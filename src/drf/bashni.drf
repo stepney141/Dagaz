@@ -1,0 +1,51 @@
+(define check-source
+  (check not-empty?)
+  (check (not down))
+  (let is-friend? friend?)
+  (take-piece-to-head current-pieces)
+  (while (and up not-empty?)
+     (set! is-friend? friend?)
+     (take-piece-to-tail current-pieces)
+  )
+  (check is-friend?)
+)
+
+(define check-intermediate
+  (check not-empty?)
+  (while (not-empty? up)
+     up
+  )
+  (check enemy?)
+  (take-piece-to-head current-pieces)
+)
+
+(define check-destination
+  (check empty?)
+  clone-state
+  (drop-pieces current-pieces)
+  (add-move-part jump-type)
+)
+
+(variant
+   (title "Bashni")
+   (players White Black)
+   (board
+      (grid (dimensions "a_h" "8_1" "0_23")
+            (direction (name up)    0  0  1)
+            (direction (name down)  0  0 -1)
+            (direction (name nw)   -1 -1)
+            (direction (name ne)    1 -1)
+            (direction (name sw)   -1  1)
+            (direction (name se)    1  1)
+            (direction (players Black) (nw se)(se nw)(ne sw)(sw ne))
+      )
+      (zone (name promotion)
+            (players White)
+            (positions b8 d8 f8 h8)
+      )
+      (zone (name promotion)
+            (players Black)
+            (positions a1 c1 e1 g1)
+      )
+   )
+)
