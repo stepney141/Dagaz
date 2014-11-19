@@ -53,11 +53,18 @@
   (check is-not-friend?)
   (check empty?)
   (drop-pieces current-pieces)
+  (if (in-zone? promotion)
+      (set-attribute is-promoted? true)
+  )
   add-move
 )
 
 (define set-moved
   (set-attribute is-moved? true)
+)
+
+(define clear-jumped
+  (set-attribute is-jumped? false)
 )
 
 (define (leap piece-type direction)
@@ -84,14 +91,83 @@
   (check n)
   (check empty?)
   (drop-pieces current-pieces)
+  (if (in-zone? promotion)
+      (set-attribute is-promoted? true)
+  )
   add-move
 )
 
-(define (pawn-eat piece-type direction)
+(define (pawn-capture piece-type direction)
   (check-source piece-type)
   (check direction)
   (check not-empty?)
   check-destination
+)
+
+(define pawn-jump
+  (check (not is-moved?))
+  (set-attribute is-jumped? true)
+  (check-source Pawn)
+  (check n)
+  (check empty?)
+  (check n)
+  (check empty?)
+  (drop-pieces current-pieces)
+  add-move
+)
+
+(define (en-passant piece-type direction)
+  (check-source piece-type)
+  (check direction)
+  (check enemy?)
+  (check is-moved?)
+  capture
+  (check n)
+  (check empty?)
+  (drop-pieces current-pieces)
+  add-move
+)
+
+(define O-O
+  (check (not is-moved?))
+  (check (not-attacked?))
+  (check-source King)
+  (check w)
+  (check empty?)
+  (check (not-attacked?))
+  (check w)
+  (check empty?)
+  (check (not-attacked?))
+  (drop-pieces current-pieces)
+  (check w)
+  (check (not is-moved?))
+  (set-attribute is-moved? true)
+  (check-source Rook)
+  e e
+  (drop-pieces current-pieces)
+  add-move
+)
+
+(define O-O-O
+  (check (not is-moved?))
+  (check (not-attacked?))
+  (check-source King)
+  (check e)
+  (check empty?)
+  (check (not-attacked?))
+  (check e)
+  (check empty?)
+  (check (not-attacked?))
+  (drop-pieces current-pieces)
+  (check e)
+  (check empty?)
+  (check e)
+  (check (not is-moved?))
+  (set-attribute is-moved? true)
+  (check-source Rook)
+  w w w
+  (drop-pieces current-pieces)
+  add-move
 )
 
 (variant
@@ -134,11 +210,13 @@
             (name Pawn)
             (attribute is-moved? false)
             (attribute is-promoted? false)
+            (attribute is-jumped? false)
             (piece (name Pawn-Rook))
             (piece (name Pawn-Knight))
             (piece (name Pawn-Bishop))
             (piece (name Pawn-Queen))
             (piece (name Pawn-King))
+            (moves pawn-jump)
       )
       (piece (name Rook)
             (attribute is-moved? false)
@@ -149,8 +227,10 @@
       (piece (name Helg))
       (piece (name King)
             (attribute is-moved? false)
+            (moves O-O O-O-O)
       )
       (moves
+            (post clear-jumped)
             (slide Rook n)(slide Rook s)(slide Rook w)(slide Rook e)
             (leap Knight nnw)(leap Knight nne)(leap Knight een)(leap Knight ees)
             (leap Knight sse)(leap Knight ssw)(leap Knight wwn)(leap Knight wws)
@@ -163,7 +243,34 @@
             (slide Helg nw)(slide Helg ne)(slide Helg sw)(slide Helg se)
             (leap Helg nnw)(leap Helg nne)(leap Helg een)(leap Helg ees)
             (leap Helg sse)(leap Helg ssw)(leap Helg wwn)(leap Helg wws)
-            (pawn-move Pawn)(pawn-eat Pawn nw)(pawn-eat Pawn ne)
+            (pawn-move Pawn)(pawn-capture Pawn nw)(pawn-capture Pawn ne)
+            (en-passant Pawn w)(en-passant Pawn w)
+      )
+   )
+   (setup
+      (White
+            (Pawn-Rook a2 h2)
+            (Pawn-Knight b2 g2)
+            (Pawn-Bishop c2 f2)
+            (Pawn-Queen d2)
+            (Pawn-King e2)
+            (Knight b1 g1)
+            (Bishop c1 f1)
+            (Rook a1 h1)
+            (Queen d1)
+            (King e1)
+      )
+      (Black
+            (Pawn-Rook a7 h7)
+            (Pawn-Knight b7 g7)
+            (Pawn-Bishop c7 f7)
+            (Pawn-Queen d7)
+            (Pawn-King e7)
+            (Knight b8 g8)
+            (Bishop c8 f8)
+            (Rook a8 h8)
+            (Queen d8)
+            (King e8)
       )
    )
 )

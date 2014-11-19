@@ -1,13 +1,16 @@
-(define check-source
+(define (check-source promoted-flag)
   (check not-empty?)
   (check (not down))
   (let is-friend? friend?)
+  (let top-promoted is-promoted?)
   (take-piece-to-head current-pieces)
   (while (and up not-empty?)
      (set! is-friend? friend?)
+     (set! top-promoted is-promoted?)
      (take-piece-to-tail current-pieces)
   )
   (check is-friend?)
+  (check (= top-promoted promoted-flag))
 )
 
 (define check-intermediate
@@ -21,9 +24,53 @@
 
 (define check-destination
   (check empty?)
-  clone-state
   (drop-pieces current-pieces)
-  (add-move-part jump-type)
+  (if (in-zone? promotion)
+      (set-attribute is-promoted? true)
+  )
+)
+
+(define (man-move promoted-flag direction)
+  (check-source promoted-flag)
+  (check direction)
+  check-destination
+  add-move
+)
+
+(define (man-capture promoted-flag direction)
+  (check-source promoted-flag)
+  (check direction)
+  check-intermediate
+  (check direction)
+  check-destination
+  (add-move-part capture-type)
+)
+
+(define (king-move promoted-flag direction)
+  (check-source promoted-flag)
+  (check direction)
+  (while empty?
+     clone-state
+     check-destination
+     add-move
+     (check direction)
+  )
+)
+
+(define (king-capture promoted-flag direction)
+  (check-source promoted-flag)
+  (check direction)
+  (while empty?
+     (check direction)
+  )
+  check-intermediate
+  (check direction)
+  (while empty?
+     clone-state
+     check-destination
+     (add-move-part capture-type)
+     (check direction)
+  )
 )
 
 (variant
@@ -46,6 +93,33 @@
       (zone (name promotion)
             (players Black)
             (positions a1 c1 e1 g1)
+      )
+   )
+   (pieces
+      (piece 
+            (name Man)
+            (attribute is-promoted? false)
+            (moves
+                (mode normal-type)
+                (man-move false nw)(man-move false ne)
+                (king-move true nw)(king-move true ne)
+                (king-move true sw)(king-move true se)
+            )
+            (moves
+                (mode capture-type)
+                (man-capture false nw)(man-capture false ne)
+                (man-capture false sw)(man-capture false se)
+                (king-capture true nw)(king-capture true ne)
+                (king-capture true sw)(king-capture true se)
+            )
+      )
+   )
+   (setup
+      (White
+            (Man a1 c1 e1 g1 b2 d2 f2 h2 a3 c3 e3 g3)
+      )
+      (Black
+            (Man b8 d8 f8 h8 a7 c7 e7 g7 b6 d6 f6 h6)
       )
    )
 )
