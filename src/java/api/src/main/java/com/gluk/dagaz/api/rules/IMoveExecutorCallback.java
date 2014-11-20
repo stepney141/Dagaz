@@ -2,9 +2,8 @@ package com.gluk.dagaz.api.rules;
 
 import com.gluk.dagaz.api.exceptions.MoveListException;
 import com.gluk.dagaz.api.state.IState;
-import com.gluk.dagaz.api.state.IStateChangePieces;
 
-public interface IMoveExecutorCallback extends IStateChangePieces {
+public interface IMoveExecutorCallback {
 	int createMove(int moveIndex, String name, String params) throws MoveListException;
 	void setStartPosition(int moveIndex, String position) throws MoveListException;
 	void setEndPosition(int moveIndex, String position) throws MoveListException;
