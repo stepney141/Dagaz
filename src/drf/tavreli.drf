@@ -193,7 +193,6 @@
             (direction (name ssw)  -1  2)
             (direction (name wwn)  -2 -1)
             (direction (name wws)  -2  1)
-            (direction (players Black) (n s)(s n)(nw sw)(sw nw)(ne se)(se ne))
       )
       (zone (name promotion)
             (players White)
@@ -203,6 +202,7 @@
             (players Black)
             (positions a1 b1 c1 d1 e1 f1 g1 h1)
       )
+      (symmetry (players Black) (n s)(s n)(nw sw)(sw nw)(ne se)(se ne))
    )
    (pieces
       (post set-moved)

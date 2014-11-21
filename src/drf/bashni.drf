@@ -84,7 +84,6 @@
             (direction (name ne)    1 -1)
             (direction (name sw)   -1  1)
             (direction (name se)    1  1)
-            (direction (players Black) (nw se)(se nw)(ne sw)(sw ne))
       )
       (zone (name promotion)
             (players White)
@@ -94,6 +93,7 @@
             (players Black)
             (positions a1 c1 e1 g1)
       )
+      (symmetry (players Black) (nw se)(se nw)(ne sw)(sw ne))
    )
    (pieces
       (piece 

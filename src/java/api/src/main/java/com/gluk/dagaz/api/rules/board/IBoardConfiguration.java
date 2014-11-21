@@ -1,4 +1,4 @@
-package com.gluk.dagaz.api.rules;
+package com.gluk.dagaz.api.rules.board;
 
 import com.gluk.dagaz.api.exceptions.BoardException;
 
@@ -12,4 +12,5 @@ public interface IBoardConfiguration {
 	void addSynonym(String oldPosition, String newPosition, String player, boolean isGate) throws BoardException;
 	void addSynonym(String oldPosition, String newPosition, boolean isGate) throws BoardException;
 	void addOperation(String name, String oldPosition, String newPosition) throws BoardException;
+	void addOperation(String name, String oldPosition, String newPosition, String player) throws BoardException;
 }
