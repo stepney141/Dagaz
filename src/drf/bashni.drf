@@ -1,76 +1,93 @@
 (define (check-source promoted-flag)
-  (check not-empty?)
-  (check (not down))
-  (let is-friend? friend?)
-  (let top-promoted is-promoted?)
-  (take-piece-to-head current-pieces)
-  (while (and up not-empty?)
-     (set! is-friend? friend?)
-     (set! top-promoted is-promoted?)
-     (take-piece-to-tail current-pieces)
-  )
-  (check is-friend?)
-  (check (= top-promoted promoted-flag))
+   (check not-empty?)
+   (check (not down))
+   (let is-friend? friend?)
+   (let top-promoted is-promoted?)
+   (take-piece-to-head current-pieces)
+   (while (and up not-empty?)
+      (set! is-friend? friend?)
+      (set! top-promoted is-promoted?)
+      (take-piece-to-tail current-pieces)
+   )
+   (check is-friend?)
+   (check (= top-promoted promoted-flag))
 )
 
 (define check-intermediate
-  (check not-empty?)
-  (while (not-empty? up)
-     up
-  )
-  (check enemy?)
-  (take-piece-to-head current-pieces)
+   (check not-empty?)
+   (while (not-empty? up)
+      up
+   )
+   (check enemy?)
+   (set! capturing-count (+ capturing-count 1))
+   (take-piece-to-head current-pieces)
 )
 
 (define check-destination
-  (check empty?)
-  (drop-pieces current-pieces)
-  (if (in-zone? promotion)
-      (set-attribute is-promoted? true)
-  )
+   (check empty?)
+   (drop-pieces current-pieces)
+   (if (in-zone? promotion)
+       (set-attribute is-promoted? true)
+   )
 )
 
 (define (man-move promoted-flag direction)
-  (check-source promoted-flag)
-  (check direction)
-  check-destination
-  add-move
+   (check-source promoted-flag)
+   (check direction)
+   check-destination
+   add-move
 )
 
 (define (man-capture promoted-flag direction)
-  (check-source promoted-flag)
-  (check direction)
-  check-intermediate
-  (check direction)
-  check-destination
-  (add-move-part capture-type)
+   (check-source promoted-flag)
+   (check direction)
+   check-intermediate
+   (check direction)
+   check-destination
+   (add-move-part capture-type)
 )
 
 (define (king-move promoted-flag direction)
-  (check-source promoted-flag)
-  (check direction)
-  (while empty?
-     clone-state
-     check-destination
-     add-move
-     (check direction)
-  )
+   (check-source promoted-flag)
+   (check direction)
+   (while empty?
+      clone-state
+      check-destination
+      add-move
+      (check direction)
+   )
 )
 
 (define (king-capture promoted-flag direction)
-  (check-source promoted-flag)
-  (check direction)
-  (while empty?
-     (check direction)
-  )
-  check-intermediate
-  (check direction)
-  (while empty?
-     clone-state
-     check-destination
-     (add-move-part capture-type)
-     (check direction)
-  )
+   (check-source promoted-flag)
+   (check direction)
+   (while empty?
+      (check direction)
+   )
+   check-intermediate
+   (check direction)
+   (while empty?
+      clone-state
+      check-destination
+      (add-move-part capture-type)
+      (check direction)
+   )
+)
+
+(define variables
+   (let capturing-count 0)
+   (let max-capturing-count 0)
+)
+
+(define invariant
+   (check
+      (>= capturing-count max-capturing-count)
+      (set! max-capturing-count capturing-count)
+   )
+)
+
+(define goals
+   (check-loss (= (count moves) 0))
 )
 
 (variant
@@ -96,6 +113,8 @@
       (symmetry (players Black) (nw se)(se nw)(ne sw)(sw ne))
    )
    (pieces
+      (pre  variables)
+      (post goals)
       (piece 
             (name Man)
             (attribute is-promoted? false)

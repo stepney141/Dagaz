@@ -170,6 +170,27 @@
   add-move
 )
 
+(define invariant
+  (check 
+      (= (count (pieces (and friend? (is-piece? King) is-attacked?))) 0)
+  )
+)
+
+(define goals
+  (let move-count (count moves))
+  (check-loss
+      (priority 1)
+      (and
+           (> (count (pieces (and friend? (is-piece? King) is-attacked?))) 0)
+           (= move-count 0)
+      )
+  )
+  (check-draw
+      (priority 2)
+      (= move-count 0)
+  )
+)
+
 (variant
    (title "Tavreli")
    (players White Black)
@@ -206,6 +227,8 @@
    )
    (pieces
       (post set-moved)
+      (post invariant)
+      (post goals)
       (piece 
             (name Pawn)
             (attribute is-moved? false)
