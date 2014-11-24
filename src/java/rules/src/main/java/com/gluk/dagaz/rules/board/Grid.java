@@ -10,54 +10,78 @@ import com.gluk.dagaz.api.rules.board.IGrid;
 public class Grid implements IGrid {
 	
 	private IBoardConfiguration board;
-	private List<List<Character>> dimensions = new ArrayList<List<Character>>();
+	private List<List<String>> dimensions = new ArrayList<List<String>>();
 	private boolean isGenerated = false;
 	
 	public Grid(IBoardConfiguration board) {
 		this.board = board;
 	}
 	
-	private void scanCharacters(String dimension, byte start, byte end, List<Character> r) throws BoardException {
-		for (byte b = start; b <= end; b++) {
-			Character p = new Character((char)b);
-			if (r.contains(p)) {
+	private void addRange(String dimension, int start, int end, boolean isNumeric, List<String> r) throws BoardException {
+		if (start == end) {
+			start--;
+		}
+		while (start != end) {
+			StringBuffer sb = new StringBuffer();
+			if (isNumeric) {
+				sb.append(Integer.toString(start));
+			} else {
+				sb.append((char)(byte)start);
+			}
+			if (r.contains(sb.toString())) {
 				throw new BoardException("Invalid dimension [" + dimension + "]");
 			}
-			r.add(p);
+			r.add(sb.toString());
+			if (start > end) {
+				start--;
+			} else {
+				start++;
+			}
 		}
 	}
-
+	
 	public void addDimension(String dimension) throws BoardException {
-		List<Character> r = new ArrayList<Character>();
-		byte start = 0;
-		Character p = null;
+		List<String> r = new ArrayList<String>();
+		int start = 0;
+		int current = 0;
+		boolean isNumeric = false;
 		for (Character c: dimension.toCharArray()) {
-			if (Character.isDigit(c) || Character.isLetter(c)) {
-				if (start != 0) {
-					byte end = (byte)(char)c;
-					if (start < end) {
-						scanCharacters(dimension, start, end, r);
-					} else {
-						scanCharacters(dimension, end, start, r);
-					}
-					start = 0;
-				} else {
-					p = c;
-				}
-			}
 			if (c.equals('_')) {
-				start = (byte)(char)p;
-				p = null;
+				start = current;
+				current = 0;
+				continue;
 			}
-			if (p != null) {
-				if (r.contains(p)) {
+			if (Character.isDigit(c)) {
+				current *= 10;
+				current += (int)c - (int)'0'; 
+				isNumeric = true;
+				continue;
+			}
+			if ((start > 0)&&(current > 0)) {
+				addRange(dimension, start, current, isNumeric, r);
+				isNumeric = false;
+				start = 0;
+				current = 0;
+			}
+			if (Character.isLetter(c)) {
+				if (isNumeric) {
 					throw new BoardException("Invalid dimension [" + dimension + "]");
 				}
-				r.add(p);
+				if (start > 0) {
+					addRange(dimension, start, (int)c, false, r);
+					start = 0;
+					continue;
+				}
+				StringBuffer sb = new StringBuffer();
+				sb.append(c);
+				if (r.contains(sb.toString())) {
+					throw new BoardException("Invalid dimension [" + dimension + "]");
+				}
+				r.add(sb.toString());
 			}
 		}
-		if (r.isEmpty()) {
-			throw new BoardException("Empty dimension [" + dimension + "]");
+		if ((start > 0)&&(current > 0)) {
+			addRange(dimension, start, current, isNumeric, r);
 		}
 		dimensions.add(r);
 	}
@@ -67,13 +91,13 @@ public class Grid implements IGrid {
 			board.createPosition(sb.toString());
 			return;
 		}
-		List<Character> d = dimensions.get(ix);
+		List<String> d = dimensions.get(ix);
 		if (d.isEmpty()) {
 			throw new BoardException("Dimension [" + Integer.toString(ix) + "] is empty");
 		}
-		for (Character c: d) {
+		for (String s: d) {
 			sb.setLength(ix);
-			sb.append(c);
+			sb.append(s);
 			generatePositions(ix + 1, sb);
 		}
 	}
@@ -94,7 +118,7 @@ public class Grid implements IGrid {
 			board.addLink(name, startPosition.toString(), endPosition.toString());
 			return;
 		}
-		List<Character> d = dimensions.get(ix);
+		List<String> d = dimensions.get(ix);
 		for (int i = 0; i < d.size(); i++) {
 			startPosition.setLength(ix);
 			startPosition.append(d.get(i));
