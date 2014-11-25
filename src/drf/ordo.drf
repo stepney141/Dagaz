@@ -12,7 +12,7 @@
    (foreach current-group
        (foreach (filter friend? directions)
            (if (not (piece-contains current-group))
-               add-piece-recursive
+               (copy-piece-to-tail current-group)
            )
        )
    )
