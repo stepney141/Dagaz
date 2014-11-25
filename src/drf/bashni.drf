@@ -90,7 +90,7 @@
    (check-loss (= (count moves) 0))
 )
 
-(variant
+(game
    (title "Bashni")
    (players White Black)
    (board
@@ -114,6 +114,7 @@
    )
    (pieces
       (pre  variables)
+      (post invariant)
       (post goals)
       (piece 
             (name Man)

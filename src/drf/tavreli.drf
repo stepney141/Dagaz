@@ -186,12 +186,12 @@
       )
   )
   (check-draw
-      (priority 2)
+      (priority 0)
       (= move-count 0)
   )
 )
 
-(variant
+(game
    (title "Tavreli")
    (players White Black)
    (board
