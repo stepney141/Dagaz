@@ -13,7 +13,7 @@ public class Parser implements IParser {
     private final static String NODE_TAG  = "n";
     private final static String ATOM_TAG  = "a";
     private final static String STR_TAG   = "s";
-    private final static String NUM_TAG   = "n";
+    private final static String NUM_TAG   = "d";
     
     private ContentHandler handler;
     private boolean isOpened = false;

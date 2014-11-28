@@ -21,10 +21,19 @@ public class Scaner implements IScaner {
 	}
 	
 	private boolean isNumeric(String s) {
-		for (char c: s.toCharArray()) {
-			if (Character.isDigit(c)) {
+		boolean isFirst = true;
+		for (Character c: s.toCharArray()) {
+			if (c.equals('-')) {
+				if (!isFirst) {
+					return false;
+				}
+				isFirst = false;
+				continue;
+			}
+			if (!Character.isDigit(c)) {
 				return false;
 			}
+			isFirst = false;
 		}
 		return true;
 	}
