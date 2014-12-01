@@ -4,27 +4,51 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
+import com.gluk.dagaz.api.application.IApplication;
+import com.gluk.dagaz.api.exceptions.CommonException;
 import com.gluk.dagaz.api.exceptions.ParsingException;
+import com.gluk.dagaz.api.io.IDataManager;
+import com.gluk.dagaz.api.io.IInput;
 import com.gluk.dagaz.api.rules.parser.IParser;
 
 public class Parser implements IParser {
 	
-    private final static String ROOT_TAG  = "r";
-    private final static String NODE_TAG  = "n";
-    private final static String ATOM_TAG  = "a";
-    private final static String STR_TAG   = "s";
-    private final static String NUM_TAG   = "d";
+    private final static String ROOT_TAG      = "r";
+    private final static String NODE_TAG      = "n";
+    private final static String ATOM_TAG      = "a";
+    private final static String STR_TAG       = "s";
+    private final static String NUM_TAG       = "d";
+
+    private final static String INCLUDE_ATOM  = "include";
     
+    private final static int    NORMAL_STATUS        = 0; 
+    private final static int    WAIT_FILENAME_STATUS = 1; 
+    private final static int    WAIT_CLOSE_STATUS    = 2; 
+    
+    private IApplication app;
+    private String scope;
     private ContentHandler handler;
     private boolean isOpened = false;
     private int deep = 0;
     private AttributesImpl empty = new AttributesImpl();
+    private int status = NORMAL_STATUS;
+    private String fileName;
+    private int includeDeep = 0;
     
-    public Parser(ContentHandler handler) {
+    public Parser(IApplication app, String scope, ContentHandler handler) {
+    	this.app = app;
+    	this.scope = scope;
     	this.handler = handler;
     }
 
 	public void openBracket() throws ParsingException {
+		if (status == WAIT_FILENAME_STATUS) {
+			throw new ParsingException("Invalid status [" + Integer.toString(status) + "]");
+		}
+		if (status == WAIT_CLOSE_STATUS) {
+			status = NORMAL_STATUS;
+			return;
+		}
 		try {
 			if (!isOpened) {
 				isOpened = true;
@@ -42,6 +66,21 @@ public class Parser implements IParser {
 		if (!isOpened) {
 			throw new ParsingException("Not opened document");
 		}
+		if (status == WAIT_FILENAME_STATUS) {
+			throw new ParsingException("Invalid status [" + Integer.toString(status) + "]");
+		}
+		if (status == WAIT_CLOSE_STATUS) {
+			try {
+				includeDeep++;
+				IDataManager dm = app.getDataManager();
+				IInput in = dm.getInput(scope, fileName);
+				Scaner scaner = new Scaner(this);
+				in.read(scaner);
+			} catch (CommonException e) {
+				throw new ParsingException(e.toString(), e);
+			}
+			return;
+		}
 		if (deep == 0) {
 			throw new ParsingException("Unbalanced brackets");
 		}
@@ -56,6 +95,13 @@ public class Parser implements IParser {
 	public void addAtom(String s) throws ParsingException {
 		if (!isOpened) {
 			throw new ParsingException("Not opened document");
+		}
+		if (status != NORMAL_STATUS) {
+			throw new ParsingException("Invalid status [" + Integer.toString(status) + "]");
+		}
+		if (s.equals(INCLUDE_ATOM)) {
+			status = WAIT_FILENAME_STATUS;
+			return;
 		}
 		if (deep == 0) {
 			throw new ParsingException("Syntax error");
@@ -72,6 +118,17 @@ public class Parser implements IParser {
 	public void addLiteral(String s, boolean isNumeric) throws ParsingException {
 		if (!isOpened) {
 			throw new ParsingException("Not opened document");
+		}
+		if (status == WAIT_CLOSE_STATUS) {
+			throw new ParsingException("Invalid status [" + Integer.toString(status) + "]");
+		}
+		if (status == WAIT_FILENAME_STATUS) {
+			if (isNumeric) {
+				throw new ParsingException("Invalid filename type [" + s + "]");
+			}
+			fileName = s;
+			status = WAIT_CLOSE_STATUS;
+			return;
 		}
 		if (deep == 0) {
 			throw new ParsingException("Syntax error");
@@ -96,6 +153,13 @@ public class Parser implements IParser {
 	public void closeAll() throws ParsingException {
 		if (!isOpened) {
 			throw new ParsingException("Not opened document");
+		}
+		if (includeDeep > 0) {
+			includeDeep--;
+			return;
+		}
+		if (status != NORMAL_STATUS) {
+			throw new ParsingException("Invalid status [" + Integer.toString(status) + "]");
 		}
 		if (deep > 0) {
 			throw new ParsingException("Unbalanced brackets");

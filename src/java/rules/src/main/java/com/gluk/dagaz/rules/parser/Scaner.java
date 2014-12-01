@@ -1,10 +1,10 @@
 package com.gluk.dagaz.rules.parser;
 
 import com.gluk.dagaz.api.exceptions.ParsingException;
+import com.gluk.dagaz.api.io.IOutput;
 import com.gluk.dagaz.api.rules.parser.IParser;
-import com.gluk.dagaz.api.rules.parser.IScaner;
 
-public class Scaner implements IScaner {
+public class Scaner implements IOutput {
 	
 	private final static char CR_CHAR      = (char)0x0D;
 	private final static char LF_CHAR      = (char)0x0A;
@@ -50,7 +50,7 @@ public class Scaner implements IScaner {
 		buffer.setLength(0);
 	}
 
-	public void scan(String s) throws ParsingException {
+	public void write(String s) throws ParsingException {
 		for (Character c: s.toCharArray()) {
 			if (isCommented) {
 				if (c.equals(CR_CHAR) || c.equals(LF_CHAR)) {
