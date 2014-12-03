@@ -41,6 +41,13 @@ public class Parser implements IParser {
     	this.handler = handler;
     }
 
+	public void parse(String name) throws CommonException {
+		Scaner scaner = new Scaner(this);
+		IDataManager dm = app.getDataManager();
+		IInput in = dm.getInput(scope, name);
+		in.read(scaner);
+	}
+	
 	public void openBracket() throws ParsingException {
 		if (status == WAIT_FILENAME_STATUS) {
 			throw new ParsingException("Invalid status [" + Integer.toString(status) + "]");
