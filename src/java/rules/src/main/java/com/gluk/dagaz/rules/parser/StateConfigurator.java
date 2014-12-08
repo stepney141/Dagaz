@@ -19,7 +19,7 @@ public class StateConfigurator extends BaseConfigurator {
 		try {
 			NodeIterator nl = getIterator(conf, SETUP_XP);
 			Node n;
-	        while ((n = nl.nextNode())!= null) {
+	        if ((n = nl.nextNode())!= null) {
 	        	String player = getName(n);
 	        	NodeIterator pl = getIterator(n);
 				Node p;

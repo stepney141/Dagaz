@@ -18,6 +18,7 @@ public abstract class BaseConfigurator {
 	private final static String N_XP      = "n";
 	private final static String NAME_XP   = "@t";
 	private final static String VALUE_XP  = "n/@t";
+	private final static String LNAME_XP  = "n[@t='name']/n/@t";
 	
 	private static XPathFactory xpf = null;
 	private Map<String, XPathExpression> xpes = new HashMap<String, XPathExpression>();
@@ -50,6 +51,11 @@ public abstract class BaseConfigurator {
 	
 	protected String getValue(Node n) throws XPathExpressionException {
 		XPathExpression xpe = getXPath(VALUE_XP);
+		return xpe.evaluate(n);
+	}
+
+	protected String getListName(Node n) throws XPathExpressionException {
+		XPathExpression xpe = getXPath(LNAME_XP);
 		return xpe.evaluate(n);
 	}
 }
