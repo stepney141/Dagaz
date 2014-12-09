@@ -15,13 +15,26 @@ import com.gluk.dagaz.rules.board.Grid;
 
 public class BoardConfigurator extends BaseConfigurator {
 
-	private final static String BOARD_XP  = "n[@t='board']";
-	private final static String GRID_XP   = "n[@t='grid']";
-	private final static String DIMS_XP   = "n[@t='dimensions']/s";
-	private final static String POS_XP    = "n[@t='positions']/n";
-	private final static String KILL_XP   = "n[@t='kill-positions']/n";
-	private final static String DIRS_XP   = "n[@t='direction']";
-	private final static String VALS_XP   = "v";
+	private final static String BOARD_XP      = "n[@t='board']";
+	private final static String GRID_XP       = "n[@t='grid']";
+	private final static String DIMS_XP       = "n[@t='dimensions']/s";
+	private final static String POS_XP        = "n[@t='positions']/n";
+	private final static String KILL_XP       = "n[@t='kill-positions']/n";
+	private final static String DIRS_XP       = "n[@t='direction']";
+	private final static String VALS_XP       = "v";
+	private final static String LINK_XP       = "n[@t='link']";
+	private final static String ZONE_XP       = "n[@t='zone']";
+	private final static String NONAME_XP     = "n[@t!='name']/n";
+	private final static String NOPLAYERS_XP  = "n[@t!='players']/n";
+	private final static String PLAYERS_XP    = "n[@t='players']/n";
+	private final static String SYN_XP        = "n[@t='synonym']|n[@t='gate']";
+	private final static String SYM_XP        = "n[@t='symmetry']";
+	private final static String OPS_XP        = "n[@t='operation']";
+	private final static String TAGS_XP       = "n";
+	
+	private final static String GATE_STR      = "gate";
+	private final static String NAME_STR      = "name";
+	private final static String PLAYERS_STR   = "players";
 	
 	private List<IGrid> grids = new ArrayList<IGrid>();
 
@@ -81,6 +94,147 @@ public class BoardConfigurator extends BaseConfigurator {
             }
         }
 	}
+
+	public void addLinks(IBoardConfiguration board, Node conf) throws Exception {
+		NodeIterator nl = getIterator(conf, LINK_XP);
+		Node n;
+        while ((n = nl.nextNode())!= null) {
+        	String name = getListName(n);
+    		NodeIterator pl = getIterator(n, NONAME_XP);
+    		Node p;
+            while ((p = pl.nextNode())!= null) {
+            	String startPosition = getName(p);
+            	String endPosition = getValue(p);
+            	board.addLink(name, startPosition, endPosition);
+            }
+        }
+	}
+	
+	public void addZones(IBoardConfiguration board, Node conf) throws Exception {
+		NodeIterator nl = getIterator(conf, ZONE_XP);
+		Node n;
+        while ((n = nl.nextNode())!= null) {
+        	String name = getListName(n);
+    		NodeIterator pl = getIterator(n, PLAYERS_XP);
+    		boolean f = true;
+    		Node p;
+            while ((p = pl.nextNode())!= null) {
+            	String player = getName(p);
+        		NodeIterator ql = getIterator(n, POS_XP);
+        		Node q;
+                while ((q = ql.nextNode())!= null) {
+                	String position = getName(q);
+                	board.addZone(name, position, player);
+                }
+                f = false;
+            }
+            if (f) {
+        		NodeIterator ql = getIterator(n, POS_XP);
+        		Node q;
+                while ((q = ql.nextNode())!= null) {
+                	String position = getName(q);
+                	board.addZone(name, position);
+                }
+            }
+        }
+	}
+	
+	public void addSyns(IBoardConfiguration board, Node conf) throws Exception {
+		NodeIterator nl = getIterator(conf, SYN_XP);
+		Node n;
+        while ((n = nl.nextNode())!= null) {
+        	String name = getName(n);
+    		NodeIterator pl = getIterator(n, PLAYERS_XP);
+    		boolean f = true;
+    		Node p;
+            while ((p = pl.nextNode())!= null) {
+            	String player = getName(p);
+        		NodeIterator ql = getIterator(n, NONAME_XP);
+        		Node q;
+                while ((q = ql.nextNode())!= null) {
+                	String oldPosition = getName(q);
+                	String newPosition = getValue(q);
+                	board.addSynonym(oldPosition, newPosition, player, name.equals(GATE_STR));
+                }
+                f = false;
+            }
+            if (f) {
+        		NodeIterator ql = getIterator(n, NONAME_XP);
+        		Node q;
+                while ((q = ql.nextNode())!= null) {
+                	String oldPosition = getName(q);
+                	String newPosition = getValue(q);
+                	board.addSynonym(oldPosition, newPosition, name.equals(GATE_STR));
+                }
+            }
+        }
+	}
+	
+	public void addSymmetries(IBoardConfiguration board, Node conf) throws Exception {
+		NodeIterator nl = getIterator(conf, SYM_XP);
+		Node n;
+        while ((n = nl.nextNode())!= null) {
+        	List<String> players = new ArrayList<String>();
+    		NodeIterator pl = getIterator(n, PLAYERS_XP);
+    		Node p;
+            while ((p = pl.nextNode())!= null) {
+            	players.add(getName(p));
+            }
+            if (players.isEmpty()) {
+            	throw new ParsingException("Players list is empty");
+            }
+    		NodeIterator ql = getIterator(n, NOPLAYERS_XP);
+    		Node q; int ix = 0;
+            while ((q = ql.nextNode())!= null) {
+            	if (ix >= players.size()) {
+                	throw new ParsingException("Bad Players list");
+            	}
+            	String player = players.get(ix++);
+            	String oldDirection = getName(q);
+        		NodeIterator tl = getIterator(q, TAGS_XP);
+        		Node t;
+                while ((t = tl.nextNode())!= null) {
+                	String newDirection = getName(t);
+                	board.addSymmetry(oldDirection, newDirection, player);
+                }
+            }
+        }
+	}
+	
+	public void addOperations(IBoardConfiguration board, Node conf) throws Exception {
+		NodeIterator nl = getIterator(conf, OPS_XP);
+		Node n;
+        while ((n = nl.nextNode())!= null) {
+        	String name = getListName(n);
+    		NodeIterator pl = getIterator(n, PLAYERS_XP);
+    		boolean f = true;
+    		Node p;
+            while ((p = pl.nextNode())!= null) {
+            	String player = getName(p);
+        		NodeIterator tl = getIterator(n, TAGS_XP);
+        		Node t;
+                while ((t = tl.nextNode())!= null) {
+                	String oldPosition = getName(t);
+                	if (oldPosition.equals(NAME_STR)) continue;
+                	if (oldPosition.equals(PLAYERS_STR)) continue;
+                	String newPosition = getValue(t);
+                	board.addOperation(name, oldPosition, newPosition, player);
+                }
+            	f = false;
+            }
+            if (f) {
+        		NodeIterator tl = getIterator(n, TAGS_XP);
+        		Node t;
+                while ((t = tl.nextNode())!= null) {
+                	String oldPosition = getName(t);
+                	if (oldPosition.equals(NAME_STR)) continue;
+                	if (oldPosition.equals(PLAYERS_STR)) continue;
+                	String newPosition = getValue(t);
+                	board.addOperation(name, oldPosition, newPosition);
+                }
+            }
+        }
+	}
 	
 	public void initBoard(IBoardConfiguration board, Node conf) throws CommonException {
 		try {
@@ -91,7 +245,11 @@ public class BoardConfigurator extends BaseConfigurator {
 	        	addPositions(board, n);
 	        	killPositions(board, n);
 	        	addDirections(board, n);
-
+	        	addSymmetries(board, n);
+	        	addLinks(board, n);
+	        	addZones(board, n);
+	        	addSyns(board, n);
+	        	addOperations(board, n);
 	        }
 		} catch (Exception e) {
 			throw new ParsingException(e.toString(), e);
