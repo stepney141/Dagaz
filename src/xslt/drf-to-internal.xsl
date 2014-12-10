@@ -9,13 +9,11 @@
          <xsl:value-of select="a[position()=1]"/>
        </xsl:attribute>
        <xsl:for-each select="*[position()&gt;1]">
-         <xsl:variable name="n">n</xsl:variable>
-         <xsl:variable name="a">a</xsl:variable>
          <xsl:choose>
-           <xsl:when test="name()=$n">
+           <xsl:when test="name()='n'">
              <xsl:call-template name="apply_n"/>
            </xsl:when>             
-           <xsl:when test="name()=$a">
+           <xsl:when test="name()='a'">
              <xsl:element name="n">
                <xsl:attribute name="t">
                  <xsl:value-of select="."/>
