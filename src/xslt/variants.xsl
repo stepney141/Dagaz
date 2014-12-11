@@ -11,14 +11,12 @@
           <xsl:copy-of select="n"/>
           <xsl:copy-of select="/r/n[*[position()=1 and name()='a']='game']/n"/>
         </xsl:variable>
-        <n><a>game</a>
-          <xsl:for-each select="exsl:node-set($u)/n">
+        <n><a>game</a><xsl:for-each select="exsl:node-set($u)/n">
             <xsl:variable name="pos" select="position()"/>
             <xsl:if test="$pos=1 or not(*[position()=1 and name()='a'] = preceding-sibling::n/*[position()=1 and name()='a'])">
               <xsl:copy-of select="."/>
             </xsl:if>
-          </xsl:for-each>
-        </n>
+        </xsl:for-each></n>
       </xsl:when>             
       <xsl:otherwise>
         <xsl:copy-of select="."/>
