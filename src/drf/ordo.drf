@@ -10,7 +10,7 @@
 (define add-piece-recursive
    (copy-piece-to-tail current-group)
    (foreach current-group
-       (foreach (filter friend? directions)
+       (foreach (try-directions (check is-friend?))
            (if (not (piece-contains current-group))
                (copy-piece-to-tail current-group)
            )
@@ -19,8 +19,8 @@
 )
 
 (define invariant
-   (foreach (filter friend? pices)
-       (if (empty? current-group)
+   (foreach (try-positions (check is-friend?))
+       (if (is-empty? current-group)
             add-piece-recursive
        )
        (check (piece-contains current-group))
@@ -34,35 +34,38 @@
 (define goals
    (check-win 
        (priority 1)
-       (> (count (filter (and friend? (in-zone? goal)) pieces)))
+       (exists?
+          (check is-friend?)
+          (check (in-zone? goal))
+       )
    )
    (check-loss 
        (priority 0)
-       (= (count moves) 0)
+       (not-exists? try-moves)
    )
 )
 
 (define check-friend
-   (check friend?)
+   (check is-friend?)
 )
 
 (define (single-move direction)
    (take-piece-to-head current-pieces)
    (check direction)
-   (while empty?
+   (while is-empty?
       clone-state
       (drop-pieces current-pieces)
       add-move
       (check direction)
    )
-   (check enemy?)
+   (check is-enemy?)
    (drop-pieces current-pieces)
    add-move
 )
 
 (define (build-stack direction)
    (take-piece-to-head current-pieces)
-   (while (friend? direction)
+   (while (is-friend? direction)
       (take-piece-to-tail current-pieces)
       add-variant
       (check direction)

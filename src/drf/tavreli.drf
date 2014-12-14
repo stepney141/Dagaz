@@ -20,29 +20,29 @@
 
 (define (check-source piece-type)
   (check not-empty?)
-  (if (enemy? down)
+  (if (is-enemy? down)
       (add-to-ai-weight! -1000)
       (add-ai-hint "for-stalemate-prevent-only")
   )
-  (let is-friend? friend?)
+  (let my-friend? is-friend?)
   (let top-piece-type get-piece-type)
   check-promoted
   (take-piece-to-head current-pieces)
   (while (and up not-empty?)
-     (set! is-friend? friend?)
+     (set! my-friend? is-friend?)
      (set! top-piece-type get-piece-type)
      check-promoted
      (take-piece-to-tail current-pieces)
   )
-  (check is-friend?)
+  (check my-friend?)
   (check (= top-piece-type piece-type))
 )
 
 (define check-destination
-  (let is-not-friend? not-friend?)
+  (let not-my-friend? not-friend?)
   (if not-empty?
      (while (and up not-empty?)
-        (set! is-not-friend? not-friend?)
+        (set! not-my-friend? not-friend?)
         (set-attribute is-promoted? false)
         (is-piece? King
            (add-to-ai-weight! 1000)
@@ -50,8 +50,8 @@
         )
      )
   )
-  (check is-not-friend?)
-  (check empty?)
+  (check not-my-friend?)
+  (check is-empty?)
   (drop-pieces current-pieces)
   (if (in-zone? promotion)
       (set-attribute is-promoted? true)
@@ -76,7 +76,7 @@
 (define (slide piece-type direction)
   (check-source piece-type)
   (check direction)
-  (while empty?
+  (while is-empty?
      clone-state
      (drop-pieces current-pieces)
      add-move
@@ -89,7 +89,7 @@
 (define (pawn-move piece-type)
   (check-source piece-type)
   (check n)
-  (check empty?)
+  (check is-empty?)
   (drop-pieces current-pieces)
   (if (in-zone? promotion)
       (set-attribute is-promoted? true)
@@ -109,9 +109,9 @@
   (set-attribute is-jumped? true)
   (check-source Pawn)
   (check n)
-  (check empty?)
+  (check is-empty?)
   (check n)
-  (check empty?)
+  (check is-empty?)
   (drop-pieces current-pieces)
   add-move
 )
@@ -119,11 +119,11 @@
 (define (en-passant piece-type direction)
   (check-source piece-type)
   (check direction)
-  (check enemy?)
+  (check is-enemy?)
   (check is-moved?)
   capture
   (check n)
-  (check empty?)
+  (check is-empty?)
   (drop-pieces current-pieces)
   add-move
 )
@@ -133,10 +133,10 @@
   (check (not-attacked? King))
   (check-source King)
   (check w)
-  (check empty?)
+  (check is-empty?)
   (check (not-attacked? King))
   (check w)
-  (check empty?)
+  (check is-empty?)
   (check (not-attacked? King))
   (drop-pieces current-pieces)
   (check w)
@@ -153,14 +153,14 @@
   (check (not-attacked? King))
   (check-source King)
   (check e)
-  (check empty?)
+  (check is-empty?)
   (check (not-attacked? King))
   (check e)
-  (check empty?)
+  (check is-empty?)
   (check (not-attacked? King))
   (drop-pieces current-pieces)
   (check e)
-  (check empty?)
+  (check is-empty?)
   (check e)
   (check (not is-moved?))
   (set-attribute is-moved? true)
@@ -172,7 +172,11 @@
 
 (define invariant
   (check 
-      (= (count (pieces (and friend? (is-piece? King) is-attacked?))) 0)
+      (not-exists?
+         (check is-friend?)
+         (check (is-piece? King)
+         (check is-attacked?)
+      )
   )
 )
 
@@ -181,13 +185,21 @@
   (check-loss
       (priority 1)
       (and
-           (> (count (pieces (and friend? (is-piece? King) is-attacked?))) 0)
-           (= move-count 0)
+           (exists?
+              (check is-friend?)
+              (check (is-piece? King)
+              (check is-attacked?)
+           )
+           (not-exists? try-moves)
       )
   )
   (check-draw
       (priority 0)
-      (= move-count 0)
+      (is-situation-repeated? 2)
+  )
+  (check-draw
+      (priority 0)
+      (not-exists? try-moves)
   )
 )
 

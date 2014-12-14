@@ -1,15 +1,15 @@
 (define (check-source promoted-flag)
    (check not-empty?)
    (check (not down))
-   (let is-friend? friend?)
+   (let my-friend? is-friend?)
    (let top-promoted is-promoted?)
    (take-piece-to-head current-pieces)
    (while (and up not-empty?)
-      (set! is-friend? friend?)
+      (set! my-friend? is-friend?)
       (set! top-promoted is-promoted?)
       (take-piece-to-tail current-pieces)
    )
-   (check is-friend?)
+   (check my-friend?)
    (check (= top-promoted promoted-flag))
 )
 
@@ -18,13 +18,13 @@
    (while (not-empty? up)
       up
    )
-   (check enemy?)
+   (check is-enemy?)
    (set! capturing-count (+ capturing-count 1))
    (take-piece-to-head current-pieces)
 )
 
 (define check-destination
-   (check empty?)
+   (check is-empty?)
    (drop-pieces current-pieces)
    (if (in-zone? promotion)
        (set-attribute is-promoted? true)
@@ -50,7 +50,7 @@
 (define (king-move promoted-flag direction)
    (check-source promoted-flag)
    (check direction)
-   (while empty?
+   (while is-empty?
       clone-state
       check-destination
       add-move
@@ -61,12 +61,12 @@
 (define (king-capture promoted-flag direction)
    (check-source promoted-flag)
    (check direction)
-   (while empty?
+   (while is-empty?
       (check direction)
    )
    check-intermediate
    (check direction)
-   (while empty?
+   (while is-empty?
       clone-state
       check-destination
       (add-move-part capture-type)
@@ -87,7 +87,9 @@
 )
 
 (define goals
-   (check-loss (= (count moves) 0))
+   (check-loss 
+      (not-exists? try-moves)
+   )
 )
 
 (game
