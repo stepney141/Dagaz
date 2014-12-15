@@ -6,6 +6,7 @@ import java.util.Set;
 import com.gluk.dagaz.api.exceptions.BoardException;
 import com.gluk.dagaz.api.rules.board.IBoard;
 import com.gluk.dagaz.api.rules.board.IBoardOperationCallback;
+import com.gluk.dagaz.api.state.IState;
 
 public class Board extends BoardConfiguration implements IBoard {
 
@@ -82,6 +83,12 @@ public class Board extends BoardConfiguration implements IBoard {
 					callback.changePosition(p, o.get(p));
 				}
 			}
+		}
+	}
+
+	public void initState(IState state) throws BoardException {
+		for (String name: counters.keySet()) {
+			state.setValue(name, counters.get(name));
 		}
 	}
 }

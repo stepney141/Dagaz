@@ -13,4 +13,6 @@ public interface IBoardConfiguration {
 	void addSynonym(String oldPosition, String newPosition, boolean isGate) throws BoardException;
 	void addOperation(String name, String oldPosition, String newPosition) throws BoardException;
 	void addOperation(String name, String oldPosition, String newPosition, String player) throws BoardException;
+	void addCounter(String name, String value, String player) throws BoardException;
+	void addCounter(String name, String value) throws BoardException;
 }

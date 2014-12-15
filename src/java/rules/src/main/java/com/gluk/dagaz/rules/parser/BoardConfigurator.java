@@ -31,6 +31,7 @@ public class BoardConfigurator extends BaseConfigurator {
 	private final static String SYM_XP        = "n[@t='symmetry']";
 	private final static String OPS_XP        = "n[@t='operation']";
 	private final static String TAGS_XP       = "n";
+	private final static String CNT_XP        = "n[@t='counter']";
 	
 	private final static String GATE_STR      = "gate";
 	private final static String NAME_STR      = "name";
@@ -236,6 +237,34 @@ public class BoardConfigurator extends BaseConfigurator {
         }
 	}
 	
+	public void addCounters(IBoardConfiguration board, Node conf) throws Exception {
+		NodeIterator nl = getIterator(conf, CNT_XP);
+		Node n;
+        while ((n = nl.nextNode())!= null) {
+        	String name = getListName(n);
+    		boolean f = true;
+    		NodeIterator pl = getIterator(n, PLAYERS_XP);
+    		Node p;
+            while ((p = pl.nextNode())!= null) {
+            	String player = getName(p);
+        		NodeIterator vl = getIterator(n, VALS_XP);
+        		Node v;
+                while ((v = vl.nextNode())!= null) {
+                	String value = v.getTextContent();
+                	board.addCounter(name, value, player);
+                }
+            }
+            if (f) {
+        		NodeIterator vl = getIterator(n, VALS_XP);
+        		Node v;
+                while ((v = vl.nextNode())!= null) {
+                	String value = v.getTextContent();
+                	board.addCounter(name, value);
+                }
+            }
+        }
+	}	
+	
 	public void initBoard(IBoardConfiguration board, Node conf) throws CommonException {
 		try {
 			NodeIterator nl = getIterator(conf, BOARD_XP);
@@ -250,6 +279,7 @@ public class BoardConfigurator extends BaseConfigurator {
 	        	addZones(board, n);
 	        	addSyns(board, n);
 	        	addOperations(board, n);
+	        	addCounters(board, n);
 	        }
 		} catch (Exception e) {
 			throw new ParsingException(e.toString(), e);

@@ -19,7 +19,7 @@
       up
    )
    (check is-enemy?)
-   (set! capturing-count (+ capturing-count 1))
+   (increment! capturing-count)
    (take-piece-to-head current-pieces)
 )
 
@@ -80,10 +80,8 @@
 )
 
 (define invariant
-   (check
-      (>= capturing-count max-capturing-count)
-      (set! max-capturing-count capturing-count)
-   )
+   (check (>= capturing-count max-capturing-count))
+   (set! max-capturing-count capturing-count)
 )
 
 (define goals
@@ -116,8 +114,8 @@
    )
    (pieces
       (pre  variables)
+      (pre  goals)
       (post invariant)
-      (post goals)
       (piece 
             (name Man)
             (attribute is-promoted? false)

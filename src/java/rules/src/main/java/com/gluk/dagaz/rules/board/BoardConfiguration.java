@@ -16,6 +16,7 @@ public abstract class BoardConfiguration implements IBoardConfiguration {
 	protected Map<String, Map<String, String>> synonyms = new HashMap<String, Map<String, String>>();
 	protected Map<String, Map<String, String>> gates = new HashMap<String, Map<String, String>>();
 	protected Map<String, Map<String, Map<String, String>>> operations = new HashMap<String, Map<String, Map<String, String>>>();
+	protected Map<String, String> counters = new HashMap<String, String>();  
 
 	public void createPosition(String position) throws BoardException {
 		if (positions.containsKey(position)) {
@@ -113,5 +114,17 @@ public abstract class BoardConfiguration implements IBoardConfiguration {
 
 	public void addOperation(String name, String oldPosition, String newPosition) throws BoardException {
 		addOperation(name, oldPosition, newPosition, "");
+	}
+
+	public void addCounter(String name, String value, String player) throws BoardException {
+		StringBuffer sb = new StringBuffer();
+		sb.append(name);
+		sb.append("@");
+		sb.append(player);
+		counters.put(sb.toString(), value);
+	}
+
+	public void addCounter(String name, String value) throws BoardException {
+		counters.put(name, value);
 	}
 }

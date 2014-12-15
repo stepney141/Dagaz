@@ -6,21 +6,19 @@ import com.gluk.dagaz.api.rules.runtime.IEnvironment;
 import com.gluk.dagaz.api.rules.runtime.IExpression;
 import com.gluk.dagaz.api.rules.runtime.IValue;
 
-public class NotExpression extends BaseExpression {
+public class CheckExpression extends BaseExpression {
 
 	public IValue getValue(IEnvironment env) throws EvaluationException {
 		if (args.size() != 1) {
 			throw new RuntimeException("Bad arity [" + Integer.toString(args.size()) + "]");
 		}
-		boolean r = true;
-		try {
-			r = !args.get(0).getValue(env).getBoolean();
-		} catch (CheckException e) {
-			// Do Nothing
+		boolean r = args.get(0).getValue(env).getBoolean();
+		if (!r) {
+			throw new CheckException("Check Exception");
 		}
 		return ConstantExpression.createBoolean(r);
 	}
-
+	
 	public void addArgument(IExpression arg) throws RuntimeException {
 		if (args.size() == 1) {
 			throw new RuntimeException("Bad arity");

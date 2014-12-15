@@ -238,9 +238,9 @@
       (symmetry (players Black) (n s)(s n)(nw sw)(sw nw)(ne se)(se ne))
    )
    (pieces
+      (pre  goals)
       (post set-moved)
       (post invariant)
-      (post goals)
       (piece 
             (name Pawn)
             (attribute is-moved? false)

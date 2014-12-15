@@ -25,23 +25,22 @@
        )
        (check (piece-contains current-group))
    )
-   (check
-       (<= penalty-count max-penalty-count)
-       (set! max-penalty-count penalty-count)
+   (check (<= penalty-count max-penalty-count))
+   (set! max-penalty-count penalty-count)
+)
+
+(define pre-goals
+   (check-loss 
+       (not-exists? try-moves)
    )
 )
 
-(define goals
+(define post-goals
    (check-win 
-       (priority 1)
        (exists?
           (check is-friend?)
           (check (in-zone? goal))
        )
-   )
-   (check-loss 
-       (priority 0)
-       (not-exists? try-moves)
    )
 )
 
@@ -109,8 +108,9 @@
    (pieces
       (pre  check-friend)
       (pre  variables)
+      (pre  pre-goals)
       (post invariant)
-      (post goals)
+      (post post-goals)
       (piece 
             (name Man)
             (moves
