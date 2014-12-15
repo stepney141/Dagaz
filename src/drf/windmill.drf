@@ -1,16 +1,8 @@
 (define variables
-   (let dropped-count 0)
-   (let max-dropped-count 0)
    (let hash 0)
 )
 
-(define change-variables
-   (increment! dropped-count)
-)
-
 (define invariant
-   (check (>= dropped-count max-dropped-count))
-   (set! max-dropped-count dropped-count)
    (check (not-situation-repeated? hash 1 1))
 )
 
@@ -108,21 +100,16 @@
             (attribute unique 0)
             (moves
                (post capturing)
-               (moves
-                  (post change-variables)
-                  (man-drop)
-               )
-               (moves
-                  (man-move strong-n) (man-move strong-nw)
-                  (man-move strong-s) (man-move strong-se)
-                  (man-move strong-w) (man-move strong-sw)
-                  (man-move strong-e) (man-move strong-ne)
-                  (man-move weak-n) (man-move weak-nw)
-                  (man-move weak-s) (man-move weak-se)
-                  (man-move weak-w) (man-move weak-sw)
-                  (man-move weak-e) (man-move weak-ne)
-                  (man-random)
-               )
+               (man-drop)
+               (man-move strong-n) (man-move strong-nw)
+               (man-move strong-s) (man-move strong-se)
+               (man-move strong-w) (man-move strong-sw)
+               (man-move strong-e) (man-move strong-ne)
+               (man-move weak-n) (man-move weak-nw)
+               (man-move weak-s) (man-move weak-se)
+               (man-move weak-w) (man-move weak-sw)
+               (man-move weak-e) (man-move weak-ne)
+               (man-random)
             )
       )
    )
