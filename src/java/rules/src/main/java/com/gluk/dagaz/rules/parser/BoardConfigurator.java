@@ -31,7 +31,7 @@ public class BoardConfigurator extends BaseConfigurator {
 	private final static String SYM_XP        = "n[@t='symmetry']";
 	private final static String OPS_XP        = "n[@t='operation']";
 	private final static String TAGS_XP       = "n";
-	private final static String CNT_XP        = "n[@t='counter']";
+	private final static String CNT_XP        = "n[@t='attribute']";
 	
 	private final static String GATE_STR      = "gate";
 	private final static String NAME_STR      = "name";
