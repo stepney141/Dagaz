@@ -27,7 +27,7 @@
    (check is-empty?)
    (drop-pieces current-pieces)
    (if (in-zone? promotion)
-       (set-attribute is-promoted? true)
+       (set! is-promoted? true)
    )
 )
 
@@ -118,7 +118,7 @@
       (post invariant)
       (piece 
             (name Man)
-            (attribute is-promoted? false)
+            (attribute (name is-promoted?) false)
             (moves
                 (mode normal-type)
                 (man-move false nw)(man-move false ne)

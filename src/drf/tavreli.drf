@@ -43,7 +43,7 @@
   (if not-empty?
      (while (and up not-empty?)
         (set! not-my-friend? not-friend?)
-        (set-attribute is-promoted? false)
+        (set! is-promoted? false)
         (is-piece? King
            (add-to-ai-weight! 1000)
            (add-ai-hint "king-captured")
@@ -54,17 +54,17 @@
   (check is-empty?)
   (drop-pieces current-pieces)
   (if (in-zone? promotion)
-      (set-attribute is-promoted? true)
+      (set! is-promoted? true)
   )
   add-move
 )
 
 (define set-moved
-  (set-attribute is-moved? true)
+  (set! is-moved? true)
 )
 
 (define clear-jumped
-  (set-attribute is-jumped? false)
+  (set! is-jumped? false)
 )
 
 (define (leap piece-type direction)
@@ -92,7 +92,7 @@
   (check is-empty?)
   (drop-pieces current-pieces)
   (if (in-zone? promotion)
-      (set-attribute is-promoted? true)
+      (set! is-promoted? true)
   )
   add-move
 )
@@ -106,7 +106,7 @@
 
 (define pawn-jump
   (check (not is-moved?))
-  (set-attribute is-jumped? true)
+  (set! is-jumped? true)
   (check-source Pawn)
   (check n)
   (check is-empty?)
@@ -141,7 +141,7 @@
   (drop-pieces current-pieces)
   (check w)
   (check (not is-moved?))
-  (set-attribute is-moved? true)
+  (set! is-moved? true)
   (check-source Rook)
   e e
   (drop-pieces current-pieces)
@@ -163,7 +163,7 @@
   (check is-empty?)
   (check e)
   (check (not is-moved?))
-  (set-attribute is-moved? true)
+  (set! is-moved? true)
   (check-source Rook)
   w w w
   (drop-pieces current-pieces)
@@ -243,9 +243,9 @@
       (post invariant)
       (piece 
             (name Pawn)
-            (attribute is-moved? false)
-            (attribute is-promoted? false)
-            (attribute is-jumped? false)
+            (attribute (name is-moved?) false)
+            (attribute (name is-promoted?) false)
+            (attribute (name is-jumped?) false)
             (piece (name Pawn-Rook))
             (piece (name Pawn-Knight))
             (piece (name Pawn-Bishop))
@@ -254,14 +254,14 @@
             (moves pawn-jump)
       )
       (piece (name Rook)
-            (attribute is-moved? false)
+            (attribute (name is-moved?) false)
       )
       (piece (name Knight))
       (piece (name Bishop))
       (piece (name Queen))
       (piece (name Helg))
       (piece (name King)
-            (attribute is-moved? false)
+            (attribute (name is-moved?) false)
             (moves O-O O-O-O)
       )
       (moves
