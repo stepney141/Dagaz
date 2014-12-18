@@ -6,7 +6,7 @@ import com.gluk.dagaz.api.exceptions.EmptyPositionException;
 import com.gluk.dagaz.api.state.IPiece;
 import com.gluk.dagaz.api.state.IPosition;
 
-public class Position extends AbstractValue implements IPosition {
+public class Position extends AbstractValueSet implements IPosition {
 	
 	private IPiece piece = null;
 	
@@ -49,5 +49,14 @@ public class Position extends AbstractValue implements IPosition {
 
 	public void setPieceAttribute(String name, String value) {
 		piece = (IPiece)piece.setValue(name, value); 
+	}
+
+	public boolean isEqual(IPosition position) throws CommonException {
+		if (isEmpty()) {
+			if (!position.isEmpty()) return false;
+			return true;
+		}
+		if (position.isEmpty()) return false;
+		return getPiece().isEqual(position.getPiece());
 	}
 }

@@ -86,7 +86,7 @@
    )
    (if (and is-friend-check? is-repeated-checking?)
        (add-to-zobrist-hash hash)
-       (check (not-situation-repeated? hash 1 1))
+       (check (not-situation-repeated? hash 1 2))
    )
 )
 
@@ -113,7 +113,7 @@
    )
    (if (and is-friend-check? is-repeated-checking?)
        (add-to-zobrist-hash hash)
-       (check (not-situation-repeated? hash 1 1))
+       (check (not-situation-repeated? hash 1 2))
    )
 )
 

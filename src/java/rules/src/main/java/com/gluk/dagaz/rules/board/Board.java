@@ -1,14 +1,30 @@
 package com.gluk.dagaz.rules.board;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.gluk.dagaz.api.application.IApplication;
 import com.gluk.dagaz.api.exceptions.BoardException;
+import com.gluk.dagaz.api.exceptions.CommonException;
+import com.gluk.dagaz.api.random.IRandomFactory;
+import com.gluk.dagaz.api.random.IRandomGenerator;
 import com.gluk.dagaz.api.rules.board.IBoard;
 import com.gluk.dagaz.api.rules.board.IBoardOperationCallback;
+import com.gluk.dagaz.api.state.IPiece;
+import com.gluk.dagaz.api.state.IPosition;
 import com.gluk.dagaz.api.state.IState;
 
 public class Board extends BoardConfiguration implements IBoard {
+	
+	private final static String RANDOM_GENEGATOR = "_zobrist";
+	
+	private IApplication app;
+	private Map<String, Map<String, Long>> hashValues = new HashMap<String, Map<String, Long>>();
+	
+	public Board(IApplication app) {
+		this.app = app;
+	}
 
 	public boolean inZone(String position, String name, String player) throws BoardException {
 		Map<String, Set<String>> zl = zones.get(name);
@@ -90,5 +106,34 @@ public class Board extends BoardConfiguration implements IBoard {
 		for (String name: counters.keySet()) {
 			state.setValue(name, counters.get(name));
 		}
+	}
+	
+	private synchronized long getHashValue(String position, String key) {
+		Map<String, Long> values = hashValues.get(position);
+		if (values == null) {
+			values = new HashMap<String, Long>();
+			hashValues.put(position, values);
+		}
+		Long r = values.get(key);
+		if (r == null) {
+			IRandomFactory rf = app.getRandomFactory();
+			IRandomGenerator gen = rf.createGenerator(RANDOM_GENEGATOR);
+			r = new Long(gen.getLongValue());
+			values.put(key, r);
+		}
+		return r;
+	}
+
+	@Override
+	public long addToHash(long hash, String position, IState state) throws CommonException {
+		if (state.positionExists(position)) {
+			IPosition pos = state.getPosition(position);
+			if (!pos.isEmpty()) {
+				IPiece piece = pos.getPiece();
+				String key = piece.getHashKey();
+				hash ^= getHashValue(position, key);
+			}
+		}
+		return hash;
 	}
 }
