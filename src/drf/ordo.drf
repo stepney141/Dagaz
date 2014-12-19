@@ -52,7 +52,6 @@
    (take-piece-to-head current-pieces)
    (check direction)
    (while is-empty?
-      clone-state
       (drop-pieces current-pieces)
       add-move
       (check direction)
@@ -76,7 +75,6 @@
    (comment (count current-pieces))
    (check direction)
    (while (empty-stack? current-pieces)
-      clone-state
       (drop-pieces current-pieces)
       add-move
       (check direction)

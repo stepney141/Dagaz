@@ -1,0 +1,333 @@
+(define build-stack
+   (check is-friend?)
+)
+
+(define check-platform
+   (if down
+       (check not-empty?)
+   )
+)
+
+(define build-stack
+   (take-piece-to-head current-pieces)
+   (check up)
+   (take-piece-to-tail current-pieces)
+   (check e)
+   (take-piece-to-tail current-pieces)
+   (check nw)
+   (take-piece-to-tail current-pieces)
+   (check e)
+   (take-piece-to-tail current-pieces)
+)
+
+(define (leap direction)
+   (check direction)
+   (check is-empty?)
+   (drop-pieces current-pieces)
+   add-move
+)
+
+(define (jump direction)
+   (take-piece-to-head current-pieces)
+   (check direction)
+   (check not-friend?)
+   (drop-pieces current-pieces)
+   add-move
+)
+
+(define (slide direction)
+   (take-piece-to-head current-pieces)
+   (check direction)
+   (while is-empty?
+      check-platform
+      (drop-pieces current-pieces)
+      add-move
+      (check direction)
+   )
+   (check is-enemy?)
+   (drop-pieces current-pieces)
+   add-move
+)
+
+(define (pawn-capture direction)
+   (take-piece-to-head current-pieces)
+   (check direction)
+   (check is-enemy?)
+   (drop-pieces current-pieces)
+   add-move
+)
+
+(define pawn-jump
+   (check (not is-moved?))
+   (take-piece-to-head current-pieces)
+   (check n)
+   (check is-empty?)
+   (check n)
+   (check is-empty?)
+   (drop-pieces current-pieces)
+   add-move
+)
+
+(define (en-passant direction)
+   (take-piece-to-head current-pieces)
+   (check direction)
+   (check is-jumped?)
+   capture
+   (check n)
+   (check is-empty?)
+   (drop-pieces current-pieces)
+   add-move
+)
+
+(define check-promotion
+   (if (in-zone? promotion)
+       (promote Rook Knight Bishop Queen)
+   )
+)
+
+(define O-O
+   (check (not is-moved?))
+   (check not-attacked?)
+   (take-piece-to-head current-pieces)
+   (check w)
+   (check is-empty?)
+   (check (not-attacked? King))
+   (check w)
+   (check is-empty?)
+   (check (not-attacked? King))
+   (drop-pieces current-pieces)
+   (check w)
+   (check (not is-moved?))
+   (set! is-moved? true)
+   (take-piece-to-head current-pieces)
+   e e
+   (drop-pieces current-pieces)
+   add-move
+)
+
+(define O-O-O
+   (check (not is-moved?))
+   (check not-attacked?)
+   (take-piece-to-head current-pieces)
+   (check e)
+   (check is-empty?)
+   (check (not-attacked? King))
+   (check e)
+   (check is-empty?)
+   (check (not-attacked? King))
+   (drop-pieces current-pieces)
+   (check e)
+   (check is-empty?)
+   (check e)
+   (check (not is-moved?))
+   (set! is-moved? true)
+   (take-piece-to-head current-pieces)
+   w w w
+   (drop-pieces current-pieces)
+   add-move
+)
+
+(define set-moved
+   (set! is-moved? true)
+)
+
+(define set-jumped
+   (set! is-jumped? true)
+)
+
+(define clear-jumped
+   (set! is-jumped? false)
+)
+
+(define goals
+  (check-loss
+      (priority 1)
+      (and
+           (exists?
+              (check is-friend?)
+              (check (is-piece? King)
+              (check is-attacked?)
+           )
+           (not-exists? try-moves)
+      )
+  )
+  (check-draw
+      (priority 0)
+      (is-situation-repeated? 2)
+  )
+  (check-draw
+      (priority 0)
+      (not-exists? try-moves)
+  )
+)
+
+(define invariant
+  (check 
+      (not-exists?
+         (check is-friend?)
+         (check (is-piece? King)
+         (check is-attacked?)
+      )
+  )
+)
+
+(game
+   (title "Platform Chess")
+   (players White Black)
+   (board
+      (grid (dimensions "a_h" "8_1")
+            (direction (name n)     0 -1)
+            (direction (name s)     0  1)
+            (direction (name e)     1  0)
+            (direction (name w)    -1  0)
+            (direction (name nw)   -1 -1)
+            (direction (name ne)    1 -1)
+            (direction (name sw)   -1  1)
+            (direction (name se)    1  1)
+            (direction (name nnw)  -1 -2)
+            (direction (name nne)   1 -2)
+            (direction (name een)   2 -1)
+            (direction (name ees)   2  1)
+            (direction (name sse)   1  2)
+            (direction (name ssw)  -1  2)
+            (direction (name wwn)  -2 -1)
+            (direction (name wws)  -2  1)
+      )
+      (grid (dimensions "A_D" "4_1")
+            (direction (name n)     0 -1)
+            (direction (name s)     0  1)
+            (direction (name e)     1  0)
+            (direction (name w)    -1  0)
+      )
+      (link (name down) 
+            (a1 A1) (b1 A1) (a2 A1) (b2 A1)
+            (c1 B1) (d1 B1) (c2 B1) (d2 B1)
+            (e1 C1) (f1 C1) (e2 C1) (f2 C1)
+            (g1 D1) (h1 D1) (g2 D1) (h2 D1)
+            (a3 A2) (b3 A2) (a4 A2) (b4 A2)
+            (c3 B2) (d3 B2) (c4 B2) (d4 B2)
+            (e3 C2) (f3 C2) (e4 C2) (f4 C2)
+            (g3 D2) (h3 D2) (g4 D2) (h4 D2)
+            (a5 A3) (b5 A3) (a6 A3) (b6 A3)
+            (c5 B3) (d5 B3) (c6 B3) (d6 B3)
+            (e5 C3) (f5 C3) (e6 C3) (f6 C3)
+            (g5 D3) (h5 D3) (g6 D3) (h6 D3)
+            (a7 A4) (b7 A4) (a8 A4) (b8 A4)
+            (c7 B4) (d7 B4) (c8 B4) (d8 B4)
+            (e7 C4) (f7 C4) (e8 C4) (f8 C4)
+            (g7 D4) (h7 D4) (g8 D4) (h8 D4)
+      )
+      (link (name up) 
+            (A1 a1) (B1 c1) (C1 e1) (D1 g1)
+            (A2 a3) (B2 c3) (C2 e3) (D2 g3)
+            (A3 a5) (B3 c5) (C3 e5) (D3 g5)
+            (A4 a7) (B4 c7) (C4 e7) (D4 g7)
+      )
+      (link (name up-black) 
+            (A1 a2) (B1 c2) (C1 e2) (D1 g2)
+            (A2 a4) (B2 c4) (C2 e4) (D2 g4)
+            (A3 a6) (B3 c6) (C3 e6) (D3 g6)
+            (A4 a8) (B4 c8) (C4 e8) (D4 g8)
+      )
+      (zone (name promotion)
+            (players White)
+            (positions a8 b8 c8 d8 e8 f8 g8 h8)
+      )
+      (zone (name promotion)
+            (players Black)
+            (positions a1 b1 c1 d1 e1 f1 g1 h1)
+      )
+      (symmetry (players Black) 
+            (n s) (nn ss) (nw sw) (ne se) (w e)
+            (s n) (ss nn) (sw nw) (se ne) (e w)
+            (up up-black)
+      )
+   )
+   (pieces
+      (pre  goals)
+      (pre  check-friend)
+      (post check-platform)
+      (post invariant)
+      (piece 
+            (name Handler)
+            (moves
+                 (pre build-stack)
+                 (leap n) (leap s) (leap e) (leap w)
+            )
+      )
+      (piece 
+            (name Pawn)
+            (attribute (name is-moved?) false)
+            (attribute (name is-jumped?) false)
+            (moves
+                (post set-moved)
+                (post clear-jumped)
+                (post check-promotion)
+                (leap n) (pawn-capture nw) (pawn-capture ne)
+                (en-passant w) (en-passant w)
+            )
+            (moves
+                (post set-jumped)
+                pawn-jump
+            )
+      )
+      (piece 
+            (name Rook)
+            (attribute (name is-moved?) false)
+            (moves
+                (post set-moved)
+                (slide n) (slide s) (slide e) (slide w)
+            )
+      )
+      (piece 
+            (name Knight)
+            (moves
+                (jump nnw) (jump nne) (jump een) (jump ees)
+                (jump sse) (jump ssw) (jump wwn) (jump wws)
+            )
+      )
+      (piece 
+            (name Bishop)
+            (moves
+                (slide nw) (slide se) (slide sw) (slide ne)
+            )
+      )
+      (piece 
+            (name Queen)
+            (moves
+                (slide n) (slide e) (slide nw) (slide sw)
+                (slide s) (slide w) (slide se) (slide ne)
+            )
+      )
+      (piece 
+            (name King)
+            (attribute (name is-moved?) false)
+            (moves
+                (post set-moved)
+                (jump n) (jump e) (jump nw) (jump sw)
+                (jump s) (jump w) (jump se) (jump ne)
+                O-O O-O-O
+            )
+      )
+   )
+   (setup
+      (White
+            (Handler A1 A2 B1 C1 D1 D2)
+            (Pawn a2 h2 b2 g2 c2 f2 d2 e2)
+            (Knight b1 g1)
+            (Bishop c1 f1)
+            (Rook a1 h1)
+            (Queen d1)
+            (King e1)
+      )
+      (Black
+            (Handler A4 A3 B4 C4 D4 D3)
+            (Pawn a7 h7 b7 g7 c7 f7 d7 e7)
+            (Knight b8 g8)
+            (Bishop c8 f8)
+            (Rook a8 h8)
+            (Queen d8)
+            (King e8)
+      )
+   )
+)

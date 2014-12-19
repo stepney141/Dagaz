@@ -51,7 +51,6 @@
    (check-source promoted-flag)
    (check direction)
    (while is-empty?
-      clone-state
       check-destination
       add-move
       (check direction)
@@ -67,7 +66,6 @@
    check-intermediate
    (check direction)
    (while is-empty?
-      clone-state
       check-destination
       (add-move-part capture-type)
       (check direction)

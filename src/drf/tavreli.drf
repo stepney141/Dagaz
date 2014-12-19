@@ -77,7 +77,6 @@
   (check-source piece-type)
   (check direction)
   (while is-empty?
-     clone-state
      (drop-pieces current-pieces)
      add-move
      (check direction)
@@ -181,7 +180,6 @@
 )
 
 (define goals
-  (let move-count (count moves))
   (check-loss
       (priority 1)
       (and
@@ -235,7 +233,10 @@
             (players Black)
             (positions a1 b1 c1 d1 e1 f1 g1 h1)
       )
-      (symmetry (players Black) (n s)(s n)(nw sw)(sw nw)(ne se)(se ne))
+      (symmetry (players Black) 
+                (n s) (nw sw) (ne se) (w e)
+                (s n) (sw nw) (se ne) (e w)
+      )
    )
    (pieces
       (pre  goals)
