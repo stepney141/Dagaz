@@ -117,7 +117,7 @@ public class Board extends BoardConfiguration implements IBoard {
 		Long r = values.get(key);
 		if (r == null) {
 			IRandomFactory rf = app.getRandomFactory();
-			IRandomGenerator gen = rf.createGenerator(RANDOM_GENEGATOR);
+			IRandomGenerator gen = rf.getGenerator(RANDOM_GENEGATOR);
 			r = new Long(gen.getLongValue());
 			values.put(key, r);
 		}
