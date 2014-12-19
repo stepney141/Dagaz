@@ -63,10 +63,6 @@
   (set! is-moved? true)
 )
 
-(define clear-jumped
-  (set! is-jumped? false)
-)
-
 (define (leap piece-type direction)
   (check-source piece-type)
   (check direction)
@@ -105,7 +101,7 @@
 
 (define pawn-jump
   (check (not is-moved?))
-  (set! is-jumped? true)
+  (set! turn-jumped turn-number)
   (check-source Pawn)
   (check n)
   (check is-empty?)
@@ -119,7 +115,7 @@
   (check-source piece-type)
   (check direction)
   (check is-enemy?)
-  (check is-moved?)
+  (check (= 1 (- turn-number turn-jumped)))
   capture
   (check n)
   (check is-empty?)
@@ -246,7 +242,7 @@
             (name Pawn)
             (attribute (name is-moved?) false)
             (attribute (name is-promoted?) false)
-            (attribute (name is-jumped?) false)
+            (attribute (name turn-jumped))
             (piece (name Pawn-Rook))
             (piece (name Pawn-Knight))
             (piece (name Pawn-Bishop))
@@ -266,7 +262,6 @@
             (moves O-O O-O-O)
       )
       (moves
-            (post clear-jumped)
             (slide Rook n)(slide Rook s)(slide Rook w)(slide Rook e)
             (leap Knight nnw)(leap Knight nne)(leap Knight een)(leap Knight ees)
             (leap Knight sse)(leap Knight ssw)(leap Knight wwn)(leap Knight wws)

@@ -71,7 +71,8 @@
 (define (en-passant direction)
    (take-piece-to-head current-pieces)
    (check direction)
-   (check is-jumped?)
+   (check is-enemy?)
+   (check (= 1 (- turn-number turn-jumped)))
    capture
    (check n)
    (check is-empty?)
@@ -132,11 +133,7 @@
 )
 
 (define set-jumped
-   (set! is-jumped? true)
-)
-
-(define clear-jumped
-   (set! is-jumped? false)
+   (set! turn-jumped turn-number)
 )
 
 (define goals
@@ -258,10 +255,9 @@
       (piece 
             (name Pawn)
             (attribute (name is-moved?) false)
-            (attribute (name is-jumped?) false)
+            (attribute (name turn-jumped))
             (moves
                 (post set-moved)
-                (post clear-jumped)
                 (post check-promotion)
                 (leap n) (pawn-capture nw) (pawn-capture ne)
                 (en-passant w) (en-passant w)
