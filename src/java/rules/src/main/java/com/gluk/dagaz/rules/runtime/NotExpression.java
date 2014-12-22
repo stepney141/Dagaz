@@ -18,7 +18,7 @@ public class NotExpression extends BaseExpression {
 		} catch (CheckException e) {
 			// Do Nothing
 		}
-		return ConstantExpression.createBoolean(r);
+		return ConstantValue.createBoolean(r);
 	}
 
 	public void addArgument(IExpression arg) throws RuntimeException {

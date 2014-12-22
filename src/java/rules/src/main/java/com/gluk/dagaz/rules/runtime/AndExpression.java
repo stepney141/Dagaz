@@ -15,6 +15,6 @@ public class AndExpression extends BaseExpression {
 				break;
 			}
 		}
-		return ConstantExpression.createBoolean(r);
+		return ConstantValue.createBoolean(r);
 	}
 }

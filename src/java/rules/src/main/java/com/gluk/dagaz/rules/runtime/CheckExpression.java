@@ -16,7 +16,7 @@ public class CheckExpression extends BaseExpression {
 		if (!r) {
 			throw new CheckException("Check Exception");
 		}
-		return ConstantExpression.createBoolean(r);
+		return ConstantValue.createBoolean(r);
 	}
 	
 	public void addArgument(IExpression arg) throws RuntimeException {

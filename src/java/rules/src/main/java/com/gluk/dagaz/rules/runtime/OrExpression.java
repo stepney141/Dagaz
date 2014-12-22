@@ -20,6 +20,6 @@ public class OrExpression extends BaseExpression {
 				// Do nothing
 			}
 		}
-		return ConstantExpression.createBoolean(r);
+		return ConstantValue.createBoolean(r);
 	}
 }

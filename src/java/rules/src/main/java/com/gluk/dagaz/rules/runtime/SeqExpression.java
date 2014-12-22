@@ -12,6 +12,6 @@ public class SeqExpression extends BaseExpression {
 		for (IExpression e: args) {
 			r = e.getValue(env).getBoolean();
 		}
-		return ConstantExpression.createBoolean(r);
+		return ConstantValue.createBoolean(r);
 	}
 }

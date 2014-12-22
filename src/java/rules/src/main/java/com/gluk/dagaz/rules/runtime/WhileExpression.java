@@ -28,6 +28,6 @@ public class WhileExpression extends BaseExpression {
 				f = true;
 			}
 		}
-		return ConstantExpression.createBoolean(r);
+		return ConstantValue.createBoolean(r);
 	}
 }

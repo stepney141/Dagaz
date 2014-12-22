@@ -19,7 +19,7 @@ public class IfExpression extends BaseExpression {
 				r = args.get(2).getValue(env).getBoolean();
 			}
 		}
-		return ConstantExpression.createBoolean(r);
+		return ConstantValue.createBoolean(r);
 	}
 
 	public void addArgument(IExpression arg) throws RuntimeException {
