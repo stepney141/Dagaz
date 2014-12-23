@@ -21,7 +21,7 @@
 (define (check-source piece-type)
   (check not-empty?)
   (if (is-enemy? down)
-      (add-to-ai-weight! -1000)
+      (set-ai-weight! -1000)
       (add-ai-hint "for-stalemate-prevent-only")
   )
   (let my-friend? is-friend?)
@@ -45,7 +45,7 @@
         (set! not-my-friend? not-friend?)
         (set! is-promoted? false)
         (is-piece? King
-           (add-to-ai-weight! 1000)
+           (set-ai-weight! 1000)
            (add-ai-hint "king-captured")
         )
      )

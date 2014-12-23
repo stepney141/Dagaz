@@ -8,5 +8,5 @@ public interface IValue {
 	boolean isNumber();
 	String getString() throws EvaluationException;
 	boolean getBoolean() throws EvaluationException;
-	long getNumber() throws EvaluationException;
+	long getLong() throws EvaluationException;
 }

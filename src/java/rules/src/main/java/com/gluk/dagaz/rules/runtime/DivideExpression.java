@@ -2,29 +2,30 @@ package com.gluk.dagaz.rules.runtime;
 
 import com.gluk.dagaz.api.exceptions.EvaluationException;
 import com.gluk.dagaz.api.exceptions.ParsingException;
+import com.gluk.dagaz.api.exceptions.ZeroDivideException;
 import com.gluk.dagaz.api.rules.runtime.IEnvironment;
 import com.gluk.dagaz.api.rules.runtime.IExpression;
 import com.gluk.dagaz.api.rules.runtime.IValue;
 
-public class IfExpression extends BaseExpression {
+public class DivideExpression extends BaseExpression {
 
+	@Override
 	public IValue getValue(IEnvironment env) throws EvaluationException {
-		if ((args.size() < 2) || (args.size() > 3)) {
-			throw new EvaluationException("Bad arity [" + Integer.toString(args.size()) + "]");
+		if (args.size() != 2) {
+			throw new EvaluationException("Bad arity");
 		}
-		IValue r = args.get(0).getValue(env);
-		if (r.getBoolean()) {
-			r = args.get(1).getValue(env);
-		} else {
-			if (args.size() == 3) {
-				r = args.get(2).getValue(env);
-			}
+		long value = args.get(0).getValue(env).getLong();
+		long v = args.get(1).getValue(env).getLong();
+		if (v == 0L) {
+			throw new ZeroDivideException("Zero Divide");
 		}
-		return r;
+		value /= v;
+		return new ConstantValue(value);
 	}
 
+	@Override
 	public void addArgument(IExpression arg) throws ParsingException {
-		if (args.size() == 3) {
+		if (args.size() == 2) {
 			throw new ParsingException("Bad arity");
 		}
 		super.addArgument(arg);

@@ -43,11 +43,10 @@ public class ApplyExpression extends BaseExpression {
 		for (int i = 1; i < args.size(); i++) {
 			IValue v = args.get(i).getValue(env);
 			String n = f.getParameters().get(i - 1);
-			env.setValue(n, v);
+			env.letValue(n, v);
 		}
 		IValue r = f.getExpression().getValue(env);
 		env.closeFrame();
 		return r;
 	}
-
 }

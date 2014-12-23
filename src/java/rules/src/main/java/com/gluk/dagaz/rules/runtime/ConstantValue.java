@@ -63,7 +63,7 @@ public class ConstantValue implements IValue {
 		return (!value.isEmpty());
 	}
 
-	public long getNumber() throws RuntimeException {
+	public long getLong() throws RuntimeException {
 		if (value == null) {
 			throw new RuntimeException("Unknown value");
 		}
