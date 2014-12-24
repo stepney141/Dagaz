@@ -13,11 +13,11 @@ import com.gluk.dagaz.api.rules.parser.IParser;
 
 public class Parser implements IParser {
 	
-    private final static String ROOT_TAG      = "r";
-    private final static String NODE_TAG      = "n";
-    private final static String ATOM_TAG      = "a";
-    private final static String STR_TAG       = "s";
-    private final static String NUM_TAG       = "v";
+    public final static String ROOT_TAG      = "r";
+    public final static String NODE_TAG      = "n";
+    public final static String ATOM_TAG      = "a";
+    public final static String STR_TAG       = "s";
+    public final static String NUM_TAG       = "v";
 
     private final static String INCLUDE_ATOM  = "include";
     

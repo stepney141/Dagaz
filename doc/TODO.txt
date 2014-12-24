@@ -45,3 +45,5 @@
 - priority во входном потоке вызывает setPriority для текущего выражения
 - add-to-zobrist-hash использует current-position
 - Команда pass формирует возможность пропуска хода
+- Реализаовать коалиции
+  - Не симметричное отношение в game (friends (S W N) (W N E) (N E S) (E S W))

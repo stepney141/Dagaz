@@ -15,23 +15,23 @@ import com.gluk.dagaz.rules.board.Grid;
 
 public class BoardConfigurator extends BaseConfigurator {
 
-	private final static String BOARD_XP      = "n[@t='board']";
-	private final static String GRID_XP       = "n[@t='grid']";
-	private final static String DIMS_XP       = "n[@t='dimensions']/s";
-	private final static String POS_XP        = "n[@t='positions']/n";
-	private final static String KILL_XP       = "n[@t='kill-positions']/n";
-	private final static String DIRS_XP       = "n[@t='direction']";
+	private final static String BOARD_XP      = "n[@t=\'board\']";
+	private final static String GRID_XP       = "n[@t=\'grid\']";
+	private final static String DIMS_XP       = "n[@t=\'dimensions\']/s";
+	private final static String POS_XP        = "n[@t=\'positions\']/n";
+	private final static String KILL_XP       = "n[@t=\'kill-positions\']/n";
+	private final static String DIRS_XP       = "n[@t=\'direction\']";
 	private final static String VALS_XP       = "v";
-	private final static String LINK_XP       = "n[@t='link']";
-	private final static String ZONE_XP       = "n[@t='zone']";
-	private final static String NONAME_XP     = "n[@t!='name']/n";
-	private final static String NOPLAYERS_XP  = "n[@t!='players']/n";
-	private final static String PLAYERS_XP    = "n[@t='players']/n";
-	private final static String SYN_XP        = "n[@t='synonym']|n[@t='gate']";
-	private final static String SYM_XP        = "n[@t='symmetry']";
-	private final static String OPS_XP        = "n[@t='operation']";
+	private final static String LINK_XP       = "n[@t=\'link\']";
+	private final static String ZONE_XP       = "n[@t=\'zone\']";
+	private final static String NONAME_XP     = "n[@t!=\'name\']/n";
+	private final static String NOPLAYERS_XP  = "n[@t!=\'players\']/n";
+	private final static String PLAYERS_XP    = "n[@t=\'players\']/n";
+	private final static String SYN_XP        = "n[@t=\'synonym\']|n[@t=\'gate\']";
+	private final static String SYM_XP        = "n[@t=\'symmetry\']";
+	private final static String OPS_XP        = "n[@t=\'operation\']";
 	private final static String TAGS_XP       = "n";
-	private final static String CNT_XP        = "n[@t='attribute']";
+	private final static String CNT_XP        = "n[@t=\'attribute\']";
 	
 	private final static String GATE_STR      = "gate";
 	private final static String NAME_STR      = "name";
@@ -265,9 +265,9 @@ public class BoardConfigurator extends BaseConfigurator {
         }
 	}	
 	
-	public void initBoard(IBoardConfiguration board, Node conf) throws CommonException {
+	public void initBoard(IBoardConfiguration board, Node game) throws CommonException {
 		try {
-			NodeIterator nl = getIterator(conf, BOARD_XP);
+			NodeIterator nl = getIterator(game, BOARD_XP);
 			Node n;
 	        if ((n = nl.nextNode())!= null) {
 	        	addDimensions(board, n);

@@ -16,9 +16,11 @@ import org.w3c.dom.traversal.NodeIterator;
 public abstract class BaseConfigurator {
 
 	private final static String N_XP      = "n";
+	private final static String TYPE_XP   = "name()";
+	private final static String TEXT_XP   = "text()";
 	private final static String NAME_XP   = "@t";
 	private final static String VALUE_XP  = "n/@t";
-	private final static String LNAME_XP  = "n[@t='name']/n/@t";
+	private final static String LNAME_XP  = "n[@t=\'name\']/n/@t";
 	
 	private static XPathFactory xpf = null;
 	private Map<String, XPathExpression> xpes = new HashMap<String, XPathExpression>();
@@ -44,8 +46,18 @@ public abstract class BaseConfigurator {
 		return XPathAPI.selectNodeIterator(n, N_XP);
 	}
 	
+	protected String getType(Node n) throws XPathExpressionException {
+		XPathExpression xpe = getXPath(TYPE_XP);
+		return xpe.evaluate(n);
+	}
+	
 	protected String getName(Node n) throws XPathExpressionException {
 		XPathExpression xpe = getXPath(NAME_XP);
+		return xpe.evaluate(n);
+	}
+	
+	protected String getText(Node n) throws XPathExpressionException {
+		XPathExpression xpe = getXPath(TEXT_XP);
 		return xpe.evaluate(n);
 	}
 	

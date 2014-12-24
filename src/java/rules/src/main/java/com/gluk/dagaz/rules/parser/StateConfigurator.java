@@ -12,12 +12,12 @@ import com.gluk.dagaz.api.state.IState;
 
 public class StateConfigurator extends BaseConfigurator {
 	
-	private final static String SETUP_XP  = "n[@t='setup']/n";
+	private final static String SETUP_XP  = "n[@t=\'setup\']/n";
 	
-	public void initSession(ISession session, Node conf) throws CommonException {
+	public void initSession(ISession session, Node game) throws CommonException {
 		IState state = session.getInitialState();
 		try {
-			NodeIterator nl = getIterator(conf, SETUP_XP);
+			NodeIterator nl = getIterator(game, SETUP_XP);
 			Node n;
 	        if ((n = nl.nextNode())!= null) {
 	        	String player = getName(n);

@@ -7,11 +7,13 @@ import com.gluk.dagaz.api.application.IApplication;
 import com.gluk.dagaz.api.exceptions.EvaluationException;
 import com.gluk.dagaz.api.exceptions.ParsingException;
 import com.gluk.dagaz.api.rules.runtime.IExpression;
-import com.gluk.dagaz.api.rules.runtime.IExpressionFactory;
 
-public class ExpressionFactory implements IExpressionFactory {
+public class ExpressionFactory {
 	
-	private static IExpressionFactory instance = null;
+	public final static String IF_WORD     = "if";
+	public final static String ELSE_WORD   = "else";
+	
+	private static ExpressionFactory instance = null;
 	
 	private IApplication app;
 	private Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
@@ -30,7 +32,7 @@ public class ExpressionFactory implements IExpressionFactory {
 		classes.put("/",                 DivideExpression.class);
 		classes.put("=",                 EqExpression.class);
 		classes.put(">",                 GtExpression.class);
-		classes.put("if",                IfExpression.class);
+		classes.put(IF_WORD,             IfExpression.class);
 		classes.put("increment!",        IncrementExpression.class);
 		classes.put("<=",                LeExpression.class);
 		classes.put("let",               LetExpression.class);
@@ -46,14 +48,13 @@ public class ExpressionFactory implements IExpressionFactory {
 		classes.put("while",             WhileExpression.class);
 	}
 	
-	public synchronized IExpressionFactory getInstance(IApplication app) {
+	public synchronized static ExpressionFactory getInstance(IApplication app) {
 		if (instance == null) {
 			instance = new ExpressionFactory(app);
 		}
 		return instance;
 	}
 
-	@Override
 	public IExpression createExpression(String name) throws ParsingException {
 		IExpression r = null;
 		Class<?> c = classes.get(name);
@@ -72,7 +73,6 @@ public class ExpressionFactory implements IExpressionFactory {
 		return r;
 	}
 
-	@Override
 	public IExpression createExpression(IExpression expr) throws ParsingException {
 		IExpression r = new ApplyExpression();
 		try {
