@@ -15,4 +15,5 @@ public interface IBoardConfiguration {
 	void addOperation(String name, String oldPosition, String newPosition, String player) throws BoardException;
 	void addCounter(String name, String value, String player) throws BoardException;
 	void addCounter(String name, String value) throws BoardException;
+	boolean isDefined(String name);
 }

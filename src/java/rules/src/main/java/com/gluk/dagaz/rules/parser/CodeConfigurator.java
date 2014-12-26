@@ -82,16 +82,17 @@ public class CodeConfigurator extends BaseConfigurator {
 			throw new ParsingException("Bad node [" + type + "]");
 		}
 		String name = getName(stmt);
-		if (parent.isQuoted(ix)) {
-			IExpression e = new ConstantExpression(name);
-			parent.addArgument(e);
-			return;
-		}
 		int arity = getArity(stmt);
 		if ((arity == 0) && !isFunction(name)) {
-			IExpression e = new GetExpression(name);
-			parent.addArgument(e);
-			return;
+			if (parent.isQuoted(ix)) {
+				IExpression e = new ConstantExpression(name);
+				parent.addArgument(e);
+				return;
+			} else {
+				IExpression e = new GetExpression(name);
+				parent.addArgument(e);
+				return;
+			}
 		}
 		ExpressionFactory ef = ExpressionFactory.getInstance(app);
 		IExpression e = ef.createExpression(name);

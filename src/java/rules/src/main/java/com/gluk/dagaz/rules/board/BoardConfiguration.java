@@ -18,6 +18,12 @@ public abstract class BoardConfiguration implements IBoardConfiguration {
 	protected Map<String, Map<String, Map<String, String>>> operations = new HashMap<String, Map<String, Map<String, String>>>();
 	protected Map<String, String> counters = new HashMap<String, String>();  
 
+	private Set<String> directions = new HashSet<String>();
+
+	public boolean isDefined(String name) {
+		return (positions.containsKey(name) || directions.contains(name));
+	}
+
 	public void createPosition(String position) throws BoardException {
 		if (positions.containsKey(position)) {
 			throw new BoardException("Duplicate position [" + position + "]");
@@ -35,6 +41,7 @@ public abstract class BoardConfiguration implements IBoardConfiguration {
 			throw new BoardException("Position [" + startPosition + "] not found");
 		}
 		if (positions.containsKey(endPosition)) {
+			directions.add(name);
 			d.addDirection(name, endPosition);
 		}
 	}

@@ -49,4 +49,9 @@ public class ApplyExpression extends BaseExpression {
 		env.closeFrame();
 		return r;
 	}
+
+	@Override
+	public boolean isQuoted(int ix) {
+		return true;
+	}
 }

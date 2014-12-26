@@ -67,6 +67,7 @@ public class Scaner implements IOutput {
 				if (!isEscaped && c.equals('"')) {
 					parser.addLiteral(buffer.toString(), false);
 					buffer.setLength(0);
+					isQuoted = false;
 					continue;
 				}
 				isEscaped = false;

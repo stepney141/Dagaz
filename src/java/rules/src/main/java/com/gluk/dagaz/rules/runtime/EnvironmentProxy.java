@@ -5,10 +5,19 @@ import java.util.Map;
 
 import com.gluk.dagaz.api.exceptions.EvaluationException;
 import com.gluk.dagaz.api.exceptions.ValueNotFoundException;
+import com.gluk.dagaz.api.rules.board.IBoardConfiguration;
 import com.gluk.dagaz.api.rules.runtime.IEnvironment;
 import com.gluk.dagaz.api.rules.runtime.IValue;
 
-public abstract class Environment implements IEnvironment {
+public class EnvironmentProxy implements IEnvironment {
+	
+	private IEnvironment env;
+	private IBoardConfiguration board;
+	
+	public EnvironmentProxy(IEnvironment env, IBoardConfiguration board) {
+		this.env   = env;
+		this.board = board;
+	}
 	
 	private int deep = 0;
 	private Map<String, ValueHolder> values = new HashMap<String, ValueHolder>();
@@ -30,7 +39,12 @@ public abstract class Environment implements IEnvironment {
 			}
 		}
 		if (h == null) {
-			throw new ValueNotFoundException("Value [" + name + "] not found");
+			return env.getValue(name);
+		} else {
+			String value = h.getValue().getString();
+			if (board.isDefined(value)) {
+				return env.getValue(value);
+			}
 		}
 		return h.getValue();
 	}
@@ -46,9 +60,10 @@ public abstract class Environment implements IEnvironment {
 	public void setValue(String name, IValue value) throws EvaluationException {
 		ValueHolder h = values.get(name);
 		if (h == null) {
-			throw new ValueNotFoundException("Value [" + name + "] not found");
+			env.setValue(name, value);
+		} else {
+			h.setValue(value);
 		}
-		h.setValue(value);
 	}
 
 	@Override
@@ -62,5 +77,20 @@ public abstract class Environment implements IEnvironment {
 			throw new EvaluationException("Empty Stack");
 		}
 		deep--;
+	}
+
+	@Override
+	public void setScore(int score, long priority) {
+		env.setScore(score, priority);
+	}
+
+	@Override
+	public void commentMove(String s) {
+		env.commentMove(s);
+	}
+
+	@Override
+	public void addAiHint(int hint, IValue value) {
+		env.addAiHint(hint, value);
 	}
 }

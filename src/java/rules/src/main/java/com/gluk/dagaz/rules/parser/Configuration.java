@@ -53,7 +53,7 @@ public class Configuration implements IConfiguration {
 			tf.setURIResolver(resolver);
 		}
 		if (df == null) {
-			DocumentBuilderFactory df = DocumentBuilderFactory.newInstance();
+			df = DocumentBuilderFactory.newInstance();
 	        df.setAttribute(LOAD_EXTERNAL_DTD, false);
 		}
 	}
