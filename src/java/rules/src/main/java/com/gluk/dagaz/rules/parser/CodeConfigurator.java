@@ -8,6 +8,7 @@ import org.w3c.dom.traversal.NodeIterator;
 import com.gluk.dagaz.api.application.IApplication;
 import com.gluk.dagaz.api.exceptions.CommonException;
 import com.gluk.dagaz.api.exceptions.ParsingException;
+import com.gluk.dagaz.api.rules.board.IBoardConfiguration;
 import com.gluk.dagaz.api.rules.runtime.IExpression;
 import com.gluk.dagaz.api.rules.runtime.IFunction;
 import com.gluk.dagaz.api.rules.runtime.IFunctionList;
@@ -29,10 +30,12 @@ public class CodeConfigurator extends BaseConfigurator {
 	
 	private IApplication app;
 	private Node root;
+	private IBoardConfiguration board;
 	
-	public CodeConfigurator(IApplication app, Node root) {
-		this.app  = app;
-		this.root = root;
+	public CodeConfigurator(IApplication app, Node root, IBoardConfiguration board) {
+		this.app   = app;
+		this.root  = root;
+		this.board = board;
 	}
 	
 	private boolean isFunction(String name) throws TransformerException {
@@ -40,7 +43,7 @@ public class CodeConfigurator extends BaseConfigurator {
 		sb.append(PREFIX_XP);
 		sb.append(name);
 		sb.append(POSTFIX_XP);
-		NodeIterator nl = getIterator(root, DEFINE_XP);
+		NodeIterator nl = getIterator(root, sb.toString());
 		return (nl.nextNode()!= null);
 	}
 	
@@ -48,12 +51,14 @@ public class CodeConfigurator extends BaseConfigurator {
 		NodeIterator nl = getIterator(fun, PARAMS_XP);
 		Node n;
         while ((n = nl.nextNode())!= null) {
-        	f.addParameter(getName(n));
+        	String name = getName(n);
+        	f.addParameter(name);
         }
         nl = getIterator(fun, FUN_XP);
         if ((n = nl.nextNode())!= null) {
         	IFunctionList fl = app.getFunctionList();
-        	fl.addFunction(getName(n), f);
+        	String name = getName(n);
+        	fl.addFunction(name, f);
         } else {
         	throw new ParsingException("Invalid declaration");
         }
@@ -68,12 +73,12 @@ public class CodeConfigurator extends BaseConfigurator {
 	
 	private void parseStatement(IExpression parent, Node stmt, int ix) throws Exception {
 		String type = getType(stmt);
-		if (!type.equals(Parser.STR_TAG)) {
+		if (type.equals(Parser.STR_TAG)) {
 			IExpression e = new ConstantExpression(getText(stmt));
 			parent.addArgument(e);
 			return;
 		}
-		if (!type.equals(Parser.NUM_TAG)) {
+		if (type.equals(Parser.NUM_TAG)) {
 			IExpression e = new ConstantExpression(Long.parseLong(getText(stmt)));
 			parent.addArgument(e);
 			return;
@@ -84,7 +89,7 @@ public class CodeConfigurator extends BaseConfigurator {
 		String name = getName(stmt);
 		int arity = getArity(stmt);
 		if ((arity == 0) && !isFunction(name)) {
-			if (parent.isQuoted(ix)) {
+			if (parent.isQuoted(ix, name)) {
 				IExpression e = new ConstantExpression(name);
 				parent.addArgument(e);
 				return;
@@ -95,7 +100,7 @@ public class CodeConfigurator extends BaseConfigurator {
 			}
 		}
 		ExpressionFactory ef = ExpressionFactory.getInstance(app);
-		IExpression e = ef.createExpression(name);
+		IExpression e = ef.createExpression(name, board);
 		IExpression seq = e;
 		NodeIterator nl = getIterator(stmt, ALL_XP);
 		Node n;
@@ -105,7 +110,9 @@ public class CodeConfigurator extends BaseConfigurator {
         		seq = new SeqExpression();
         		e.addArgument(seq);
         	}
-        	parseStatement(seq, n, i++);
+        	if (!getName(n).equals(ExpressionFactory.ELSE_WORD)) {
+            	parseStatement(seq, n, i++);
+        	}
         }
 		parent.addArgument(e);
 	}

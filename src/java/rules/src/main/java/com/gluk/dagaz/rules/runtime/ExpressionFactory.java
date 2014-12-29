@@ -6,6 +6,7 @@ import java.util.Map;
 import com.gluk.dagaz.api.application.IApplication;
 import com.gluk.dagaz.api.exceptions.EvaluationException;
 import com.gluk.dagaz.api.exceptions.ParsingException;
+import com.gluk.dagaz.api.rules.board.IBoardConfiguration;
 import com.gluk.dagaz.api.rules.runtime.IExpression;
 
 public class ExpressionFactory {
@@ -55,26 +56,26 @@ public class ExpressionFactory {
 		return instance;
 	}
 
-	public IExpression createExpression(String name) throws ParsingException {
+	public IExpression createExpression(String name, IBoardConfiguration board) throws ParsingException {
 		IExpression r = null;
 		Class<?> c = classes.get(name);
 		try {
 			if (c != null) {
 				r = (IExpression)c.newInstance();
-				r.setApplication(app);
 			}
 			if (r == null) {
-				r = new ApplyExpression();
+				r = new ApplyExpression(board);
 				r.addArgument(new ConstantExpression(name));
 			}
+			r.setApplication(app);
 		} catch (Exception e) {
 			throw new ParsingException(e.toString(), e);
 		}
 		return r;
 	}
 
-	public IExpression createExpression(IExpression expr) throws ParsingException {
-		IExpression r = new ApplyExpression();
+	public IExpression createExpression(IExpression expr, IBoardConfiguration board) throws ParsingException {
+		IExpression r = new ApplyExpression(board);
 		try {
 			r.addArgument(expr);
 		} catch (EvaluationException e) {

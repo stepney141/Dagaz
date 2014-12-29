@@ -8,10 +8,13 @@ import com.gluk.dagaz.api.rules.runtime.IValue;
 public class SeqExpression extends BaseExpression {
 
 	public IValue getValue(IEnvironment env) throws EvaluationException {
-		boolean r = false;
-		for (IExpression e: args) {
-			r = e.getValue(env).getBoolean();
+		if (args.size() == 0) {
+			throw new EvaluationException("Bad arity [" + Integer.toString(args.size()) + "]");
 		}
-		return ConstantValue.createBoolean(r);
+		IValue r = null;
+		for (IExpression e: args) {
+			r = e.getValue(env);
+		}
+		return r;
 	}
 }

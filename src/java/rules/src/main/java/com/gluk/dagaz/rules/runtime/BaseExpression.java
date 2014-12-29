@@ -24,7 +24,7 @@ public abstract class BaseExpression implements IExpression {
 		return false;
 	}
 
-	public boolean isQuoted(int ix) {
+	public boolean isQuoted(int ix, String name) {
 		return false;
 	}
 

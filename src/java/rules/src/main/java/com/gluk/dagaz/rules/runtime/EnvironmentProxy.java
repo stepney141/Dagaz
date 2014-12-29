@@ -14,14 +14,14 @@ public class EnvironmentProxy implements IEnvironment {
 	private IEnvironment env;
 	private IBoardConfiguration board;
 	
+	private int deep = 0;
+	private Map<String, ValueHolder> values = new HashMap<String, ValueHolder>();
+
 	public EnvironmentProxy(IEnvironment env, IBoardConfiguration board) {
 		this.env   = env;
 		this.board = board;
 	}
 	
-	private int deep = 0;
-	private Map<String, ValueHolder> values = new HashMap<String, ValueHolder>();
-
 	@Override
 	public IValue getValue(String name) throws ValueNotFoundException {
 		ValueHolder h = values.get(name);

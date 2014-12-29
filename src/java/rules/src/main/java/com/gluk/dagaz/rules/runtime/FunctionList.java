@@ -16,7 +16,7 @@ public class FunctionList implements IFunctionList {
 		StringBuffer sb = new StringBuffer();
 		sb.append(name);
 		sb.append('@');
-		sb.append(Integer.toString(f.getParameters().size() - 1));
+		sb.append(Integer.toString(f.getParameters().size()));
 		funcs.put(sb.toString(), f);
 	}
 

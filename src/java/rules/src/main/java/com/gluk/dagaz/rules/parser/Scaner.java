@@ -22,6 +22,7 @@ public class Scaner implements IOutput {
 	
 	private boolean isNumeric(String s) {
 		boolean isFirst = true;
+		boolean r = false;
 		for (Character c: s.toCharArray()) {
 			if (c.equals('-')) {
 				if (!isFirst) {
@@ -34,8 +35,9 @@ public class Scaner implements IOutput {
 				return false;
 			}
 			isFirst = false;
+			r = true;
 		}
-		return true;
+		return r;
 	}
 	
 	private void clearBuffer() throws ParsingException {

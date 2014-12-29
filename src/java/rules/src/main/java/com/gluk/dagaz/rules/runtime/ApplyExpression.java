@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.gluk.dagaz.api.exceptions.CriticalException;
 import com.gluk.dagaz.api.exceptions.EvaluationException;
+import com.gluk.dagaz.api.rules.board.IBoardConfiguration;
 import com.gluk.dagaz.api.rules.runtime.IEnvironment;
 import com.gluk.dagaz.api.rules.runtime.IExpression;
 import com.gluk.dagaz.api.rules.runtime.IFunction;
@@ -13,8 +14,13 @@ import com.gluk.dagaz.api.rules.runtime.IValue;
 
 public class ApplyExpression extends BaseExpression {
 
+	private IBoardConfiguration board;
 	private String name = null;
 	private Map<String, IFunction> funcs = new HashMap<String, IFunction>();
+	
+	public ApplyExpression(IBoardConfiguration board) {
+		this.board = board;
+	}
 	
 	@Override
 	public IValue getValue(IEnvironment env) throws EvaluationException {
@@ -51,7 +57,7 @@ public class ApplyExpression extends BaseExpression {
 	}
 
 	@Override
-	public boolean isQuoted(int ix) {
-		return true;
+	public boolean isQuoted(int ix, String name) {
+		return board.isDefined(name);
 	}
 }

@@ -28,7 +28,7 @@ public class LetExpression extends BaseExpression {
 	}
 
 	@Override
-	public boolean isQuoted(int ix) {
+	public boolean isQuoted(int ix, String name) {
 		return (ix == 0);
 	}
 }
