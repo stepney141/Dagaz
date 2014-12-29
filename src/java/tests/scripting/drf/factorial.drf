@@ -1,0 +1,15 @@
+(define (factorial n a)
+  (if (<= n 1)
+     a
+   else
+     (factorial (- n 1) (* a n))
+  )
+)
+
+(define (factorial n)
+  (factorial n 1)
+)
+
+(define main
+  (set! out (factorial 5))
+)
