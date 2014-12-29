@@ -1,6 +1,8 @@
 package com.gluk.dagaz.rules.runtime;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.gluk.dagaz.api.exceptions.CriticalException;
@@ -46,10 +48,14 @@ public class ApplyExpression extends BaseExpression {
 			funcs.put(name, f);
 		}
 		env.openFrame();
+		List<NamedValue> values = new ArrayList<NamedValue>();
 		for (int i = 1; i < args.size(); i++) {
 			IValue v = args.get(i).getValue(env);
 			String n = f.getParameters().get(i - 1);
-			env.letValue(n, v);
+			values.add(new NamedValue(n, v));
+		}
+		for (NamedValue v: values) {
+			env.letValue(v.getName(), v.getValue());
 		}
 		IValue r = f.getExpression().getValue(env);
 		env.closeFrame();
