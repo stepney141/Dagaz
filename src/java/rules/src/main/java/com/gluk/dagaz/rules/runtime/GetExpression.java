@@ -8,18 +8,24 @@ import com.gluk.dagaz.api.rules.runtime.IValue;
 public class GetExpression extends BaseExpression {
 	
 	private String name;
+	private boolean isQuoted = false;
 	
 	public GetExpression(String name) {
 		this.name = name;
 	}
-
+	
 	@Override
 	public IValue getValue(IEnvironment env) throws EvaluationException {
-		return env.getValue(name);
+		return env.getValue(name, isQuoted);
 	}
 
 	@Override
 	public void addArgument(IExpression arg) throws EvaluationException {
 		throw new EvaluationException("Bad arity");
+	}
+
+	@Override
+	public void setQuoted() {
+		this.isQuoted = true;
 	}
 }

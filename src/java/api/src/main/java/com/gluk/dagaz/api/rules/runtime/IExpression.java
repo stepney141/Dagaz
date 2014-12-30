@@ -9,6 +9,7 @@ public interface IExpression {
 	IValue getValue(IEnvironment env) throws EvaluationException;
 	void addArgument(IExpression arg) throws ParsingException;
 	boolean isConstant();
-	boolean isQuoted(int ix, String name);
+	void setQuoted();
+	boolean isQuoted(int ix);
 	void setPriority(long priority) throws ParsingException;
 }

@@ -6,7 +6,6 @@ import java.util.Map;
 import com.gluk.dagaz.api.application.IApplication;
 import com.gluk.dagaz.api.exceptions.EvaluationException;
 import com.gluk.dagaz.api.exceptions.ParsingException;
-import com.gluk.dagaz.api.rules.board.IBoardConfiguration;
 import com.gluk.dagaz.api.rules.runtime.IExpression;
 
 public class ExpressionFactory {
@@ -22,8 +21,6 @@ public class ExpressionFactory {
 	private ExpressionFactory(IApplication app) {
 		this.app = app;
 		classes.put("+",                 AddExpression.class);
-		classes.put("add-ai-hint",       AiHintExpression.class);
-		classes.put("set-ai-weight!",    AiWeightExpression.class);
 		classes.put("and",               AndExpression.class);
 		classes.put("check-draw",        CheckDrawExpression.class);
 		classes.put("check",             CheckExpression.class);
@@ -56,7 +53,7 @@ public class ExpressionFactory {
 		return instance;
 	}
 
-	public IExpression createExpression(String name, IBoardConfiguration board) throws ParsingException {
+	public IExpression createExpression(String name) throws ParsingException {
 		IExpression r = null;
 		Class<?> c = classes.get(name);
 		try {
@@ -64,7 +61,7 @@ public class ExpressionFactory {
 				r = (IExpression)c.newInstance();
 			}
 			if (r == null) {
-				r = new ApplyExpression(board);
+				r = new ApplyExpression();
 				r.addArgument(new ConstantExpression(name));
 			}
 			r.setApplication(app);
@@ -74,8 +71,8 @@ public class ExpressionFactory {
 		return r;
 	}
 
-	public IExpression createExpression(IExpression expr, IBoardConfiguration board) throws ParsingException {
-		IExpression r = new ApplyExpression(board);
+	public IExpression createExpression(IExpression expr) throws ParsingException {
+		IExpression r = new ApplyExpression();
 		try {
 			r.addArgument(expr);
 		} catch (EvaluationException e) {

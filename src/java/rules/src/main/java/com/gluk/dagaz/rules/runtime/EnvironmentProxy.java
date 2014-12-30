@@ -23,7 +23,10 @@ public class EnvironmentProxy implements IEnvironment {
 	}
 	
 	@Override
-	public IValue getValue(String name) throws ValueNotFoundException {
+	public IValue getValue(String name, boolean isQuoted) throws ValueNotFoundException {
+		if (isQuoted && board.isDefined(name)) {
+			return new ConstantValue(name);
+		}
 		ValueHolder h = values.get(name);
 		boolean f = false;
 		while (h != null) {
@@ -39,11 +42,11 @@ public class EnvironmentProxy implements IEnvironment {
 			}
 		}
 		if (h == null) {
-			return env.getValue(name);
+			return env.getValue(name, isQuoted);
 		} else {
 			String value = h.getValue().getString();
 			if (board.isDefined(value)) {
-				return env.getValue(value);
+				return env.getValue(value, isQuoted);
 			}
 		}
 		return h.getValue();
@@ -82,15 +85,5 @@ public class EnvironmentProxy implements IEnvironment {
 	@Override
 	public void setScore(int score, long priority) {
 		env.setScore(score, priority);
-	}
-
-	@Override
-	public void commentMove(String s) {
-		env.commentMove(s);
-	}
-
-	@Override
-	public void addAiHint(int hint, IValue value) {
-		env.addAiHint(hint, value);
 	}
 }

@@ -23,8 +23,10 @@ public abstract class BaseExpression implements IExpression {
 	public boolean isConstant() {
 		return false;
 	}
+	
+	public void setQuoted() {}
 
-	public boolean isQuoted(int ix, String name) {
+	public boolean isQuoted(int ix) {
 		return false;
 	}
 

@@ -14,7 +14,7 @@ public class IncrementExpression extends BaseExpression {
 			throw new EvaluationException("Bad arity");
 		}
 		String name = args.get(0).getValue(env).getString();
-		long v = env.getValue(name).getLong();
+		long v = env.getValue(name, false).getLong();
 		if (args.size() == 2) {
 			v += args.get(1).getValue(env).getLong();
 		} else {
@@ -34,7 +34,7 @@ public class IncrementExpression extends BaseExpression {
 	}
 
 	@Override
-	public boolean isQuoted(int ix, String name) {
+	public boolean isQuoted(int ix) {
 		return (ix == 0);
 	}
 }

@@ -11,7 +11,7 @@ public class Environment implements IEnvironment {
 
     private static final Logger LOGGER = Logger.getLogger(Environment.class);
 
-    public IValue getValue(String name) throws ValueNotFoundException {
+    public IValue getValue(String name, boolean isQuoted) throws ValueNotFoundException {
 		throw new ValueNotFoundException("Unimplemented");
 	}
 
@@ -26,8 +26,4 @@ public class Environment implements IEnvironment {
 	public void closeFrame() throws EvaluationException {}
 
 	public void setScore(int score, long priority) {}
-
-	public void commentMove(String s) {}
-
-	public void addAiHint(int hint, IValue value) {}
 }

@@ -31,12 +31,12 @@ public class Scripting extends BaseApplication {
 			conf.setTransformationScope(TRANSFORM_SCOPE);
 			conf.addTransformation(BASE_TRANSFORM);
 			
-			IBoardConfiguration board = new Board();
-			CodeConfigurator code = new CodeConfigurator(this, conf.getDocument(), board);
+			CodeConfigurator code = new CodeConfigurator(this, conf.getDocument());
 			code.initApplication();
 			IFunctionList fl = getFunctionList();
 			IFunction f = fl.getFunction("main@0");
 			
+			IBoardConfiguration board = new Board();
 			IEnvironment env = new Environment();
 			IEnvironment proxy = new EnvironmentProxy(env, board);
 			f.getExpression().getValue(proxy);

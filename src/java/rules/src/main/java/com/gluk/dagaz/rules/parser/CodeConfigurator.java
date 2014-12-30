@@ -8,7 +8,6 @@ import org.w3c.dom.traversal.NodeIterator;
 import com.gluk.dagaz.api.application.IApplication;
 import com.gluk.dagaz.api.exceptions.CommonException;
 import com.gluk.dagaz.api.exceptions.ParsingException;
-import com.gluk.dagaz.api.rules.board.IBoardConfiguration;
 import com.gluk.dagaz.api.rules.runtime.IExpression;
 import com.gluk.dagaz.api.rules.runtime.IFunction;
 import com.gluk.dagaz.api.rules.runtime.IFunctionList;
@@ -30,12 +29,10 @@ public class CodeConfigurator extends BaseConfigurator {
 	
 	private IApplication app;
 	private Node root;
-	private IBoardConfiguration board;
 	
-	public CodeConfigurator(IApplication app, Node root, IBoardConfiguration board) {
+	public CodeConfigurator(IApplication app, Node root) {
 		this.app   = app;
 		this.root  = root;
-		this.board = board;
 	}
 	
 	private boolean isFunction(String name) throws TransformerException {
@@ -89,7 +86,7 @@ public class CodeConfigurator extends BaseConfigurator {
 		String name = getName(stmt);
 		int arity = getArity(stmt);
 		if ((arity == 0) && !isFunction(name)) {
-			if (parent.isQuoted(ix, name)) {
+			if (parent.isQuoted(ix)) {
 				IExpression e = new ConstantExpression(name);
 				parent.addArgument(e);
 				return;
@@ -100,7 +97,7 @@ public class CodeConfigurator extends BaseConfigurator {
 			}
 		}
 		ExpressionFactory ef = ExpressionFactory.getInstance(app);
-		IExpression e = ef.createExpression(name, board);
+		IExpression e = ef.createExpression(name);
 		IExpression seq = e;
 		NodeIterator nl = getIterator(stmt, ALL_XP);
 		Node n;

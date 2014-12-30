@@ -71,8 +71,8 @@
 )
 
 (define (ordo-move direction)
-   (comment turn-mode)
-   (comment (count current-pieces))
+   (set! move.comment turn-mode)
+   (set! move.comment (count current-pieces))
    (check direction)
    (while (empty-stack? current-pieces)
       (drop-pieces current-pieces)
