@@ -218,6 +218,7 @@
       - http://skyruk.livejournal.com/210392.html
     * Нарды (варианты)
   - Семейство шашек
+    - http://onlineigry.com/show/nastol_games/checkers
     - Зажимные шашки
       * Сиджа
       * Hasami Shogi (варианты)
@@ -233,6 +234,7 @@
       * Харбага
       * Замма
       * Йотай
+        - http://skyruk.livejournal.com/250752.html
       * Дабло
       * Дамоне
     - Ортогональные шашки
@@ -249,8 +251,14 @@
       * Ставропольские
     - Контактные шашки
       * Фанорона
+        - http://skyruk.livejournal.com/250752.html
         - http://www.iggamecenter.com/info/ru/fanorona.html
+      * Бушка
+        - http://www.mindsports.nl/index.php/arena/bushka/81-rules
+      * Коно
+        - http://skyruk.livejournal.com/250752.html
       * Суракарта
+        - http://skyruk.livejournal.com/250752.html
         - http://www.iggamecenter.com/info/ru/surakarta.html
       * Абалоне
       * Такока

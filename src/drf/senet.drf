@@ -1,0 +1,54 @@
+(game
+   (title "Senet")
+   (players White Black ?Random)
+   (turn-order ?Random ?Random ?Random ?Random 
+               White 
+               ?Random ?Random ?Random ?Random 
+               Black
+   )
+   (board
+      (grid (dimensions "A_J" "1")
+            (direction (name forward)   1 0)
+            (direction (name backward) -1 0)
+      )
+      (grid (dimensions "A_J" "2")
+            (direction (name forward)  -1 0)
+            (direction (name backward)  1 0)
+      )
+      (grid (dimensions "A_K" "3")
+            (direction (name forward)   1 0)
+            (direction (name backward) -1 0)
+      )
+      (grid (dimensions "a_d"))
+      (link (name forward)  (J1 J2) (A2 A3))
+      (link (name backward) (J2 J1) (A3 A2))
+      (zone (name rebirth)  (positions F2))
+      (zone (name protect)  (positions F3 G3 H3 I3 J3))
+      (zone (name beauty)   (positions F3))
+      (zone (name water)    (positions G3))
+      (zone (name truth)    (positions H3))
+      (zone (name ra)       (positions I3))
+      (zone (name end)      (positions K3))
+      (zone (name dices)    (positions a b c d))
+   )
+   (setup
+      (White
+            (Man B1 D1 F1 H1 J1)
+      )
+      (Black
+            (Man A1 C1 E1 G1 I1)
+      )
+   )
+)
+
+(variant
+   (title "Senet (7 Mans)")
+   (setup
+      (White
+            (Man B1 D1 F1 H1 J1 B2 D2)
+      )
+      (Black
+            (Man A1 C1 E1 G1 I1 A2 C2)
+      )
+   )
+)
