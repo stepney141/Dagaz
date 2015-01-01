@@ -72,11 +72,6 @@
    )
 )
 
-(define variables
-   (let capturing-count 0)
-   (let max-capturing-count 0)
-)
-
 (define invariant
    (check (>= capturing-count max-capturing-count))
    (set! max-capturing-count capturing-count)
@@ -90,7 +85,7 @@
 
 (game
    (title "Bashni")
-   (players White Black)
+   (turn-order White Black)
    (board
       (grid (dimensions "a_h" "8_1" "0_23")
             (direction (name up)    0  0  1)
@@ -111,7 +106,8 @@
       (symmetry (players Black) (nw se)(se nw)(ne sw)(sw ne))
    )
    (pieces
-      (pre  variables)
+      (attribute capturing-count 0)
+      (attribute max-capturing-count 0)
       (pre  goals)
       (post invariant)
       (piece 

@@ -1,10 +1,6 @@
-(define variables
-   (let penalty-count 0)
-   (let min-penalty-count 1)
-)
-
 (define set-penalty
-   (set! penalty-count 1)
+   (check (= min-penalty 1))
+   (set! penalty 1)
 )
 
 (define add-piece-recursive
@@ -25,8 +21,8 @@
        )
        (check (piece-contains current-group))
    )
-   (check (<= penalty-count max-penalty-count))
-   (set! max-penalty-count penalty-count)
+   (check (<= penalty min-penalty))
+   (set! min-penalty penalty)
 )
 
 (define pre-goals
@@ -83,7 +79,7 @@
 
 (game
    (title "Ordo")
-   (players Light Dark)
+   (turn-order Light Dark)
    (board
       (grid (dimensions "A_J" "8_1")
             (direction (name n)     0 -1)
@@ -106,8 +102,9 @@
       (symmetry (players Dark) (n s)(s n)(nw sw)(sw nw)(ne se)(se ne))
    )
    (pieces
+      (attribute penalty 0)
+      (attribute min-penalty 1)
       (pre  check-friend)
-      (pre  variables)
       (pre  pre-goals)
       (post invariant)
       (post post-goals)

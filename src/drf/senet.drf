@@ -1,6 +1,76 @@
+(define goals
+   (check-win (not-exists? (check is-friend?)))
+)
+
+(define (set-penalty value)
+   (check (= min-penalty value))
+   (set! penalty value)
+)
+
+(define invariant
+   (check (<= penalty min-penalty))
+   (set! min-penalty penalty)
+)
+
+(define dice-drop
+   (check (player-is? ?Random))
+   (check (in-zone? dices))
+   (check is-empty?)
+   drop-pieces
+   add-move
+)
+
+(define sum-dices
+   (set! step-count (count
+            (check (in-zone? dices))
+            (check (piece-is? One))
+       )
+   )
+   (all
+       (check (in-zone? dices))
+       (check not-empty?)
+       capture
+   )
+   (if (= step-count 0)
+       (set! step-count 5)
+   )
+)
+
+(define (man-move direction opposite)
+   (let starting-position current-position)
+   (take-piece-to-head current-pieces)
+   (while (decrement! step-count)
+       (check direction)
+       (if is-enemy?
+           (check (not-enemy? direction))
+       )
+       (if is-friend?
+           (check (not-friend? direction))
+       )
+       (if (in-zone? stop)
+           (set! step-count 0)
+       )
+   )
+   (check not-friend?)
+   (if is-enemy?
+       (check (not-zone? protect))
+       (check (or (not-enemy? direction)
+                  (not-enemy? opposite)
+              )
+       )
+       (take-piece-to-head enemy-pieces)
+       (drop-pieces current-pieces)
+       starting-position
+       (drop-pieces enemy-pieces)
+    else
+       (drop-pieces current-pieces)
+       (if (in-zone? end) capture)
+   )
+   add-move
+)
+
 (game
    (title "Senet")
-   (players White Black ?Random)
    (turn-order ?Random ?Random ?Random ?Random 
                White 
                ?Random ?Random ?Random ?Random 
@@ -20,16 +90,45 @@
             (direction (name backward) -1 0)
       )
       (grid (dimensions "a_d"))
-      (link (name forward)  (J1 J2) (A2 A3))
-      (link (name backward) (J2 J1) (A3 A2))
+      (link (name forward)  (J1 J2) (A2 A3) (K3 K3))
+      (link (name backward) (J2 J1) (A3 A2) (K3 K3))
       (zone (name rebirth)  (positions F2))
       (zone (name protect)  (positions F3 G3 H3 I3 J3))
       (zone (name beauty)   (positions F3))
       (zone (name water)    (positions G3))
       (zone (name truth)    (positions H3))
       (zone (name ra)       (positions I3))
+      (zone (name stop)     (positions F3 K3))
       (zone (name end)      (positions K3))
       (zone (name dices)    (positions a b c d))
+   )
+   (pieces
+      (post goals)
+      (piece 
+            (name Dice)
+            (piece (name Zero))
+            (piece (name One))
+            (moves dice-drop)
+      )
+      (piece
+            (name Man)
+            (attribute step-count 0)
+            (attribute penalty 0)
+            (attribute min-penalty 2)
+            (pre sum-dices)
+            (post invariant)
+            (moves 
+                 (man-move forward backward)
+            )
+            (moves 
+                 (pre (set-penalty 1))
+                 (man-move backward forward)
+            )
+            (moves 
+                 (pre (set-penalty 2))
+                 pass
+            )
+      )
    )
    (setup
       (White

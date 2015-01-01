@@ -142,7 +142,7 @@
       (and
            (exists?
               (check is-friend?)
-              (check (is-piece? King))
+              (check (piece-is? King))
               (check is-attacked?)
            )
            (not-exists? try-moves)
@@ -162,7 +162,7 @@
   (check 
       (not-exists?
          (check is-friend?)
-         (check (is-piece? King))
+         (check (piece-is? King))
          (check is-attacked?)
       )
   )
@@ -170,7 +170,7 @@
 
 (game
    (title "Platform Chess")
-   (players White Black)
+   (turn-order White Black)
    (board
       (grid (dimensions "a_h" "8_1")
             (direction (name n)     0 -1)

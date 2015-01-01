@@ -44,7 +44,7 @@
      (while (and up not-empty?)
         (set! not-my-friend? not-friend?)
         (set! is-promoted? false)
-        (is-piece? King
+        (piece-is? King
            (set! ai.weight 1000)
            (set! ai.hint "king-captured")
         )
@@ -169,7 +169,7 @@
   (check 
       (not-exists?
          (check is-friend?)
-         (check (is-piece? King))
+         (check (piece-is? King))
          (check is-attacked?)
       )
   )
@@ -181,7 +181,7 @@
       (and
            (exists?
               (check is-friend?)
-              (check (is-piece? King))
+              (check (piece-is? King))
               (check is-attacked?)
            )
            (not-exists? try-moves)
@@ -199,7 +199,7 @@
 
 (game
    (title "Tavreli")
-   (players White Black)
+   (turn-order White Black)
    (board
       (grid (dimensions "a_h" "8_1" "0_31")
             (direction (name up)    0  0  1)
