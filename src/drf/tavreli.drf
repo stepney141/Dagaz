@@ -44,7 +44,7 @@
      (while (and up not-empty?)
         (set! not-my-friend? not-friend?)
         (set! is-promoted? false)
-        (piece-is? King
+        (is-piece? King
            (set! ai.weight 1000)
            (set! ai.hint "king-captured")
         )
@@ -169,7 +169,7 @@
   (check 
       (not-exists?
          (check is-friend?)
-         (check (piece-is? King))
+         (check (is-piece? King))
          (check is-attacked?)
       )
   )
@@ -181,7 +181,7 @@
       (and
            (exists?
               (check is-friend?)
-              (check (piece-is? King))
+              (check (is-piece? King))
               (check is-attacked?)
            )
            (not-exists? try-moves)

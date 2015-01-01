@@ -12,8 +12,15 @@
    (set! min-penalty penalty)
 )
 
+(define check-player
+   (check (not-current-player? ?Random))
+)
+
+(define check-random
+   (check (is-current-player? ?Random))
+)
+
 (define dice-drop
-   (check (player-is? ?Random))
    (check (in-zone? dices))
    (check is-empty?)
    drop-pieces
@@ -23,7 +30,7 @@
 (define sum-dices
    (set! step-count (count
             (check (in-zone? dices))
-            (check (piece-is? One))
+            (check (is-piece? One))
        )
    )
    (all
@@ -54,10 +61,7 @@
    (check not-friend?)
    (if is-enemy?
        (check (not-zone? protect))
-       (check (or (not-enemy? direction)
-                  (not-enemy? opposite)
-              )
-       )
+       (check (= (is-enemy? direction) (is-enemy? opposite)))
        (take-piece-to-head enemy-pieces)
        (drop-pieces current-pieces)
        starting-position
@@ -106,6 +110,7 @@
       (post goals)
       (piece 
             (name Dice)
+            (pre check-random)
             (piece (name Zero))
             (piece (name One))
             (moves dice-drop)
@@ -115,6 +120,7 @@
             (attribute step-count 0)
             (attribute penalty 0)
             (attribute min-penalty 2)
+            (pre check-player)
             (pre sum-dices)
             (post invariant)
             (moves 

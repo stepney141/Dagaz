@@ -142,7 +142,7 @@
       (and
            (exists?
               (check is-friend?)
-              (check (piece-is? King))
+              (check (is-piece? King))
               (check is-attacked?)
            )
            (not-exists? try-moves)
@@ -162,7 +162,7 @@
   (check 
       (not-exists?
          (check is-friend?)
-         (check (piece-is? King))
+         (check (is-piece? King))
          (check is-attacked?)
       )
   )
