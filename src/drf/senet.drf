@@ -2,6 +2,10 @@
    (check-win (not-exists? (check is-friend?)))
 )
 
+(define check-not-protect
+   (check (not-zone? protect))
+)
+
 (define (set-penalty value)
    (check (= min-penalty value))
    (set! penalty value)
@@ -43,8 +47,7 @@
    )
 )
 
-(define (man-move direction opposite)
-   (let starting-position current-position)
+(define (move-to-count direction check-stop?)
    (take-piece-to-head current-pieces)
    (while (decrement! step-count)
        (check direction)
@@ -54,22 +57,81 @@
        (if is-friend?
            (check (not-friend? direction))
        )
-       (if (in-zone? stop)
+       (if (and check-stop? (in-zone? stop))
            (set! step-count 0)
        )
    )
-   (check not-friend?)
-   (if is-enemy?
-       (check (not-zone? protect))
-       (check (= (is-enemy? direction) (is-enemy? opposite)))
-       (take-piece-to-head enemy-pieces)
-       (drop-pieces current-pieces)
-       starting-position
-       (drop-pieces enemy-pieces)
-    else
-       (drop-pieces current-pieces)
-       (if (in-zone? end) capture)
+)
+
+(define move-to-rebirth
+   (check rebirth)
+   (while not-empty?
+       (check backward)
    )
+)
+
+(define (man-move direction opposite)
+   (check (not-zone? protect))
+   (let starting-position current-position)
+   (move-to-count direction true)
+   (if (and (in-zone? water) not-empty?)
+       move-to-rebirth
+       (drop-pieces current-pieces)
+    else
+       (check not-friend?)
+       (if is-enemy?
+           (check (not-zone? protect))
+           (check (= (is-enemy? direction) (is-enemy? opposite)))
+           (take-piece-to-head enemy-pieces)
+           (drop-pieces current-pieces)
+           starting-position
+           (drop-pieces enemy-pieces)
+        else
+           (drop-pieces current-pieces)
+       )
+   )
+   add-move
+)
+
+(define man-move-beauty
+   (check (in-zone? beauty))
+   (move-to-count forward false)
+   (if not-empty?
+       (check water)
+       (if not-empty?
+           move-to-rebirth
+       )
+   )
+   (drop-pieces current-pieces)
+   (if (in-zone? end) capture)
+   add-move
+)
+
+(define man-move-water
+   (check (in-zone? water))
+   (move-to-count forward false)
+   (if (not-zone? end)
+        move-to-rebirth
+   )
+   (drop-pieces current-pieces)
+   (if (in-zone? end) capture)
+   add-move
+)
+
+(define (man-move-zone zone)
+   (check (in-zone? zone))
+   (move-to-count forward false)
+   (check (in-zone? end))
+   (drop-pieces current-pieces)
+   capture
+   add-move
+)
+
+(define man-move-end
+   (check forward)
+   (check (in-zone? end))
+   (drop-pieces current-pieces)
+   capture
    add-move
 )
 
@@ -94,14 +156,14 @@
             (direction (name backward) -1 0)
       )
       (grid (dimensions "a_d"))
-      (link (name forward)  (J1 J2) (A2 A3) (K3 K3))
-      (link (name backward) (J2 J1) (A3 A2) (K3 K3))
+      (link (name forward)  (J1 J2) (A2 A3))
+      (link (name backward) (J2 J1) (A3 A2))
       (zone (name rebirth)  (positions F2))
       (zone (name protect)  (positions F3 G3 H3 I3 J3))
       (zone (name beauty)   (positions F3))
       (zone (name water)    (positions G3))
-      (zone (name truth)    (positions H3))
-      (zone (name ra)       (positions I3))
+      (zone (name truths)   (positions H3))
+      (zone (name Ra)       (positions I3))
       (zone (name stop)     (positions F3 K3))
       (zone (name end)      (positions K3))
       (zone (name dices)    (positions a b c d))
@@ -125,8 +187,14 @@
             (post invariant)
             (moves 
                  (man-move forward backward)
+                 man-move-beauty
+                 man-move-water
+                 (man-move-zone truths)
+                 (man-move-zone Ra)
+                 man-move-end
             )
             (moves 
+                 (pre check-not-protect)
                  (pre (set-penalty 1))
                  (man-move backward forward)
             )
