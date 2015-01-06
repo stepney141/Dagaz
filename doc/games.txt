@@ -75,8 +75,6 @@
       - http://skyruk.livejournal.com/231444.html
     * Мехен
       - http://skyruk.livejournal.com/212534.html
-    * Пулук
-      - http://bashni-shashki.narod.ru/index/0-88
     * Сенет
       - http://skyruk.livejournal.com/183773.html
         - Кости: 4 x D2
@@ -156,6 +154,81 @@
           - Фишка на 30-м пункте уже не бьётся, но с доски может уйти только после выброса единицы
         - Дорожки на доске не должны пустовать 
           - Если противник срубает единственную активную фишку игрока, а у того в руке есть ещё фишки, одна из них тотчас выходит на старт
+    * Таблан
+      - http://skyruk.livejournal.com/290069.html
+        - Кости: 4 x D2 (Очки считаются по количеству выпавших светлых сторон)
+          - 1 - активация фишки и/или 2 очка + дополнительный бросок
+          - 2, 3 - 0 очков и переход хода
+          - 4 - 8 очков и дополнительный бросок
+          - 0 - 12 очков и дополнительный бросок
+        - Доска: 12 x 4
+        - У каждого игрока 12 фишек (в начале, выстраиваются в ряд на первой линии)
+        - Игрок, выбросивший единицу, начинает и делает первый ход на 2 клетки
+        - При результативном броске игрок может 
+          - Либо сделать ход одной фишкой на соответствующее количество клеток (2, 8 или 12) 
+          - Либо сделать два хода двумя фишками (1+1, 4+4 или 6+6)
+        - Выпавшие очки должны быть использованы полностью, если это возможно, если нет – они сгорают
+        - Фишка, которая встала на любую клетку в последнем ряду, заканчивает свой путь и не может ходить дальше
+        - На одной клетке может находиться только одна фишка
+          - Если фишка настигает фишку противника – та считается сбитой и удаляется с доски до конца игры
+          - Игрок не может рубить фишки противника в его домашнем ряду, однако его собственные фишки, достигшие домашнего ряда противника, могут быть срублены
+        - Игра считается законченной, когда один из игроков переместил все свои оставшиеся фишки на последнюю горизонталь доски
+          - Побеждает тот, у кого окажется больше фишек в "домашнем" ряду противника
+        - Существует вариант правил, усложняющий и удлиняющий игру
+          - Клетки в домашнем ряду противника должны заниматься постепенно, начиная с самой далекой
+          - Другие ходы в этот ряд запрещены
+    * Таб
+      - http://skyruk.livejournal.com/290069.html
+        - Кости: 4 x D2
+          - 1 - 1 очко или активация фишки + дополнительный бросок
+            - Выпавшая единица (таб) даёт игроку право обратить фишку и переместить её на одно поле вперёд
+            - Можно потратить таб на обычный ход, поскольку активировать фишку получается не всегда
+            - В некоторых вариантах правил предусмотрено накопление «табов» для последующей активации фишек
+          - 2 - 2 очка и переход хода
+          - 3 - 3 очка и переход хода
+          - 4 - 4 очка и дополнительный бросок
+          - 0 - 6 очков и дополнительный бросок
+        - Доска 4 ряда, количество клеток нечётно: 7, 9, 11, 13, 15 или 29
+        - Фишки движутся слева направо, друг другу навстречу
+          - С возможностью преследования в каждом отдельном ряду
+          - Выйдя на центральные дорожки, фишки продолжают циркулировать только по ним
+          - В свои домашние дорожки они не возвращаются
+          - В дом соперника войти не могут, пока есть ещё фишки в своём домашнем ряду
+        - Фишка, нагнавшая фишку соперника, срубает её
+        - Дружественные фишки, оказавшись на одной клетке, могут быть сдвоены (eggeh) и дальше движутся как одна
+          - Если такая пара нагоняет вражескую пару, она разбивает её: одна фишка снимается с доски, другая продолжает движение как одиночная
+          - Сдваивание фишки не является обязательным
+          - Игрок в любое время может разбить пару и двигать фишки по отдельности
+        ? Фишки, вошедшие в домашний ряд противника, прекращают движение, пока другие фишки не закончат свой путь
+        - Игра продолжается до тех пор, пока один игрок не потеряет все свои фишки
+    * Кюз
+      - http://skyruk.livejournal.com/290069.html
+    * Кюст огюн
+      - http://skyruk.livejournal.com/290069.html
+    * Сиг
+      - http://skyruk.livejournal.com/290069.html
+    * Беери-бахри
+      - http://skyruk.livejournal.com/290069.html
+    * Pente-grammai
+    * Пулук
+      - http://skyruk.livejournal.com/290069.html
+        - Кости: 4 x D2 (считаются пустые стороны)
+          - 1-4 - соответствующее количество очков
+          - 0 - 5 очков
+        - Доска: 11 полос (первая и последняя - города)
+        - Игра начинается с пустого поля, фишки стоят в городах
+        - Тот, кто выбросил больше, начинает игру
+        - Далее ходят по очереди, перемещая фишку по доске на соответствующее количество полосок 
+          - Или вводя в игру новую
+        - Две фишки одного цвета не могут встать на одну полоску
+        - На фишку противника (или на столбик, с фишкой противника на верху) можно поставить свою "в столбик" (взяв в плен)
+          - Столбик двигается как единая фишка в направлении, заданном верхней фишкой
+          - Когда доходит до города
+            - Свои фишки возвращаются в игру (в свой город)
+            - Фишки противника изымаются из игры
+        - Точный бросок для достижения финиша не обязателен
+        - Игрок, который захватит или заблокирует все пять фишек противника, выигрывает
+      - http://bashni-shashki.narod.ru/index/0-88
     * Дальдоза
       - http://skyruk.livejournal.com/288965.html
         - Кости: 2 x D4
@@ -196,8 +269,8 @@
           - По правилам Фрииза выпавшие на костях очки могли использоваться отдельно для передвижения нескольких фишек, но могли и суммироваться для хода одной фишки
           - В Северном Тромсё, где игра шла с двумя костями, подобное не дозволялось, и результат броска не мог быть раздроблен
        - Фишка - "король" не принадлежит никому (переходит на сторону одного из игроков), при расстановке она ставится на отметку в центре поля
-       - Фишки начинают игру в своём домашнем ряду, двигаясь слева направо, дойдя до его конца, переходят в средний ряд и меняют направление движения на противоположное (справа налево)
        - Фишки движутся только вперёд
+       - Фишки начинают игру в своём домашнем ряду, двигаясь слева направо, дойдя до его конца, переходят в средний ряд и меняют направление движения на противоположное (справа налево)
        - Достигнув конца среднего ряда, фишки входят в домашний ряд противника, где снова движутся слева направо - и так далее в обратном порядке, возвращаясь на свою домашнюю дорожку
        - По пути фишки противников сталкиваются и рубят друг друга, если настигают
        - И свою, и чужую фишку можно перепрыгивать без последствий
@@ -291,30 +364,99 @@
       * Военные игры (варианты)
       * Алькуэрк (Аль Киркат)
       * Харбага
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/draughts-variants/506-kharbaga
       * Замма
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/draughts-variants/505-zamma
       * Йотай
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/draughts-variants/507-yote
         - http://skyruk.livejournal.com/250752.html
       * Дабло
       * Дамоне
+      * Konane
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/draughts-variants/613-konane
     - Ортогональные шашки
       * Турецкие
+        - https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%88%D0%BA%D0%B8#.D0.A2.D1.83.D1.80.D0.B5.D1.86.D0.BA.D0.B8.D0.B5_.D1.88.D0.B0.D1.88.D0.BA.D0.B8
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/draughts-variants/502-dama_t
       * Армянские
+        - https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%88%D0%BA%D0%B8#.D0.90.D1.80.D0.BC.D1.8F.D0.BD.D1.81.D0.BA.D0.B8.D0.B5_.D1.88.D0.B0.D1.88.D0.BA.D0.B8_.28.D1.82.D0.B0.D0.BC.D0.B0.29
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/draughts-variants/503-tama_a
         - http://www.iggamecenter.com/info/ru/tama.html
       * Осетинские
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/draughts-variants/504-tama_o
     - Диагональные шашки
       * Тайские
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/draughts-variants/500-thai
       * Английские
+        - https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%88%D0%BA%D0%B8#.D0.90.D0.BD.D0.B3.D0.BB.D0.B8.D0.B9.D1.81.D0.BA.D0.B8.D0.B5_.D1.88.D0.B0.D1.88.D0.BA.D0.B8_.28.D1.87.D0.B5.D0.BA.D0.B5.D1.80.D1.81.29
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/draughts-variants/493-checkers
+      * Пул
+        - https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%88%D0%BA%D0%B8#.D0.9F.D1.83.D0.BB_.D1.87.D0.B5.D0.BA.D0.B5.D1.80.D1.81_.28.D0.9F.D1.83.D0.BB.29
+      * Испанские
+        - https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%88%D0%BA%D0%B8#.D0.98.D1.81.D0.BF.D0.B0.D0.BD.D1.81.D0.BA.D0.B8.D0.B5_.D1.88.D0.B0.D1.88.D0.BA.D0.B8
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/draughts-variants/497-dama_s
       * Итальянские
+        - https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%88%D0%BA%D0%B8#.D0.98.D1.82.D0.B0.D0.BB.D1.8C.D1.8F.D0.BD.D1.81.D0.BA.D0.B8.D0.B5_.D1.88.D0.B0.D1.88.D0.BA.D0.B8
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/draughts-variants/498-dama_i
+      * Португальские
+        - https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%88%D0%BA%D0%B8#.D0.9F.D0.BE.D1.80.D1.82.D1.83.D0.B3.D0.B0.D0.BB.D1.8C.D1.81.D0.BA.D0.B8.D0.B5_.D1.88.D0.B0.D1.88.D0.BA.D0.B8
+      * Германские
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/draughts-variants/499-german
+      * Французские
+        - https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%88%D0%BA%D0%B8#.D0.A4.D1.80.D0.B0.D0.BD.D1.86.D1.83.D0.B7.D1.81.D0.BA.D0.B8.D0.B5_.D1.88.D0.B0.D1.88.D0.BA.D0.B8
+        - https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%88%D0%BA%D0%B8
+      * Фризские
+        - https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%88%D0%BA%D0%B8#.D0.A4.D1.80.D0.B8.D0.B7.D1.81.D0.BA.D0.B8.D0.B5_.28.D1.84.D1.80.D0.B8.D1.81.D0.BB.D0.B0.D0.BD.D0.B4.D1.81.D0.BA.D0.B8.D0.B5.29_.D1.88.D0.B0.D1.88.D0.BA.D0.B8
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/draughts-variants/501-frisian
+      * Чешские
+        - https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%88%D0%BA%D0%B8#.D0.A7.D0.B5.D1.88.D1.81.D0.BA.D0.B8.D0.B5_.D1.88.D0.B0.D1.88.D0.BA.D0.B8
+        - https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%88%D0%BA%D0%B8
       * Русские
-        - Взятие "за фук" (устаревшее) - убирается одна из фигур противника из тех, что могла выполнить взятие, если он его прозевал
-      * Польские
+        - https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%88%D0%BA%D0%B8#.D0.A0.D1.83.D1.81.D1.81.D0.BA.D0.B8.D0.B5_.D1.88.D0.B0.D1.88.D0.BA.D0.B8
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/draughts-variants/494-shashki
+        - other
+          - Взятие "за фук" (устаревшее) - убирается одна из фигур противника из тех, что могла выполнить взятие, если он его прозевал
+      * Бразильские
+        - https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%88%D0%BA%D0%B8#.D0.91.D1.80.D0.B0.D0.B7.D0.B8.D0.BB.D1.8C.D1.81.D0.BA.D0.B8.D0.B5_.D1.88.D0.B0.D1.88.D0.BA.D0.B8
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/draughts-variants/495-brazilian
+      * Канадские
+        - https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%88%D0%BA%D0%B8#.D0.9A.D0.B0.D0.BD.D0.B0.D0.B4.D1.81.D0.BA.D0.B8.D0.B5_.D1.88.D0.B0.D1.88.D0.BA.D0.B8
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/draughts-variants/496-canadian
+      * Международные
+        - https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%88%D0%BA%D0%B8#.D0.9C.D0.B5.D0.B6.D0.B4.D1.83.D0.BD.D0.B0.D1.80.D0.BE.D0.B4.D0.BD.D1.8B.D0.B5_.D1.88.D0.B0.D1.88.D0.BA.D0.B8
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/draughts-variants/492-international-draughts
+      * 80-клеточные
+        - https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%88%D0%BA%D0%B8#80-.D0.BA.D0.BB.D0.B5.D1.82.D0.BE.D1.87.D0.BD.D1.8B.D0.B5_.D1.88.D0.B0.D1.88.D0.BA.D0.B8
+      * Диагональные
+        - https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%88%D0%BA%D0%B8#.D0.94.D0.B8.D0.B0.D0.B3.D0.BE.D0.BD.D0.B0.D0.BB.D1.8C.D0.BD.D1.8B.D0.B5_.D1.88.D0.B0.D1.88.D0.BA.D0.B8
+      * Вигмана
+        - https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%88%D0%BA%D0%B8#.D0.A8.D0.B0.D1.88.D0.BA.D0.B8_.D0.92.D0.B8.D0.B3.D0.BC.D0.B0.D0.BD.D0.B0
+      * Двухходовые
+        - https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%88%D0%BA%D0%B8#.D0.94.D0.B2.D1.83.D1.85.D1.85.D0.BE.D0.B4.D0.BE.D0.B2.D1.8B.D0.B5_.D1.88.D0.B0.D1.88.D0.BA.D0.B8
+      * Поддавки
+        - https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%88%D0%BA%D0%B8#.D0.9F.D0.BE.D0.B4.D0.B4.D0.B0.D0.B2.D0.BA.D0.B8_.28.D0.BE.D0.B1.D1.80.D0.B0.D1.82.D0.BD.D1.8B.D0.B5_.D1.88.D0.B0.D1.88.D0.BA.D0.B8.29
       * Ставропольские
+        - https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%88%D0%BA%D0%B8#.D0.A1.D1.82.D0.B0.D0.B2.D1.80.D0.BE.D0.BF.D0.BE.D0.BB.D1.8C.D1.81.D0.BA.D0.B8.D0.B5_.D1.88.D0.B0.D1.88.D0.BA.D0.B8
+      * Самоеды
+        - https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%88%D0%BA%D0%B8#.D0.A8.D0.B0.D1.88.D0.BA.D0.B8-.D1.81.D0.B0.D0.BC.D0.BE.D0.B5.D0.B4.D1.8B
+    - Гексагональные
+      * Hexdame
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/hexagonal-variants/482-hexdame
+      * Pommel
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/hexagonal-variants/629-pommel
+      * Псковские
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/hexagonal-variants/512-pskovskiye-shashki
+      * Hexemergo
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/hexagonal-variants/485-hexemergo
     - Контактные шашки
       * Фанорона
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/contact-draughts/490-fanorona
         - http://skyruk.livejournal.com/250752.html
         - http://www.iggamecenter.com/info/ru/fanorona.html
       * Бушка
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/contact-draughts/491-bushka
         - http://www.mindsports.nl/index.php/arena/bushka/81-rules
+    - Другие варианты взятия
       * Коно
         - http://skyruk.livejournal.com/250752.html
       * Суракарта
@@ -325,19 +467,38 @@
         - http://www.iggamecenter.com/info/ru/taacoca.html
     - Варианты "столбовых шашек"
       * Башни
+        - https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%88%D0%BA%D0%B8#.D0.A1.D1.82.D0.BE.D0.BB.D0.B1.D0.BE.D0.B2.D1.8B.D0.B5_.D1.88.D0.B0.D1.88.D0.BA.D0.B8
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/column-checkers/486-bashni
+      * Многоуровневые
+        - https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%88%D0%BA%D0%B8#80-.D0.BA.D0.BB.D0.B5.D1.82.D0.BE.D1.87.D0.BD.D1.8B.D0.B5_.D1.88.D0.B0.D1.88.D0.BA.D0.B8
       * Ласка
+        - https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%88%D0%BA%D0%B8#.D0.9B.D0.B0.D1.81.D0.BA.D0.B0
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/column-checkers/487-lasca
         - http://www.iggamecenter.com/info/ru/lasca.html
+      * Stapeldammen
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/column-checkers/488-stapeldammen
       * Двойные шашки
       * Трибуны
       * Пиларе
         - http://www.iggamecenter.com/info/ru/pilare.html
-      * Эмерге
+      * Эмерго
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/column-checkers/489-emergo
         - http://www.iggamecenter.com/info/ru/emergo.html
+      * Grabber
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/column-checkers/611-grabber
     - Современные варианты
       * Мурус Галликус
         - http://www.iggamecenter.com/info/ru/murusgallicus.html
       * Дамео
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/draughts-variants/509-dameo
+        - http://www.mindsports.nl/index.php/arena/dameo
         - http://www.iggamecenter.com/info/ru/dameo.html
+      * Croda
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/draughts-variants/508-croda
+      * Harzdame
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/draughts-variants/510-harzdame
+      * Killer Draughts
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/draughts-variants/513-killer-draughts
       * Ордо
         - http://www.iggamecenter.com/info/ru/ordo.html
       * Линии действия
@@ -381,6 +542,7 @@
       * Стратего
     - Шашматы
       * Шатра (Алтайские шашки)
+        - https://ru.wikipedia.org/wiki/%D0%90%D0%BB%D1%82%D0%B0%D0%B9%D1%81%D0%BA%D0%B8%D0%B5_%D1%88%D0%B0%D1%88%D0%BA%D0%B8_%28%D1%88%D0%B0%D1%82%D1%80%D0%B0%29
         - http://skyruk.livejournal.com/339712.html
       * Белорусские шашки
       * Другие
