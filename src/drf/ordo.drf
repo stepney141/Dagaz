@@ -173,23 +173,6 @@
    )
 )
 
-(macro define-penalty-x-moves
-   (moves
-       (mode vertical)
-       (pre (build-stack n))
-       (pre (set-penalty 1))
-       (ordo-move sw)
-       (ordo-move se)
-   )
-   (moves
-       (mode horizontal)
-       (pre (build-stack e))
-       (pre (set-penalty 1))
-       (ordo-move sw)
-       (ordo-move se)
-   )
-)
-
 (game
    (title "Ordo")
    (turn-order Light Dark)
@@ -242,7 +225,7 @@
    (title "OrdoX")
    (pieces
       (attribute penalty 0)
-      (attribute min-penalty 2)
+      (attribute min-penalty 1)
       (pre  check-friend)
       (pre  pre-goals)
       (post check-coherence)
@@ -250,13 +233,14 @@
       (post post-goals)
       (piece 
             (name Man)
-            (define-common-moves)
-            (define-common-x-moves)
-            (define-penalty-moves)
-            (define-penalty-x-moves)
+            (moves 
+                (pre check-coherence)
+                (define-common-moves)
+                (define-common-x-moves)
+            )
             (moves
                 (attribute list-of-the-lists)
-                (pre (set-penalty 2))
+                (pre (set-penalty 1))
                 (pre repair-coherence)
                 (define-common-moves)
                 (define-common-x-moves)
