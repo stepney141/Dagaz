@@ -1,6 +1,6 @@
-(define set-penalty
-   (check (= min-penalty 1))
-   (set! penalty 1)
+(define (set-penalty value)
+   (check (= min-penalty value))
+   (set! penalty value)
 )
 
 (define check-penalty
@@ -23,11 +23,53 @@
 (define check-coherence
    (once
        (check is-friend?)
-       (copy-piece-to-tail current-group)
+       (copy-piece-to-head current-group)
        add-piece-neighbors
    )
    (if (not-empty? current-group)
        (check (piece-contains current-group))
+   )
+)
+
+(define not-used?
+   (foreach (list-of-the-lists current-group)
+       (check (not-contains? current-group))
+   )
+)
+
+(define separate-pieces
+   (all
+       (check is-friend?)
+       (check not-used?)
+       (let current-group empty-list)
+       (copy-piece-to-head current-group)
+       add-piece-neighbors
+       (add-to-tail list-of-the-lists current-group)
+   )
+)
+
+(define repair-coherence
+   (let max-size 0)
+   separate-pieces
+   (foreach (list-of-the-lists current-group)
+       (if (>= (size current-group) max-size)
+           (set! max-size (size current-group))
+       )
+   )
+   (foreach (list-of-the-lists current-group)
+       (if (< (size current-group) max-size)
+           (foreach current-group
+               capture
+           )
+           (del-from list-of-the-lists current-group)
+       )
+   )
+   (if (> (size list-of-the-lists) 1)
+       (let current-group (any list-of-the-lists))
+       (foreach current-group
+           (comment "x" current-position)
+           capture
+       )
    )
 )
 
@@ -40,8 +82,8 @@
 (define post-goals
    (check-win 
        (exists?
-          (check is-friend?)
-          (check (in-zone? goal))
+           (check is-friend?)
+           (check (in-zone? goal))
        )
    )
 )
@@ -73,13 +115,78 @@
 )
 
 (define (ordo-move direction)
-   (set! move.comment turn-mode)
-   (set! move.comment (count current-pieces))
+   (comment turn-mode)
+   (comment (count current-pieces))
    (check direction)
    (while (empty-stack? current-pieces)
       (drop-pieces current-pieces)
       add-move
       (check direction)
+   )
+)
+
+(macro define-common-moves
+   (moves
+       (mode single)
+       (single-move n)(single-move nw)(single-move ne)
+       (single-move w)(single-move e)
+   )
+   (moves
+       (mode vertical)
+       (pre (build-stack n))
+       (ordo-move w) 
+       (ordo-move e) 
+   )
+   (moves
+       (mode horizontal)
+       (pre (build-stack e))
+       (ordo-move n) 
+   )
+)
+
+(macro define-penalty-moves
+   (moves
+       (mode single)
+       (pre (set-penalty 1))
+       (single-move s)(single-move sw)(single-move se)
+   )
+   (moves
+       (mode horizontal)
+       (pre (build-stack e))
+       (pre (set-penalty 1))
+       (ordo-move s)
+   )
+)
+
+(macro define-common-x-moves
+   (moves
+       (mode vertical)
+       (pre (build-stack n))
+       (ordo-move nw)
+       (ordo-move ne)
+   )
+   (moves
+       (mode horizontal)
+       (pre (build-stack e))
+       (ordo-move nw)
+       (ordo-move ne)
+   )
+)
+
+(macro define-penalty-x-moves
+   (moves
+       (mode vertical)
+       (pre (build-stack n))
+       (pre (set-penalty 1))
+       (ordo-move sw)
+       (ordo-move se)
+   )
+   (moves
+       (mode horizontal)
+       (pre (build-stack e))
+       (pre (set-penalty 1))
+       (ordo-move sw)
+       (ordo-move se)
    )
 )
 
@@ -117,46 +224,8 @@
       (post post-goals)
       (piece 
             (name Man)
-            (moves
-                (mode single)
-                (single-move n)(single-move nw)(single-move ne)
-                (single-move w)(single-move e)
-            )
-            (moves
-                (mode single)
-                (pre set-penalty)
-                (single-move s)(single-move sw)(single-move se)
-            )
-            (moves
-                (mode vertical)
-                (pre (build-stack n))
-                (ordo-move w) 
-                (ordo-move e) 
-                (ordo-move nw)
-                (ordo-move ne)
-            )
-            (moves
-                (mode horizontal)
-                (pre (build-stack e))
-                (ordo-move n) 
-                (ordo-move nw)
-                (ordo-move ne)
-            )
-            (moves
-                (mode vertical)
-                (pre (build-stack n))
-                (pre set-penalty)
-                (ordo-move sw)
-                (ordo-move se)
-            )
-            (moves
-                (mode horizontal)
-                (pre (build-stack e))
-                (pre set-penalty)
-                (ordo-move s)
-                (ordo-move sw)
-                (ordo-move se)
-            )
+            (define-common-moves)
+            (define-penalty-moves)
       )
    )
    (setup
@@ -165,6 +234,33 @@
       )
       (Black
             (Man A7 A6 B7 B6 C8 C7 D8 D7 E7 E6 F7 F6 G8 G7 H8 H7 I7 I6 J7 J6)
+      )
+   )
+)
+
+(variant
+   (title "OrdoX")
+   (pieces
+      (attribute penalty 0)
+      (attribute min-penalty 2)
+      (pre  check-friend)
+      (pre  pre-goals)
+      (post check-coherence)
+      (post check-penalty)
+      (post post-goals)
+      (piece 
+            (name Man)
+            (define-common-moves)
+            (define-common-x-moves)
+            (define-penalty-moves)
+            (define-penalty-x-moves)
+            (moves
+                (attribute list-of-the-lists)
+                (pre (set-penalty 2))
+                (pre repair-coherence)
+                (define-common-moves)
+                (define-common-x-moves)
+            )
       )
    )
 )

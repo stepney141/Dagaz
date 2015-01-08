@@ -59,7 +59,7 @@
    (any
       (check is-empty?)
       (drop-pieces current-pieces)
-      (set! move.comment current-position)
+      (comment current-position)
       add-move
    )
 )
@@ -145,8 +145,7 @@
                   (check-in-line strong-w strong-e false) (check-in-line strong-nw strong-se false)
                )))
            )
-           (set! move.comment "x")
-           (set! move.comment current-position)
+           (comment "x" current-position)
            capture
        )
    )
