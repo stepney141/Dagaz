@@ -3,10 +3,16 @@
    (set! penalty 1)
 )
 
-(define add-piece-recursive
-   (copy-piece-to-tail current-group)
+(define check-penalty
+   (check (<= penalty min-penalty))
+   (set! min-penalty penalty)
+)
+
+(define add-piece-neighbors
    (foreach current-group
-       (foreach (try-directions (check is-friend?))
+       (all
+           (check (any n s e w nw sw ne se))
+           (check is-friend?)
            (if (not (piece-contains current-group))
                (copy-piece-to-tail current-group)
            )
@@ -14,15 +20,15 @@
    )
 )
 
-(define invariant
-   (foreach (try-positions (check is-friend?))
-       (if (is-empty? current-group)
-            add-piece-recursive
-       )
+(define check-coherence
+   (once
+       (check is-friend?)
+       (copy-piece-to-tail current-group)
+       add-piece-neighbors
+   )
+   (if (not-empty? current-group)
        (check (piece-contains current-group))
    )
-   (check (<= penalty min-penalty))
-   (set! min-penalty penalty)
 )
 
 (define pre-goals
@@ -106,7 +112,8 @@
       (attribute min-penalty 1)
       (pre  check-friend)
       (pre  pre-goals)
-      (post invariant)
+      (post check-coherence)
+      (post check-penalty)
       (post post-goals)
       (piece 
             (name Man)
