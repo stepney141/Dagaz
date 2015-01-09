@@ -78,9 +78,7 @@
 )
 
 (define goals
-   (check-loss 
-      (not-exists? try-moves)
-   )
+   (check-loss no-moves?)
 )
 
 (game

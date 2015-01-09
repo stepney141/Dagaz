@@ -49,6 +49,7 @@
 )
 
 (define repair-coherence
+   (let list-of-the-lists)
    (let max-size 0)
    separate-pieces
    (foreach (list-of-the-lists current-group)
@@ -74,9 +75,7 @@
 )
 
 (define pre-goals
-   (check-loss 
-       (not-exists? try-moves)
-   )
+   (check-loss no-moves?)
 )
 
 (define post-goals
@@ -88,11 +87,8 @@
    )
 )
 
-(define check-friend
-   (check is-friend?)
-)
-
 (define (single-move direction)
+   (check is-friend?)
    (take-piece-to-head current-pieces)
    (check direction)
    (while is-empty?
@@ -106,6 +102,7 @@
 )
 
 (define (build-stack direction)
+   (check is-friend?)
    (take-piece-to-head current-pieces)
    (while (is-friend? direction)
       (take-piece-to-tail current-pieces)
@@ -226,7 +223,6 @@
    (pieces
       (attribute penalty 0)
       (attribute min-penalty 1)
-      (pre  check-friend)
       (pre  pre-goals)
       (post check-coherence)
       (post check-penalty)
@@ -239,7 +235,6 @@
                 (define-common-x-moves)
             )
             (moves
-                (attribute list-of-the-lists)
                 (pre (set-penalty 1))
                 (pre repair-coherence)
                 (define-common-moves)

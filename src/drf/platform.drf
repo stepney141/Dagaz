@@ -145,7 +145,7 @@
               (check (is-piece? King))
               (check is-attacked?)
            )
-           (not-exists? try-moves)
+           no-moves?
       )
   )
   (check-draw
@@ -154,7 +154,7 @@
   )
   (check-draw
       (priority 0)
-      (not-exists? try-moves)
+      no-moves?
   )
 )
 

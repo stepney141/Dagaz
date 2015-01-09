@@ -6,11 +6,12 @@
    )
    (check-draw
       (priority 1)
-      (and can-draw? (not-exists? try-moves))
+      (check can-draw?)
+      no-moves?
    )
    (check-loss
       (priority 0)
-      (not-exists? try-moves)
+      no-moves?
    )
 )
 
