@@ -26,6 +26,7 @@ public class ExpressionFactory {
 		classes.put("check",             CheckExpression.class);
 		classes.put("check-loss",        CheckLossExpression.class);
 		classes.put("check-win",         CheckWinExpression.class);
+		classes.put("comment",           CommentExpression.class);
 		classes.put("decrement!",        DecrementExpression.class);
 		classes.put("/",                 DivideExpression.class);
 		classes.put("=",                 EqExpression.class);

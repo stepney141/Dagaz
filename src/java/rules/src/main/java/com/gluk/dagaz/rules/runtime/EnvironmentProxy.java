@@ -2,6 +2,7 @@ package com.gluk.dagaz.rules.runtime;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 
 import com.gluk.dagaz.api.exceptions.EvaluationException;
 import com.gluk.dagaz.api.exceptions.ValueNotFoundException;
@@ -16,12 +17,39 @@ public class EnvironmentProxy implements IEnvironment {
 	
 	private int deep = 0;
 	private Map<String, ValueHolder> values = new HashMap<String, ValueHolder>();
+	private boolean isContinuationsSupported = false;
+	private Stack<Integer> trace = new Stack<Integer>(); 
 
+	public EnvironmentProxy(IEnvironment env, IBoardConfiguration board, boolean isContinuationsSupported) {
+		this.env   = env;
+		this.board = board;
+		this.isContinuationsSupported = isContinuationsSupported;
+	}
+	
 	public EnvironmentProxy(IEnvironment env, IBoardConfiguration board) {
 		this.env   = env;
 		this.board = board;
 	}
 	
+	@Override
+	public boolean isContinuationsSupported() {
+		return isContinuationsSupported;
+	}
+
+	@Override
+	public void pushTrace(int ix) {
+		if (isContinuationsSupported) {
+			trace.push(ix);
+		}
+	}
+
+	@Override
+	public void popTrace() {
+		if (isContinuationsSupported) {
+			trace.pop();
+		}
+	}
+
 	@Override
 	public IValue getValue(String name, boolean isQuoted) throws ValueNotFoundException {
 		if (isQuoted && board.isDefined(name)) {

@@ -15,7 +15,7 @@ public class GetExpression extends BaseExpression {
 	}
 	
 	@Override
-	public IValue getValue(IEnvironment env) throws EvaluationException {
+	protected IValue eval(IEnvironment env) throws EvaluationException {
 		return env.getValue(name, isQuoted);
 	}
 

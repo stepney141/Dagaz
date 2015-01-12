@@ -20,7 +20,7 @@ public class ApplyExpression extends BaseExpression {
 	private Map<String, IFunction> funcs = new HashMap<String, IFunction>();
 	
 	@Override
-	public IValue getValue(IEnvironment env) throws EvaluationException {
+	protected IValue eval(IEnvironment env) throws EvaluationException {
 		if (args.size() == 0) {
 			throw new EvaluationException("Empty Apply expression");
 		}

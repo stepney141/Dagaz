@@ -9,7 +9,7 @@ import com.gluk.dagaz.api.rules.runtime.IValue;
 
 public class OrExpression extends BaseExpression {
 
-	public IValue getValue(IEnvironment env) throws EvaluationException {
+	protected IValue eval(IEnvironment env) throws EvaluationException {
 		boolean r = false;
 		try {
 			for (IExpression e: args) {

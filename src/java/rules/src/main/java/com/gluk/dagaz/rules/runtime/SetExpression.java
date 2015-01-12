@@ -9,7 +9,7 @@ import com.gluk.dagaz.api.rules.runtime.IValue;
 public class SetExpression extends BaseExpression {
 
 	@Override
-	public IValue getValue(IEnvironment env) throws EvaluationException {
+	protected IValue eval(IEnvironment env) throws EvaluationException {
 		if (args.size() != 2) {
 			throw new EvaluationException("Bad arity");
 		}

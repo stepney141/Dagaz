@@ -11,5 +11,5 @@
 )
 
 (define main
-  (set! out (factorial 5))
+  (factorial 5)
 )

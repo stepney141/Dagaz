@@ -18,7 +18,7 @@ public class ConstantExpression extends BaseExpression {
 	}
 
 	@Override
-	public IValue getValue(IEnvironment env) throws EvaluationException {
+	protected IValue eval(IEnvironment env) throws EvaluationException {
 		return value;
 	}
 

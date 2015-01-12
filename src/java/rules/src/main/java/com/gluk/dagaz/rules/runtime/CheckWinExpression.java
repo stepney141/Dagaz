@@ -16,7 +16,7 @@ public class CheckWinExpression extends BaseExpression {
 	}
 
 	@Override
-	public IValue getValue(IEnvironment env) throws EvaluationException {
+	protected IValue eval(IEnvironment env) throws EvaluationException {
 		if (args.size() != 1) {
 			throw new EvaluationException("Bad arity");
 		}

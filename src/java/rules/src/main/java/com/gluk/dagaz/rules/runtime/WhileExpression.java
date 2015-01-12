@@ -7,7 +7,7 @@ import com.gluk.dagaz.api.rules.runtime.IValue;
 
 public class WhileExpression extends BaseExpression {
 
-	public IValue getValue(IEnvironment env) throws EvaluationException {
+	protected IValue eval(IEnvironment env) throws EvaluationException {
 		if (args.size() < 2) {
 			throw new EvaluationException("Bad arity [" + Integer.toString(args.size()) + "]");
 		}

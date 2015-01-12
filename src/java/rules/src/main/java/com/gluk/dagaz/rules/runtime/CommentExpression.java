@@ -5,16 +5,15 @@ import com.gluk.dagaz.api.rules.runtime.IEnvironment;
 import com.gluk.dagaz.api.rules.runtime.IExpression;
 import com.gluk.dagaz.api.rules.runtime.IValue;
 
-public class SeqExpression extends BaseExpression {
+public class CommentExpression extends BaseExpression {
+	
+	private final static String COMMENT_NAME = "move.comment";
 
+	@Override
 	protected IValue eval(IEnvironment env) throws EvaluationException {
-		if (args.size() == 0) {
-			throw new EvaluationException("Bad arity [" + Integer.toString(args.size()) + "]");
-		}
-		IValue r = null;
 		for (IExpression e: args) {
-			r = e.getValue(env);
+			env.setValue(COMMENT_NAME, e.getValue(env));
 		}
-		return r;
+		return ConstantValue.createBoolean(true);
 	}
 }
