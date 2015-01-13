@@ -108,6 +108,9 @@ public class EnvironmentProxy implements IEnvironment {
 			throw new EvaluationException("Empty Stack");
 		}
 		deep--;
+		for (String name: values.keySet()) {
+			getValue(name, false);
+		}
 	}
 
 	@Override
