@@ -14,6 +14,10 @@ public class GetExpression extends BaseExpression {
 		this.name = name;
 	}
 	
+	public String getName() {
+		return name;
+	}
+	
 	@Override
 	protected IValue eval(IEnvironment env) throws EvaluationException {
 		return env.getValue(name, isQuoted);

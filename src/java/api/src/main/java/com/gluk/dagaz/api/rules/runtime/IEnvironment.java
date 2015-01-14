@@ -18,4 +18,5 @@ public interface IEnvironment {
 	boolean isContinuationsSupported();
 	void    pushTrace(int ix);
 	void    popTrace();
+	void    addContinuation() throws EvaluationException;
 }

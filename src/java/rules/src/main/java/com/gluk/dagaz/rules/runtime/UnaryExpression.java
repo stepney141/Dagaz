@@ -6,25 +6,17 @@ import com.gluk.dagaz.api.rules.runtime.IEnvironment;
 import com.gluk.dagaz.api.rules.runtime.IExpression;
 import com.gluk.dagaz.api.rules.runtime.IValue;
 
-public class SubExpression extends BaseExpression {
+public abstract class UnaryExpression extends BaseExpression {
 
-	@Override
-	protected IValue eval(IEnvironment env) throws EvaluationException {
-		if ((args.size() < 1) || (args.size() > 2)) {
-			throw new EvaluationException("Bad arity");
+	public IValue getValue(IEnvironment env) throws EvaluationException {
+		if (args.size() != 1) {
+			throw new EvaluationException("Bad arity [" + Integer.toString(args.size()) + "]");
 		}
-		long value = args.get(0).getValue(env).getLong();
-		if (args.size() > 1) {
-			value -= args.get(1).getValue(env).getLong();
-		} else {
-			value = -value;
-		}
-		return new ConstantValue(value);
+		return super.getValue(env);
 	}
-
-	@Override
+	
 	public void addArgument(IExpression arg) throws ParsingException {
-		if (args.size() == 2) {
+		if (args.size() == 1) {
 			throw new ParsingException("Bad arity");
 		}
 		super.addArgument(arg);

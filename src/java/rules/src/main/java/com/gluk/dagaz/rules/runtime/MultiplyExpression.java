@@ -9,9 +9,6 @@ public class MultiplyExpression extends BaseExpression {
 
 	@Override
 	protected IValue eval(IEnvironment env) throws EvaluationException {
-		if (args.size() < 1) {
-			throw new EvaluationException("Bad arity");
-		}
 		long value = 1L;
 		for (IExpression e: args) {
 			value *= e.getValue(env).getLong();

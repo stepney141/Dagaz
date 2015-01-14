@@ -117,4 +117,9 @@ public class EnvironmentProxy implements IEnvironment {
 	public void setScore(int score, long priority) {
 		env.setScore(score, priority);
 	}
+
+	@Override
+	public void addContinuation() throws EvaluationException {
+		throw new EvaluationException("Not Implemented");
+	}
 }

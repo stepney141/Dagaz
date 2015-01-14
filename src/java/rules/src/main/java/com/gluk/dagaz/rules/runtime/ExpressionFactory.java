@@ -20,8 +20,10 @@ public class ExpressionFactory {
 	
 	private ExpressionFactory(IApplication app) {
 		this.app = app;
+		classes.put("abs",               AbsExpression.class);
 		classes.put("+",                 AddExpression.class);
 		classes.put("and",               AndExpression.class);
+		classes.put("any",               AnyExpression.class);
 		classes.put("check-draw",        CheckDrawExpression.class);
 		classes.put("check",             CheckExpression.class);
 		classes.put("check-loss",        CheckLossExpression.class);
@@ -36,6 +38,8 @@ public class ExpressionFactory {
 		classes.put("<=",                LeExpression.class);
 		classes.put("let",               LetExpression.class);
 		classes.put("<",                 LtExpression.class);
+		classes.put("max",               MaxExpression.class);
+		classes.put("min",               MinExpression.class);
 		classes.put("*",                 MultiplyExpression.class);
 		classes.put("!=",                NeExpression.class);
 		classes.put("not",               NotExpression.class);

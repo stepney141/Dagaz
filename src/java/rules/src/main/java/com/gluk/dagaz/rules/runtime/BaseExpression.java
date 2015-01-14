@@ -16,7 +16,9 @@ public abstract class BaseExpression implements IExpression {
 	protected List<IExpression> args = new ArrayList<IExpression>();
 	protected int order = 0;
 	
-	protected abstract IValue eval(IEnvironment env);
+	protected IValue eval(IEnvironment env) throws EvaluationException {
+		throw new EvaluationException("Not Implemented");
+	}
 	
 	public IValue getValue(IEnvironment env) throws EvaluationException {
 		env.pushTrace(order);

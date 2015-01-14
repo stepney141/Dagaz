@@ -46,4 +46,9 @@ public class Environment implements IEnvironment {
 	public void pushTrace(int ix) {}
 
 	public void popTrace() {}
+
+	@Override
+	public void addContinuation() throws EvaluationException {
+		throw new EvaluationException("Unimplemented");
+	}
 }

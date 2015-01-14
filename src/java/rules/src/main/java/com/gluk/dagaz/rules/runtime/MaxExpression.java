@@ -5,14 +5,19 @@ import com.gluk.dagaz.api.rules.runtime.IEnvironment;
 import com.gluk.dagaz.api.rules.runtime.IExpression;
 import com.gluk.dagaz.api.rules.runtime.IValue;
 
-public class AddExpression extends BaseExpression {
+public class MaxExpression extends BaseExpression {
 
-	@Override
 	protected IValue eval(IEnvironment env) throws EvaluationException {
-		long value = 0L;
-		for (IExpression e: args) {
-			value += e.getValue(env).getLong();
+		if (args.size() < 1) {
+			throw new EvaluationException("Bad arity [" + Integer.toString(args.size()) + "]");
 		}
-		return new ConstantValue(value);
+		IValue r = null;
+		for (IExpression e: args) {
+			IValue v = e.getValue(env);
+			if ((r == null) || (r.getLong() < v.getLong())) {
+				r = v;
+			}
+		}
+		return r;
 	}
 }
