@@ -8,6 +8,7 @@ import com.gluk.dagaz.api.rules.runtime.IValue;
 
 public class IfExpression extends BaseExpression {
 
+	@Override
 	protected IValue eval(IEnvironment env) throws EvaluationException {
 		if ((args.size() < 2) || (args.size() > 3)) {
 			throw new EvaluationException("Bad arity [" + Integer.toString(args.size()) + "]");
@@ -23,6 +24,7 @@ public class IfExpression extends BaseExpression {
 		return r;
 	}
 
+	@Override
 	public void addArgument(IExpression arg) throws ParsingException {
 		if (args.size() == 3) {
 			throw new ParsingException("Bad arity");

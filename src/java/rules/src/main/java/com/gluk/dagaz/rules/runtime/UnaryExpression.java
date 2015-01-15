@@ -8,6 +8,7 @@ import com.gluk.dagaz.api.rules.runtime.IValue;
 
 public abstract class UnaryExpression extends BaseExpression {
 
+	@Override
 	public IValue getValue(IEnvironment env) throws EvaluationException {
 		if (args.size() != 1) {
 			throw new EvaluationException("Bad arity [" + Integer.toString(args.size()) + "]");
@@ -15,6 +16,7 @@ public abstract class UnaryExpression extends BaseExpression {
 		return super.getValue(env);
 	}
 	
+	@Override
 	public void addArgument(IExpression arg) throws ParsingException {
 		if (args.size() == 1) {
 			throw new ParsingException("Bad arity");

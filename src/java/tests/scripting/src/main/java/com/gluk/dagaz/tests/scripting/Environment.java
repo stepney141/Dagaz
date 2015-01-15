@@ -20,6 +20,7 @@ public class Environment implements IEnvironment {
     
     public Environment() {}
 
+	@Override
     public IValue getValue(String name, boolean isQuoted) throws ValueNotFoundException {
     	if (value != null) {
     		return value;
@@ -27,28 +28,28 @@ public class Environment implements IEnvironment {
 		throw new ValueNotFoundException("Unimplemented");
 	}
 
+	@Override
 	public void letValue(String name, IValue value) throws EvaluationException {}
 
+	@Override
 	public void setValue(String name, IValue value) throws EvaluationException {
 		LOGGER.debug(value.getString());
 	}
 
+	@Override
 	public void openFrame() {}
 
+	@Override
 	public void closeFrame() throws EvaluationException {}
 
+	@Override
 	public void setScore(int score, long priority) {}
 
-	public boolean isContinuationsSupported() {
-		return false;
+	@Override
+	public IEnvironment getCopy() {
+		return this;
 	}
-
-	public void pushTrace(int ix) {}
-
-	public void popTrace() {}
 
 	@Override
-	public void addContinuation() throws EvaluationException {
-		throw new EvaluationException("Unimplemented");
-	}
+	public void clear() {}
 }

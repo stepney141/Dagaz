@@ -22,6 +22,7 @@ public class ExpressionFactory {
 		this.app = app;
 		classes.put("abs",               AbsExpression.class);
 		classes.put("+",                 AddExpression.class);
+		classes.put("all",               AllDeterminator.class);
 		classes.put("and",               AndExpression.class);
 		classes.put("any",               AnyExpression.class);
 		classes.put("check-draw",        CheckDrawExpression.class);
@@ -29,9 +30,11 @@ public class ExpressionFactory {
 		classes.put("check-loss",        CheckLossExpression.class);
 		classes.put("check-win",         CheckWinExpression.class);
 		classes.put("comment",           CommentExpression.class);
+		classes.put("count",             CountDeterminator.class);
 		classes.put("decrement!",        DecrementExpression.class);
 		classes.put("/",                 DivideExpression.class);
 		classes.put("=",                 EqExpression.class);
+		classes.put("exists?",           ExistsDeterminator.class);
 		classes.put(">",                 GtExpression.class);
 		classes.put(IF_WORD,             IfExpression.class);
 		classes.put("increment!",        IncrementExpression.class);

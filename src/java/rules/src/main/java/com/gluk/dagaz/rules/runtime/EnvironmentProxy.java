@@ -7,18 +7,23 @@ import java.util.Stack;
 import com.gluk.dagaz.api.exceptions.EvaluationException;
 import com.gluk.dagaz.api.exceptions.ValueNotFoundException;
 import com.gluk.dagaz.api.rules.board.IBoardConfiguration;
+import com.gluk.dagaz.api.rules.runtime.IContinuation;
+import com.gluk.dagaz.api.rules.runtime.IContinuationSupport;
 import com.gluk.dagaz.api.rules.runtime.IEnvironment;
 import com.gluk.dagaz.api.rules.runtime.IValue;
 
-public class EnvironmentProxy implements IEnvironment {
+public class EnvironmentProxy implements IEnvironment, IContinuationSupport {
 	
 	private IEnvironment env;
 	private IBoardConfiguration board;
 	
 	private int deep = 0;
 	private Map<String, ValueHolder> values = new HashMap<String, ValueHolder>();
+	
 	private boolean isContinuationsSupported = false;
-	private Stack<Integer> trace = new Stack<Integer>(); 
+	private Stack<Integer> trace = new Stack<Integer>(); // TODO: Change initial capacity
+	private Stack<IValue> cached = new Stack<IValue>();  // TODO: Change initial capacity
+	private Stack<IContinuation> continuations = new Stack<IContinuation>(); 
 
 	public EnvironmentProxy(IEnvironment env, IBoardConfiguration board, boolean isContinuationsSupported) {
 		this.env   = env;
@@ -29,6 +34,41 @@ public class EnvironmentProxy implements IEnvironment {
 	public EnvironmentProxy(IEnvironment env, IBoardConfiguration board) {
 		this.env   = env;
 		this.board = board;
+	}
+	
+	@Override
+	public IEnvironment getCopy() {
+		// TODO: Реализовать глубокое копирование
+		return this;
+	}
+
+
+	@Override
+	public void clear() {
+		trace.clear();
+		cached.clear();
+		continuations.clear();
+		values.clear();
+	}
+	
+	@Override
+	public void addContinuation() throws EvaluationException {
+		IContinuation c = new Continuation(this, trace, cached);
+		continuations.push(c);
+	}
+	
+	@Override
+	public IContinuation getContinuation() {
+		if (continuations.isEmpty()) {
+			return null;
+		} else {
+			IContinuation c = continuations.pop();
+			if (c.getLevel() <= trace.size()) {
+				continuations.push(c);
+				return null;
+			}
+			return c;
+		}
 	}
 	
 	@Override
@@ -46,10 +86,28 @@ public class EnvironmentProxy implements IEnvironment {
 	@Override
 	public void popTrace() {
 		if (isContinuationsSupported) {
-			trace.pop();
+			if (!trace.isEmpty()) {
+				trace.pop();
+			}
 		}
 	}
 
+	@Override
+	public void pushValue(IValue v) {
+		if (isContinuationsSupported) {
+			cached.push(v);
+		}
+	}
+
+	@Override
+	public void popValue() {
+		if (isContinuationsSupported) {
+			if (!cached.isEmpty()) {
+				cached.pop();
+			}
+		}
+	}
+	
 	@Override
 	public IValue getValue(String name, boolean isQuoted) throws ValueNotFoundException {
 		if (isQuoted && board.isDefined(name)) {
@@ -116,10 +174,5 @@ public class EnvironmentProxy implements IEnvironment {
 	@Override
 	public void setScore(int score, long priority) {
 		env.setScore(score, priority);
-	}
-
-	@Override
-	public void addContinuation() throws EvaluationException {
-		throw new EvaluationException("Not Implemented");
 	}
 }

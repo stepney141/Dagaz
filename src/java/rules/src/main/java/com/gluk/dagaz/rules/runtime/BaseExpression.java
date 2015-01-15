@@ -6,6 +6,8 @@ import java.util.List;
 import com.gluk.dagaz.api.application.IApplication;
 import com.gluk.dagaz.api.exceptions.EvaluationException;
 import com.gluk.dagaz.api.exceptions.ParsingException;
+import com.gluk.dagaz.api.rules.runtime.IContinuation;
+import com.gluk.dagaz.api.rules.runtime.IContinuationSupport;
 import com.gluk.dagaz.api.rules.runtime.IEnvironment;
 import com.gluk.dagaz.api.rules.runtime.IExpression;
 import com.gluk.dagaz.api.rules.runtime.IValue;
@@ -16,14 +18,56 @@ public abstract class BaseExpression implements IExpression {
 	protected List<IExpression> args = new ArrayList<IExpression>();
 	protected int order = 0;
 	
+	private IValue cache = null;
+	
 	protected IValue eval(IEnvironment env) throws EvaluationException {
 		throw new EvaluationException("Not Implemented");
 	}
 	
+	@Override
+	public void setCache(IValue v) {
+		cache = v;
+	}
+
+	@Override
+	public void clearCache() {
+		cache = null;
+	}
+
+	@Override
+	public IValue getValue(IContinuation cont) throws EvaluationException {
+		int ix = cont.popTrace();
+		for (int i = 0; i < ix; i++) {
+			args.get(i).setCache(cont.popValue());
+		}
+		IExpression current = args.get(ix); 
+		current.setCache(current.getValue(cont));
+		IEnvironment env = cont.getEnvironment();
+		IValue r = getValue(env);
+		for (IExpression e: args) {
+			e.clearCache();
+		}
+		return r;
+	}
+	
 	public IValue getValue(IEnvironment env) throws EvaluationException {
-		env.pushTrace(order);
+		if (cache != null) {
+			return cache;
+		}
+		if (env instanceof IContinuationSupport) {
+			IContinuationSupport cs = (IContinuationSupport)env;
+			cs.pushTrace(order);
+		}
 		IValue v = eval(env);
-		env.popTrace();
+		if (env instanceof IContinuationSupport) {
+			IContinuationSupport cs = (IContinuationSupport)env;
+			cs.popTrace();
+			for (IExpression e: args) {
+				e.clearCache();
+				cs.popValue();
+			}
+			cs.pushValue(v);
+		}
 		return v;
 	}
 

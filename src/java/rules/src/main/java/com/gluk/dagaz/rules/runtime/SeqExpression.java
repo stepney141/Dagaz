@@ -7,6 +7,7 @@ import com.gluk.dagaz.api.rules.runtime.IValue;
 
 public class SeqExpression extends BaseExpression {
 
+	@Override
 	protected IValue eval(IEnvironment env) throws EvaluationException {
 		IValue r = null;
 		for (IExpression e: args) {

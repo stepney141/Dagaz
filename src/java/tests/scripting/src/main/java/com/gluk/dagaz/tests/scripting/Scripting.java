@@ -44,6 +44,7 @@ public class Scripting extends BaseApplication {
 				IValue v = null;
 				for (int i=0; i < ITERATION_COUNT; i++) {
 					v = f.getExpression().getValue(proxy);
+					proxy.clear();
 				}
 				if (v != null) {
 					env.setValue("out", v);

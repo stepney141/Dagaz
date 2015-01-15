@@ -6,6 +6,7 @@ import com.gluk.dagaz.api.rules.runtime.IValue;
 
 public class AbsExpression extends UnaryExpression {
 
+	@Override
 	protected IValue eval(IEnvironment env) throws EvaluationException {
 		long r = Math.abs(args.get(0).getValue(env).getLong());
 		return new ConstantValue(r);

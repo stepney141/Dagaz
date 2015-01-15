@@ -3,18 +3,19 @@ package com.gluk.dagaz.rules.runtime;
 import com.gluk.dagaz.api.exceptions.CheckException;
 import com.gluk.dagaz.api.exceptions.EvaluationException;
 import com.gluk.dagaz.api.exceptions.ParsingException;
+import com.gluk.dagaz.api.rules.runtime.IContinuationSupport;
 import com.gluk.dagaz.api.rules.runtime.IEnvironment;
 import com.gluk.dagaz.api.rules.runtime.IExpression;
 import com.gluk.dagaz.api.rules.runtime.IValue;
 
-public class AnyExpression extends BaseExpression {
+public class AnyExpression extends BaseAnyExpression {
 	
 	private final static String RANGE_NAME    = "_";
 	
 	private IExpression currentRange = null;
 	private boolean isRanged = false;
-	private int currentVariant = 0; // TODO: Сбрасывается при завершении обработки Continuation-а
 	
+	@Override
 	public IValue getValue(IEnvironment env) throws EvaluationException {
 		if (currentRange != null) {
 			if (isRanged) {
@@ -30,14 +31,18 @@ public class AnyExpression extends BaseExpression {
 		if (args.isEmpty()) {
 			throw new CheckException("No Variants");
 		}
-		if (currentVariant + 1 < args.size()) {
-			env.pushTrace(currentVariant + 1);
-			env.addContinuation();
-			env.popTrace();
+		if (env instanceof IContinuationSupport) {
+			IContinuationSupport cs = (IContinuationSupport)env;
+			if (currentVariant + 1 < args.size()) {
+				cs.pushTrace(currentVariant + 1);
+				cs.addContinuation();
+				cs.popTrace();
+			}
 		}
 		return args.get(currentVariant).getValue(env);
 	}
 	
+	@Override
 	public void addArgument(IExpression arg) throws ParsingException {
 		if (arg instanceof GetExpression) {
 			GetExpression e = (GetExpression)arg;

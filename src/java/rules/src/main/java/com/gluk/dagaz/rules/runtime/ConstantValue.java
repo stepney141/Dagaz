@@ -37,18 +37,22 @@ public class ConstantValue implements IValue {
 		return r;
 	}
 	
+	@Override
 	public boolean isList() {
 		return false;
 	}
 
+	@Override
 	public boolean isBoolean() {
 		return (type == SystemIds.BOOLEAN_TYPE);
 	}
 
+	@Override
 	public boolean isNumber() {
 		return (type == SystemIds.NUMBER_TYPE);
 	}
 
+	@Override
 	public String getString() throws RuntimeException {
 		if (value == null) {
 			throw new RuntimeException("Unknown value");
@@ -56,6 +60,7 @@ public class ConstantValue implements IValue {
 		return value;
 	}
 
+	@Override
 	public boolean getBoolean() throws RuntimeException {
 		if (value == null) {
 			throw new RuntimeException("Unknown value");
@@ -63,6 +68,7 @@ public class ConstantValue implements IValue {
 		return (!value.isEmpty());
 	}
 
+	@Override
 	public long getLong() throws RuntimeException {
 		if (value == null) {
 			throw new RuntimeException("Unknown value");
@@ -75,5 +81,4 @@ public class ConstantValue implements IValue {
 		}
 		return r;
 	}
-
 }

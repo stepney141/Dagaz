@@ -8,6 +8,7 @@ import com.gluk.dagaz.api.rules.runtime.IValue;
 
 public class NotExpression extends UnaryExpression {
 
+	@Override
 	protected IValue eval(IEnvironment env) throws EvaluationException {
 		boolean r = true;
 		try {
