@@ -2,7 +2,6 @@ package com.gluk.dagaz.rules.runtime;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
 
 import com.gluk.dagaz.api.exceptions.EvaluationException;
 import com.gluk.dagaz.api.exceptions.ValueNotFoundException;
@@ -21,14 +20,13 @@ public class EnvironmentProxy implements IEnvironment, IContinuationSupport {
 	private Map<String, ValueHolder> values = new HashMap<String, ValueHolder>();
 	
 	private boolean isContinuationsSupported = false;
-	private Stack<Integer> trace = new Stack<Integer>(); // TODO: Change initial capacity
-	private Stack<IValue> cached = new Stack<IValue>();  // TODO: Change initial capacity
-	private Stack<IContinuation> continuations = new Stack<IContinuation>(); 
-
+	private IContinuationSupport cs = null;
+	
 	public EnvironmentProxy(IEnvironment env, IBoardConfiguration board, boolean isContinuationsSupported) {
 		this.env   = env;
 		this.board = board;
 		this.isContinuationsSupported = isContinuationsSupported;
+		this.cs = new ContinuationSupport();
 	}
 	
 	public EnvironmentProxy(IEnvironment env, IBoardConfiguration board) {
@@ -36,75 +34,69 @@ public class EnvironmentProxy implements IEnvironment, IContinuationSupport {
 		this.board = board;
 	}
 	
-	@Override
-	public IEnvironment getCopy() {
-		// TODO: Реализовать глубокое копирование
-		return this;
-	}
-
-
-	@Override
-	public void clear() {
-		trace.clear();
-		cached.clear();
-		continuations.clear();
-		values.clear();
-	}
-	
-	@Override
-	public void addContinuation() throws EvaluationException {
-		IContinuation c = new Continuation(this, trace, cached);
-		continuations.push(c);
-	}
-	
-	@Override
-	public IContinuation getContinuation() {
-		if (continuations.isEmpty()) {
-			return null;
-		} else {
-			IContinuation c = continuations.pop();
-			if (c.getLevel() <= trace.size()) {
-				continuations.push(c);
-				return null;
-			}
-			return c;
+	public EnvironmentProxy(EnvironmentProxy src) {
+		this.env   = src.env.getCopy();
+		this.board = src.board;
+		this.deep  = src.deep;
+		this.cs    = src.cs;
+		this.isContinuationsSupported = src.isContinuationsSupported;
+		for (String name: src.values.keySet()) {
+			ValueHolder h = new ValueHolder(src.values.get(name));
+			values.put(name, h);
 		}
 	}
 	
+	@Override
+	public IEnvironment getCopy() {
+		return new EnvironmentProxy(this);
+	}
+
 	@Override
 	public boolean isContinuationsSupported() {
 		return isContinuationsSupported;
 	}
 
 	@Override
+	public void clear() {
+		cs = new ContinuationSupport();
+		values.clear();
+	}
+	
+	@Override
+	public void addContinuation(IEnvironment env) throws EvaluationException {
+		cs.addContinuation(env);
+	}
+	
+	@Override
+	public IContinuation getContinuation() {
+		return cs.getContinuation();
+	}
+	
+	@Override
 	public void pushTrace(int ix) {
 		if (isContinuationsSupported) {
-			trace.push(ix);
+			cs.pushTrace(ix);
 		}
 	}
 
 	@Override
 	public void popTrace() {
 		if (isContinuationsSupported) {
-			if (!trace.isEmpty()) {
-				trace.pop();
-			}
+			cs.popTrace();
 		}
 	}
 
 	@Override
 	public void pushValue(IValue v) {
 		if (isContinuationsSupported) {
-			cached.push(v);
+			cs.pushValue(v);
 		}
 	}
 
 	@Override
 	public void popValue() {
 		if (isContinuationsSupported) {
-			if (!cached.isEmpty()) {
-				cached.pop();
-			}
+			cs.popValue();
 		}
 	}
 	

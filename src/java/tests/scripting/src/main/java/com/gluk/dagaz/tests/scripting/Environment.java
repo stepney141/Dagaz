@@ -52,4 +52,9 @@ public class Environment implements IEnvironment {
 
 	@Override
 	public void clear() {}
+
+	@Override
+	public boolean isContinuationsSupported() {
+		return false;
+	}
 }

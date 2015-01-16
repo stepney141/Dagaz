@@ -37,7 +37,7 @@ public class Scripting extends BaseApplication {
 			IFunctionList fl = getFunctionList();
 			IFunction f = fl.getFunction("main@0");
 			IBoardConfiguration board = new Board();
-			for (long x = 1; x <= 20; x++) {
+			for (long x = 1; x <= 10; x++) {
 				IEnvironment env = new Environment(x);
 				IEnvironment proxy = new EnvironmentProxy(env, board, true);
 				long timestamp = System.currentTimeMillis();

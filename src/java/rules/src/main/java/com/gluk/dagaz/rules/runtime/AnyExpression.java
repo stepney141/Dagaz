@@ -35,7 +35,7 @@ public class AnyExpression extends BaseAnyExpression {
 			IContinuationSupport cs = (IContinuationSupport)env;
 			if (currentVariant + 1 < args.size()) {
 				cs.pushTrace(currentVariant + 1);
-				cs.addContinuation();
+				cs.addContinuation(env);
 				cs.popTrace();
 			}
 		}

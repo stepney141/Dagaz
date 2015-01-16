@@ -16,5 +16,6 @@ public interface IEnvironment {
 	void         closeFrame() throws EvaluationException;
 	void         setScore(int score, long priority);
 	IEnvironment getCopy();
+	boolean      isContinuationsSupported();
 	void         clear();
 }

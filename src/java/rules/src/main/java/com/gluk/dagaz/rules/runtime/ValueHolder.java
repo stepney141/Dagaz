@@ -14,6 +14,16 @@ public class ValueHolder {
 		this.parent = parent;
 	}
 	
+	public ValueHolder(ValueHolder src) {
+		this.deep   = src.deep;
+		this.value  = src.value;
+		if (src.parent == null) {
+			this.parent = null;
+		} else {
+			this.parent = new ValueHolder(src.parent);
+		}
+	}
+	
 	public int getDeep() {
 		return deep;
 	}

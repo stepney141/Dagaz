@@ -21,7 +21,7 @@ public class AllDeterminator extends BaseDeterminator {
 			// Do Nothing
 		}
 		if (env instanceof IContinuationSupport) {
-			IContinuationSupport cs = (IContinuationSupport)env;
+			IContinuationSupport cs = getContinuationSupport();
 			for (IContinuation cont = cs.getContinuation(); cont != null; cont = cs.getContinuation()) {
 				try {
 					for (IExpression e: args) {

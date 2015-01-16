@@ -23,7 +23,7 @@ public class AnyRange extends BaseAnyExpression {
 			IContinuationSupport cs = (IContinuationSupport)env;
 			if (x + 1 <= b) {
 				cs.pushTrace(currentVariant + 1);
-				cs.addContinuation();
+				cs.addContinuation(env);
 				cs.popTrace();
 			}
 		}
