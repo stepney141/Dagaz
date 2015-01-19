@@ -57,7 +57,8 @@
    (check (>= flying-mans-count (count (check is-friend?))))
    (check is-friend?)
    (take-piece-to-head current-pieces)
-   (any
+   (all
+      any-position
       (check is-empty?)
       (drop-pieces current-pieces)
       (comment current-position)
@@ -120,19 +121,22 @@
 
 (define capturing
    (let capturing-count
-      (count-trues
-          (check-in-line strong-n true) (check-in-line strong-ne true)
-          (check-in-line strong-s true) (check-in-line strong-sw true)
-          (check-in-line strong-e true) (check-in-line strong-se true)
-          (check-in-line strong-w true) (check-in-line strong-nw true)
-          (check-in-line strong-n strong-s true) (check-in-line strong-ne strong-sw true)
-          (check-in-line strong-s strong-n true) (check-in-line strong-sw strong-ne true)
-          (check-in-line strong-e strong-w true) (check-in-line strong-se strong-nw true)
-          (check-in-line strong-w strong-e true) (check-in-line strong-nw strong-se true)
+      (count 
+          (any
+              (check-in-line strong-n true) (check-in-line strong-ne true)
+              (check-in-line strong-s true) (check-in-line strong-sw true)
+              (check-in-line strong-e true) (check-in-line strong-se true)
+              (check-in-line strong-w true) (check-in-line strong-nw true)
+              (check-in-line strong-n strong-s true) (check-in-line strong-ne strong-sw true)
+              (check-in-line strong-s strong-n true) (check-in-line strong-sw strong-ne true)
+              (check-in-line strong-e strong-w true) (check-in-line strong-se strong-nw true)
+              (check-in-line strong-w strong-e true) (check-in-line strong-nw strong-se true)
+          )
       )
    )
    (while (decrement! capturing-count)
-       (any 
+       (all
+           any-position
            (check is-enemy?) 
            (if in-line-checking?
                (check (not (or
@@ -148,6 +152,7 @@
            )
            (comment "x" current-position)
            capture
+           add-move-part
        )
    )
 )

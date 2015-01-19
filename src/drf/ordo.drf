@@ -21,12 +21,12 @@
 )
 
 (define check-coherence
-   (once
-       (check is-friend?)
-       (copy-piece-to-head current-group)
-       add-piece-neighbors
-   )
-   (if (not-empty? current-group)
+   (if (exists?
+           any-position
+           (check is-friend?)
+           (copy-piece-to-head current-group)
+           add-piece-neighbors
+       )
        (check (piece-contains current-group))
    )
 )
@@ -39,6 +39,7 @@
 
 (define separate-pieces
    (all
+       any-position
        (check is-friend?)
        (check not-used?)
        (let current-group empty-list)
@@ -81,6 +82,7 @@
 (define post-goals
    (check-win 
        (exists?
+           any-position
            (check is-friend?)
            (check (in-zone? goal))
        )
@@ -113,9 +115,12 @@
 
 (define (ordo-move direction)
    (comment turn-mode)
-   (comment (count current-pieces))
+   (comment (size current-pieces))
    (check direction)
-   (while (empty-stack? current-pieces)
+   (while is-empty?
+      (foreach current-group
+         (check is-empty?)
+      )
       (drop-pieces current-pieces)
       add-move
       (check direction)
