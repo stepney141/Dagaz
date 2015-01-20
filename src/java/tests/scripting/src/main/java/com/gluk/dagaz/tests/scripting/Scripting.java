@@ -16,10 +16,9 @@ public class Scripting extends BaseApplication {
     private static final Logger LOGGER = Logger.getLogger(Scripting.class);
 
     private final static String SCRIPT_SCOPE      = "./drf";
-	private final static String SCRIPT_NAME       = "fib.drf";
+	private final static String SCRIPT_NAME       = "any.drf";
     private final static String TRANSFORM_SCOPE   = "../../../xslt";
     private final static String BASE_TRANSFORM    = "drf-to-internal.xsl";
-    private final static int    ITERATION_COUNT   = 1000;
 
     public static void main(String[] args) {
 		Scripting script = new Scripting();
@@ -37,20 +36,16 @@ public class Scripting extends BaseApplication {
 			IFunctionList fl = getFunctionList();
 			IFunction f = fl.getFunction("main@0");
 			IBoardConfiguration board = new Board();
-			for (long x = 1; x <= 10; x++) {
-				IEnvironment env = new Environment(x);
-				IEnvironment proxy = new EnvironmentProxy(env, board, true);
-				long timestamp = System.currentTimeMillis();
-				IValue v = null;
-				for (int i=0; i < ITERATION_COUNT; i++) {
-					v = f.getExpression().getValue(proxy);
-					proxy.clear();
-				}
-				if (v != null) {
-					env.setValue("out", v);
-				}
-				LOGGER.debug("Evaluation Time = " + Long.toString(System.currentTimeMillis() - timestamp));
+			IEnvironment env = new Environment();
+			IEnvironment proxy = new EnvironmentProxy(env, board, true);
+			long timestamp = System.currentTimeMillis();
+			IValue v = null;
+			v = f.getExpression().getValue(proxy);
+			proxy.clear();
+			if (v != null) {
+				env.setValue("out", v);
 			}
+			LOGGER.debug("Evaluation Time = " + Long.toString(System.currentTimeMillis() - timestamp));
 		} catch (Exception e) {
 			LOGGER.fatal(e.toString());
 		}

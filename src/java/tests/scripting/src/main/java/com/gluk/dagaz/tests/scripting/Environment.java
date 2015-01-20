@@ -1,5 +1,7 @@
 package com.gluk.dagaz.tests.scripting;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 import com.gluk.dagaz.api.exceptions.EvaluationException;
@@ -56,5 +58,15 @@ public class Environment implements IEnvironment {
 	@Override
 	public boolean isContinuationsSupported() {
 		return false;
+	}
+
+	@Override
+	public List<String> getPositions(String zone) throws EvaluationException {
+		throw new EvaluationException("Unimplemented");
+	}
+
+	@Override
+	public List<String> getPositions() throws EvaluationException {
+		throw new EvaluationException("Unimplemented");
 	}
 }

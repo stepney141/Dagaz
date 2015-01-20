@@ -1,6 +1,7 @@
 package com.gluk.dagaz.rules.runtime;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.gluk.dagaz.api.exceptions.EvaluationException;
@@ -166,5 +167,15 @@ public class EnvironmentProxy implements IEnvironment, IContinuationSupport {
 	@Override
 	public void setScore(int score, long priority) {
 		env.setScore(score, priority);
+	}
+
+	@Override
+	public List<String> getPositions(String zone) throws EvaluationException {
+		return env.getPositions(zone);
+	}
+
+	@Override
+	public List<String> getPositions() throws EvaluationException {
+		return env.getPositions();
 	}
 }

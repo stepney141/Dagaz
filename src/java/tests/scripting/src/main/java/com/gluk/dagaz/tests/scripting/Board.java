@@ -1,6 +1,9 @@
 package com.gluk.dagaz.tests.scripting;
 
+import java.util.List;
+
 import com.gluk.dagaz.api.exceptions.BoardException;
+import com.gluk.dagaz.api.exceptions.EvaluationException;
 import com.gluk.dagaz.api.rules.board.IBoardConfiguration;
 
 public class Board implements IBoardConfiguration {
@@ -31,5 +34,15 @@ public class Board implements IBoardConfiguration {
 
 	public boolean isDefined(String name) {
 		return false;
+	}
+
+	@Override
+	public List<String> getPositions(String zone, String player) throws EvaluationException {
+		throw new EvaluationException("Unimplemented");
+	}
+
+	@Override
+	public List<String> getPositions() throws EvaluationException {
+		throw new EvaluationException("Unimplemented");
 	}
 }

@@ -25,6 +25,7 @@ public class ExpressionFactory {
 		classes.put("all",               AllDeterminator.class);
 		classes.put("and",               AndExpression.class);
 		classes.put("any",               AnyExpression.class);
+		classes.put("any-position",      AnyPositionExpression.class);
 		classes.put("check-draw",        CheckDrawExpression.class);
 		classes.put("check",             CheckExpression.class);
 		classes.put("check-loss",        CheckLossExpression.class);
@@ -59,6 +60,10 @@ public class ExpressionFactory {
 			instance = new ExpressionFactory(app);
 		}
 		return instance;
+	}
+	
+	public boolean isDefined(String name) {
+		return (classes.get(name) != null);
 	}
 
 	public IExpression createExpression(String name) throws ParsingException {

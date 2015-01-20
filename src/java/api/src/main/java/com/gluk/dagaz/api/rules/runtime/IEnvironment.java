@@ -1,5 +1,7 @@
 package com.gluk.dagaz.api.rules.runtime;
 
+import java.util.List;
+
 import com.gluk.dagaz.api.exceptions.EvaluationException;
 import com.gluk.dagaz.api.exceptions.ValueNotFoundException;
 
@@ -12,10 +14,12 @@ public interface IEnvironment {
 	IValue       getValue(String name, boolean isQuoted) throws ValueNotFoundException;
 	void         letValue(String name, IValue value) throws EvaluationException;
 	void         setValue(String name, IValue value) throws EvaluationException;
-	void         openFrame();
+	void         openFrame() throws EvaluationException;
 	void         closeFrame() throws EvaluationException;
 	void         setScore(int score, long priority);
 	IEnvironment getCopy();
 	boolean      isContinuationsSupported();
 	void         clear();
+	List<String> getPositions(String zone) throws EvaluationException;
+	List<String> getPositions() throws EvaluationException;
 }

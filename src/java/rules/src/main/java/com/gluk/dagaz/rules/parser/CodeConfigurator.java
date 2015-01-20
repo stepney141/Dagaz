@@ -83,9 +83,10 @@ public class CodeConfigurator extends BaseConfigurator {
 		if (!type.equals(Parser.NODE_TAG)) {
 			throw new ParsingException("Bad node [" + type + "]");
 		}
+		ExpressionFactory ef = ExpressionFactory.getInstance(app);
 		String name = getName(stmt);
 		int arity = getArity(stmt);
-		if ((arity == 0) && !isFunction(name)) {
+		if ((arity == 0) && !ef.isDefined(name) && !isFunction(name)) {
 			if (parent.isQuoted(ix)) {
 				IExpression e = new ConstantExpression(name);
 				parent.addArgument(e);
@@ -96,7 +97,6 @@ public class CodeConfigurator extends BaseConfigurator {
 				return;
 			}
 		}
-		ExpressionFactory ef = ExpressionFactory.getInstance(app);
 		IExpression e = ef.createExpression(name);
 		IExpression seq = e;
 		NodeIterator nl = getIterator(stmt, ALL_XP);

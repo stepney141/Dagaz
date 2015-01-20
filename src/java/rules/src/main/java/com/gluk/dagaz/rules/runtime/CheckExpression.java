@@ -7,7 +7,7 @@ import com.gluk.dagaz.api.rules.runtime.IEnvironment;
 import com.gluk.dagaz.api.rules.runtime.IExpression;
 import com.gluk.dagaz.api.rules.runtime.IValue;
 
-public class CheckExpression extends BaseExpression {
+public class CheckExpression extends BaseAnyExpression {
 
 	@Override
 	protected IValue eval(IEnvironment env) throws EvaluationException {

@@ -16,4 +16,5 @@ public interface IExpression {
 	void    setOrder(int order);
 	void    setCache(IValue v);
 	void    clearCache();
+	void    clear();
 }

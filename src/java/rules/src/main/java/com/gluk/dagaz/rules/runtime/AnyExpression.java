@@ -12,21 +12,21 @@ public class AnyExpression extends BaseAnyExpression {
 	
 	private final static String RANGE_NAME    = "_";
 	
-	private IExpression currentRange = null;
+	private IExpression currentExpression = null;
 	private boolean isRanged = false;
 	
 	@Override
 	public IValue getValue(IEnvironment env) throws EvaluationException {
-		if (currentRange != null) {
+		if (currentExpression != null) {
 			if (isRanged) {
 				throw new EvaluationException("Bad Range");
 			}
 			try {
-				super.addArgument(currentRange);
+				super.addArgument(currentExpression);
 			} catch (ParsingException e) {
 				throw new EvaluationException(e.toString(), e);
 			}
-			currentRange = null;
+			currentExpression = null;
 		}
 		if (args.isEmpty()) {
 			throw new CheckException("No Variants");
@@ -47,25 +47,26 @@ public class AnyExpression extends BaseAnyExpression {
 		if (arg instanceof GetExpression) {
 			GetExpression e = (GetExpression)arg;
 			if (e.getName().equals(RANGE_NAME)) {
-				if (isRanged) {
+				if (isRanged || (currentExpression == null)) {
 					throw new ParsingException("Bad Range");
 				}
 				isRanged = true;
 				return;
 			}
 		}
-		if (isRanged && (currentRange != null)) {
-			currentRange.addArgument(arg);
-			super.addArgument(currentRange);
-			currentRange = null;
+		if (isRanged && (currentExpression != null)) {
+			IExpression range = new AnyRange();
+			range.addArgument(currentExpression);
+			range.addArgument(arg);
+			super.addArgument(range);
+			currentExpression = null;
 			isRanged = false;
 			return;
 		}
-		if (currentRange != null) {
-			super.addArgument(currentRange);
+		if (currentExpression != null) {
+			super.addArgument(currentExpression);
 		}
-		currentRange = new AnyRange();
-		currentRange.addArgument(arg);
+		currentExpression = arg;
 		isRanged = false;
 	}
 }

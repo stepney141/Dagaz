@@ -1,11 +1,14 @@
 package com.gluk.dagaz.rules.board;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import com.gluk.dagaz.api.exceptions.BoardException;
+import com.gluk.dagaz.api.exceptions.EvaluationException;
 import com.gluk.dagaz.api.rules.board.IBoardConfiguration;
 
 public abstract class BoardConfiguration implements IBoardConfiguration {
@@ -22,6 +25,39 @@ public abstract class BoardConfiguration implements IBoardConfiguration {
 
 	public boolean isDefined(String name) {
 		return (positions.containsKey(name) || directions.contains(name));
+	}
+
+	@Override
+	public List<String> getPositions(String zone, String player) throws EvaluationException {
+		List<String> r = new ArrayList<String>();
+		if (positions.keySet().contains(zone)) {
+			r.add(zone);
+			return r;
+		}
+		Map<String, Set<String>> zl = zones.get(zone);
+		if (zl == null) {
+			throw new EvaluationException("Zone [" + zone + "] undefined");
+		}
+		Set<String> z = zl.get(player);
+		if (z == null) {
+			z = zl.get("");
+		}
+		if (z == null) {
+			throw new EvaluationException("Zone [" + zone + "] undefined for player [" + player + "]");
+		}
+		for (String p: z) {
+			r.add(p);
+		}
+		return r;
+	}
+
+	@Override
+	public List<String> getPositions() throws EvaluationException {
+		List<String> r = new ArrayList<String>();
+		for (String p: positions.keySet()) {
+			r.add(p);
+		}
+		return r;
 	}
 
 	public void createPosition(String position) throws BoardException {

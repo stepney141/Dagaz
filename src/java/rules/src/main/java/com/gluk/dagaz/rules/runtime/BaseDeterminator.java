@@ -1,5 +1,7 @@
 package com.gluk.dagaz.rules.runtime;
 
+import java.util.List;
+
 import com.gluk.dagaz.api.exceptions.EvaluationException;
 import com.gluk.dagaz.api.exceptions.ValueNotFoundException;
 import com.gluk.dagaz.api.rules.runtime.IContinuation;
@@ -17,8 +19,15 @@ public class BaseDeterminator extends BaseExpression implements IEnvironment, IC
 	public boolean isContinuationsSupported() {
 		return true;
 	}
+	
+	private void checkEnv() throws EvaluationException {
+		if (env == null) {
+			throw new EvaluationException("Environment not initialized");
+		}
+	}
 
 	protected IContinuationSupport getContinuationSupport() throws EvaluationException {
+		checkEnv();
 		IContinuationSupport cs = (IContinuationSupport)env;
 		if (env.isContinuationsSupported()) {
 			return cs;
@@ -46,16 +55,12 @@ public class BaseDeterminator extends BaseExpression implements IEnvironment, IC
 
 	@Override
 	public void pushTrace(int ix) {
-		if (env.isContinuationsSupported()) {
-			cs.pushTrace(ix);
-		}
+		cs.pushTrace(ix);
 	}
 
 	@Override
 	public void popTrace() {
-		if (env.isContinuationsSupported()) {
-			cs.popTrace();
-		}
+		cs.popTrace();
 	}
 
 	@Override
@@ -78,42 +83,60 @@ public class BaseDeterminator extends BaseExpression implements IEnvironment, IC
 
 	@Override
 	public IValue getValue(String name, boolean isQuoted) throws ValueNotFoundException {
+		checkEnv();
 		return env.getValue(name, isQuoted);
 	}
 
 	@Override
 	public void letValue(String name, IValue value) throws EvaluationException {
+		checkEnv();
 		env.letValue(name, value);
 	}
 
 	@Override
 	public void setValue(String name, IValue value) throws EvaluationException {
+		checkEnv();
 		env.setValue(name, value);
 	}
 
 	@Override
 	public void openFrame() {
+		checkEnv();
 		env.openFrame();
 	}
 
 	@Override
 	public void closeFrame() throws EvaluationException {
+		checkEnv();
 		env.closeFrame();
 	}
 
 	@Override
 	public void setScore(int score, long priority) {
+		checkEnv();
 		env.setScore(score, priority);
 	}
 
 	@Override
 	public IEnvironment getCopy() {
-		return env;
+		return this;
 	}
 
 	@Override
 	public void clear() {
-		cs = (IContinuationSupport)env;
+		checkEnv();
 		env.clear();
+	}
+
+	@Override
+	public List<String> getPositions(String zone) {
+		checkEnv();
+		return env.getPositions(zone);
+	}
+
+	@Override
+	public List<String> getPositions() {
+		checkEnv();
+		return env.getPositions();
 	}
 }

@@ -35,6 +35,14 @@ public abstract class BaseExpression implements IExpression {
 	}
 
 	@Override
+	public void clear() {
+		for (IExpression e: args) {
+			e.clear();
+		}
+		clearCache();
+	}
+
+	@Override
 	public IValue getValue(IContinuation cont) throws EvaluationException {
 		int ix = cont.popTrace();
 		for (int i = 0; i < ix; i++) {

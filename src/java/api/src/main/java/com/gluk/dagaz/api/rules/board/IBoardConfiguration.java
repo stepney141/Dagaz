@@ -1,6 +1,9 @@
 package com.gluk.dagaz.api.rules.board;
 
+import java.util.List;
+
 import com.gluk.dagaz.api.exceptions.BoardException;
+import com.gluk.dagaz.api.exceptions.EvaluationException;
 
 public interface IBoardConfiguration {
 	void createPosition(String position) throws BoardException;
@@ -16,4 +19,6 @@ public interface IBoardConfiguration {
 	void addCounter(String name, String value, String player) throws BoardException;
 	void addCounter(String name, String value) throws BoardException;
 	boolean isDefined(String name);
+	List<String> getPositions(String zone, String player) throws EvaluationException; // Use current-player variable
+	List<String> getPositions() throws EvaluationException;
 }
