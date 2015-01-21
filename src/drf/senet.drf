@@ -1,5 +1,5 @@
 (define goals
-   (check-win (not-exists? (check is-friend?)))
+   (check-win (not-exists? any-position (check is-friend?)))
 )
 
 (define check-not-protect
@@ -17,11 +17,11 @@
 )
 
 (define check-player
-   (check (not-current-player? ?Random))
+   (check is-friend?)
 )
 
 (define check-random
-   (check (is-current-player? ?Random))
+   (check (= current-player ?Random))
 )
 
 (define dice-drop
@@ -32,13 +32,14 @@
 )
 
 (define sum-dices
-   (set! step-count (count
-            (check (in-zone? dices))
+   (set! step-count 
+       (count
+            (any-position dices)
             (check (is-piece? One))
        )
    )
    (all
-       (check (in-zone? dices))
+       (any-position dices)
        (check not-empty?)
        capture
    )
@@ -49,6 +50,7 @@
 
 (define (move-to-count direction check-stop?)
    (take-piece-to-head current-pieces)
+   (let step-count step-count)
    (while (decrement! step-count)
        (check direction)
        (if is-enemy?
@@ -135,10 +137,20 @@
    add-move
 )
 
+(define check-repeat
+   (if (or (= 1 step-count)
+           (= 4 step-count)
+           (= 5 step-count)
+       repeat
+   )
+)
+
 (game
    (title "Senet")
-   (turn-order ?Random ?Random ?Random ?Random 
-               White 
+   (turn-order (label repeat)
+               ?Random ?Random ?Random ?Random 
+               White
+               (label repeat)
                ?Random ?Random ?Random ?Random 
                Black
    )
@@ -169,6 +181,9 @@
       (zone (name dices)    (positions a b c d))
    )
    (pieces
+      (attribute step-count 0)
+      (attribute penalty 0)
+      (attribute min-penalty 2)
       (post goals)
       (piece 
             (name Dice)
@@ -179,12 +194,10 @@
       )
       (piece
             (name Man)
-            (attribute step-count 0)
-            (attribute penalty 0)
-            (attribute min-penalty 2)
             (pre check-player)
             (pre sum-dices)
             (post invariant)
+            (post check-repeat)
             (moves 
                  (man-move forward backward)
                  man-move-beauty

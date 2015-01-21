@@ -141,6 +141,7 @@
       (priority 1)
       (and
            (exists?
+              any-position
               (check is-friend?)
               (check (is-piece? King))
               (check is-attacked?)
@@ -161,6 +162,7 @@
 (define invariant
   (check 
       (not-exists?
+         any-position
          (check is-friend?)
          (check (is-piece? King))
          (check is-attacked?)

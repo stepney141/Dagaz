@@ -1,7 +1,7 @@
 (define goals
    (check-loss 
       (and (> mans-left 0)
-           (>= 2 (count (check is-friend?)))
+           (>= 2 (count any-position (check is-friend?)))
       )
    )
    (check-draw
@@ -27,7 +27,7 @@
 
 (define (man-move direction)
    (check (= 0 mans-left))
-   (check (< flying-mans-count (count (check is-friend?))))
+   (check (< flying-mans-count (count any-position (check is-friend?))))
    (check is-friend?)
    (take-piece-to-head current-pieces)
    (check direction)
@@ -40,7 +40,7 @@
 (define (man-jump direction)
    (check (or is-friend-jumping? is-enemy-jumping?))
    (check (= 0 mans-left))
-   (check (< flying-mans-count (count (check is-friend?))))
+   (check (< flying-mans-count (count any-position (check is-friend?))))
    (check is-friend?)
    (take-piece-to-head current-pieces)
    (check direction)
@@ -54,7 +54,7 @@
 
 (define man-random
    (check (= 0 mans-left))
-   (check (>= flying-mans-count (count (check is-friend?))))
+   (check (>= flying-mans-count (count any-position (check is-friend?))))
    (check is-friend?)
    (take-piece-to-head current-pieces)
    (all
