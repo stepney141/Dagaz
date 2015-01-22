@@ -713,6 +713,9 @@
         - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/draughts-variants/509-dameo
         - http://www.mindsports.nl/index.php/arena/dameo
         - http://www.iggamecenter.com/info/ru/dameo.html
+      * Turn the Table Checkers
+        - http://skyruk.livejournal.com/334328.html
+        - http://boardgamegeek.com/image/1970523/turn-tables-checkers
       * Croda
         - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/draughts-variants/508-croda
       * Harzdame
