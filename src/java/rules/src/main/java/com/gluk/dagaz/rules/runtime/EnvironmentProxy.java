@@ -10,6 +10,7 @@ import com.gluk.dagaz.api.rules.board.IBoardConfiguration;
 import com.gluk.dagaz.api.rules.runtime.IContinuation;
 import com.gluk.dagaz.api.rules.runtime.IContinuationSupport;
 import com.gluk.dagaz.api.rules.runtime.IEnvironment;
+import com.gluk.dagaz.api.rules.runtime.IExpression;
 import com.gluk.dagaz.api.rules.runtime.IValue;
 
 public class EnvironmentProxy implements IEnvironment, IContinuationSupport {
@@ -58,12 +59,6 @@ public class EnvironmentProxy implements IEnvironment, IContinuationSupport {
 	}
 
 	@Override
-	public void clear() {
-		cs = new ContinuationSupport();
-		values.clear();
-	}
-	
-	@Override
 	public void addContinuation(IEnvironment env) throws EvaluationException {
 		cs.addContinuation(env);
 	}
@@ -88,16 +83,16 @@ public class EnvironmentProxy implements IEnvironment, IContinuationSupport {
 	}
 
 	@Override
-	public void pushValue(IValue v) {
+	public void addValue(int ix, IValue v) {
 		if (isContinuationsSupported) {
-			cs.pushValue(v);
+			cs.addValue(ix, v);
 		}
 	}
 
 	@Override
-	public void popValue() {
+	public void setValues(IExpression e) {
 		if (isContinuationsSupported) {
-			cs.popValue();
+			cs.setValues(e);
 		}
 	}
 	

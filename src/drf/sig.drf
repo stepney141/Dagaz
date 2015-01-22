@@ -85,10 +85,10 @@
 
 (game
    (title "Sig")
-   (turn-order (label repeat)
+   (turn-order (label (players First) repeat)
                ?Random ?Random ?Random ?Random 
                First
-               (label repeat)
+               (label (players Second) repeat)
                ?Random ?Random ?Random ?Random 
                Second
    )

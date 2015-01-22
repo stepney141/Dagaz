@@ -5,7 +5,6 @@ import com.gluk.dagaz.api.exceptions.EvaluationException;
 import com.gluk.dagaz.api.rules.runtime.IContinuation;
 import com.gluk.dagaz.api.rules.runtime.IContinuationSupport;
 import com.gluk.dagaz.api.rules.runtime.IEnvironment;
-import com.gluk.dagaz.api.rules.runtime.IExpression;
 import com.gluk.dagaz.api.rules.runtime.IValue;
 
 public class CountDeterminator extends BaseDeterminator {
@@ -14,9 +13,7 @@ public class CountDeterminator extends BaseDeterminator {
 	protected IValue eval(IEnvironment env) throws EvaluationException {
 		long r = 0;
 		try {
-			for (IExpression e: args) {
-				e.getValue(env);
-			}
+			args.get(0).getValue(env);
 			r++;
 		} catch (CheckException  e) {
 			// Do Nothing
@@ -25,9 +22,7 @@ public class CountDeterminator extends BaseDeterminator {
 			IContinuationSupport cs = getContinuationSupport();
 			for (IContinuation cont = cs.getContinuation(); cont != null; cont = cs.getContinuation()) {
 				try {
-					for (IExpression e: args) {
-						e.getValue(cont);
-					}
+					args.get(0).getValue(cont);
 					r++;
 				} catch (CheckException  e) {
 					// Do Nothing

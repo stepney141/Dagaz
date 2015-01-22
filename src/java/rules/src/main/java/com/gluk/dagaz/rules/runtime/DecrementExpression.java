@@ -15,10 +15,14 @@ public class DecrementExpression extends BaseExpression {
 		}
 		String name = args.get(0).getValue(env).getString();
 		long v = env.getValue(name, false).getLong();
+		long delta = 1;
 		if (args.size() == 2) {
-			v -= args.get(1).getValue(env).getLong();
+			delta = args.get(1).getValue(env).getLong();
+		}
+		if (v - delta > 0) {
+			v -= delta;
 		} else {
-			v--;
+			return new ConstantValue(0L);
 		}
 		IValue value = new ConstantValue(v);
 		env.setValue(name, value);

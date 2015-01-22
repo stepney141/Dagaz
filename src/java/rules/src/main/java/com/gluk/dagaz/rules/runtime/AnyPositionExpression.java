@@ -5,49 +5,26 @@ import java.util.List;
 import com.gluk.dagaz.api.exceptions.CheckException;
 import com.gluk.dagaz.api.exceptions.EvaluationException;
 import com.gluk.dagaz.api.exceptions.ParsingException;
-import com.gluk.dagaz.api.rules.runtime.IContinuationSupport;
 import com.gluk.dagaz.api.rules.runtime.IEnvironment;
 import com.gluk.dagaz.api.rules.runtime.IExpression;
 import com.gluk.dagaz.api.rules.runtime.IValue;
 
 public class AnyPositionExpression extends BaseAnyExpression {
 	
-	List<String> positions = null;
 
 	@Override
 	public IValue getValue(IEnvironment env) throws EvaluationException {
+		List<String> positions = null;
 		if (args.isEmpty()) {
-			if (positions == null) {
-				positions = env.getPositions();
-			}
+			positions = env.getPositions();
 			if (positions.isEmpty()) {
 				throw new CheckException("No Variants");
 			}
-			if (env instanceof IContinuationSupport) {
-				IContinuationSupport cs = (IContinuationSupport)env;
-				if (currentVariant + 1 < positions.size()) {
-					cs.pushTrace(currentVariant + 1);
-					cs.addContinuation(env);
-					cs.popTrace();
-				}
-			}
+			addContinuation(env, positions.size());
 			return env.getValue(positions.get(currentVariant), false);
 		}
-		if (env instanceof IContinuationSupport) {
-			IContinuationSupport cs = (IContinuationSupport)env;
-			if (currentVariant + 1 < args.size()) {
-				cs.pushTrace(currentVariant + 1);
-				cs.addContinuation(env);
-				cs.popTrace();
-			}
-		}
+		addContinuation(env, args.size());
 		return args.get(currentVariant).getValue(env);
-	}
-	
-	@Override
-	public void clear() {
-		positions = null;
-		super.clear();
 	}
 	
 	@Override

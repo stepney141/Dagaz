@@ -3,10 +3,12 @@ package com.gluk.dagaz.rules.runtime;
 import java.util.List;
 
 import com.gluk.dagaz.api.exceptions.EvaluationException;
+import com.gluk.dagaz.api.exceptions.ParsingException;
 import com.gluk.dagaz.api.exceptions.ValueNotFoundException;
 import com.gluk.dagaz.api.rules.runtime.IContinuation;
 import com.gluk.dagaz.api.rules.runtime.IContinuationSupport;
 import com.gluk.dagaz.api.rules.runtime.IEnvironment;
+import com.gluk.dagaz.api.rules.runtime.IExpression;
 import com.gluk.dagaz.api.rules.runtime.IValue;
 
 public class BaseDeterminator extends BaseExpression implements IEnvironment, IContinuationSupport {
@@ -14,11 +16,6 @@ public class BaseDeterminator extends BaseExpression implements IEnvironment, IC
 	private IEnvironment env = null;
 	private IContinuationSupport cs = new ContinuationSupport();
 	private boolean isContinuationsNeeded = false;
-	
-	@Override
-	public boolean isContinuationsSupported() {
-		return true;
-	}
 	
 	private void checkEnv() throws EvaluationException {
 		if (env == null) {
@@ -40,8 +37,25 @@ public class BaseDeterminator extends BaseExpression implements IEnvironment, IC
 	}
 
 	@Override
+	public void addArgument(IExpression arg) throws ParsingException {
+		IExpression e = null;
+		if (args.isEmpty()) {
+			e = new SeqExpression();
+			super.addArgument(e);
+		} else {
+			e = args.get(0);
+		}
+		e.addArgument(arg);
+	}
+	
+	@Override
+	public boolean isContinuationsSupported() {
+		return true;
+	}
+	
+	@Override
 	public IValue getValue(IEnvironment env) throws EvaluationException {
-		if (args.size() < 1) {
+		if (args.size() != 1) {
 			throw new EvaluationException("Bad arity [" + Integer.toString(args.size()) + "]");
 		}
 		this.env = env;
@@ -64,17 +78,19 @@ public class BaseDeterminator extends BaseExpression implements IEnvironment, IC
 	}
 
 	@Override
+	public void addValue(int ix, IValue v) {
+		cs.addValue(ix, v);
+	}
+
+	@Override
+	public void setValues(IExpression e) {
+		cs.setValues(e);
+	}
+	
+	@Override
 	public void addContinuation(IEnvironment env) throws EvaluationException {
 		cs.addContinuation(env);
 	}
-
-	@Override
-	public void pushValue(IValue v) {
-		isContinuationsNeeded = true;
-	}
-
-	@Override
-	public void popValue() {}
 
 	@Override
 	public IContinuation getContinuation() {
@@ -120,12 +136,6 @@ public class BaseDeterminator extends BaseExpression implements IEnvironment, IC
 	@Override
 	public IEnvironment getCopy() {
 		return this;
-	}
-
-	@Override
-	public void clear() {
-		checkEnv();
-		env.clear();
 	}
 
 	@Override

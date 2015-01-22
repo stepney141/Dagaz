@@ -1,26 +1,23 @@
 package com.gluk.dagaz.rules.runtime;
 
-import java.util.Stack;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.gluk.dagaz.api.rules.runtime.IContinuation;
 import com.gluk.dagaz.api.rules.runtime.IEnvironment;
-import com.gluk.dagaz.api.rules.runtime.IValue;
+import com.gluk.dagaz.api.rules.runtime.IExpression;
 
 public class Continuation implements IContinuation {
 	
-	private IEnvironment   env;
-	private Stack<Integer> trace = new Stack<Integer>();
-	private Stack<IValue> values = new Stack<IValue>(); 
+	private IEnvironment env;
+	private List<CallFrame> trace = new ArrayList<CallFrame>();
+	private int offset = 0;
 	
-	public Continuation(IEnvironment env, Stack<Integer> trace, Stack<IValue> values) {
+	public Continuation(IEnvironment env, List<CallFrame> trace) {
 		this.env = env.getCopy();
-		while (!trace.isEmpty()) {
-			Integer x = trace.pop();
-			this.trace.push(x);
-		}
-		while (!values.isEmpty()) {
-			IValue x = values.pop();
-			this.values.push(x);
+		for (int i=0; i < trace.size(); i++) {
+			CallFrame x = trace.get(i);
+			this.trace.add(i, x);
 		}
 	}
 	
@@ -30,13 +27,20 @@ public class Continuation implements IContinuation {
 	}
 
 	@Override
-	public int popTrace() {
-		return trace.pop();
+	public void setOffset(int offset) {
+		this.offset = offset;
 	}
 
 	@Override
-	public IValue popValue() {
-		return values.pop();
+	public int useTrace(IExpression e) {
+		int r = 0;
+		if (offset < trace.size()) {
+			CallFrame f = trace.get(offset);
+			f.setValues(e);
+			r = f.getCurrent();
+			offset++;
+		}
+		return r;
 	}
 
 	@Override

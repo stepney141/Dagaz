@@ -14,7 +14,7 @@ import com.gluk.dagaz.api.rules.runtime.IValue;
 
 public abstract class BaseExpression implements IExpression {
 	
-	protected IApplication app;
+    protected IApplication app;
 	protected List<IExpression> args = new ArrayList<IExpression>();
 	protected int order = 0;
 	
@@ -28,26 +28,20 @@ public abstract class BaseExpression implements IExpression {
 	public void setCache(IValue v) {
 		cache = v;
 	}
-
+	
+	@Override
+	public void setCache(int ix, IValue v) {
+		args.get(ix).setCache(v);
+	}
+	
 	@Override
 	public void clearCache() {
 		cache = null;
 	}
 
 	@Override
-	public void clear() {
-		for (IExpression e: args) {
-			e.clear();
-		}
-		clearCache();
-	}
-
-	@Override
 	public IValue getValue(IContinuation cont) throws EvaluationException {
-		int ix = cont.popTrace();
-		for (int i = 0; i < ix; i++) {
-			args.get(i).setCache(cont.popValue());
-		}
+		int ix = cont.useTrace(this);
 		IExpression current = args.get(ix); 
 		current.setCache(current.getValue(cont));
 		IEnvironment env = cont.getEnvironment();
@@ -70,11 +64,7 @@ public abstract class BaseExpression implements IExpression {
 		if (env instanceof IContinuationSupport) {
 			IContinuationSupport cs = (IContinuationSupport)env;
 			cs.popTrace();
-			for (IExpression e: args) {
-				e.clearCache();
-				cs.popValue();
-			}
-			cs.pushValue(v);
+			cs.addValue(order, v);
 		}
 		return v;
 	}

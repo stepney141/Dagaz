@@ -147,10 +147,10 @@
 
 (game
    (title "Senet")
-   (turn-order (label repeat)
+   (turn-order (label (players White) repeat)
                ?Random ?Random ?Random ?Random 
                White
-               (label repeat)
+               (label (players Black) repeat)
                ?Random ?Random ?Random ?Random 
                Black
    )

@@ -41,13 +41,12 @@ public class Scripting extends BaseApplication {
 			long timestamp = System.currentTimeMillis();
 			IValue v = null;
 			v = f.getExpression().getValue(proxy);
-			proxy.clear();
 			if (v != null) {
 				env.setValue("out", v);
 			}
 			LOGGER.debug("Evaluation Time = " + Long.toString(System.currentTimeMillis() - timestamp));
 		} catch (Exception e) {
-			LOGGER.fatal(e.toString());
+			LOGGER.fatal(e.toString(), e);
 		}
 	}
 }

@@ -19,7 +19,6 @@ public interface IEnvironment {
 	void         setScore(int score, long priority);
 	IEnvironment getCopy();
 	boolean      isContinuationsSupported();
-	void         clear();
 	List<String> getPositions(String zone) throws EvaluationException;
 	List<String> getPositions() throws EvaluationException;
 }

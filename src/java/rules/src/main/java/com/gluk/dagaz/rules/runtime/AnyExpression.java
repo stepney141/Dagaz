@@ -3,7 +3,6 @@ package com.gluk.dagaz.rules.runtime;
 import com.gluk.dagaz.api.exceptions.CheckException;
 import com.gluk.dagaz.api.exceptions.EvaluationException;
 import com.gluk.dagaz.api.exceptions.ParsingException;
-import com.gluk.dagaz.api.rules.runtime.IContinuationSupport;
 import com.gluk.dagaz.api.rules.runtime.IEnvironment;
 import com.gluk.dagaz.api.rules.runtime.IExpression;
 import com.gluk.dagaz.api.rules.runtime.IValue;
@@ -31,14 +30,7 @@ public class AnyExpression extends BaseAnyExpression {
 		if (args.isEmpty()) {
 			throw new CheckException("No Variants");
 		}
-		if (env instanceof IContinuationSupport) {
-			IContinuationSupport cs = (IContinuationSupport)env;
-			if (currentVariant + 1 < args.size()) {
-				cs.pushTrace(currentVariant + 1);
-				cs.addContinuation(env);
-				cs.popTrace();
-			}
-		}
+		addContinuation(env, args.size());
 		return args.get(currentVariant).getValue(env);
 	}
 	
