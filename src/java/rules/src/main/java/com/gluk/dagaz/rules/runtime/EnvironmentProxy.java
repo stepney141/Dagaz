@@ -96,25 +96,31 @@ public class EnvironmentProxy implements IEnvironment, IContinuationSupport {
 		}
 	}
 	
-	@Override
-	public IValue getValue(String name, boolean isQuoted) throws ValueNotFoundException {
-		if (isQuoted && board.isDefined(name)) {
-			return new ConstantValue(name);
-		}
+	private boolean clearName(String name) {
 		ValueHolder h = values.get(name);
-		boolean f = false;
+		boolean r = false;
 		while (h != null) {
 			if (h.getDeep() <= deep) break;
 			h = h.getParent();
-			f = true;
+			r = true;
 		}
-		if (f) {
+		if (r) {
 			if (h != null) {
 				values.put(name, h);
 			} else {
 				values.remove(name);
 			}
 		}
+		return r;
+	}
+	
+	@Override
+	public IValue getValue(String name, boolean isQuoted) throws ValueNotFoundException {
+		if (isQuoted && board.isDefined(name)) {
+			return new ConstantValue(name);
+		}
+		clearName(name);
+		ValueHolder h = values.get(name);
 		if (h == null) {
 			return env.getValue(name, isQuoted);
 		} else {
@@ -154,8 +160,15 @@ public class EnvironmentProxy implements IEnvironment, IContinuationSupport {
 			throw new EvaluationException("Empty Stack");
 		}
 		deep--;
-		for (String name: values.keySet()) {
-			getValue(name, false);
+		boolean f = true;
+		while (f) {
+			f = false;
+			for (String name: values.keySet()) {
+				if (clearName(name)) {
+					f = true;
+					break;
+				}
+			}
 		}
 	}
 

@@ -115,7 +115,7 @@
   (check-source piece-type)
   (check direction)
   (check is-enemy?)
-  (check (= 1 (- turn-number turn-jumped)))
+  (check (>= 1 (- turn-number turn-jumped)))
   capture
   (check n)
   (check is-empty?)
