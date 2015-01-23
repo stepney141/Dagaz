@@ -8,7 +8,7 @@ import com.gluk.dagaz.api.exceptions.EvaluationException;
 import com.gluk.dagaz.api.exceptions.ValueNotFoundException;
 import com.gluk.dagaz.api.rules.runtime.IEnvironment;
 import com.gluk.dagaz.api.rules.runtime.IValue;
-import com.gluk.dagaz.rules.runtime.ConstantValue;
+import com.gluk.dagaz.rules.runtime.utils.ConstantValue;
 
 public class Environment implements IEnvironment {
 

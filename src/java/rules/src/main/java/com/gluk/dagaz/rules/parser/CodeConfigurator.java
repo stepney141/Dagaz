@@ -11,11 +11,11 @@ import com.gluk.dagaz.api.exceptions.ParsingException;
 import com.gluk.dagaz.api.rules.runtime.IExpression;
 import com.gluk.dagaz.api.rules.runtime.IFunction;
 import com.gluk.dagaz.api.rules.runtime.IFunctionList;
-import com.gluk.dagaz.rules.runtime.ConstantExpression;
-import com.gluk.dagaz.rules.runtime.ExpressionFactory;
-import com.gluk.dagaz.rules.runtime.Function;
-import com.gluk.dagaz.rules.runtime.GetExpression;
-import com.gluk.dagaz.rules.runtime.SeqExpression;
+import com.gluk.dagaz.rules.runtime.library.ConstantExpression;
+import com.gluk.dagaz.rules.runtime.library.ExpressionFactory;
+import com.gluk.dagaz.rules.runtime.library.GetExpression;
+import com.gluk.dagaz.rules.runtime.library.SeqExpression;
+import com.gluk.dagaz.rules.runtime.utils.Function;
 
 public class CodeConfigurator extends BaseConfigurator {
 

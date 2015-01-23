@@ -5,7 +5,7 @@ import com.gluk.dagaz.api.io.IDataManager;
 import com.gluk.dagaz.api.random.IRandomFactory;
 import com.gluk.dagaz.api.rules.runtime.IFunctionList;
 import com.gluk.dagaz.api.state.IStateManager;
-import com.gluk.dagaz.rules.runtime.FunctionList;
+import com.gluk.dagaz.rules.runtime.utils.FunctionList;
 
 public class BaseApplication implements IApplication {
 	

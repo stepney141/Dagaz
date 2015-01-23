@@ -9,7 +9,7 @@ import com.gluk.dagaz.api.rules.runtime.IFunctionList;
 import com.gluk.dagaz.api.rules.runtime.IValue;
 import com.gluk.dagaz.rules.parser.CodeConfigurator;
 import com.gluk.dagaz.rules.parser.Configuration;
-import com.gluk.dagaz.rules.runtime.EnvironmentProxy;
+import com.gluk.dagaz.rules.runtime.utils.EnvironmentProxy;
 
 public class Scripting extends BaseApplication {
 
