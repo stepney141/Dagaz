@@ -39,10 +39,8 @@
 )
 
 (define check-destination
-  (let not-my-friend? not-friend?)
   (if not-empty?
      (while (and up not-empty?)
-        (set! not-my-friend? not-friend?)
         (set! is-promoted? false)
         (is-piece? King
            (set! ai.weight 1000)
@@ -50,7 +48,6 @@
         )
      )
   )
-  (check not-my-friend?)
   (check is-empty?)
   (drop-pieces current-pieces)
   (if (in-zone? promotion)
