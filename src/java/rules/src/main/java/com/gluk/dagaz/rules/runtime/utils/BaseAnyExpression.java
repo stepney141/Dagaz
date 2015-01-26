@@ -1,4 +1,4 @@
-package com.gluk.dagaz.rules.runtime.library;
+package com.gluk.dagaz.rules.runtime.utils;
 
 import com.gluk.dagaz.api.exceptions.EvaluationException;
 import com.gluk.dagaz.api.rules.runtime.IContinuation;
@@ -14,11 +14,9 @@ public abstract class BaseAnyExpression extends BaseExpression  {
 		if (env instanceof IContinuationSupport) {
 			IContinuationSupport cs = (IContinuationSupport)env;
 			if (currentVariant + 1 < maxValue) {
-				cs.pushTrace(0);
-				cs.pushTrace(currentVariant + 1);
-				cs.popTrace();
+				cs.addValue(currentVariant + 1);
+ 				cs.setValue(-1, null);
 				cs.addContinuation(env);
-				cs.popTrace();
 			}
 		}
 	}
@@ -31,4 +29,7 @@ public abstract class BaseAnyExpression extends BaseExpression  {
 		currentVariant = 0;
 		return r;
 	}
+
+	@Override
+	public void setCache(int ix, IValue v) {}
 }

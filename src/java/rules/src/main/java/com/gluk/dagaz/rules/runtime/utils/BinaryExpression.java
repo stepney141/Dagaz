@@ -1,4 +1,4 @@
-package com.gluk.dagaz.rules.runtime.library;
+package com.gluk.dagaz.rules.runtime.utils;
 
 import com.gluk.dagaz.api.exceptions.EvaluationException;
 import com.gluk.dagaz.api.exceptions.ParsingException;

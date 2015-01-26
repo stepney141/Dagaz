@@ -16,8 +16,8 @@ public class Continuation implements IContinuation {
 	public Continuation(IEnvironment env, List<CallFrame> trace) {
 		this.env = env.getCopy();
 		for (int i=0; i < trace.size(); i++) {
-			CallFrame x = trace.get(i);
-			this.trace.add(i, x);
+			CallFrame f = trace.get(i).getCopy();
+			this.trace.add(i, f);
 		}
 	}
 	
@@ -36,8 +36,7 @@ public class Continuation implements IContinuation {
 		int r = 0;
 		if (offset < trace.size()) {
 			CallFrame f = trace.get(offset);
-			f.setValues(e);
-			r = f.getCurrent();
+			r = f.useValues(e);
 			offset++;
 		}
 		return r;

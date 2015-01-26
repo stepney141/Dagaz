@@ -6,6 +6,7 @@ import com.gluk.dagaz.api.exceptions.ParsingException;
 import com.gluk.dagaz.api.rules.runtime.IEnvironment;
 import com.gluk.dagaz.api.rules.runtime.IExpression;
 import com.gluk.dagaz.api.rules.runtime.IValue;
+import com.gluk.dagaz.rules.runtime.utils.BaseAnyExpression;
 
 public class AnyExpression extends BaseAnyExpression {
 	
@@ -15,7 +16,7 @@ public class AnyExpression extends BaseAnyExpression {
 	private boolean isRanged = false;
 	
 	@Override
-	public IValue getValue(IEnvironment env) throws EvaluationException {
+	public IValue eval(IEnvironment env) throws EvaluationException {
 		if (currentExpression != null) {
 			if (isRanged) {
 				throw new EvaluationException("Bad Range");

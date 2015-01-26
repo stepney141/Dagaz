@@ -8,11 +8,12 @@ import com.gluk.dagaz.api.exceptions.ParsingException;
 import com.gluk.dagaz.api.rules.runtime.IEnvironment;
 import com.gluk.dagaz.api.rules.runtime.IExpression;
 import com.gluk.dagaz.api.rules.runtime.IValue;
+import com.gluk.dagaz.rules.runtime.utils.BaseAnyExpression;
 
 public class ZoneExpression extends BaseAnyExpression {
 
 	@Override
-	public IValue getValue(IEnvironment env) throws EvaluationException {
+	public IValue eval(IEnvironment env) throws EvaluationException {
 		if (args.size() != 1) {
 			throw new EvaluationException("Bad arity [" + Integer.toString(args.size()) + "]");
 		}

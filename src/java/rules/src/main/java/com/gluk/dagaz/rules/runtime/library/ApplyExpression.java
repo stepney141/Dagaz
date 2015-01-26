@@ -13,6 +13,7 @@ import com.gluk.dagaz.api.rules.runtime.IExpression;
 import com.gluk.dagaz.api.rules.runtime.IFunction;
 import com.gluk.dagaz.api.rules.runtime.IFunctionList;
 import com.gluk.dagaz.api.rules.runtime.IValue;
+import com.gluk.dagaz.rules.runtime.utils.BaseExpression;
 import com.gluk.dagaz.rules.runtime.utils.NamedValue;
 
 public class ApplyExpression extends BaseExpression {

@@ -10,7 +10,6 @@ import com.gluk.dagaz.api.rules.board.IBoardConfiguration;
 import com.gluk.dagaz.api.rules.runtime.IContinuation;
 import com.gluk.dagaz.api.rules.runtime.IContinuationSupport;
 import com.gluk.dagaz.api.rules.runtime.IEnvironment;
-import com.gluk.dagaz.api.rules.runtime.IExpression;
 import com.gluk.dagaz.api.rules.runtime.IValue;
 
 public class EnvironmentProxy implements IEnvironment, IContinuationSupport {
@@ -69,33 +68,19 @@ public class EnvironmentProxy implements IEnvironment, IContinuationSupport {
 	}
 	
 	@Override
-	public void pushTrace(int ix) {
+	public void addValue(int ix) {
 		if (isContinuationsSupported) {
-			cs.pushTrace(ix);
+			cs.addValue(ix);
 		}
 	}
 
 	@Override
-	public void popTrace() {
+	public void setValue(int ix, IValue v) {
 		if (isContinuationsSupported) {
-			cs.popTrace();
+			cs.setValue(ix, v);
 		}
 	}
 
-	@Override
-	public void addValue(int ix, IValue v) {
-		if (isContinuationsSupported) {
-			cs.addValue(ix, v);
-		}
-	}
-
-	@Override
-	public void setValues(IExpression e) {
-		if (isContinuationsSupported) {
-			cs.setValues(e);
-		}
-	}
-	
 	private boolean clearName(String name) {
 		ValueHolder h = values.get(name);
 		boolean r = false;

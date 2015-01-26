@@ -39,14 +39,19 @@
 )
 
 (define check-destination
+  (let not-my-friend? not-friend?)
   (if not-empty?
      (while (and up not-empty?)
+        (set! not-my-friend? not-friend?)
         (set! is-promoted? false)
         (is-piece? King
            (set! ai.weight 1000)
            (set! ai.hint "king-captured")
         )
      )
+  )
+  (check not-fusion?
+     (check not-my-friend?)
   )
   (check is-empty?)
   (drop-pieces current-pieces)
@@ -230,6 +235,7 @@
                 (n s) (nw sw) (ne se) (w e)
                 (s n) (sw nw) (se ne) (e w)
       )
+      (attribute (name not-fusion?) false)
    )
    (pieces
       (pre  goals)

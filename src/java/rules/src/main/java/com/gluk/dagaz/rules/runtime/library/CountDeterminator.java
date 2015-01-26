@@ -6,6 +6,7 @@ import com.gluk.dagaz.api.rules.runtime.IContinuation;
 import com.gluk.dagaz.api.rules.runtime.IContinuationSupport;
 import com.gluk.dagaz.api.rules.runtime.IEnvironment;
 import com.gluk.dagaz.api.rules.runtime.IValue;
+import com.gluk.dagaz.rules.runtime.utils.BaseDeterminator;
 import com.gluk.dagaz.rules.runtime.utils.ConstantValue;
 
 public class CountDeterminator extends BaseDeterminator {

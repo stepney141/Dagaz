@@ -8,12 +8,13 @@ import com.gluk.dagaz.api.exceptions.ParsingException;
 import com.gluk.dagaz.api.rules.runtime.IEnvironment;
 import com.gluk.dagaz.api.rules.runtime.IExpression;
 import com.gluk.dagaz.api.rules.runtime.IValue;
+import com.gluk.dagaz.rules.runtime.utils.BaseAnyExpression;
 
 public class AnyPositionExpression extends BaseAnyExpression {
 	
 
 	@Override
-	public IValue getValue(IEnvironment env) throws EvaluationException {
+	public IValue eval(IEnvironment env) throws EvaluationException {
 		List<String> positions = null;
 		if (args.isEmpty()) {
 			positions = env.getPositions();

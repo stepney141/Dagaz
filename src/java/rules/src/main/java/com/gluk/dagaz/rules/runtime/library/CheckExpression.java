@@ -6,6 +6,7 @@ import com.gluk.dagaz.api.exceptions.ParsingException;
 import com.gluk.dagaz.api.rules.runtime.IEnvironment;
 import com.gluk.dagaz.api.rules.runtime.IExpression;
 import com.gluk.dagaz.api.rules.runtime.IValue;
+import com.gluk.dagaz.rules.runtime.utils.BaseAnyExpression;
 import com.gluk.dagaz.rules.runtime.utils.ConstantValue;
 
 public class CheckExpression extends BaseAnyExpression {

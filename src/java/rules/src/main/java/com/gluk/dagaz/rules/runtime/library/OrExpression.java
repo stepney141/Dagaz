@@ -6,6 +6,7 @@ import com.gluk.dagaz.api.exceptions.ValueNotFoundException;
 import com.gluk.dagaz.api.rules.runtime.IEnvironment;
 import com.gluk.dagaz.api.rules.runtime.IExpression;
 import com.gluk.dagaz.api.rules.runtime.IValue;
+import com.gluk.dagaz.rules.runtime.utils.BaseExpression;
 import com.gluk.dagaz.rules.runtime.utils.ConstantValue;
 
 public class OrExpression extends BaseExpression {

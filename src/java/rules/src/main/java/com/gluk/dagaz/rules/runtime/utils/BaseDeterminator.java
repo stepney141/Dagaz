@@ -1,4 +1,4 @@
-package com.gluk.dagaz.rules.runtime.library;
+package com.gluk.dagaz.rules.runtime.utils;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import com.gluk.dagaz.api.rules.runtime.IContinuationSupport;
 import com.gluk.dagaz.api.rules.runtime.IEnvironment;
 import com.gluk.dagaz.api.rules.runtime.IExpression;
 import com.gluk.dagaz.api.rules.runtime.IValue;
-import com.gluk.dagaz.rules.runtime.utils.ContinuationSupport;
+import com.gluk.dagaz.rules.runtime.library.SeqExpression;
 
 public class BaseDeterminator extends BaseExpression implements IEnvironment, IContinuationSupport {
 	
@@ -69,25 +69,15 @@ public class BaseDeterminator extends BaseExpression implements IEnvironment, IC
 	}
 
 	@Override
-	public void pushTrace(int ix) {
-		cs.pushTrace(ix);
+	public void addValue(int ix) {
+		cs.addValue(ix);
 	}
 
 	@Override
-	public void popTrace() {
-		cs.popTrace();
+	public void setValue(int ix, IValue v) {
+		cs.setValue(ix, v);
 	}
 
-	@Override
-	public void addValue(int ix, IValue v) {
-		cs.addValue(ix, v);
-	}
-
-	@Override
-	public void setValues(IExpression e) {
-		cs.setValues(e);
-	}
-	
 	@Override
 	public void addContinuation(IEnvironment env) throws EvaluationException {
 		cs.addContinuation(env);

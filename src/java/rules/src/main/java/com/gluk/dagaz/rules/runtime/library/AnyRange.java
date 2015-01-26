@@ -4,12 +4,13 @@ import com.gluk.dagaz.api.exceptions.CheckException;
 import com.gluk.dagaz.api.exceptions.EvaluationException;
 import com.gluk.dagaz.api.rules.runtime.IEnvironment;
 import com.gluk.dagaz.api.rules.runtime.IValue;
+import com.gluk.dagaz.rules.runtime.utils.BaseAnyExpression;
 import com.gluk.dagaz.rules.runtime.utils.ConstantValue;
 
 public class AnyRange extends BaseAnyExpression {
 
 	@Override
-	public IValue getValue(IEnvironment env) throws EvaluationException {
+	public IValue eval(IEnvironment env) throws EvaluationException {
 		if (args.size() != 2) {
 			throw new EvaluationException("Bad arity [" + Integer.toString(args.size()) + "]");
 		}

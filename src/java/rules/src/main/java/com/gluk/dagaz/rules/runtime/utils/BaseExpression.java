@@ -1,4 +1,4 @@
-package com.gluk.dagaz.rules.runtime.library;
+package com.gluk.dagaz.rules.runtime.utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,10 +41,19 @@ public abstract class BaseExpression implements IExpression {
 
 	@Override
 	public IValue getValue(IContinuation cont) throws EvaluationException {
-		int ix = cont.useTrace(this);
-		IExpression current = args.get(ix); 
-		current.setCache(current.getValue(cont));
 		IEnvironment env = cont.getEnvironment();
+		int ix = cont.useTrace(this);
+		IExpression current = args.get(ix);
+		if (env instanceof IContinuationSupport) {
+			IContinuationSupport cs = (IContinuationSupport)env;
+			cs.addValue(order);
+		}
+		IValue v = current.getValue(cont);
+		if (env instanceof IContinuationSupport) {
+			IContinuationSupport cs = (IContinuationSupport)env;
+			cs.setValue(order, v);
+		}
+		current.setCache(v);
 		IValue r = getValue(env);
 		for (IExpression e: args) {
 			e.clearCache();
@@ -58,13 +67,12 @@ public abstract class BaseExpression implements IExpression {
 		}
 		if (env instanceof IContinuationSupport) {
 			IContinuationSupport cs = (IContinuationSupport)env;
-			cs.pushTrace(order);
+			cs.addValue(order);
 		}
 		IValue v = eval(env);
 		if (env instanceof IContinuationSupport) {
 			IContinuationSupport cs = (IContinuationSupport)env;
-			cs.popTrace();
-			cs.addValue(order, v);
+			cs.setValue(order, v);
 		}
 		return v;
 	}
