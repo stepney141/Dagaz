@@ -16,7 +16,7 @@ public class Scripting extends BaseApplication {
     private static final Logger LOGGER = Logger.getLogger(Scripting.class);
 
     private final static String SCRIPT_SCOPE      = "./drf";
-	private final static String SCRIPT_NAME       = "any.drf";
+	private final static String SCRIPT_NAME       = "fib.drf";
     private final static String TRANSFORM_SCOPE   = "../../../xslt";
     private final static String BASE_TRANSFORM    = "drf-to-internal.xsl";
 
@@ -36,13 +36,15 @@ public class Scripting extends BaseApplication {
 			IFunctionList fl = getFunctionList();
 			IFunction f = fl.getFunction("main@0");
 			IBoardConfiguration board = new Board();
-			IEnvironment env = new Environment();
-			IEnvironment proxy = new EnvironmentProxy(env, board, true);
 			long timestamp = System.currentTimeMillis();
-			IValue v = null;
-			v = f.getExpression().getValue(proxy);
-			if (v != null) {
-				env.setValue("out", v);
+			for (int i = 1; i < 10; i++) {
+				IEnvironment env = new Environment(i);
+				IEnvironment proxy = new EnvironmentProxy(env, board);
+				IValue v = null;
+				v = f.getExpression().getValue(proxy);
+				if (v != null) {
+					env.setValue("out", v);
+				}
 			}
 			LOGGER.debug("Evaluation Time = " + Long.toString(System.currentTimeMillis() - timestamp));
 		} catch (Exception e) {

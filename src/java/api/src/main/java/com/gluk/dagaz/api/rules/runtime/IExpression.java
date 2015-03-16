@@ -13,8 +13,4 @@ public interface IExpression {
 	void    setQuoted();
 	boolean isQuoted(int ix);
 	void    setPriority(long priority) throws ParsingException;
-	void    setOrder(int order);
-	void    setCache(IValue v);
-	void    setCache(int ix, IValue v);
-	void    clearCache();
 }

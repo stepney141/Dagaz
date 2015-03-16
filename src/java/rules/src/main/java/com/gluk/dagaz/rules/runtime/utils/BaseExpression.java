@@ -16,69 +16,36 @@ public abstract class BaseExpression implements IExpression {
 	
     protected IApplication app;
 	protected List<IExpression> args = new ArrayList<IExpression>();
-	protected int order = 0;
-	
-	private IValue cache = null;
 	
 	protected IValue eval(IEnvironment env) throws EvaluationException {
 		throw new EvaluationException("Not Implemented");
 	}
 	
-	@Override
-	public void setCache(IValue v) {
-		cache = v;
-	}
-	
-	@Override
-	public void setCache(int ix, IValue v) {
-		args.get(ix).setCache(v);
-	}
-	
-	@Override
-	public void clearCache() {
-		cache = null;
-	}
-
-	@Override
-	public IValue getValue(IContinuation cont) throws EvaluationException {
-		IEnvironment env = cont.getEnvironment();
-		int ix = cont.useTrace(this);
-		IExpression current = args.get(ix);
-		if (env instanceof IContinuationSupport) {
-			IContinuationSupport cs = (IContinuationSupport)env;
-			cs.addValue(order);
-		}
-		IValue v = current.getValue(cont);
-		if (env instanceof IContinuationSupport) {
-			IContinuationSupport cs = (IContinuationSupport)env;
-			cs.setValue(order, v);
-		}
-		current.setCache(v);
-		IValue r = getValue(env);
-		for (IExpression e: args) {
-			e.clearCache();
-		}
-		return r;
-	}
-	
 	public IValue getValue(IEnvironment env) throws EvaluationException {
-		if (cache != null) {
-			return cache;
+		IValue v = null;
+		IContinuationSupport cs = env.getContinuationSupport();
+		if (cs != null) {
+			cs.enter(this);
+			IContinuation c = env.getContinuation();
+			v = c.getCachedValue(this, cs.getLevel(this));
 		}
-		if (env instanceof IContinuationSupport) {
-			IContinuationSupport cs = (IContinuationSupport)env;
-			cs.addValue(order);
+		if (v == null) {
+			v = eval(env);
 		}
-		IValue v = eval(env);
-		if (env instanceof IContinuationSupport) {
-			IContinuationSupport cs = (IContinuationSupport)env;
-			cs.setValue(order, v);
+		if (cs != null) {
+			IContinuation c = env.getContinuation();
+			c.cacheValue(this, cs.getLevel(this), v);
+			cs.exit(this);
 		}
 		return v;
 	}
-
-	public void setOrder(int order) {
-		this.order = order;
+	
+	public IValue getValue(IContinuation cont) throws EvaluationException {
+		IEnvironment env = cont.getEnvironment();
+		env.pushContinuation(cont);
+		IValue v = getValue(env);
+		env.popContinuation();
+		return v;
 	}
 
 	public void setApplication(IApplication app) {
@@ -86,7 +53,6 @@ public abstract class BaseExpression implements IExpression {
 	}
 
 	public void addArgument(IExpression arg) throws ParsingException {
-		arg.setOrder(args.size());
 		args.add(arg);
 	}
 	

@@ -18,7 +18,14 @@ public interface IEnvironment {
 	void         closeFrame() throws EvaluationException;
 	void         setScore(int score, long priority);
 	IEnvironment getCopy();
-	boolean      isContinuationsSupported();
 	List<String> getPositions(String zone) throws EvaluationException;
 	List<String> getPositions() throws EvaluationException;
+	
+	IContinuationSupport getContinuationSupport();
+	void                 addContinuationSupport(IContinuationSupport cs);
+	void                 delContinuationSupport();
+	IContinuation        getContinuation();
+	void                 pushContinuation(IContinuation cont);
+	void                 popContinuation();
+	IContinuation        createContinuation();
 }

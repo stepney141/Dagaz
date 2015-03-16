@@ -6,6 +6,8 @@ import org.apache.log4j.Logger;
 
 import com.gluk.dagaz.api.exceptions.EvaluationException;
 import com.gluk.dagaz.api.exceptions.ValueNotFoundException;
+import com.gluk.dagaz.api.rules.runtime.IContinuation;
+import com.gluk.dagaz.api.rules.runtime.IContinuationSupport;
 import com.gluk.dagaz.api.rules.runtime.IEnvironment;
 import com.gluk.dagaz.api.rules.runtime.IValue;
 import com.gluk.dagaz.rules.runtime.utils.ConstantValue;
@@ -53,11 +55,6 @@ public class Environment implements IEnvironment {
 	}
 
 	@Override
-	public boolean isContinuationsSupported() {
-		return false;
-	}
-
-	@Override
 	public List<String> getPositions(String zone) throws EvaluationException {
 		throw new EvaluationException("Unimplemented");
 	}
@@ -65,5 +62,32 @@ public class Environment implements IEnvironment {
 	@Override
 	public List<String> getPositions() throws EvaluationException {
 		throw new EvaluationException("Unimplemented");
+	}
+
+	@Override
+	public IContinuationSupport getContinuationSupport() {
+		return null;
+	}
+
+	@Override
+	public void addContinuationSupport(IContinuationSupport cs) {}
+
+	@Override
+	public void delContinuationSupport() {}
+
+	@Override
+	public IContinuation getContinuation() {
+		return null;
+	}
+
+	@Override
+	public void pushContinuation(IContinuation cont) {}
+
+	@Override
+	public void popContinuation() {}
+
+	@Override
+	public IContinuation createContinuation() {
+		return null;
 	}
 }
