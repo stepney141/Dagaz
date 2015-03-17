@@ -16,25 +16,52 @@ public abstract class BaseExpression implements IExpression {
 	
     protected IApplication app;
 	protected List<IExpression> args = new ArrayList<IExpression>();
+	private   boolean isCaching = true;
+	private   IExpression parent = null;
 	
 	protected IValue eval(IEnvironment env) throws EvaluationException {
 		throw new EvaluationException("Not Implemented");
 	}
 	
+	public boolean isNoCaching() {
+		return false;
+	}
+	
+	public boolean isDeterminator() {
+		return false;
+	}
+	
+	public void noCaching() {
+		if (!isDeterminator()) {
+			this.isCaching = false;
+			if (parent != null) {
+				parent.noCaching();
+			}
+		}
+	}
+
+	public void setParent(IExpression e) {
+		this.parent = e;
+	}
+	
 	public IValue getValue(IEnvironment env) throws EvaluationException {
 		IValue v = null;
 		IContinuationSupport cs = env.getContinuationSupport();
-		if (cs != null) {
+		if (isCaching && (cs != null)) {
 			cs.enter(this);
 			IContinuation c = env.getContinuation();
-			v = c.getCachedValue(this, cs.getLevel(this));
+			if (c != null) {
+				v = c.getCachedValue(this, cs.getLevel(this));
+			}
 		}
 		if (v == null) {
 			v = eval(env);
 		}
-		if (cs != null) {
+		if (isCaching && (cs != null)) {
 			IContinuation c = env.getContinuation();
-			c.cacheValue(this, cs.getLevel(this), v);
+			if (c != null) {
+				c.cacheValue(this, cs.getLevel(this), v);
+			}
 			cs.exit(this);
 		}
 		return v;
@@ -54,6 +81,10 @@ public abstract class BaseExpression implements IExpression {
 
 	public void addArgument(IExpression arg) throws ParsingException {
 		args.add(arg);
+		arg.setParent(this);
+		if (arg.isNoCaching()) {
+			arg.noCaching();
+		}
 	}
 	
 	public boolean isConstant() {

@@ -11,6 +11,7 @@ public interface IEnvironment {
 	public final static int WIN_SCORE       = 1;
 	public final static int DRAW_SCORE      = 2;
 	
+	IValue       getValue(String name) throws ValueNotFoundException;
 	IValue       getValue(String name, boolean isQuoted) throws ValueNotFoundException;
 	void         letValue(String name, IValue value) throws EvaluationException;
 	void         setValue(String name, IValue value) throws EvaluationException;
@@ -24,8 +25,7 @@ public interface IEnvironment {
 	IContinuationSupport getContinuationSupport();
 	void                 addContinuationSupport(IContinuationSupport cs);
 	void                 delContinuationSupport();
-	IContinuation        getContinuation();
-	void                 pushContinuation(IContinuation cont);
+	void                 pushContinuation(IContinuation c);
 	void                 popContinuation();
-	IContinuation        createContinuation();
+	IContinuation        getContinuation();
 }

@@ -31,6 +31,11 @@ public class Continuation implements IContinuation {
 	}
 
 	@Override
+	public void setEnvironment(IEnvironment env) {
+		this.env = env;
+	}
+
+	@Override
 	public IEnvironment getEnvironment() {
 		return env;
 	}
@@ -53,5 +58,4 @@ public class Continuation implements IContinuation {
 		}
 		return l.get(level);
 	}
-
 }

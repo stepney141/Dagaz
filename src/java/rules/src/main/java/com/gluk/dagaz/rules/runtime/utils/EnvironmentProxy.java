@@ -39,13 +39,8 @@ public class EnvironmentProxy implements IEnvironment {
 	}
 	
 	@Override
-	public IContinuation createContinuation() {
-		return new Continuation(this);
-	}
-
-	@Override
-	public void pushContinuation(IContinuation cont) {
-		conts.push(cont);
+	public void pushContinuation(IContinuation c) {
+		conts.push(c);
 	}
 
 	@Override
@@ -56,12 +51,8 @@ public class EnvironmentProxy implements IEnvironment {
 	@Override
 	public IContinuation getContinuation() {
 		IContinuation c = null;
-		IContinuationSupport cs = getContinuationSupport();
-		if (conts.isEmpty()) {
-			if (cs != null) {
-				c = createContinuation();
-				pushContinuation(c);
-			}
+		if (!conts.isEmpty()) {
+			c = conts.peek();
 		}
 		return c;
 	}
@@ -124,6 +115,11 @@ public class EnvironmentProxy implements IEnvironment {
 			}
 		}
 		return h.getValue();
+	}
+
+	@Override
+	public IValue getValue(String name) throws ValueNotFoundException {
+		return getValue(name, false);
 	}
 
 	@Override

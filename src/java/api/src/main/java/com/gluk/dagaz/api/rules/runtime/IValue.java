@@ -9,4 +9,5 @@ public interface IValue {
 	String getString() throws EvaluationException;
 	boolean getBoolean() throws EvaluationException;
 	long getLong() throws EvaluationException;
+	int getInt() throws EvaluationException;
 }

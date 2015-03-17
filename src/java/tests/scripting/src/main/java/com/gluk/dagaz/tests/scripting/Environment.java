@@ -33,6 +33,11 @@ public class Environment implements IEnvironment {
 	}
 
 	@Override
+	public IValue getValue(String name) throws ValueNotFoundException {
+		return getValue(name, false);
+	}
+
+	@Override
 	public void letValue(String name, IValue value) throws EvaluationException {}
 
 	@Override
@@ -85,9 +90,4 @@ public class Environment implements IEnvironment {
 
 	@Override
 	public void popContinuation() {}
-
-	@Override
-	public IContinuation createContinuation() {
-		return null;
-	}
 }

@@ -10,7 +10,11 @@ public interface IExpression {
 	IValue  getValue(IContinuation cont) throws EvaluationException;
 	void    addArgument(IExpression arg) throws ParsingException;
 	boolean isConstant();
+	boolean isNoCaching();
+	boolean isDeterminator();
 	void    setQuoted();
 	boolean isQuoted(int ix);
 	void    setPriority(long priority) throws ParsingException;
+	void    noCaching();
+	void    setParent(IExpression e);
 }

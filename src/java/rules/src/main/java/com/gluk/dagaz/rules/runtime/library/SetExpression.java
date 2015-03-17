@@ -19,4 +19,9 @@ public class SetExpression extends BinaryExpression {
 	public boolean isQuoted(int ix) {
 		return (ix == 0);
 	}
+
+	@Override
+	public boolean isNoCaching() {
+		return true;
+	}
 }

@@ -28,6 +28,11 @@ public class ConstantValue implements IValue {
 		this.value = Long.toString(value); 
 	}
 	
+	public ConstantValue(int value) {
+		this.type  = SystemIds.NUMBER_TYPE;
+		this.value = Integer.toString(value); 
+	}
+	
 	public static IValue createBoolean(Boolean value) {
 		IValue r = bools.get(value);
 		if (r == null) {
@@ -76,6 +81,20 @@ public class ConstantValue implements IValue {
 		long r = 0;
 		try {
 			r = Long.parseLong(value);
+		} catch (NumberFormatException e) {
+			throw new RuntimeException(e.toString(), e);
+		}
+		return r;
+	}
+
+	@Override
+	public int getInt() throws RuntimeException {
+		if (value == null) {
+			throw new RuntimeException("Unknown value");
+		}
+		int r = 0;
+		try {
+			r = Integer.parseInt(value);
 		} catch (NumberFormatException e) {
 			throw new RuntimeException(e.toString(), e);
 		}
