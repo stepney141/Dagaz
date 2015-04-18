@@ -41,7 +41,7 @@
 )
 
 (define build-stack
-   (check is-friend?)
+   (check not-empty?)
    take-piece
    (check loop)
    (while not-from?
