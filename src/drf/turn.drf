@@ -3,6 +3,10 @@
    (set! max-capturing-count capturing-count)
 )
 
+(define check-completed
+   (check no-moves?)
+)
+
 (define goals
    (check-loss no-moves?)
 )
@@ -29,7 +33,7 @@
    (check direction)
    (check is-enemy?)
    capture
-   (increment! capturing-count)
+   (set! capturing-count 1)
    (check direction)
    (check is-empty?)
    drop-pieces
@@ -108,6 +112,7 @@
             (moves
                 (mode capture-type)
                 (pre  check-friend)
+                (post check-completed)
                 (jump nw) (jump ne)
             )
       )
@@ -130,6 +135,7 @@
             (moves
                 (mode capture-type)
                 (pre  check-friend)
+                (post check-completed)
                 (jump nw) (jump ne)
                 (jump sw) (jump se)
                 (jump w)  (jump e)
