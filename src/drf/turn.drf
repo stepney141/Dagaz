@@ -1,0 +1,147 @@
+(define invariant
+   (check (>= capturing-count max-capturing-count))
+   (set! max-capturing-count capturing-count)
+)
+
+(define goals
+   (check-loss no-moves?)
+)
+
+(define check-friend
+   (check is-friend?)
+   take-piece
+)
+
+(define check-promotion
+   (if (in-zone? promotion)
+       (promote King)
+   )
+)
+
+(define (shift direction)
+   (check direction)
+   (check is-empty?)
+   drop-pieces
+   add-move
+)
+
+(define (jump direction)
+   (check direction)
+   (check is-enemy?)
+   capture
+   (increment! capturing-count)
+   (check direction)
+   (check is-empty?)
+   drop-pieces
+   (add-move-part capture-type)
+)
+
+(define build-stack
+   (check is-friend?)
+   take-piece
+   (check loop)
+   (while not-from?
+       (if not-empty?
+           take-piece
+       )
+       (check loop)
+   )
+)
+
+(define (rotate n)
+   (while (decrement! n)
+       (check loop)
+   )
+   drop-pieces
+   add-move
+)
+
+(game
+   (title "Turn the Table Checkers")
+   (turn-order White Black)
+   (board
+      (grid (dimensions "a_i" "9_1")
+            (direction (name nw)  0 -1)
+            (direction (name ne)  1 -1)
+            (direction (name sw) -1  1)
+            (direction (name se)  0  1)
+            (direction (name w)  -1  0)
+            (direction (name e)   1  0)
+      )
+      (kill-positions a6 a7 a8 a9 b7 b8 b9 c8 c9 d9 f1 g1 g2 h1 h2 h3 i1 i2 i3 i4)
+      (link (name loop) 
+            (a4 a5) (a5 b6) (b6 c6) (c6 c5) (c5 b4) (b4 a4)
+            (c2 c3) (c3 d4) (d4 e4) (e4 e3) (e3 d2) (d2 c2)
+            (e6 e7) (e7 f8) (f8 g8) (g8 g7) (g7 f6) (f6 e6)
+            (g4 g5) (g5 h6) (h6 i6) (i6 i5) (i5 h4) (h4 g4)
+      )
+      (zone (name promotion)
+            (players White)
+            (positions e9 f9 g9 h9 i9)
+      )
+      (zone (name promotion)
+            (players Black)
+            (positions a1 b1 c1 d1 e1)
+      )
+      (symmetry (players Black) (nw se) (se nw) (ne sw) (sw ne))
+   )   
+   (pieces
+      (attribute capturing-count 0)
+      (attribute max-capturing-count 0)
+      (pre  goals)
+      (post invariant)
+      (piece 
+            (name Man)
+            (post check-promotion)
+            (moves
+                (pre check-friend)
+                (shift nw) (shift ne)
+            )
+            (moves
+                (pre build-stack)
+                (rotate 1)
+                (rotate 2)
+                (rotate 3)
+                (rotate 4)
+                (rotate 5)
+            )
+            (moves
+                (mode capture-type)
+                (pre  check-friend)
+                (jump nw) (jump ne)
+            )
+      )
+      (piece 
+            (name King)
+            (moves
+                (pre check-friend)
+                (shift nw) (shift ne)
+                (shift sw) (shift se)
+                (shift w)  (shift e)
+            )
+            (moves
+                (pre build-stack)
+                (rotate 1)
+                (rotate 2)
+                (rotate 3)
+                (rotate 4)
+                (rotate 5)
+            )
+            (moves
+                (mode capture-type)
+                (pre  check-friend)
+                (jump nw) (jump ne)
+                (jump sw) (jump se)
+                (jump w)  (jump e)
+            )
+      )
+   )
+   (setup
+      (White
+            (Man a1 b1 c1 d1 e1  b2 c2 d2 e2  c3 d3 e3)
+      )
+      (Black
+            (Man e9 f9 g9 h9 i9  e8 f8 g8 h8  e7 f7 g7)
+      )
+   )
+)
