@@ -1,77 +1,3 @@
-(define (check-source promoted-flag)
-   (check not-empty?)
-   (check (not down))
-   (let my-friend? is-friend?)
-   (let top-promoted is-promoted?)
-   (take-piece-to-head current-pieces)
-   (while (and up not-empty?)
-      (set! my-friend? is-friend?)
-      (set! top-promoted is-promoted?)
-      (take-piece-to-tail current-pieces)
-   )
-   (check my-friend?)
-   (check (= top-promoted promoted-flag))
-)
-
-(define check-intermediate
-   (check not-empty?)
-   (while (not-empty? up)
-      up
-   )
-   (check is-enemy?)
-   (increment! capturing-count)
-   (take-piece-to-head current-pieces)
-)
-
-(define check-destination
-   (check is-empty?)
-   (drop-pieces current-pieces)
-   (if (in-zone? promotion)
-       (set! is-promoted? true)
-   )
-)
-
-(define (man-move promoted-flag direction)
-   (check-source promoted-flag)
-   (check direction)
-   check-destination
-   add-move
-)
-
-(define (man-capture promoted-flag direction)
-   (check-source promoted-flag)
-   (check direction)
-   check-intermediate
-   (check direction)
-   check-destination
-   (add-move-part capture-type)
-)
-
-(define (king-move promoted-flag direction)
-   (check-source promoted-flag)
-   (check direction)
-   (while is-empty?
-      check-destination
-      add-move
-      (check direction)
-   )
-)
-
-(define (king-capture promoted-flag direction)
-   (check-source promoted-flag)
-   (check direction)
-   (while is-empty?
-      (check direction)
-   )
-   check-intermediate
-   (check direction)
-   (while is-empty?
-      check-destination
-      (add-move-part capture-type)
-      (check direction)
-   )
-)
-
 (define invariant
    (check (>= capturing-count max-capturing-count))
    (set! max-capturing-count capturing-count)
@@ -79,6 +5,82 @@
 
 (define goals
    (check-loss no-moves?)
+)
+
+(define check-friend
+   (check is-friend?)
+   (check up)
+   (check is-empty?)
+   (while down)
+   (while not-empty?
+       take-piece
+       (check up)
+   )
+)
+
+(define check-promotion
+   (check is-empty?)
+   (let is-promotion? (in-zone? promotion))
+   drop-pieces
+   (if is-promotion?
+       (promote King)
+   )
+)
+
+(define check-enemy
+   (check not-captured?)
+   (set-position! not-captured? false)
+   (while not-empty?
+       (check up)
+   )
+   (check (is-enemy? down))
+   (increment! capturing-count)
+   drop-pieces
+   (check down)
+   (while not-empty?
+       take-piece
+       (check up)
+   )
+)
+
+(define (shift direction)
+   (check direction)
+   check-promotion
+   add-move
+)
+
+(define (man-jump direction)
+   (check direction)
+   (check not-empty?)
+   check-enemy
+   (check direction)
+   check-promotion
+   (add-move-part capture-type)
+)
+
+(define (shift direction)
+   (check direction)
+   (while is-empty?
+       drop-pieces
+       add-move
+       check-friend
+       (check direction)
+   )
+)
+
+(define (king-jump direction)
+   (check direction)
+   (while is-empty?
+       (check direction)
+   )
+   check-enemy
+   (check direction)
+   (while is-empty?
+       drop-pieces
+       (add-move-part capture-type)
+       check-friend
+       (check direction)
+   )
 )
 
 (game
@@ -95,11 +97,11 @@
       )
       (zone (name promotion)
             (players White)
-            (positions b8 d8 f8 h8)
+            (positions b80 d80 f80 h80)
       )
       (zone (name promotion)
             (players Black)
-            (positions a1 c1 e1 g1)
+            (positions a10 c10 e10 g10)
       )
       (symmetry (players Black) (nw se)(se nw)(ne sw)(sw ne))
    )
@@ -107,31 +109,38 @@
       (attribute capturing-count 0)
       (attribute max-capturing-count 0)
       (pre  goals)
+      (pre  check-friend)
       (post invariant)
       (piece 
             (name Man)
-            (attribute (name is-promoted?) false)
             (moves
-                (mode normal-type)
-                (man-move false nw)(man-move false ne)
-                (king-move true nw)(king-move true ne)
-                (king-move true sw)(king-move true se)
+                (shift nw)(shift ne)
             )
             (moves
                 (mode capture-type)
-                (man-capture false nw)(man-capture false ne)
-                (man-capture false sw)(man-capture false se)
-                (king-capture true nw)(king-capture true ne)
-                (king-capture true sw)(king-capture true se)
+                (man-jump nw)(man-jump ne)
+                (man-jump sw)(man-jump se)
+            )
+      )
+      (piece 
+            (name King)
+            (moves
+                (slide nw)(slide ne)
+                (slide sw)(slide se)
+            )
+            (moves
+                (mode capture-type)
+                (king-jump nw)(king-jump ne)
+                (king-jump sw)(king-jump se)
             )
       )
    )
    (setup
       (White
-            (Man a1 c1 e1 g1 b2 d2 f2 h2 a3 c3 e3 g3)
+            (Man a10 c10 e10 g10 b20 d20 f20 h20 a30 c30 e30 g30)
       )
       (Black
-            (Man b8 d8 f8 h8 a7 c7 e7 g7 b6 d6 f6 h6)
+            (Man b80 d80 f80 h80 a70 c70 e70 g70 b60 d60 f60 h60)
       )
    )
 )
