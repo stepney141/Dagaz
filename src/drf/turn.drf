@@ -44,11 +44,12 @@
    (check not-empty?)
    take-piece
    (check loop)
-   (while not-from?
+   (let cnt 5)
+   (while (decrement! cnt)
        (if not-empty?
            take-piece
        )
-       (check loop)
+       (single loop)
    )
 )
 

@@ -14,7 +14,7 @@
    (while down)
    (while not-empty?
        take-piece
-       (check up)
+       (single up)
    )
 )
 
@@ -28,38 +28,48 @@
 )
 
 (define check-enemy
-   (check not-captured?)
-   (set-position! not-captured? false)
+   (if is-captured?
+       (check false)
+   )   
+   (set-position-flag! is-captured? true)
    (while not-empty?
        (check up)
    )
-   (check (is-enemy? down))
+   (if (is-friend? down)
+       (check false)
+   )
    (increment! capturing-count)
    drop-pieces
    (check down)
    (while not-empty?
        take-piece
-       (check up)
+       (single up)
    )
 )
 
 (define (shift direction)
    (check direction)
+   (while down)
    check-promotion
    add-move
 )
 
 (define (man-jump direction)
    (check direction)
-   (check not-empty?)
+   (while down)
+   (if empty?
+       (check false)
+   )
    check-enemy
    (check direction)
+   (while down)
    check-promotion
    (add-move-part capture-type)
 )
 
 (define (shift direction)
    (check direction)
+   (while down)
    (while is-empty?
        drop-pieces
        add-move
@@ -70,11 +80,14 @@
 
 (define (king-jump direction)
    (check direction)
+   (while down)
    (while is-empty?
        (check direction)
+       (while down)
    )
    check-enemy
    (check direction)
+   (while down)
    (while is-empty?
        drop-pieces
        (add-move-part capture-type)
@@ -90,10 +103,10 @@
       (grid (dimensions "a_h" "8_1" "0_23")
             (direction (name up)    0  0  1)
             (direction (name down)  0  0 -1)
-            (direction (name nw)   -1 -1)
-            (direction (name ne)    1 -1)
-            (direction (name sw)   -1  1)
-            (direction (name se)    1  1)
+            (direction (name nw)   -1 -1  0)
+            (direction (name ne)    1 -1  0)
+            (direction (name sw)   -1  1  0)
+            (direction (name se)    1  1  0)
       )
       (zone (name promotion)
             (players White)
