@@ -6,6 +6,7 @@ import java.util.Map;
 import com.gluk.dagaz.api.exceptions.CommonException;
 import com.gluk.dagaz.api.exceptions.CriticalException;
 import com.gluk.dagaz.api.exceptions.StateException;
+import com.gluk.dagaz.api.player.IPlayer;
 import com.gluk.dagaz.api.state.IState;
 
 public class FullState extends AbstractState {
@@ -40,5 +41,35 @@ public class FullState extends AbstractState {
 
 	public boolean isTerminalState() {
 		return nextStates.isEmpty();
+	}
+
+	public long getHash() {
+		// TODO:
+		return 0;
+	}
+
+	public long getHash(String name) {
+		// TODO:
+		return 0;
+	}
+
+	public int getPartNumber() {
+		// TODO:
+		return 0;
+	}
+
+	public IPlayer getPlayer() {
+		// TODO:
+		return null;
+	}
+
+	public IState createState(String move, String mode, boolean isPartial) {
+		// TODO:
+		return null;
+	}
+
+	public IState getNextState(String move, String mode) throws CommonException {
+		// TODO:
+		return null;
 	}
 }

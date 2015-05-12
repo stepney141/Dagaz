@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.gluk.dagaz.api.exceptions.CriticalException;
-import com.gluk.dagaz.api.rules.runtime.IFunction;
-import com.gluk.dagaz.api.rules.runtime.IFunctionList;
+import com.gluk.dagaz.api.rules.functions.IFunction;
+import com.gluk.dagaz.api.rules.functions.IFunctionManager;
 
-public class FunctionList implements IFunctionList {
+public class FunctionList implements IFunctionManager {
 	
 	private Map<String, IFunction> funcs = new HashMap<String, IFunction>();
 
@@ -16,7 +16,7 @@ public class FunctionList implements IFunctionList {
 		StringBuffer sb = new StringBuffer();
 		sb.append(name);
 		sb.append('@');
-		sb.append(Integer.toString(f.getParameters().size()));
+		sb.append(Integer.toString(f.getArguments().size()));
 		funcs.put(sb.toString(), f);
 	}
 

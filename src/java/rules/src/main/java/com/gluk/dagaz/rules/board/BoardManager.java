@@ -1,28 +1,30 @@
 package com.gluk.dagaz.rules.board;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import com.gluk.dagaz.api.application.IApplication;
 import com.gluk.dagaz.api.exceptions.BoardException;
 import com.gluk.dagaz.api.exceptions.CommonException;
+import com.gluk.dagaz.api.exceptions.EvaluationException;
 import com.gluk.dagaz.api.random.IRandomFactory;
 import com.gluk.dagaz.api.random.IRandomGenerator;
-import com.gluk.dagaz.api.rules.board.IBoard;
-import com.gluk.dagaz.api.rules.board.IBoardOperationCallback;
+import com.gluk.dagaz.api.rules.board.IBoardManager;
 import com.gluk.dagaz.api.state.IPiece;
 import com.gluk.dagaz.api.state.IPosition;
 import com.gluk.dagaz.api.state.IState;
 
-public class Board extends BoardConfiguration implements IBoard {
+public class BoardManager extends BoardConfiguration implements IBoardManager {
 	
 	private final static String RANDOM_GENEGATOR = "_zobrist";
 	
 	private IApplication app;
 	private Map<String, Map<String, Long>> hashValues = new HashMap<String, Map<String, Long>>();
 	
-	public Board(IApplication app) {
+	public BoardManager(IApplication app) {
 		this.app = app;
 	}
 
@@ -87,21 +89,6 @@ public class Board extends BoardConfiguration implements IBoard {
 		return np;
 	}
 
-	public void execOperation(String name, String player, IBoardOperationCallback callback) throws BoardException {
-		Map<String, Map<String, String>> pl = operations.get(name);
-		if (pl != null) {
-			Map<String, String> o = pl.get(player);
-			if (o == null) {
-				o = pl.get("");
-			}
-			if (o != null) {
-				for (String p: o.keySet()) {
-					callback.changePosition(p, o.get(p));
-				}
-			}
-		}
-	}
-
 	public void initState(IState state) throws BoardException {
 		for (String name: counters.keySet()) {
 			state.setValue(name, counters.get(name));
@@ -126,7 +113,7 @@ public class Board extends BoardConfiguration implements IBoard {
 
 	@Override
 	public long addToHash(long hash, String position, IState state) throws CommonException {
-		if (state.positionExists(position)) {
+		if (state.isPositionExists(position)) {
 			IPosition pos = state.getPosition(position);
 			if (!pos.isEmpty()) {
 				IPiece piece = pos.getPiece();
@@ -135,5 +122,38 @@ public class Board extends BoardConfiguration implements IBoard {
 			}
 		}
 		return hash;
+	}
+
+	@Override
+	public List<String> getPositions(String zone, String player) throws EvaluationException {
+		List<String> r = new ArrayList<String>();
+		if (positions.keySet().contains(zone)) {
+			r.add(zone);
+			return r;
+		}
+		Map<String, Set<String>> zl = zones.get(zone);
+		if (zl == null) {
+			throw new EvaluationException("Zone [" + zone + "] undefined");
+		}
+		Set<String> z = zl.get(player);
+		if (z == null) {
+			z = zl.get("");
+		}
+		if (z == null) {
+			throw new EvaluationException("Zone [" + zone + "] undefined for player [" + player + "]");
+		}
+		for (String p: z) {
+			r.add(p);
+		}
+		return r;
+	}
+
+	@Override
+	public List<String> getPositions() throws EvaluationException {
+		List<String> r = new ArrayList<String>();
+		for (String p: positions.keySet()) {
+			r.add(p);
+		}
+		return r;
 	}
 }

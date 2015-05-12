@@ -8,10 +8,10 @@ import java.util.Map;
 import com.gluk.dagaz.api.exceptions.CriticalException;
 import com.gluk.dagaz.api.exceptions.EvaluationException;
 import com.gluk.dagaz.api.exceptions.ParsingException;
+import com.gluk.dagaz.api.rules.functions.IFunction;
+import com.gluk.dagaz.api.rules.functions.IFunctionManager;
 import com.gluk.dagaz.api.rules.runtime.IEnvironment;
 import com.gluk.dagaz.api.rules.runtime.IExpression;
-import com.gluk.dagaz.api.rules.runtime.IFunction;
-import com.gluk.dagaz.api.rules.runtime.IFunctionList;
 import com.gluk.dagaz.api.rules.runtime.IValue;
 import com.gluk.dagaz.rules.runtime.utils.BaseExpression;
 import com.gluk.dagaz.rules.runtime.utils.NamedValue;
@@ -36,7 +36,7 @@ public class ApplyExpression extends BaseExpression {
 		}
 		IFunction f = funcs.get(name);
 		if (f == null) {
-			IFunctionList fl = app.getFunctionList();
+			IFunctionManager fl = app.getFunctionManager();
 			try {
 				f = fl.getFunction(name);
 			} catch (CriticalException e) {
@@ -44,18 +44,18 @@ public class ApplyExpression extends BaseExpression {
 			}
 			funcs.put(name, f);
 		}
-		env.openFrame();
+		env.openScope();
 		List<NamedValue> values = new ArrayList<NamedValue>();
 		for (int i = 1; i < args.size(); i++) {
 			IValue v = args.get(i).getValue(env);
-			String n = f.getParameters().get(i - 1);
+			String n = f.getArguments().get(i - 1);
 			values.add(new NamedValue(n, v));
 		}
 		for (NamedValue v: values) {
 			env.letValue(v.getName(), v.getValue());
 		}
-		IValue r = f.getExpression().getValue(env);
-		env.closeFrame();
+		IValue r = f.getCode().getValue(env);
+		env.closeScope();
 		return r;
 	}
 

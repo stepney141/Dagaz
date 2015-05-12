@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.gluk.dagaz.api.state.IPiece;
-import com.gluk.dagaz.api.state.IValueSet;
 
 public class Piece implements IPiece {
 	
@@ -18,7 +17,7 @@ public class Piece implements IPiece {
 		this.type = type;
 	}
 
-	public String getOwner() {
+	public String getPlayer() {
 		return player;
 	}
 
@@ -34,20 +33,23 @@ public class Piece implements IPiece {
 		return r;
 	}
 
-	public IValueSet setValue(String name, String value) {
+	public void setValue(String name, String value, boolean isPersistent) {
 		String r = values.get(name);
 		if ((r != null) && value.equals(r)) {
-			return this;
+			return;
 		}
 		Piece p = new Piece(player, type);
 		for (String nm: values.keySet()) {
 			p.values.put(nm, values.get(nm));
 		}
 		p.values.put(name, value);
-		return p;
+	}
+	
+	public void setValue(String name, String value) {
+		setValue(name, value, true);
 	}
 
-	public boolean isClonable() {
+	public boolean isPersistent() {
 		return true;
 	}
 
@@ -57,21 +59,6 @@ public class Piece implements IPiece {
 
 	public boolean isValuePresent(String name) {
 		return values.containsKey(name);
-	}
-
-	public boolean isEqualValues(IValueSet value) {
-		if (value.getValuesCount() != values.size()) return false;
-		for (String name: values.keySet()) {
-			if (!value.isValuePresent(name)) return false;
-			if (!values.get(name).equals(value.getValue(name))) return false;
-		}
-		return true;
-	}
-
-	public boolean isEqual(IPiece piece) {
-		if (!piece.getOwner().equals(player)) return false;
-		if (!piece.getType().equals(type)) return false;
-		return isEqualValues(piece);
 	}
 
 	public String getHashKey() {

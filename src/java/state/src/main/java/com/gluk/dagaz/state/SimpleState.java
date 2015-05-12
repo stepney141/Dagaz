@@ -2,6 +2,7 @@ package com.gluk.dagaz.state;
 
 import com.gluk.dagaz.api.exceptions.CommonException;
 import com.gluk.dagaz.api.exceptions.StateException;
+import com.gluk.dagaz.api.player.IPlayer;
 import com.gluk.dagaz.api.state.IState;
 
 public class SimpleState extends AbstractState {
@@ -35,5 +36,35 @@ public class SimpleState extends AbstractState {
 
 	public boolean isTerminalState() {
 		return (nextState == null);
+	}
+
+	public long getHash() {
+		// TODO:
+		return 0;
+	}
+
+	public long getHash(String name) {
+		// TODO:
+		return 0;
+	}
+
+	public int getPartNumber() {
+		// TODO:
+		return 0;
+	}
+
+	public IPlayer getPlayer() {
+		// TODO:
+		return null;
+	}
+
+	public IState createState(String move, String mode, boolean isPartial) {
+		// TODO:
+		return null;
+	}
+
+	public IState getNextState(String move, String mode) throws CommonException {
+		// TODO:
+		return null;
 	}
 }

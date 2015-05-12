@@ -6,8 +6,8 @@ public interface IValue {
 	boolean isList();
 	boolean isBoolean();
 	boolean isNumber();
-	String getString() throws EvaluationException;
 	boolean getBoolean() throws EvaluationException;
-	long getLong() throws EvaluationException;
-	int getInt() throws EvaluationException;
+	String  getString() throws EvaluationException;
+	long    getLong() throws EvaluationException;
+	int     getInt() throws EvaluationException;
 }

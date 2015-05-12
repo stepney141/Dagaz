@@ -7,7 +7,7 @@ import java.util.Stack;
 
 import com.gluk.dagaz.api.exceptions.EvaluationException;
 import com.gluk.dagaz.api.exceptions.ValueNotFoundException;
-import com.gluk.dagaz.api.rules.board.IBoardConfiguration;
+import com.gluk.dagaz.api.rules.board.IBoardManager;
 import com.gluk.dagaz.api.rules.runtime.IContinuation;
 import com.gluk.dagaz.api.rules.runtime.IContinuationSupport;
 import com.gluk.dagaz.api.rules.runtime.IEnvironment;
@@ -16,14 +16,14 @@ import com.gluk.dagaz.api.rules.runtime.IValue;
 public class EnvironmentProxy implements IEnvironment {
 	
 	private IEnvironment env;
-	private IBoardConfiguration board;
+	private IBoardManager board;
 	
 	private int deep = 0;
 	private Map<String, ValueHolder> values = new HashMap<String, ValueHolder>();
 	private Stack<IContinuationSupport> csStack = new Stack<IContinuationSupport>();
 	private Stack<IContinuation> conts = new Stack<IContinuation>(); 
 	
-	public EnvironmentProxy(IEnvironment env, IBoardConfiguration board) {
+	public EnvironmentProxy(IEnvironment env, IBoardManager board) {
 		this.env   = env;
 		this.board = board;
 	}
@@ -140,12 +140,12 @@ public class EnvironmentProxy implements IEnvironment {
 	}
 
 	@Override
-	public void openFrame() {
+	public void openScope() {
 		deep++;
 	}
 
 	@Override
-	public void closeFrame() throws EvaluationException {
+	public void closeScope() throws EvaluationException {
 		if (deep == 0) {
 			throw new EvaluationException("Empty Stack");
 		}

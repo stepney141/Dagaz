@@ -88,7 +88,7 @@ public class Grid implements IGrid {
 	
 	private void generatePositions(int ix, StringBuffer sb) throws BoardException {
 		if (ix >= dimensions.size()) {
-			board.createPosition(sb.toString());
+			board.addPosition(sb.toString());
 			return;
 		}
 		List<String> d = dimensions.get(ix);
@@ -102,7 +102,7 @@ public class Grid implements IGrid {
 		}
 	}
 
-	public void generate() throws BoardException {
+	public void generate(IBoardConfiguration board) throws BoardException {
 		if (!isGenerated) {
 			isGenerated = true;
 			if (dimensions.isEmpty()) {
@@ -136,10 +136,12 @@ public class Grid implements IGrid {
 		
 	}
 
-	public void addDirection(String name, List<Integer> deltas) throws BoardException {
-		generate();
+	@Override
+	public void addDirection(String name, int delta) throws BoardException {
+		// TODO:
+/*		generate(board);
 		StringBuffer startPosition = new StringBuffer();
 		StringBuffer endPosition = new StringBuffer();
-		generateLinks(0, name, deltas, startPosition, endPosition);
+		generateLinks(0, name, deltas, startPosition, endPosition); */
 	}
 }

@@ -26,7 +26,7 @@ public abstract class AbstractValueSet implements IValueSet {
 		return r;
 	}
 
-	public boolean isClonable() {
+	public boolean isPersistent() {
 		return isClonable;
 	}
 	
@@ -34,17 +34,16 @@ public abstract class AbstractValueSet implements IValueSet {
 		return clonableFlags.contains(name);
 	}
 
-	public IValueSet setValue(String name, String value) {
+	public void setValue(String name, String value) {
 		setValue(name, value, true);
-		return this;
 	}
 
-	public IValueSet setValue(String name, String value, boolean isClonable) {
-		if (isClonable) {
+	public void setValue(String name, String value, boolean isPersistent) {
+		if (isPersistent) {
 			this.isClonable = true;
 		}
 		flags.put(name, value);
-		if (isClonable) {
+		if (isPersistent) {
 			if (!isClonable(name)) {
 				clonableFlags.add(name);
 			}
@@ -53,7 +52,6 @@ public abstract class AbstractValueSet implements IValueSet {
 				clonableFlags.remove(name);
 			}
 		}
-		return this;
 	}
 
 	public void copyValuesTo(AbstractValueSet v) {
@@ -69,16 +67,5 @@ public abstract class AbstractValueSet implements IValueSet {
 	
 	public boolean isValuePresent(String name) {
 		return clonableFlags.contains(name);
-	}
-	
-	public boolean isEqualValues(IValueSet value) {
-		if (getValuesCount() != value.getValuesCount()) return false;
-		for (String name: clonableFlags) {
-			if (!value.isValuePresent(name)) return false;
-			String v = flags.get(name);
-			if (v == null) return false;
-			if (!value.getValue(name).equals(v)) return false;
-		}
-		return true;
 	}
 }

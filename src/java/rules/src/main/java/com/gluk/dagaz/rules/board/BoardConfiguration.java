@@ -1,14 +1,11 @@
 package com.gluk.dagaz.rules.board;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import com.gluk.dagaz.api.exceptions.BoardException;
-import com.gluk.dagaz.api.exceptions.EvaluationException;
 import com.gluk.dagaz.api.rules.board.IBoardConfiguration;
 
 public abstract class BoardConfiguration implements IBoardConfiguration {
@@ -27,47 +24,14 @@ public abstract class BoardConfiguration implements IBoardConfiguration {
 		return (positions.containsKey(name) || directions.contains(name));
 	}
 
-	@Override
-	public List<String> getPositions(String zone, String player) throws EvaluationException {
-		List<String> r = new ArrayList<String>();
-		if (positions.keySet().contains(zone)) {
-			r.add(zone);
-			return r;
-		}
-		Map<String, Set<String>> zl = zones.get(zone);
-		if (zl == null) {
-			throw new EvaluationException("Zone [" + zone + "] undefined");
-		}
-		Set<String> z = zl.get(player);
-		if (z == null) {
-			z = zl.get("");
-		}
-		if (z == null) {
-			throw new EvaluationException("Zone [" + zone + "] undefined for player [" + player + "]");
-		}
-		for (String p: z) {
-			r.add(p);
-		}
-		return r;
-	}
-
-	@Override
-	public List<String> getPositions() throws EvaluationException {
-		List<String> r = new ArrayList<String>();
-		for (String p: positions.keySet()) {
-			r.add(p);
-		}
-		return r;
-	}
-
-	public void createPosition(String position) throws BoardException {
+	public void addPosition(String position) throws BoardException {
 		if (positions.containsKey(position)) {
 			throw new BoardException("Duplicate position [" + position + "]");
 		}
 		positions.put(position, new DirectionList());
 	}
 
-	public void deletePosition(String position) throws BoardException {
+	public void delPosition(String position) throws BoardException {
 		positions.remove(position);
 	}
 
@@ -159,7 +123,7 @@ public abstract class BoardConfiguration implements IBoardConfiguration {
 		addOperation(name, oldPosition, newPosition, "");
 	}
 
-	public void addCounter(String name, String value, String player) throws BoardException {
+	public void addVariable(String name, String value, String player) throws BoardException {
 		StringBuffer sb = new StringBuffer();
 		sb.append(name);
 		sb.append("@");
@@ -167,7 +131,7 @@ public abstract class BoardConfiguration implements IBoardConfiguration {
 		counters.put(sb.toString(), value);
 	}
 
-	public void addCounter(String name, String value) throws BoardException {
+	public void addVariable(String name, String value) throws BoardException {
 		counters.put(name, value);
 	}
 }

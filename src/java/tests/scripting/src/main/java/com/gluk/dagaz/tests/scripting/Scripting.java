@@ -2,10 +2,10 @@ package com.gluk.dagaz.tests.scripting;
 
 import org.apache.log4j.Logger;
 
-import com.gluk.dagaz.api.rules.board.IBoardConfiguration;
+import com.gluk.dagaz.api.rules.board.IBoardManager;
+import com.gluk.dagaz.api.rules.functions.IFunction;
+import com.gluk.dagaz.api.rules.functions.IFunctionManager;
 import com.gluk.dagaz.api.rules.runtime.IEnvironment;
-import com.gluk.dagaz.api.rules.runtime.IFunction;
-import com.gluk.dagaz.api.rules.runtime.IFunctionList;
 import com.gluk.dagaz.api.rules.runtime.IValue;
 import com.gluk.dagaz.rules.parser.CodeConfigurator;
 import com.gluk.dagaz.rules.parser.Configuration;
@@ -33,15 +33,15 @@ public class Scripting extends BaseApplication {
 			conf.addTransformation(BASE_TRANSFORM);
 			CodeConfigurator code = new CodeConfigurator(this, conf.getDocument());
 			code.initApplication();
-			IFunctionList fl = getFunctionList();
+			IFunctionManager fl = getFunctionManager();
 			IFunction f = fl.getFunction("main@0");
-			IBoardConfiguration board = new Board();
+			IBoardManager board = new Board();
 			long timestamp = System.currentTimeMillis();
 			for (int i = 1; i < 10; i++) {
 				IEnvironment env = new Environment(i);
 				IEnvironment proxy = new EnvironmentProxy(env, board);
 				IValue v = null;
-				v = f.getExpression().getValue(proxy);
+				v = f.getCode().getValue(proxy);
 				if (v != null) {
 					env.setValue("out", v);
 				}

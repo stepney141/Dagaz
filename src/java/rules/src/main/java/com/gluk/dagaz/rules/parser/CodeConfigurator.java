@@ -8,9 +8,9 @@ import org.w3c.dom.traversal.NodeIterator;
 import com.gluk.dagaz.api.application.IApplication;
 import com.gluk.dagaz.api.exceptions.CommonException;
 import com.gluk.dagaz.api.exceptions.ParsingException;
+import com.gluk.dagaz.api.rules.functions.IFunction;
+import com.gluk.dagaz.api.rules.functions.IFunctionManager;
 import com.gluk.dagaz.api.rules.runtime.IExpression;
-import com.gluk.dagaz.api.rules.runtime.IFunction;
-import com.gluk.dagaz.api.rules.runtime.IFunctionList;
 import com.gluk.dagaz.rules.runtime.library.ConstantExpression;
 import com.gluk.dagaz.rules.runtime.library.ExpressionFactory;
 import com.gluk.dagaz.rules.runtime.library.GetExpression;
@@ -49,11 +49,11 @@ public class CodeConfigurator extends BaseConfigurator {
 		Node n;
         while ((n = nl.nextNode())!= null) {
         	String name = getName(n);
-        	f.addParameter(name);
+        	f.addArgument(name);
         }
         nl = getIterator(fun, FUN_XP);
         if ((n = nl.nextNode())!= null) {
-        	IFunctionList fl = app.getFunctionList();
+        	IFunctionManager fl = app.getFunctionManager();
         	String name = getName(n);
         	fl.addFunction(name, f);
         } else {

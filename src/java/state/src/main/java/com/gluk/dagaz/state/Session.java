@@ -1,12 +1,9 @@
 package com.gluk.dagaz.state;
 
-import com.gluk.dagaz.api.exceptions.CommonException;
-import com.gluk.dagaz.api.exceptions.StateException;
-import com.gluk.dagaz.api.rules.board.IBoard;
-import com.gluk.dagaz.api.state.ISession;
 import com.gluk.dagaz.api.state.IState;
+import com.gluk.dagaz.api.state.IStateManager;
 
-public class Session implements ISession {
+public class Session implements IStateManager {
 	
 	private IState initialState;
 	private IState currentState;
@@ -24,7 +21,12 @@ public class Session implements ISession {
 		return currentState;
 	}
 
-	public IState getPrevState() throws StateException {
+	public void configure(String name, String value) {
+		// TODO:
+		
+	}
+
+/*	public IState getPrevState() throws StateException {
 		IState r = currentState.getPrevState();
 		currentState = r;
 		return r;
@@ -36,17 +38,18 @@ public class Session implements ISession {
 		return r;
 	}
 
-	public IState getNextState(String move) throws CommonException {
+	public IState getNextState(String move, String mode) throws CommonException {
 		IState r = currentState.getNextState(move);
 		currentState = r;
 		return r;
-	}
+	}*/
 
-	public boolean isSituationRepeated(int count, int deep, String name, Long hash) {
+	// TODO:
+/*	public boolean isSituationRepeated(int count, int deep, String name, Long hash) {
 		return currentState.isRepeated(count, true, (deep == 0)?0:(currentState.getTurnNumber() - deep + 1), currentState.getTurnOrder(), name, hash);
 	}
 
-	public boolean isSituationRepeated(IBoard board, int count, int deep) throws CommonException {
+	public boolean isSituationRepeated(IBoardManager board, int count, int deep) throws CommonException {
 		return currentState.isRepeated(board, count, (deep == 0)?0:(currentState.getTurnNumber() - deep + 1), currentState.getTurnOrder());
 	}
 
@@ -54,7 +57,7 @@ public class Session implements ISession {
 		return currentState.isRepeated(count, true, (deep == 0)?0:(currentState.getTurnNumber() - deep + 1), 0, name, hash);
 	}
 
-	public boolean isPositionRepeated(IBoard board, int count, int deep) throws CommonException {
+	public boolean isPositionRepeated(IBoardManager board, int count, int deep) throws CommonException {
 		return currentState.isRepeated(board, count, (deep == 0)?0:(currentState.getTurnNumber() - deep + 1), 0);
-	}
+	}*/
 }

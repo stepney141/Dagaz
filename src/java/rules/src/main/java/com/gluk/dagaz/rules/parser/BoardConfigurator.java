@@ -29,7 +29,6 @@ public class BoardConfigurator extends BaseConfigurator {
 	private final static String PLAYERS_XP    = "n[@t=\'players\']/n";
 	private final static String SYN_XP        = "n[@t=\'synonym\']|n[@t=\'gate\']";
 	private final static String SYM_XP        = "n[@t=\'symmetry\']";
-	private final static String OPS_XP        = "n[@t=\'operation\']";
 	private final static String TAGS_XP       = "n";
 	private final static String CNT_XP        = "n[@t=\'attribute\']";
 	
@@ -50,7 +49,7 @@ public class BoardConfigurator extends BaseConfigurator {
 	        	String dim = d.getTextContent();
 	        	g.addDimension(dim);
 	        }
-	        g.generate();
+	        g.generate(board);
     		grids.add(g);
         }
 	}
@@ -60,7 +59,7 @@ public class BoardConfigurator extends BaseConfigurator {
 		Node n;
         while ((n = nl.nextNode())!= null) {
         	String position = getName(n);
-        	board.createPosition(position);
+        	board.addPosition(position);
         }
 	}
 
@@ -69,7 +68,7 @@ public class BoardConfigurator extends BaseConfigurator {
 		Node n;
         while ((n = nl.nextNode())!= null) {
         	String position = getName(n);
-        	board.deletePosition(position);
+        	board.delPosition(position);
         }
 	}
 	
@@ -84,14 +83,12 @@ public class BoardConfigurator extends BaseConfigurator {
     		NodeIterator dl = getIterator(n, DIRS_XP);
     		Node d;
             while ((d = dl.nextNode())!= null) {
-            	List<Integer> deltas = new ArrayList<Integer>();
             	String name = getListName(d);
         		NodeIterator vl = getIterator(d, VALS_XP);
         		Node v;
                 while ((v = vl.nextNode())!= null) {
-                	deltas.add(Integer.parseInt(v.getTextContent()));
+                    g.addDirection(name, Integer.parseInt(v.getTextContent()));
                 }
-                g.addDirection(name, deltas);
             }
         }
 	}
@@ -202,42 +199,7 @@ public class BoardConfigurator extends BaseConfigurator {
         }
 	}
 	
-	public void addOperations(IBoardConfiguration board, Node conf) throws Exception {
-		NodeIterator nl = getIterator(conf, OPS_XP);
-		Node n;
-        while ((n = nl.nextNode())!= null) {
-        	String name = getListName(n);
-    		NodeIterator pl = getIterator(n, PLAYERS_XP);
-    		boolean f = true;
-    		Node p;
-            while ((p = pl.nextNode())!= null) {
-            	String player = getName(p);
-        		NodeIterator tl = getIterator(n, TAGS_XP);
-        		Node t;
-                while ((t = tl.nextNode())!= null) {
-                	String oldPosition = getName(t);
-                	if (oldPosition.equals(NAME_STR)) continue;
-                	if (oldPosition.equals(PLAYERS_STR)) continue;
-                	String newPosition = getValue(t);
-                	board.addOperation(name, oldPosition, newPosition, player);
-                }
-            	f = false;
-            }
-            if (f) {
-        		NodeIterator tl = getIterator(n, TAGS_XP);
-        		Node t;
-                while ((t = tl.nextNode())!= null) {
-                	String oldPosition = getName(t);
-                	if (oldPosition.equals(NAME_STR)) continue;
-                	if (oldPosition.equals(PLAYERS_STR)) continue;
-                	String newPosition = getValue(t);
-                	board.addOperation(name, oldPosition, newPosition);
-                }
-            }
-        }
-	}
-	
-	public void addCounters(IBoardConfiguration board, Node conf) throws Exception {
+	public void addVariables(IBoardConfiguration board, Node conf) throws Exception {
 		NodeIterator nl = getIterator(conf, CNT_XP);
 		Node n;
         while ((n = nl.nextNode())!= null) {
@@ -251,7 +213,7 @@ public class BoardConfigurator extends BaseConfigurator {
         		Node v;
                 while ((v = vl.nextNode())!= null) {
                 	String value = v.getTextContent();
-                	board.addCounter(name, value, player);
+                	board.addVariable(name, value, player);
                 }
             }
             if (f) {
@@ -259,7 +221,7 @@ public class BoardConfigurator extends BaseConfigurator {
         		Node v;
                 while ((v = vl.nextNode())!= null) {
                 	String value = v.getTextContent();
-                	board.addCounter(name, value);
+                	board.addVariable(name, value);
                 }
             }
         }
@@ -278,8 +240,7 @@ public class BoardConfigurator extends BaseConfigurator {
 	        	addLinks(board, n);
 	        	addZones(board, n);
 	        	addSyns(board, n);
-	        	addOperations(board, n);
-	        	addCounters(board, n);
+	        	addVariables(board, n);
 	        }
 		} catch (Exception e) {
 			throw new ParsingException(e.toString(), e);

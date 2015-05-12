@@ -46,10 +46,10 @@ public class Environment implements IEnvironment {
 	}
 
 	@Override
-	public void openFrame() {}
+	public void openScope() {}
 
 	@Override
-	public void closeFrame() throws EvaluationException {}
+	public void closeScope() throws EvaluationException {}
 
 	@Override
 	public void setScore(int score, long priority) {}

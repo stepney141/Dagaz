@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gluk.dagaz.api.exceptions.CriticalException;
+import com.gluk.dagaz.api.rules.functions.IFunction;
 import com.gluk.dagaz.api.rules.runtime.IExpression;
-import com.gluk.dagaz.api.rules.runtime.IFunction;
 
 public class Function implements IFunction {
 	
@@ -17,12 +17,12 @@ public class Function implements IFunction {
 	}
 
 	@Override
-	public IExpression getExpression() {
+	public IExpression getCode() {
 		return expr;
 	}
 
 	@Override
-	public void addParameter(String name) throws CriticalException {
+	public void addArgument(String name) throws CriticalException {
 		if (params.contains(name)) {
 			throw new CriticalException("Invalid parameters");
 		}
@@ -30,7 +30,7 @@ public class Function implements IFunction {
 	}
 
 	@Override
-	public List<String> getParameters() {
+	public List<String> getArguments() {
 		return params;
 	}
 }

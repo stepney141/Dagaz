@@ -7,15 +7,15 @@ import com.gluk.dagaz.api.exceptions.CommonException;
 import com.gluk.dagaz.api.exceptions.ParsingException;
 import com.gluk.dagaz.api.state.IPiece;
 import com.gluk.dagaz.api.state.IPosition;
-import com.gluk.dagaz.api.state.ISession;
 import com.gluk.dagaz.api.state.IState;
+import com.gluk.dagaz.api.state.IStateManager;
 
 public class StateConfigurator extends BaseConfigurator {
 	
 	private final static String SETUP_XP  = "n[@t=\'setup\']/n";
 	
-	public void initSession(ISession session, Node game) throws CommonException {
-		IState state = session.getInitialState();
+	public void initSession(IStateManager sm, Node game) throws CommonException {
+		IState state = sm.getInitialState();
 		try {
 			NodeIterator nl = getIterator(game, SETUP_XP);
 			Node n;

@@ -10,8 +10,8 @@ public class Position extends AbstractValueSet implements IPosition {
 	
 	private IPiece piece = null;
 	
-	public boolean isClonable() {
-		return super.isClonable() || (piece != null);
+	public boolean isPersistent() {
+		return super.isPersistent() || (piece != null);
 	}
 
 	public IPosition getClone() {
@@ -34,7 +34,7 @@ public class Position extends AbstractValueSet implements IPosition {
 
 	public IPiece createPiece(String player, String type) throws CommonException {
 		if (piece != null) {
-			throw new CriticalException("Posiion is not empty");
+			throw new CriticalException("Posion is not empty");
 		}
 		piece = new Piece(player, type);
 		return piece;
@@ -45,18 +45,5 @@ public class Position extends AbstractValueSet implements IPosition {
 			throw new EmptyPositionException("Position is empty");
 		}
 		piece = null;
-	}
-
-	public void setPieceAttribute(String name, String value) {
-		piece = (IPiece)piece.setValue(name, value); 
-	}
-
-	public boolean isEqual(IPosition position) throws CommonException {
-		if (isEmpty()) {
-			if (!position.isEmpty()) return false;
-			return true;
-		}
-		if (position.isEmpty()) return false;
-		return getPiece().isEqual(position.getPiece());
 	}
 }
