@@ -1,8 +1,10 @@
 package com.gluk.dagaz.api.state;
 
-public interface IRepeatitionHelper extends IState {
-	boolean isSituationRepeated(String name, Long hash, int count, int deep);
-	boolean isSituationRepeated(int count, int deep);
-	boolean isPositionRepeated(String name, Long hash, int count, int deep);
-	boolean isPositionRepeated(int count, int deep);
+import com.gluk.dagaz.api.exceptions.CommonException;
+
+public interface IRepeatitionHelper {
+	boolean isSituationRepeated(String name, Long hash, int count, int deep) throws CommonException;
+	boolean isSituationRepeated(int count, int deep) throws CommonException;
+	boolean isPositionRepeated(String name, Long hash, int count, int deep) throws CommonException;
+	boolean isPositionRepeated(int count, int deep) throws CommonException;
 }

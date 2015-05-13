@@ -1,20 +1,25 @@
 package com.gluk.dagaz.state;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collection;
 
 import com.gluk.dagaz.api.state.IPiece;
 
-public class Piece implements IPiece {
+public class Piece extends AbstractValueSet implements IPiece {
 	
 	String player;
 	String type;
 	
-	private Map<String, String> values = new HashMap<String, String>(); 
-	
 	public Piece(String player, String type) {
 		this.player = player;
 		this.type = type;
+	}
+	
+	public Piece(IPiece p) {
+		this.player = p.getPlayer();
+		this.type   = p.getType();
+		for (String name: p.getPersistentValues()) {
+			setValue(name, p.getValue(name));
+		}
 	}
 
 	public String getPlayer() {
@@ -25,55 +30,28 @@ public class Piece implements IPiece {
 		return type;
 	}
 
-	public String getValue(String name) {
-		String r = values.get(name);
-		if (r == null) {
-			r = "";
-		}
-		return r;
-	}
-
-	public void setValue(String name, String value, boolean isPersistent) {
-		String r = values.get(name);
-		if ((r != null) && value.equals(r)) {
-			return;
-		}
-		Piece p = new Piece(player, type);
-		for (String nm: values.keySet()) {
-			p.values.put(nm, values.get(nm));
-		}
-		p.values.put(name, value);
-	}
-	
-	public void setValue(String name, String value) {
-		setValue(name, value, true);
-	}
-
-	public boolean isPersistent() {
-		return true;
-	}
-
-	public int getValuesCount() {
-		return values.size();
-	}
-
-	public boolean isValuePresent(String name) {
-		return values.containsKey(name);
-	}
-
 	public String getHashKey() {
 		StringBuffer sb = new StringBuffer();
 		sb.append(type);
 		sb.append('@');
 		sb.append(player);
-		if (values.size() > 0) {
+		Collection<String> names = getPersistentValues();
+		if (!names.isEmpty()) {
 			sb.append(':');
-			for (String name: values.keySet()) {
+			for (String name: names) {
 				sb.append(name);
 				sb.append('=');
-				sb.append(values.get(name));
+				sb.append(getValue(name));
 			}
 		}
 		return sb.toString();
+	}
+
+	public boolean isEqual(IPiece p) {
+		if (!player.equals(p.getPlayer()) ||
+	        !type.equals(p.getType())) {
+			return false;
+		}
+		return super.isEqual(p);
 	}
 }

@@ -10,62 +10,54 @@ import com.gluk.dagaz.api.state.IValueSet;
 
 public abstract class AbstractValueSet implements IValueSet {
 
-	private boolean isClonable = false;
-	private Map<String, String> flags = new HashMap<String, String>();
-	private Set<String> clonableFlags = new HashSet<String>();
+	private Map<String, String>   values = new HashMap<String, String>();
+	private Set<String> persistentValues = new HashSet<String>();
 	
-	protected Collection<String> getClonableFlags() {
-		return clonableFlags;
+	public boolean isValuePresent(String name) {
+		return values.containsKey(name);
+	}
+
+	public boolean isPersistent(String name) {
+		return persistentValues.contains(name);
 	}
 
 	public String getValue(String name) {
-		String r = flags.get(name);
+		String r = values.get(name);
 		if (r == null) {
+			// Возврат неинициализированного значения !!!
 			r = "";
 		}
 		return r;
 	}
 
-	public boolean isPersistent() {
-		return isClonable;
-	}
-	
-	public boolean isClonable(String name) {
-		return clonableFlags.contains(name);
+	public void setValue(String name, String value, boolean isPersistent) {
+		values.put(name, value);
+		if (isPersistent) {
+			if (!isPersistent(name)) {
+				persistentValues.add(name);
+			}
+		} else {
+			if (isPersistent(name)) {
+				persistentValues.remove(name);
+			}
+		}
 	}
 
 	public void setValue(String name, String value) {
 		setValue(name, value, true);
 	}
 
-	public void setValue(String name, String value, boolean isPersistent) {
-		if (isPersistent) {
-			this.isClonable = true;
-		}
-		flags.put(name, value);
-		if (isPersistent) {
-			if (!isClonable(name)) {
-				clonableFlags.add(name);
-			}
-		} else {
-			if (isClonable(name)) {
-				clonableFlags.remove(name);
-			}
-		}
+	public Collection<String> getPersistentValues() {
+		return persistentValues;
 	}
 
-	public void copyValuesTo(AbstractValueSet v) {
-		for (String name: getClonableFlags()) {
-			String value = getValue(name);
-			v.setValue(name, value, true);
+	public boolean isEqual(IValueSet v) {
+		Collection<String> names = v.getPersistentValues();
+		if (names.size() != persistentValues.size()) return false;
+		for (String name: names) {
+			String value = v.getValue(name);
+			if (!value.equals(getValue(name))) return false;
 		}
-	}
-
-	public int getValuesCount() {
-		return clonableFlags.size();
-	}
-	
-	public boolean isValuePresent(String name) {
-		return clonableFlags.contains(name);
+		return true;
 	}
 }

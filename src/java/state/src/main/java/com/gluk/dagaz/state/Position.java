@@ -10,19 +10,23 @@ public class Position extends AbstractValueSet implements IPosition {
 	
 	private IPiece piece = null;
 	
-	public boolean isPersistent() {
-		return super.isPersistent() || (piece != null);
-	}
+	public Position() {}
 
-	public IPosition getClone() {
-		Position r = new Position();
-		copyValuesTo(r);
-		r.piece = piece;
-		return r;
+	public Position(IPosition p) throws EmptyPositionException {
+		for (String name: p.getPersistentValues()) {
+			setValue(name, p.getValue(name));
+		}
+		if (!p.isEmpty()) {
+			this.piece = p.getPiece();
+		}
 	}
-
+	
 	public boolean isEmpty() {
 		return (piece == null);
+	}
+
+	public boolean isClear() {
+		return isEmpty() && (getPersistentValues().isEmpty());
 	}
 
 	public IPiece getPiece() throws EmptyPositionException {
@@ -32,15 +36,32 @@ public class Position extends AbstractValueSet implements IPosition {
 		return piece;
 	}
 
-	public IPiece createPiece(String player, String type) throws CommonException {
-		if (piece != null) {
+	public void setAttribute(String name, String value) throws EmptyPositionException {
+		if (isEmpty()) {
+			throw new EmptyPositionException("Position.setAttribute is failed");
+		}
+		if (!piece.isValuePresent(name) || 
+			!piece.isPersistent(name) ||
+			!piece.getValue(name).equals(value)) {
+			piece = new Piece(piece);
+			piece.setValue(name, value, true);
+		}
+	}
+	
+	public IPiece addPiece(IPiece piece) throws CommonException {
+		if (!isEmpty()) {
 			throw new CriticalException("Posion is not empty");
 		}
-		piece = new Piece(player, type);
+		this.piece = piece;
 		return piece;
 	}
 
-	public void deletePiece() throws EmptyPositionException {
+	public IPiece addPiece(String player, String type) throws CommonException {
+		IPiece p = new Piece(player, type);
+		return addPiece(p);
+	}
+	
+	public void delPiece() throws EmptyPositionException {
 		if (piece == null) {
 			throw new EmptyPositionException("Position is empty");
 		}
