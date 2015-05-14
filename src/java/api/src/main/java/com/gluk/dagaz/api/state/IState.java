@@ -14,7 +14,7 @@ public interface IState extends IValueSet, IStateNavigation {
 	boolean            isPositionExists(String name);
 	IPosition          getPosition(String name);
 	void               setAttribute(String pos, String name, String value) throws EmptyPositionException;
-	void               takePiece(String name, String pos, boolean isCut) throws CommonException;
+	IPieceIterator     getPieceIterator(String name) throws CommonException;
 	void               dropPieces(String name) throws CommonException;
 	Collection<String> getPositions();
 	boolean            isEqual(IState s);

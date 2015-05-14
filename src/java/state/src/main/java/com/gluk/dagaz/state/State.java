@@ -11,6 +11,7 @@ import com.gluk.dagaz.api.exceptions.CriticalException;
 import com.gluk.dagaz.api.exceptions.EmptyPositionException;
 import com.gluk.dagaz.api.exceptions.StateException;
 import com.gluk.dagaz.api.rules.board.IBoardManager;
+import com.gluk.dagaz.api.state.IPieceIterator;
 import com.gluk.dagaz.api.state.IPosition;
 import com.gluk.dagaz.api.state.IState;
 
@@ -101,7 +102,16 @@ public class State extends AbstractValueSet implements IState {
 		return prevState;
 	}
 
-	public void takePiece(String name, String pos, boolean isCut) throws CommonException {
+	public IPieceIterator getPieceIterator(String name) throws CommonException {
+		PieceList l = lists.get(name);
+		if (l == null) {
+			l = new PieceList(this);
+			lists.put(name, l);
+		}
+		return l.getIterator();
+	}
+
+	public void takePiece(PieceList list, String pos, boolean isCut) throws CommonException {
 		if (!isPositionExists(pos)) {
 			throw new EmptyPositionException("Position [" + pos + "] not found");
 		}
@@ -109,13 +119,8 @@ public class State extends AbstractValueSet implements IState {
 		if (p.isEmpty()) {
 			throw new EmptyPositionException("Position [" + pos + "] is empty");
 		}
-		PieceList l = lists.get(name);
-		if (l == null) {
-			l = new PieceList();
-			lists.put(name, l);
-		}
 		PiecePosition pp = new PiecePosition(p.getPiece(), pos);
-		l.add(pp);
+		list.add(pp);
 		if (isCut) {
 			p.delPiece();
 		}

@@ -6,14 +6,26 @@ import java.util.List;
 
 import com.gluk.dagaz.api.exceptions.CommonException;
 import com.gluk.dagaz.api.exceptions.CriticalException;
-import com.gluk.dagaz.api.exceptions.EmptyPositionException;
-import com.gluk.dagaz.api.state.IPiece;
+import com.gluk.dagaz.api.state.IPieceIterator;
+import com.gluk.dagaz.api.state.IPiecePosition;
 
 public class PieceList {
 	
+	private State state;
 	private List<PiecePosition> pieces = new ArrayList<PiecePosition>();
 	
-	// TODO: PieceIterator не инвалидирующийся при добавлении фигуры в набор
+	public PieceList(State state) {
+		this.state = state;
+	}
+	
+	public IPieceIterator getIterator() {
+		return new PieceIterator(this);
+	}
+	
+	public void addPiece(String pos, boolean isCut) throws CommonException {
+		state.takePiece(this, pos, isCut);
+	}
+	
 	public void add(PiecePosition p) throws CommonException {
 		for (int i = 0; i < pieces.size(); i++) {
 			if (p.isEqual(pieces.get(i))) {
@@ -23,21 +35,18 @@ public class PieceList {
 		pieces.add(p);
 	}
 	
+	public IPiecePosition getPiece(int ix) {
+		return pieces.get(ix);
+	}
+	
 	public Collection<PiecePosition> getPieces() {
 		return pieces;
 	}
 	
-	public void setAttribute(String pos, String name, String value) throws EmptyPositionException {
+	public void setAttribute(String pos, String name, String value) {
 		for (PiecePosition pp: pieces) {
 			if (pos.equals(pp.getPosition())) {
-				IPiece p = pp.getPiece();
-				if (!p.isValuePresent(name) || 
-					!p.isPersistent(name) ||
-					!p.getValue(name).equals(value)) {
-					p = new Piece(p);
-					p.setValue(name, value, true);
-					pp.setPiece(p);
-				}
+				pp.setAttribute(name, value);
 			}
 		}
 	}
