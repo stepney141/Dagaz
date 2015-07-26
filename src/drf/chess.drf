@@ -235,9 +235,9 @@
       (if is-friend?
           (check is-attacked?)
       )
-      (check no-move?)
+      (check no-moves?)
    )
    (draw
-      (check no-move?)
+      (check no-moves?)
    )
 )

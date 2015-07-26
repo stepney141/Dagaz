@@ -19,6 +19,9 @@
       (check is-empty?)
       (check (>= capture-count max-capture-count))
       (set! max-capture-count capture-count)
+      (if (> capture-count 0)
+          (check no-moves?)
+      )
       (log (order 1) " - " position)
    )
 )
@@ -34,7 +37,7 @@
           (check dir)
           (check is-empty?)
           (set! is-marked? T)
-          (inc! capture-count)
+          (set! capture-count 1)
           end-move-part
       )
    )
@@ -82,6 +85,6 @@
    (board chess-board)
    (players Red White)
    (loss
-      (check no-move?)
+      (check no-moves?)
    )
 )
