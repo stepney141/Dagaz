@@ -1,0 +1,25 @@
+(board
+   (name common-directions)
+   (dir (name n)   0 -1)
+   (dir (name e)   1  0)
+   (dir (name s)   0  1)
+   (dir (name w)  -1  0)
+   (dir (name nw) -1 -1)
+   (dir (name ne)  1 -1)
+   (dir (name se)  1  1)
+   (dir (name sw) -1  1)
+)
+
+(board
+   (name chess-board-8x8)
+   (is-a common-directions)
+   (dim "a-h")
+   (dim "8-1")
+)
+
+(board
+   (name chess-board-10x10)
+   (is-a common-directions)
+   (dim "a-j")
+   (dim "10-1")
+)

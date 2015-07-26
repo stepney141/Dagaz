@@ -1,4 +1,4 @@
-(import chess.drf)
+(import chess-boards.drf)
 
 (piece
    (name checkers-invariant)
@@ -27,18 +27,55 @@
 )
 
 (piece
+   (name set-counter)
+   (update-counter
+      (set! capture-count 1)
+   )
+)
+
+(piece
+   (name inc-counter)
+   (update-counter
+      (inc! capture-count)
+   )
+)
+
+(define common-capture
+   capture
+   (log (order 2) " x " position)
+   (check dir)
+   (check is-empty?)
+   (set! is-marked? T)
+   update-counter
+)
+
+(piece
    (name checkers-piece)
    (attribute is-marked? F)
    (move
       (check (any dir))
       (if is-enemy?
-          capture
-          (log (order 2) " x " position)
-          (check dir)
-          (check is-empty?)
-          (set! is-marked? T)
-          (set! capture-count 1)
+          common-capture
           end-move-part
+      )
+   )
+)
+
+(piece
+   (name flying-king)
+   (is-a checkers-piece)
+   (move
+      (check (any dir))
+      (while is-empty?
+         end-move
+         (check dir)
+      )
+      (if is-enemy?
+          common-capture
+          (while is-empty?
+             end-move-part
+             (check dir)
+          )
       )
    )
 )
@@ -47,6 +84,7 @@
    (name Man M)
    (is-a checkers-invariant)
    (is-a checkers-piece)
+   (is-a set-counter)
    (dir nw ne)
    (post
       (if (in-zone? promotion)
@@ -61,17 +99,18 @@
    (name King K)
    (is-a checkers-invariant)
    (is-a checkers-piece)
+   (is-a set-counter)
    (dir nw ne sw se)
 )
 
 (player
-   (name White)
+   (name Red)
    (M a1 c1 e1 g1 b2 d2 f2 h2 a3 c3 e3 g3)
    (zone (name promotion) b8 d8 f8 h8)
 )
 
 (player
-   (name Red)
+   (name White)
    (sym nw se)
    (sym ne sw)
    (sym se nw)
@@ -82,7 +121,7 @@
 
 (game
    (name "Checkers")
-   (board chess-board)
+   (board chess-board-8x8)
    (players Red White)
    (loss
       (check no-moves?)

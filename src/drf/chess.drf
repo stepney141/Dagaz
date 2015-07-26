@@ -1,16 +1,4 @@
-(board
-   (name chess-board)
-   (dim "a-h")
-   (dim "8-1")
-   (dir (name n)   0 -1)
-   (dir (name e)   1  0)
-   (dir (name s)   0  1)
-   (dir (name w)  -1  0)
-   (dir (name nw) -1 -1)
-   (dir (name ne)  1 -1)
-   (dir (name se)  1  1)
-   (dir (name sw) -1  1)
-)
+(import chess-boards.drf)
 
 (piece
    (name chess-invariant)
@@ -228,7 +216,7 @@
 
 (game
    (name "Chess")
-   (board chess-board)
+   (board chess-board-8x8)
    (players White Black)
    (loss 
       (any King)
