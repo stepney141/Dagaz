@@ -68,7 +68,7 @@
 )
 
 (player
-   (name White)
+   (name Red)
    (sym nw se)
    (sym ne sw)
    (sym se nw)
@@ -80,7 +80,7 @@
 (game
    (name "Checkers")
    (board chess-board)
-   (players White Black)
+   (players Red White)
    (loss
       (check no-move?)
    )
