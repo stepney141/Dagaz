@@ -1,0 +1,87 @@
+(import chess.drf)
+
+(piece
+   (name checkers-invariant)
+   (pre
+      (any checkers-piece)
+      (if is-friend?
+          (set! is-marked? F)
+      )
+   )
+   (pre
+      (check friend?)
+      (if (> capture-count 0)
+          (check is-marked?)
+      )
+      (log position)
+   )
+   (post
+      (check is-empty?)
+      (check (>= capture-count max-capture-count))
+      (set! max-capture-count capture-count)
+      (log (order 1) " - " position)
+   )
+)
+
+(piece
+   (name checkers-piece)
+   (attribute is-marked? F)
+   (move
+      (check (any dir))
+      (if is-enemy?
+          capture
+          (log (order 2) " x " position)
+          (check dir)
+          (check is-empty?)
+          (set! is-marked? T)
+          (inc! capture-count)
+          end-move-part
+      )
+   )
+)
+
+(piece
+   (name Man M)
+   (is-a checkers-invariant)
+   (is-a checkers-piece)
+   (dir nw ne)
+   (post
+      (if (in-zone? promotion)
+          (piece-type K)
+          (log (order 3) " = " piece-type)
+          end-move
+      )
+   )
+)
+
+(piece
+   (name King K)
+   (is-a checkers-invariant)
+   (is-a checkers-piece)
+   (dir nw ne sw se)
+)
+
+(player
+   (name White)
+   (M a1 c1 e1 g1 b2 d2 f2 h2 a3 c3 e3 g3)
+   (zone (name promotion) b8 d8 f8 h8)
+)
+
+(player
+   (name White)
+   (sym nw se)
+   (sym ne sw)
+   (sym se nw)
+   (sym sw ne)
+   (M b8 d8 f8 h8 a7 c7 e7 g7 b6 d6 f6 h6)
+   (zone (name promotion) a1 c1 e1 g1)
+)
+
+(game
+   (name "Checkers")
+   (board chess-board)
+   (players White Black)
+   (loss
+      (check no-move?)
+   )
+)

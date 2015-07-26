@@ -1,0 +1,243 @@
+(board
+   (name chess-board)
+   (dim "a-h")
+   (dim "8-1")
+   (dir (name n)   0 -1)
+   (dir (name e)   1  0)
+   (dir (name s)   0  1)
+   (dir (name w)  -1  0)
+   (dir (name nw) -1 -1)
+   (dir (name ne)  1 -1)
+   (dir (name se)  1  1)
+   (dir (name sw) -1  1)
+)
+
+(piece
+   (name chess-invariant)
+   (pre
+      (any Pawn)
+      (if is-friend?
+          (set! is-jumping? F)
+      )      
+   )
+   (post
+      (any King)
+      (if is-friend?
+          (check not-attacked?)
+      )
+   )
+)
+
+(piece
+   (name chess-piece)
+   (pre
+      (check friend?)
+      (log position)
+   )
+   (post
+      (check not-friend?)      
+      (if is-enemy?
+          capture
+          (log (order 1) " x ")
+       else
+          (log (order 1) " - ")
+      )
+      (log (order 2) position)
+      (set! not-moved? F)
+      (any King)
+      (if (and is-enemy? is-attacked?)
+          (log (order 4) "!")
+      )
+   )
+)
+
+(piece
+   (name leaper)
+   (is-a chess-piece)
+   (is-a chess-invariant)
+   (move
+      (check (any dir))
+   )
+)
+
+(piece
+   (name slider)
+   (is-a chess-piece)
+   (is-a chess-invariant)
+   (move
+      (check (any dir))
+      (while is-empty?
+         end-move
+         (check dir)
+      )
+   )
+)
+
+(piece
+   (name king-piece)
+   (move
+      (check not-moved?)
+      (check not-attacked?)
+      (check e)
+      (check is-empty?)
+      (check not-attacked?)
+      (check e)
+      (check is-empty?)
+      drop-all
+      (check e)
+      (check not-moved?)
+      take-piece
+      w w
+      (log "O-O")
+   )
+   (move
+      (check not-moved?)
+      (check not-attacked?)
+      (check w)
+      (check is-empty?)
+      (check not-attacked?)
+      (check w)
+      (check is-empty?)
+      (check not-attacked?)
+      (check w)
+      (check is-empty?)
+      drop-all
+      (check w)
+      (check not-moved?)
+      take-piece
+      e e
+      (log "O-O-O")
+   )
+)
+
+(piece
+   (name en-passant)
+   (attribute not-moved? T)
+   (attribute is-jumping? F)
+   (side w e)
+   (move
+      (log position " x ")
+      (check (any side))
+      (check is-enemy?)
+      (check (is-piece? P))
+      (check is-jumping?)
+      (check n)
+      (check is-empty?)
+      (log (order 1) position)
+   )
+)
+
+(piece
+   (name King K)
+   (is-a leaper)
+   (is-a king-piece)
+   (attribute not-moved? T)
+   (dir n e s w nw ne se sw)
+)
+
+(piece
+   (name Bishop B)
+   (is-a slider)
+   (dir nw ne se sw)
+)
+
+(piece
+   (name Knight N)
+   (is-a chess-piece)
+   (is-a chess-invariant)
+   (first-dir n e s w)
+   (second-dir
+      (if (= first-dir n) nw ne)
+      (if (= first-dir e) ne se)
+      (if (= first-dir s) sw se)
+      (if (= first-dir w) nw sw)
+   )
+   (move
+      (check (any first-dir))
+      (check (any second-dir))
+   )
+)
+
+(piece
+   (name Rook R)
+   (attribute not-moved? T)
+   (is-a slider)
+   (dir n e s w)
+)
+
+(piece
+   (name Queen Q)
+   (is-a slider)
+   (dir n e s w nw ne se sw)
+)
+
+(piece
+   (name Pawn P)
+   (is-a chess-piece)
+   (is-a chess-invariant)
+   (is-a en-passant)
+   (dir nw ne)
+   (post
+      (if (in-zone? promotion)
+          (piece-type (any Q R B N))
+          (log (order 3) " = " piece-type)
+      )
+   )
+   (move
+      (check n)
+      (check is-empty?)
+   )
+   (move
+      (check not-moved?)
+      (check n)
+      (check is-empty?)
+      (check n)
+      (check is-empty?)
+      (set! is-jumping? T)
+   )
+   (move
+      (check (any dir))
+      (check is-enemy?)
+   )
+)
+
+(player
+   (name White)
+   (K e1)
+   (Q d1)
+   (R a1 h1)
+   (N b1 g1)
+   (B c1 f1)
+   (P a2 b2 c2 d2 e2 f2 g2 h2)
+   (zone (name promotion) a8 b8 c8 d8 e8 f8 g8 h8)
+)
+
+(player
+   (name Black)
+   (sym n  s)
+   (sym nw sw)
+   (sym ne se)
+   (K e8)
+   (Q d8)
+   (R a8 h8)
+   (N b8 g8)
+   (B c8 f8)
+   (P a7 b7 c7 d7 e7 f7 g7 h7)
+   (zone (name promotion) a1 b1 c1 d1 e1 f1 g1 h1)
+)
+
+(game
+   (name "Chess")
+   (board chess-board)
+   (players White Black)
+   (loss 
+      (any King)
+      (if is-friend?
+          (check is-attacked?)
+      )
+      (check no-move?)
+   )
+   (draw
+      (check no-move?)
+   )
+)
