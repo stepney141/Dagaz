@@ -1,0 +1,56 @@
+(import chess-boards.drf)
+(import checkers.drf)
+
+(piece
+   (name Man M)
+   (is-a checkers-invariant)
+   (is-a checkers-piece)
+   (is-a inc-counter)
+   (dir nw ne)
+   (capture-dir sw se)
+   (post
+      (if (and (in-zone? promotion) no-moves?)
+          (piece-type K)
+          (log (order 3) " = " piece-type)
+      )
+   )
+   (move
+      (check (any capture-dir))
+      (check is-enemy?)
+      common-capture
+      end-move-part
+   )
+)
+
+(piece
+   (name King K)
+   (is-a checkers-invariant)
+   (is-a flying-king)
+   (is-a inc-counter)
+   (dir nw ne sw se)
+)
+
+(player
+   (name White)
+   (M a1 c1 e1 g1 i1 b2 d2 f2 h2 j2 a3 c3 e3 g3 i3)
+   (zone (name promotion) b8 d8 f8 h8 j8)
+)
+
+(player
+   (name Black)
+   (sym nw se)
+   (sym ne sw)
+   (sym se nw)
+   (sym sw ne)
+   (M b8 d8 f8 h8 j8 a7 c7 e7 g7 i7 b6 d6 f6 h6 j6)
+   (zone (name promotion) a1 c1 e1 g1 i1)
+)
+
+(game
+   (name "International Checkers")
+   (board chess-board-10x10)
+   (players White Black)
+   (loss
+      (check no-moves?)
+   )
+)
