@@ -23,3 +23,10 @@
    (dim "a-j")
    (dim "10-1")
 )
+
+(board
+   (name xiangqi-board)
+   (is-a common-directions)
+   (dim "a-i")
+   (dim "10-1")
+)

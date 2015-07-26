@@ -3,24 +3,14 @@
 (piece
    (name chess-invariant)
    (pre
-      (any Pawn)
-      (if is-friend?
-          (set! is-jumping? F)
-      )      
+      (check friend?)
+      (log position)
    )
    (post
       (any King)
       (if is-friend?
           (check not-attacked?)
       )
-   )
-)
-
-(piece
-   (name chess-piece)
-   (pre
-      (check friend?)
-      (log position)
    )
    (post
       (check not-friend?)      
@@ -31,6 +21,18 @@
           (log (order 1) " - ")
       )
       (log (order 2) position)
+   )
+)
+
+(piece
+   (name chess-piece)
+   (pre
+      (any Pawn)
+      (if is-friend?
+          (set! is-jumping? F)
+      )      
+   )
+   (post
       (set! not-moved? F)
       (any King)
       (if (and is-enemy? is-attacked?)
@@ -41,7 +43,6 @@
 
 (piece
    (name leaper)
-   (is-a chess-piece)
    (is-a chess-invariant)
    (move
       (check (any dir))
@@ -50,7 +51,6 @@
 
 (piece
    (name slider)
-   (is-a chess-piece)
    (is-a chess-invariant)
    (move
       (check (any dir))
@@ -118,6 +118,7 @@
 (piece
    (name King K)
    (is-a leaper)
+   (is-a chess-piece)
    (is-a king-piece)
    (attribute not-moved? T)
    (dir n e s w nw ne se sw)
@@ -126,12 +127,12 @@
 (piece
    (name Bishop B)
    (is-a slider)
+   (is-a chess-piece)
    (dir nw ne se sw)
 )
 
 (piece
-   (name Knight N)
-   (is-a chess-piece)
+   (name knight-piece)
    (is-a chess-invariant)
    (first-dir n e s w)
    (second-dir
@@ -140,6 +141,12 @@
       (if (= first-dir s) sw se)
       (if (= first-dir w) nw sw)
    )
+)
+
+(piece
+   (name Knight N)
+   (is-a chess-piece)
+   (is-a knight-piece)
    (move
       (check (any first-dir))
       (check (any second-dir))
@@ -148,14 +155,16 @@
 
 (piece
    (name Rook R)
-   (attribute not-moved? T)
    (is-a slider)
+   (is-a chess-piece)
+   (attribute not-moved? T)
    (dir n e s w)
 )
 
 (piece
    (name Queen Q)
    (is-a slider)
+   (is-a chess-piece)
    (dir n e s w nw ne se sw)
 )
 
