@@ -122,6 +122,7 @@
       (check no-moves?)
    )
    (win
+      (order 1)
       (check no-moves?)
    )
 )

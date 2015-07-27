@@ -184,6 +184,7 @@
       )
    )
    (loss
+      (order 1)
       (check no-moves?)
    )
 )

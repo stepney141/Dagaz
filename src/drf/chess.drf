@@ -173,6 +173,7 @@
       (check no-moves?)
    )
    (draw
+      (order 1)
       (check no-moves?)
    )
 )

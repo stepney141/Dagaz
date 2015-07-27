@@ -1,5 +1,12 @@
-(import "chess-boards.drf" xiangqi-board)
+(import "chess-boards.drf" common-directions)
 (import "shatranj.drf" chess-invariant leaper slider knight-piece)
+
+(board
+   (name xiangqi-board)
+   (is-a common-directions)
+   (dim "a-i")
+   (dim "10-1")
+)
 
 (piece
    (name in-castle)
@@ -26,7 +33,6 @@
 
 (piece
    (name Mandarin M)
-   (is-a chess-invariant)
    (is-a leaper)
    (is-a in-castle)
    (dir nw ne se sw)
