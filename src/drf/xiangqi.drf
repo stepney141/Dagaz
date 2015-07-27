@@ -12,7 +12,7 @@
    (name King K)
    (is-a leaper)
    (is-a in-castle)
-   (dir n e s w nw ne se sw)
+   (dir n e s w)
    (move
       drop-all
       (while n
