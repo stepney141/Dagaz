@@ -66,12 +66,6 @@
 
 (player
    (name Red)
-   (P a3 b3 c3 d3 e4 f4 g4 h4)
-   (R rook-zone 2)
-   (K home-zone 1)
-   (F home-zone 1)
-   (N home-zone 2)
-   (E home-zone 2)
    (zone (name rook-zone) 
       a1 b1 c1 d1 e1 f1 g1 h1
       a2 b2 c2 d2 e2 f2 g2 h2
@@ -88,12 +82,6 @@
    (sym n  s)
    (sym nw sw)
    (sym ne se)
-   (P a5 b5 c5 d5 e6 f6 g6 h6)
-   (R rook-zone 2)
-   (K home-zone 1)
-   (F home-zone 1)
-   (N home-zone 2)
-   (E home-zone 2)
    (zone (name rook-zone) 
       a8 b8 c8 d8 e8 f8 g8 h8
       a7 b7 c7 d7 e7 f7 g7 h7
@@ -108,7 +96,24 @@
 (game
    (name "Sittuyin")
    (board chess-board-8x8)
-   (players Red Black)
+   (players 
+      (Red 
+         (P a3 b3 c3 d3 e4 f4 g4 h4)
+         (R rook-zone 2)
+         (K home-zone 1)
+         (F home-zone 1)
+         (N home-zone 2)
+         (E home-zone 2)
+      )
+      (Black
+         (P a5 b5 c5 d5 e6 f6 g6 h6)
+         (R rook-zone 2)
+         (K home-zone 1)
+         (F home-zone 1)
+         (N home-zone 2)
+         (E home-zone 2)
+      )
+   )
    (loss 
       (any King)
       (if is-friend?

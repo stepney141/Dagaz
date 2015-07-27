@@ -99,13 +99,6 @@
 
 (player
    (name Red)
-   (K e1)
-   (M d1 f1)
-   (E c1 g1)
-   (H b1 h1)
-   (R a1 i1)
-   (C b3 h3)
-   (P a4 c4 e4 g4 i4)
    (zone (name castle) d1 e1 f1 d2 e2 f2 d3 e3 f3)
    (zone (name home) 
       a1  b1  c1  d1  e1  f1  g1  h1  i1
@@ -119,13 +112,6 @@
 (player
    (name Black)
    (sym n s)
-   (K e10)
-   (M d10 f10)
-   (E c10 g10)
-   (H b10 h10)
-   (R a10 i10)
-   (C b8 h8)
-   (P a7 c7 e7 g7 i7)
    (zone (name castle) d10 e10 f10 d9 e9 f9 d8 e8 f8)
    (zone (name home) 
       a10 b10 c10 d10 e10 f10 g10 h10 i10
@@ -139,7 +125,26 @@
 (game
    (name "Xiangqi")
    (board xiangqi-board)
-   (players Red Black)
+   (players 
+      (Red 
+         (K e1)
+         (M d1 f1)
+         (E c1 g1)
+         (H b1 h1)
+         (R a1 i1)
+         (C b3 h3)
+         (P a4 c4 e4 g4 i4)
+      )
+      (Black
+         (K e10)
+         (M d10 f10)
+         (E c10 g10)
+         (H b10 h10)
+         (R a10 i10)
+         (C b8 h8)
+         (P a7 c7 e7 g7 i7)
+      )
+   )
    (loss
       (check no-moves?)
    )
