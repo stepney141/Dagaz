@@ -1,5 +1,5 @@
-(import chess-boards.drf)
-(import chess.drf)
+(import "chess-boards.drf" xiangqi-board)
+(import "shatranj.drf" chess-invariant leaper slider knight-piece)
 
 (piece
    (name in-castle)

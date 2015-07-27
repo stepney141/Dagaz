@@ -1,0 +1,122 @@
+(import "chess-boards.drf" chess-board-8x8)
+(import "shatranj.drf" leaper slider knight-piece pawn-piece)
+
+(piece
+   (name King K)
+   (is-a leaper)
+   (dir n e s w nw ne se sw)
+)
+
+(piece
+   (name Ferz F)
+   (is-a leaper)
+   (dir nw ne se sw)
+)
+
+(piece
+   (name Elephant E)
+   (is-a leaper)
+   (dir n nw ne se sw)
+)
+
+(piece
+   (name Knight N)
+   (is-a knight-piece)
+   (move
+      (check (any first-dir))
+      (check (any second-dir))
+   )
+)
+
+(piece
+   (name Rook R)
+   (is-a slider)
+   (dir n e s w)
+)
+
+(define promote-pawn
+   (if (in-zone? promotion)
+       (check 
+          (not-exists
+             (any F)
+             (check is-friend?)
+          )
+       )
+       (piece-type F)
+   )
+)
+
+(piece
+   (name Pawn P)
+   (is-a pawn-piece)
+   (move
+      (check n)
+      (check is-empty?)
+      promote-pawn
+   )
+   (move
+      (check (any dir))
+      (check is-enemy?)
+      promote-pawn
+   )
+   (move
+      promote-pawn
+   )
+)
+
+(player
+   (name Red)
+   (P a3 b3 c3 d3 e4 f4 g4 h4)
+   (R rook-zone 2)
+   (K home-zone 1)
+   (F home-zone 1)
+   (N home-zone 2)
+   (E home-zone 2)
+   (zone (name rook-zone) 
+      a1 b1 c1 d1 e1 f1 g1 h1
+      a2 b2 c2 d2 e2 f2 g2 h2
+   )
+   (zone (name home-zone) 
+      a2 b2 c2 d2 e2 f2 g2 h2
+      e3 f3 g3 h3
+   )
+   (zone (name promotion) a8 b7 c6 d5 e5 f6 g7 h8)
+)
+
+(player
+   (name Black)
+   (sym n  s)
+   (sym nw sw)
+   (sym ne se)
+   (P a5 b5 c5 d5 e6 f6 g6 h6)
+   (R rook-zone 2)
+   (K home-zone 1)
+   (F home-zone 1)
+   (N home-zone 2)
+   (E home-zone 2)
+   (zone (name rook-zone) 
+      a8 b8 c8 d8 e8 f8 g8 h8
+      a7 b7 c7 d7 e7 f7 g7 h7
+   )
+   (zone (name home-zone) 
+      a7 b7 c7 d7 e7 f7 g7 h7
+      a6 b6 c6 d6
+   )
+   (zone (name promotion) a1 b2 c3 d4 e4 f3 g2 h1)
+)
+
+(game
+   (name "Sittuyin")
+   (board chess-board-8x8)
+   (players Red Black)
+   (loss 
+      (any King)
+      (if is-friend?
+          (check is-attacked?)
+      )
+      (check no-moves?)
+   )
+   (win
+      (check no-moves?)
+   )
+)

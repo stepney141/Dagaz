@@ -1,28 +1,5 @@
-(import chess-boards.drf)
-
-(piece
-   (name chess-invariant)
-   (pre
-      (check friend?)
-      (log position)
-   )
-   (post
-      (any King)
-      (if is-friend?
-          (check not-attacked?)
-      )
-   )
-   (post
-      (check not-friend?)      
-      (if is-enemy?
-          capture
-          (log (order 1) " x ")
-       else
-          (log (order 1) " - ")
-      )
-      (log (order 2) position)
-   )
-)
+(import "chess-boards.drf" chess-board-8x8)
+(import "shatranj.drf" chess-invariant leaper slider knight-piece pawn-piece)
 
 (piece
    (name chess-piece)
@@ -34,30 +11,6 @@
    )
    (post
       (set! not-moved? F)
-      (any King)
-      (if (and is-enemy? is-attacked?)
-          (log (order 4) "!")
-      )
-   )
-)
-
-(piece
-   (name leaper)
-   (is-a chess-invariant)
-   (move
-      (check (any dir))
-   )
-)
-
-(piece
-   (name slider)
-   (is-a chess-invariant)
-   (move
-      (check (any dir))
-      (while is-empty?
-         end-move
-         (check dir)
-      )
    )
 )
 
@@ -132,18 +85,6 @@
 )
 
 (piece
-   (name knight-piece)
-   (is-a chess-invariant)
-   (first-dir n e s w)
-   (second-dir
-      (if (= first-dir n) nw ne)
-      (if (= first-dir e) ne se)
-      (if (= first-dir s) sw se)
-      (if (= first-dir w) nw sw)
-   )
-)
-
-(piece
    (name Knight N)
    (is-a chess-piece)
    (is-a knight-piece)
@@ -172,17 +113,13 @@
    (name Pawn P)
    (is-a chess-piece)
    (is-a chess-invariant)
+   (is-a pawn-piece)
    (is-a en-passant)
-   (dir nw ne)
    (post
       (if (in-zone? promotion)
           (piece-type (any Q R B N))
           (log (order 3) " = " piece-type)
       )
-   )
-   (move
-      (check n)
-      (check is-empty?)
    )
    (move
       (check not-moved?)
@@ -191,10 +128,6 @@
       (check n)
       (check is-empty?)
       (set! is-jumping? T)
-   )
-   (move
-      (check (any dir))
-      (check is-enemy?)
    )
 )
 

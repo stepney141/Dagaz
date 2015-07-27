@@ -1,5 +1,5 @@
-(import chess-boards.drf)
-(import checkers.drf)
+(import "chess-boards.drf" chess-board-8x8)
+(import "checkers.drf" checkers-invariant checkers-piece set-counter flying-king common-capture)
 
 (piece
    (name Man M)

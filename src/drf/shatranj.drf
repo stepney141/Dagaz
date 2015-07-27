@@ -1,0 +1,184 @@
+(import "chess-boards.drf" chess-board-8x8)
+
+(piece
+   (name chess-invariant)
+   (pre
+      (check friend?)
+      (log position)
+   )
+   (post
+      (any King)
+      (if is-friend?
+          (check not-attacked?)
+      )
+   )
+   (post
+      (check not-friend?)      
+      (if is-enemy?
+          capture
+          (log (order 1) " x ")
+       else
+          (log (order 1) " - ")
+      )
+      (log (order 2) position)
+   )
+   (post
+      (any King)
+      (if (and is-enemy? is-attacked?)
+          (log (order 4) "!")
+      )
+   )
+)
+
+(piece
+   (name leaper)
+   (is-a chess-invariant)
+   (move
+      (check (any dir))
+   )
+)
+
+(piece
+   (name slider)
+   (is-a chess-invariant)
+   (move
+      (check (any dir))
+      (while is-empty?
+         end-move
+         (check dir)
+      )
+   )
+)
+
+(piece
+   (name knight-piece)
+   (is-a chess-invariant)
+   (first-dir n e s w)
+   (second-dir
+      (if (= first-dir n) nw ne)
+      (if (= first-dir e) ne se)
+      (if (= first-dir s) sw se)
+      (if (= first-dir w) nw sw)
+   )
+)
+
+(piece
+   (name pawn-piece)
+   (dir nw ne)
+   (move
+      (check n)
+      (check is-empty?)
+   )
+   (move
+      (check (any dir))
+      (check is-enemy?)
+   )
+)
+
+(piece
+   (name King K)
+   (is-a leaper)
+   (dir n e s w nw ne se sw)
+)
+
+(piece
+   (name Ferz F)
+   (attribute not-moved? F)
+   (is-a leaper)
+   (dir nw ne se sw)
+   (spec-dir s nw ne se sw)
+   (post
+      (set! not-moved? F)
+   )
+   (move
+      (check not-moved?)
+      (check (any spec-dir))
+      (check spec-dir)
+   )
+)
+
+(piece
+   (name Knight N)
+   (is-a knight-piece)
+   (move
+      (check (any first-dir))
+      (check (any second-dir))
+   )
+)
+
+(piece
+   (name Elephant E)
+   (is-a chess-invariant)
+   (dir nw ne se sw)
+   (move
+      (check (any dir))
+      (check dir)
+   )
+)
+
+(piece
+   (name Rook R)
+   (is-a slider)
+   (dir n e s w)
+)
+
+(piece
+   (name Pawn P)
+   (is-a pawn-piece)
+   (post
+       (if (in-zone? promotion)
+           (piece-type F)
+           (set! not-moved? T)
+       )
+   )
+)
+
+(player
+   (name White)
+   (K e1)
+   (F d1)
+   (R a1 h1)
+   (N b1 g1)
+   (E c1 f1)
+   (P a2 b2 c2 d2 e2 f2 g2 h2)
+   (zone (name promotion) a8 b8 c8 d8 e8 f8 g8 h8)
+)
+
+(player
+   (name Black)
+   (sym n  s)
+   (sym s  n)
+   (sym nw sw)
+   (sym ne se)
+   (K e8)
+   (F d8)
+   (R a8 h8)
+   (N b8 g8)
+   (E c8 f8)
+   (P a7 b7 c7 d7 e7 f7 g7 h7)
+   (zone (name promotion) a1 b1 c1 d1 e1 f1 g1 h1)
+)
+
+(game
+   (name "Shatranj")
+   (board chess-board-8x8)
+   (players White Black)
+   (loss 
+      (any King)
+      (if is-friend?
+          (check is-attacked?)
+      )
+      (check no-moves?)
+   )
+   (draw
+      (= 1 
+         (count
+            (any piece)
+            (check is-friend?)
+         )
+      )
+   )
+   (loss
+      (check no-moves?)
+   )
+)
