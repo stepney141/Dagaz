@@ -1,0 +1,87 @@
+(import "chess-boards.drf" chess-board-8x8)
+(import "shatranj.drf" leaper slider knight-piece pawn-piece)
+
+(piece
+   (name King K)
+   (is-a leaper)
+   (dir n e s w nw ne se sw)
+)
+
+(piece
+   (name Ferz F)
+   (is-a leaper)
+   (dir nw ne se sw)
+)
+
+(piece
+   (name Elephant E)
+   (is-a leaper)
+   (dir n nw ne se sw)
+)
+
+(piece
+   (name Knight N)
+   (is-a knight-piece)
+   (move
+      (check (any first-dir))
+      (check (any second-dir))
+   )
+)
+
+(piece
+   (name Rook R)
+   (is-a slider)
+   (dir n e s w)
+)
+
+(piece
+   (name Pawn P)
+   (is-a pawn-piece)
+)
+
+(player
+   (name White)
+   (zone (name promotion) a6 b6 c6 d6 e6 f6 g6 h6)
+)
+
+(player
+   (name Black)
+   (sym n  s)
+   (sym nw sw)
+   (sym ne se)
+   (zone (name promotion) a3 b3 c3 d3 e3 f3 g3 h3)
+)
+
+(game
+   (name "Makruk")
+   (board chess-board-8x8)
+   (players 
+      (Red 
+         (P a3 b3 c3 d3 e3 f3 g3 h3)
+         (R a1 h1)
+         (N b1 g1)
+         (E c1 f1)
+         (F e1)
+         (K d1)
+      )
+      (Black
+         (P a6 b6 c6 d6 e6 f6 g6 h6)
+         (R a8 h8)
+         (N b8 g8)
+         (E c8 f8)
+         (F e8)
+         (K d8)
+      )
+   )
+   (loss 
+      (any King)
+      (if is-friend?
+          (check is-attacked?)
+      )
+      (check no-moves?)
+   )
+   (win
+      (order 1)
+      (check no-moves?)
+   )
+)

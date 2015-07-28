@@ -126,9 +126,8 @@
    (name Red)
    (is-a player-invariant)
    (zone (name castle) d1 e1 f1 d2 e2 f2 d3 e3 f3)
-   (zone (name home-zone)  b1 c1 g1 h1)
-   (zone (name left-zone)  b1 c1)
-   (zone (name right-zone) g1 h1)
+   (zone (name home-zone) b1 c1 g1 h1)
+   (zone (name left-zone) b1 c1)
    (attribute not-passed? T)
 )
 
@@ -139,20 +138,15 @@
    (zone (name castle) d10 e10 f10 d9 e9 f9 d8 e8 f8)
    (zone (name home-zone)  b10 c10 g10 h10)
    (zone (name left-zone)  b10 c10)
-   (zone (name right-zone) g10 h10)
    (attribute not-passed? T)
 )
 
 (define setup-check
    (check
-      (and 
-         (exists
+      (> 2
+         (count
             (any H)
             (in-zone left-zone)
-         )
-         (exists
-            (any H)
-            (in-zone right-zone)
          )
       )
    )
