@@ -6,11 +6,11 @@
    (pre
       (any Pawn)
       (if is-friend?
-          (set! is-jumping? F)
+          (set! is-jumping? false)
       )      
    )
    (post
-      (set! not-moved? F)
+      (set! not-moved? false)
    )
 )
 
@@ -53,8 +53,8 @@
 
 (piece
    (name en-passant)
-   (attribute not-moved? T)
-   (attribute is-jumping? F)
+   (attribute not-moved? true)
+   (attribute is-jumping? false)
    (side w e)
    (move
       (log position " x ")
@@ -73,7 +73,7 @@
    (is-a leaper)
    (is-a chess-piece)
    (is-a king-piece)
-   (attribute not-moved? T)
+   (attribute not-moved? true)
    (dir n e s w nw ne se sw)
 )
 
@@ -98,7 +98,7 @@
    (name Rook R)
    (is-a slider)
    (is-a chess-piece)
-   (attribute not-moved? T)
+   (attribute not-moved? true)
    (dir n e s w)
 )
 
@@ -127,7 +127,7 @@
       (check is-empty?)
       (check n)
       (check is-empty?)
-      (set! is-jumping? T)
+      (set! is-jumping? true)
    )
 )
 
@@ -139,8 +139,11 @@
 (player
    (name Black)
    (sym n  s)
+   (sym s  n)
    (sym nw sw)
    (sym ne se)
+   (sym sw nw)
+   (sym se ne)
    (zone (name promotion) a1 b1 c1 d1 e1 f1 g1 h1)
 )
 

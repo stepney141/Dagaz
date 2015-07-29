@@ -2,6 +2,13 @@
 (import "shatranj.drf" leaper slider knight-piece pawn-piece)
 
 (piece
+   (name sittuyin-piece)
+   (post
+      (check (not-goal? stalemate))
+   )
+)
+
+(piece
    (name King K)
    (is-a leaper)
    (dir n e s w nw ne se sw)
@@ -80,8 +87,11 @@
 (player
    (name Black)
    (sym n  s)
+   (sym s  n)
    (sym nw sw)
    (sym ne se)
+   (sym sw nw)
+   (sym se ne)
    (zone (name rook-zone) 
       a8 b8 c8 d8 e8 f8 g8 h8
       a7 b7 c7 d7 e7 f7 g7 h7
@@ -91,6 +101,16 @@
       a6 b6 c6 d6
    )
    (zone (name promotion) a1 b2 c3 d4 e4 f3 g2 h1)
+)
+
+(define setup-check
+   (all
+      (any R)
+      (if is-friend?
+          (while (and n (or is-empty? is-friend? (is-piece? P))))
+          (check (not-piece? K))
+      )
+   )
 )
 
 (game
@@ -112,6 +132,7 @@
          (F home-zone 1)
          (N home-zone 2)
          (E home-zone 2)
+         (invariant setup-check)
       )
    )
    (loss 
@@ -123,6 +144,7 @@
    )
    (win
       (order 1)
+      (mode stalemate)
       (check no-moves?)
    )
 )

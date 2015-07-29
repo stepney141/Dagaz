@@ -118,6 +118,7 @@
 (player
    (name Black)
    (sym n s)
+   (sym s n)
    (zone (name castle) d10 e10 f10 d9 e9 f9 d8 e8 f8)
    (zone (name home) 
       a10 b10 c10 d10 e10 f10 g10 h10 i10

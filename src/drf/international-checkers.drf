@@ -7,18 +7,12 @@
    (is-a checkers-piece)
    (is-a inc-counter)
    (dir nw ne)
-   (capture-dir sw se)
+   (capture-dir nw ne sw se)
    (post
       (if (and (in-zone? promotion) no-moves?)
           (piece-type K)
           (log (order 3) " = " piece-type)
       )
-   )
-   (move
-      (check (any capture-dir))
-      (check is-enemy?)
-      common-capture
-      end-move-part
    )
 )
 

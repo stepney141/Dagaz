@@ -5,7 +5,7 @@
    (pre
       (any checkers-piece)
       (if is-friend?
-          (set! is-marked? F)
+          (set! is-marked? false)
       )
    )
    (pre
@@ -45,19 +45,23 @@
    (log (order 2) " x " position)
    (check dir)
    (check is-empty?)
-   (set! is-marked? T)
+   (set! is-marked? true)
    update-counter
 )
 
 (piece
    (name checkers-piece)
-   (attribute is-marked? F)
+   (attribute is-marked? false)
    (move
       (check (any dir))
-      (if is-enemy?
-          common-capture
-          end-move-part
-      )
+      (check is-empty?)
+   )
+   (move
+      (mode capturing)
+      (check (any capture-dir))
+      (check is-enemy?)
+      common-capture
+      (end-move-part capturing)
    )
 )
 
@@ -70,12 +74,19 @@
          end-move
          (check dir)
       )
-      (if is-enemy?
-          common-capture
-          (while is-empty?
-             end-move-part
-             (check dir)
-          )
+      (check is-empty?)
+   )
+   (move
+      (mode capturing)
+      (check (any dir))
+      (while is-empty?
+         (check dir)
+      )
+      (check is-enemy?)
+      common-capture
+      (while is-empty?
+         (end-move-part capturing)
+         (check dir)
       )
    )
 )
@@ -86,6 +97,7 @@
    (is-a checkers-piece)
    (is-a set-counter)
    (dir nw ne)
+   (capture-dir nw ne)
    (post
       (if (in-zone? promotion)
           (piece-type K)

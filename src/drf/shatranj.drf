@@ -13,6 +13,7 @@
       )
    )
    (post
+      (order 1)
       (check not-friend?)      
       (if is-enemy?
           capture
@@ -23,6 +24,7 @@
       (log (order 2) position)
    )
    (post
+      (order 2)
       (any King)
       (if (and is-enemy? is-attacked?)
           (log (order 4) "!")
@@ -83,12 +85,12 @@
 
 (piece
    (name Ferz F)
-   (attribute not-moved? F)
+   (attribute not-moved? false)
    (is-a leaper)
    (dir nw ne se sw)
    (spec-dir s nw ne se sw)
    (post
-      (set! not-moved? F)
+      (set! not-moved? false)
    )
    (move
       (check not-moved?)
@@ -128,7 +130,7 @@
    (post
        (if (in-zone? promotion)
            (piece-type F)
-           (set! not-moved? T)
+           (set! not-moved? true)
        )
    )
 )
@@ -144,6 +146,8 @@
    (sym s  n)
    (sym nw sw)
    (sym ne se)
+   (sym sw nw)
+   (sym se ne)
    (zone (name promotion) a1 b1 c1 d1 e1 f1 g1 h1)
 )
 

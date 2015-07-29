@@ -47,8 +47,11 @@
 (player
    (name Black)
    (sym n  s)
+   (sym s  n)
    (sym nw sw)
    (sym ne se)
+   (sym sw nw)
+   (sym se ne)
    (zone (name promotion) a3 b3 c3 d3 e3 f3 g3 h3)
 )
 
@@ -80,7 +83,7 @@
       )
       (check no-moves?)
    )
-   (win
+   (draw
       (order 1)
       (check no-moves?)
    )

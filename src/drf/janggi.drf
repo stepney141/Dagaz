@@ -12,7 +12,7 @@
          (if is-friend?
              (while n
                  (if (and is-enemy? (is-piece? K))
-                     (check F)
+                     (check false)
                  )
              )
          )
@@ -118,7 +118,7 @@
    (move
       (check (= 0 max-result))
       (check not-passed?)
-      (set! not-passed? F)
+      (set! not-passed? false)
    )
 )
 
@@ -128,17 +128,18 @@
    (zone (name castle) d1 e1 f1 d2 e2 f2 d3 e3 f3)
    (zone (name home-zone) b1 c1 g1 h1)
    (zone (name left-zone) b1 c1)
-   (attribute not-passed? T)
+   (attribute not-passed? true)
 )
 
 (player
    (name Black)
    (is-a player-invariant)
    (sym n s)
+   (sym s n)
    (zone (name castle) d10 e10 f10 d9 e9 f9 d8 e8 f8)
    (zone (name home-zone)  b10 c10 g10 h10)
    (zone (name left-zone)  b10 c10)
-   (attribute not-passed? T)
+   (attribute not-passed? true)
 )
 
 (define setup-check
@@ -164,7 +165,7 @@
          (R a1 i1)
          (C b3 h3)
          (P a4 c4 e4 g4 i4)
-         setup-check
+         (invariant setup-check)
       )
       (Black
          (K e9)
@@ -174,7 +175,7 @@
          (R a10 i10)
          (C b8 h8)
          (P a7 c7 e7 g7 i7)
-         setup-check
+         (invariant setup-check)
       )
    )
    (loss 
