@@ -23,3 +23,15 @@
    (dim "a-j")
    (dim "10-1")
 )
+
+(game 
+   (name chess-game)
+   (loss 
+      (mode mate)
+      (any King)
+      (if is-friend?
+          (check is-attacked?)
+      )
+      (check no-moves?)
+   )
+)

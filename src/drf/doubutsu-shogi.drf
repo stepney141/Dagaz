@@ -1,0 +1,82 @@
+(import "chess-common.drf" chess-game common-directions)
+(import "shatranj.drf" leaper)
+(import "shogi.drf" shogi-common King Pawn)
+
+(board
+   (name doubutsu-shogi-board)
+   (is-a common-directions)
+   (dim "a-c")
+   (dim "4-1")
+)
+
+(piece
+   (name drop-common)
+   (post
+      (if is-dropping?
+          (check (not-zone? promotion))
+      )
+   )
+)
+
+(piece
+   (name Sang)
+   (is-a leaper)
+   (is-a shogi-common)
+   (is-a drop-common)
+   (dir nw ne sw se)
+)
+
+(piece
+   (name Jang)
+   (is-a leaper)
+   (is-a shogi-common)
+   (is-a drop-common)
+   (dir n w s e)
+)
+
+(piece
+   (name Za)
+   (is-a Pawn)
+   (is-a drop-common)
+)
+
+(player
+   (name Green)
+   (zone (name promotion) a4 b4 c4)
+   (zone (name hand) 4)
+)
+
+(player
+   (name Red)
+   (sym n s)
+   (zone (name promotion) a1 b1 c1)
+   (zone (name hand) 4)
+)
+
+(game
+   (name "Doubutsu Shogi")
+   (is-a chess-game)
+   (board doubutsu-shogi-board)
+   (players 
+      (Green
+         (Sang a1)
+         (King b1)
+         (Jang c1)
+         (Za   b2)
+      )
+      (Red
+         (Sang c4)
+         (King b4)
+         (Jang a4)
+         (Za   b3)
+      )
+   )
+   (win
+      (exists
+         (any piece)
+         (check is-friend?)
+         (check (is-piece? King))
+         (check (in-zone? promotion))
+      )
+   )
+)

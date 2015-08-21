@@ -1,4 +1,4 @@
-(import "chess-boards.drf" common-directions)
+(import "chess-common.drf" chess-game common-directions)
 (import "shatranj.drf" chess-invariant leaper slider)
 
 (board
@@ -204,6 +204,7 @@
 
 (game
    (name "Shogi")
+   (is-a chess-game)
    (board shogi-board)
    (players 
       (Black
@@ -226,14 +227,6 @@
          (B h8)
          (P a7 b7 c7 d7 e7 f7 g7 h7 i7)
       )
-   )
-   (loss 
-      (mode mate)
-      (any King)
-      (if is-friend?
-          (check is-attacked?)
-      )
-      (check no-moves?)
    )
    (loss
       (order 1)

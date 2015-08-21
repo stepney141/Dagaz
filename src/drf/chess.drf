@@ -1,4 +1,4 @@
-(import "chess-boards.drf" chess-board-8x8)
+(import "chess-common.drf" chess-game chess-board-8x8)
 (import "shatranj.drf" chess-invariant leaper slider knight-piece pawn-piece)
 
 (piece
@@ -149,6 +149,7 @@
 
 (game
    (name "Chess")
+   (is-a chess-game)
    (board chess-board-8x8)
    (players 
       (White 
@@ -167,13 +168,6 @@
          (B c8 f8)
          (P a7 b7 c7 d7 e7 f7 g7 h7)
       )
-   )
-   (loss 
-      (any King)
-      (if is-friend?
-          (check is-attacked?)
-      )
-      (check no-moves?)
    )
    (draw
       (order 1)

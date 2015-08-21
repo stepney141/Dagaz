@@ -1,4 +1,4 @@
-(import "chess-boards.drf" chess-board-10x10)
+(import "chess-common.drf" chess-board-10x10)
 (import "checkers.drf" checkers-invariant checkers-piece inc-counter flying-king common-capture)
 
 (piece

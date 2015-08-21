@@ -1,4 +1,4 @@
-(import "chess-boards.drf" chess-board-8x8)
+(import "chess-common.drf" chess-board-8x8)
 
 (piece
    (name checkers-invariant)

@@ -1,4 +1,4 @@
-(import "chess-boards.drf" chess-board-8x8)
+(import "chess-common.drf" chess-game chess-board-8x8)
 (import "shatranj.drf" leaper slider knight-piece pawn-piece)
 
 (piece
@@ -57,6 +57,7 @@
 
 (game
    (name "Makruk")
+   (is-a chess-game)
    (board chess-board-8x8)
    (players 
       (Red 
@@ -75,13 +76,6 @@
          (F e8)
          (K d8)
       )
-   )
-   (loss 
-      (any King)
-      (if is-friend?
-          (check is-attacked?)
-      )
-      (check no-moves?)
    )
    (draw
       (order 1)

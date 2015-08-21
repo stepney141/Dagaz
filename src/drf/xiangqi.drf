@@ -1,4 +1,4 @@
-(import "chess-boards.drf" common-directions)
+(import "chess-common.drf" common-directions)
 (import "shatranj.drf" chess-invariant leaper slider knight-piece)
 
 (board

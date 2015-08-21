@@ -1,4 +1,4 @@
-(import "chess-boards.drf" chess-board-8x8)
+(import "chess-common.drf" chess-game chess-board-8x8)
 (import "shatranj.drf" leaper slider knight-piece pawn-piece)
 
 (piece
@@ -115,6 +115,7 @@
 
 (game
    (name "Sittuyin")
+   (is-a chess-game)
    (board chess-board-8x8)
    (players 
       (Red 
@@ -134,13 +135,6 @@
          (E home-zone 2)
          (invariant setup-check)
       )
-   )
-   (loss 
-      (any King)
-      (if is-friend?
-          (check is-attacked?)
-      )
-      (check no-moves?)
    )
    (win
       (order 1)

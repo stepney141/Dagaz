@@ -1,4 +1,4 @@
-(import "chess-boards.drf" chess-board-8x8)
+(import "chess-common.drf" chess-game chess-board-8x8)
 
 (piece
    (name chess-invariant)
@@ -153,6 +153,7 @@
 
 (game
    (name "Shatranj")
+   (is-a chess-game)
    (board chess-board-8x8)
    (players 
       (White  
@@ -171,13 +172,6 @@
          (E c8 f8)
          (P a7 b7 c7 d7 e7 f7 g7 h7)
       )
-   )
-   (loss 
-      (any King)
-      (if is-friend?
-          (check is-attacked?)
-      )
-      (check no-moves?)
    )
    (draw
       (= 1 

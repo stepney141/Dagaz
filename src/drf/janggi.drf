@@ -1,3 +1,4 @@
+(import "chess-common.drf" chess-game)
 (import "xiangqi.drf" xiangqi-board in-castle)
 (import "shatranj.drf" chess-invariant leaper slider knight-piece)
 
@@ -155,6 +156,7 @@
 
 (game
    (name "Janggi")
+   (is-a chess-game)
    (board xiangqi-board)
    (players 
       (Red 
@@ -177,13 +179,6 @@
          (P a7 c7 e7 g7 i7)
          (invariant setup-check)
       )
-   )
-   (loss 
-      (any King)
-      (if is-friend?
-          (check is-attacked?)
-      )
-      (check no-moves?)
    )
    (draw
       (order 1)
