@@ -4,8 +4,10 @@
 
 (piece
    (name janggi-invariant)
-   (pre
+   (post
       (set! result 1)
+      (check (>= result max-result))
+      (set! max-result result)
    )
    (post
       (all
@@ -112,10 +114,6 @@
 
 (player
    (name player-invariant)
-   (post
-      (check (>= result max-result))
-      (set! max-result result)
-   )
    (move
       (check (= 0 max-result))
       (check not-passed?)

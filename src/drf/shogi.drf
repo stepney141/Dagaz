@@ -11,7 +11,8 @@
 (piece shogi-common
    (post
       (if is-enemy?
-          (set! is-promoted? false)
+          change-owner!
+          (set! is-promoted? false)          
           (copy-to hand)
       )
    )
@@ -67,7 +68,6 @@
 )
 
 (piece shogi-leaper
-   (is-a chess-invariant)
    (move
       (check (not is-promoted?))
       (check (any dir))
@@ -79,7 +79,6 @@
 )
 
 (piece shogi-slider
-   (is-a chess-invariant)
    (move
       (check (not is-promoted?))
       (check (any dir))
@@ -110,6 +109,7 @@
 
 (piece
    (name Silver S)
+   (is-a chess-invariant)
    (is-a shogi-common)
    (is-a shogi-piece)
    (is-a shogi-leaper)
@@ -118,8 +118,7 @@
 )
 
 (piece
-   (name Knight N)
-   (is-a chess-invariant)
+   (name shogi-knight)
    (is-a shogi-common)
    (is-a shogi-piece)
    (dir nw ne)
@@ -136,8 +135,13 @@
 )
 
 (piece
-   (name Lance L)
+   (name Knight N)
    (is-a chess-invariant)
+   (is-a shogi-knight)
+)
+
+(piece
+   (name shogi-lance)
    (is-a shogi-common)
    (is-a shogi-piece)
    (prom-dir n e s w nw ne)
@@ -156,7 +160,14 @@
 )
 
 (piece
+   (name Lance L)
+   (is-a chess-invariant)
+   (is-a shogi-lance)
+)
+
+(piece
    (name Bishop B)
+   (is-a chess-invariant)
    (is-a shogi-common)
    (is-a shogi-piece)
    (is-a shogi-slider)
@@ -166,6 +177,7 @@
 
 (piece
    (name Rook R)
+   (is-a chess-invariant)
    (is-a shogi-common)
    (is-a shogi-piece)
    (is-a shogi-slider)
@@ -174,12 +186,28 @@
 )
 
 (piece
-   (name Pawn P)
+   (name shogi-pawn)
    (is-a shogi-common)
    (is-a shogi-piece)
    (is-a shogi-leaper)
    (dir n)
    (prom-dir n e s w nw ne)
+   (post
+      (let column get-column)
+      (check
+         (not-exists?
+            (any Pawn)
+            (check is-friend?)
+            (check (= column get-column))
+         )
+      )
+   )
+)
+
+(piece
+   (name Pawn P)
+   (is-a chess-invariant)
+   (is-a shogi-pawn)
 )
 
 (player
@@ -194,6 +222,12 @@
 
 (player
    (name White)
+   (sym n s)
+   (sym s n)
+   (sym nw se)
+   (sym se nw)
+   (sym sw ne)
+   (sym ne sw)
    (zone (name hand))
    (zone (name promotion) 
       a1 b1 c1 d1 e1 f1 g1 h1 i1

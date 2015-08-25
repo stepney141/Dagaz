@@ -44,7 +44,7 @@
 (define promote-pawn
    (if (in-zone? promotion)
        (check 
-          (not-exists
+          (not-exists?
              (any F)
              (check is-friend?)
           )

@@ -72,7 +72,7 @@
       )
    )
    (win
-      (exists
+      (exists?
          (any piece)
          (check is-friend?)
          (check (is-piece? King))
