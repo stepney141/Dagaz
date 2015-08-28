@@ -118,6 +118,7 @@
       (check (= 0 max-result))
       (check not-passed?)
       (set! not-passed? false)
+      (log "pass")
    )
 )
 

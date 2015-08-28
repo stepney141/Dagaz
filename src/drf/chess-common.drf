@@ -24,6 +24,25 @@
    (dim "10-1")
 )
 
+(piece
+   (name chess-common)
+   (pre
+      (check friend?)
+      (log position)
+   )
+   (post
+      (order 1)
+      (check not-friend?)      
+      (if is-enemy?
+          capture
+          (log (order 1) " x ")
+       else
+          (log (order 1) " - ")
+      )
+      (log (order 2) position)
+   )
+)
+
 (game 
    (name chess-game)
    (loss 

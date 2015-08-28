@@ -1,27 +1,13 @@
-(import "chess-common.drf" chess-game chess-board-8x8)
+(import "chess-common.drf" chess-common chess-game chess-board-8x8)
 
 (piece
    (name chess-invariant)
-   (pre
-      (check friend?)
-      (log position)
-   )
+   (is-a chess-common)
    (post
       (any King)
       (if is-friend?
           (check not-attacked?)
       )
-   )
-   (post
-      (order 1)
-      (check not-friend?)      
-      (if is-enemy?
-          capture
-          (log (order 1) " x ")
-       else
-          (log (order 1) " - ")
-      )
-      (log (order 2) position)
    )
    (post
       (order 2)

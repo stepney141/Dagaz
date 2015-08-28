@@ -1,6 +1,9 @@
+(import "chess-common.drf" chess-common)
 (import "shogi.drf" shogi-board shogi-common shogi-piece shogi-leaper shogi-slider shogi-knight shogi-lance shogi-pawn Black White)
 
-(piece yonin-shogi-common
+(piece
+   (name yonin-shogi-common)
+   (is-a chess-common)
    (post
       (set! result 1)
       (check (>= result max-result))
@@ -88,6 +91,7 @@
    (name player-invariant)
    (move
       (check (= 0 max-result))
+      (log "pass")
    )
 )
 

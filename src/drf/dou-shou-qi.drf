@@ -1,0 +1,175 @@
+(import "chess-common.drf" common-directions chess-common)
+
+(board
+   (name doushouqi-board)
+   (is-a common-directions)
+   (dim "a-g")
+   (dim "9-1")
+)
+
+(piece
+   (name doushouqi-common)
+   (pre
+      (let my-value value)
+   )
+   (post
+      (check (or (in-zone? trap) (<= value my-value)))
+   )
+   (post
+      (check (not-zone? water))
+   )
+)
+
+(piece
+   (name doushouqi-leaper)
+   (is-a chess-common)
+   (dir n e s w)
+   (move
+      (check (any dir))
+   )
+   (post
+      (check (not-zone? own-den))
+   )
+)
+
+(piece
+   (name doushouqi-slider)
+   (move
+      (check (any slide-dir))
+      (check (in-zone? water))
+      (while (in-zone? water)
+         (check is-empty?)
+         (check slide-dir)
+      )
+   )
+)
+
+(piece
+   (name Rat Shu)
+   (is-a doushouqi-leaper)
+   (attribute value 1)
+   (pre
+      (let start-in-water? (in-zone? water))
+   )
+   (post
+      (check (or (in-zone? trap) (= value 1 8)))
+   )
+   (post
+      (check (= start-in-water? (in-zone? water)))
+   )
+)
+
+(piece
+   (name Cat Mao)
+   (is-a doushouqi-common)
+   (is-a doushouqi-leaper)
+   (attribute value 2)
+)
+
+(piece
+   (name Dog Gou)
+   (is-a doushouqi-common)
+   (is-a doushouqi-leaper)
+   (attribute value 3)
+)
+
+(piece
+   (name Wolf Lan)
+   (is-a doushouqi-common)
+   (is-a doushouqi-leaper)
+   (attribute value 4)
+)
+
+(piece
+   (name Panther Bao)
+   (is-a doushouqi-common)
+   (is-a doushouqi-leaper)
+   (attribute value 5)
+)
+
+(piece
+   (name Tiger Hu)
+   (is-a doushouqi-common)
+   (is-a doushouqi-leaper)
+   (is-a doushouqi-slider)
+   (attribute value 6)
+   (slide-dir e w)
+)
+
+(piece
+   (name Lion Shi)
+   (is-a doushouqi-common)
+   (is-a doushouqi-leaper)
+   (is-a doushouqi-slider)
+   (attribute value 7)
+   (slide-dir n s)
+)
+
+(piece
+   (name Elephant Sian)
+   (is-a doushouqi-common)
+   (is-a doushouqi-leaper)
+   (attribute value 8)
+   (post
+      (check (> value 1 8))
+   )
+)
+
+(player
+   (name Black)
+   (zone (name den) d9)
+   (zone (name own-den) d1)
+   (zone (name trap) c9 d8 e9)
+   (zone (name water) 
+      b4 b5 b6 c4 c5 c6
+      e4 e5 e6 f4 f5 f6
+   )
+)
+
+(player
+   (name White)
+   (zone (name den) d1)
+   (zone (name own-den) d9)
+   (zone (name trap) c1 d2 e1)
+   (zone (name water) 
+      b4 b5 b6 c4 c5 c6
+      e4 e5 e6 f4 f5 f6
+   )
+)
+
+(game
+   (name "Dou Shou Qi" "Jungle")
+   (board doushouqi-board)
+   (players 
+      (Black
+         (Shu  g3)
+         (Mao  b2)
+         (Gou  f2)
+         (Lan  c3)
+         (Bao  e3)
+         (Hu   a1)
+         (Shi  g1)
+         (Sian a3)
+      )
+      (White
+         (Shu  a7)
+         (Mao  f8)
+         (Gou  b8)
+         (Lan  e7)
+         (Bao  c7)
+         (Hu   g9)
+         (Shi  a9)
+         (Sian g7)
+      )
+   )
+   (win
+      (exists
+         (any chess-common)
+         (check (in-zone? den))
+         (check is-friend?)
+      )
+   )
+   (loss
+      (check no-moves?)
+   )
+)
