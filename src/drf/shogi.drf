@@ -198,6 +198,7 @@
          (not-exists?
             (any Pawn)
             (check is-friend?)
+            (check not-promoted?)
             (check (= column get-column))
          )
       )
