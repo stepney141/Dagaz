@@ -73,9 +73,8 @@
    )
    (win
       (exists?
-         (any piece)
+         (any King)
          (check is-friend?)
-         (check (is-piece? King))
          (check (in-zone? promotion))
       )
    )

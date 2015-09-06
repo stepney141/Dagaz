@@ -47,10 +47,12 @@
    (name chess-game)
    (loss 
       (mode mate)
-      (any King)
-      (if is-friend?
-          (check is-attacked?)
+      (exists?
+         (any King)
+         (if is-friend?
+             (check is-attacked?)
+         )
+         (check no-moves?)
       )
-      (check no-moves?)
    )
 )
