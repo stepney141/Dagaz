@@ -32,6 +32,7 @@
 )
 
 (define (common-capture dir)
+   (check not-captured?)
    capture
    (check dir)
    (check is-empty?)
