@@ -3,16 +3,7 @@
 (piece
    (name checkers-invariant)
    (pre
-      (any checkers-piece)
-      (if is-friend?
-          (set! is-marked? false)
-      )
-   )
-   (pre
       (check friend?)
-      (if (> capture-count 0)
-          (check is-marked?)
-      )
       (log position)
    )
    (post
@@ -22,7 +13,7 @@
       (if (> capture-count 0)
           (check no-moves?)
       )
-      (log (order 1) " - " position)
+      (log " - " position)
    )
 )
 
@@ -40,28 +31,26 @@
    )
 )
 
-(define common-capture
+(define (common-capture dir)
    capture
-   (log (order 2) " x " position)
    (check dir)
    (check is-empty?)
-   (set! is-marked? true)
    update-counter
 )
 
 (piece
    (name checkers-piece)
-   (attribute is-marked? false)
    (move
       (check (any dir))
-      (check is-empty?)
    )
    (move
-      (mode capturing)
-      (check (any capture-dir))
-      (check is-enemy?)
-      common-capture
-      (end-move-part capturing)
+      (repeat
+         (name capturing)
+         (check (any capture-dir))
+         (check is-enemy?)
+         (common-capture capture-dir)
+         end-move
+      )
    )
 )
 
@@ -77,16 +66,18 @@
       (check is-empty?)
    )
    (move
-      (mode capturing)
-      (check (any dir))
-      (while is-empty?
-         (check dir)
-      )
-      (check is-enemy?)
-      common-capture
-      (while is-empty?
-         (end-move-part capturing)
-         (check dir)
+      (repeat
+         (name capturing)
+         (check (any dir))
+         (while is-empty?
+            (check dir)
+         )
+         (check is-enemy?)
+         (common-capture dir)
+         (while is-empty?
+            end-move
+            (check dir)
+         )
       )
    )
 )
@@ -101,7 +92,6 @@
    (post
       (if (in-zone? promotion)
           (piece-type K)
-          (log (order 3) " = " piece-type)
           end-move
       )
    )
