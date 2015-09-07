@@ -1,12 +1,14 @@
 (import "chess-common.drf" chess-common chess-board-10x10)
 
 (define (common-slide first-zone first-dir second-zone second-dir long-move?)
+   (let first-long? false)
    (check (in-zone? first-zone))
    (check (any first-dir))
    (while (and is-empty? (in-zone? first-zone))
       end-move
       (check first-dir)
       (set! long-move? true)
+      (set! first-long? true)
    )
    (if long-move?
        (check (and not-friend? (in-zone? second-zone)))
@@ -18,10 +20,16 @@
    )
    (check (any second-dir))
    (log (order 1) " - " position)
+   (set-flag second-long? true)
    (while (and is-empty? (in-zone? second-zone))
+      (if first-long?
+          (check second-long?)
+          (set! second-long? false)
+      )
       end-move
       (check second-dir)
    )
+   (check second-long?)
    (check (and not-friend? (in-zone? second-zone)))
 )
 
@@ -66,6 +74,7 @@
    (move
       (check (in-zone? inner-zone))
       (check (any dir))
+      (check (not-zone? restricted-zone))
    )
 )
 
@@ -115,6 +124,10 @@
    b4 c4 d4 c3 d3 d2 g4 h4 i4 g3 h3 g2 b7 c7 d7 c8 d8 d9 g7 h7 i7 g8 h8 g9
 )
 
+(define restricted
+   a1 b1 c1 a2 b2 a3 h1 i1 j1 i2 j2 j3 a10 b10 c10 a9 b9 a8 h10 i10 j10 i9 j9 j8
+)
+
 (player
    (name White)
    (zone (name inner-zone)  cross goal)
@@ -124,6 +137,7 @@
    (zone (name right-zone)  white-right)
    (zone (name goal-zone)   goal)
    (zone (name target-zone) cross goal target)
+   (zone (name restricted-zone) restricted)
 )
 
 (player
@@ -139,6 +153,7 @@
    (zone (name right-zone)  black-right)
    (zone (name goal-zone)   goal)
    (zone (name target-zone) cross goal target)
+   (zone (name restricted-zone) restricted)
 )
 
 (game 
@@ -161,8 +176,8 @@
    (win
       (= 2 (count
          (any G)
-         (check is-friend?)
          (check (in-zone? goal-zone))
+         (check is-friend?)
       ))
    )
    (loss 
