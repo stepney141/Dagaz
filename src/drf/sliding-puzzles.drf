@@ -1,0 +1,69 @@
+(import "chess-common.drf" common-directions)
+
+(board
+   (name board-4x5)
+   (is-a common-directions)
+   (dim "a-d")
+   (dim "5-1")
+)
+
+(piece
+   (name sliding-piece)
+   (dir n e s w)
+   (pre
+      (log position)
+      (let piece-type piece)
+      (all
+          (any sliding-piece)
+          (check (= piece-type piece))
+          take-piece
+      )
+   )
+   (post
+      (check is-empty?)
+      (log " - " position)
+   )
+   (move
+      (check (any dir))
+   )
+)
+
+(piece
+   (name A-J)
+   (is-a sliding-piece)
+)
+
+(player
+   (name RedDonkey You)
+   (zone (name goal) b1 b2 c1 c2)
+)
+
+(game
+   (name sliding-puzzle)
+   (win
+      (not (exists?
+         (any A)
+         (check (not-zone? goal))
+      ))
+   )
+)
+
+(game
+   (name "Red Donkey")
+   (is-a sliding-puzzle)
+   (board board-4x5)
+   (players 
+      (RedDonkey
+         (A b4 b5 c4 c5)
+         (B a4 a5)
+         (C d4 d5)
+         (D a2 a3)
+         (E d2 d3)
+         (F b3 c3)
+         (G a1)
+         (H b2)
+         (I c2)
+         (J d1)
+      )
+   )
+)
