@@ -10,6 +10,7 @@
 (piece
    (name sliding-piece)
    (dir n e s w)
+   (attribute marked? false)
    (pre
       (log position)
       (let piece-type piece)
@@ -29,12 +30,12 @@
 )
 
 (piece
-   (name A-J)
+   (name A-Z)
    (is-a sliding-piece)
 )
 
 (player
-   (name RedDonkey You)
+   (name rd You)
    (zone (name goal) b1 b2 c1 c2)
 )
 
@@ -42,7 +43,7 @@
    (name sliding-puzzle)
    (win
       (not (exists?
-         (any A)
+         (any A B)
          (check (not-zone? goal))
       ))
    )
@@ -53,17 +54,472 @@
    (is-a sliding-puzzle)
    (board board-4x5)
    (players 
-      (RedDonkey
+      (rd
          (A b4 b5 c4 c5)
-         (B a4 a5)
-         (C d4 d5)
-         (D a2 a3)
-         (E d2 d3)
-         (F b3 c3)
-         (G a1)
-         (H b2)
-         (I c2)
-         (J d1)
+         (C a4 a5)
+         (D d4 d5)
+         (E a2 a3)
+         (F d2 d3)
+         (G b3 c3)
+         (H a1)
+         (I b2)
+         (J c2)
+         (K d1)
+      )
+   )
+)
+
+(player
+   (name f-1 You)
+   (zone (name goal) c1 c2 d1 d2)
+)
+
+(player
+   (name f-2 You)
+   (zone (name goal) a1 a2 b1 b2)
+)
+
+(game
+   (name "Fathers's puzzle (variant 1)")
+   (is-a sliding-puzzle)
+   (board board-4x5)
+   (players 
+      (f-1
+         (A a4 a5 b4 b5)
+         (C c5 d5)
+         (D c4 d4)
+         (E a1 a2)
+         (F b1 b2)
+         (G c2 d2)
+         (H c1 d1)
+         (I b3)
+         (J c3)
+      )
+   )
+)
+
+(game
+   (name "Fathers's puzzle (variant 2)")
+   (is-a sliding-puzzle)
+   (board board-4x5)
+   (players 
+      (f-1
+         (A a4 a5 b4 b5)
+         (C c5 d5)
+         (D c4 d4)
+         (E a1 a2)
+         (F b1 b2)
+         (G c2 d2)
+         (H c1 d1)
+         (I b3)
+         (J c3)
+      )
+   )
+)
+
+(board
+   (name board-5x5)
+   (is-a common-directions)
+   (dim "a-e")
+   (dim "5-1")
+)
+
+(player
+   (name m You)
+   (zone (name goal) d3 d4 d5 e3 e4 e5)
+)
+
+(game
+   (name "Mothers's puzzle")
+   (is-a sliding-puzzle)
+   (board board-5x5)
+   (players 
+      (m
+         (A a1 a2 b1)
+         (B d5 e4 e5)
+         (C a5)
+         (D b5)
+         (E a4 b4 c4)
+         (F a3 b3)
+         (G c3 d3)
+         (H b2 c2)
+         (I d2 e2)
+         (J c1 d1 e1)
+      )
+   )
+)
+
+(board
+   (name board-5x3)
+   (is-a common-directions)
+   (dim "a-e")
+   (dim "3-1")
+)
+
+(player
+   (name fr You)
+   (zone (name goal) a2 b2 c2 d2 e2)
+)
+
+(define mark
+   (set! marked? true)
+)
+
+(game
+   (name "5 in row")
+   (board board-5x3)
+   (players 
+      (fr
+         (A a1 (a2 mark))
+         (B (b1 mark))
+         (C b2)
+         (D b3)
+         (E c1)
+         (F (c2 mark) c3)
+         (G d1)
+         (H (d2 mark) (e2 mark))
+         (I d3 e3)
+      )
+   )
+   (win
+      (not (exists?
+         (any sliding-puzzle)
+         (check marked?)
+         (check (not-zone? goal))
+      ))
+   )
+)
+
+(board
+   (name board-6x6)
+   (is-a common-directions)
+   (dim "a-f")
+   (dim "6-1")
+)
+
+(player
+   (name sh-1 You)
+   (zone (name goal) e1 e2 e3 f1 f2 f3)
+)
+
+(game
+   (name "Shamshin's puzzle (variant 1)")
+   (is-a sliding-puzzle)
+   (board board-6x6)
+   (players 
+      (sh-1
+         (A a4 a5 a6 b4 b5 b6)
+         (C a3 b3 c3 d3)
+         (D a2 b2)
+         (E c2 d2)
+         (F c6 d6)
+         (G e6 f6)
+         (H c4 c5)
+         (I d5 e5)
+         (J d4 e4)
+         (K f4 f5)
+         (L e2 e3 f2 f3)
+      )
+   )
+)
+
+(player
+   (name sh-2 You)
+   (zone (name goal) d1 d2 d3 e1 e2 e3)
+)
+
+(game
+   (name "Shamshin's puzzle (variant 2)")
+   (is-a sliding-puzzle)
+   (board board-5x5)
+   (players 
+      (sh-2
+         (A a3 a4 a5 b3 b4 b5)
+         (C a1 a2)
+         (D b1 b2)
+         (E c1)
+         (F c2)
+         (G d1 d2)
+         (H e1 e2)
+         (I d3 e3)
+         (J d4 e4)
+         (K d5 e5)
+      )
+   )
+)
+
+(player
+   (name sh-3 You)
+   (zone (name goal) d1 d2 e1 e2)
+)
+
+(game
+   (name "Shamshin's puzzle (variant 3)")
+   (is-a sliding-puzzle)
+   (board board-5x5)
+   (players 
+      (sh-3
+         (A a4 a5 b4 b5)
+         (C a3 b3 c3 c4)
+         (D c5)
+         (E a2 b2)
+         (F c2)
+         (G d2 d3)
+         (H d4 e4)
+         (I d5 e5)
+         (J e2 e3)
+      )
+   )
+)
+
+(board
+   (name board-6x5)
+   (is-a common-directions)
+   (dim "a-f")
+   (dim "5-1")
+)
+
+(player
+   (name sh-4 sh-7 sh-8 You)
+   (zone (name goal) d1 d2 e1 e2 f1 f2)
+)
+
+(game
+   (name "Shamshin's puzzle (variant 4)")
+   (is-a sliding-puzzle)
+   (board board-6x5)
+   (players 
+      (sh-4
+         (A a4 a5 b4 b5 c4 c5)
+         (C a3 b3 c3)
+         (D a2)
+         (E b2 c2)
+         (F c1)
+         (G d1)
+         (H d2 e2 f2)
+         (I d3 e3)
+         (J d4 e4)
+         (K f3 f4)
+         (L d5 e5 f5)
+      )
+   )
+)
+
+(player
+   (name sh-5 You)
+   (zone (name goal) e1 e2 f1 f2)
+)
+
+(game
+   (name "Shamshin's puzzle (variant 5)")
+   (is-a sliding-puzzle)
+   (board board-6x5)
+   (players 
+      (sh-5
+         (A a4 a5 b4 b5)
+         (C c5 d5 e5)
+         (D f5)
+         (E a3)
+         (F b3 c3 c4 d4)
+         (G e4 f4)
+         (H d3 e3 f3)
+         (I a2 b2)
+         (J c2 d2)
+         (K e2 f2)
+         (L c1)
+         (M d1)
+      )
+   )
+)
+
+(player
+   (name sh-6 You)
+   (zone (name goal) d1 d2 e1 e2)
+)
+
+(game
+   (name "Shamshin's puzzle (variant 6)")
+   (is-a sliding-puzzle)
+   (board board-5x5)
+   (players 
+      (sh-6
+         (A a4 a5 b4 b5)
+         (C c5 d5 e5)
+         (D c4 d4)
+         (E e4)
+         (F a3 b3 c3)
+         (G d3 e3)
+         (H a2 b2)
+         (I c2 d2 e2)
+         (J a1)
+      )
+   )
+)
+
+(game
+   (name "Shamshin's puzzle (variant 7)")
+   (is-a sliding-puzzle)
+   (board board-6x5)
+   (players 
+      (sh-7
+         (A a4 a5 b4 b5 c4 c5)
+         (C d5 e5 f5)
+         (D d4)
+         (E e4 f4)
+         (F c3 d3 e3)
+         (G f3)
+         (H c2 d2)
+         (I e2 f2)
+         (J a1 b1)
+         (K a2 a3)
+         (L b2 b3)
+      )
+   )
+)
+
+(game
+   (name "Shamshin's puzzle (variant 8)")
+   (is-a sliding-puzzle)
+   (board board-6x5)
+   (players 
+      (sh-8
+         (A a4 a5 b4 b5 c4 c5)
+         (C a3 b3)
+         (D c3 d3)
+         (E e3 f3)
+         (F a2 b2 c2)
+         (G d2 e2 f2)
+         (H a1 b1)
+         (I d4 d5)
+         (J e4 e5)
+         (K f4 f5)
+      )
+   )
+)
+
+(board
+   (name board-5x6)
+   (is-a common-directions)
+   (dim "a-e")
+   (dim "6-1")
+)
+
+(player
+   (name sh-9 You)
+   (zone (name goal) d1 d1 d3 e1 e2 e3)
+)
+
+(game
+   (name "Shamshin's puzzle (variant 9)")
+   (is-a sliding-puzzle)
+   (board board-5x6)
+   (players 
+      (sh-9
+         (A a4 a5 a6 b4 b5 b6)
+         (C a1 a2 a3)
+         (D b1 b2 b3)
+         (E c2 d2 e2)
+         (F c3 c4)
+         (G d3 d4)
+         (H e3 e4)
+         (I c5)
+         (J d5 e5)
+         (K c6 d6)
+         (L e6)
+      )
+   )
+)
+
+(player
+   (name sh-10 You)
+   (zone (name goal) a1 a2 b1 b2)
+)
+
+(game
+   (name "Shamshin's puzzle (variant 10)")
+   (is-a sliding-puzzle)
+   (board board-5x5)
+   (players 
+      (sh-10
+         (A d4 d5 e4 e5)
+         (C a1 b1)
+         (D a2 b2)
+         (E a3 a4)
+         (F b3 b4)
+         (G a5 b5 c5)
+         (H c2 d2)
+         (I e2)
+         (J c3 d3 e3)
+         (K c4)
+      )
+   )
+)
+
+(player
+   (name p-1 You)
+   (zone (name goal) b1 c1 d1 e1 b2 c2 d2 e2)
+)
+
+(game
+   (name "Puzzle (variant 1)")
+   (is-a sliding-puzzle)
+   (board board-6x5)
+   (players 
+      (p-1
+         (A b4 c4 d4 e4)
+         (B b5 c5 d5 e5)
+         (C a1 a2 b1 b2)
+         (D a3 b3)
+         (E c1 c2 d1 d2)
+         (F c3 d3)
+         (G e1 e2 f1 f2)
+         (H e3 f3)
+      )
+   )
+)
+
+(board
+   (name board-7x7)
+   (is-a common-directions)
+   (dim "a-g")
+   (dim "7-1")
+)
+
+(player
+   (name p-2 You)
+   (zone (name goal) a7)
+)
+
+(game
+   (name "Puzzle (variant 2)")
+   (is-a sliding-puzzle)
+   (board board-7x7)
+   (players 
+      (p-2
+         (A g1)
+         (C a1 b1)
+         (D a2 b2)
+         (E a3 a4)
+         (F b3 b4)
+         (G a5 b5)
+         (H a6 b6)
+         (I c1 d1)
+         (J c2 c3)
+         (K c4 c5)
+         (L c6 c7)
+         (M d2 e2)
+         (N d3 e3)
+         (O d4 d5)
+         (P d6 d7)
+         (Q e1 f1)
+         (R e4 f4)
+         (S e5 e6)
+         (T f5 f6)
+         (U e7 f7)
+         (V f2 g2)
+         (W f3 g3)
+         (X g4 g5)
+         (Y g6 g7)
       )
    )
 )
