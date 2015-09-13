@@ -1,0 +1,77 @@
+(import "chess-common.drf" common-directions)
+
+(board
+   (name ming-mang-board)
+   (is-a common-directions)
+   (dim "a-i")
+   (dim "9-1")
+)
+
+(piece
+   (name Man)
+   (first-dir n e s w)
+   (second-dir
+      (if (= first-dir n) w e)
+      (if (= first-dir e) n s)
+      (if (= first-dir s) w e)
+      (if (= first-dir w) n s)
+   )
+   (pre
+      (check is-friend?)
+      (log position)
+   )
+   (post
+      (order 1)
+      (check is-empty?)
+      (log "-" position)
+   )
+   (post
+      (order 2)
+      (check (any first-dir))
+      (while is-enemy?
+          change-owner!
+          (any
+             (seq
+                (check (any second-dir))
+                (while is-enemy?
+                    change-owner!
+                    (check second-dir)
+                )
+             )
+             (check first-dir)
+          )
+      )
+      (check is-friend?)
+   )
+   (move
+      (check (any first-dir))
+      (while is-empty?
+         end-move
+         (check first-dir)
+      )
+   )
+)
+
+(player
+   (name White)
+)
+
+(player
+   (name Black)
+)
+
+(game
+   (name "Ming Mang")
+   (board ming-mang-board)
+   (players 
+      (White
+          (Man a1 a2 a3 a4 a5 a6 a7 a8 b1 c1 d1 e1 f1 g1 h1 i1)
+      )
+      (Black
+          (Man a9 b9 c9 d9 e9 f9 g9 h9 i9 i8 i7 i6 i5 i4 i3 i2)
+      )
+   )
+   (loss
+      (check no-moves?)
+   )
+)
