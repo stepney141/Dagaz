@@ -24,10 +24,10 @@
       (check not-attacked?)
       (check e)
       (check is-empty?)
-      drop-all
+      drop
       (check e)
       (check not-moved?)
-      take-piece
+      take
       w w
       (log "O-O")
    )
@@ -42,10 +42,10 @@
       (check not-attacked?)
       (check w)
       (check is-empty?)
-      drop-all
+      drop
       (check w)
       (check not-moved?)
-      take-piece
+      take
       e e
       (log "O-O-O")
    )

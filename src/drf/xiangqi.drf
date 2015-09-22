@@ -21,7 +21,7 @@
    (is-a in-castle)
    (dir n e s w)
    (move
-      drop-all
+      drop
       (while n
          (if (and is-enemy? (is-piece? K))
              capture

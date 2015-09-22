@@ -17,7 +17,7 @@
       (all
           (any sliding-piece)
           (check (= piece-type piece))
-          take-piece
+          take
       )
    )
    (post
