@@ -22,11 +22,11 @@
    (dir n e s w)
    (move
       drop
-      (while n
-         (if (and is-enemy? (is-piece? K))
-             capture
-             (log "x " position)
-         )
+      (while (is-empty? n) n)
+      (check n)
+      (if (and is-enemy? (is-piece? K))
+          capture
+          (log "x " position)
       )
    )
 )
