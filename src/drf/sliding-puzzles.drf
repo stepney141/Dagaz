@@ -42,10 +42,10 @@
 (game
    (name sliding-puzzle)
    (win
-      (not (exists?
+      (not-exists?
          (any A B)
          (check (not-zone? goal))
-      ))
+      )
    )
 )
 
@@ -182,11 +182,11 @@
       )
    )
    (win
-      (not (exists?
+      (not-exists?
          (any sliding-puzzle)
          (check marked?)
          (check (not-zone? goal))
-      ))
+      )
    )
 )
 

@@ -117,7 +117,7 @@
    (is-a en-passant)
    (post
       (if (in-zone? promotion)
-          (piece-type (any Q R B N))
+          (set-piece! (any Q R B N))
           (log (order 3) " = " piece-type)
       )
    )

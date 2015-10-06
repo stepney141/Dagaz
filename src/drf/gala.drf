@@ -20,7 +20,7 @@
    )
    (check (any second-dir))
    (log (order 1) " - " position)
-   (set-flag second-long? true)
+   (let second-long? true)
    (while (and is-empty? (in-zone? second-zone))
       (if first-long?
           (check second-long?)

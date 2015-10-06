@@ -44,10 +44,10 @@
    (is-a chess-invariant)
    (first-dir n e s w)
    (second-dir
-      (if (= first-dir n) nw ne)
-      (if (= first-dir e) ne se)
-      (if (= first-dir s) sw se)
-      (if (= first-dir w) nw sw)
+      (= first-dir n) > nw ne
+      (= first-dir e) > ne se
+      (= first-dir s) > sw se
+      (= first-dir w) > nw sw
    )
 )
 
@@ -116,7 +116,7 @@
    (is-a pawn-piece)
    (post
        (if (in-zone? promotion)
-           (piece-type F)
+           (set-piece! F)
            (set! not-moved? true)
        )
    )

@@ -163,7 +163,7 @@
       )
    )
    (win
-      (exists
+      (exists?
          (any chess-common)
          (check (in-zone? den))
          (check is-friend?)

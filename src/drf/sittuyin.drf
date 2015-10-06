@@ -49,7 +49,7 @@
              (check is-friend?)
           )
        )
-       (piece-type F)
+       (set-piece! F)
    )
 )
 

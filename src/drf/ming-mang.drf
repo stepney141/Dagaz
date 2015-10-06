@@ -11,10 +11,10 @@
    (name Man)
    (first-dir n e s w)
    (second-dir
-      (if (= first-dir n) w e)
-      (if (= first-dir e) n s)
-      (if (= first-dir s) w e)
-      (if (= first-dir w) n s)
+      (= first-dir n) > w e
+      (= first-dir e) > n s
+      (= first-dir s) > w e
+      (= first-dir w) > n s
    )
    (pre
       (check is-friend?)

@@ -32,7 +32,8 @@
 )
 
 (define (common-capture dir)
-   (check not-captured?)
+   (check (not-flag? is-captured))
+   (set-flag! is-captured)
    capture
    (check dir)
    (check is-empty?)
@@ -92,7 +93,7 @@
    (capture-dir nw ne)
    (post
       (if (in-zone? promotion)
-          (piece-type K)
+          (set-piece! K)
           end-move
       )
    )

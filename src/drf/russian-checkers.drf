@@ -10,7 +10,7 @@
    (capture-dir nw ne sw se)
    (post
       (if (in-zone? promotion)
-          (piece-type K)
+          (set-piece! K)
       )
    )
 )
