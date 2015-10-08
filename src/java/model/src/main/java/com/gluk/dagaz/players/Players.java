@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.gluk.dagaz.api.IPlayers;
+import com.gluk.dagaz.api.model.IPlayers;
 import com.gluk.dagaz.exceptions.CommonException;
 
 public class Players implements IPlayers {

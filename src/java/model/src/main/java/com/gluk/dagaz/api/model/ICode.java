@@ -1,4 +1,4 @@
-package com.gluk.dagaz.api;
+package com.gluk.dagaz.api.model;
 
 public interface ICode {
 	public final static int GET_CODE = 0; // Обращение к имени

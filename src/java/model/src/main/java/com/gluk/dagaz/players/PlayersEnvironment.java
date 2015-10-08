@@ -1,8 +1,8 @@
 package com.gluk.dagaz.players;
 
-import com.gluk.dagaz.api.IEnvironment;
-import com.gluk.dagaz.api.IReserved;
-import com.gluk.dagaz.api.IValue;
+import com.gluk.dagaz.api.model.IReserved;
+import com.gluk.dagaz.api.model.IValue;
+import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.utils.Value;
 

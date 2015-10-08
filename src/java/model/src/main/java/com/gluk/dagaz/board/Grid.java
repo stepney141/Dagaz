@@ -3,7 +3,7 @@ package com.gluk.dagaz.board;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gluk.dagaz.api.IBoard;
+import com.gluk.dagaz.api.model.IBoard;
 import com.gluk.dagaz.exceptions.CommonException;
 
 public class Grid {

@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import com.gluk.dagaz.api.IBoard;
+import com.gluk.dagaz.api.model.IBoard;
 import com.gluk.dagaz.exceptions.CommonException;
 
 public class Board implements IBoard {

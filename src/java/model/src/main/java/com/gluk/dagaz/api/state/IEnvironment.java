@@ -1,5 +1,6 @@
-package com.gluk.dagaz.api;
+package com.gluk.dagaz.api.state;
 
+import com.gluk.dagaz.api.model.IValue;
 import com.gluk.dagaz.exceptions.CommonException;
 
 public interface IEnvironment {                                                     // Управление переменными

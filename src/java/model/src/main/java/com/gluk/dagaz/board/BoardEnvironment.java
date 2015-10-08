@@ -2,10 +2,10 @@ package com.gluk.dagaz.board;
 
 import java.util.Stack;
 
-import com.gluk.dagaz.api.IEnvironment;
-import com.gluk.dagaz.api.IReserved;
-import com.gluk.dagaz.api.ITransactional;
-import com.gluk.dagaz.api.IValue;
+import com.gluk.dagaz.api.model.IReserved;
+import com.gluk.dagaz.api.model.IValue;
+import com.gluk.dagaz.api.state.IEnvironment;
+import com.gluk.dagaz.api.state.ITransactional;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.utils.Value;
 

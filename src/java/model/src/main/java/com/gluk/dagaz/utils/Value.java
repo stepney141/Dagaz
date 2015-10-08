@@ -1,6 +1,6 @@
 package com.gluk.dagaz.utils;
 
-import com.gluk.dagaz.api.IValue;
+import com.gluk.dagaz.api.model.IValue;
 
 public abstract class Value implements IValue {
 	
