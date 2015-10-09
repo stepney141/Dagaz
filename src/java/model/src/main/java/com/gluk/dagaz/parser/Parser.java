@@ -1,4 +1,4 @@
-package com.gluk.dagaz.parser;
+п»їpackage com.gluk.dagaz.parser;
 
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
@@ -10,7 +10,7 @@ import com.gluk.dagaz.api.parser.IParser;
 import com.gluk.dagaz.api.utils.IApplication;
 import com.gluk.dagaz.exceptions.CommonException;
 
-// TODO: Создать корневой узел при сканировании документа
+// TODO: РЎРѕР·РґР°С‚СЊ РєРѕСЂРЅРµРІРѕР№ СѓР·РµР» РїСЂРё СЃРєР°РЅРёСЂРѕРІР°РЅРёРё РґРѕРєСѓРјРµРЅС‚Р°
 
 public class Parser implements IParser {
 	
