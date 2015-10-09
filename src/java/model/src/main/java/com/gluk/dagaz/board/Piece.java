@@ -3,15 +3,15 @@ package com.gluk.dagaz.board;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.gluk.dagaz.api.model.IPiece;
 import com.gluk.dagaz.api.model.IValue;
 import com.gluk.dagaz.api.random.IRandomGenerator;
-import com.gluk.dagaz.api.state.ITransactional;
+import com.gluk.dagaz.api.state.IPiece;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.utils.Application;
 
-public class Piece implements IPiece, ITransactional {
+public class Piece implements IPiece {
 	
+	// Важно: Значения атрибутов не учитываются при построении Zobrist Hash
 	private final static String ZOBRIST_RAND = "$$$ZOBRIST$$$";
 	private static Map<String, Map<String, Long>> hashes = new HashMap<String, Map<String, Long>>();
 	
@@ -50,24 +50,30 @@ public class Piece implements IPiece, ITransactional {
 	public long getHash(String pos) {
 		return getHash(name, pos);
 	}
-
+	
 	public IValue getAttribute(String name) throws CommonException {
-		// TODO Auto-generated method stub
-		return null;
+		IValue r = attributes.get(name);
+		if (r == null) {
+			throw new CommonException("Attribute [" + name + "] not found");
+		}
+		return r;
 	}
 
-	public void setAttribute(String name, IValue value) throws CommonException {
-		// TODO Auto-generated method stub
-		
+	public void addAttribute(String name, IValue value) throws CommonException {
+		if (attributes.containsKey(name)) {
+			throw new CommonException("Attribute [" + name + "] already defined");
+		}
+		attributes.put(name, value);
 	}
-
-	public void savepoint() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void rollback() throws CommonException {
-		// TODO Auto-generated method stub
-		
+	
+	public IPiece setAttribute(String name, IValue value) throws CommonException {
+		IPiece p = new Piece(name, owner);
+		for (String n: attributes.keySet()) {
+			if (!n.equals(name)) {
+				p.addAttribute(n, attributes.get(n));
+			}
+		}
+		p.addAttribute(name, value);
+		return p;
 	}
 }

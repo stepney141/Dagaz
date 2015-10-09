@@ -5,12 +5,11 @@ import java.util.Map;
 import java.util.Stack;
 
 import com.gluk.dagaz.api.model.IValue;
-import com.gluk.dagaz.api.state.IClonable;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.api.state.ITransactional;
 import com.gluk.dagaz.exceptions.CommonException;
 
-public class LocalEnvironment implements IEnvironment, ITransactional, IClonable {
+public class LocalEnvironment implements IEnvironment, ITransactional {
 	
 	private IEnvironment env;
 	private Map<String, Stack<Fixup>> fixups = new HashMap<String, Stack<Fixup>>();
@@ -91,14 +90,5 @@ public class LocalEnvironment implements IEnvironment, ITransactional, IClonable
 			}
 		}
 		throw new CommonException("Fixup [" + name + "] not found");
-	}
-
-	public void copyTo(IEnvironment env) throws CommonException {
-		for (String name: fixups.keySet()) {
-			Stack<Fixup> s = fixups.get(name);
-			if (!s.isEmpty()) {
-				env.set(name, s.peek().getValue());
-			}
-		}
 	}
 }

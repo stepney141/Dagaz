@@ -1,14 +1,6 @@
 package com.gluk.dagaz.api.model;
 
 public interface IReserved {
-	// BoardEnvironment
-	public final static String BOARD_POSITION   = "position";            // [in, out] string - имя текущей позиции (или не привязанной зоны)
-	public final static String BOARD_IN_ZONE    = "in-zone?";            // [opt out] boolean - принадлежность позиции зоне
-	public final static String BOARD_NOT_ZONE   = "not-zone?";           // [opt out] boolean - не принадлежность позиции зоне
-	public final static String BOARD_ZONE       = "zone";                // [out] list - список позиций зоны
-	
-	public final static String BOARD_ALL_ZONE   = "all";                 // Имя зоны, содержащей все позиции
-
 	// PlayerEnvironment
 	public final static String PLAYER_CURRENT   = "current-player";      // [out] string - имя текущего игрока (выполняет переключение хода) 
 	public final static String PLAYER_NEXT      = "next-player";         // [out] string - имя игрока выполняющего следующий ход
@@ -19,6 +11,7 @@ public interface IReserved {
 	public final static String PLAYER_ORDER     = "turn-order";          // [out] number - получение очерёдности внутри хода
 
 	// StateEnvironment
+	// TODO: Навигация
 	public final static String STATE_PLAYER     = "player";              // [in, opt in, out, opt out] string - имя владельца фигуры
 	public final static String STATE_PIECE      = "piece";               // [in, opt in, out, opt out] string - тип фигуры
 	public final static String STATE_IS_EMPTY   = "is-empty?";           // [out, opt out] boolean - позиция пуста

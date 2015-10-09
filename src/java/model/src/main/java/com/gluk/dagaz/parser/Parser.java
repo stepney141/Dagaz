@@ -10,6 +10,8 @@ import com.gluk.dagaz.api.parser.IParser;
 import com.gluk.dagaz.api.utils.IApplication;
 import com.gluk.dagaz.exceptions.CommonException;
 
+// TODO: Создать корневой узел при сканировании документа
+
 public class Parser implements IParser {
 	
     public final static String ROOT_TAG      = "r";
