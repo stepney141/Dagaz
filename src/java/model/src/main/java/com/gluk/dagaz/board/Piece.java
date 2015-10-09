@@ -1,4 +1,4 @@
-package com.gluk.dagaz.board;
+п»їpackage com.gluk.dagaz.board;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +11,7 @@ import com.gluk.dagaz.utils.Application;
 
 public class Piece implements IPiece {
 	
-	// Важно: Значения атрибутов не учитываются при построении Zobrist Hash
+	// Р’Р°Р¶РЅРѕ: Р—РЅР°С‡РµРЅРёСЏ Р°С‚СЂРёР±СѓС‚РѕРІ РЅРµ СѓС‡РёС‚С‹РІР°СЋС‚СЃСЏ РїСЂРё РїРѕСЃС‚СЂРѕРµРЅРёРё Zobrist Hash
 	private final static String ZOBRIST_RAND = "$$$ZOBRIST$$$";
 	private static Map<String, Map<String, Long>> hashes = new HashMap<String, Map<String, Long>>();
 	
