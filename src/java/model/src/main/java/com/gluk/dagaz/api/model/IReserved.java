@@ -1,5 +1,7 @@
 package com.gluk.dagaz.api.model;
 
+// TODO: Исключить сравнения строк, используя менеджер имён, связывающий строки с числовыми значениями, по запросу
+
 public interface IReserved {
 	// PlayerEnvironment
 	public final static String PLAYER_CURRENT   = "current-player";      // [out] string - имя текущего игрока (выполняет переключение хода) 
