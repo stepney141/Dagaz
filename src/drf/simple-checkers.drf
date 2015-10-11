@@ -25,13 +25,12 @@
    )
    (move
       (while true
-         (let dir (any nw ne sw se)
-            (check dir)
-            (check is-enemy?)
-            capture
-            (check dir)
-            end-move
-         )
+         (let dir (any nw ne sw se))
+         (check dir)
+         (check is-enemy?)
+         capture
+         (check dir)
+         end-move
       )
    )
 )
