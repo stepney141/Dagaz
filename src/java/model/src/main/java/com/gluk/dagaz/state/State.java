@@ -21,7 +21,7 @@ import com.gluk.dagaz.undo.UndoPiece;
 import com.gluk.dagaz.undo.UndoTake;
 import com.gluk.dagaz.undo.UndoValue;
 
-public class State implements IState, ITransactional {
+public class State implements IState, ITransactional, Cloneable {
 
 	private Board board;
 	private Map<String, IPiece> pieces = new HashMap<String, IPiece>();
@@ -35,13 +35,18 @@ public class State implements IState, ITransactional {
 	public State(Board board) {
 		this.board = board;
 	}
-
+	
 	public long getZobristHash() {
-		// TODO:
-
 		return hash;
 	}
 	
+	public String getPosition() throws CommonException {
+		if (currentPos == null) {
+			throw new CommonException("Position unassigned");
+		}
+		return currentPos;
+	}
+
 	public void savepoint() {
 		deep++;
 	}
@@ -57,18 +62,20 @@ public class State implements IState, ITransactional {
 		}
 	}
 
-	public void copyTo(IState state) throws CommonException {
+	public IState clone() throws CloneNotSupportedException {
+		State r = (State)super.clone();
 		for (String pos: pieces.keySet()) {
-			state.setPiece(pos, pieces.get(pos));
+			r.changePiece(pos, pieces.get(pos));
 		}
 		for (String name: values.keySet()) {
 			IValue value = values.get(name).get("");
 			if (value != null) {
-				state.setValue("", value);
+				r.changeFlag(name, "", value);
 			}
 		}
+		return r;
 	}
-
+	
 	public IValue getFlag(String name, String pos) {
 		Map<String, IValue> l = values.get(name);
 		if (l == null) {
@@ -105,19 +112,32 @@ public class State implements IState, ITransactional {
 		setFlag(name, "", value);
 	}
 
-	// Важно: После изменения значения атрибута, новый экземпляр фигуры должен передаваться в setPiece
 	public IPiece getPiece(String pos) {
 		return pieces.get(pos);
 	}
 	
 	public void changePiece(String pos, IPiece piece) {
+		IPiece p = getPiece(pos);
+		if (p != null) {
+			hash ^= p.getHash(pos);
+		}
 		if (piece == null) {
 			pieces.remove(pos);
 		} else {
+			hash ^= piece.getHash(pos);
 			pieces.put(pos, piece);
 		}
 	}
 	
+	public void changeAttribute(String pos, String name, IValue value) throws CommonException {
+		IPiece piece = getPiece(pos);
+		if (piece == null) {
+			throw new CommonException("Position [" + pos + "] is empty");
+		}
+		piece = piece.setAttribute(name, value);
+		changePiece(pos, piece);
+	}
+
 	public void setPiece(String pos, IPiece piece) throws CommonException {
 		IPiece oldPiece = getPiece(pos);
 		if (oldPiece == null && piece == null) {

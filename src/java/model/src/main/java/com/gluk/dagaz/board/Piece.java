@@ -11,15 +11,14 @@ import com.gluk.dagaz.utils.Application;
 
 public class Piece implements IPiece {
 	
-	// Важно: Значения атрибутов не учитываются при построении Zobrist Hash
 	private final static String ZOBRIST_RAND = "$$$ZOBRIST$$$";
-	private static Map<String, Map<String, Long>> hashes = new HashMap<String, Map<String, Long>>();
+	private static Map<Piece, Map<String, Long>> hashes = new HashMap<Piece, Map<String, Long>>();
 	
 	private String name;
 	private String owner;
 	private Map<String, IValue> attributes = new HashMap<String, IValue>();
 	
-	public static long getHash(String piece, String pos) {
+	public static long getHash(Piece piece, String pos) {
 		Map<String, Long> h = hashes.get(piece);
 		if (h == null) {
 			h = new HashMap<String, Long>();
@@ -48,7 +47,7 @@ public class Piece implements IPiece {
 	}
 
 	public long getHash(String pos) {
-		return getHash(name, pos);
+		return getHash(this, pos);
 	}
 	
 	public IValue getAttribute(String name) throws CommonException {

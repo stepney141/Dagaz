@@ -10,7 +10,7 @@ public class UndoDrop extends AbstractUndo {
 
 	public UndoDrop(String pos, IPiece piece, int deep) {
 		super(deep);
-		this.pos = pos;
+		this.pos   = pos;
 		this.piece = piece;
 	}
 

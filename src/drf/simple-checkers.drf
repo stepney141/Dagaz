@@ -16,12 +16,12 @@
       (log position)
    )
    (post
-      (check is-empty?)
       (log " - " position)
       drop
    )
    (move
       (check (any nw ne))
+      (check is-empty?)
    )
    (move
       (while true
@@ -30,6 +30,7 @@
          (check is-enemy?)
          capture
          (check dir)
+         (check is-empty?)
          end-move
       )
    )

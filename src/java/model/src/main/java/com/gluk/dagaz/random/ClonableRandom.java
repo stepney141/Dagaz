@@ -3,7 +3,7 @@ package com.gluk.dagaz.random;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class CopyableRandom extends Random {
+public class ClonableRandom extends Random implements Cloneable {
 	
     static final long serialVersionUID = 3905348978240129619L;
 	
@@ -13,13 +13,13 @@ public class CopyableRandom extends Random {
 
 	  private static volatile long seedUniquifier = 8682522807148012L;
 
-	  private final AtomicLong seed = new AtomicLong(0L);
+	  private AtomicLong seed = new AtomicLong(0L);
 
-	  public CopyableRandom() { 
+	  public ClonableRandom() { 
 		  this(++seedUniquifier + System.nanoTime()); 
 	  }
 
-	  public CopyableRandom(long seed) { 
+	  public ClonableRandom(long seed) { 
 		  this.seed.set((seed ^ multiplier) & mask); 
 	  }
 	  
@@ -36,7 +36,9 @@ public class CopyableRandom extends Random {
 	    return (int) (nextseed >>> (48 - bits));
 	  }
 
-	  public CopyableRandom copy() { 
-		  return new CopyableRandom((seed.get() ^ multiplier) & mask); 
+	  public ClonableRandom clone() throws CloneNotSupportedException {
+		  ClonableRandom r = (ClonableRandom)super.clone();
+		  r.seed = new AtomicLong(seed.get());
+		  return r;
 	  }
 }

@@ -3,19 +3,19 @@ package com.gluk.dagaz.random;
 import com.gluk.dagaz.api.random.IRandomGenerator;
 import com.gluk.dagaz.exceptions.CommonException;
 
-public class RandomGenerator implements IRandomGenerator {
+public class RandomGenerator implements IRandomGenerator, Cloneable {
 	
-	private CopyableRandom rand;
+	private ClonableRandom rand;
 	
 	public RandomGenerator() {
-		this.rand = new CopyableRandom();
+		this.rand = new ClonableRandom();
 	}
 
 	public RandomGenerator(long seed) {
-		this.rand = new CopyableRandom(seed);
+		this.rand = new ClonableRandom(seed);
 	}
 
-	public RandomGenerator(CopyableRandom rand) {
+	public RandomGenerator(ClonableRandom rand) {
 		this.rand = rand;
 	}
 
@@ -38,10 +38,10 @@ public class RandomGenerator implements IRandomGenerator {
 		return r;
 	}
 
-	public synchronized IRandomGenerator getClone() {
-		IRandomGenerator r = null;
+	public synchronized IRandomGenerator clone() throws CloneNotSupportedException {
+		RandomGenerator r = (RandomGenerator)super.clone();
 		synchronized (rand) {
-			r = new RandomGenerator(rand.copy());
+			r.rand = rand.clone();
 		}
 		return r;
 	}
