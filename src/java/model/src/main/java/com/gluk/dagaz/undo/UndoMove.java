@@ -14,7 +14,7 @@ public class UndoMove extends AbstractUndo {
 	}
 
 	@Override
-	public void undo(State state) {
+	public void execute(State state) {
 		state.setPosition(ix, pos);
 	}
 }

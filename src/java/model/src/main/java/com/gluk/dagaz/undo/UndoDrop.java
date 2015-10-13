@@ -15,7 +15,7 @@ public class UndoDrop extends AbstractUndo {
 	}
 
 	@Override
-	public void undo(State state) {
+	public void execute(State state) {
 		state.toHand(pos, piece);
 	}
 }

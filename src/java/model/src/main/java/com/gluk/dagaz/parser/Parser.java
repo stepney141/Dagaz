@@ -4,10 +4,10 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
+import com.gluk.dagaz.api.application.IApplication;
 import com.gluk.dagaz.api.parser.IInput;
 import com.gluk.dagaz.api.parser.IDataManager;
 import com.gluk.dagaz.api.parser.IParser;
-import com.gluk.dagaz.api.utils.IApplication;
 import com.gluk.dagaz.exceptions.CommonException;
 
 // TODO: Создать корневой узел при сканировании документа

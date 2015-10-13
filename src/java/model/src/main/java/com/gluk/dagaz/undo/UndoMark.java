@@ -2,14 +2,14 @@ package com.gluk.dagaz.undo;
 
 import com.gluk.dagaz.state.State;
 
-public class UndoTake extends AbstractUndo {
+public class UndoMark extends AbstractUndo {
 
-	public UndoTake(int deep) {
+	public UndoMark(int deep) {
 		super(deep);
 	}
 
 	@Override
 	public void execute(State state) {
-		state.undoTake();
+		state.popMarked();
 	}
 }

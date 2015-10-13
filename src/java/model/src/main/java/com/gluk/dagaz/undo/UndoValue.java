@@ -17,7 +17,7 @@ public class UndoValue extends AbstractUndo {
 	}
 
 	@Override
-	public void undo(State state) {
+	public void execute(State state) {
 		state.changeFlag(name, pos, value);
 	}
 }

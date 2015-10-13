@@ -1,5 +1,6 @@
 package com.gluk.dagaz.board;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -15,6 +16,10 @@ public class Board implements IBoard {
 	private Set<String> positions = new HashSet<String>();
 	private Map<String, Map<String, String>> directions = new HashMap<String, Map<String, String>>();
 	private Map<String, Map<String, Set<String>>> zones = new HashMap<String, Map<String, Set<String>>>();
+	
+	public Collection<String> getPositions() {
+		return positions;
+	}
 
 	public String navigate(String name, String from, IEnvironment env) throws CommonException {
 		if (positions.contains(name)) {

@@ -14,12 +14,15 @@ import com.gluk.dagaz.api.state.ITransactional;
 import com.gluk.dagaz.board.Board;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.undo.AbstractUndo;
+import com.gluk.dagaz.undo.UndoBack;
 import com.gluk.dagaz.undo.UndoDrop;
+import com.gluk.dagaz.undo.UndoMark;
 import com.gluk.dagaz.undo.UndoMove;
 import com.gluk.dagaz.undo.UndoNavigate;
 import com.gluk.dagaz.undo.UndoPiece;
 import com.gluk.dagaz.undo.UndoTake;
 import com.gluk.dagaz.undo.UndoValue;
+import com.gluk.dagaz.utils.PieceHandler;
 
 public class State implements IState, ITransactional, Cloneable {
 
@@ -28,12 +31,41 @@ public class State implements IState, ITransactional, Cloneable {
 	private List<PieceHandler> hand = new ArrayList<PieceHandler>();
 	private Map<String, Map<String, IValue>> values = new HashMap<String, Map<String, IValue>>();
 	private Stack<AbstractUndo> undo = new Stack<AbstractUndo>();
+	private Stack<String> marked = new Stack<String>();
 	private String currentPos = null;
 	private long hash = 0L;
 	private int deep = 0;
 	
 	public State(Board board) {
 		this.board = board;
+	}
+
+	public void pushMarked(String position) {
+		marked.push(position);
+	}
+	
+	public void popMarked() {
+		if (!marked.isEmpty()) {
+			marked.pop();
+		}
+	}
+	
+	public void mark() throws CommonException {
+		if (currentPos == null) {
+			throw new CommonException("Position unassigned");
+		}
+		pushMarked(currentPos);
+		undo.push(new UndoMark(deep));
+	}
+
+	public void back() throws CommonException {
+		if (marked.isEmpty()) {
+			throw new CommonException("No marked positions");
+		}
+		undo.push(new UndoNavigate(currentPos, deep));
+		String pos = marked.pop();
+		setCurrentPosition(pos);
+		undo.push(new UndoBack(pos, deep));
 	}
 	
 	public long getZobristHash() {
@@ -57,7 +89,7 @@ public class State implements IState, ITransactional, Cloneable {
 			if (u.getDeep() <= deep) {
 				break;
 			}
-			u.undo(this);
+			u.execute(this);
 			undo.pop();
 		}
 	}
@@ -175,13 +207,6 @@ public class State implements IState, ITransactional, Cloneable {
 		hand.clear();
 	}
 	
-	public String getCurrentPos() throws CommonException {
-		if (currentPos == null) {
-			throw new CommonException("Current Position not assigned");
-		}
-		return currentPos;
-	}
-
 	public void setCurrentPosition(String pos) {
 		currentPos = pos;
 	}
@@ -215,7 +240,7 @@ public class State implements IState, ITransactional, Cloneable {
 						throw new CommonException("Internal Error");
 					}
 					AbstractUndo u = undo.pop();
-					u.undo(this);
+					u.execute(this);
 				}
 				return false;
 			}
@@ -223,5 +248,9 @@ public class State implements IState, ITransactional, Cloneable {
 			setPosition(ix, to);
 		}
 		return r;
+	}
+
+	public boolean isDefined(String name) {
+		return board.isDefined(name);
 	}
 }

@@ -14,5 +14,5 @@ public abstract class AbstractUndo {
 		return deep;
 	}
 	
-	public abstract void undo(State state);
+	public abstract void execute(State state);
 }

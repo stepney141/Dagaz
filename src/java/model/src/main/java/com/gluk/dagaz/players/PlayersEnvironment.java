@@ -19,9 +19,6 @@ public class PlayersEnvironment implements IEnvironment {
 	public boolean isDefined(String name) throws CommonException {
 		if (name.equals(IReserved.PLAYER_CURRENT)   ||
 			name.equals(IReserved.PLAYER_NEXT)      ||
-			name.equals(IReserved.PLAYER_IS_FRIEND) ||
-			name.equals(IReserved.PLAYER_IS_ENEMY)  ||
-			name.equals(IReserved.PLAYER_DIR)       ||
 			name.equals(IReserved.PLAYER_TURN)      ||
 			name.equals(IReserved.PLAYER_ORDER)) {
 			return true;
@@ -39,32 +36,16 @@ public class PlayersEnvironment implements IEnvironment {
 			int ord = players.getOrder(numOrder);
 			return Value.create(ord);
 		}
+		if (name.equals(IReserved.PLAYER_NEXT)) {
+			String player = players.getPlayer(numOrder + 1);
+			return Value.create(player);
+		}
 		String player = players.getPlayer(numOrder);
 		if (name.equals(IReserved.PLAYER_CURRENT)) {
 			return Value.create(player);
 		}
-		if (name.equals(IReserved.PLAYER_NEXT)) {
-			return Value.create(player);
-		}
 		if (players.isDefined(player, name)) {
-			return get(IReserved.PLAYER_DIR, name);
-		}
-		throw new CommonException("Unsupported");
-	}
-
-	public IValue get(String name, String opt) throws CommonException {
-		String player = players.getPlayer(numOrder);
-		if (name.equals(IReserved.PLAYER_IS_FRIEND)) {
-			boolean f = player.equals(opt);
-			return Value.create(f);
-		}
-		if (name.equals(IReserved.PLAYER_IS_ENEMY)) {
-			boolean f = !player.equals(opt);
-			return Value.create(f);
-		}
-		if (name.equals(IReserved.PLAYER_DIR)) {
-			String dir = players.getDirection(player, opt);
-			return Value.create(dir);
+			return players.get(player, name);
 		}
 		throw new CommonException("Unsupported");
 	}

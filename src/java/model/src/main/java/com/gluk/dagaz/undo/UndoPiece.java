@@ -15,7 +15,7 @@ public class UndoPiece extends AbstractUndo {
 	}
 
 	@Override
-	public void undo(State state) {
+	public void execute(State state) {
 		state.changePiece(pos, piece);
 	}
 }

@@ -14,8 +14,16 @@
       (check is-friend?)
       take
       (log position)
+      (let max-captured 0)
+      (let captured 0)
    )
    (post
+      (redo check-max-captured
+          (check (<= max-captured captured))
+          (set! max-captured captured)
+      )
+      check-max-captured
+      capture-all
       (log " - " position)
       drop
    )
@@ -28,7 +36,8 @@
          (let dir (any nw ne sw se))
          (check dir)
          (check is-enemy?)
-         capture
+         (redo capture-all capture)
+         (inc! captured)
          (check dir)
          (check is-empty?)
          end-move

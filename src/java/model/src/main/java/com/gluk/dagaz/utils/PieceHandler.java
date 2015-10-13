@@ -1,4 +1,4 @@
-package com.gluk.dagaz.state;
+package com.gluk.dagaz.utils;
 
 import com.gluk.dagaz.api.state.IPiece;
 

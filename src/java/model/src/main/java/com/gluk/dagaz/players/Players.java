@@ -6,7 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.gluk.dagaz.api.model.IPlayers;
+import com.gluk.dagaz.api.model.IValue;
 import com.gluk.dagaz.exceptions.CommonException;
+import com.gluk.dagaz.utils.Value;
 
 public class Players implements IPlayers {
 	
@@ -61,10 +63,20 @@ public class Players implements IPlayers {
 	}
 
 	public boolean isDefined(String player, String name) {
+		if (turnOrder.contains(name)) {
+			return true;
+		}
 		Map<String, String> dirs = syms.get(player);
 		if (dirs == null) {
 			return false;
 		}
 		return dirs.containsKey(name);
+	}
+
+	public IValue get(String player, String name) throws CommonException {
+		if (turnOrder.contains(name)) {
+			return Value.create(player.equals(name));
+		}
+		return Value.create(getDirection(player, name));
 	}
 }

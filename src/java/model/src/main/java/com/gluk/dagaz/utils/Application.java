@@ -1,8 +1,8 @@
 package com.gluk.dagaz.utils;
 
+import com.gluk.dagaz.api.application.IApplication;
 import com.gluk.dagaz.api.parser.IDataManager;
 import com.gluk.dagaz.api.random.IRandomFactory;
-import com.gluk.dagaz.api.utils.IApplication;
 
 public class Application implements IApplication {
 	

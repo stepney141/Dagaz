@@ -2,12 +2,12 @@ package com.gluk.dagaz.state;
 
 import com.gluk.dagaz.api.model.IValue;
 
-public class Fixup {
+public class DataFixup {
 	
 	private IValue value;
 	private int deep;
 	
-	public Fixup(IValue value, int deep) {
+	public DataFixup(IValue value, int deep) {
 		this.value = value;
 		this.deep = deep;
 	}

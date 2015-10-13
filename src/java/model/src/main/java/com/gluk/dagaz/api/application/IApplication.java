@@ -1,4 +1,4 @@
-package com.gluk.dagaz.api.utils;
+package com.gluk.dagaz.api.application;
 
 import com.gluk.dagaz.api.parser.IDataManager;
 import com.gluk.dagaz.api.random.IRandomFactory;

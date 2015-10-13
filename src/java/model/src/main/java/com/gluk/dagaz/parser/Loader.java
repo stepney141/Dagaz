@@ -14,8 +14,8 @@ import javax.xml.transform.sax.TransformerHandler;
 import org.w3c.dom.Document;
 import org.xml.sax.ContentHandler;
 
+import com.gluk.dagaz.api.application.IApplication;
 import com.gluk.dagaz.api.parser.ILoader;
-import com.gluk.dagaz.api.utils.IApplication;
 import com.gluk.dagaz.exceptions.CommonException;
 
 public class Loader implements ILoader {
