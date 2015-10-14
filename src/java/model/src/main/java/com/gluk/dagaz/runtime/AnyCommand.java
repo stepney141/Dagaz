@@ -7,24 +7,30 @@ import com.gluk.dagaz.api.model.IValue;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.api.state.IState;
 import com.gluk.dagaz.exceptions.CommonException;
+import com.gluk.dagaz.utils.AnyUndo;
 
 public class AnyCommand extends AbstractCommand { // -- v
 	
 	private List<IValue> values = new ArrayList<IValue>(); 
 
-	public AnyCommand(List<IValue> values, Processor processor) {
-		super(processor);
-		this.values = values;
+	@Override
+	public void addArgument(Object arg) throws CommonException {
+		if (!(arg instanceof IValue)) {
+			throw new CommonException("Invalid argument");
+		}
+		values.add((IValue)arg);
 	}
-
+	
 	@Override
 	public boolean execute(IState state, IEnvironment env) throws CommonException {
-		int ix = processor.undo.peek().getIndex();
+		super.execute(state, env);
+		AnyUndo u = (AnyUndo)processor.getUndo().peek(); 
+		int ix = u.getIndex();
 		if (ix >= values.size()) {
-			processor.undo.pop();
+			processor.getUndo().pop();
 			return false;
 		}
-		processor.stack.push(values.get(ix));
+		processor.getStack().push(values.get(ix));
 		return true;
 	}
 }

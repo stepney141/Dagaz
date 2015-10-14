@@ -6,15 +6,12 @@ import com.gluk.dagaz.exceptions.CommonException;
 
 public class CheckCommand extends AbstractCommand { // ? --
 
-	public CheckCommand(Processor processor) {
-		super(processor);
-	}
-
 	@Override
 	public boolean execute(IState state, IEnvironment env) throws CommonException {
-		if (processor.stack.isEmpty()) {
+		super.execute(state, env);
+		if (processor.getStack().isEmpty()) {
 			throw new CommonException("Stack is empty");
 		}
-		return processor.stack.pop().getBoolean();
+		return processor.getStack().pop().getBoolean();
 	}
 }

@@ -6,16 +6,13 @@ import com.gluk.dagaz.exceptions.CommonException;
 
 public class DropCommand extends AbstractCommand { // v --
 
-	public DropCommand(Processor processor) {
-		super(processor);
-	}
-
 	@Override
 	public boolean execute(IState state, IEnvironment env) throws CommonException {
-		if (processor.stack.isEmpty()) {
+		super.execute(state, env);
+		if (processor.getStack().isEmpty()) {
 			throw new CommonException("Stack is empty");
 		}
-		processor.stack.pop();
+		processor.getStack().pop();
 		return true;
 	}
 }

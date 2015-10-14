@@ -6,19 +6,26 @@ import com.gluk.dagaz.exceptions.CommonException;
 
 public class LetCommand extends AbstractCommand { // v --
 
-	private String name;
+	private String name = null;
 
-	public LetCommand(String name, Processor processor) {
-		super(processor);
-		this.name = name;
+	@Override
+	public void addArgument(Object arg) throws CommonException {
+		if ((name != null) || !(arg instanceof String)) {
+			throw new CommonException("Invalid argument");
+		}
+		name = (String)arg;
 	}
 
 	@Override
 	public boolean execute(IState state, IEnvironment env) throws CommonException {
-		if (processor.stack.isEmpty()) {
+		super.execute(state, env);
+		if (name == null) {
+			throw new CommonException("Invalid arguments");
+		}
+		if (processor.getStack().isEmpty()) {
 			throw new CommonException("Stack is empty");
 		}
-		env.let(name, processor.stack.pop());
+		env.let(name, processor.getStack().pop());
 		return true;
 	} 
 }

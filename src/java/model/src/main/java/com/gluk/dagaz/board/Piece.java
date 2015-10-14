@@ -12,8 +12,6 @@ import com.gluk.dagaz.utils.Application;
 public class Piece implements IPiece {
 	
 	private final static String ZOBRIST_RAND = "$$$ZOBRIST$$$";
-
-	// TODO: Check Piece using for key
 	private static Map<Piece, Map<String, Long>> hashes = new HashMap<Piece, Map<String, Long>>();
 	
 	private String name;
@@ -33,6 +31,14 @@ public class Piece implements IPiece {
 			h.put(pos, r);
 		}
 		return r;
+	}
+	
+	public boolean equals(Piece p) {
+		return this == p;
+	}
+	
+	public int hashCode() {
+		return super.hashCode();
 	}
 
 	public Piece(String name, String owner) {

@@ -17,7 +17,6 @@ public interface IState {
 	void addToHand(String pos, IPiece piece) throws CommonException;                    // Добавить фигуру в руку
 	void dropHand() throws CommonException;                                             // Сбросить фигуры из руки
 	boolean navigate(String dir, IEnvironment env) throws CommonException;              // Изменение текущей позиции
-	boolean moveHand(String dir, IEnvironment env) throws CommonException;              // Перемещение набора фигур
 	void mark() throws CommonException;                                                 // Запомнить текущую позицию
 	void back() throws CommonException;                                                 // Вернуться к запомненной позиции
 }

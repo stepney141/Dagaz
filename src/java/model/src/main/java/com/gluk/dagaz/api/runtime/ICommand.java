@@ -6,4 +6,5 @@ import com.gluk.dagaz.exceptions.CommonException;
 
 public interface ICommand {
 	boolean execute(IState state, IEnvironment env) throws CommonException;  // Выполнение команды (false прерывает рассчёт хода)
+	public void addArgument(Object arg) throws CommonException;              // Определение аргумента
 }

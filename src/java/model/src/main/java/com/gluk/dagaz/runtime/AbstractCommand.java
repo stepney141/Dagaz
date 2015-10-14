@@ -1,17 +1,22 @@
 package com.gluk.dagaz.runtime;
 
 import com.gluk.dagaz.api.runtime.ICommand;
+import com.gluk.dagaz.api.runtime.IProcessor;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.api.state.IState;
 import com.gluk.dagaz.exceptions.CommonException;
 
 public abstract class AbstractCommand implements ICommand {
 	
-	protected Processor processor;
+	protected IProcessor processor = null;
 	
-	public AbstractCommand(Processor processor) {
-		this.processor = processor;
+	public boolean execute(IState state, IEnvironment env) throws CommonException {
+		if (processor == null) {
+			throw new CommonException("Internal error");
+		}
+		return true;
 	}
-
-	public abstract boolean execute(IState state, IEnvironment env) throws CommonException;
+	
+	public void addArgument(Object arg) throws CommonException {}
+	public void setProcessor(IProcessor processor) {this.processor = processor;}
 }

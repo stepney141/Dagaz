@@ -8,19 +8,25 @@ import com.gluk.dagaz.utils.Value;
 
 public class DecCommand extends AbstractCommand { // -- n
 
-	private String name;
+	private String name = null;
 
-	public DecCommand(String name, Processor processor) {
-		super(processor);
-		this.name = name;
+	@Override
+	public void addArgument(Object arg) throws CommonException {
+		if ((name != null) || !(arg instanceof String)) {
+			throw new CommonException("Invalid argument");
+		}
+		name = (String)arg;
 	}
 
 	@Override
 	public boolean execute(IState state, IEnvironment env) throws CommonException {
+		super.execute(state, env);
+		if (name == null) {
+			throw new CommonException("Invalid arguments");
+		}
 		IValue v = env.get(name);
 		env.set(name, Value.create(v.getNumber() - 1)); // Важно: 0 интерпретируется как false
-		processor.stack.push(v);
+		processor.getStack().push(v);
 		return true;
 	}
-
 }

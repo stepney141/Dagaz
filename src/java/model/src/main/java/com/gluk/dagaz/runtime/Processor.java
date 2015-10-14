@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
+import com.gluk.dagaz.api.application.IMoveGenerator;
 import com.gluk.dagaz.api.model.IValue;
 import com.gluk.dagaz.api.runtime.ICommand;
+import com.gluk.dagaz.api.runtime.IProcessor;
 import com.gluk.dagaz.api.state.IEnvironment;
+import com.gluk.dagaz.api.state.IPiece;
 import com.gluk.dagaz.api.state.IState;
 import com.gluk.dagaz.api.state.ITransactional;
 import com.gluk.dagaz.board.Board;
@@ -21,31 +24,49 @@ import com.gluk.dagaz.state.State;
 import com.gluk.dagaz.state.StateEnvironment;
 import com.gluk.dagaz.utils.AnyUndo;
 
-public class Processor {
+public class Processor implements IProcessor {
 
 	private Players players;
 	private Board board;
 	private List<ICommand> commands = new ArrayList<ICommand>();
 	private Set<ITransactional> trans = new HashSet<ITransactional>();
 	
-	public MoveGenerator gen;
-	public Stack<IValue> stack = new Stack<IValue>();
-	public int nextCommand;
-	public Stack<AnyUndo> undo = new Stack<AnyUndo>(); 
+	private MoveGenerator gen;
+	private Stack<IValue> stack = new Stack<IValue>();
+	private int nextCommand;
+	private Stack<AnyUndo> undo = new Stack<AnyUndo>(); 
 	
 	public Processor(Players players, Board board, MoveGenerator gen) {
 		this.players = players;
 		this.board = board;
 		this.gen = gen;
 	}
+	
+	public IMoveGenerator getMoveGenerator() {
+		return gen;
+	}
+	
+	public Stack<AnyUndo> getUndo() {
+		return undo;
+	}
+	
+	public Stack<IValue> getStack() {
+		return stack;
+	}
+	
+	public void incNextCommand(int delta) {
+		nextCommand += delta;
+	}
 
 	public void savepoint() {
 		for (ITransactional t: trans) {
 			t.savepoint();
 		}
-		undo.push(new AnyUndo(nextCommand - 1));
-                // TODO: Save stack
-
+		AnyUndo u = new AnyUndo(nextCommand - 1);
+		for (IValue v: stack) {
+			u.saveStack(v);
+		}
+		undo.push(u);
 	}
 
 	public boolean rollback() throws CommonException {
@@ -56,8 +77,7 @@ public class Processor {
 			t.rollback();
 		}
 		nextCommand = undo.peek().getCommand();
-                // TODO: Rollback stack
-
+		stack = undo.peek().getStack();
 		return true;
 	}
 	
@@ -72,10 +92,12 @@ public class Processor {
 		commands.add(command);
 	}
 
-	public void execute(int numOrder, State old) throws CommonException, CloneNotSupportedException {
+	public void execute(int numOrder, String pieceType, State old) throws CommonException, CloneNotSupportedException {
 		PlayersEnvironment pe = new PlayersEnvironment(players, numOrder);
 		for (String pos: board.getPositions()) {
-                        // TODO: Check Piece type
+			IPiece p = old.getPiece(pos);
+			if (p == null) continue;
+			if (!p.getName().equals(pieceType)) continue;
 			clear();
 			State state = (State)old.clone();
 			state.setCurrentPosition(pos);

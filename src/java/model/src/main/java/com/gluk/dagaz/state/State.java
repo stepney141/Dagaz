@@ -40,6 +40,14 @@ public class State implements IState, ITransactional, Cloneable {
 		this.board = board;
 	}
 
+	public boolean equals(State s) {
+		return this == s;
+	}
+	
+	public int hashCode() {
+		return super.hashCode();
+	}
+	
 	public void pushMarked(String position) {
 		marked.push(position);
 	}
@@ -218,6 +226,25 @@ public class State implements IState, ITransactional, Cloneable {
 		}
 		undo.push(new UndoNavigate(currentPos, deep));
 		setCurrentPosition(to);
+		if (!dir.equals(to)) {
+			for (int ix = 0; ix < hand.size(); ix++) {
+				PieceHandler h = hand.get(ix);
+				String from = h.getPosition();
+				to = board.navigate(dir, from, env);
+				if (to.isEmpty()) {
+					for (;ix > 0; ix--) {
+						if (undo.isEmpty()) {
+							throw new CommonException("Internal Error");
+						}
+						AbstractUndo u = undo.pop();
+						u.execute(this);
+					}
+					return false;
+				}
+				undo.push(new UndoMove(from, ix, deep));
+				setPosition(ix, to);
+			}
+		}
 		return true;
 	}
 	
@@ -225,29 +252,6 @@ public class State implements IState, ITransactional, Cloneable {
 		if (ix < hand.size()) {
 			hand.get(ix).setPosition(pos);
 		}
-	}
-
-	public boolean moveHand(String dir, IEnvironment env) throws CommonException {
-		boolean r = false;
-		for (int ix = 0; ix < hand.size(); ix++) {
-			r = true;
-			PieceHandler h = hand.get(ix);
-			String from = h.getPosition();
-			String to = board.navigate(dir, from, env);
-			if (to.isEmpty()) {
-				for (;ix > 0; ix--) {
-					if (undo.isEmpty()) {
-						throw new CommonException("Internal Error");
-					}
-					AbstractUndo u = undo.pop();
-					u.execute(this);
-				}
-				return false;
-			}
-			undo.push(new UndoMove(from, ix, deep));
-			setPosition(ix, to);
-		}
-		return r;
 	}
 
 	public boolean isDefined(String name) {
