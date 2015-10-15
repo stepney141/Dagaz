@@ -3,6 +3,7 @@ package com.gluk.dagaz.runtime;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.gluk.dagaz.api.model.IReserved;
 import com.gluk.dagaz.api.runtime.ICommand;
 import com.gluk.dagaz.api.runtime.ICommandFactory;
 import com.gluk.dagaz.api.runtime.IProcessor;
@@ -22,23 +23,26 @@ public class CommandFactory implements ICommandFactory {
 	}
 	
 	private CommandFactory() {
-		classes.put("any",             AnyCommand.class);
-		classes.put("back",            BackCommand.class);
-		classes.put("capture",         CaptureCommand.class);
-		classes.put("check",           CheckCommand.class);
-		classes.put("dec!",            DecCommand.class);
-		classes.put("_drop",           DropCommand.class);
-		classes.put("_end",            EndCommand.class);
-		classes.put("_get",            GetCommand.class);
-		classes.put("if",              IfCommand.class);
-		classes.put("inc!",            IncCommand.class);
-		classes.put("_jump",           JumpCommand.class);
-		classes.put("let",             LetCommand.class);
-		classes.put("log",             LogCommand.class);
-		classes.put("mark",            MarkCommand.class);
-		classes.put("drop",            PutCommand.class);
-		classes.put("set!",            SetCommand.class);
-		classes.put("take",            TakeCommand.class);
+		classes.put(IReserved.CMD_ANY,     AnyCommand.class);
+		classes.put(IReserved.CMD_BACK,    BackCommand.class);
+		classes.put(IReserved.CMD_CAPTURE, CaptureCommand.class);
+		classes.put(IReserved.CMD_CHECK,   CheckCommand.class);
+		classes.put(IReserved.CMD_DEC,     DecCommand.class);
+		classes.put(IReserved.CMD_DROP,    DropCommand.class);
+		classes.put(IReserved.CMD_END,     EndCommand.class);
+		classes.put(IReserved.CMD_GET,     GetCommand.class);
+		classes.put(IReserved.CMD_IF,      IfCommand.class);
+		classes.put(IReserved.CMD_INC,     IncCommand.class);
+		classes.put(IReserved.CMD_JUMP,    JumpCommand.class);
+		classes.put(IReserved.CMD_LET,     LetCommand.class);
+		classes.put(IReserved.CMD_LOG,     LogCommand.class);
+		classes.put(IReserved.CMD_MARK,    MarkCommand.class);
+		classes.put(IReserved.CMD_PUT,     PutCommand.class);
+		classes.put(IReserved.CMD_SET,     SetCommand.class);
+		classes.put(IReserved.CMD_TAKE,    TakeCommand.class);
+		classes.put(IReserved.CMD_NOT,     NotCommand.class);
+		classes.put(IReserved.CMD_PLUS,    PlusCommand.class);
+		classes.put(IReserved.CMD_MINUS,   MinusCommand.class);
 	}
 
 	public boolean isDefined(String name) {
@@ -49,7 +53,7 @@ public class CommandFactory implements ICommandFactory {
 		AbstractCommand r = null;
 		Class<?> c = classes.get(name);
 		if (c == null) {
-			throw new CommonException("Internal error");
+			throw new CommonException("Command [" + name + "] not found");
 		}
 		try {
 			r = (AbstractCommand)c.newInstance();

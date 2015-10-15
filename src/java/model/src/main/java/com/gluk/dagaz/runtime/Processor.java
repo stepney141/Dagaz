@@ -8,6 +8,7 @@ import java.util.Stack;
 
 import com.gluk.dagaz.api.application.IMoveGenerator;
 import com.gluk.dagaz.api.model.IValue;
+import com.gluk.dagaz.api.parser.IBuild;
 import com.gluk.dagaz.api.runtime.ICommand;
 import com.gluk.dagaz.api.runtime.IProcessor;
 import com.gluk.dagaz.api.state.IEnvironment;
@@ -24,7 +25,7 @@ import com.gluk.dagaz.state.State;
 import com.gluk.dagaz.state.StateEnvironment;
 import com.gluk.dagaz.utils.AnyUndo;
 
-public class Processor implements IProcessor {
+public class Processor implements IProcessor, IBuild {
 
 	private Players players;
 	private Board board;
@@ -92,6 +93,15 @@ public class Processor implements IProcessor {
 		commands.add(command);
 	}
 
+	public int getOffset() {
+		return commands.size();
+	}
+	
+	public void addFixup(int offset) {
+		// TODO: ¬ыполнить прив€зку на post-действи€
+		
+	}
+	
 	public void execute(int numOrder, String pieceType, State old) throws CommonException, CloneNotSupportedException {
 		PlayersEnvironment pe = new PlayersEnvironment(players, numOrder);
 		for (String pos: board.getPositions()) {
@@ -105,8 +115,7 @@ public class Processor implements IProcessor {
 			StateEnvironment se = new StateEnvironment(state, board, pe);
 			LocalEnvironment env = new LocalEnvironment(se);
 			trans.add(env);
-			execute(state, env);
-			gen.endMove();
+			execute(state, env); // TODO: ¬ конец цепочки добавл€ть пустую any-команду дл€ выполнени€ отката вариантов
 		}
 	}
 	
