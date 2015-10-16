@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gluk.dagaz.api.model.IValue;
+import com.gluk.dagaz.api.state.IDeferredCheck;
 import com.gluk.dagaz.api.state.IEnvironment;
-import com.gluk.dagaz.api.state.IState;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.utils.AnyUndo;
 
@@ -22,7 +22,7 @@ public class AnyCommand extends AbstractCommand { // -- v
 	}
 	
 	@Override
-	public boolean execute(IState state, IEnvironment env) throws CommonException {
+	public boolean execute(IDeferredCheck state, IEnvironment env) throws CommonException {
 		super.execute(state, env);
 		AnyUndo u = (AnyUndo)processor.getUndo().peek(); 
 		int ix = u.getIndex();

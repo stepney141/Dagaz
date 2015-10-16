@@ -2,27 +2,39 @@ package com.gluk.dagaz.parser;
 
 import com.gluk.dagaz.api.model.IReserved;
 import com.gluk.dagaz.api.parser.IBuild;
-import com.gluk.dagaz.api.parser.IBuilder;
+import com.gluk.dagaz.api.parser.IStatement;
 import com.gluk.dagaz.exceptions.CommonException;
 
-public abstract class AbstractBuilder implements IBuilder {
+public abstract class AbstractStatement implements IStatement {
 	
 	protected IBuild build = null;
-	private IBuilder childBuilder = null;
+	private IStatement childBuilder = null;
+	private IStatement parent = null;
 	
 	public void setBuild(IBuild build) {
 		this.build = build;
+	}
+	
+	public void setParent(IStatement parent) {
+		this.parent = parent;
+	}
+	
+	public void setDeferred() {
+		if (parent != null) {
+			parent.setDeferred();
+		}
 	}
 
 	public boolean childIsActive() {
 		return childBuilder != null;
 	}
-
+	
 	public void openChild(String name) throws CommonException {
 		if (childIsActive()) {
 			childBuilder.openChild(name);
 		} else {
-			childBuilder = BuilderFactory.getInstance().createBuilder(name, build);
+			childBuilder = StatementFactory.getInstance().createStatement(name, build);
+			childBuilder.setParent(this);
 			childBuilder.open(name);
 		}
 	}
@@ -41,7 +53,7 @@ public abstract class AbstractBuilder implements IBuilder {
 
 	public void addLexem(String name) throws CommonException {
 		if (IReserved.STMT_END.equals(name)) {
-			IBuilder builder = BuilderFactory.getInstance().createBuilder(name, build);
+			IStatement builder = StatementFactory.getInstance().createStatement(name, build);
 			builder.open(name);
 			builder.close();
 			return;

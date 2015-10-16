@@ -1,8 +1,8 @@
 package com.gluk.dagaz.runtime;
 
 import com.gluk.dagaz.api.model.IValue;
+import com.gluk.dagaz.api.state.IDeferredCheck;
 import com.gluk.dagaz.api.state.IEnvironment;
-import com.gluk.dagaz.api.state.IState;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.utils.Value;
 
@@ -19,7 +19,7 @@ public class DecCommand extends AbstractCommand { // -- n
 	}
 
 	@Override
-	public boolean execute(IState state, IEnvironment env) throws CommonException {
+	public boolean execute(IDeferredCheck state, IEnvironment env) throws CommonException {
 		super.execute(state, env);
 		if (name == null) {
 			throw new CommonException("Invalid arguments");

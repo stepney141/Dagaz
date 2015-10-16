@@ -12,20 +12,15 @@
    (name Man)
    (pre
       (check is-friend?)
-      take
+      (take)
       (log position)
-      (let max-captured 0)
       (let captured 0)
    )
    (post
-      (redo check-max-captured
-          (check (<= max-captured captured))
-          (set! max-captured captured)
-      )
-      check-max-captured
-      capture-all
+      (check (<= max-captured captured))
+      (set! max-captured captured)
       (log " - " position)
-      drop
+      (drop)
    )
    (move
       (check (any nw ne))
@@ -36,11 +31,11 @@
          (let dir (any nw ne sw se))
          (check dir)
          (check is-enemy?)
-         (redo capture-all capture)
+         (capture)
          (inc! captured)
          (check dir)
          (check is-empty?)
-         end-move
+         (end-move)
       )
    )
 )

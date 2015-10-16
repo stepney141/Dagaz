@@ -43,6 +43,15 @@ public class CommandFactory implements ICommandFactory {
 		classes.put(IReserved.CMD_NOT,     NotCommand.class);
 		classes.put(IReserved.CMD_PLUS,    PlusCommand.class);
 		classes.put(IReserved.CMD_MINUS,   MinusCommand.class);
+		classes.put(IReserved.CMD_LE,      LeCommand.class);
+		classes.put(IReserved.CMD_LT,      LtCommand.class);
+		classes.put(IReserved.CMD_GE,      GeCommand.class);
+		classes.put(IReserved.CMD_GT,      GtCommand.class);
+		classes.put(IReserved.CMD_EQ,      EqCommand.class);
+		classes.put(IReserved.CMD_NE,      NeCommand.class);
+		classes.put(IReserved.CMD_MUL,     MulCommand.class);
+		classes.put(IReserved.CMD_DIV,     DivCommand.class);
+		classes.put(IReserved.CMD_MOD,     ModCommand.class);
 	}
 
 	public boolean isDefined(String name) {

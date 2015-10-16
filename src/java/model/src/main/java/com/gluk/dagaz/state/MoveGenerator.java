@@ -1,55 +1,33 @@
 package com.gluk.dagaz.state;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.gluk.dagaz.api.application.IMoveCallback;
 import com.gluk.dagaz.api.application.IMoveGenerator;
-import com.gluk.dagaz.api.state.IState;
-import com.gluk.dagaz.api.state.ITransactional;
+import com.gluk.dagaz.api.state.IDeferredCheck;
 import com.gluk.dagaz.exceptions.CommonException;
 
-public class MoveGenerator implements IMoveGenerator, ITransactional {
+public class MoveGenerator implements IMoveGenerator {
 	
 	private IMoveCallback callback;
-	private IState state;
-	private List<String> notationList = new ArrayList<String>();
-	private Stack<Integer> undo = new Stack<Integer>(); 
+	private Map<String, IDeferredCheck> moves = new HashMap<String, IDeferredCheck>(); 
 	
-	public MoveGenerator(IState state, IMoveCallback callback) {
+	public MoveGenerator(IMoveCallback callback) {
 		this.callback = callback;
-		this.state = state;
-	}
-	
-	public void clear() {
-		notationList.clear();
-		undo.clear();
 	}
 
-	public void log(String notation) {
-		notationList.add(notation);
+	public synchronized void addMove(String notation, IDeferredCheck state) {
+		moves.put(notation, state);
 	}
 
-	public void endMove() {
-		StringBuffer sb = new StringBuffer();
-		for (String s: notationList) {
-			sb.append(s);
+	public void close() throws CommonException {
+		for (String name: moves.keySet()) {
+			IDeferredCheck state = moves.get(name);
+			if (state.check()) {
+				callback.addMove(name, state);
+			}
 		}
-		callback.addMove(sb.toString(), state);
-	}
-
-	public void savepoint() {
-		undo.push(notationList.size());
-	}
-
-	public void rollback() throws CommonException {
-		if (undo.isEmpty()) {
-			throw new CommonException("Internal Error");
-		}
-		int sz = undo.pop();
-		while (notationList.size() > sz) {
-			notationList.remove(notationList.size() - 1);
-		}
+		moves.clear();
 	}
 }

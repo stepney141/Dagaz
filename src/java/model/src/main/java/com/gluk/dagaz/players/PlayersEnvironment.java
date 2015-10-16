@@ -9,11 +9,13 @@ import com.gluk.dagaz.utils.Value;
 public class PlayersEnvironment implements IEnvironment {
 	
 	private Players players;
-	private int numOrder; 
+	private int numOrder;
+	private IEnvironment env;
 	
-	public PlayersEnvironment(Players players, int numOrder) {
+	public PlayersEnvironment(Players players, int numOrder, IEnvironment env) {
 		this.players = players;
 		this.numOrder = numOrder;
+		this.env = env;
 	}
 
 	public boolean isDefined(String name) throws CommonException {
@@ -24,7 +26,7 @@ public class PlayersEnvironment implements IEnvironment {
 			return true;
 		}
 		String player = players.getPlayer(numOrder);
-		return players.isDefined(player, name);
+		return players.isDefined(player, name) || env.isDefined(name);
 	}
 
 	public IValue get(String name) throws CommonException {
@@ -47,18 +49,39 @@ public class PlayersEnvironment implements IEnvironment {
 		if (players.isDefined(player, name)) {
 			return players.get(player, name);
 		}
-		throw new CommonException("Unsupported");
+		return env.get(name);
 	}
 
 	public void let(String name, IValue value) throws CommonException {
-		throw new CommonException("Unsupported");
+		if (name.equals(IReserved.PLAYER_CURRENT)   ||
+			name.equals(IReserved.PLAYER_NEXT)      ||
+			name.equals(IReserved.PLAYER_TURN)      ||
+			name.equals(IReserved.PLAYER_ORDER)     ||
+			players.isDefined(name, name)) {
+			throw new CommonException("Unsupported");
+		}
+		env.let(name, value);
 	}
 
 	public void set(String name, IValue value) throws CommonException {
-		throw new CommonException("Unsupported");
+		if (name.equals(IReserved.PLAYER_CURRENT)   ||
+			name.equals(IReserved.PLAYER_NEXT)      ||
+			name.equals(IReserved.PLAYER_TURN)      ||
+			name.equals(IReserved.PLAYER_ORDER)     ||
+			players.isDefined(name, name)) {
+			throw new CommonException("Unsupported");
+		}
+		env.set(name, value);
 	}
 
 	public void del(String name) throws CommonException {
-		throw new CommonException("Unsupported");
+		if (name.equals(IReserved.PLAYER_CURRENT)   ||
+			name.equals(IReserved.PLAYER_NEXT)      ||
+			name.equals(IReserved.PLAYER_TURN)      ||
+			name.equals(IReserved.PLAYER_ORDER)     ||
+			players.isDefined(name, name)) {
+			throw new CommonException("Unsupported");
+		}
+		env.del(name);
 	}
 }

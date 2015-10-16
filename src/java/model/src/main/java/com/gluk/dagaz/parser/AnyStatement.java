@@ -6,7 +6,7 @@ import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.runtime.CommandFactory;
 import com.gluk.dagaz.utils.Value;
 
-public class AnyBuilder extends AbstractBuilder {
+public class AnyStatement extends AbstractStatement {
 
 	private ICommand anyCommand = null;
 

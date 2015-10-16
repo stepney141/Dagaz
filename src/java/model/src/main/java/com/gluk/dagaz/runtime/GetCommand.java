@@ -1,7 +1,7 @@
 package com.gluk.dagaz.runtime;
 
+import com.gluk.dagaz.api.state.IDeferredCheck;
 import com.gluk.dagaz.api.state.IEnvironment;
-import com.gluk.dagaz.api.state.IState;
 import com.gluk.dagaz.exceptions.CommonException;
 
 public class GetCommand extends AbstractCommand { // -- v
@@ -17,7 +17,7 @@ public class GetCommand extends AbstractCommand { // -- v
 	}
 	
 	@Override
-	public boolean execute(IState state, IEnvironment env) throws CommonException {
+	public boolean execute(IDeferredCheck state, IEnvironment env) throws CommonException {
 		super.execute(state, env);
 		if (name == null) {
 			throw new CommonException("Invalid arguments");

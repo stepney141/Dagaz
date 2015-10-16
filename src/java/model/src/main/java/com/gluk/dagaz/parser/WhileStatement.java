@@ -5,7 +5,7 @@ import com.gluk.dagaz.api.runtime.ICommand;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.runtime.CommandFactory;
 
-public class WhileBuilder extends AbstractBuilder {
+public class WhileStatement extends AbstractStatement {
 	
 	private int baseOffset = 0;
 	private int ifOffset = 0;

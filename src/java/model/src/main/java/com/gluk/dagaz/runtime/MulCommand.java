@@ -5,8 +5,8 @@ import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.utils.Value;
 
-public class PlusCommand extends AbstractCommand { // n ... -- n
-	
+public class MulCommand extends AbstractCommand { // n ... -- n
+
 	private int arity = 0;
 
 	public void addArgument(Object arg) throws CommonException {
@@ -18,9 +18,9 @@ public class PlusCommand extends AbstractCommand { // n ... -- n
 	
 	public boolean execute(IDeferredCheck state, IEnvironment env) throws CommonException { 
 		super.execute(state, env);
-		int r = 0;
+		int r = 1;
 		for (int i = 0; i < arity; i++) {
-			r += processor.getStack().pop().getNumber();
+			r *= processor.getStack().pop().getNumber();
 		}
 		processor.getStack().push(Value.create(r));
 		return true;

@@ -1,11 +1,9 @@
 package com.gluk.dagaz.api.model;
 
-// TODO: Исключить сравнения строк, используя менеджер имён, связывающий строки с числовыми значениями, по запросу
-
 public interface IReserved {
 	// LocalEnvironment
-	public final static String LOCAL_TRUE       = "true";                // [out] string - true 
-	public final static String LOCAL_FALSE      = "false";               // [out] string - false 
+	public final static String LOCAL_TRUE       = "true";                // [out] boolean - true 
+	public final static String LOCAL_FALSE      = "false";               // [out] boolean - false 
 
 	// PlayerEnvironment
 	public final static String PLAYER_CURRENT   = "current-player";      // [out] string - имя текущего игрока (выполняет переключение хода) 
@@ -26,17 +24,18 @@ public interface IReserved {
 	
 	// Commands
 	public final static String CMD_END          = "_end";                // Завершение расчёта хода
+	public final static String CMD_ENV          = "_env";                // Сохранение состояния окружения
 	public final static String CMD_JUMP         = "_jump";               // Безусловный переход
 	public final static String CMD_GET          = "_get";                // Запрос значения по имени
 	public final static String CMD_DROP         = "_drop";               // Удаление значения на стеке
-	public final static String CMD_LOG          = "log";                 // Формирование нотации хода
+	public final static String CMD_LOG          = "_log";                // Формирование нотации хода
 	public final static String CMD_ANY          = "_any";                // Недетерминированный выбор
 	public final static String CMD_CHECK        = "_check";              // Проверка выполнения инварианта
 	public final static String CMD_IF           = "_if";                 // Условный переход
-	public final static String CMD_LET          = "let";                 // Определение переменной
-	public final static String CMD_SET          = "set!";                // Изменение значения переменной
-	public final static String CMD_INC          = "inc!";                // Инкремент переменной (возвращает значение до инкремента)
-	public final static String CMD_DEC          = "dec!";                // Декремент переменной (возвращает значение до декремента)
+	public final static String CMD_LET          = "_let";                // Определение переменной
+	public final static String CMD_SET          = "_set";                // Изменение значения переменной
+	public final static String CMD_INC          = "_inc";                // Инкремент переменной (возвращает значение до инкремента)
+	public final static String CMD_DEC          = "_dec";                // Декремент переменной (возвращает значение до декремента)
 	public final static String CMD_TAKE         = "take";                // Взятие фигур "в руку"
 	public final static String CMD_PUT          = "drop";                // Возврат фигур на доску
 	public final static String CMD_CAPTURE      = "capture";             // Удаление фигуры
@@ -45,6 +44,15 @@ public interface IReserved {
 	public final static String CMD_NOT          = "not";                 // Логическое отрицание
 	public final static String CMD_PLUS         = "+";                   // Сложение
 	public final static String CMD_MINUS        = "-";                   // Вычитание или изменение знака
+	public final static String CMD_MUL          = "*";                   // Умножение
+	public final static String CMD_DIV          = "/";                   // Деление
+	public final static String CMD_MOD          = "%";                   // Получение остатка от деления
+	public final static String CMD_LE           = "<=";                  // Сравнение числовых значений
+	public final static String CMD_LT           = "<";                   // Сравнение числовых значений
+	public final static String CMD_GE           = ">=";                  // Сравнение числовых значений
+	public final static String CMD_GT           = ">";                   // Сравнение числовых значений
+	public final static String CMD_EQ           = "=";                   // Сравнение числовых значений
+	public final static String CMD_NE           = "!=";                  // Сравнение числовых значений
 
 	// Statements
 	public final static String STMT_SEQ         = "_seq";                // Последовательность действий
@@ -54,4 +62,11 @@ public interface IReserved {
 	public final static String STMT_ANY         = "any";                 // Оператор недетерминированного выбора
 	public final static String STMT_CHECK       = "check";               // Проверка выполнения инварианта
 	public final static String STMT_END         = "end-move";            // Завершение варианта хода
+	public final static String STMT_OR          = "or";                  // Логическое или
+	public final static String STMT_AND         = "and";                 // Логическое и
+	public final static String STMT_SET         = "set!";                // Определение локальной переменной
+	public final static String STMT_LET         = "let";                 // Определение локальной переменной
+	public final static String STMT_LOG         = "log";                 // Формирование нотации хода
+	public final static String STMT_INC         = "inc!";                // Инкремент переменной (возвращает значение до инкремента)
+	public final static String STMT_DEC         = "dec!";                // Декремент переменной (возвращает значение до декремента)
 }

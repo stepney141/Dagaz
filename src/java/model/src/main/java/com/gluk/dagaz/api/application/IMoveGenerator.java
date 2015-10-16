@@ -1,6 +1,9 @@
 package com.gluk.dagaz.api.application;
 
+import com.gluk.dagaz.api.state.IDeferredCheck;
+import com.gluk.dagaz.exceptions.CommonException;
+
 public interface IMoveGenerator {
-	void endMove();
-	void log(String notation);
+	void addMove(String notation, IDeferredCheck state);
+	void close() throws CommonException;
 }

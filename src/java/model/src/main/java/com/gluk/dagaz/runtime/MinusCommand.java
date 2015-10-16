@@ -1,7 +1,7 @@
 package com.gluk.dagaz.runtime;
 
+import com.gluk.dagaz.api.state.IDeferredCheck;
 import com.gluk.dagaz.api.state.IEnvironment;
-import com.gluk.dagaz.api.state.IState;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.utils.Value;
 
@@ -19,7 +19,7 @@ public class MinusCommand extends AbstractCommand {
 		}
 	}
 
-	public boolean execute(IState state, IEnvironment env) throws CommonException { // n [n] -- n
+	public boolean execute(IDeferredCheck state, IEnvironment env) throws CommonException { // n [n] -- n
 		super.execute(state, env);
 		int r = -processor.getStack().pop().getNumber();
 		if (arity == 2) {

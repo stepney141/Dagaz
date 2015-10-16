@@ -1,0 +1,36 @@
+package com.gluk.dagaz.parser;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.gluk.dagaz.api.model.IReserved;
+import com.gluk.dagaz.api.runtime.ICommand;
+import com.gluk.dagaz.exceptions.CommonException;
+import com.gluk.dagaz.runtime.CommandFactory;
+
+public class LogStatement extends AbstractStatement {
+	
+	private List<String> names = new ArrayList<String>();
+
+	@Override
+	public void addOperand(String name) throws CommonException {
+		names.add(name);
+	}
+
+	@Override
+	public void close() throws CommonException {
+		if (names.isEmpty()) {
+			throw new CommonException("Syntax error");
+		}
+		ICommand logCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_LOG, build);
+		build.addCommand(logCommand);
+		for (String s: names) {
+			logCommand.addArgument(s);
+		}
+	}
+	
+	@Override
+	public void openChild(String name) throws CommonException {
+		throw new CommonException("Unsupported");
+	}
+}

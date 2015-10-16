@@ -24,7 +24,7 @@ import com.gluk.dagaz.undo.UndoTake;
 import com.gluk.dagaz.undo.UndoValue;
 import com.gluk.dagaz.utils.PieceHandler;
 
-public class State implements IState, ITransactional, Cloneable {
+public class State extends DeferredCheck implements ITransactional, Cloneable {
 
 	private Board board;
 	private Map<String, IPiece> pieces = new HashMap<String, IPiece>();

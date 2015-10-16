@@ -5,7 +5,7 @@ import com.gluk.dagaz.api.runtime.ICommand;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.runtime.CommandFactory;
 
-public class IfBuilder extends AbstractBuilder {
+public class IfStatement extends AbstractStatement {
 
 	private int jumpOffset = 0;
 	private ICommand jumpCommand = null;

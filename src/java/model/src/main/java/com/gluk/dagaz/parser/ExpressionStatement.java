@@ -5,24 +5,34 @@ import com.gluk.dagaz.api.runtime.ICommand;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.runtime.CommandFactory;
 
-public class SeqBuilder extends AbstractBuilder {
+public class ExpressionStatement extends AbstractStatement {
 	
-	private void addDropCommand() throws CommonException {
-		ICommand dropCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_DROP, build);
-		build.addCommand(dropCommand);
-	}
+	private String name = null;
+	private int arity = 0;
 
+	@Override
+	public void open(String name) throws CommonException {
+		this.name = name;
+	}
+	
+	@Override
+	public void close() throws CommonException {
+		ICommand cmd = CommandFactory.getInstance().createCommand(name, build);
+		build.addCommand(cmd);
+		cmd.addArgument(arity); 
+	}
+	
 	@Override
 	public void addOperand(String name) throws CommonException {
 		ICommand getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
 		build.addCommand(getCommand);
 		getCommand.addArgument(name);
-		addDropCommand();
+		arity++;
 	}
-	
+
 	@Override
 	public void closeChild() throws CommonException {
 		super.closeChild();
-		addDropCommand();
+		arity++;
 	}
 }

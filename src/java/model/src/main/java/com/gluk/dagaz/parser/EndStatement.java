@@ -6,7 +6,7 @@ import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.runtime.CommandFactory;
 import com.gluk.dagaz.utils.Value;
 
-public class EndBuilder extends AbstractBuilder {
+public class EndStatement extends AbstractStatement {
 
 	@Override
 	public void open(String name) throws CommonException {
