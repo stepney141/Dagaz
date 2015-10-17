@@ -19,13 +19,14 @@ public class GetCommand extends AbstractCommand { // [s] -- v
 	@Override
 	public boolean execute(IDeferredCheck state, IEnvironment env) throws CommonException {
 		super.execute(state, env);
-		if (name == null) {
+		String operand = name;
+		if (operand == null) {
 			if (processor.getStack().isEmpty()) {
 				throw new CommonException("Stack is empty");
 			}
-			name = processor.getStack().pop().getString();
+			operand = processor.getStack().pop().getString();
 		}
-		processor.getStack().push(env.get(name));
+		processor.getStack().push(env.get(operand));
 		return true;
 	}
 
