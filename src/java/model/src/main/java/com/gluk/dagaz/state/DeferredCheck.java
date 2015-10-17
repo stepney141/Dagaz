@@ -14,7 +14,9 @@ public abstract class DeferredCheck implements IDeferredCheck {
 	private List<ICommand> commands = new ArrayList<ICommand>();
 
 	public void addDeferredCommand(ICommand c) {
-		commands.add(c);
+		if (!commands.contains(c)) {
+			commands.add(c);
+		}
 	}
 	
 	public void setEnvironment(IEnvironment env) {
