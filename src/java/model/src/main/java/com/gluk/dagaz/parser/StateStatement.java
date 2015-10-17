@@ -6,6 +6,8 @@ import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.runtime.CommandFactory;
 
 public class StateStatement extends AbstractStatement {
+	
+	private final static String INTERNAL_POS_VALUE = "_pos";
 
 	private String func = null;
 	private int failOffset = 0;
@@ -15,13 +17,17 @@ public class StateStatement extends AbstractStatement {
 	@Override
 	public void open(String name) throws CommonException {
 		this.func = name;
-		ICommand markCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_MARK, build);
-		build.addCommand(markCommand);
+		ICommand getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
+		build.addCommand(getCommand);
+		getCommand.addArgument(IReserved.STATE_POSITION);
+		ICommand letCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_LET, build);
+		build.addCommand(letCommand);
+		letCommand.addArgument(INTERNAL_POS_VALUE);
 		int enterOffset = build.getOffset();
 		ICommand enterCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_JUMP, build);
 		build.addCommand(enterCommand);
 		failOffset = build.getOffset();
-		ICommand getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
+		getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
 		build.addCommand(getCommand);
 		getCommand.addArgument(IReserved.LOCAL_FALSE);
 		exitOffset = build.getOffset();
@@ -38,8 +44,14 @@ public class StateStatement extends AbstractStatement {
 		getCommand.addArgument(func);
 		int currentOffset = build.getOffset();
 		exitCommand.addArgument(currentOffset - exitOffset);
-		ICommand backCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_BACK, build);
-		build.addCommand(backCommand);
+		getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
+		build.addCommand(getCommand);
+		getCommand.addArgument(INTERNAL_POS_VALUE);
+		getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
+		build.addCommand(getCommand);
+		ICommand delCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_DEL, build);
+		build.addCommand(delCommand);
+		delCommand.addArgument(INTERNAL_POS_VALUE);
 	}
 	
 	@Override

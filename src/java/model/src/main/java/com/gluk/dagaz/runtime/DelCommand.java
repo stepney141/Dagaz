@@ -4,8 +4,8 @@ import com.gluk.dagaz.api.state.IDeferredCheck;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.exceptions.CommonException;
 
-public class GetCommand extends AbstractCommand { // [s] -- v
-	
+public class DelCommand extends AbstractCommand { // v --
+
 	private String name = null;
 
 	@Override
@@ -20,13 +20,9 @@ public class GetCommand extends AbstractCommand { // [s] -- v
 	public boolean execute(IDeferredCheck state, IEnvironment env) throws CommonException {
 		super.execute(state, env);
 		if (name == null) {
-			if (processor.getStack().isEmpty()) {
-				throw new CommonException("Stack is empty");
-			}
-			name = processor.getStack().pop().getString();
+			throw new CommonException("Invalid arguments");
 		}
-		processor.getStack().push(env.get(name));
+		env.del(name);
 		return true;
 	}
-
 }

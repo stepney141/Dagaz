@@ -14,9 +14,7 @@ import com.gluk.dagaz.api.state.ITransactional;
 import com.gluk.dagaz.board.Board;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.undo.AbstractUndo;
-import com.gluk.dagaz.undo.UndoBack;
 import com.gluk.dagaz.undo.UndoDrop;
-import com.gluk.dagaz.undo.UndoMark;
 import com.gluk.dagaz.undo.UndoMove;
 import com.gluk.dagaz.undo.UndoNavigate;
 import com.gluk.dagaz.undo.UndoPiece;
@@ -31,7 +29,6 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 	private List<PieceHandler> hand = new ArrayList<PieceHandler>();
 	private Map<String, Map<String, IValue>> values = new HashMap<String, Map<String, IValue>>();
 	private Stack<AbstractUndo> undo = new Stack<AbstractUndo>();
-	private Stack<String> marked = new Stack<String>();
 	private String currentPos = null;
 	private long hash = 0L;
 	private int deep = 0;
@@ -46,34 +43,6 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 	
 	public int hashCode() {
 		return super.hashCode();
-	}
-	
-	public void pushMarked(String position) {
-		marked.push(position);
-	}
-	
-	public void popMarked() {
-		if (!marked.isEmpty()) {
-			marked.pop();
-		}
-	}
-	
-	public void mark() throws CommonException {
-		if (currentPos == null) {
-			throw new CommonException("Position unassigned");
-		}
-		pushMarked(currentPos);
-		undo.push(new UndoMark(deep));
-	}
-
-	public void back() throws CommonException {
-		if (marked.isEmpty()) {
-			throw new CommonException("No marked positions");
-		}
-		undo.push(new UndoNavigate(currentPos, deep));
-		String pos = marked.pop();
-		setCurrentPosition(pos);
-		undo.push(new UndoBack(pos, deep));
 	}
 	
 	public long getZobristHash() {

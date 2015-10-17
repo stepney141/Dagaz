@@ -34,13 +34,12 @@ public interface IReserved {
 	public final static String CMD_IF           = "_if";                 // Условный переход
 	public final static String CMD_LET          = "_let";                // Определение переменной
 	public final static String CMD_SET          = "_set";                // Изменение значения переменной
+	public final static String CMD_DEL          = "_del";                // Удаление локальной переменной
 	public final static String CMD_INC          = "_inc";                // Инкремент переменной (возвращает значение до инкремента)
 	public final static String CMD_DEC          = "_dec";                // Декремент переменной (возвращает значение до декремента)
 	public final static String CMD_TAKE         = "take";                // Взятие фигур "в руку"
 	public final static String CMD_PUT          = "drop";                // Возврат фигур на доску
 	public final static String CMD_CAPTURE      = "capture";             // Удаление фигуры
-	public final static String CMD_MARK         = "mark";                // Пометка позиции
-	public final static String CMD_BACK         = "back";                // Возврат к отмеченной позиции
 	public final static String CMD_NOT          = "not";                 // Логическое отрицание
 	public final static String CMD_PLUS         = "+";                   // Сложение
 	public final static String CMD_MINUS        = "-";                   // Вычитание или изменение знака
