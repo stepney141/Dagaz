@@ -9,7 +9,7 @@ public class EndCommand extends AbstractCommand { // --
 	@Override
 	public boolean execute(IDeferredCheck state, IEnvironment env) throws CommonException {
 		super.execute(state, env);
-		processor.getMoveLogger().endMove();
+		processor.getMoveLogger().endMove(env);
 		return false;
 	}
 }

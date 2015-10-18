@@ -28,4 +28,5 @@ public abstract class AbstractCommand implements ICommand {
 	
 	public void addArgument(Object arg) throws CommonException {}
 	public void setProcessor(IProcessor processor) {this.processor = processor;}
+	public String getValueName() {return null;}
 }

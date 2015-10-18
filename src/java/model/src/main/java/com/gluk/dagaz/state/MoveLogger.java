@@ -4,21 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-import com.gluk.dagaz.api.application.IMoveCallback;
+import com.gluk.dagaz.api.application.IMoveGenerator;
 import com.gluk.dagaz.api.application.IMoveLogger;
-import com.gluk.dagaz.api.state.IState;
+import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.api.state.ITransactional;
 import com.gluk.dagaz.exceptions.CommonException;
 
 public class MoveLogger implements IMoveLogger, ITransactional {
 	
-	private IMoveCallback callback;
-	private IState state;
+	private IMoveGenerator moveGenerator;
+	private State state;
 	private List<String> notationList = new ArrayList<String>();
 	private Stack<Integer> undo = new Stack<Integer>(); 
 	
-	public MoveLogger(IState state, IMoveCallback callback) {
-		this.callback = callback;
+	public MoveLogger(State state, IMoveGenerator moveGenerator) {
+		this.moveGenerator = moveGenerator;
 		this.state = state;
 	}
 	
@@ -31,12 +31,12 @@ public class MoveLogger implements IMoveLogger, ITransactional {
 		notationList.add(notation);
 	}
 
-	public void endMove() {
+	public void endMove(IEnvironment env) throws CommonException {
 		StringBuffer sb = new StringBuffer();
 		for (String s: notationList) {
 			sb.append(s);
 		}
-		callback.addMove(sb.toString(), state);
+		moveGenerator.addMove(sb.toString(), state, env);
 	}
 
 	public void savepoint() {

@@ -17,6 +17,11 @@ public class GetCommand extends AbstractCommand { // [s] -- v
 	}
 	
 	@Override
+	public String getValueName() {
+		return name;
+	}
+	
+	@Override
 	public boolean execute(IDeferredCheck state, IEnvironment env) throws CommonException {
 		super.execute(state, env);
 		String operand = name;
@@ -29,5 +34,4 @@ public class GetCommand extends AbstractCommand { // [s] -- v
 		processor.getStack().push(env.get(operand));
 		return true;
 	}
-
 }

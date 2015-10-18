@@ -29,6 +29,7 @@ public interface IReserved {
 	public final static String CMD_GET          = "_get";                // Запрос значения по имени
 	public final static String CMD_DROP         = "_drop";               // Удаление значения на стеке
 	public final static String CMD_LOG          = "_log";                // Формирование нотации хода
+	public final static String CMD_TRACE        = "_trace";              // Трассировка
 	public final static String CMD_ANY          = "_any";                // Недетерминированный выбор
 	public final static String CMD_CHECK        = "_check";              // Проверка выполнения инварианта
 	public final static String CMD_IF           = "_if";                 // Условный переход
@@ -37,6 +38,7 @@ public interface IReserved {
 	public final static String CMD_DEL          = "_del";                // Удаление локальной переменной
 	public final static String CMD_INC          = "_inc";                // Инкремент переменной (возвращает значение до инкремента)
 	public final static String CMD_DEC          = "_dec";                // Декремент переменной (возвращает значение до декремента)
+	public final static String CMD_ZONE         = "_zone";               // Проверка принадлежности позиции зоне
 	public final static String CMD_TAKE         = "take";                // Взятие фигур "в руку"
 	public final static String CMD_PUT          = "drop";                // Возврат фигур на доску
 	public final static String CMD_CAPTURE      = "capture";             // Удаление фигуры
@@ -66,6 +68,9 @@ public interface IReserved {
 	public final static String STMT_SET         = "set!";                // Определение локальной переменной
 	public final static String STMT_LET         = "let";                 // Определение локальной переменной
 	public final static String STMT_LOG         = "log";                 // Формирование нотации хода
+	public final static String STMT_TRACE       = "trace";               // Трассировка
 	public final static String STMT_INC         = "inc!";                // Инкремент переменной (возвращает значение до инкремента)
 	public final static String STMT_DEC         = "dec!";                // Декремент переменной (возвращает значение до декремента)
+	public final static String STMT_IN_ZONE     = "in-zone?";            // Проверка принадлежности позиции именованной зоне
+	public final static String STMT_NOT_ZONE    = "not-zone?";           // Проверка не принадлежности позиции именованной зоне
 }

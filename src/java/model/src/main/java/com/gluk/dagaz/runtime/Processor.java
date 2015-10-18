@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.Stack;
 
 import com.gluk.dagaz.api.application.IMoveLogger;
+import com.gluk.dagaz.api.model.IBoard;
 import com.gluk.dagaz.api.model.IValue;
 import com.gluk.dagaz.api.parser.IBuild;
 import com.gluk.dagaz.api.runtime.ICommand;
@@ -43,6 +44,10 @@ public class Processor implements IProcessor, IBuild {
 		this.players = players;
 		this.board = board;
 		this.gen = gen;
+	}
+	
+	public IBoard getBoard() {
+		return getBoard();
 	}
 	
 	public void addFixup(int offset) {

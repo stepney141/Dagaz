@@ -34,6 +34,7 @@ public class StatementFactory implements IStatementFactory {
 		classes.put(IReserved.STMT_LET,         LetStatement.class);
 		classes.put(IReserved.STMT_SET,         SetStatement.class);
 		classes.put(IReserved.STMT_LOG,         LogStatement.class);
+		classes.put(IReserved.STMT_TRACE,       LogStatement.class);
 		classes.put(IReserved.STMT_INC,         IncStatement.class);
 		classes.put(IReserved.STMT_DEC,         DecStatement.class);
 		classes.put(IReserved.STATE_IS_EMPTY,   StateStatement.class);
@@ -42,6 +43,11 @@ public class StatementFactory implements IStatementFactory {
 		classes.put(IReserved.STATE_NOT_ENEMY,  StateStatement.class);
 		classes.put(IReserved.STATE_IS_FRIEND,  StateStatement.class);
 		classes.put(IReserved.STATE_NOT_FRIEND, StateStatement.class);
+		classes.put(IReserved.STATE_POSITION,   StateStatement.class);
+		classes.put(IReserved.STATE_PLAYER,     StateStatement.class);
+		classes.put(IReserved.STATE_PIECE,      StateStatement.class);
+		classes.put(IReserved.STMT_IN_ZONE,     ZoneStatement.class);
+		classes.put(IReserved.STMT_NOT_ZONE,    ZoneStatement.class);
 	}
 
 	public IStatement createStatement(String name, IBuild build) throws CommonException {

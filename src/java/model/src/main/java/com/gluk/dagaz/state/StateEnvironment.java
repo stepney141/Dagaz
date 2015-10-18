@@ -97,6 +97,10 @@ public class StateEnvironment implements IEnvironment {
 			return Value.create(!env.get(p.getOwner()).getBoolean());
 		}
 		if (state.isDefined(name)) {
+			IValue v = state.getValue(name);
+			if (v != null) {
+				return v;
+			}
 			return Value.create(state.navigate(name, env));
 		}
 		return env.get(name);

@@ -1,6 +1,7 @@
 package com.gluk.dagaz.state;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.gluk.dagaz.api.runtime.ICommand;
@@ -12,6 +13,10 @@ public abstract class DeferredCheck implements IDeferredCheck {
 	
 	private IEnvironment env = null;
 	private List<ICommand> commands = new ArrayList<ICommand>();
+	
+	public Collection<ICommand> getDeferredCommands() {
+		return commands;
+	}
 
 	public void addDeferredCommand(ICommand c) {
 		if (!commands.contains(c)) {

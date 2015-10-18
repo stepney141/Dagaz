@@ -36,6 +36,7 @@ public class CommandFactory implements ICommandFactory {
 		classes.put(IReserved.CMD_LET,     LetCommand.class);
 		classes.put(IReserved.CMD_DEL,     DelCommand.class);
 		classes.put(IReserved.CMD_LOG,     LogCommand.class);
+		classes.put(IReserved.CMD_TRACE,   TraceCommand.class);
 		classes.put(IReserved.CMD_PUT,     PutCommand.class);
 		classes.put(IReserved.CMD_SET,     SetCommand.class);
 		classes.put(IReserved.CMD_TAKE,    TakeCommand.class);
@@ -51,6 +52,7 @@ public class CommandFactory implements ICommandFactory {
 		classes.put(IReserved.CMD_MUL,     MulCommand.class);
 		classes.put(IReserved.CMD_DIV,     DivCommand.class);
 		classes.put(IReserved.CMD_MOD,     ModCommand.class);
+		classes.put(IReserved.CMD_ZONE,    ZoneCommand.class);
 	}
 
 	public boolean isDefined(String name) {

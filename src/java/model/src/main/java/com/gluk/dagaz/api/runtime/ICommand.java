@@ -9,4 +9,5 @@ public interface ICommand {
 	void addArgument(Object arg) throws CommonException;                             // Определение аргумента
 	boolean isDeferred();                                                            // Перенести команду в отложенную проверку?
 	void setDeferred();                                                              // Пометить команду как отложенную
+	String getValueName();
 }

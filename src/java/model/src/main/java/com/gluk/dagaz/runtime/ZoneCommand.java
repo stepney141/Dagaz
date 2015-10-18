@@ -1,36 +1,37 @@
 package com.gluk.dagaz.runtime;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.gluk.dagaz.api.state.IDeferredCheck;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.exceptions.CommonException;
+import com.gluk.dagaz.utils.Value;
 
-public class LogCommand extends AbstractCommand { // --
+public class ZoneCommand extends AbstractCommand { // [s] -- ?
 	
-	private List<String> values = new ArrayList<String>();
-	
+	private String zone = null;
+	private String pos  = null;
+
 	@Override
 	public void addArgument(Object arg) throws CommonException {
-		if (!(arg instanceof String)) {
+		if ((pos != null) || !(arg instanceof String)) {
 			throw new CommonException("Invalid argument");
 		}
-		values.add((String)arg);
+		if (zone == null) {
+			zone = (String)arg;
+		} else {
+			pos = (String)arg;
+		}
 	}
-
+	
 	@Override
 	public boolean execute(IDeferredCheck state, IEnvironment env) throws CommonException {
 		super.execute(state, env);
-		if (values.isEmpty()) {
+		if (zone == null) {
 			throw new CommonException("Invalid arguments");
 		}
-		for (String value: values) {
-			if (env.isDefined(value)) {
-				value = env.get(value).getString();
-			}
-			processor.getMoveLogger().log(value);
+		if (pos == null) {
+			pos = processor.getStack().pop().getString();
 		}
+		processor.getStack().push(Value.create(processor.getBoard().inZone(pos, pos, env)));
 		return true;
 	}
 }

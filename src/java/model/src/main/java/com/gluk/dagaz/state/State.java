@@ -22,6 +22,8 @@ import com.gluk.dagaz.undo.UndoTake;
 import com.gluk.dagaz.undo.UndoValue;
 import com.gluk.dagaz.utils.PieceHandler;
 
+// TODO: Get and set Piece'a attributes
+
 public class State extends DeferredCheck implements ITransactional, Cloneable {
 
 	private Board board;
@@ -187,7 +189,7 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 	public void setCurrentPosition(String pos) {
 		currentPos = pos;
 	}
-
+	
 	public boolean navigate(String dir, IEnvironment env) throws CommonException {
 		String to = board.navigate(dir, currentPos, env);
 		if (to.isEmpty()) {
@@ -224,6 +226,12 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 	}
 
 	public boolean isDefined(String name) {
+		Map<String, IValue> l = values.get(name);
+		if (l != null) {
+			if (l.get("") != null) {
+				return true;
+			}
+		}
 		return board.isDefined(name);
 	}
 }

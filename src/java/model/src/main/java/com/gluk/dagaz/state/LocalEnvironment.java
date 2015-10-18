@@ -57,6 +57,11 @@ public class LocalEnvironment implements IEnvironment, ITransactional {
 	private static String unquote(String s) {
 		return s.substring(1, s.length() - 1);
 	}
+	
+	public boolean isKnown(String name) {
+		Stack<DataFixup> s = fixups.get(name);
+		return (s != null) && !s.isEmpty();
+	}
 
 	public boolean isDefined(String name) throws CommonException {
 		if (name.equals(IReserved.LOCAL_TRUE)  ||
@@ -64,8 +69,7 @@ public class LocalEnvironment implements IEnvironment, ITransactional {
 			isNumber(name) || isQuoted(name)) {
 			return true;
 		}
-		Stack<DataFixup> s = fixups.get(name);
-		if (s != null && !s.isEmpty()) {
+		if (isKnown(name)) {
 			return true;
 		}
 		return env.isDefined(name);
