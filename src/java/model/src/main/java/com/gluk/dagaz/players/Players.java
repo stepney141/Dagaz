@@ -23,18 +23,18 @@ public class Players implements IPlayers {
 		if (turnOrder.isEmpty()) {
 			throw new CommonException("Turn Order list is empty");
 		}
-		return num / turnOrder.size();
+		return ((num - 1) / turnOrder.size()) + 1;
 	}
 
 	public int getOrder(int num) throws CommonException {
 		if (turnOrder.isEmpty()) {
 			throw new CommonException("Turn Order list is empty");
 		}
-		return num % turnOrder.size();
+		return ((num - 1) % turnOrder.size()) + 1;
 	}
 
 	public String getPlayer(int num) throws CommonException {
-		int ix = getOrder(num);
+		int ix = getOrder(num) - 1;
 		return turnOrder.get(ix);
 	}
 
@@ -62,17 +62,18 @@ public class Players implements IPlayers {
 		return to;
 	}
 
-	public boolean isDefined(String player, String name) {
+	public boolean isDefined(String name) {
 		if (turnOrder.contains(name)) {
 			return true;
 		}
-		Map<String, String> dirs = syms.get(player);
-		if (dirs == null) {
-			return false;
+		for (Map<String, String> dirs: syms.values()) {
+			if (dirs.containsKey(name)) {
+				return true;
+			}
 		}
-		return dirs.containsKey(name);
+		return false;
 	}
-
+	
 	public IValue get(String player, String name) throws CommonException {
 		if (turnOrder.contains(name)) {
 			return Value.create(player.equals(name));

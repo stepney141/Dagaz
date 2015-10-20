@@ -16,10 +16,7 @@ public class Grid {
 	}
 	
 	private void addRange(String dimension, int start, int end, boolean isNumeric, List<String> r) throws CommonException {
-		if (start == end) {
-			start--;
-		}
-		while (start != end) {
+		while (true) {
 			StringBuffer sb = new StringBuffer();
 			if (isNumeric) {
 				sb.append(Integer.toString(start));
@@ -30,6 +27,7 @@ public class Grid {
 				throw new CommonException("Invalid dimension [" + dimension + "]");
 			}
 			r.add(sb.toString());
+			if (start == end) break;
 			if (start > end) {
 				start--;
 			} else {
@@ -39,13 +37,21 @@ public class Grid {
 	}
 	
 	public void addDimension(String dimension) throws CommonException {
+		StringBuffer sb = new StringBuffer();
 		List<String> r = new ArrayList<String>();
 		int start = 0;
 		int current = 0;
 		boolean isNumeric = false;
 		for (Character c: dimension.toCharArray()) {
 			if (c.equals('-')) {
-				start = current;
+				if (isNumeric) {
+					start = current;
+				} else {
+					if (sb.length() == 0) {
+						throw new CommonException("Invalid dimension [" + dimension + "]");
+					}
+					start = (int)sb.toString().charAt(0);
+				}
 				current = 0;
 				continue;
 			}
@@ -55,11 +61,16 @@ public class Grid {
 				isNumeric = true;
 				continue;
 			}
+			if (Character.isLetter(c) && (start > 0)) {
+				current = (int)c;
+			}
 			if ((start > 0)&&(current > 0)) {
 				addRange(dimension, start, current, isNumeric, r);
 				isNumeric = false;
 				start = 0;
 				current = 0;
+				sb.setLength(0);
+				continue;
 			}
 			if (Character.isLetter(c)) {
 				if (isNumeric) {
@@ -70,21 +81,53 @@ public class Grid {
 					start = 0;
 					continue;
 				}
-				StringBuffer sb = new StringBuffer();
 				sb.append(c);
-				if (r.contains(sb.toString())) {
+				continue;
+			}
+			if (sb.length() > 0) {
+				if (isNumeric || r.contains(sb.toString())) {
 					throw new CommonException("Invalid dimension [" + dimension + "]");
 				}
 				r.add(sb.toString());
+				sb.setLength(0);
+			}
+			if (current > 0) {
+				if (!isNumeric || r.contains(Integer.toString(current))) {
+					throw new CommonException("Invalid dimension [" + dimension + "]");
+				}
+				r.add(Integer.toString(current));
+				current = 0;
 			}
 		}
 		if ((start > 0)&&(current > 0)) {
+			if (!isNumeric) {
+				throw new CommonException("Invalid dimension [" + dimension + "]");
+			}
 			addRange(dimension, start, current, isNumeric, r);
+			isNumeric = false;
+			start = 0;
+			current = 0;
+		}
+		if (sb.length() > 0) {
+			if (isNumeric || r.contains(sb.toString())) {
+				throw new CommonException("Invalid dimension [" + dimension + "]");
+			}
+			r.add(sb.toString());
+			sb.setLength(0);
+		}
+		if (current > 0) {
+			if (!isNumeric || r.contains(Integer.toString(current))) {
+				throw new CommonException("Invalid dimension [" + dimension + "]");
+			}
+			r.add(Integer.toString(current));
+			current = 0;
+			isNumeric = false;
 		}
 		dimensions.add(r);
 	}
 	
 	private void generatePositions(int ix, StringBuffer sb) throws CommonException {
+		int sz = sb.length();
 		if (ix >= dimensions.size()) {
 			board.addPosition(sb.toString());
 			return;
@@ -94,7 +137,7 @@ public class Grid {
 			throw new CommonException("Dimension [" + Integer.toString(ix) + "] is empty");
 		}
 		for (String s: d) {
-			sb.setLength(ix);
+			sb.setLength(sz);
 			sb.append(s);
 			generatePositions(ix + 1, sb);
 		}
@@ -106,15 +149,19 @@ public class Grid {
 	}
 	
 	private void generateLinks(int ix, String name, List<Integer> deltas, StringBuffer startPosition, StringBuffer endPosition) throws CommonException {
+		int stSz = startPosition.length();
+		int enSz = endPosition.length();
 		if (ix >= dimensions.size()) {
-			board.addLink(name, startPosition.toString(), endPosition.toString());
+			if (board.isDefined(startPosition.toString()) && board.isDefined(endPosition.toString())) {
+				board.addLink(name, startPosition.toString(), endPosition.toString());
+			}
 			return;
 		}
 		List<String> d = dimensions.get(ix);
 		for (int i = 0; i < d.size(); i++) {
-			startPosition.setLength(ix);
+			startPosition.setLength(stSz);
 			startPosition.append(d.get(i));
-			endPosition.setLength(ix);
+			endPosition.setLength(enSz);
 			if (ix < deltas.size()) {
 				int j = i + deltas.get(ix);
 				if (j < 0) continue;

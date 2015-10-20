@@ -45,11 +45,14 @@ public class Board implements IBoard {
 			throw new CommonException("Zone [" + name + "] undefined");
 		}
 		Set<String> list = players.get("");
-		if (list.contains(pos)) {
+		if ((list != null) && list.contains(pos)) {
 			return true;
 		}
 		String player = env.get(IReserved.PLAYER_CURRENT).getString();
 		list = players.get(player);
+		if (list == null) {
+			return false;
+		}
 		return list.contains(pos);
 	}
 
@@ -89,6 +92,9 @@ public class Board implements IBoard {
 		if (!positions.contains(name)) {
 			throw new CommonException("Position [" + name +"] undefined");
 		}
+		for (String dir: directions.keySet()) {
+			delLink(dir, name);
+		}
 		positions.remove(name);
 	}
 
@@ -112,6 +118,9 @@ public class Board implements IBoard {
 			throw new CommonException("Direction [" + name +"] undefined");
 		}
 		links.remove(from);
+		if (links.isEmpty()) {
+			directions.remove(name);
+		}
 	}
 
 	public boolean isDefined(String name) {

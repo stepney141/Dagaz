@@ -25,8 +25,7 @@ public class PlayersEnvironment implements IEnvironment {
 			name.equals(IReserved.PLAYER_ORDER)) {
 			return true;
 		}
-		String player = players.getPlayer(numOrder);
-		return players.isDefined(player, name) || env.isDefined(name);
+		return players.isDefined(name) || env.isDefined(name);
 	}
 
 	public IValue get(String name) throws CommonException {
@@ -46,7 +45,7 @@ public class PlayersEnvironment implements IEnvironment {
 		if (name.equals(IReserved.PLAYER_CURRENT)) {
 			return Value.create(player);
 		}
-		if (players.isDefined(player, name)) {
+		if (players.isDefined(name)) {
 			return players.get(player, name);
 		}
 		return env.get(name);
@@ -57,7 +56,7 @@ public class PlayersEnvironment implements IEnvironment {
 			name.equals(IReserved.PLAYER_NEXT)      ||
 			name.equals(IReserved.PLAYER_TURN)      ||
 			name.equals(IReserved.PLAYER_ORDER)     ||
-			players.isDefined(name, name)) {
+			players.isDefined(name)) {
 			throw new CommonException("Unsupported");
 		}
 		env.let(name, value);
@@ -68,7 +67,7 @@ public class PlayersEnvironment implements IEnvironment {
 			name.equals(IReserved.PLAYER_NEXT)      ||
 			name.equals(IReserved.PLAYER_TURN)      ||
 			name.equals(IReserved.PLAYER_ORDER)     ||
-			players.isDefined(name, name)) {
+			players.isDefined(name)) {
 			throw new CommonException("Unsupported");
 		}
 		env.set(name, value);
@@ -79,7 +78,7 @@ public class PlayersEnvironment implements IEnvironment {
 			name.equals(IReserved.PLAYER_NEXT)      ||
 			name.equals(IReserved.PLAYER_TURN)      ||
 			name.equals(IReserved.PLAYER_ORDER)     ||
-			players.isDefined(name, name)) {
+			players.isDefined(name)) {
 			throw new CommonException("Unsupported");
 		}
 		env.del(name);

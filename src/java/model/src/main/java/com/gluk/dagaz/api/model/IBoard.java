@@ -11,6 +11,6 @@ public interface IBoard {
 	void delLink(String name, String from) throws CommonException;                      // Удаление лишних связей, созданных grid
 	void addZone(String name, String player, String pos) throws CommonException;        // Определение зоны привязанной к игроку
 	void addZone(String name, String pos) throws CommonException;                       // Определение зоны
-	String navigate(String name, String from, IEnvironment env) throws CommonException; // Перемещение с указанной позиции
 	boolean inZone(String name, String pos, IEnvironment env) throws CommonException;   // Проверка принадлежности позиции зоне
+	String navigate(String name, String from, IEnvironment env) throws CommonException; // Перемещение с указанной позиции
 }
