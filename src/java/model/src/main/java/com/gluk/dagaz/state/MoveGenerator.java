@@ -36,10 +36,10 @@ public class MoveGenerator implements IMoveGenerator {
 		}
 	}
 
-	public void close() throws CommonException {
+	public void close(IEnvironment env) throws CommonException {
 		for (String name: moves.keySet()) {
 			IDeferredCheck state = moves.get(name);
-			if (state.check()) {
+			if (state.check(env)) {
 				callback.addMove(name, state);
 			}
 		}

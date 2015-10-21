@@ -6,5 +6,5 @@ import com.gluk.dagaz.state.State;
 
 public interface IMoveGenerator {
 	void addMove(String notation, State state, IEnvironment env) throws CommonException;
-	void close() throws CommonException;
+	void close(IEnvironment env) throws CommonException;
 }

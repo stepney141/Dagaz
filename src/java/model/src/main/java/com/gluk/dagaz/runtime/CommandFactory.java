@@ -23,6 +23,7 @@ public class CommandFactory implements ICommandFactory {
 	}
 	
 	private CommandFactory() {
+		classes.put(IReserved.CMD_QUOTE,   QuoteCommand.class);
 		classes.put(IReserved.CMD_ANY,     AnyCommand.class);
 		classes.put(IReserved.CMD_CAPTURE, CaptureCommand.class);
 		classes.put(IReserved.CMD_CHECK,   CheckCommand.class);

@@ -5,9 +5,8 @@ import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.utils.Value;
 
-public class ZoneCommand extends AbstractCommand { // [s] -- ?
-	
-	private String zone = null;
+public class QuoteCommand extends AbstractCommand { // -- 'v
+
 	private String name = null;
 
 	@Override
@@ -15,24 +14,13 @@ public class ZoneCommand extends AbstractCommand { // [s] -- ?
 		if ((name != null) || !(arg instanceof String)) {
 			throw new CommonException("Invalid argument");
 		}
-		if (zone == null) {
-			zone = (String)arg;
-		} else {
-			name = (String)arg;
-		}
+		name = (String)arg;
 	}
 	
 	@Override
 	public boolean execute(IDeferredCheck state, IEnvironment env) throws CommonException {
 		super.execute(state, env);
-		if (zone == null) {
-			throw new CommonException("Invalid arguments");
-		}
-		String pos = name;
-		if (pos == null) {
-			pos = processor.getStack().pop().getString();
-		}
-		processor.getStack().push(Value.create(processor.getBoard().inZone(zone, pos, env)));
+		processor.getStack().push(Value.quote(name));
 		return true;
 	}
 }

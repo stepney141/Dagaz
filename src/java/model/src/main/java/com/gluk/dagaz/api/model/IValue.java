@@ -6,4 +6,5 @@ public interface IValue {
 	String getString();
 	int getNumber() throws CommonException;
 	boolean getBoolean() throws CommonException;
+	boolean isReference();
 }

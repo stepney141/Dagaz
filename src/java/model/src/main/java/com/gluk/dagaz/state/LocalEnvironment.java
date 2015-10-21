@@ -102,7 +102,7 @@ public class LocalEnvironment implements IEnvironment, ITransactional {
 		if (isQuoted(name)) {
 			return Value.create(unquote(name));
 		}
-		if (isDefined(name)) {
+		if (isKnown(name)) {
 			return fixups.get(name).peek().getValue();
 		}
 		return env.get(name);
@@ -123,6 +123,7 @@ public class LocalEnvironment implements IEnvironment, ITransactional {
 			} else {
 				f.setValue(value);
 			}
+			return;
 		}
 		throw new CommonException("Fixup [" + name + "] not found");
 	}
@@ -139,6 +140,7 @@ public class LocalEnvironment implements IEnvironment, ITransactional {
 			if (f.getDeep() >= deep) {
 				s.pop();
 			}
+			return;
 		}
 		throw new CommonException("Fixup [" + name + "] not found");
 	}

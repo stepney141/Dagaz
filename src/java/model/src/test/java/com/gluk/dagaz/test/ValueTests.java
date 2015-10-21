@@ -36,4 +36,12 @@ public class ValueTests {
 		assertFalse(a == c);
 		assertTrue(a.getBoolean() == c.getBoolean());
 	}
+
+	@Test
+	public void testValueReference() throws CommonException {
+		IValue a = Value.create("a");
+		IValue b = Value.quote("a");
+		assertFalse(a == b);
+		assertTrue(a.getString().equals(b.getString()));
+	}
 }

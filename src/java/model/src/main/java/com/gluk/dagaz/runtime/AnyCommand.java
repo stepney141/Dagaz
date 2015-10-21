@@ -24,7 +24,10 @@ public class AnyCommand extends AbstractCommand { // -- v
 	@Override
 	public boolean execute(IDeferredCheck state, IEnvironment env) throws CommonException {
 		super.execute(state, env);
-		AnyUndo u = (AnyUndo)processor.getUndo().peek(); 
+		if (processor.getUndo().isEmpty()) {
+			return false;
+		}
+		AnyUndo u = (AnyUndo)processor.getUndo().peek();
 		int ix = u.getIndex();
 		if (ix >= values.size()) {
 			processor.getUndo().pop();

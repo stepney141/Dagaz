@@ -23,8 +23,8 @@ public interface IReserved {
 	public final static String STATE_NOT_FRIEND = "not-friend?";         // [out] boolean - позиция не содержит дружественную фигуру
 	
 	// Commands
+	public final static String CMD_QUOTE        = "_quote";              // Цитирование
 	public final static String CMD_END          = "_end";                // Завершение расчёта хода
-	public final static String CMD_ENV          = "_env";                // Сохранение состояния окружения
 	public final static String CMD_JUMP         = "_jump";               // Безусловный переход
 	public final static String CMD_GET          = "_get";                // Запрос значения по имени
 	public final static String CMD_DROP         = "_drop";               // Удаление значения на стеке

@@ -1,6 +1,7 @@
 package com.gluk.dagaz.parser;
 
 import com.gluk.dagaz.api.model.IReserved;
+import com.gluk.dagaz.api.parser.IStatementInternal;
 import com.gluk.dagaz.api.runtime.ICommand;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.runtime.CommandFactory;
@@ -32,8 +33,7 @@ public class CheckStatement extends AbstractStatement {
 	}
 	
 	@Override
-	public void closeChild() throws CommonException {
-		super.closeChild();
+	public void close(IStatementInternal stmt) throws CommonException {
 		if (checkCommand != null) {
 			throw new CommonException("Invalid CHECK arity");
 		}
@@ -50,7 +50,5 @@ public class CheckStatement extends AbstractStatement {
 		if (isDeferred) {
 			build.setDeferred(baseOffset);
 		}
-		ICommand envCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_ENV, build);
-		build.addCommand(envCommand);
 	}
 }

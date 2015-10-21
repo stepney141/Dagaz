@@ -11,6 +11,14 @@ public class DataFixup {
 		this.value = value;
 		this.deep = deep;
 	}
+	
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(deep);
+		sb.append(": ");
+		sb.append(value.getString());
+		return sb.toString();
+	}
 
 	public IValue getValue() {
 		return value;

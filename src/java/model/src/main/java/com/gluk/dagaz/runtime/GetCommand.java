@@ -1,5 +1,6 @@
 package com.gluk.dagaz.runtime;
 
+import com.gluk.dagaz.api.model.IValue;
 import com.gluk.dagaz.api.state.IDeferredCheck;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.exceptions.CommonException;
@@ -31,7 +32,11 @@ public class GetCommand extends AbstractCommand { // [s] -- v
 			}
 			operand = processor.getStack().pop().getString();
 		}
-		processor.getStack().push(env.get(operand));
+		IValue value = env.get(operand);
+		if (value.isReference()) {
+			value = env.get(value.getString());
+		}
+		processor.getStack().push(value);
 		return true;
 	}
 }

@@ -11,7 +11,6 @@ import com.gluk.dagaz.exceptions.CommonException;
 
 public abstract class DeferredCheck implements IDeferredCheck {
 	
-	private IEnvironment env = null;
 	private List<ICommand> commands = new ArrayList<ICommand>();
 	
 	public Collection<ICommand> getDeferredCommands() {
@@ -24,11 +23,7 @@ public abstract class DeferredCheck implements IDeferredCheck {
 		}
 	}
 	
-	public void setEnvironment(IEnvironment env) {
-		this.env = env;
-	}
-
-	public boolean check() throws CommonException {
+	public boolean check(IEnvironment env) throws CommonException {
 		if ((env == null) || commands.isEmpty()) {
 			return true;
 		}

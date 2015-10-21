@@ -1,6 +1,7 @@
 package com.gluk.dagaz.parser;
 
 import com.gluk.dagaz.api.model.IReserved;
+import com.gluk.dagaz.api.parser.IStatementInternal;
 import com.gluk.dagaz.api.runtime.ICommand;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.runtime.CommandFactory;
@@ -29,11 +30,15 @@ public class LetStatement extends AbstractStatement {
 	}
 
 	@Override
-	public void closeChild() throws CommonException {
-		super.closeChild();
+	public void close(IStatementInternal stmt) throws CommonException {
 		if ((name == null) || (letCommand != null)) {
 			throw new CommonException("Syntax error");
 		}
 		addLetCommand();
+	}
+
+	@Override
+	public void open(IStatementInternal stmt) throws CommonException {
+		stmt.setQuoted();
 	}
 }

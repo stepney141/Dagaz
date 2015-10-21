@@ -5,8 +5,8 @@ import java.util.Map;
 
 import com.gluk.dagaz.api.model.IReserved;
 import com.gluk.dagaz.api.parser.IBuild;
-import com.gluk.dagaz.api.parser.IStatement;
 import com.gluk.dagaz.api.parser.IStatementFactory;
+import com.gluk.dagaz.api.parser.IStatementInternal;
 import com.gluk.dagaz.exceptions.CommonException;
 
 public class StatementFactory implements IStatementFactory {
@@ -50,7 +50,7 @@ public class StatementFactory implements IStatementFactory {
 		classes.put(IReserved.STMT_NOT_ZONE,    ZoneStatement.class);
 	}
 
-	public IStatement createStatement(String name, IBuild build) throws CommonException {
+	public IStatementInternal createStatement(String name, IBuild build) throws CommonException {
 		AbstractStatement r = null;
 		Class<?> c = classes.get(name);
 		if (c == null) {

@@ -25,7 +25,7 @@ public class DecCommand extends AbstractCommand { // -- n
 			throw new CommonException("Invalid arguments");
 		}
 		IValue v = env.get(name);
-		env.set(name, Value.create(v.getNumber() - 1)); // Важно: 0 интерпретируется как false
+		env.set(name, Value.create(v.getNumber() - 1));
 		processor.getStack().push(v);
 		return true;
 	}
