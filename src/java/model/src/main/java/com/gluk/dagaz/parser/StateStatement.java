@@ -6,7 +6,7 @@ import com.gluk.dagaz.api.runtime.ICommand;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.runtime.CommandFactory;
 
-public class StateStatement extends AbstractStatement {
+public class StateStatement extends AbstractExpression {
 	
 	private final static String INTERNAL_POS_VALUE = "_pos";
 

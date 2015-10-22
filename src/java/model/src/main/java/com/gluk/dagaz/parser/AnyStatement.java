@@ -7,7 +7,7 @@ import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.runtime.CommandFactory;
 import com.gluk.dagaz.utils.Value;
 
-public class AnyStatement extends AbstractStatement {
+public class AnyStatement extends AbstractExpression {
 
 	private ICommand anyCommand = null;
 	private boolean isQuoted = false;

@@ -47,8 +47,8 @@ public abstract class AbstractStatement implements IStatementInternal {
 		if (childStatement.childIsActive()) {
 			childStatement.closeChild();
 		} else {
-			close(childStatement);
 			childStatement.close();
+			close(childStatement);
 			childStatement = null;
 		}
 	}
@@ -69,7 +69,11 @@ public abstract class AbstractStatement implements IStatementInternal {
 		}
 	}
 	
-	public abstract void addOperand(String name) throws CommonException;
+	public boolean isExpression() {
+		return false;
+	}
+	
+	public void addOperand(String name) throws CommonException {}
 	public void open(String name) throws CommonException {}
 	public void close() throws CommonException {}
 	public void open(IStatementInternal stmt) throws CommonException {}

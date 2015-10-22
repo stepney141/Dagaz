@@ -27,4 +27,12 @@ public class MockMoveLogger implements IMoveLogger {
 	public void log(String notation) {
 		sb.append(notation);
 	}
+
+	public void savepoint() {}
+
+	public boolean rollback() throws CommonException {
+		return false;
+	}
+
+	public void clear() {}
 }

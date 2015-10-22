@@ -23,6 +23,7 @@ public class AndStatement extends ShortCircuitStatement {
 		build.addCommand(notCommand);
 		int currentOffset = build.getOffset();
 		ICommand ifCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_IF, build);
+		build.addCommand(ifCommand);
 		ifCommand.addArgument(ifOffset - currentOffset);
 	}
 }

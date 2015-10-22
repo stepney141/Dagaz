@@ -20,10 +20,11 @@ import com.gluk.dagaz.mock.MockProcessor;
 import com.gluk.dagaz.mock.MockState;
 import com.gluk.dagaz.runtime.CommandFactory;
 import com.gluk.dagaz.state.GlobalEnvironment;
+import com.gluk.dagaz.state.LocalEnvironment;
 import com.gluk.dagaz.utils.AnyUndo;
 import com.gluk.dagaz.utils.Value;
 
-// TODO: let, capture, take, put
+// TODO: capture, take, put
 
 public class RuntimeTests {
 
@@ -242,6 +243,24 @@ public class RuntimeTests {
 		assertTrue(env.isDefined("x"));
 		assertTrue(env.get("x").getNumber() == 1);
 	}
+	
+	@Test
+	public void testLetCommand() throws CommonException {
+		IEnvironment ge = new GlobalEnvironment();
+		LocalEnvironment env = new LocalEnvironment(ge);
+		IBoard board = new Board();
+		IMoveLogger logger = new MockMoveLogger();
+		IProcessor processor = new MockProcessor(board, logger);
+		IDeferredCheck state = new MockState();
+		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_LET, processor);
+		c.addArgument("x");
+		assertFalse(env.isDefined("x"));
+		processor.getStack().push(Value.create(1));
+		assertTrue(c.execute(state, env));
+		assertTrue(processor.getStack().isEmpty());
+		assertTrue(env.isDefined("x"));
+		assertTrue(env.get("x").getNumber() == 1);
+	}	
 	
 	@Test
 	public void testDelCommand() throws CommonException {

@@ -23,6 +23,8 @@ public class SeqStatement extends AbstractStatement {
 	
 	@Override
 	public void close(IStatementInternal stmt) throws CommonException {
-		addDropCommand();
+		if (stmt.isExpression()) {
+			addDropCommand();
+		}
 	}
 }

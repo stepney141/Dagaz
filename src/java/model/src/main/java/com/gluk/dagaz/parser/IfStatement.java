@@ -11,6 +11,11 @@ public class IfStatement extends AbstractStatement {
 	private int jumpOffset = 0;
 	private ICommand jumpCommand = null;
 	
+	private void addDropCommand() throws CommonException {
+		ICommand dropCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_DROP, build);
+		build.addCommand(dropCommand);
+	}
+
 	private void addIfCommand() throws CommonException {
 		int ifOffset = build.getOffset();
 		ICommand ifCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_IF, build);
@@ -24,12 +29,7 @@ public class IfStatement extends AbstractStatement {
 	
 	@Override
 	public void addOperand(String name) throws CommonException {
-		ICommand getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
-		build.addCommand(getCommand);
-		getCommand.addArgument(name);
-		if (jumpCommand == null) {
-			addIfCommand();
-		} else if (IReserved.STMT_ELSE.equals(name)) {
+		if (IReserved.STMT_ELSE.equals(name)) {
 			if (jumpCommand == null) {
 				throw new CommonException("Syntax error");
 			}
@@ -40,9 +40,15 @@ public class IfStatement extends AbstractStatement {
 			jumpCommand.addArgument(currentOffset - jumpOffset);
 			jumpOffset = offset;
 			jumpCommand = cmd;
+			return;
+		}
+		ICommand getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
+		build.addCommand(getCommand);
+		getCommand.addArgument(name);
+		if (jumpCommand == null) {
+			addIfCommand();
 		} else {
-			ICommand dropCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_DROP, build);
-			build.addCommand(dropCommand);
+			addDropCommand();
 		}
 	}
 
@@ -50,7 +56,9 @@ public class IfStatement extends AbstractStatement {
 	public void close(IStatementInternal stmt) throws CommonException {
 		if (jumpCommand == null) {
 			addIfCommand();
-		}
+		} else if (stmt.isExpression()) {
+			addDropCommand();
+		} 
 	}
 
 	@Override

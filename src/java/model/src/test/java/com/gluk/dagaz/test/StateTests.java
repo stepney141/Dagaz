@@ -14,6 +14,8 @@ import com.gluk.dagaz.state.GlobalEnvironment;
 import com.gluk.dagaz.state.LocalEnvironment;
 import com.gluk.dagaz.utils.Value;
 
+// TODO: State, StateEnvironment, MoveGenerator
+
 public class StateTests {
 
 	@Test

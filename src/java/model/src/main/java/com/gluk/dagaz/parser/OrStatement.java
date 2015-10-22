@@ -21,6 +21,7 @@ public class OrStatement extends ShortCircuitStatement {
 	protected void exitFrame() throws CommonException {
 		int currentOffset = build.getOffset();
 		ICommand ifCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_IF, build);
+		build.addCommand(ifCommand);
 		ifCommand.addArgument(ifOffset - currentOffset);
 	}
 }

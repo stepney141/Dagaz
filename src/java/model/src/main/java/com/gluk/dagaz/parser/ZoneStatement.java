@@ -6,7 +6,7 @@ import com.gluk.dagaz.api.runtime.ICommand;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.runtime.CommandFactory;
 
-public class ZoneStatement extends AbstractStatement {  
+public class ZoneStatement extends AbstractExpression {  
 
 	private String func = null;
 	private String zone = null;

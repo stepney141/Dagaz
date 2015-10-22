@@ -24,6 +24,9 @@ public class LetStatement extends AbstractStatement {
 			if (letCommand != null) {
 				throw new CommonException("Syntax error");
 			}
+			ICommand getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
+			build.addCommand(getCommand);
+			getCommand.addArgument(name);
 			addLetCommand();
 		}
 		this.name = name;

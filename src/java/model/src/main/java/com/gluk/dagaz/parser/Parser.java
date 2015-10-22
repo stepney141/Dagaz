@@ -1,4 +1,4 @@
-﻿package com.gluk.dagaz.parser;
+package com.gluk.dagaz.parser;
 
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
@@ -20,7 +20,8 @@ public class Parser implements IParser {
     public final static String STR_TAG       = "s";
     public final static String NUM_TAG       = "v";
 
-    private final static String INCLUDE_ATOM  = "include";
+    private final static String INCLUDE_TAG   = "include";
+    private final static String IMPORT_TAG    = "import";
     
     private final static int    NORMAL_STATUS        = 0; 
     private final static int    WAIT_FILENAME_STATUS = 1; 
@@ -107,7 +108,7 @@ public class Parser implements IParser {
 		if (status != NORMAL_STATUS) {
 			throw new CommonException("Invalid status [" + Integer.toString(status) + "]");
 		}
-		if (s.equals(INCLUDE_ATOM)) {
+		if (s.equals(INCLUDE_TAG)) {
 			status = WAIT_FILENAME_STATUS;
 			return;
 		}

@@ -25,7 +25,10 @@ public class LocalEnvironment implements IEnvironment, ITransactional {
 		deep++;
 	}
 
-	public void rollback() throws CommonException {
+	public boolean rollback() throws CommonException {
+		if (deep == 0) {
+			return false;
+		}
 		deep--;
 		for (Stack<DataFixup> s: fixups.values()) {
 			while (!s.isEmpty()) {
@@ -36,6 +39,7 @@ public class LocalEnvironment implements IEnvironment, ITransactional {
 				s.pop();
 			}
 		}
+		return true;
 	}
 	
 	private static boolean isNumber(String s) {
@@ -143,5 +147,10 @@ public class LocalEnvironment implements IEnvironment, ITransactional {
 			return;
 		}
 		throw new CommonException("Fixup [" + name + "] not found");
+	}
+
+	public void clear() {
+		fixups.clear();
+		deep = 0;
 	}
 }

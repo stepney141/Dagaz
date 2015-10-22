@@ -6,7 +6,7 @@ import com.gluk.dagaz.api.runtime.ICommand;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.runtime.CommandFactory;
 
-public abstract class ShortCircuitStatement extends AbstractStatement {
+public abstract class ShortCircuitStatement extends AbstractExpression {
 
 	protected int ifOffset = 0;
 	protected int exitOffset = 0;
@@ -31,6 +31,8 @@ public abstract class ShortCircuitStatement extends AbstractStatement {
 		ICommand getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
 		build.addCommand(getCommand);
 		getCommand.addArgument(name);
+		int currentOffset = build.getOffset();
+		exitCommand.addArgument(currentOffset - exitOffset);
 	}	
 
 	@Override

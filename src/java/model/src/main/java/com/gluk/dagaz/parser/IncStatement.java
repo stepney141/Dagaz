@@ -6,7 +6,7 @@ import com.gluk.dagaz.api.runtime.ICommand;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.runtime.CommandFactory;
 
-public class IncStatement extends AbstractStatement {
+public class IncStatement extends AbstractExpression {
 	
 	private String name = null;
 

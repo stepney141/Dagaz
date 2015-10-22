@@ -1,5 +1,7 @@
 package com.gluk.dagaz.api.model;
 
+import java.util.Collection;
+
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.exceptions.CommonException;
 
@@ -13,4 +15,5 @@ public interface IBoard {
 	void addZone(String name, String pos) throws CommonException;                       // Определение зоны
 	boolean inZone(String name, String pos, IEnvironment env) throws CommonException;   // Проверка принадлежности позиции зоне
 	String navigate(String name, String from, IEnvironment env) throws CommonException; // Перемещение с указанной позиции
+	Collection<String> getPositions();                                                  // Получение списка всех позиций
 }

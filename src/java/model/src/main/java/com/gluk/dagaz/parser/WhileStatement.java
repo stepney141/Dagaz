@@ -12,6 +12,11 @@ public class WhileStatement extends AbstractStatement {
 	private int ifOffset = 0;
 	private ICommand ifCommand = null;
 
+	private void addDropCommand() throws CommonException {
+		ICommand dropCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_DROP, build);
+		build.addCommand(dropCommand);
+	}
+
 	@Override
 	public void open(String name) throws CommonException {
 		baseOffset = build.getOffset();
@@ -46,8 +51,7 @@ public class WhileStatement extends AbstractStatement {
 		if (ifCommand == null) {
 			addIfCommand();
 		} else {
-			ICommand dropCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_DROP, build);
-			build.addCommand(dropCommand);
+			addDropCommand();
 		}
 	}
 
@@ -55,6 +59,8 @@ public class WhileStatement extends AbstractStatement {
 	public void close(IStatementInternal stmt) throws CommonException {
 		if (ifCommand == null) {
 			addIfCommand();
-		}
+		} else if (stmt.isExpression()) {
+			addDropCommand();
+		} 
 	}
 }

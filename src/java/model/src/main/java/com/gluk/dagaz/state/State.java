@@ -39,6 +39,16 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 		this.board = board;
 	}
 
+	public void clear() {
+		pieces.clear();
+		hand.clear();
+		values.clear();
+		undo.clear();
+		currentPos = null;
+		hash = 0L;
+		deep = 0;
+	}
+	
 	public boolean equals(State s) {
 		return this == s;
 	}
@@ -62,7 +72,10 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 		deep++;
 	}
 
-	public void rollback() throws CommonException {
+	public boolean rollback() throws CommonException {
+		if (undo.isEmpty()) {
+			return false;
+		}
 		while (!undo.isEmpty()) {
 			AbstractUndo u = undo.peek();
 			if (u.getDeep() <= deep) {
@@ -71,6 +84,7 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 			u.execute(this);
 			undo.pop();
 		}
+		return true;
 	}
 
 	public IState clone() throws CloneNotSupportedException {

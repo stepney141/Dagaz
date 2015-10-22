@@ -6,7 +6,7 @@ import com.gluk.dagaz.api.runtime.ICommand;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.runtime.CommandFactory;
 
-public class ExpressionStatement extends AbstractStatement {
+public class ExpressionStatement extends AbstractExpression {
 	
 	private String name = null;
 	private int arity = 0;

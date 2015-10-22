@@ -6,4 +6,5 @@ public interface IStatement {
 	void openChild(String name) throws CommonException;
 	void closeChild() throws CommonException;
 	void addLexem(String name) throws CommonException;
+	boolean isExpression();
 }
