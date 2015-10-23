@@ -13,13 +13,13 @@ import com.gluk.dagaz.mock.MockMoveLogger;
 import com.gluk.dagaz.mock.MockProcessor;
 import com.gluk.dagaz.mock.MockState;
 import com.gluk.dagaz.mock.MockStatement;
-import com.gluk.dagaz.parser.AbstractStatement;
-import com.gluk.dagaz.parser.SeqStatement;
 import com.gluk.dagaz.state.GlobalEnvironment;
 import com.gluk.dagaz.state.LocalEnvironment;
+import com.gluk.dagaz.statements.AbstractStatement;
+import com.gluk.dagaz.statements.SeqStatement;
 import com.gluk.dagaz.utils.Value;
 
-// TODO: StateStatement, ZoneStatement, AnyStatement, EndStatement, Get Commands
+// TODO: StateStatement, ZoneStatement, AnyStatement, EndStatement
 
 public class ParserTests {
 
@@ -53,7 +53,7 @@ public class ParserTests {
 	}
 
 	@Test
-	public void testAndStatement() throws CommonException { // (and (dec! a) (dec! b) (dec! c) ) 
+	public void testAndStatement() throws CommonException { // (and (dec! a) b (dec! c) ) 
 		IEnvironment ge = new GlobalEnvironment();
 		IEnvironment env = new LocalEnvironment(ge);
 		Board board = new Board();
@@ -66,44 +66,39 @@ public class ParserTests {
 		root.openChild("dec!");
 		root.addLexem("a");
 		root.closeChild();
-		root.openChild("dec!");
 		root.addLexem("b");
-		root.closeChild();
 		root.openChild("dec!");
 		root.addLexem("c");
 		root.closeChild();
 		root.closeChild();
 		env.let("a", Value.create(3));
-		env.let("b", Value.create(3));
+		env.let("b", Value.create(true));
 		env.let("c", Value.create(3));
 		processor.execute(state, env);
 		assertTrue(processor.getStack().pop().getBoolean());
 		assertTrue(processor.getStack().isEmpty());
 		assertTrue(env.get("a").getNumber() == 2);
-		assertTrue(env.get("b").getNumber() == 2);
 		assertTrue(env.get("c").getNumber() == 2);
 		env.set("a", Value.create(3));
-		env.set("b", Value.create(1));
+		env.set("b", Value.create(true));
 		env.set("c", Value.create(0));
 		processor.execute(state, env);
 		assertFalse(processor.getStack().pop().getBoolean());
 		assertTrue(processor.getStack().isEmpty());
 		assertTrue(env.get("a").getNumber() == 2);
-		assertTrue(env.get("b").getNumber() == 0);
 		assertTrue(env.get("c").getNumber() == -1);
 		env.set("a", Value.create(1));
-		env.set("b", Value.create(0));
+		env.set("b", Value.create(false));
 		env.set("c", Value.create(0));
 		processor.execute(state, env);
 		assertFalse(processor.getStack().pop().getBoolean());
 		assertTrue(processor.getStack().isEmpty());
 		assertTrue(env.get("a").getNumber() == 0);
-		assertTrue(env.get("b").getNumber() == -1);
 		assertTrue(env.get("c").getNumber() == 0);
 	}
 
 	@Test
-	public void testOrStatement() throws CommonException { // (or (dec! a) (dec! b) (dec! c) ) 
+	public void testOrStatement() throws CommonException { // (or (dec! a) b (dec! c) ) 
 		IEnvironment ge = new GlobalEnvironment();
 		IEnvironment env = new LocalEnvironment(ge);
 		Board board = new Board();
@@ -116,53 +111,47 @@ public class ParserTests {
 		root.openChild("dec!");
 		root.addLexem("a");
 		root.closeChild();
-		root.openChild("dec!");
 		root.addLexem("b");
-		root.closeChild();
 		root.openChild("dec!");
 		root.addLexem("c");
 		root.closeChild();
 		root.closeChild();
 		env.let("a", Value.create(0));
-		env.let("b", Value.create(0));
+		env.let("b", Value.create(false));
 		env.let("c", Value.create(0));
 		processor.execute(state, env);
 		assertFalse(processor.getStack().pop().getBoolean());
 		assertTrue(processor.getStack().isEmpty());
 		assertTrue(env.get("a").getNumber() == -1);
-		assertTrue(env.get("b").getNumber() == -1);
 		assertTrue(env.get("c").getNumber() == -1);
 		env.set("a", Value.create(0));
-		env.set("b", Value.create(0));
+		env.set("b", Value.create(false));
 		env.set("c", Value.create(1));
 		processor.execute(state, env);
 		assertTrue(processor.getStack().pop().getBoolean());
 		assertTrue(processor.getStack().isEmpty());
 		assertTrue(env.get("a").getNumber() == -1);
-		assertTrue(env.get("b").getNumber() == -1);
 		assertTrue(env.get("c").getNumber() == 0);
 		env.set("a", Value.create(0));
-		env.set("b", Value.create(2));
+		env.set("b", Value.create(true));
 		env.set("c", Value.create(0));
 		processor.execute(state, env);
 		assertTrue(processor.getStack().pop().getBoolean());
 		assertTrue(processor.getStack().isEmpty());
 		assertTrue(env.get("a").getNumber() == -1);
-		assertTrue(env.get("b").getNumber() == 1);
 		assertTrue(env.get("c").getNumber() == 0);
 		env.set("a", Value.create(3));
-		env.set("b", Value.create(2));
+		env.set("b", Value.create(true));
 		env.set("c", Value.create(0));
 		processor.execute(state, env);
 		assertTrue(processor.getStack().pop().getBoolean());
 		assertTrue(processor.getStack().isEmpty());
 		assertTrue(env.get("a").getNumber() == 2);
-		assertTrue(env.get("b").getNumber() == 2);
 		assertTrue(env.get("c").getNumber() == 0);
 	}
 	
 	@Test
-	public void testIfStatement() throws CommonException { // (if (> x 3) (set! x 3)) 
+	public void testIfStatement() throws CommonException { // (if (> x 3) (set! x 3) x) 
 		IEnvironment ge = new GlobalEnvironment();
 		IEnvironment env = new LocalEnvironment(ge);
 		Board board = new Board();
@@ -180,6 +169,7 @@ public class ParserTests {
 		root.addLexem("x");
 		root.addLexem("3");
 		root.closeChild();
+		root.addLexem("x");
 		root.closeChild();
 		env.let("x", Value.create(1));
 		processor.execute(state, env);
@@ -192,7 +182,7 @@ public class ParserTests {
 	}
 	
 	@Test
-	public void testIfElseStatement() throws CommonException { // (if (> x 3) (set! x 10) else (set! x 0)) 
+	public void testIfElseStatement() throws CommonException { // (if (> x 3) x (set! x 10) else (set! x 0) x) 
 		IEnvironment ge = new GlobalEnvironment();
 		IEnvironment env = new LocalEnvironment(ge);
 		Board board = new Board();
@@ -206,6 +196,7 @@ public class ParserTests {
 		root.addLexem("x");
 		root.addLexem("3");
 		root.closeChild();
+		root.addLexem("x");
 		root.openChild("set!");
 		root.addLexem("x");
 		root.addLexem("10");
@@ -215,6 +206,7 @@ public class ParserTests {
 		root.addLexem("x");
 		root.addLexem("0");
 		root.closeChild();
+		root.addLexem("x");
 		root.closeChild();
 		env.let("x", Value.create(3));
 		processor.execute(state, env);
@@ -227,7 +219,7 @@ public class ParserTests {
 	}
 
 	@Test
-	public void testWhileStatement() throws CommonException { // (while (dec! x) (inc! y)) 
+	public void testWhileStatement() throws CommonException { // (while (dec! x) x (inc! y)) 
 		IEnvironment ge = new GlobalEnvironment();
 		IEnvironment env = new LocalEnvironment(ge);
 		Board board = new Board();
@@ -240,6 +232,7 @@ public class ParserTests {
 		root.openChild("dec!");
 		root.addLexem("x");
 		root.closeChild();
+		root.addLexem("x");
 		root.openChild("inc!");
 		root.addLexem("y");
 		root.closeChild();

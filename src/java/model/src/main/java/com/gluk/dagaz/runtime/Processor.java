@@ -7,9 +7,7 @@ import java.util.Set;
 
 import com.gluk.dagaz.api.application.IMoveLogger;
 import com.gluk.dagaz.api.model.IValue;
-import com.gluk.dagaz.api.parser.IBuild;
 import com.gluk.dagaz.api.runtime.ICommand;
-import com.gluk.dagaz.api.runtime.IProcessor;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.api.state.IPiece;
 import com.gluk.dagaz.api.state.ITransactional;
@@ -22,17 +20,19 @@ import com.gluk.dagaz.state.State;
 import com.gluk.dagaz.state.StateEnvironment;
 import com.gluk.dagaz.utils.AnyUndo;
 
-public class Processor extends AbstractProcessor implements IProcessor, IBuild {
+public class Processor extends AbstractProcessor {
 
 	private Players players;
+	private String pieceType;
 	private Set<ITransactional> trans = new HashSet<ITransactional>();
 	
 	private Set<String> localNames = new HashSet<String>();
 	private List<Integer> fixups = new ArrayList<Integer>();
 	
-	public Processor(Players players, Board board, IMoveLogger logger) {
+	public Processor(String pieceType, Players players, Board board, IMoveLogger logger) {
 		super(board, logger);
 		this.players = players;
+		this.pieceType = pieceType;
 	}
 	
 	public void addFixup(int offset) {
@@ -91,7 +91,7 @@ public class Processor extends AbstractProcessor implements IProcessor, IBuild {
 		trans.add(getMoveLogger());
 	}
 	
-	public void execute(int numOrder, String pieceType, State old, IEnvironment ge) throws CommonException, CloneNotSupportedException {
+	public void execute(int numOrder, State old, IEnvironment ge) throws CommonException, CloneNotSupportedException {
 		PlayersEnvironment pe = new PlayersEnvironment(players, numOrder, ge);
 		for (String pos: getBoard().getPositions()) {
 			IPiece p = old.getPiece(pos);
@@ -104,7 +104,7 @@ public class Processor extends AbstractProcessor implements IProcessor, IBuild {
 			StateEnvironment se = new StateEnvironment(state, getBoard(), pe);
 			LocalEnvironment env = new LocalEnvironment(se);
 			trans.add(env);
-			execute(state, env); // TODO: В конец цепочки добавлять пустую any-команду для выполнения отката вариантов
+			execute(state, env);
 		}
 	}
 }

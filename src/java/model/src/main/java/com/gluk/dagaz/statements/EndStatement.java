@@ -1,4 +1,4 @@
-package com.gluk.dagaz.parser;
+package com.gluk.dagaz.statements;
 
 import com.gluk.dagaz.api.model.IReserved;
 import com.gluk.dagaz.api.runtime.ICommand;

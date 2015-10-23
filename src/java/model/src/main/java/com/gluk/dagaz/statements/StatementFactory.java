@@ -1,4 +1,4 @@
-package com.gluk.dagaz.parser;
+package com.gluk.dagaz.statements;
 
 import java.util.HashMap;
 import java.util.Map;
