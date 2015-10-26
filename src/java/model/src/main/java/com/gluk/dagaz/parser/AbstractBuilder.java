@@ -21,11 +21,16 @@ public abstract class AbstractBuilder implements IBuilder {
 	protected final static String ALL_XP    = "*";
 	protected final static String N_XP      = "n";
 	protected final static String V_XP      = "v";
+	protected final static String GAME_XP   = "n[@t=\'game\']";
+	protected final static String SETUP_XP  = "n[@t=\'players\']";
 	protected final static String BOARD_XP  = "n[@t=\'board\']";
+	protected final static String GRID_XP   = "n[@t=\'grid\']";
 	protected final static String DIM_XP    = "n[@t=\'dim\']";
 	protected final static String DIR_XP    = "n[@t=\'dir\']";
 	protected final static String POS_XP    = "n[@t=\'pos\']";
 	protected final static String KILL_XP   = "n[@t=\'kill\']";
+	protected final static String LINK_XP   = "n[@t=\'link\']";
+	protected final static String UNLINK_XP = "n[@t=\'unlink\']";
 	protected final static String PIECE_XP  = "n[@t=\'piece\']";
 	protected final static String MOVE_XP   = "n[@t=\'move\']";
 	protected final static String PRE_XP    = "n[@t=\'pre\']";
@@ -36,6 +41,7 @@ public abstract class AbstractBuilder implements IBuilder {
 	private   final static String TAG_XP    = "@t";
 	private   final static String VALUE_XP  = "n/@t";
 	private   final static String NAME_XP   = "n[@t=\'name\']/n/@t";
+	private   final static String GBOARD_XP = "n[@t=\'board\']/n/@t";
 	
 	private static XPathFactory xpf = null;
 	private Map<String, XPathExpression> xpes = new HashMap<String, XPathExpression>();
@@ -111,6 +117,15 @@ public abstract class AbstractBuilder implements IBuilder {
 
 	protected String getName(Node n) throws CommonException {
 		XPathExpression xpe = getXPath(NAME_XP);
+		try {
+			return xpe.evaluate(n);
+		} catch (XPathExpressionException ex) {
+			throw new CommonException(ex.toString(), ex);
+		}
+	}
+
+	protected String getBoard(Node n) throws CommonException {
+		XPathExpression xpe = getXPath(GBOARD_XP);
 		try {
 			return xpe.evaluate(n);
 		} catch (XPathExpressionException ex) {

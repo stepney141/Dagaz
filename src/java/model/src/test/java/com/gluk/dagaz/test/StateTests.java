@@ -8,10 +8,10 @@ import org.junit.Test;
 import com.gluk.dagaz.api.model.IReserved;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.exceptions.CommonException;
-import com.gluk.dagaz.players.Players;
-import com.gluk.dagaz.players.PlayersEnvironment;
+import com.gluk.dagaz.model.Players;
 import com.gluk.dagaz.state.GlobalEnvironment;
 import com.gluk.dagaz.state.LocalEnvironment;
+import com.gluk.dagaz.state.PlayersEnvironment;
 import com.gluk.dagaz.utils.Value;
 
 // TODO: State, StateEnvironment, MoveGenerator

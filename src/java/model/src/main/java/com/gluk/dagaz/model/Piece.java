@@ -1,4 +1,4 @@
-﻿package com.gluk.dagaz.board;
+package com.gluk.dagaz.model;
 
 import java.util.HashMap;
 import java.util.Map;

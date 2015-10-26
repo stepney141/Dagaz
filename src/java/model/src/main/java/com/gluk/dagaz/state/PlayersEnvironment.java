@@ -1,9 +1,10 @@
-package com.gluk.dagaz.players;
+package com.gluk.dagaz.state;
 
 import com.gluk.dagaz.api.model.IReserved;
 import com.gluk.dagaz.api.model.IValue;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.exceptions.CommonException;
+import com.gluk.dagaz.model.Players;
 import com.gluk.dagaz.utils.Value;
 
 public class PlayersEnvironment implements IEnvironment {

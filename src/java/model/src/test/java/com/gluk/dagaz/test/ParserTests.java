@@ -7,12 +7,12 @@ import org.junit.Test;
 
 import com.gluk.dagaz.api.state.IDeferredCheck;
 import com.gluk.dagaz.api.state.IEnvironment;
-import com.gluk.dagaz.board.Board;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.mock.MockMoveLogger;
 import com.gluk.dagaz.mock.MockProcessor;
 import com.gluk.dagaz.mock.MockState;
 import com.gluk.dagaz.mock.MockStatement;
+import com.gluk.dagaz.model.Board;
 import com.gluk.dagaz.state.GlobalEnvironment;
 import com.gluk.dagaz.state.LocalEnvironment;
 import com.gluk.dagaz.statements.AbstractStatement;

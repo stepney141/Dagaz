@@ -11,12 +11,12 @@ import org.junit.Test;
 import com.gluk.dagaz.api.model.IBoard;
 import com.gluk.dagaz.api.model.IPlayers;
 import com.gluk.dagaz.api.state.IEnvironment;
-import com.gluk.dagaz.board.Board;
-import com.gluk.dagaz.board.Grid;
 import com.gluk.dagaz.exceptions.CommonException;
-import com.gluk.dagaz.players.Players;
-import com.gluk.dagaz.players.PlayersEnvironment;
+import com.gluk.dagaz.model.Board;
+import com.gluk.dagaz.model.Grid;
+import com.gluk.dagaz.model.Players;
 import com.gluk.dagaz.state.GlobalEnvironment;
+import com.gluk.dagaz.state.PlayersEnvironment;
 
 public class ModelTests {
 	

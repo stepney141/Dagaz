@@ -1,4 +1,4 @@
-package com.gluk.dagaz.players;
+package com.gluk.dagaz.model;
 
 import java.util.ArrayList;
 import java.util.List;
