@@ -107,14 +107,24 @@ public class StateEnvironment implements IEnvironment {
 	}
 
 	public void let(String name, IValue value) throws CommonException {
+		if (state.isDefined(name)) {
+			throw new CommonException("Value [" + name + "] can not be replaced");
+		}
 		env.let(name, value);
 	}
 
 	public void set(String name, IValue value) throws CommonException {
-		env.set(name, value);
+		if (state.isDefined(name)) {
+			state.setValue(name, value);
+		} else {
+			env.set(name, value);
+		}
 	}
 
 	public void del(String name) throws CommonException {
+		if (state.isDefined(name)) {
+			throw new CommonException("Value [" + name + "] can not be deleted");
+		}
 		env.del(name);
 	}
 }

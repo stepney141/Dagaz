@@ -24,6 +24,7 @@ public abstract class AbstractBuilder implements IBuilder {
 	protected final static String GAME_XP   = "n[@t=\'game\']";
 	protected final static String SETUP_XP  = "n[@t=\'players\']";
 	protected final static String BOARD_XP  = "n[@t=\'board\']";
+	protected final static String ATTR_XP   = "n[@t=\'attribute\']";
 	protected final static String GRID_XP   = "n[@t=\'grid\']";
 	protected final static String DIM_XP    = "n[@t=\'dim\']";
 	protected final static String DIR_XP    = "n[@t=\'dir\']";

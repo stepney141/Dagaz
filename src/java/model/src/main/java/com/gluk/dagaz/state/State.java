@@ -22,8 +22,6 @@ import com.gluk.dagaz.undo.UndoTake;
 import com.gluk.dagaz.undo.UndoValue;
 import com.gluk.dagaz.utils.PieceHandler;
 
-// TODO: Get and set Piece'a attributes
-
 public class State extends DeferredCheck implements ITransactional, Cloneable {
 
 	private Board board;
@@ -101,7 +99,7 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 		return r;
 	}
 	
-	public IValue getFlag(String name, String pos) {
+	private IValue getFlag(String name, String pos) {
 		Map<String, IValue> l = values.get(name);
 		if (l == null) {
 			return null;
@@ -111,7 +109,26 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 	}
 	
 	public IValue getValue(String name) throws CommonException {
-		return getFlag(name, "");
+		IValue r = null;
+		IValue defValue = board.getDefaultValue(name);
+		if (defValue != null) {
+			r = getFlag(name, "");
+			if (r == null) {
+				r = defValue;
+			}
+			return r;
+		}
+		if (currentPos != null) {
+			IPiece p = pieces.get(currentPos);
+			if (p != null) {
+				defValue = board.getDefaultValue(p.getName(), name);
+				if (defValue != null) {
+					r = p.getAttribute(name);
+				}
+			}
+			r = getFlag(name, currentPos);
+		}
+		return r;
 	}
 	
 	public void changeFlag(String name, String pos, IValue value) {
@@ -127,14 +144,29 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 		}
 	}
 	
-	public void setFlag(String name, String pos, IValue value) throws CommonException {
+	private void setFlag(String name, String pos, IValue value) throws CommonException {
 		IValue oldValue = getFlag(name, pos);
 		undo.push(new UndoValue(name, pos, oldValue, deep));
 		changeFlag(name, pos, value);
 	}
 	
 	public void setValue(String name, IValue value) throws CommonException {
-		setFlag(name, "", value);
+		if (board.getDefaultValue(name) != null) {
+			setFlag(name, "", value);
+			return;
+		}
+		if (currentPos != null) {
+			IPiece p = pieces.get(currentPos);
+			if (p != null) {
+				if (board.getDefaultValue(p.getName(), name) != null) {
+					p = p.setAttribute(name, value);
+					setPiece(currentPos, p);
+					return;
+				}
+			}
+			setFlag(name, currentPos, value);
+		}
+		throw new CommonException("Value [" + name + "] undefined");
 	}
 
 	public IPiece getPiece(String pos) {
@@ -154,15 +186,6 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 		}
 	}
 	
-	public void changeAttribute(String pos, String name, IValue value) throws CommonException {
-		IPiece piece = getPiece(pos);
-		if (piece == null) {
-			throw new CommonException("Position [" + pos + "] is empty");
-		}
-		piece = piece.setAttribute(name, value);
-		changePiece(pos, piece);
-	}
-
 	public void setPiece(String pos, IPiece piece) throws CommonException {
 		IPiece oldPiece = getPiece(pos);
 		if (oldPiece == null && piece == null) {
@@ -240,11 +263,17 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 	}
 
 	public boolean isDefined(String name) {
-		Map<String, IValue> l = values.get(name);
-		if (l != null) {
-			if (l.get("") != null) {
-				return true;
+		if (board.getDefaultValue(name) != null) {
+			return true;
+		}
+		if (currentPos != null) {
+			IPiece p = pieces.get(currentPos);
+			if (p != null) {
+				if (board.getDefaultValue(p.getName(), name) != null) {
+					return true;
+				}
 			}
+			return getFlag(name, currentPos) != null;
 		}
 		return board.isDefined(name);
 	}

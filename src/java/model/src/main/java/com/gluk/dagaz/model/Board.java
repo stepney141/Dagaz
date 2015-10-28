@@ -8,6 +8,7 @@ import java.util.Set;
 
 import com.gluk.dagaz.api.model.IBoard;
 import com.gluk.dagaz.api.model.IReserved;
+import com.gluk.dagaz.api.model.IValue;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.exceptions.CommonException;
 
@@ -16,6 +17,7 @@ public class Board implements IBoard {
 	private Set<String> positions = new HashSet<String>();
 	private Map<String, Map<String, String>> directions = new HashMap<String, Map<String, String>>();
 	private Map<String, Map<String, Set<String>>> zones = new HashMap<String, Map<String, Set<String>>>();
+	private Map<String, Map<String, IValue>> pieces = new HashMap<String, Map<String, IValue>>();
 	
 	public Collection<String> getPositions() {
 		return positions;
@@ -125,5 +127,33 @@ public class Board implements IBoard {
 
 	public boolean isDefined(String name) {
 		return positions.contains(name) || directions.containsKey(name);
+	}
+
+	public IValue getDefaultValue(String piece, String name) {
+		Map<String, IValue> attributes = pieces.get(piece);
+		if (attributes == null) {
+			return null;
+		}
+		return attributes.get(name);
+	}
+
+	public void setDefaultValue(String piece, String name, IValue value) throws CommonException {
+		Map<String, IValue> attributes = pieces.get(piece);
+		if (attributes == null) {
+			attributes = new HashMap<String, IValue>();
+			pieces.put(piece, attributes);
+		}
+		if (attributes.containsKey(name)) {
+			throw new CommonException("Attribute [" + name + "] of Piece [" + piece + "] already defined");
+		}
+		attributes.put(name, value);
+	}
+
+	public IValue getDefaultValue(String name) {
+		return getDefaultValue("", name);
+	}
+
+	public void setDefaultValue(String name, IValue value) throws CommonException {
+		setDefaultValue("", name, value);
 	}
 }
