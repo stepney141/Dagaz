@@ -20,8 +20,10 @@ public class StateEnvironment implements IEnvironment {
 	}
 
 	public boolean isDefined(String name) throws CommonException {
-		if (name.equals(IReserved.STATE_POSITION)  ||
-			name.equals(IReserved.STATE_PLAYER)    ||
+		if (name.equals(IReserved.STATE_POSITION)) {
+			return state.getPosition() != null;
+		}
+		if (name.equals(IReserved.STATE_PLAYER)    ||
 			name.equals(IReserved.STATE_PIECE)     ||
 			name.equals(IReserved.STATE_IS_EMPTY)  ||
 			name.equals(IReserved.STATE_NOT_EMPTY) ||
@@ -36,7 +38,11 @@ public class StateEnvironment implements IEnvironment {
 
 	public IValue get(String name) throws CommonException {
 		if (name.equals(IReserved.STATE_POSITION)) {
-			return Value.create(state.getPosition());
+			String pos = state.getPosition();
+			if (pos == null) {
+				throw new CommonException("Position unassigned");
+			}
+			return Value.create(pos);
 		}
 		if (name.equals(IReserved.STATE_PLAYER)) {
 			String pos = state.getPosition();

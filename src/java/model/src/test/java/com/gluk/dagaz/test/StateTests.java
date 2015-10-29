@@ -5,16 +5,22 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.gluk.dagaz.api.application.IMoveGenerator;
+import com.gluk.dagaz.api.application.IMoveLogger;
 import com.gluk.dagaz.api.model.IReserved;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.exceptions.CommonException;
+import com.gluk.dagaz.mock.MockMoveGenerator;
+import com.gluk.dagaz.model.Board;
 import com.gluk.dagaz.model.Players;
 import com.gluk.dagaz.state.GlobalEnvironment;
 import com.gluk.dagaz.state.LocalEnvironment;
+import com.gluk.dagaz.state.MoveLogger;
 import com.gluk.dagaz.state.PlayersEnvironment;
+import com.gluk.dagaz.state.State;
 import com.gluk.dagaz.utils.Value;
 
-// TODO: State, StateEnvironment, MoveGenerator
+// TODO: State, StateEnvironment
 
 public class StateTests {
 
@@ -116,5 +122,85 @@ public class StateTests {
 		assertFalse(env.isDefined("y"));
 		env.rollback();
 		assertTrue(env.get("x").getNumber() == 0);
+	}
+	
+	@Test
+	public void testMoveLogger() throws CommonException {
+		IEnvironment env = new GlobalEnvironment();
+		IMoveGenerator mg = new MockMoveGenerator();
+		Board board = new Board();
+		State state = new State(board);
+		IMoveLogger ml = new MoveLogger(state, mg);
+		ml.savepoint();
+		ml.log("e2");
+		ml.savepoint();
+		ml.log("-e4");
+		ml.endMove(env);
+		assertTrue(mg.toString().equals("e2-e4"));
+		ml.savepoint();
+		ml.log("=King");
+		ml.endMove(env);
+		assertTrue(mg.toString().equals("e2-e4=King"));
+		assertTrue(ml.rollback());
+		ml.endMove(env);
+		assertTrue(mg.toString().equals("e2-e4"));
+		assertTrue(ml.rollback());
+		ml.log("-e3");
+		ml.endMove(env);
+		assertTrue(mg.toString().equals("e2-e3"));
+		assertTrue(ml.rollback());
+		ml.endMove(env);
+		assertTrue(mg.toString().isEmpty());
+		assertFalse(ml.rollback());
+	}
+
+	@Test
+	public void testStateGlobal() throws CommonException, CloneNotSupportedException {
+		Board board = new Board();
+		board.addPosition("a1");
+		board.addPosition("a2");
+		board.setDefaultValue("x", Value.create(0));
+		State state = new State(board);
+		assertTrue(state.getPosition() == null);
+		
+		state.savepoint();
+		assertTrue(state.getValue("x").getNumber() == 0);
+		assertTrue(state.getValue("y") == null);
+		state.setValue("x", Value.create(1));
+		assertTrue(state.getValue("x").getNumber() == 1);
+		assertTrue(state.getValue("y") == null);
+		
+		state.savepoint();
+		state.setCurrentPosition("a1");
+		assertTrue(state.getPosition().equals("a1"));
+		state.setValue("y", Value.create(2));
+		assertTrue(state.getValue("x").getNumber() == 1);
+		assertTrue(state.getValue("y").getNumber() == 2);
+		
+		state.savepoint();
+		state.setCurrentPosition("a2");
+		assertTrue(state.getPosition().equals("a2"));
+		assertTrue(state.getValue("x").getNumber() == 1);
+		assertTrue(state.getValue("y") == null);
+		
+		state.savepoint();
+		state.setValue("x", Value.create(3));
+		state.setValue("y", Value.create(4));
+		assertTrue(state.getValue("x").getNumber() == 3);
+		assertTrue(state.getValue("y").getNumber() == 4);
+		
+		state.savepoint();
+		state.setCurrentPosition("a1");
+		assertTrue(state.getPosition().equals("a1"));
+		assertTrue(state.getValue("x").getNumber() == 3);
+		assertTrue(state.getValue("y").getNumber() == 2);
+		
+		State newState = (State)state.clone();
+		assertTrue(newState.getValue("x").getNumber() == 3);
+		assertTrue(newState.getValue("y") == null);
+		assertFalse(newState.rollback());
+		// TODO: rollback, UNDO Change Position !!!
+		
+		
 	}
 }

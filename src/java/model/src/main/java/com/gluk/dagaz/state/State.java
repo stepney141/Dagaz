@@ -18,6 +18,7 @@ import com.gluk.dagaz.undo.UndoDrop;
 import com.gluk.dagaz.undo.UndoMove;
 import com.gluk.dagaz.undo.UndoNavigate;
 import com.gluk.dagaz.undo.UndoPiece;
+import com.gluk.dagaz.undo.UndoPos;
 import com.gluk.dagaz.undo.UndoTake;
 import com.gluk.dagaz.undo.UndoValue;
 import com.gluk.dagaz.utils.PieceHandler;
@@ -37,77 +38,6 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 		this.board = board;
 	}
 
-	public void clear() {
-		pieces.clear();
-		hand.clear();
-		values.clear();
-		undo.clear();
-		currentPos = null;
-		hash = 0L;
-		deep = 0;
-	}
-	
-	public boolean equals(State s) {
-		return this == s;
-	}
-	
-	public int hashCode() {
-		return super.hashCode();
-	}
-	
-	public long getZobristHash() {
-		return hash;
-	}
-	
-	public String getPosition() throws CommonException {
-		if (currentPos == null) {
-			throw new CommonException("Position unassigned");
-		}
-		return currentPos;
-	}
-
-	public void savepoint() {
-		deep++;
-	}
-
-	public boolean rollback() throws CommonException {
-		if (undo.isEmpty()) {
-			return false;
-		}
-		while (!undo.isEmpty()) {
-			AbstractUndo u = undo.peek();
-			if (u.getDeep() <= deep) {
-				break;
-			}
-			u.execute(this);
-			undo.pop();
-		}
-		return true;
-	}
-
-	public IState clone() throws CloneNotSupportedException {
-		State r = (State)super.clone();
-		for (String pos: pieces.keySet()) {
-			r.changePiece(pos, pieces.get(pos));
-		}
-		for (String name: values.keySet()) {
-			IValue value = values.get(name).get("");
-			if (value != null) {
-				r.changeFlag(name, "", value);
-			}
-		}
-		return r;
-	}
-	
-	private IValue getFlag(String name, String pos) {
-		Map<String, IValue> l = values.get(name);
-		if (l == null) {
-			return null;
-		}
-		IValue v = l.get(pos);
-		return v;
-	}
-	
 	public IValue getValue(String name) throws CommonException {
 		IValue r = null;
 		IValue defValue = board.getDefaultValue(name);
@@ -131,6 +61,82 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 		return r;
 	}
 	
+	public void setValue(String name, IValue value) throws CommonException {
+		if (board.getDefaultValue(name) != null) {
+			setFlag(name, "", value);
+			return;
+		}
+		if (currentPos != null) {
+			IPiece p = pieces.get(currentPos);
+			if (p != null) {
+				if (board.getDefaultValue(p.getName(), name) != null) {
+					p = p.setAttribute(name, value);
+					setPiece(currentPos, p);
+					return;
+				}
+			}
+			setFlag(name, currentPos, value);
+			return;
+		}
+		throw new CommonException("Value [" + name + "] undefined");
+	}
+
+	public void clear() {
+		pieces.clear();
+		hand.clear();
+		values.clear();
+		undo.clear();
+		currentPos = null;
+		hash = 0L;
+		deep = 0;
+	}
+	
+	public String getPosition() throws CommonException {
+		return currentPos;
+	}
+
+	public void savepoint() {
+		deep++;
+	}
+
+	public boolean rollback() throws CommonException {
+		if (undo.isEmpty()) {
+			return false;
+		}
+		while (!undo.isEmpty()) {
+			AbstractUndo u = undo.peek();
+			if (u.getDeep() <= deep) {
+				break;
+			}
+			u.execute(this);
+			undo.pop();
+		}
+		return true;
+	}
+
+	public IState clone() throws CloneNotSupportedException {
+		State r = new State(board);
+		for (String pos: pieces.keySet()) {
+			r.changePiece(pos, pieces.get(pos));
+		}
+		for (String name: values.keySet()) {
+			IValue value = values.get(name).get("");
+			if (value != null) {
+				r.changeFlag(name, "", value);
+			}
+		}
+		return r;
+	}
+	
+	private IValue getFlag(String name, String pos) {
+		Map<String, IValue> l = values.get(name);
+		if (l == null) {
+			return null;
+		}
+		IValue v = l.get(pos);
+		return v;
+	}
+	
 	public void changeFlag(String name, String pos, IValue value) {
 		Map<String, IValue> l = values.get(name);
 		if (l == null) {
@@ -150,25 +156,6 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 		changeFlag(name, pos, value);
 	}
 	
-	public void setValue(String name, IValue value) throws CommonException {
-		if (board.getDefaultValue(name) != null) {
-			setFlag(name, "", value);
-			return;
-		}
-		if (currentPos != null) {
-			IPiece p = pieces.get(currentPos);
-			if (p != null) {
-				if (board.getDefaultValue(p.getName(), name) != null) {
-					p = p.setAttribute(name, value);
-					setPiece(currentPos, p);
-					return;
-				}
-			}
-			setFlag(name, currentPos, value);
-		}
-		throw new CommonException("Value [" + name + "] undefined");
-	}
-
 	public IPiece getPiece(String pos) {
 		return pieces.get(pos);
 	}
@@ -223,8 +210,13 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 		hand.clear();
 	}
 	
-	public void setCurrentPosition(String pos) {
+	public void changeCurrentPosition(String pos) {
 		currentPos = pos;
+	}
+	
+	public void setCurrentPosition(String pos) {
+		undo.push(new UndoPos(currentPos, deep));
+		changeCurrentPosition(pos);
 	}
 	
 	public boolean navigate(String dir, IEnvironment env) throws CommonException {
@@ -276,5 +268,9 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 			return getFlag(name, currentPos) != null;
 		}
 		return board.isDefined(name);
+	}
+
+	public long getZobristHash() {
+		return hash;
 	}
 }

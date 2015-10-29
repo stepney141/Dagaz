@@ -17,6 +17,7 @@ import com.gluk.dagaz.model.Grid;
 import com.gluk.dagaz.model.Players;
 import com.gluk.dagaz.state.GlobalEnvironment;
 import com.gluk.dagaz.state.PlayersEnvironment;
+import com.gluk.dagaz.utils.Value;
 
 public class ModelTests {
 	
@@ -264,5 +265,21 @@ public class ModelTests {
 		assertTrue(b.isDefined("H10y"));
 		assertTrue(b.isDefined("J19z"));
 		assertFalse(b.isDefined("I1x"));
+	}
+
+	@Test
+	public void testBoardDefaults() throws CommonException {
+		IBoard b = new Board();
+		b.setDefaultValue("x", Value.create(1));
+		b.setDefaultValue("y", Value.create(2));
+		b.setDefaultValue("Pawn", "x", Value.create(3));
+		b.setDefaultValue("Pawn", "z", Value.create(4));
+		assertTrue(b.getDefaultValue("x").getNumber() == 1);
+		assertTrue(b.getDefaultValue("y").getNumber() == 2);
+		assertTrue(b.getDefaultValue("z") == null);
+		assertTrue(b.getDefaultValue("Pawn", "x").getNumber() == 3);
+		assertTrue(b.getDefaultValue("Pawn", "y") == null);
+		assertTrue(b.getDefaultValue("Pawn", "z").getNumber() == 4);
+		assertTrue(b.getDefaultValue("Queen", "x") == null);
 	}
 }

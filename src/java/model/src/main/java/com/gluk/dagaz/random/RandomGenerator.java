@@ -39,10 +39,8 @@ public class RandomGenerator implements IRandomGenerator, Cloneable {
 	}
 
 	public synchronized IRandomGenerator clone() throws CloneNotSupportedException {
-		RandomGenerator r = (RandomGenerator)super.clone();
-		synchronized (rand) {
-			r.rand = rand.clone();
-		}
+		RandomGenerator r = new RandomGenerator();
+		r.rand = rand.clone();
 		return r;
 	}
 
