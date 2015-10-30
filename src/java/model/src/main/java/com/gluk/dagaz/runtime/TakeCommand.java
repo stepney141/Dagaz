@@ -10,7 +10,7 @@ public class TakeCommand extends AbstractCommand { // --
 	@Override
 	public boolean execute(IDeferredCheck state, IEnvironment env) throws CommonException {
 		super.execute(state, env);
-		String pos = state.getPosition();
+		String pos = state.getCurrentPosition();
 		IPiece piece = state.getPiece(pos);
 		state.setPiece(pos, null);
 		state.addToHand(pos, piece);

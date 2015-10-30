@@ -13,11 +13,11 @@ import com.gluk.dagaz.mock.MockProcessor;
 import com.gluk.dagaz.mock.MockState;
 import com.gluk.dagaz.mock.MockStatement;
 import com.gluk.dagaz.model.Board;
+import com.gluk.dagaz.runtime.Value;
 import com.gluk.dagaz.state.GlobalEnvironment;
 import com.gluk.dagaz.state.LocalEnvironment;
 import com.gluk.dagaz.statements.AbstractStatement;
 import com.gluk.dagaz.statements.SeqStatement;
-import com.gluk.dagaz.utils.Value;
 
 // TODO: StateStatement, ZoneStatement, AnyStatement, EndStatement
 

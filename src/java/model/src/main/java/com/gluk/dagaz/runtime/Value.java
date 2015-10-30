@@ -1,4 +1,4 @@
-package com.gluk.dagaz.utils;
+package com.gluk.dagaz.runtime;
 
 import java.util.HashMap;
 import java.util.Map;

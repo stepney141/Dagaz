@@ -9,7 +9,7 @@ public class CaptureCommand extends AbstractCommand { // --
 	@Override
 	public boolean execute(IDeferredCheck state, IEnvironment env) throws CommonException {
 		super.execute(state, env);
-		String pos = state.getPosition();
+		String pos = state.getCurrentPosition();
 		state.setPiece(pos, null);
 		return true;
 	}

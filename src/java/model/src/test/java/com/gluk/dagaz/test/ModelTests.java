@@ -15,9 +15,9 @@ import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.model.Board;
 import com.gluk.dagaz.model.Grid;
 import com.gluk.dagaz.model.Players;
+import com.gluk.dagaz.runtime.Value;
 import com.gluk.dagaz.state.GlobalEnvironment;
 import com.gluk.dagaz.state.PlayersEnvironment;
-import com.gluk.dagaz.utils.Value;
 
 public class ModelTests {
 	

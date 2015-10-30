@@ -4,13 +4,11 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
-import com.gluk.dagaz.api.application.IApplication;
 import com.gluk.dagaz.api.parser.IInput;
 import com.gluk.dagaz.api.parser.IDataManager;
 import com.gluk.dagaz.api.parser.IParser;
 import com.gluk.dagaz.exceptions.CommonException;
-
-// TODO: Создать корневой узел при сканировании документа
+import com.gluk.dagaz.utils.DataManager;
 
 public class Parser implements IParser {
 	
@@ -27,7 +25,6 @@ public class Parser implements IParser {
     private final static int    WAIT_FILENAME_STATUS = 1; 
     private final static int    WAIT_CLOSE_STATUS    = 2; 
     
-    private IApplication app;
     private String scope;
     private ContentHandler handler;
     private boolean isOpened = false;
@@ -37,15 +34,14 @@ public class Parser implements IParser {
     private String fileName;
     private int includeDeep = 0;
     
-    public Parser(IApplication app, String scope, ContentHandler handler) {
-    	this.app = app;
+    public Parser(String scope, ContentHandler handler) {
     	this.scope = scope;
     	this.handler = handler;
     }
 
 	public void parse(String name) throws CommonException {
 		Scaner scaner = new Scaner(this);
-		IDataManager dm = app.getDataManager();
+		IDataManager dm = DataManager.getInstance();
 		IInput in = dm.getInput(scope, name);
 		in.read(scaner);
 	}
@@ -81,7 +77,7 @@ public class Parser implements IParser {
 		if (status == WAIT_CLOSE_STATUS) {
 			try {
 				includeDeep++;
-				IDataManager dm = app.getDataManager();
+				IDataManager dm = DataManager.getInstance();
 				IInput in = dm.getInput(scope, fileName);
 				Scaner scaner = new Scaner(this);
 				in.read(scaner);

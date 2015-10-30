@@ -17,7 +17,7 @@ public class MockState implements IDeferredCheck {
 		return 0L;
 	}
 
-	public String getPosition() throws CommonException {
+	public String getCurrentPosition() throws CommonException {
 		throw new CommonException("Unsupported");
 	}
 

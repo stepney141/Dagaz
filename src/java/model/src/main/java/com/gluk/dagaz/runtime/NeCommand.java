@@ -3,7 +3,6 @@ package com.gluk.dagaz.runtime;
 import com.gluk.dagaz.api.state.IDeferredCheck;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.exceptions.CommonException;
-import com.gluk.dagaz.utils.Value;
 
 public class NeCommand extends AbstractBinaryCommand { // a b -- ?
 

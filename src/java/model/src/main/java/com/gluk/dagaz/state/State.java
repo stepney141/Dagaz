@@ -1,4 +1,4 @@
-package com.gluk.dagaz.state;
+﻿package com.gluk.dagaz.state;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,7 +16,6 @@ import com.gluk.dagaz.model.Board;
 import com.gluk.dagaz.undo.AbstractUndo;
 import com.gluk.dagaz.undo.UndoDrop;
 import com.gluk.dagaz.undo.UndoMove;
-import com.gluk.dagaz.undo.UndoNavigate;
 import com.gluk.dagaz.undo.UndoPiece;
 import com.gluk.dagaz.undo.UndoPos;
 import com.gluk.dagaz.undo.UndoTake;
@@ -38,39 +37,82 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 		this.board = board;
 	}
 
+	public long getZobristHash() {
+		return hash;
+	}
+	
+	public boolean isDefined(String name) {
+		// Проверка определения значения уровня доски
+		if (board.getDefaultValue(name) != null) {
+			return true;
+		}
+		// Если задана текущая позиция
+		if (currentPos != null) {
+			IPiece p = pieces.get(currentPos);
+			// И на ней есть фигура
+			if (p != null) {
+				// Проверка определения атрибута фигуры
+				if (board.getDefaultValue(p.getName(), name) != null) {
+					return true;
+				}
+			}
+			// Иначе - проверка наличия позиционного флага
+			return getFlag(name, currentPos) != null;
+		}
+		// Проверка определения имени на уровне модели (имя позиции или направления)
+		return board.isDefined(name);
+	}
+	
 	public IValue getValue(String name) throws CommonException {
-		IValue r = null;
 		IValue defValue = board.getDefaultValue(name);
 		if (defValue != null) {
-			r = getFlag(name, "");
+			// Получение значения уровня доски
+			IValue r = getFlag(name, "");
 			if (r == null) {
+				// Брать значение по умолчанию, если не определено
 				r = defValue;
 			}
 			return r;
 		}
+		// Если задана текущая позиция
 		if (currentPos != null) {
 			IPiece p = pieces.get(currentPos);
+			// И на ней есть фигура
 			if (p != null) {
 				defValue = board.getDefaultValue(p.getName(), name);
 				if (defValue != null) {
-					r = p.getAttribute(name);
+					// Получение значения атрибута
+					IValue r = p.getAttribute(name);
+					if (r == null) {
+						// Брать значение по умолчанию, если не определено
+						r = defValue;
+					}
+					return r;
 				}
 			}
-			r = getFlag(name, currentPos);
+			// Получение значения позиционного флага
+			return getFlag(name, currentPos);
 		}
-		return r;
+		// Значение не определено (исключение бросается в StateEnvironment)
+		return null;
 	}
 	
 	public void setValue(String name, IValue value) throws CommonException {
 		if (board.getDefaultValue(name) != null) {
+			// Изменение значения уровня доски (не привязанного к позиции)
 			setFlag(name, "", value);
 			return;
 		}
+		// Если задана текущая позиция
 		if (currentPos != null) {
 			IPiece p = pieces.get(currentPos);
+			// И на ней есть фигура
 			if (p != null) {
+				// И для фигуры определён атрибут
 				if (board.getDefaultValue(p.getName(), name) != null) {
+					// Изменить значение атрибута (создаётся новый экземпляр фигуры)
 					p = p.setAttribute(name, value);
+					// Изменённая фигура размещается на текущей позиции
 					setPiece(currentPos, p);
 					return;
 				}
@@ -78,119 +120,28 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 			setFlag(name, currentPos, value);
 			return;
 		}
+		// Запрещается изменение не определённых значений
 		throw new CommonException("Value [" + name + "] undefined");
 	}
 
-	public void clear() {
-		pieces.clear();
-		hand.clear();
-		values.clear();
-		undo.clear();
-		currentPos = null;
-		hash = 0L;
-		deep = 0;
-	}
-	
-	public String getPosition() throws CommonException {
+	public String getCurrentPosition() throws CommonException {
 		return currentPos;
 	}
 
-	public void savepoint() {
-		deep++;
-	}
-
-	public boolean rollback() throws CommonException {
-		if (undo.isEmpty()) {
-			return false;
-		}
-		while (!undo.isEmpty()) {
-			AbstractUndo u = undo.peek();
-			if (u.getDeep() <= deep) {
-				break;
-			}
-			u.execute(this);
-			undo.pop();
-		}
-		return true;
-	}
-
-	public IState clone() throws CloneNotSupportedException {
-		State r = new State(board);
-		for (String pos: pieces.keySet()) {
-			r.changePiece(pos, pieces.get(pos));
-		}
-		for (String name: values.keySet()) {
-			IValue value = values.get(name).get("");
-			if (value != null) {
-				r.changeFlag(name, "", value);
-			}
-		}
-		return r;
-	}
-	
-	private IValue getFlag(String name, String pos) {
-		Map<String, IValue> l = values.get(name);
-		if (l == null) {
-			return null;
-		}
-		IValue v = l.get(pos);
-		return v;
-	}
-	
-	public void changeFlag(String name, String pos, IValue value) {
-		Map<String, IValue> l = values.get(name);
-		if (l == null) {
-			l = new HashMap<String, IValue>();
-			values.put(name, l);
-		}
-		if (value == null) {
-			l.remove(pos);
-		} else {
-			l.put(pos, value);
-		}
-	}
-	
-	private void setFlag(String name, String pos, IValue value) throws CommonException {
-		IValue oldValue = getFlag(name, pos);
-		undo.push(new UndoValue(name, pos, oldValue, deep));
-		changeFlag(name, pos, value);
+	public void setCurrentPosition(String pos) {
+		// Не определено в IState, использовать navigate для позиционирования
+		undo.push(new UndoPos(currentPos, deep));
+		changeCurrentPosition(pos);
 	}
 	
 	public IPiece getPiece(String pos) {
 		return pieces.get(pos);
 	}
 	
-	public void changePiece(String pos, IPiece piece) {
-		IPiece p = getPiece(pos);
-		if (p != null) {
-			hash ^= p.getHash(pos);
-		}
-		if (piece == null) {
-			pieces.remove(pos);
-		} else {
-			hash ^= piece.getHash(pos);
-			pieces.put(pos, piece);
-		}
-	}
-	
 	public void setPiece(String pos, IPiece piece) throws CommonException {
 		IPiece oldPiece = getPiece(pos);
-		if (oldPiece == null && piece == null) {
-			throw new CommonException("Position [" + pos + "] already is empty");
-		}
 		undo.push(new UndoPiece(pos, oldPiece, deep));
 		changePiece(pos, piece);
-	}
-	
-	public void undoTake() {
-		int ix = hand.size() - 1;
-		if (ix >= 0) {
-			hand.remove(ix);
-		}
-	}
-	
-	public void toHand(String pos, IPiece piece) {
-		hand.add(new PieceHandler(pos, piece));
 	}
 	
 	public void addToHand(String pos, IPiece piece) throws CommonException {
@@ -210,67 +161,148 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 		hand.clear();
 	}
 	
-	public void changeCurrentPosition(String pos) {
-		currentPos = pos;
-	}
-	
-	public void setCurrentPosition(String pos) {
-		undo.push(new UndoPos(currentPos, deep));
-		changeCurrentPosition(pos);
-	}
-	
 	public boolean navigate(String dir, IEnvironment env) throws CommonException {
+		// Запрос у модели результирующей позиции
 		String to = board.navigate(dir, currentPos, env);
 		if (to.isEmpty()) {
+			// Имя не известно модели, навигация не успешна
 			return false;
 		}
-		undo.push(new UndoNavigate(currentPos, deep));
+		// Изменение текущей позиции
+		int currUndoSize = undo.size();
 		setCurrentPosition(to);
+		// Если для навигации использовано имя направления, а не имя позиции 
 		if (!dir.equals(to)) {
+			// Переместить фигуры "в руке" (над доской)
 			for (int ix = 0; ix < hand.size(); ix++) {
 				PieceHandler h = hand.get(ix);
 				String from = h.getPosition();
+				// Получение результрующей позиции для фигуры "в руке" 
 				to = board.navigate(dir, from, env);
 				if (to.isEmpty()) {
-					for (;ix > 0; ix--) {
-						if (undo.isEmpty()) {
-							throw new CommonException("Internal Error");
-						}
+					// Если синхронное перемещение всех фигур невозможно
+					while (undo.size() > currUndoSize) {
+						// Локальный откат перемещения
 						AbstractUndo u = undo.pop();
 						u.execute(this);
 					}
+					// Выполнить навигацию не удалось
 					return false;
 				}
+				// Перемещение фигуры "в руке"
 				undo.push(new UndoMove(from, ix, deep));
 				setPosition(ix, to);
 			}
 		}
+		// Навигация успешна
 		return true;
+	}
+	
+	public void clear() {
+		pieces.clear();
+		hand.clear();
+		values.clear();
+		undo.clear();
+		currentPos = null;
+		hash = 0L;
+		deep = 0;
+	}
+	
+	public void savepoint() {
+		deep++;
+	}
+
+	public boolean rollback() throws CommonException {
+		if (deep == 0) {
+			return false;
+		}
+		deep--;
+		while (!undo.isEmpty()) {
+			AbstractUndo u = undo.peek();
+			if (u.getDeep() <= deep) {
+				break;
+			}
+			u.execute(this);
+			undo.pop();
+		}
+		return true;
+	}
+
+	public IState clone() throws CloneNotSupportedException {
+		State r = new State(board);
+		// Копировать размещение фигур на доске
+		for (String pos: pieces.keySet()) {
+			r.changePiece(pos, pieces.get(pos));
+		}
+		// Копировать значения уровня доски (не привязанные к позициям)
+		for (String name: values.keySet()) {
+			IValue value = values.get(name).get("");
+			if (value != null) {
+				r.changeFlag(name, "", value);
+			}
+		}
+		return r;
+	}
+	
+	private IValue getFlag(String name, String pos) {
+		Map<String, IValue> l = values.get(name);
+		if (l == null) {
+			return null;
+		}
+		IValue v = l.get(pos);
+		return v;
+	}
+	
+	private void setFlag(String name, String pos, IValue value) throws CommonException {
+		IValue oldValue = getFlag(name, pos);
+		undo.push(new UndoValue(name, pos, oldValue, deep));
+		changeFlag(name, pos, value);
+	}
+	
+	public void changeFlag(String name, String pos, IValue value) {
+		Map<String, IValue> l = values.get(name);
+		if (l == null) {
+			l = new HashMap<String, IValue>();
+			values.put(name, l);
+		}
+		if (value == null) {
+			l.remove(pos);
+		} else {
+			l.put(pos, value);
+		}
+	}
+	
+	public void changeCurrentPosition(String pos) {
+		currentPos = pos;
+	}
+	
+	public void changePiece(String pos, IPiece piece) {
+		IPiece p = getPiece(pos);
+		if (p != null) {
+			hash ^= p.getHash(pos);
+		}
+		if (piece == null) {
+			pieces.remove(pos);
+		} else {
+			hash ^= piece.getHash(pos);
+			pieces.put(pos, piece);
+		}
+	}
+	
+	public void undoTake() {
+		int ix = hand.size() - 1;
+		if (ix >= 0) {
+			hand.remove(ix);
+		}
+	}
+	
+	public void toHand(String pos, IPiece piece) {
+		hand.add(new PieceHandler(pos, piece));
 	}
 	
 	public void setPosition(int ix, String pos) {
 		if (ix < hand.size()) {
 			hand.get(ix).setPosition(pos);
 		}
-	}
-
-	public boolean isDefined(String name) {
-		if (board.getDefaultValue(name) != null) {
-			return true;
-		}
-		if (currentPos != null) {
-			IPiece p = pieces.get(currentPos);
-			if (p != null) {
-				if (board.getDefaultValue(p.getName(), name) != null) {
-					return true;
-				}
-			}
-			return getFlag(name, currentPos) != null;
-		}
-		return board.isDefined(name);
-	}
-
-	public long getZobristHash() {
-		return hash;
 	}
 }

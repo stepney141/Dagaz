@@ -1,4 +1,4 @@
-package com.gluk.dagaz.test;
+﻿package com.gluk.dagaz.test;
 
 import static org.junit.Assert.assertTrue;
 
@@ -14,11 +14,11 @@ public class RandomTest {
 
 	@Test
 	public void testRandomCloning() throws CommonException, CloneNotSupportedException {
-		IRandomFactory rf = new RandomFactory();
+		IRandomFactory rf = RandomFactory.getInstance();
 		RandomGenerator a = (RandomGenerator)rf.getGenerator("a");
 		IRandomGenerator b = a.clone();
-		assertTrue(a != b);
-		assertTrue(a.getLongValue() == b.getLongValue());
+		assertTrue(a != b);                                // Клонирование генератора создаёт новый объект
+		assertTrue(a.getLongValue() == b.getLongValue());  // Вывод клонированного генератора совпадает с с выводом оригинального
 		assertTrue(a.getLongValue() == b.getLongValue());
 		assertTrue(a.getLongValue() == b.getLongValue());
 		assertTrue(a.getLongValue() == b.getLongValue());

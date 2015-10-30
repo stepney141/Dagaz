@@ -14,7 +14,6 @@ import javax.xml.transform.sax.TransformerHandler;
 import org.w3c.dom.Document;
 import org.xml.sax.ContentHandler;
 
-import com.gluk.dagaz.api.application.IApplication;
 import com.gluk.dagaz.api.parser.ILoader;
 import com.gluk.dagaz.exceptions.CommonException;
 
@@ -27,7 +26,6 @@ public class Loader implements ILoader {
 	private static TransformerFactory tf = null;
 	private static DocumentBuilderFactory df = null;
 	
-	private IApplication app;
 	private Document doc = null;
 	
 	private String docName;
@@ -36,8 +34,7 @@ public class Loader implements ILoader {
 	
 	private List<String> transformList = new ArrayList<String>();
 	
-	public Loader(IApplication app, String docName) throws CommonException {
-		this.app = app;
+	public Loader(String docName) throws CommonException {
 		this.docName = docName;
 		if (tf == null) {
 			System.setProperty(JAVAX_TRANSFORM_FACTORY, XALAN_TRANSFORM_FACTORY);
@@ -87,7 +84,7 @@ public class Loader implements ILoader {
 				}
 		        doc = df.newDocumentBuilder().newDocument();
 		        last.setResult(new DOMResult(doc));
-		        Parser parser = new Parser(app, docScope, first);
+		        Parser parser = new Parser(docScope, first);
 		        parser.parse(docName);
 			} catch (Exception e) {
 				throw new CommonException(e.toString(), e);

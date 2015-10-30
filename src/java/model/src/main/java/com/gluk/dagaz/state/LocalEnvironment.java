@@ -9,7 +9,7 @@ import com.gluk.dagaz.api.model.IValue;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.api.state.ITransactional;
 import com.gluk.dagaz.exceptions.CommonException;
-import com.gluk.dagaz.utils.Value;
+import com.gluk.dagaz.runtime.Value;
 
 public class LocalEnvironment implements IEnvironment, ITransactional {
 	

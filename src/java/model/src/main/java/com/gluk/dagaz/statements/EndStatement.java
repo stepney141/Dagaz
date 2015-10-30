@@ -4,7 +4,7 @@ import com.gluk.dagaz.api.model.IReserved;
 import com.gluk.dagaz.api.runtime.ICommand;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.runtime.CommandFactory;
-import com.gluk.dagaz.utils.Value;
+import com.gluk.dagaz.runtime.Value;
 
 public class EndStatement extends AbstractStatement {
 

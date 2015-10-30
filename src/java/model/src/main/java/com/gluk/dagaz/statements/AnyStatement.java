@@ -5,7 +5,7 @@ import com.gluk.dagaz.api.parser.IStatementInternal;
 import com.gluk.dagaz.api.runtime.ICommand;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.runtime.CommandFactory;
-import com.gluk.dagaz.utils.Value;
+import com.gluk.dagaz.runtime.Value;
 
 public class AnyStatement extends AbstractExpression {
 

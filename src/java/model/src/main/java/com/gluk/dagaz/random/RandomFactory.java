@@ -9,6 +9,17 @@ import com.gluk.dagaz.api.random.IRandomGenerator;
 public class RandomFactory implements IRandomFactory {
 	
 	private Map<String, IRandomGenerator> generators = new HashMap<String, IRandomGenerator>();
+	
+	private static IRandomFactory instance = null;
+	
+	public synchronized static IRandomFactory getInstance() {
+		if (instance == null) {
+			instance = new RandomFactory();
+		}
+		return instance;
+	}
+	
+	private RandomFactory() {}
 
 	public synchronized IRandomGenerator getGenerator(String name, long seed) {
 		IRandomGenerator r = generators.get(name);

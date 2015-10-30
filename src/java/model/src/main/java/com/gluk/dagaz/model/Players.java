@@ -8,7 +8,7 @@ import java.util.Map;
 import com.gluk.dagaz.api.model.IPlayers;
 import com.gluk.dagaz.api.model.IValue;
 import com.gluk.dagaz.exceptions.CommonException;
-import com.gluk.dagaz.utils.Value;
+import com.gluk.dagaz.runtime.Value;
 
 public class Players implements IPlayers {
 	

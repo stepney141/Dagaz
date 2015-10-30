@@ -7,7 +7,7 @@ import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.api.state.IPiece;
 import com.gluk.dagaz.api.state.IState;
 import com.gluk.dagaz.exceptions.CommonException;
-import com.gluk.dagaz.utils.Value;
+import com.gluk.dagaz.runtime.Value;
 
 public class StateEnvironment implements IEnvironment {
 	
@@ -21,7 +21,7 @@ public class StateEnvironment implements IEnvironment {
 
 	public boolean isDefined(String name) throws CommonException {
 		if (name.equals(IReserved.STATE_POSITION)) {
-			return state.getPosition() != null;
+			return state.getCurrentPosition() != null;
 		}
 		if (name.equals(IReserved.STATE_PLAYER)    ||
 			name.equals(IReserved.STATE_PIECE)     ||
@@ -38,14 +38,14 @@ public class StateEnvironment implements IEnvironment {
 
 	public IValue get(String name) throws CommonException {
 		if (name.equals(IReserved.STATE_POSITION)) {
-			String pos = state.getPosition();
+			String pos = state.getCurrentPosition();
 			if (pos == null) {
 				throw new CommonException("Position unassigned");
 			}
 			return Value.create(pos);
 		}
 		if (name.equals(IReserved.STATE_PLAYER)) {
-			String pos = state.getPosition();
+			String pos = state.getCurrentPosition();
 			IPiece p = state.getPiece(pos);
 			if (p == null) {
 				return Value.create(false);
@@ -53,7 +53,7 @@ public class StateEnvironment implements IEnvironment {
 			return Value.create(p.getOwner());
 		}
 		if (name.equals(IReserved.STATE_PIECE)) {
-			String pos = state.getPosition();
+			String pos = state.getCurrentPosition();
 			IPiece p = state.getPiece(pos);
 			if (p == null) {
 				return Value.create(false);
@@ -61,17 +61,17 @@ public class StateEnvironment implements IEnvironment {
 			return Value.create(p.getName());
 		}
 		if (name.equals(IReserved.STATE_IS_EMPTY)) {
-			String pos = state.getPosition();
+			String pos = state.getCurrentPosition();
 			IPiece p = state.getPiece(pos);
 			return Value.create(p == null);
 		}
 		if (name.equals(IReserved.STATE_NOT_EMPTY)) {
-			String pos = state.getPosition();
+			String pos = state.getCurrentPosition();
 			IPiece p = state.getPiece(pos);
 			return Value.create(p != null);
 		}
 		if (name.equals(IReserved.STATE_IS_ENEMY)) {
-			String pos = state.getPosition();
+			String pos = state.getCurrentPosition();
 			IPiece p = state.getPiece(pos);
 			if (p == null) {
 				return Value.create(false);
@@ -79,7 +79,7 @@ public class StateEnvironment implements IEnvironment {
 			return Value.create(!env.get(p.getOwner()).getBoolean());
 		}
 		if (name.equals(IReserved.STATE_NOT_ENEMY)) {
-			String pos = state.getPosition();
+			String pos = state.getCurrentPosition();
 			IPiece p = state.getPiece(pos);
 			if (p == null) {
 				return Value.create(true);
@@ -87,7 +87,7 @@ public class StateEnvironment implements IEnvironment {
 			return env.get(p.getOwner());
 		}
 		if (name.equals(IReserved.STATE_IS_FRIEND)) {
-			String pos = state.getPosition();
+			String pos = state.getCurrentPosition();
 			IPiece p = state.getPiece(pos);
 			if (p == null) {
 				return Value.create(false);
@@ -95,7 +95,7 @@ public class StateEnvironment implements IEnvironment {
 			return env.get(p.getOwner());
 		}
 		if (name.equals(IReserved.STATE_NOT_FRIEND)) {
-			String pos = state.getPosition();
+			String pos = state.getCurrentPosition();
 			IPiece p = state.getPiece(pos);
 			if (p == null) {
 				return Value.create(true);

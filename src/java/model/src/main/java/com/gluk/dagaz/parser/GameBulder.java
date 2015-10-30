@@ -11,7 +11,7 @@ import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.model.Board;
 import com.gluk.dagaz.model.Game;
 import com.gluk.dagaz.model.Piece;
-import com.gluk.dagaz.utils.Value;
+import com.gluk.dagaz.runtime.Value;
 
 public class GameBulder extends AbstractBuilder {
 

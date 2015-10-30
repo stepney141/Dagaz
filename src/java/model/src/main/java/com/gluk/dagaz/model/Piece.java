@@ -7,7 +7,7 @@ import com.gluk.dagaz.api.model.IValue;
 import com.gluk.dagaz.api.random.IRandomGenerator;
 import com.gluk.dagaz.api.state.IPiece;
 import com.gluk.dagaz.exceptions.CommonException;
-import com.gluk.dagaz.utils.Application;
+import com.gluk.dagaz.random.RandomFactory;
 
 public class Piece implements IPiece {
 	
@@ -26,7 +26,7 @@ public class Piece implements IPiece {
 		}
 		Long r = h.get(pos);
 		if (r == null) {
-			IRandomGenerator g = Application.getInstance().getRandomFactory().getGenerator(ZOBRIST_RAND);
+			IRandomGenerator g = RandomFactory.getInstance().getGenerator(ZOBRIST_RAND);
 			r = g.getLongValue();
 			h.put(pos, r);
 		}
