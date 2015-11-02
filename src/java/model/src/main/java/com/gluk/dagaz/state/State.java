@@ -82,12 +82,7 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 				defValue = board.getDefaultValue(p.getName(), name);
 				if (defValue != null) {
 					// Получение значения атрибута
-					IValue r = p.getAttribute(name);
-					if (r == null) {
-						// Брать значение по умолчанию, если не определено
-						r = defValue;
-					}
-					return r;
+					return p.getAttribute(name, defValue);
 				}
 			}
 			// Получение значения позиционного флага

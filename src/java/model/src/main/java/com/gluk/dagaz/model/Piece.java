@@ -14,7 +14,7 @@ public class Piece implements IPiece {
 	private final static String ZOBRIST_RAND = "$$$ZOBRIST$$$";
 	private static Map<Piece, Map<String, Long>> hashes = new HashMap<Piece, Map<String, Long>>();
 	
-	private String name;
+	private String type;
 	private String owner;
 	private Map<String, IValue> attributes = new HashMap<String, IValue>();
 	
@@ -42,12 +42,12 @@ public class Piece implements IPiece {
 	}
 
 	public Piece(String name, String owner) {
-		this.name = name;
+		this.type = name;
 		this.owner = owner;
 	}
 
 	public String getName() {
-		return name;
+		return type;
 	}
 
 	public String getOwner() {
@@ -58,29 +58,24 @@ public class Piece implements IPiece {
 		return getHash(this, pos);
 	}
 	
-	public IValue getAttribute(String name) throws CommonException {
-		IValue r = attributes.get(name);
+	public IValue getAttribute(String attr, IValue def) throws CommonException {
+		IValue r = attributes.get(attr);
 		if (r == null) {
-			throw new CommonException("Attribute [" + name + "] not found");
+			return def;
 		}
 		return r;
 	}
 
-	public void addAttribute(String name, IValue value) throws CommonException {
-		if (attributes.containsKey(name)) {
-			throw new CommonException("Attribute [" + name + "] already defined");
-		}
-		attributes.put(name, value);
+	public void addAttribute(String attr, IValue value) throws CommonException {
+		attributes.put(attr, value);
 	}
 	
-	public IPiece setAttribute(String name, IValue value) throws CommonException {
-		IPiece p = new Piece(name, owner);
+	public IPiece setAttribute(String attr, IValue value) throws CommonException {
+		IPiece p = new Piece(type, owner);
 		for (String n: attributes.keySet()) {
-			if (!n.equals(name)) {
-				p.addAttribute(n, attributes.get(n));
-			}
+			p.addAttribute(n, attributes.get(n));
 		}
-		p.addAttribute(name, value);
+		p.addAttribute(attr, value);
 		return p;
 	}
 }

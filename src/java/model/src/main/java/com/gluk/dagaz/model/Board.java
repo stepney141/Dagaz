@@ -1,8 +1,10 @@
 package com.gluk.dagaz.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -94,7 +96,21 @@ public class Board implements IBoard {
 		if (!positions.contains(name)) {
 			throw new CommonException("Position [" + name +"] undefined");
 		}
+		List<String> dirs = new ArrayList<String>();
 		for (String dir: directions.keySet()) {
+			dirs.add(dir);
+		}
+		for (String dir: dirs) {
+			Map<String, String> links = directions.get(dir);
+			List<String> keys = new ArrayList<String>();
+			for (String from: links.keySet()) {
+				keys.add(from);
+			}
+			for (String from: keys) {
+				if (links.get(from).equals(name)) {
+					delLink(dir, from);
+				}
+			}
 			delLink(dir, name);
 		}
 		positions.remove(name);

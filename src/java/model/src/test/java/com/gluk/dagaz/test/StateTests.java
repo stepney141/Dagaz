@@ -9,9 +9,11 @@ import com.gluk.dagaz.api.application.IMoveGenerator;
 import com.gluk.dagaz.api.application.IMoveLogger;
 import com.gluk.dagaz.api.model.IReserved;
 import com.gluk.dagaz.api.state.IEnvironment;
+import com.gluk.dagaz.api.state.IPiece;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.mock.MockMoveGenerator;
 import com.gluk.dagaz.model.Board;
+import com.gluk.dagaz.model.Piece;
 import com.gluk.dagaz.model.Players;
 import com.gluk.dagaz.runtime.Value;
 import com.gluk.dagaz.state.GlobalEnvironment;
@@ -20,7 +22,7 @@ import com.gluk.dagaz.state.MoveLogger;
 import com.gluk.dagaz.state.PlayersEnvironment;
 import com.gluk.dagaz.state.State;
 
-// TODO: State, StateEnvironment
+// TODO: State (navigate), StateEnvironment
 
 public class StateTests {
 
@@ -154,47 +156,64 @@ public class StateTests {
 	}
 
 	@Test
-	public void testStateGlobal() throws CommonException, CloneNotSupportedException {
+	public void testStateValues() throws CommonException, CloneNotSupportedException {
 		Board board = new Board();
 		board.addPosition("a1"); 
 		board.addPosition("a2");
-		board.setDefaultValue("x", Value.create(0));                                   // Определяется переменная уровня доски (x = 0)
+		assertFalse(board.isDefined("x"));
+		assertFalse(board.isDefined("y"));
 		State state = new State(board);
+		assertFalse(state.isDefined("x"));
+		board.setDefaultValue("x", Value.create(0));                                   // Определяется переменная уровня доски (x = 0)
+		assertTrue(state.isDefined("x"));
+		assertFalse(state.isDefined("y"));
 		assertTrue(state.getCurrentPosition() == null);
 		
 		state.savepoint();                                                            // Точка сохранения (1)
 		assertTrue(state.getValue("x").getNumber() == 0);                             // Значение по умолчанию x = 0 (не привязано к позиции доски)
 		assertTrue(state.getValue("y") == null);                                      // Значение y не определено
 		state.setValue("x", Value.create(1));                                         // Изменяется значение (x = 1)
+		assertTrue(state.isDefined("x"));
+		assertFalse(state.isDefined("y"));
 		assertTrue(state.getValue("x").getNumber() == 1);
 		assertTrue(state.getValue("y") == null);
 		
 		state.savepoint();                                                            // Точка сохранения (2)
 		state.setCurrentPosition("a1");                                               // Устанавливается текущая позиция (a1)
-		assertTrue(state.getCurrentPosition().equals("a1"));                                 // Проверяется установка текущей позиции
+		assertTrue(state.getCurrentPosition().equals("a1"));                          // Проверяется установка текущей позиции
 		state.setValue("y", Value.create(2));                                         // Создаётся значение (y = 2) привязанное к позиции a1
+		assertTrue(state.isDefined("x"));
+		assertTrue(state.isDefined("y"));
 		assertTrue(state.getValue("x").getNumber() == 1);
 		assertTrue(state.getValue("y").getNumber() == 2);
 		
 		state.savepoint();                                                            // Точка сохранения (3)
 		state.setCurrentPosition("a2");                                               // Текущая позиция изменяется (a2)
 		assertTrue(state.getCurrentPosition().equals("a2"));
+		assertTrue(state.isDefined("x"));
+		assertFalse(state.isDefined("y"));
 		assertTrue(state.getValue("x").getNumber() == 1);                             // Значение (x = 1) не привязано к текущей позиции
 		assertTrue(state.getValue("y") == null);                                      // Значение y не определено для позиции a2
 		
 		state.savepoint();                                                            // Точка сохранения (4)
 		state.setValue("x", Value.create(3));                                         // Изменяется значение (x = 3) не привязанное к позиции
 		state.setValue("y", Value.create(4));                                         // Создаётся значение (y = 4) привязанное к позиции a2
+		assertTrue(state.isDefined("x"));
+		assertTrue(state.isDefined("y"));
 		assertTrue(state.getValue("x").getNumber() == 3);
 		assertTrue(state.getValue("y").getNumber() == 4);
 		
 		state.savepoint();                                                            // Точка сохранения (5)
 		state.setCurrentPosition("a1");                                               // Текущая позиция изменяется (a1)
 		assertTrue(state.getCurrentPosition().equals("a1"));
+		assertTrue(state.isDefined("x"));
+		assertTrue(state.isDefined("y"));
 		assertTrue(state.getValue("x").getNumber() == 3);                             // Значение x было изменено (x = 3)
 		assertTrue(state.getValue("y").getNumber() == 2);                             // Для позиции a1 значение (y = 2)
 		
 		State newState = (State)state.clone();                                        // При выполнении клонирования состояния
+		assertTrue(newState.isDefined("x"));
+		assertFalse(newState.isDefined("y"));
 		assertTrue(newState.getValue("x").getNumber() == 3);                          // наследуются значения не привязанные к позиции
 		assertTrue(newState.getValue("y") == null);                                   // Значения, временно привязанные к позициям (позиционные флаги), сбрасываюся 
 		assertTrue(newState.getCurrentPosition() == null);                                   // Текущая позиция сбрасывается тоже
@@ -202,28 +221,116 @@ public class StateTests {
 		
 		assertTrue(state.rollback());                                                 // Откат к точке сохранения (5)
 		assertTrue(state.getCurrentPosition().equals("a2"));
+		assertTrue(state.isDefined("x"));
+		assertTrue(state.isDefined("y"));
 		assertTrue(state.getValue("x").getNumber() == 3);
 		assertTrue(state.getValue("y").getNumber() == 4);
 
 		assertTrue(state.rollback());                                                 // Откат к точке сохранения (4)
 		assertTrue(state.getCurrentPosition().equals("a2"));
+		assertTrue(state.isDefined("x"));
+		assertFalse(state.isDefined("y"));
 		assertTrue(state.getValue("x").getNumber() == 1);
 		assertTrue(state.getValue("y") == null);
 
 		assertTrue(state.rollback());                                                 // Откат к точке сохранения (3)
 		assertTrue(state.getCurrentPosition().equals("a1"));
+		assertTrue(state.isDefined("x"));
+		assertTrue(state.isDefined("y"));
 		assertTrue(state.getValue("x").getNumber() == 1);
 		assertTrue(state.getValue("y").getNumber() == 2);
 
 		assertTrue(state.rollback());                                                 // Откат к точке сохранения (2)
 		assertTrue(state.getCurrentPosition() == null);
+		assertTrue(state.isDefined("x"));
+		assertFalse(state.isDefined("y"));
 		assertTrue(state.getValue("x").getNumber() == 1);
 		assertTrue(state.getValue("y") == null);
 
 		assertTrue(state.rollback());                                                 // Откат к точке сохранения (1)
 		assertTrue(state.getCurrentPosition() == null);
+		assertTrue(state.isDefined("x"));
+		assertFalse(state.isDefined("y"));
 		assertTrue(state.getValue("x").getNumber() == 0);
 		assertTrue(state.getValue("y") == null);
 		assertFalse(state.rollback());                                                // Больше нет точек сохранения
 	}
+	
+	@Test
+	public void testStatePieces() throws CommonException, CloneNotSupportedException {
+		Board board = new Board();
+		board.addPosition("a1"); 
+		board.addPosition("a2");
+		board.setDefaultValue("Pawn", "a", Value.create(1));                          // Определение атрибута фигуры (a = 1)
+		assertFalse(board.isDefined("a"));
+		State state = new State(board);
+		assertTrue(state.getZobristHash() == 0L);                                     // Начальное значение хэша позиции нулевое
+		assertFalse(state.isDefined("a"));
+		
+		state.savepoint();                                                            // Точка сохранения (1)
+		IPiece p1 = new Piece("Pawn", "White");                                       // Создание фигуры
+		state.setPiece("a1", p1);                                                     // и размещение её на доске
+		long h1 = state.getZobristHash();
+		assertFalse(h1 == 0L);                                                        // Хэш позиции изменился
+		
+		state.savepoint();                                                            // Точка сохранения (2)
+		state.setPiece("a1", null);                                                   // Снимаем фигуру с доски
+		assertTrue(state.getZobristHash() == 0L);                                     // доска пуста
+		state.setPiece("a2", p1);                                                     // и размещаем на другом месте
+		long h2 = state.getZobristHash();
+		assertFalse(h2 == h1);                                                        // Хэш позиции изменился
+		assertFalse(h2 == 0L);                                                        // и не равен нулю
+		
+		state.savepoint();                                                            // Точка сохранения (3)
+		state.setCurrentPosition("a2");                                               // Устанавливаем текущую позицию
+		assertTrue(state.getValue("a").getNumber() == 1);                             // Проверяем значение атрибута по умолчанию
+		state.setValue("a", Value.create(2));                                         // После чего, изменяем значение атрибута (a = 2)
+		assertTrue(state.isDefined("a"));
+		assertTrue(state.getValue("a").getNumber() == 2);                             // Проверяем значение изменённого атрибута
+		long h3 = state.getZobristHash();
+		assertFalse(h3 == h1);                                                        // Хэш позиции изменился
+		assertFalse(h3 == h2);
+		assertFalse(h3 == 0L);
+		
+		state.savepoint();                                                            // Точка сохранения (4)
+		IPiece p2 = state.getPiece("a2");                                             // Перемещаем фигуру на исходную позицию
+		assertFalse(p1 == p2);
+		state.setPiece("a2", null);                                                   
+		state.setPiece("a1", p2);
+		assertFalse(state.isDefined("a"));
+		assertTrue(state.getValue("a") == null);                                      // Значение атрибута недоступно, поскольку поле пусто
+		state.setCurrentPosition("a1");
+		assertTrue(state.isDefined("a"));
+		assertTrue(state.getValue("a").getNumber() == 2);                             // Проверяем значение изменённого атрибута (a == 2)
+		long h4 = state.getZobristHash();
+		assertFalse(h4 == h1);                                                        // Хэш позиции не совпадает с исходным
+		assertFalse(h4 == 0L);
+
+		state.savepoint();                                                            // Точка сохранения (5)
+		state.setPiece("a1", p1);                                                     // Возвращаем первоначальную фигуру на исходную позицию                                                   
+		assertTrue(state.isDefined("a"));
+		assertTrue(state.getValue("a").getNumber() == 1);                             // Атрибут вновь содержит значение по умолчанию (a == 1)
+		assertTrue(state.getZobristHash() == h1);                                     // Хэш позиции соответсвует исходному
+
+		assertTrue(state.rollback());                                                 // Откат к точке сохранения (5)
+		assertTrue(state.isDefined("a"));
+		assertTrue(state.getValue("a").getNumber() == 2);
+		assertTrue(state.getZobristHash() == h4);    
+
+		assertTrue(state.rollback());                                                 // Откат к точке сохранения (4)
+		assertTrue(state.isDefined("a"));
+		assertTrue(state.getValue("a").getNumber() == 2);                             // Проверяем значение изменённого атрибута
+		assertTrue(state.getZobristHash() == h3);    
+
+		assertTrue(state.rollback());                                                 // Откат к точке сохранения (3)
+		assertTrue(state.getZobristHash() == h2);    
+
+		assertTrue(state.rollback());                                                 // Откат к точке сохранения (2)
+		assertTrue(state.getZobristHash() == h1);    
+
+		assertTrue(state.rollback());                                                 // Откат к точке сохранения (1)
+		assertTrue(state.getZobristHash() == 0L);    
+		
+		assertFalse(state.rollback());                                                // Больше нет точек сохранения
+	}	
 }

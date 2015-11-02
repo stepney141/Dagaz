@@ -1,4 +1,4 @@
-package com.gluk.dagaz.test;
+﻿package com.gluk.dagaz.test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -24,19 +24,19 @@ public class ModelTests {
 	@Test
 	public void testPlayers() throws CommonException {
 		IPlayers p = new Players();
-		p.addPlayer("White");
+		p.addPlayer("White");                                                      // Определяем двух игроков
 		p.addPlayer("Black");
-		assertTrue(p.isDefined("White"));
-		assertFalse(p.isDefined("Green"));
-		assertTrue(p.getTurn(1) == 1);
+		assertTrue(p.isDefined("White"));                                          // Игрок White определён
+		assertFalse(p.isDefined("Green"));                                         // Игрок Green не определён
+		assertTrue(p.getTurn(1) == 1);                                             // Номер хода для полухода
 		assertTrue(p.getTurn(2) == 1);
 		assertTrue(p.getTurn(3) == 2);
 		assertTrue(p.getTurn(4) == 2);
-		assertTrue(p.getOrder(1) == 1);
+		assertTrue(p.getOrder(1) == 1);                                            // Очерёдность полухода внутри хода
 		assertTrue(p.getOrder(2) == 2);
 		assertTrue(p.getOrder(3) == 1);
 		assertTrue(p.getOrder(4) == 2);
-		assertTrue(p.getPlayer(1).equals("White"));
+		assertTrue(p.getPlayer(1).equals("White"));                                // Игрок, выполняющий полуход
 		assertTrue(p.getPlayer(2).equals("Black"));
 		assertTrue(p.getPlayer(3).equals("White"));
 		assertTrue(p.getPlayer(4).equals("Black"));
@@ -45,35 +45,36 @@ public class ModelTests {
 	@Test
 	public void testSymetries() throws CommonException {
 		IPlayers p = new Players();
-		p.addPlayer("South");
+		p.addPlayer("South");                                                      // Определяем четырёх игроков
 		p.addPlayer("West");
 		p.addPlayer("North");
 		p.addPlayer("East");
-		p.addSymmetry("West", "n", "e");
+		p.addSymmetry("West", "n", "e");                                           // Определяем симметрии для всех игроков кроме первого
 		p.addSymmetry("North", "n", "s");
 		p.addSymmetry("East", "n", "w");
 		p.addSymmetry("West", "s", "w");
-		assertTrue(p.isDefined("n"));
-		assertTrue(p.isDefined("s"));
-		assertFalse(p.isDefined("e"));
-		assertTrue(p.getDirection("South", "n").equals("n"));
+		assertTrue(p.isDefined("n"));                                              // Преобразование для n определено
+		assertTrue(p.isDefined("s"));                                              // Преобразование для s определено
+		assertFalse(p.isDefined("e"));                                             // Преобразование для e не было определено
+		assertTrue(p.getDirection("South", "n").equals("n"));                      // Для первого игрока, направления преобразуются сами в себя
 		assertTrue(p.getDirection("North", "n").equals("s"));
-		assertTrue(p.get("North", "North").getBoolean());
-		assertFalse(p.get("North", "South").getBoolean());
-		assertTrue(p.get("West", "n").getString().equals("e"));
-		assertTrue(p.get("West", "s").getString().equals("w"));
+		assertTrue(p.get("North", "North").getBoolean());                          // Игрок дружественен сам себе
+		assertFalse(p.get("North", "South").getBoolean());                         // Игрок враждебен другому игроку (коалиции не реализованы)
+		assertTrue(p.get("West", "n").getString().equals("e"));                    // Для West направление n преобразуется в e
+		assertTrue(p.get("West", "s").getString().equals("w"));                    // а s преобразуется в w
 	}
 
 	@Test
 	public void testBoardPositions() throws CommonException {
 		IBoard b = new Board();
-		b.addPosition("a1");
+		b.addPosition("a1");                                                       // Создаём позиции
 		b.addPosition("a2");
 		b.addPosition("b1");
 		b.addPosition("b2");
-		assertTrue(b.isDefined("a1"));
-		assertFalse(b.isDefined("a3"));
-		b.addLink("n", "a1", "a2");
+		assertTrue(b.isDefined("a1"));                                             // Позиция a1 определена
+		assertTrue(b.isDefined("b2"));                                             // Позиция b2 определена
+		assertFalse(b.isDefined("a3"));                                            // Позиция a3 не была определена
+		b.addLink("n", "a1", "a2");                                                // Создаём связи
 		b.addLink("n", "b1", "b2");
 		b.addLink("s", "a2", "a1");
 		b.addLink("s", "b2", "b1");
@@ -81,16 +82,19 @@ public class ModelTests {
 		b.addLink("e", "a2", "b2");
 		b.addLink("w", "b1", "a1");
 		b.addLink("w", "b2", "a2");
-		assertTrue(b.isDefined("n"));
+		assertTrue(b.isDefined("n"));                                              // Связи составляют направления, определённые на уровне доски
 		assertTrue(b.isDefined("s"));
 		assertTrue(b.isDefined("w"));
 		assertTrue(b.isDefined("e"));
-		assertFalse(b.isDefined("nw"));
-		b.delPosition("a1");
-		b.delLink("n", "b1");
-		assertFalse(b.isDefined("a1"));
-		assertFalse(b.isDefined("n"));
-		assertTrue(b.isDefined("e"));
+		assertFalse(b.isDefined("nw"));                                            // Направление nw не было определено
+		b.delPosition("a1");                                                       // Удаляем позицию a1
+		b.delLink("n", "b1");                                                      // Удаляем связь b1 -> b2
+		b.delLink("w", "b2");                                                      // Удаляем связь b2 -> a2
+		assertFalse(b.isDefined("a1"));                                            // Позиция a1 не определена (поскольку была удалена)
+		assertFalse(b.isDefined("n"));                                             // Направление n не определено (поскольку были удалены все его связи)
+		assertTrue(b.isDefined("e"));                                              // Направление e остаётся определённым
+		assertFalse(b.isDefined("w"));                                             // Направление w не определено (поскольку были удалены все его связи)
+		assertTrue(b.isDefined("s"));                                              // Направление s остаётся определённым
 	}
 
 	@Test
