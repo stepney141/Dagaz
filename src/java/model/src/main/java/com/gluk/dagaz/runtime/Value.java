@@ -82,9 +82,6 @@ public class Value implements IValue {
 	}
 
 	public int getNumber() throws CommonException {
-		if (isReference) {
-			throw new CommonException("Invalid cast");
-		}
 		int r;
 		try {
 			r = Integer.parseInt(value);
@@ -95,9 +92,6 @@ public class Value implements IValue {
 	}
 
 	public boolean getBoolean() throws CommonException {
-		if (isReference) {
-			throw new CommonException("Invalid cast");
-		}
 		if (value.isEmpty()) return false;
 		if (value.equals("0")) return false;
 		return true;

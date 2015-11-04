@@ -38,9 +38,4 @@ public class SetStatement extends AbstractStatement {
 		}
 		addSetCommand();
 	}
-
-	@Override
-	public void open(IStatementInternal stmt) throws CommonException {
-		stmt.setQuoted();
-	}
 }

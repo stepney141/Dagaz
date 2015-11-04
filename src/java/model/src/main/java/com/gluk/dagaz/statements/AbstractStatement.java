@@ -78,5 +78,4 @@ public abstract class AbstractStatement implements IStatementInternal {
 	public void close() throws CommonException {}
 	public void open(IStatementInternal stmt) throws CommonException {}
 	public void close(IStatementInternal stmt) throws CommonException {}
-	public void setQuoted() {}
 }

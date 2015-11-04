@@ -10,7 +10,6 @@ import com.gluk.dagaz.runtime.Value;
 public class AnyStatement extends AbstractExpression {
 
 	private ICommand anyCommand = null;
-	private boolean isQuoted = false;
 
 	@Override
 	public void open(String name) throws CommonException {
@@ -25,15 +24,6 @@ public class AnyStatement extends AbstractExpression {
 	
 	@Override
 	public void addOperand(String name) throws CommonException {
-		if (isQuoted) {
-			anyCommand.addArgument(Value.quote(name));
-		} else {
-			anyCommand.addArgument(Value.create(name));
-		}
-	}
-
-	@Override
-	public void setQuoted() {
-		isQuoted = true;
+		anyCommand.addArgument(Value.create(name));
 	}
 }

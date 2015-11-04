@@ -39,9 +39,4 @@ public class LetStatement extends AbstractStatement {
 		}
 		addLetCommand();
 	}
-
-	@Override
-	public void open(IStatementInternal stmt) throws CommonException {
-		stmt.setQuoted();
-	}
 }

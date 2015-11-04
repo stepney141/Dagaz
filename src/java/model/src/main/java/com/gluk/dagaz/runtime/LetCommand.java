@@ -1,5 +1,6 @@
 package com.gluk.dagaz.runtime;
 
+import com.gluk.dagaz.api.model.IValue;
 import com.gluk.dagaz.api.state.IDeferredCheck;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.exceptions.CommonException;
@@ -25,7 +26,11 @@ public class LetCommand extends AbstractCommand { // v --
 		if (processor.getStack().isEmpty()) {
 			throw new CommonException("Stack is empty");
 		}
-		env.let(name, processor.getStack().pop());
+		IValue v = processor.getStack().pop();
+		if (env.isDefined(v.getString())) {
+			v = Value.quote(v.getString());
+		}
+		env.let(name, v);
 		return true;
 	} 
 }

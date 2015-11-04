@@ -10,5 +10,4 @@ public interface IStatementInternal extends IStatement {
 	void close(IStatementInternal stmt) throws CommonException;
 	void setParent(IStatementInternal parent);
 	void setDeferred();
-	void setQuoted();
 }
