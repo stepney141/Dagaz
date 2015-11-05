@@ -16,7 +16,7 @@ import com.gluk.dagaz.parser.AbstractBuild;
 import com.gluk.dagaz.utils.AnyUndo;
 
 public abstract class AbstractProcessor extends AbstractBuild implements IProcessor, IBuild, ITransactional {
-
+	
 	private IBoard board;
 	private IMoveLogger logger;
 

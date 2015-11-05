@@ -151,7 +151,7 @@ public class StateTests {
 		assertTrue(mg.toString().equals("e2-e3"));                                     // e2-e3 
 		assertTrue(ml.rollback());                                                     // Откат к точке сохранения (2)
 		ml.endMove(env);                                                               // Формируется итоговая нотация
-		assertTrue(mg.toString().isEmpty());                                           // Строка записи ход пуста
+		assertFalse(mg.toString().isEmpty());                                          // Нотация "пустого" хода сгенерирована автоматически
 		assertFalse(ml.rollback());                                                    // Больше нет точек сохранения
 	}
 

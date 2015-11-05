@@ -11,6 +11,8 @@ import com.gluk.dagaz.exceptions.CommonException;
 
 public class MoveLogger implements IMoveLogger {
 	
+	private static long moveCounter = 0L;
+
 	private IMoveGenerator moveGenerator;
 	private State state;
 	private List<String> notationList = new ArrayList<String>();
@@ -30,12 +32,16 @@ public class MoveLogger implements IMoveLogger {
 		notationList.add(notation);
 	}
 
-	public void endMove(IEnvironment env) throws CommonException {
+	public synchronized void endMove(IEnvironment env) throws CommonException {
 		StringBuffer sb = new StringBuffer();
 		for (String s: notationList) {
 			sb.append(s);
 		}
-		moveGenerator.addMove(sb.toString(), state, env);
+		String s = sb.toString();
+		if (s.isEmpty()) {
+			s = Long.toString(++moveCounter);
+		}
+		moveGenerator.addMove(s, state, env);
 	}
 
 	public void savepoint() {
