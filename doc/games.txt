@@ -752,8 +752,11 @@
         - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/hexagonal-variants/485-hexemergo
     - Контактные шашки
       * Фанорона
-        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/contact-draughts/490-fanorona
         - http://skyruk.livejournal.com/250752.html
+          - Нельзя продолжать взятие, двинувшись в противоположном направлении
+          - Нельзя продолжать взятие, двинувшись в том же направлении
+          - Выполняя взятие, нельзя посещать одни и те же поля дважды
+        - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/contact-draughts/490-fanorona
         - http://www.iggamecenter.com/info/ru/fanorona.html
       * Бушка
         - http://www.mindsports.nl/index.php/on-the-evolution-of-draughts-variants/contact-draughts/491-bushka
