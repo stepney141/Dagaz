@@ -10,9 +10,14 @@
 )
 
 (player
+   (name White)
+   (zone (name start) a1)
+)
+
+(player
    (name Black)
-   (sym  n  s)
-   (sym a1 a9)
+   (sym  n s)
+   (zone (name start) a9)
 )
 
 (define walk
@@ -67,7 +72,8 @@
    )
    (move
       (check (in-zone? off))
-      a1 (walk)
+      (check (any start))
+      (walk)
    )
    (move
       (check (in-zone? plane))
