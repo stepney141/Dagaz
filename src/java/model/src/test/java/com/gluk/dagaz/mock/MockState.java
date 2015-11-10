@@ -41,9 +41,9 @@ public class MockState implements IDeferredCheck {
 
 	public void changeAttribute(String pos, String name, IValue value) throws CommonException {}
 
-	public void addToHand(String pos, IPiece piece) throws CommonException {}
+	public void takePiece() throws CommonException {}
 
-	public void dropHand() throws CommonException {}
+	public void dropPieces() throws CommonException {}
 
 	public boolean navigate(String dir, IEnvironment env) throws CommonException {
 		return false;

@@ -48,7 +48,7 @@ public class LocalEnvironment implements IEnvironment, ITransactional {
 				return false;
 			}
 		}
-		return true;
+		return !s.isEmpty();
 	}
 	
 	private static boolean isQuoted(String s) {
@@ -129,7 +129,7 @@ public class LocalEnvironment implements IEnvironment, ITransactional {
 			}
 			return;
 		}
-		throw new CommonException("Fixup [" + name + "] not found");
+		env.set(name, value);
 	}
 
 	public void del(String name) throws CommonException {

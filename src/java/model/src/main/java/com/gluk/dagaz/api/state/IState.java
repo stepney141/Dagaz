@@ -11,7 +11,7 @@ public interface IState {
 	String getCurrentPosition() throws CommonException;                                 // Получение текущей позиции
 	IPiece getPiece(String pos);                                                        // Получение фигуры на заданной позиции (позиция содержит не более одной фигуры)
 	void setPiece(String pos, IPiece piece) throws CommonException;                     // Изменение содержимого позиции (добавление или удаление фигуры)
-	void addToHand(String pos, IPiece piece) throws CommonException;                    // Добавить фигуру в руку
-	void dropHand() throws CommonException;                                             // Сбросить фигуры из руки
+	void takePiece() throws CommonException;                                            // Добавить фигуру в руку
+	void dropPieces() throws CommonException;                                           // Сбросить фигуры из руки
 	boolean navigate(String dir, IEnvironment env) throws CommonException;              // Изменение текущей позиции
 }

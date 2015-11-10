@@ -1,8 +1,6 @@
 ﻿package com.gluk.dagaz.state;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
@@ -26,7 +24,7 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 
 	private Board board;
 	private Map<String, IPiece> pieces = new HashMap<String, IPiece>();
-	private List<PieceHandler> hand = new ArrayList<PieceHandler>();
+	private PieceHandler hand = null;
 	private Map<String, Map<String, IValue>> values = new HashMap<String, Map<String, IValue>>();
 	private Stack<AbstractUndo> undo = new Stack<AbstractUndo>();
 	private String currentPos = null;
@@ -36,7 +34,7 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 	public State(Board board) {
 		this.board = board;
 	}
-
+	
 	public long getZobristHash() {
 		return hash;
 	}
@@ -57,7 +55,9 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 				}
 			}
 			// Иначе - проверка наличия позиционного флага
-			return getFlag(name, currentPos) != null;
+			if (getFlag(name, currentPos) != null) {
+				return true;
+			}
 		}
 		// Проверка определения имени на уровне модели (имя позиции или направления)
 		return board.isDefined(name);
@@ -139,21 +139,28 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 		changePiece(pos, piece);
 	}
 	
-	public void addToHand(String pos, IPiece piece) throws CommonException {
+	public void takePiece() throws CommonException {
+		if (currentPos == null) {
+			throw new CommonException("Position undefined");
+		}
+		IPiece piece = getPiece(currentPos);
+		if (piece == null) {
+			throw new CommonException("Position [" + currentPos + "] is empty");
+		}
+		setPiece(currentPos, null);
 		undo.push(new UndoTake(deep));
-		toHand(pos, piece);
+		toHand(currentPos, piece);
 	}
 	
-	public void dropHand() throws CommonException {
-		for (int ix = hand.size() - 1; ix >= 0; ix--) {
-			PieceHandler h = hand.get(ix);
-			undo.push(new UndoDrop(h.getPosition(), h.getPiece(), deep));
-			if (getPiece(h.getPosition()) != null) {
-				throw new CommonException("Position [" + h.getPosition() + "] is not empty");
+	public void dropPieces() throws CommonException {
+		if (hand != null) {
+			undo.push(new UndoDrop(hand.getPosition(), hand.getPiece(), deep));
+			if (getPiece(hand.getPosition()) != null) {
+				throw new CommonException("Position [" + hand.getPosition() + "] is not empty");
 			}
-			changePiece(h.getPosition(), h.getPiece());
+			setPiece(hand.getPosition(), hand.getPiece());
 		}
-		hand.clear();
+		hand = null;
 	}
 	
 	public boolean navigate(String dir, IEnvironment env) throws CommonException {
@@ -169,9 +176,8 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 		// Если для навигации использовано имя направления, а не имя позиции 
 		if (!dir.equals(to)) {
 			// Переместить фигуры "в руке" (над доской)
-			for (int ix = 0; ix < hand.size(); ix++) {
-				PieceHandler h = hand.get(ix);
-				String from = h.getPosition();
+			if (hand != null) {
+				String from = hand.getPosition();
 				// Получение результрующей позиции для фигуры "в руке" 
 				to = board.navigate(dir, from, env);
 				if (to.isEmpty()) {
@@ -185,8 +191,8 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 					return false;
 				}
 				// Перемещение фигуры "в руке"
-				undo.push(new UndoMove(from, ix, deep));
-				setPosition(ix, to);
+				undo.push(new UndoMove(from, deep));
+				setPosition(to);
 			}
 		}
 		// Навигация успешна
@@ -195,10 +201,10 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 	
 	public void clear() {
 		pieces.clear();
-		hand.clear();
 		values.clear();
 		undo.clear();
 		currentPos = null;
+		hand = null;
 		hash = 0L;
 		deep = 0;
 	}
@@ -285,19 +291,16 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 	}
 	
 	public void undoTake() {
-		int ix = hand.size() - 1;
-		if (ix >= 0) {
-			hand.remove(ix);
-		}
+		hand = null;
 	}
 	
 	public void toHand(String pos, IPiece piece) {
-		hand.add(new PieceHandler(pos, piece));
+		hand = new PieceHandler(pos, piece);
 	}
 	
-	public void setPosition(int ix, String pos) {
-		if (ix < hand.size()) {
-			hand.get(ix).setPosition(pos);
+	public void setPosition(String pos) {
+		if (hand != null) {
+			hand.setPosition(pos);
 		}
 	}
 }

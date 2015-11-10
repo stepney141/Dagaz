@@ -1,6 +1,5 @@
 package com.gluk.dagaz.state;
 
-import com.gluk.dagaz.api.model.IBoard;
 import com.gluk.dagaz.api.model.IReserved;
 import com.gluk.dagaz.api.model.IValue;
 import com.gluk.dagaz.api.state.IEnvironment;
@@ -14,24 +13,30 @@ public class StateEnvironment implements IEnvironment {
 	private IState state;
 	private IEnvironment env;
 	
-	public StateEnvironment(IState state, IBoard board, IEnvironment env) {
+	public StateEnvironment(State state, IEnvironment env) {
 		this.state = state;
 		this.env   = env;
 	}
 
 	public boolean isDefined(String name) throws CommonException {
-		if (name.equals(IReserved.STATE_POSITION)) {
-			return state.getCurrentPosition() != null;
-		}
-		if (name.equals(IReserved.STATE_PLAYER)    ||
-			name.equals(IReserved.STATE_PIECE)     ||
+		String pos = state.getCurrentPosition();
+		if (name.equals(IReserved.STATE_POSITION)  ||
 			name.equals(IReserved.STATE_IS_EMPTY)  ||
 			name.equals(IReserved.STATE_NOT_EMPTY) ||
 			name.equals(IReserved.STATE_IS_ENEMY)  ||
 			name.equals(IReserved.STATE_NOT_ENEMY) ||
 			name.equals(IReserved.STATE_IS_FRIEND) ||
 			name.equals(IReserved.STATE_NOT_FRIEND)) {
-			return true;
+			return pos != null;
+			}
+		if (name.equals(IReserved.STATE_PLAYER)    ||
+			name.equals(IReserved.STATE_PIECE)) {
+			if (pos != null) {
+				IPiece p = state.getPiece(pos);
+				return p != null;
+			} else {
+				return false;
+			}
 		}
 		return state.isDefined(name) || env.isDefined(name);
 	}

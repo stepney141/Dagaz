@@ -50,6 +50,8 @@ public class StateStatement extends AbstractExpression {
 		getCommand.addArgument(INTERNAL_POS_VALUE);
 		getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
 		build.addCommand(getCommand);
+		ICommand dropCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_DROP, build);
+		build.addCommand(dropCommand);
 		ICommand delCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_DEL, build);
 		build.addCommand(delCommand);
 		delCommand.addArgument(INTERNAL_POS_VALUE);

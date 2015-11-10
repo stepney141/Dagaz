@@ -21,8 +21,7 @@ import com.gluk.dagaz.state.LocalEnvironment;
 import com.gluk.dagaz.state.MoveLogger;
 import com.gluk.dagaz.state.PlayersEnvironment;
 import com.gluk.dagaz.state.State;
-
-// TODO: State (navigate), StateEnvironment
+import com.gluk.dagaz.state.StateEnvironment;
 
 public class StateTests {
 
@@ -333,4 +332,186 @@ public class StateTests {
 		
 		assertFalse(state.rollback());                                                // Больше нет точек сохранения
 	}	
+
+	@Test
+	public void testStateNavigate() throws CommonException, CloneNotSupportedException {
+		Board board = new Board();
+		board.addPosition("a1");                                                      // Определение позиций
+		board.addPosition("a2");
+		board.addLink("n", "a1", "a2");                                               // Определение направлений
+		board.addLink("s", "a2", "a1");
+		State state = new State(board);
+		assertTrue(state.getCurrentPosition() == null);                                                 
+		assertTrue(state.getPiece("a1") == null);                                                 
+		assertTrue(state.getPiece("a2") == null);                                                 
+		
+		state.savepoint();                                                            // Точка сохранения (1)
+		IPiece p = new Piece("Pawn", "White");                                        // Создание фигуры
+		state.setCurrentPosition("a1");
+		state.setPiece("a1", p);
+		assertTrue(state.getCurrentPosition() == "a1");                                                 
+		assertTrue(state.getPiece("a1") == p);                                                 
+		assertTrue(state.getPiece("a2") == null);                                                 
+
+		state.savepoint();                                                            // Точка сохранения (2)
+		state.takePiece();                                                            // Взять фигуру
+		assertTrue(state.getPiece("a1") == null);                                                 
+		assertTrue(state.getPiece("a2") == null);                                                 
+		IEnvironment ge = new GlobalEnvironment();
+		Players players = new Players();
+		players.addPlayer("White");                              
+		players.addPlayer("Black");
+		players.addSymmetry("Black", "n", "s");
+		players.addSymmetry("Black", "s", "n");
+		IEnvironment env = new PlayersEnvironment(players, 1, ge);
+		assertFalse(state.navigate("s", env));                                                 
+		assertTrue(state.getCurrentPosition() == "a1");                                                 
+		assertTrue(state.navigate("n", env));                                                 
+		assertTrue(state.getCurrentPosition() == "a2");                                                 
+
+		state.savepoint();                                                            // Точка сохранения (3)
+		state.dropPieces();
+		assertTrue(state.getPiece("a1") == null);                                                 
+		assertTrue(state.getPiece("a2") == p);                                                 
+		assertFalse(state.navigate("n", env));
+		
+		state.savepoint();                                                            // Точка сохранения (4)
+		env = new PlayersEnvironment(players, 2, ge);
+		state.takePiece();
+		assertTrue(state.getPiece("a1") == null);                                                 
+		assertTrue(state.getPiece("a2") == null);                                                 
+		assertFalse(state.navigate("s", env));
+		assertTrue(state.getCurrentPosition() == "a2");                                                 
+		
+		state.savepoint();                                                            // Точка сохранения (5)
+		assertTrue(state.navigate("n", env));
+		assertTrue(state.getCurrentPosition() == "a1");                                                 
+		state.dropPieces();
+		assertTrue(state.getPiece("a1") == p);                                                 
+		assertTrue(state.getPiece("a2") == null);                                                 
+
+		assertTrue(state.rollback());                                                 // Откат к точке сохранения (5)
+		assertTrue(state.getCurrentPosition() == "a2");                                                 
+		assertTrue(state.getPiece("a1") == null);                                                 
+		assertTrue(state.getPiece("a2") == null);                                                 
+
+		assertTrue(state.rollback());                                                 // Откат к точке сохранения (4)
+		assertTrue(state.getPiece("a1") == null);                                                 
+		assertTrue(state.getPiece("a2") == p);                                                 
+
+		assertTrue(state.rollback());                                                 // Откат к точке сохранения (3)
+		assertTrue(state.getCurrentPosition() == "a2");                                                 
+		assertTrue(state.getPiece("a1") == null);                                                 
+		assertTrue(state.getPiece("a2") == null);                                                 
+
+		assertTrue(state.rollback());                                                 // Откат к точке сохранения (2)
+		assertTrue(state.getCurrentPosition() == "a1");                                                 
+		assertTrue(state.getPiece("a1") == p);                                                 
+		assertTrue(state.getPiece("a2") == null);                                                 
+
+		assertTrue(state.rollback());                                                 // Откат к точке сохранения (1)
+		assertTrue(state.getCurrentPosition() == null);                                                 
+		assertTrue(state.getPiece("a1") == null);                                                 
+		assertTrue(state.getPiece("a2") == null);                                                 
+
+		assertFalse(state.rollback());                                                // Больше нет точек сохранения
+	}
+
+	@Test
+	public void testStateEnvironment() throws CommonException, CloneNotSupportedException {
+		IEnvironment ge = new GlobalEnvironment();
+		Players players = new Players();
+		players.addPlayer("White");                              
+		players.addPlayer("Black");
+		IEnvironment pe = new PlayersEnvironment(players, 1, ge);
+		
+		Board board = new Board();
+		board.setDefaultValue("x", Value.create(0));
+		board.addPosition("a1");
+		board.addPosition("a2");
+		board.addLink("n", "a1", "a2");
+		board.addLink("s", "a2", "a1");
+		assertTrue(board.isDefined("a1"));
+		assertTrue(board.isDefined("n"));
+		
+		State state = new State(board);
+		IEnvironment env = new StateEnvironment(state, pe);
+		assertTrue(env.isDefined("x"));
+		assertTrue(env.isDefined("a1"));
+		assertTrue(env.isDefined("a2"));
+		assertTrue(env.isDefined("n"));
+		assertTrue(env.isDefined("s"));
+		assertTrue(env.isDefined(IReserved.PLAYER_CURRENT));
+		assertTrue(env.get("x").getNumber() == 0);
+		
+		assertFalse(env.isDefined(IReserved.STATE_POSITION));
+		assertFalse(env.isDefined(IReserved.STATE_PLAYER));
+		assertFalse(env.isDefined(IReserved.STATE_PIECE));
+		assertFalse(env.isDefined(IReserved.STATE_IS_EMPTY));
+		assertFalse(env.isDefined(IReserved.STATE_NOT_EMPTY));
+		assertFalse(env.isDefined(IReserved.STATE_IS_FRIEND));
+		assertFalse(env.isDefined(IReserved.STATE_NOT_FRIEND));
+		assertFalse(env.isDefined(IReserved.STATE_IS_ENEMY));
+		assertFalse(env.isDefined(IReserved.STATE_NOT_ENEMY));
+		
+		assertTrue(env.get("a1").getBoolean());
+		assertFalse(env.isDefined(IReserved.STATE_PLAYER));
+		assertFalse(env.isDefined(IReserved.STATE_PIECE));
+		assertTrue(env.isDefined(IReserved.STATE_POSITION));
+		assertTrue(env.isDefined(IReserved.STATE_IS_EMPTY));
+		assertTrue(env.isDefined(IReserved.STATE_NOT_EMPTY));
+		assertTrue(env.isDefined(IReserved.STATE_IS_FRIEND));
+		assertTrue(env.isDefined(IReserved.STATE_NOT_FRIEND));
+		assertTrue(env.isDefined(IReserved.STATE_IS_ENEMY));
+		assertTrue(env.isDefined(IReserved.STATE_NOT_ENEMY));
+		
+		assertTrue(env.get(IReserved.STATE_POSITION).getString() == "a1");
+		assertTrue(env.get(IReserved.STATE_IS_EMPTY).getBoolean());
+		assertFalse(env.get(IReserved.STATE_NOT_EMPTY).getBoolean());
+		assertFalse(env.get(IReserved.STATE_IS_FRIEND).getBoolean());
+		assertTrue(env.get(IReserved.STATE_NOT_FRIEND).getBoolean());
+		assertFalse(env.get(IReserved.STATE_IS_ENEMY).getBoolean());
+		assertTrue(env.get(IReserved.STATE_NOT_ENEMY).getBoolean());
+		
+		IPiece p = new Piece("Pawn", "White");
+		state.setPiece(state.getCurrentPosition(), p);
+		assertTrue(env.isDefined(IReserved.STATE_PLAYER));
+		assertTrue(env.isDefined(IReserved.STATE_PIECE));
+		assertTrue(env.get(IReserved.STATE_PLAYER).getString().equals("White"));
+		assertTrue(env.get(IReserved.STATE_PIECE).getString().equals("Pawn"));
+		assertFalse(env.get(IReserved.STATE_IS_EMPTY).getBoolean());
+		assertTrue(env.get(IReserved.STATE_NOT_EMPTY).getBoolean());
+		assertTrue(env.get(IReserved.STATE_IS_FRIEND).getBoolean());
+		assertFalse(env.get(IReserved.STATE_NOT_FRIEND).getBoolean());
+		assertFalse(env.get(IReserved.STATE_IS_ENEMY).getBoolean());
+		assertTrue(env.get(IReserved.STATE_NOT_ENEMY).getBoolean());
+		
+		assertFalse(env.get("s").getBoolean());
+		assertTrue(env.get("n").getBoolean());
+		assertFalse(env.isDefined(IReserved.STATE_PLAYER));
+		assertFalse(env.isDefined(IReserved.STATE_PIECE));
+		assertTrue(env.get(IReserved.STATE_POSITION).getString() == "a2");
+		assertTrue(env.get(IReserved.STATE_IS_EMPTY).getBoolean());
+		assertFalse(env.get(IReserved.STATE_NOT_EMPTY).getBoolean());
+		assertFalse(env.get(IReserved.STATE_IS_FRIEND).getBoolean());
+		assertTrue(env.get(IReserved.STATE_NOT_FRIEND).getBoolean());
+		assertFalse(env.get(IReserved.STATE_IS_ENEMY).getBoolean());
+		assertTrue(env.get(IReserved.STATE_NOT_ENEMY).getBoolean());
+		
+		p = new Piece("King", "Black");
+		state.setPiece(state.getCurrentPosition(), p);
+		assertTrue(env.isDefined(IReserved.STATE_PLAYER));
+		assertTrue(env.isDefined(IReserved.STATE_PIECE));
+		assertTrue(env.get(IReserved.STATE_PLAYER).getString().equals("Black"));
+		assertTrue(env.get(IReserved.STATE_PIECE).getString().equals("King"));
+		assertFalse(env.get(IReserved.STATE_IS_EMPTY).getBoolean());
+		assertTrue(env.get(IReserved.STATE_NOT_EMPTY).getBoolean());
+		assertFalse(env.get(IReserved.STATE_IS_FRIEND).getBoolean());
+		assertTrue(env.get(IReserved.STATE_NOT_FRIEND).getBoolean());
+		assertTrue(env.get(IReserved.STATE_IS_ENEMY).getBoolean());
+		assertFalse(env.get(IReserved.STATE_NOT_ENEMY).getBoolean());
+		
+		env.set("x", Value.create(1));
+		assertTrue(env.get("x").getNumber() == 1);
+	}
 }

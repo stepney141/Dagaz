@@ -234,9 +234,6 @@ public class ModelTests {
 		deltas.add(-1);
 		deltas.add(0);
 		g.addDirection("w", deltas);
-		deltas.clear();
-		deltas.add(-1);
-		deltas.add(-1);
 		
 		IEnvironment ge = new GlobalEnvironment();
 		Players p = new Players();

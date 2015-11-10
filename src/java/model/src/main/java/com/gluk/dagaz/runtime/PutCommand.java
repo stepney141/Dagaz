@@ -9,7 +9,7 @@ public class PutCommand extends AbstractCommand { // --
 	@Override
 	public boolean execute(IDeferredCheck state, IEnvironment env) throws CommonException {
 		super.execute(state, env);
-		state.dropHand();
+		state.dropPieces();
 		return true;
 	}
 }

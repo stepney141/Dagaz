@@ -32,9 +32,14 @@ public class GetCommand extends AbstractCommand { // [s] -- v
 			}
 			operand = processor.getStack().pop().getString();
 		}
-		IValue value = env.get(operand);
-		if (value.isReference()) {
-			value = env.get(value.getString());
+		IValue value = null;
+		if (!operand.isEmpty() && env.isDefined(operand)) { 
+			value = env.get(operand);
+			if (value.isReference()) {
+				value = env.get(value.getString());
+			}
+		} else {
+			value = Value.create("");
 		}
 		processor.getStack().push(value);
 		return true;

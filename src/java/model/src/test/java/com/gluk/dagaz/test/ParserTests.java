@@ -3,6 +3,9 @@ package com.gluk.dagaz.test;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 
 import com.gluk.dagaz.api.state.IDeferredCheck;
@@ -13,13 +16,18 @@ import com.gluk.dagaz.mock.MockProcessor;
 import com.gluk.dagaz.mock.MockState;
 import com.gluk.dagaz.mock.MockStatement;
 import com.gluk.dagaz.model.Board;
+import com.gluk.dagaz.model.Grid;
+import com.gluk.dagaz.model.Players;
 import com.gluk.dagaz.runtime.Value;
 import com.gluk.dagaz.state.GlobalEnvironment;
 import com.gluk.dagaz.state.LocalEnvironment;
+import com.gluk.dagaz.state.PlayersEnvironment;
+import com.gluk.dagaz.state.State;
+import com.gluk.dagaz.state.StateEnvironment;
 import com.gluk.dagaz.statements.AbstractStatement;
 import com.gluk.dagaz.statements.SeqStatement;
 
-// TODO: StateStatement, ZoneStatement, AnyStatement, EndStatement
+// TODO: AnyStatement, EndStatement
 
 public class ParserTests {
 
@@ -243,5 +251,133 @@ public class ParserTests {
 		assertTrue(processor.getStack().isEmpty());
 		assertTrue(env.get("x").getNumber() == -1);
 		assertTrue(env.get("y").getNumber() == 3);
+	}
+
+	@Test
+	public void testStateStatement() throws CommonException { // (set! x (position n e))
+		IEnvironment ge = new GlobalEnvironment();
+		Players players = new Players();
+		players.addPlayer("White");                              
+		players.addPlayer("Black");
+		IEnvironment pe = new PlayersEnvironment(players, 1, ge);
+
+		Board board = new Board();
+		Grid g = new Grid(board);
+		g.addDimension("a-b");
+		g.addDimension("2-1");
+		g.createPositions();
+		
+		List<Integer> deltas = new ArrayList<Integer>();
+		deltas.add(0);
+		deltas.add(1);
+		g.addDirection("s", deltas);
+		deltas.clear();
+		deltas.add(0);
+		deltas.add(-1);
+		g.addDirection("n", deltas);
+		deltas.clear();
+		deltas.add(1);
+		deltas.add(0);
+		g.addDirection("e", deltas);
+		deltas.clear();
+		deltas.add(-1);
+		deltas.add(0);
+		g.addDirection("w", deltas);
+		
+		State state = new State(board);
+		IEnvironment se = new StateEnvironment(state, pe);
+		IEnvironment env = new LocalEnvironment(se);
+		MockMoveLogger logger = new MockMoveLogger();
+		MockProcessor processor = new MockProcessor(board, logger);
+		AbstractStatement root = new SeqStatement();
+		
+		root.setBuild(processor);
+		root.openChild("set!");
+		root.addLexem("x");
+		root.openChild("position");
+		root.addLexem("n");
+		root.addLexem("e");
+		root.closeChild();
+		root.closeChild();
+		
+		state.setCurrentPosition("a1");
+		processor.execute(state, env);
+		assertTrue(env.get("x").getString().equals("b2"));
+		assertTrue(state.getCurrentPosition().equals("a1"));
+		
+		state.setCurrentPosition("a2");
+		processor.execute(state, env);
+		assertFalse(env.get("x").getBoolean());
+		assertTrue(state.getCurrentPosition().equals("a2"));
+
+		state.setCurrentPosition("b1");
+		processor.execute(state, env);
+		assertFalse(env.get("x").getBoolean());
+		assertTrue(state.getCurrentPosition().equals("b1"));
+	}
+
+	@Test
+	public void testZoneStatement() throws CommonException { // (set! x (in-zone? home a1)) (set! y (in-zone? home))
+		IEnvironment ge = new GlobalEnvironment();
+		Players players = new Players();
+		players.addPlayer("White");                              
+		players.addPlayer("Black");
+		IEnvironment pe = new PlayersEnvironment(players, 1, ge);
+
+		Board board = new Board();
+		board.addPosition("a1");
+		board.addPosition("a2");
+		board.addPosition("b1");
+		board.addPosition("b2");
+		board.addZone("home", "b1");
+		board.addZone("home", "White", "a1");
+		board.addZone("home", "Black", "b2");
+		
+		State state = new State(board);
+		IEnvironment se = new StateEnvironment(state, pe);
+		IEnvironment env = new LocalEnvironment(se);
+		MockMoveLogger logger = new MockMoveLogger();
+		MockProcessor processor = new MockProcessor(board, logger);
+		AbstractStatement root = new SeqStatement();
+
+		root.setBuild(processor);
+		root.openChild("set!");
+		root.addLexem("x");
+		root.openChild("in-zone?");
+		root.addLexem("home");
+		root.addLexem("a1");
+		root.closeChild();
+		root.closeChild();
+
+		root.openChild("set!");
+		root.addLexem("y");
+		root.openChild("in-zone?");
+		root.addLexem("home");
+		root.closeChild();
+		root.closeChild();
+		
+		assertTrue(board.inZone("home", "a1", env));
+		assertFalse(board.inZone("home", "a2", env));
+		assertTrue(board.inZone("home", "b1", env));
+		assertFalse(board.inZone("home", "b2", env));
+		
+		state.setCurrentPosition("b1");
+		processor.execute(state, env);
+		assertTrue(env.get("x").getBoolean());
+		assertTrue(env.get("y").getBoolean());
+
+		pe = new PlayersEnvironment(players, 2, ge);
+		se = new StateEnvironment(state, pe);
+		env = new LocalEnvironment(se);
+
+		assertFalse(board.inZone("home", "a1", env));
+		assertFalse(board.inZone("home", "a2", env));
+		assertTrue(board.inZone("home", "b1", env));
+		assertTrue(board.inZone("home", "b2", env));
+		
+		state.setCurrentPosition("a2");
+		processor.execute(state, env);
+		assertFalse(env.get("x").getBoolean());
+		assertFalse(env.get("y").getBoolean());
 	}
 }

@@ -24,7 +24,7 @@ import com.gluk.dagaz.state.GlobalEnvironment;
 import com.gluk.dagaz.state.LocalEnvironment;
 import com.gluk.dagaz.utils.AnyUndo;
 
-// TODO: capture, take, put
+// TODO: capture, take, put, any
 
 public class RuntimeTests {
 

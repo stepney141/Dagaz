@@ -39,7 +39,6 @@ public class Processor extends AbstractProcessor {
 		fixups.add(offset);
 	}
 	
-	// TODO: Fixup to post-actions
 	public void fixup() throws CommonException {
 		int currentOffset = commands.size();
 		for (Integer offset: fixups) {
@@ -101,7 +100,7 @@ public class Processor extends AbstractProcessor {
 			State state = (State)old.clone();
 			state.setCurrentPosition(pos);
 			trans.add(state);
-			StateEnvironment se = new StateEnvironment(state, getBoard(), pe);
+			StateEnvironment se = new StateEnvironment(state, pe);
 			LocalEnvironment env = new LocalEnvironment(se);
 			trans.add(env);
 			execute(state, env);

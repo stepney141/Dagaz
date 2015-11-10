@@ -1,4 +1,4 @@
-﻿package com.gluk.dagaz.test;
+package com.gluk.dagaz.test;
 
 import static org.junit.Assert.assertTrue;
 
@@ -10,7 +10,7 @@ import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.random.RandomFactory;
 import com.gluk.dagaz.random.RandomGenerator;
 
-public class RandomTest {
+public class RandomTests {
 
 	@Test
 	public void testRandomCloning() throws CommonException, CloneNotSupportedException {
