@@ -33,11 +33,11 @@ public class CodeBuilder extends AbstractBuilder {
 		while ((n = nl.nextNode())!= null) {
 			String type = getType(n);
 			if (type.equals(N_XP)) {
-				s.openChild(getTag(n));
+				s.tag(getTag(n));
 				buildCode(s, n);
-				s.closeChild();
+				s.end();
 			} else {
-				s.addLexem(getText(n));
+				s.val(getText(n));
 			}
 		}
 	}

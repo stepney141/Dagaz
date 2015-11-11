@@ -7,15 +7,16 @@ import com.gluk.dagaz.api.model.IBoard;
 import com.gluk.dagaz.api.model.IValue;
 import com.gluk.dagaz.api.state.IDeferredCheck;
 import com.gluk.dagaz.api.state.IEnvironment;
+import com.gluk.dagaz.api.state.ITransactional;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.utils.AnyUndo;
 
-public interface IProcessor {
-	IBoard getBoard();
-	IMoveLogger getMoveLogger();
-	Stack<AnyUndo> getUndo();
-	Stack<IValue> getStack();
-	int getNextCommand();
-	void incNextCommand(int delta);
-	void execute(IDeferredCheck state, IEnvironment env) throws CommonException;
+public interface IProcessor extends ITransactional {
+	IBoard         getBoard();
+	IMoveLogger    getMoveLogger();
+	Stack<IValue>  getStack();
+	AnyUndo        getUndo();
+	void           pushUndo(AnyUndo u);
+	void           incNextCommand(int delta);
+	void           execute(IDeferredCheck state, IEnvironment env) throws CommonException;
 }

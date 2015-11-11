@@ -22,9 +22,8 @@ import com.gluk.dagaz.runtime.CommandFactory;
 import com.gluk.dagaz.runtime.Value;
 import com.gluk.dagaz.state.GlobalEnvironment;
 import com.gluk.dagaz.state.LocalEnvironment;
-import com.gluk.dagaz.utils.AnyUndo;
 
-// TODO: capture, take, put, any
+// TODO: capture, take, put
 
 public class RuntimeTests {
 
@@ -54,36 +53,6 @@ public class RuntimeTests {
 		c.addArgument("e4");
 		assertTrue(c.execute(state, env));
 		assertTrue(logger.getLog().equals("e2 - e4"));
-	}
-
-	@Test
-	public void testAnyCommand() throws CommonException {
-		IBoard board = new Board();
-		IMoveLogger logger = new MockMoveLogger();
-		IProcessor processor = new MockProcessor(board, logger);
-		IEnvironment env = new GlobalEnvironment();
-		IDeferredCheck state = new MockState();
-		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_ANY, processor);
-		assertFalse(c.execute(state, env));
-		AnyUndo u = new AnyUndo(0);
-		processor.getUndo().push(u);
-		assertFalse(c.execute(state, env));
-		assertTrue(u.getIndex() == 1);
-		assertTrue(processor.getUndo().isEmpty());
-		c.addArgument(Value.create(1));
-		c.addArgument(Value.create(2));
-		c.addArgument(Value.create(3));
-		u = new AnyUndo(0);
-		processor.getUndo().push(u);
-		assertTrue(c.execute(state, env));
-		assertTrue(processor.getStack().pop().getNumber() == 1);
-		assertTrue(c.execute(state, env));
-		assertTrue(processor.getStack().pop().getNumber() == 2);
-		assertTrue(c.execute(state, env));
-		assertTrue(processor.getStack().pop().getNumber() == 3);
-		assertFalse(c.execute(state, env));
-		assertTrue(u.getIndex() == 4);
-		assertTrue(processor.getUndo().isEmpty());
 	}
 
 	@Test
@@ -570,5 +539,45 @@ public class RuntimeTests {
 		assertTrue(c.execute(state, env));
 		assertTrue(processor.getStack().pop().getBoolean());
 		assertTrue(processor.getStack().isEmpty());
+	}
+
+	@Test
+	public void testAnyCommand() throws CommonException {
+		IBoard board = new Board();
+		IMoveLogger logger = new MockMoveLogger();
+		MockProcessor processor = new MockProcessor(board, logger);
+		IEnvironment env = new GlobalEnvironment();
+		IDeferredCheck state = new MockState();
+		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_ANY, processor);
+		
+		assertFalse(processor.execCommand(c, state, env));
+		assertTrue(processor.getStack().isEmpty());
+		assertTrue(processor.getUndoStack().isEmpty());
+
+		c.addArgument(Value.create(1));
+		c.addArgument(Value.create(2));
+		c.addArgument(Value.create(3));
+		assertTrue(processor.execCommand(c, state, env));
+		assertTrue(processor.getStack().pop().getNumber() == 1);
+		assertTrue(processor.getStack().isEmpty());
+		assertTrue(processor.getUndoStack().size() == 1);
+
+		assertTrue(processor.rollback());
+		assertTrue(processor.execCommand(c, state, env));
+		assertTrue(processor.getStack().pop().getNumber() == 2);
+		assertTrue(processor.getStack().isEmpty());
+		assertTrue(processor.getUndoStack().size() == 1);
+		
+		assertTrue(processor.rollback());
+		assertTrue(processor.execCommand(c, state, env));
+		assertTrue(processor.getStack().pop().getNumber() == 3);
+		assertTrue(processor.getStack().isEmpty());
+		assertTrue(processor.getUndoStack().size() == 1);
+
+		assertTrue(processor.rollback());
+		assertFalse(processor.execCommand(c, state, env));
+		assertTrue(processor.getStack().isEmpty());
+		assertFalse(processor.rollback());
+		assertTrue(processor.getUndoStack().isEmpty());
 	}
 }

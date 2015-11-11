@@ -40,7 +40,7 @@ public class Grid {
 		StringBuffer sb = new StringBuffer();
 		List<String> r = new ArrayList<String>();
 		int start = 0;
-		int current = 0;
+		int current = -1;
 		boolean isNumeric = false;
 		for (Character c: dimension.toCharArray()) {
 			if (c.equals('-')) {
@@ -52,11 +52,15 @@ public class Grid {
 					}
 					start = (int)sb.toString().charAt(0);
 				}
-				current = 0;
+				current = -1;
 				continue;
 			}
 			if (Character.isDigit(c)) {
-				current *= 10;
+				if (current > 0) {
+					current *= 10;
+				} else {
+					current = 0;
+				}
 				current += (int)c - (int)'0'; 
 				isNumeric = true;
 				continue;
@@ -64,11 +68,11 @@ public class Grid {
 			if (Character.isLetter(c) && (start > 0)) {
 				current = (int)c;
 			}
-			if ((start > 0)&&(current > 0)) {
+			if ((start > 0)&&(current >= 0)) {
 				addRange(dimension, start, current, isNumeric, r);
 				isNumeric = false;
 				start = 0;
-				current = 0;
+				current = -1;
 				sb.setLength(0);
 				continue;
 			}
@@ -91,22 +95,22 @@ public class Grid {
 				r.add(sb.toString());
 				sb.setLength(0);
 			}
-			if (current > 0) {
+			if (current >= 0) {
 				if (!isNumeric || r.contains(Integer.toString(current))) {
 					throw new CommonException("Invalid dimension [" + dimension + "]");
 				}
 				r.add(Integer.toString(current));
-				current = 0;
+				current = -1;
 			}
 		}
-		if ((start > 0)&&(current > 0)) {
+		if ((start > 0)&&(current >= 0)) {
 			if (!isNumeric) {
 				throw new CommonException("Invalid dimension [" + dimension + "]");
 			}
 			addRange(dimension, start, current, isNumeric, r);
 			isNumeric = false;
 			start = 0;
-			current = 0;
+			current = -1;
 		}
 		if (sb.length() > 0) {
 			if (isNumeric || r.contains(sb.toString())) {
@@ -115,7 +119,7 @@ public class Grid {
 			r.add(sb.toString());
 			sb.setLength(0);
 		}
-		if (current > 0) {
+		if (current >= 0) {
 			if (!isNumeric || r.contains(Integer.toString(current))) {
 				throw new CommonException("Invalid dimension [" + dimension + "]");
 			}

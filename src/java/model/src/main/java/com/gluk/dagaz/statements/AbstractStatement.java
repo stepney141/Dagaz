@@ -29,9 +29,9 @@ public abstract class AbstractStatement implements IStatementInternal {
 		return childStatement != null;
 	}
 	
-	public void openChild(String name) throws CommonException {
+	public void tag(String name) throws CommonException {
 		if (childIsActive()) {
-			childStatement.openChild(name);
+			childStatement.tag(name);
 		} else {
 			childStatement = StatementFactory.getInstance().createStatement(name, build);
 			childStatement.setParent(this);
@@ -40,12 +40,12 @@ public abstract class AbstractStatement implements IStatementInternal {
 		}
 	}
 
-	public void closeChild() throws CommonException {
+	public void end() throws CommonException {
 		if (!childIsActive()) {
 			throw new CommonException("The Builder is not active");
 		}
 		if (childStatement.childIsActive()) {
-			childStatement.closeChild();
+			childStatement.end();
 		} else {
 			childStatement.close();
 			close(childStatement);
@@ -53,7 +53,7 @@ public abstract class AbstractStatement implements IStatementInternal {
 		}
 	}
 
-	public void addLexem(String name) throws CommonException {
+	public void val(String name) throws CommonException {
 		if (IReserved.STMT_END.equals(name)) {
 			IStatementInternal stmt = StatementFactory.getInstance().createStatement(name, build);
 			stmt.open(name);
@@ -63,7 +63,7 @@ public abstract class AbstractStatement implements IStatementInternal {
 			return;
 		}
 		if (childIsActive()) {
-			childStatement.addLexem(name);
+			childStatement.val(name);
 		} else {
 			addOperand(name);
 		}

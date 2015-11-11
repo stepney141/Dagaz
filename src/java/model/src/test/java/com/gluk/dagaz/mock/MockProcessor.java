@@ -1,14 +1,24 @@
 package com.gluk.dagaz.mock;
 
+import java.util.Stack;
+
 import com.gluk.dagaz.api.application.IMoveLogger;
 import com.gluk.dagaz.api.model.IBoard;
+import com.gluk.dagaz.api.runtime.ICommand;
+import com.gluk.dagaz.api.state.IDeferredCheck;
+import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.runtime.AbstractProcessor;
+import com.gluk.dagaz.utils.AnyUndo;
 
 public class MockProcessor extends AbstractProcessor {
 	
 	public MockProcessor(IBoard board, IMoveLogger logger) {
 		super(board, logger);
+	}
+	
+	public Stack<AnyUndo> getUndoStack() {
+		return undo;
 	}
 	
 	public void addFixup(int offset) {}
@@ -23,9 +33,13 @@ public class MockProcessor extends AbstractProcessor {
 
 	public void setDeferred(int offset) {}
 
-	public void savepoint() {}
-
-	public boolean rollback() throws CommonException {
-		return false;
+	public int getNextCommand() {
+		return nextCommand;
+	}
+	
+	public boolean execCommand(ICommand c, IDeferredCheck state, IEnvironment env) throws CommonException {
+		nextCommand = 1;
+		currCommand = 1;
+		return c.execute(state, env);
 	}
 }

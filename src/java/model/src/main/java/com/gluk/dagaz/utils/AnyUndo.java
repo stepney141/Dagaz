@@ -6,12 +6,14 @@ import com.gluk.dagaz.api.model.IValue;
 
 public class AnyUndo {
 
-	private int command;
+	private int next;
+	private int curr;
 	private int index = 0;
 	private Stack<IValue> stack = new Stack<IValue>(); 
 	
-	public AnyUndo(int command) {
-		this.command = command;
+	public AnyUndo(int next, int curr) {
+		this.next = next;
+		this.curr = curr;
 	}
 	
 	public void saveStack(IValue v) {
@@ -22,8 +24,12 @@ public class AnyUndo {
 		return stack;
 	}
 	
-	public int getCommand() {
-		return command;
+	public int getNext() {
+		return next;
+	}
+	
+	public int getCurr() {
+		return curr;
 	}
 	
 	public int getIndex() {
