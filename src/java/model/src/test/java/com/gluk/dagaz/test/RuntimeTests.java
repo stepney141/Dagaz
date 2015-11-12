@@ -23,7 +23,7 @@ import com.gluk.dagaz.runtime.Value;
 import com.gluk.dagaz.state.GlobalEnvironment;
 import com.gluk.dagaz.state.LocalEnvironment;
 
-// TODO: capture, take, put
+// TODO: take, put
 
 public class RuntimeTests {
 
@@ -102,17 +102,24 @@ public class RuntimeTests {
 		IEnvironment env = new GlobalEnvironment();
 		IDeferredCheck state = new MockState();
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_QUOTE, processor);
-		c.addArgument("x");
-		env.set("x", Value.create(1));
+		processor.getStack().push(Value.create("x"));
 		assertTrue(c.execute(state, env));
 		IValue v = processor.getStack().pop();
 		assertTrue(v.isReference());
+		assertTrue(v.getString().equals("x"));
 		assertTrue(processor.getStack().isEmpty());
+		c.addArgument("x");
+		assertTrue(c.execute(state, env));
+		v = processor.getStack().pop();
+		assertTrue(v.isReference());
+		assertTrue(v.getString().equals("x"));
+		assertTrue(processor.getStack().isEmpty());
+		env.set("x", Value.create(2));
 		env.set("y", v);
 		c = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, processor);
 		c.addArgument("y");
 		assertTrue(c.execute(state, env));
-		assertTrue(processor.getStack().pop().getNumber() == 1);
+		assertTrue(processor.getStack().pop().getNumber() == 2);
 		assertTrue(processor.getStack().isEmpty());
 	}
 	

@@ -445,6 +445,7 @@ public class StateTests {
 		assertTrue(env.get("x").getNumber() == 0);
 		
 		assertFalse(env.isDefined(IReserved.STATE_POSITION));
+		assertFalse(env.isDefined(IReserved.STATE_CAPTURE));
 		assertFalse(env.isDefined(IReserved.STATE_PLAYER));
 		assertFalse(env.isDefined(IReserved.STATE_PIECE));
 		assertFalse(env.isDefined(IReserved.STATE_IS_EMPTY));
@@ -458,6 +459,7 @@ public class StateTests {
 		assertFalse(env.isDefined(IReserved.STATE_PLAYER));
 		assertFalse(env.isDefined(IReserved.STATE_PIECE));
 		assertTrue(env.isDefined(IReserved.STATE_POSITION));
+		assertTrue(env.isDefined(IReserved.STATE_CAPTURE));
 		assertTrue(env.isDefined(IReserved.STATE_IS_EMPTY));
 		assertTrue(env.isDefined(IReserved.STATE_NOT_EMPTY));
 		assertTrue(env.isDefined(IReserved.STATE_IS_FRIEND));
@@ -466,6 +468,7 @@ public class StateTests {
 		assertTrue(env.isDefined(IReserved.STATE_NOT_ENEMY));
 		
 		assertTrue(env.get(IReserved.STATE_POSITION).getString() == "a1");
+		assertFalse(env.get(IReserved.STATE_CAPTURE).getBoolean());
 		assertTrue(env.get(IReserved.STATE_IS_EMPTY).getBoolean());
 		assertFalse(env.get(IReserved.STATE_NOT_EMPTY).getBoolean());
 		assertFalse(env.get(IReserved.STATE_IS_FRIEND).getBoolean());
@@ -485,6 +488,9 @@ public class StateTests {
 		assertFalse(env.get(IReserved.STATE_NOT_FRIEND).getBoolean());
 		assertFalse(env.get(IReserved.STATE_IS_ENEMY).getBoolean());
 		assertTrue(env.get(IReserved.STATE_NOT_ENEMY).getBoolean());
+		assertTrue(env.get(IReserved.STATE_CAPTURE).getBoolean());
+		assertFalse(env.get(IReserved.STATE_CAPTURE).getBoolean());
+		assertTrue(env.get(IReserved.STATE_IS_EMPTY).getBoolean());
 		
 		assertFalse(env.get("s").getBoolean());
 		assertTrue(env.get("n").getBoolean());
@@ -510,6 +516,9 @@ public class StateTests {
 		assertTrue(env.get(IReserved.STATE_NOT_FRIEND).getBoolean());
 		assertTrue(env.get(IReserved.STATE_IS_ENEMY).getBoolean());
 		assertFalse(env.get(IReserved.STATE_NOT_ENEMY).getBoolean());
+		assertTrue(env.get(IReserved.STATE_CAPTURE).getBoolean());
+		assertFalse(env.get(IReserved.STATE_CAPTURE).getBoolean());
+		assertTrue(env.get(IReserved.STATE_IS_EMPTY).getBoolean());
 		
 		env.set("x", Value.create(1));
 		assertTrue(env.get("x").getNumber() == 1);

@@ -21,9 +21,10 @@ public interface IReserved {
 	public final static String STATE_NOT_ENEMY  = "not-enemy?";          // [out] boolean - позиция не содержит враждебную фигуру
 	public final static String STATE_IS_FRIEND  = "is-friend?";          // [out] boolean - позиция содержит дружественную фигуру
 	public final static String STATE_NOT_FRIEND = "not-friend?";         // [out] boolean - позиция не содержит дружественную фигуру
+	public final static String STATE_CAPTURE    = "capture";             // [out] boolean - Удаление фигуры
 	
 	// Commands
-	public final static String CMD_QUOTE        = "_quote";              // Цитирование
+	public final static String CMD_QUOTE        = "\'";                  // Цитирование
 	public final static String CMD_END          = "_end";                // Завершение расчёта хода
 	public final static String CMD_JUMP         = "_jump";               // Безусловный переход
 	public final static String CMD_GET          = "_get";                // Запрос значения по имени
@@ -41,7 +42,6 @@ public interface IReserved {
 	public final static String CMD_ZONE         = "_zone";               // Проверка принадлежности позиции зоне
 	public final static String CMD_TAKE         = "take";                // Взятие фигур "в руку"
 	public final static String CMD_PUT          = "drop";                // Возврат фигур на доску
-	public final static String CMD_CAPTURE      = "capture";             // Удаление фигуры
 	public final static String CMD_NOT          = "not";                 // Логическое отрицание
 	public final static String CMD_PLUS         = "+";                   // Сложение
 	public final static String CMD_MINUS        = "-";                   // Вычитание или изменение знака

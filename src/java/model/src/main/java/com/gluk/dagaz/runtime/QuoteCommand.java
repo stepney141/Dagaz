@@ -4,7 +4,7 @@ import com.gluk.dagaz.api.state.IDeferredCheck;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.exceptions.CommonException;
 
-public class QuoteCommand extends AbstractCommand { // -- 'v
+public class QuoteCommand extends AbstractCommand { // [v] -- 'v
 
 	private String name = null;
 
@@ -19,7 +19,14 @@ public class QuoteCommand extends AbstractCommand { // -- 'v
 	@Override
 	public boolean execute(IDeferredCheck state, IEnvironment env) throws CommonException {
 		super.execute(state, env);
-		processor.getStack().push(Value.quote(name));
+		String operand = name;
+		if (operand == null) {
+			if (processor.getStack().isEmpty()) {
+				throw new CommonException("Stack is empty");
+			}
+			operand = processor.getStack().pop().getString();
+		}
+		processor.getStack().push(Value.quote(operand));
 		return true;
 	}
 }

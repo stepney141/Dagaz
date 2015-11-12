@@ -46,6 +46,7 @@ public class StatementFactory implements IStatementFactory {
 		classes.put(IReserved.STATE_POSITION,   StateStatement.class);
 		classes.put(IReserved.STATE_PLAYER,     StateStatement.class);
 		classes.put(IReserved.STATE_PIECE,      StateStatement.class);
+		classes.put(IReserved.STATE_CAPTURE,    StateStatement.class);
 		classes.put(IReserved.STMT_IN_ZONE,     ZoneStatement.class);
 		classes.put(IReserved.STMT_NOT_ZONE,    ZoneStatement.class);
 	}
