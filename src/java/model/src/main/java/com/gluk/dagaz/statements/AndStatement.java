@@ -19,11 +19,9 @@ public class AndStatement extends ShortCircuitStatement {
 	
 	@Override
 	protected void exitFrame() throws CommonException {
-		ICommand notCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_NOT, build);
-		build.addCommand(notCommand);
+		CommandFactory.getInstance().createCommand(IReserved.CMD_NOT, build);
 		int currentOffset = build.getOffset();
 		ICommand ifCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_IF, build);
-		build.addCommand(ifCommand);
 		ifCommand.addArgument(ifOffset - currentOffset);
 	}
 }

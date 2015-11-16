@@ -19,14 +19,12 @@ public class ExpressionStatement extends AbstractExpression {
 	@Override
 	public void close() throws CommonException {
 		ICommand cmd = CommandFactory.getInstance().createCommand(name, build);
-		build.addCommand(cmd);
 		cmd.addArgument(arity); 
 	}
 	
 	@Override
 	public void addOperand(String name) throws CommonException {
 		ICommand getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
-		build.addCommand(getCommand);
 		getCommand.addArgument(name);
 		arity++;
 	}

@@ -23,18 +23,15 @@ public class ZoneStatement extends AbstractExpression {
 		}
 		if (pos == null) {
 			ICommand getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
-			build.addCommand(getCommand);
 			getCommand.addArgument(IReserved.STATE_POSITION);
 		}
 		ICommand zoneCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_ZONE, build);
-		build.addCommand(zoneCommand);
 		zoneCommand.addArgument(zone);
 		if (pos != null) {
 			zoneCommand.addArgument(pos);
 		}
 		if (func.equals(IReserved.STMT_NOT_ZONE)) {
-			ICommand notCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_NOT, build);
-			build.addCommand(notCommand);
+			CommandFactory.getInstance().createCommand(IReserved.CMD_NOT, build);
 		}
 	}
 	

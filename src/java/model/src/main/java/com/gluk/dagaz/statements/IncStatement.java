@@ -24,7 +24,6 @@ public class IncStatement extends AbstractExpression {
 			throw new CommonException("Syntax error");
 		}
 		ICommand incCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_INC, build);
-		build.addCommand(incCommand);
 		incCommand.addArgument(name);
 	}
 	

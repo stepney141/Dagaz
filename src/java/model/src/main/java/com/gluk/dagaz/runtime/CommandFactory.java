@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.gluk.dagaz.api.model.IReserved;
+import com.gluk.dagaz.api.parser.IBuild;
 import com.gluk.dagaz.api.runtime.ICommand;
 import com.gluk.dagaz.api.runtime.ICommandFactory;
-import com.gluk.dagaz.api.runtime.IProcessor;
 import com.gluk.dagaz.exceptions.CommonException;
 
 public class CommandFactory implements ICommandFactory {
@@ -59,7 +59,7 @@ public class CommandFactory implements ICommandFactory {
 		return (classes.get(name) != null);
 	}
 
-	public ICommand createCommand(String name, IProcessor processor) throws CommonException {
+	public ICommand createCommand(String name, IBuild build) throws CommonException {
 		AbstractCommand r = null;
 		Class<?> c = classes.get(name);
 		if (c == null) {
@@ -67,7 +67,7 @@ public class CommandFactory implements ICommandFactory {
 		}
 		try {
 			r = (AbstractCommand)c.newInstance();
-			r.setProcessor(processor);
+			build.addCommand(r);
 		} catch (Exception e) {
 			throw new CommonException(e.toString(), e);
 		}

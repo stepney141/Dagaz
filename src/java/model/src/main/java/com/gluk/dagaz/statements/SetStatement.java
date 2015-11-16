@@ -13,7 +13,6 @@ public class SetStatement extends AbstractStatement {
 	
 	private void addSetCommand() throws CommonException {
 		setCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_SET, build);
-		build.addCommand(setCommand);
 		setCommand.addArgument(name);
 	}
 
@@ -24,7 +23,6 @@ public class SetStatement extends AbstractStatement {
 				throw new CommonException("Syntax error");
 			}
 			ICommand getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
-			build.addCommand(getCommand);
 			getCommand.addArgument(name);
 			addSetCommand();
 		}

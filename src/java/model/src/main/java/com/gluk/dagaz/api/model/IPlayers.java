@@ -1,5 +1,6 @@
 package com.gluk.dagaz.api.model;
 
+import com.gluk.dagaz.api.state.IValue;
 import com.gluk.dagaz.exceptions.CommonException;
 
 public interface IPlayers {

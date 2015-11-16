@@ -9,14 +9,12 @@ import com.gluk.dagaz.runtime.CommandFactory;
 public class SeqStatement extends AbstractStatement {
 	
 	private void addDropCommand() throws CommonException {
-		ICommand dropCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_DROP, build);
-		build.addCommand(dropCommand);
+		CommandFactory.getInstance().createCommand(IReserved.CMD_DROP, build);
 	}
 
 	@Override
 	public void addOperand(String name) throws CommonException {
 		ICommand getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
-		build.addCommand(getCommand);
 		getCommand.addArgument(name);
 		addDropCommand();
 	}

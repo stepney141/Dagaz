@@ -14,9 +14,7 @@ public class AnyStatement extends AbstractExpression {
 	@Override
 	public void open(String name) throws CommonException {
 		anyCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_ANY, build);
-		build.addCommand(anyCommand);
-		ICommand getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
-		build.addCommand(getCommand);
+		CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
 	}
 	
 	@Override

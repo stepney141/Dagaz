@@ -24,7 +24,6 @@ public class DecStatement  extends AbstractExpression {
 			throw new CommonException("Syntax error");
 		}
 		ICommand decCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_DEC, build);
-		build.addCommand(decCommand);
 		decCommand.addArgument(name);
 	}
 	

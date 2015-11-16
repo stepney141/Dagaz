@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.Stack;
 
 import com.gluk.dagaz.api.model.IReserved;
-import com.gluk.dagaz.api.model.IValue;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.api.state.ITransactional;
+import com.gluk.dagaz.api.state.IValue;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.runtime.Value;
 
@@ -67,7 +67,7 @@ public class LocalEnvironment implements IEnvironment, ITransactional {
 		return (s != null) && !s.isEmpty();
 	}
 
-	public boolean isDefined(String name) throws CommonException {
+	public boolean isDefined(String name) {
 		if (name.equals(IReserved.LOCAL_TRUE)  ||
 			name.equals(IReserved.LOCAL_FALSE) ||
 			isNumber(name) || isQuoted(name)) {

@@ -1,14 +1,14 @@
-﻿package com.gluk.dagaz.state;
+package com.gluk.dagaz.state;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-import com.gluk.dagaz.api.model.IValue;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.api.state.IPiece;
 import com.gluk.dagaz.api.state.IState;
 import com.gluk.dagaz.api.state.ITransactional;
+import com.gluk.dagaz.api.state.IValue;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.model.Board;
 import com.gluk.dagaz.undo.AbstractUndo;
@@ -119,7 +119,7 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 		throw new CommonException("Value [" + name + "] undefined");
 	}
 
-	public String getCurrentPosition() throws CommonException {
+	public String getCurrentPosition() {
 		return currentPos;
 	}
 

@@ -1,4 +1,4 @@
-package com.gluk.dagaz.api.model;
+package com.gluk.dagaz.api.state;
 
 import com.gluk.dagaz.exceptions.CommonException;
 

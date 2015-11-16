@@ -3,7 +3,6 @@ package com.gluk.dagaz.parser;
 import org.w3c.dom.Node;
 import org.w3c.dom.traversal.NodeIterator;
 
-import com.gluk.dagaz.api.application.IMoveLogger;
 import com.gluk.dagaz.api.model.IReserved;
 import com.gluk.dagaz.api.parser.IBuild;
 import com.gluk.dagaz.api.parser.IBuilderCallback;
@@ -12,19 +11,16 @@ import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.model.Board;
 import com.gluk.dagaz.model.Players;
 import com.gluk.dagaz.runtime.CommandFactory;
-import com.gluk.dagaz.runtime.Processor;
 import com.gluk.dagaz.statements.StatementFactory;
 
 public class CodeBuilder extends AbstractBuilder {
 	
 	private Players players;
 	private Board board;
-	private IMoveLogger logger;
 	
-	public CodeBuilder(Players players, Board board, IMoveLogger logger) {
+	public CodeBuilder(Players players, Board board) {
 		this.players = players;
 		this.board   = board;
-		this.logger  = logger;
 	}
 	
 	private void buildCode(IStatement s, Node c) throws CommonException {
@@ -55,7 +51,7 @@ public class CodeBuilder extends AbstractBuilder {
 		while ((n = nl.nextNode())!= null) {
 			buildCode(seq, n);
 		}
-		build.addCommand(CommandFactory.getInstance().createCommand(IReserved.CMD_ANY, build));
+		CommandFactory.getInstance().createCommand(IReserved.CMD_ANY, build);
 	}
 
 	public void build(Node node, IBuilderCallback callback) throws CommonException {
@@ -66,9 +62,9 @@ public class CodeBuilder extends AbstractBuilder {
 			NodeIterator ml = getIterator(p, MOVE_XP);
 			Node m;
 			while ((m = ml.nextNode())!= null) {
-				IBuild build = new Processor(pieceType, players, board, logger);
+				IBuild build = new Build(players, board, pieceType);
 				buildMove(build, p, m);
-				callback.addProcessor(build);
+				callback.addBuild(build);
 			}
 		}
 	}

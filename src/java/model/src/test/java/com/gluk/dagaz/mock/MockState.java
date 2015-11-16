@@ -1,10 +1,11 @@
 package com.gluk.dagaz.mock;
 
-import com.gluk.dagaz.api.model.IValue;
 import com.gluk.dagaz.api.runtime.ICommand;
+import com.gluk.dagaz.api.runtime.IProcessor;
 import com.gluk.dagaz.api.state.IDeferredCheck;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.api.state.IPiece;
+import com.gluk.dagaz.api.state.IValue;
 import com.gluk.dagaz.exceptions.CommonException;
 
 public class MockState implements IDeferredCheck {
@@ -17,8 +18,8 @@ public class MockState implements IDeferredCheck {
 		return 0L;
 	}
 
-	public String getCurrentPosition() throws CommonException {
-		throw new CommonException("Unsupported");
+	public String getCurrentPosition() {
+		return null;
 	}
 
 	public IValue getFlag(String name, String pos) {
@@ -51,7 +52,7 @@ public class MockState implements IDeferredCheck {
 
 	public void addDeferredCommand(ICommand c) {}
 
-	public boolean check(IEnvironment env) throws CommonException {
+	public boolean check(IProcessor processor, IEnvironment env) throws CommonException {
 		return true;
 	}
 }

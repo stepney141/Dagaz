@@ -3,6 +3,7 @@ package com.gluk.dagaz.api.model;
 import java.util.Collection;
 
 import com.gluk.dagaz.api.state.IEnvironment;
+import com.gluk.dagaz.api.state.IValue;
 import com.gluk.dagaz.exceptions.CommonException;
 
 public interface IBoard {

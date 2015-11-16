@@ -3,6 +3,7 @@ package com.gluk.dagaz.runtime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gluk.dagaz.api.runtime.IProcessor;
 import com.gluk.dagaz.api.state.IDeferredCheck;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.exceptions.CommonException;
@@ -19,9 +20,7 @@ public class LogCommand extends AbstractCommand { // --
 		values.add((String)arg);
 	}
 
-	@Override
-	public boolean execute(IDeferredCheck state, IEnvironment env) throws CommonException {
-		super.execute(state, env);
+	public boolean execute(IProcessor processor, IDeferredCheck state, IEnvironment env) throws CommonException {
 		if (values.isEmpty()) {
 			throw new CommonException("Invalid arguments");
 		}
@@ -29,7 +28,7 @@ public class LogCommand extends AbstractCommand { // --
 			if (env.isDefined(value)) {
 				value = env.get(value).getString();
 			}
-			processor.getMoveLogger().log(value);
+			processor.getLogger().log(value);
 		}
 		return true;
 	}

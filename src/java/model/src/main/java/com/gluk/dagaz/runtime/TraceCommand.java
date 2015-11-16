@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.gluk.dagaz.api.runtime.IProcessor;
 import com.gluk.dagaz.api.state.IDeferredCheck;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.exceptions.CommonException;
@@ -23,9 +24,7 @@ public class TraceCommand extends AbstractCommand { // --
 		values.add((String)arg);
 	}
 
-	@Override
-	public boolean execute(IDeferredCheck state, IEnvironment env) throws CommonException {
-		super.execute(state, env);
+	public boolean execute(IProcessor processor, IDeferredCheck state, IEnvironment env) throws CommonException {
 		if (values.isEmpty()) {
 			throw new CommonException("Invalid arguments");
 		}

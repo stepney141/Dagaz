@@ -15,21 +15,17 @@ public abstract class ShortCircuitStatement extends AbstractExpression {
 	protected void openFrame(String name) throws CommonException {
 		int enterOffset = build.getOffset();
 		ICommand enterCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_JUMP, build);
-		build.addCommand(enterCommand);
 		ifOffset = build.getOffset();
 		ICommand getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
-		build.addCommand(getCommand);
 		getCommand.addArgument(name);
 		exitOffset = build.getOffset();
 		exitCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_JUMP, build);
-		build.addCommand(exitCommand);
 		int currentOffset = build.getOffset();
 		enterCommand.addArgument(currentOffset - enterOffset);
 	}
 	
 	protected void closeFrame(String name) throws CommonException {
 		ICommand getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
-		build.addCommand(getCommand);
 		getCommand.addArgument(name);
 		int currentOffset = build.getOffset();
 		exitCommand.addArgument(currentOffset - exitOffset);
@@ -38,7 +34,6 @@ public abstract class ShortCircuitStatement extends AbstractExpression {
 	@Override
 	public void addOperand(String name) throws CommonException {
 		ICommand getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
-		build.addCommand(getCommand);
 		getCommand.addArgument(name);
 		exitFrame();
 	}

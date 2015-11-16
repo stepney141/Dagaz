@@ -6,6 +6,7 @@ import java.util.Map;
 import com.gluk.dagaz.api.application.IMoveCallback;
 import com.gluk.dagaz.api.application.IMoveGenerator;
 import com.gluk.dagaz.api.runtime.ICommand;
+import com.gluk.dagaz.api.runtime.IProcessor;
 import com.gluk.dagaz.api.state.IDeferredCheck;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.exceptions.CommonException;
@@ -13,10 +14,10 @@ import com.gluk.dagaz.exceptions.CommonException;
 public class MoveGenerator implements IMoveGenerator {
 	
 	private IMoveCallback callback;
-	private LocalEnvironment local;
+	private IEnvironment local;
 	private Map<String, IDeferredCheck> moves = new HashMap<String, IDeferredCheck>(); 
 	
-	public MoveGenerator(IMoveCallback callback, LocalEnvironment local) {
+	public MoveGenerator(IMoveCallback callback, IEnvironment local) {
 		this.callback  = callback;
 		this.local = local; 
 	}
@@ -36,10 +37,10 @@ public class MoveGenerator implements IMoveGenerator {
 		}
 	}
 
-	public void close(IEnvironment env) throws CommonException {
+	public void close(IProcessor processor, IEnvironment env) throws CommonException {
 		for (String name: moves.keySet()) {
 			IDeferredCheck state = moves.get(name);
-			if (state.check(env)) {
+			if (state.check(processor, env)) {
 				callback.addMove(name, state);
 			}
 		}

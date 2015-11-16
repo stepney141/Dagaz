@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.gluk.dagaz.api.parser.IBuild;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.api.state.IPiece;
 import com.gluk.dagaz.exceptions.CommonException;
@@ -14,6 +15,7 @@ import com.gluk.dagaz.model.Board;
 import com.gluk.dagaz.model.Grid;
 import com.gluk.dagaz.model.Piece;
 import com.gluk.dagaz.model.Players;
+import com.gluk.dagaz.parser.Build;
 import com.gluk.dagaz.state.GlobalEnvironment;
 import com.gluk.dagaz.state.LocalEnvironment;
 import com.gluk.dagaz.state.PlayersEnvironment;
@@ -54,7 +56,8 @@ public class BigTests {
 		IEnvironment se = new StateEnvironment(state, pe);
 		IEnvironment env = new LocalEnvironment(se);
 		MockMoveLogger logger = new MockMoveLogger();
-		MockProcessor processor = new MockProcessor(board, logger);
+		IBuild build = new Build(players, board);
+		MockProcessor processor = new MockProcessor(build, logger);
 		AbstractStatement root = new SeqStatement();
 
 		IPiece p = new Piece("Queen", "You");
@@ -63,7 +66,7 @@ public class BigTests {
 		state.setPiece("c0", p);
 		state.setPiece("d0", p);
 		
-		root.setBuild(processor);
+		root.setBuild(build);
 		root.tag("check");
 		root.val("a0");
 		root.end();

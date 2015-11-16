@@ -13,8 +13,7 @@ public class WhileStatement extends AbstractStatement {
 	private ICommand ifCommand = null;
 
 	private void addDropCommand() throws CommonException {
-		ICommand dropCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_DROP, build);
-		build.addCommand(dropCommand);
+		CommandFactory.getInstance().createCommand(IReserved.CMD_DROP, build);
 	}
 
 	@Override
@@ -29,24 +28,20 @@ public class WhileStatement extends AbstractStatement {
 		}
 		int currentOffset = build.getOffset();
 		ICommand jumpCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_JUMP, build);
-		build.addCommand(jumpCommand);
 		jumpCommand.addArgument(baseOffset - currentOffset);
 		currentOffset = build.getOffset();
 		ifCommand.addArgument(currentOffset - ifOffset);
 	}
 	
 	private void addIfCommand() throws CommonException {
-		ICommand notCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_NOT, build);
-		build.addCommand(notCommand);
+		CommandFactory.getInstance().createCommand(IReserved.CMD_NOT, build);
 		ifOffset = build.getOffset();
 		ifCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_IF, build);
-		build.addCommand(ifCommand);
 	}
 	
 	@Override
 	public void addOperand(String name) throws CommonException {
 		ICommand getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
-		build.addCommand(getCommand);
 		getCommand.addArgument(name);
 		if (ifCommand == null) {
 			addIfCommand();

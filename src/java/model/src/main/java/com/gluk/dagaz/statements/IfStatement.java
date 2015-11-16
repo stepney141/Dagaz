@@ -12,17 +12,14 @@ public class IfStatement extends AbstractStatement {
 	private ICommand jumpCommand = null;
 	
 	private void addDropCommand() throws CommonException {
-		ICommand dropCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_DROP, build);
-		build.addCommand(dropCommand);
+		CommandFactory.getInstance().createCommand(IReserved.CMD_DROP, build);
 	}
 
 	private void addIfCommand() throws CommonException {
 		int ifOffset = build.getOffset();
 		ICommand ifCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_IF, build);
-		build.addCommand(ifCommand);
 		jumpOffset = build.getOffset();
 		jumpCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_JUMP, build);
-		build.addCommand(jumpCommand);
 		int currentOffset = build.getOffset();
 		ifCommand.addArgument(currentOffset - ifOffset);
 	}
@@ -35,7 +32,6 @@ public class IfStatement extends AbstractStatement {
 			}
 			int offset = build.getOffset();
 			ICommand cmd = CommandFactory.getInstance().createCommand(IReserved.CMD_JUMP, build);
-			build.addCommand(cmd);
 			int currentOffset = build.getOffset();
 			jumpCommand.addArgument(currentOffset - jumpOffset);
 			jumpOffset = offset;
@@ -43,7 +39,6 @@ public class IfStatement extends AbstractStatement {
 			return;
 		}
 		ICommand getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
-		build.addCommand(getCommand);
 		getCommand.addArgument(name);
 		if (jumpCommand == null) {
 			addIfCommand();

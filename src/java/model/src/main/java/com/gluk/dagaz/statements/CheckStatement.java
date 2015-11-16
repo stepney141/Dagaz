@@ -18,7 +18,6 @@ public class CheckStatement extends AbstractStatement {
 
 	private void addCheckCommand() throws CommonException {
 		checkCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_CHECK, build);
-		build.addCommand(checkCommand);
 	}
 	
 	@Override
@@ -27,7 +26,6 @@ public class CheckStatement extends AbstractStatement {
 			throw new CommonException("Invalid CHECK arity");
 		}
 		ICommand getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
-		build.addCommand(getCommand);
 		getCommand.addArgument(name);
 		addCheckCommand();
 	}

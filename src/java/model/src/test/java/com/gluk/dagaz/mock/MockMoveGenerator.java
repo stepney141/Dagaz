@@ -1,6 +1,7 @@
 package com.gluk.dagaz.mock;
 
 import com.gluk.dagaz.api.application.IMoveGenerator;
+import com.gluk.dagaz.api.runtime.IProcessor;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.state.State;
@@ -17,5 +18,5 @@ public class MockMoveGenerator implements IMoveGenerator {
 		this.notation = notation;
 	}
 
-	public void close(IEnvironment env) throws CommonException {}
+	public void close(IProcessor processor, IEnvironment env) throws CommonException {}
 }

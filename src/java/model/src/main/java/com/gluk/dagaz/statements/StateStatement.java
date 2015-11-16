@@ -19,21 +19,16 @@ public class StateStatement extends AbstractExpression {
 	public void open(String name) throws CommonException {
 		this.func = name;
 		ICommand getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
-		build.addCommand(getCommand);
 		getCommand.addArgument(IReserved.STATE_POSITION);
 		ICommand letCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_LET, build);
-		build.addCommand(letCommand);
 		letCommand.addArgument(INTERNAL_POS_VALUE);
 		int enterOffset = build.getOffset();
 		ICommand enterCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_JUMP, build);
-		build.addCommand(enterCommand);
 		failOffset = build.getOffset();
 		getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
-		build.addCommand(getCommand);
 		getCommand.addArgument(IReserved.LOCAL_FALSE);
 		exitOffset = build.getOffset();
 		exitCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_JUMP, build);
-		build.addCommand(exitCommand);
 		int currentOffset = build.getOffset();
 		enterCommand.addArgument(currentOffset - enterOffset);
 	}
@@ -41,32 +36,24 @@ public class StateStatement extends AbstractExpression {
 	@Override
 	public void close() throws CommonException {
 		ICommand getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
-		build.addCommand(getCommand);
 		getCommand.addArgument(func);
 		int currentOffset = build.getOffset();
 		exitCommand.addArgument(currentOffset - exitOffset);
 		getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
-		build.addCommand(getCommand);
 		getCommand.addArgument(INTERNAL_POS_VALUE);
 		getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
-		build.addCommand(getCommand);
-		ICommand dropCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_DROP, build);
-		build.addCommand(dropCommand);
+		CommandFactory.getInstance().createCommand(IReserved.CMD_DROP, build);
 		ICommand delCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_DEL, build);
-		build.addCommand(delCommand);
 		delCommand.addArgument(INTERNAL_POS_VALUE);
 	}
 	
 	@Override
 	public void addOperand(String name) throws CommonException {
 		ICommand getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
-		build.addCommand(getCommand);
 		getCommand.addArgument(name);
-		ICommand notCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_NOT, build);
-		build.addCommand(notCommand);
+		CommandFactory.getInstance().createCommand(IReserved.CMD_NOT, build);
 		int ifOffset = build.getOffset();
 		ICommand ifCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_IF, build);
-		build.addCommand(ifCommand);
 		ifCommand.addArgument(failOffset - ifOffset);
 	}
 

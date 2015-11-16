@@ -2,7 +2,7 @@ package com.gluk.dagaz.utils;
 
 import java.util.Stack;
 
-import com.gluk.dagaz.api.model.IValue;
+import com.gluk.dagaz.api.state.IValue;
 
 public class AnyUndo {
 

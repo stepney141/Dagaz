@@ -3,9 +3,10 @@ package com.gluk.dagaz.runtime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gluk.dagaz.api.model.IValue;
+import com.gluk.dagaz.api.runtime.IProcessor;
 import com.gluk.dagaz.api.state.IDeferredCheck;
 import com.gluk.dagaz.api.state.IEnvironment;
+import com.gluk.dagaz.api.state.IValue;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.utils.AnyUndo;
 
@@ -21,9 +22,7 @@ public class AnyCommand extends AbstractCommand { // -- v
 		values.add((IValue)arg);
 	}
 	
-	@Override
-	public boolean execute(IDeferredCheck state, IEnvironment env) throws CommonException {
-		super.execute(state, env);
+	public boolean execute(IProcessor processor, IDeferredCheck state, IEnvironment env) throws CommonException {
 		AnyUndo u = processor.getUndo();
 		int ix = u.getIndex();
 		if (ix >= values.size()) {

@@ -3,9 +3,9 @@ package com.gluk.dagaz.model;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.gluk.dagaz.api.model.IValue;
 import com.gluk.dagaz.api.random.IRandomGenerator;
 import com.gluk.dagaz.api.state.IPiece;
+import com.gluk.dagaz.api.state.IValue;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.random.RandomFactory;
 

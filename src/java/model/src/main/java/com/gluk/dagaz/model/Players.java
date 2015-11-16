@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.gluk.dagaz.api.model.IPlayers;
-import com.gluk.dagaz.api.model.IValue;
+import com.gluk.dagaz.api.state.IValue;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.runtime.Value;
 

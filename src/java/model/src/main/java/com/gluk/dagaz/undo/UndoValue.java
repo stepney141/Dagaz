@@ -1,6 +1,6 @@
 package com.gluk.dagaz.undo;
 
-import com.gluk.dagaz.api.model.IValue;
+import com.gluk.dagaz.api.state.IValue;
 import com.gluk.dagaz.state.State;
 
 public class UndoValue extends AbstractUndo {

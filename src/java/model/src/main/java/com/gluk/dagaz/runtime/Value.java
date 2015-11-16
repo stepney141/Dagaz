@@ -3,7 +3,7 @@ package com.gluk.dagaz.runtime;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.gluk.dagaz.api.model.IValue;
+import com.gluk.dagaz.api.state.IValue;
 import com.gluk.dagaz.exceptions.CommonException;
 
 public class Value implements IValue {

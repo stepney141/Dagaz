@@ -11,13 +11,11 @@ public class EndStatement extends AbstractStatement {
 	@Override
 	public void open(String name) throws CommonException {
 		ICommand anyCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_ANY, build);
-		build.addCommand(anyCommand);
 		anyCommand.addArgument(Value.create(true));
 		anyCommand.addArgument(Value.create(false));
 		int currentOffset = build.getOffset();
 		build.addFixup(currentOffset);
-		ICommand ifCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_IF, build);
-		build.addCommand(ifCommand);
+		CommandFactory.getInstance().createCommand(IReserved.CMD_IF, build);
 	}
 	
 	@Override

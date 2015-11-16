@@ -1,10 +1,10 @@
 package com.gluk.dagaz.state;
 
 import com.gluk.dagaz.api.model.IReserved;
-import com.gluk.dagaz.api.model.IValue;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.api.state.IPiece;
 import com.gluk.dagaz.api.state.IState;
+import com.gluk.dagaz.api.state.IValue;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.runtime.Value;
 
@@ -18,7 +18,7 @@ public class StateEnvironment implements IEnvironment {
 		this.env   = env;
 	}
 
-	public boolean isDefined(String name) throws CommonException {
+	public boolean isKnown(String name) {
 		String pos = state.getCurrentPosition();
 		if (name.equals(IReserved.STATE_POSITION)  ||
 			name.equals(IReserved.STATE_CAPTURE)   ||
@@ -39,7 +39,11 @@ public class StateEnvironment implements IEnvironment {
 				return false;
 			}
 		}
-		return state.isDefined(name) || env.isDefined(name);
+		return state.isDefined(name);
+	}
+	
+	public boolean isDefined(String name) {
+		return isKnown(name) || env.isDefined(name);
 	}
 
 	public IValue get(String name) throws CommonException {

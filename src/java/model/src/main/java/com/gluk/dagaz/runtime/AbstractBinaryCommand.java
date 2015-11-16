@@ -2,7 +2,7 @@ package com.gluk.dagaz.runtime;
 
 import com.gluk.dagaz.exceptions.CommonException;
 
-public class AbstractBinaryCommand extends AbstractCommand {
+public abstract class AbstractBinaryCommand extends AbstractCommand {
 
 	public void addArgument(Object arg) throws CommonException {
 		if (!(arg instanceof Integer)) {

@@ -11,6 +11,8 @@ import com.gluk.dagaz.random.RandomFactory;
 import com.gluk.dagaz.random.RandomGenerator;
 
 public class RandomTests {
+	
+	// TODO: Check auto-randomize
 
 	@Test
 	public void testRandomCloning() throws CommonException, CloneNotSupportedException {

@@ -10,8 +10,8 @@ import java.util.Set;
 
 import com.gluk.dagaz.api.model.IBoard;
 import com.gluk.dagaz.api.model.IReserved;
-import com.gluk.dagaz.api.model.IValue;
 import com.gluk.dagaz.api.state.IEnvironment;
+import com.gluk.dagaz.api.state.IValue;
 import com.gluk.dagaz.exceptions.CommonException;
 
 public class Board implements IBoard {

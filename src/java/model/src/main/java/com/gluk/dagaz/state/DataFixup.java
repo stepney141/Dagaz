@@ -1,6 +1,6 @@
 package com.gluk.dagaz.state;
 
-import com.gluk.dagaz.api.model.IValue;
+import com.gluk.dagaz.api.state.IValue;
 
 public class DataFixup {
 	

@@ -1,32 +1,36 @@
 package com.gluk.dagaz.state;
 
+import com.gluk.dagaz.api.model.IPlayers;
 import com.gluk.dagaz.api.model.IReserved;
-import com.gluk.dagaz.api.model.IValue;
 import com.gluk.dagaz.api.state.IEnvironment;
+import com.gluk.dagaz.api.state.IValue;
 import com.gluk.dagaz.exceptions.CommonException;
-import com.gluk.dagaz.model.Players;
 import com.gluk.dagaz.runtime.Value;
 
 public class PlayersEnvironment implements IEnvironment {
 	
-	private Players players;
+	private IPlayers players;
 	private int numOrder;
 	private IEnvironment env;
 	
-	public PlayersEnvironment(Players players, int numOrder, IEnvironment env) {
+	public PlayersEnvironment(IPlayers players, int numOrder, IEnvironment env) {
 		this.players = players;
 		this.numOrder = numOrder;
 		this.env = env;
 	}
 
-	public boolean isDefined(String name) throws CommonException {
+	public boolean isKnown(String name) {
 		if (name.equals(IReserved.PLAYER_CURRENT)   ||
 			name.equals(IReserved.PLAYER_NEXT)      ||
 			name.equals(IReserved.PLAYER_TURN)      ||
 			name.equals(IReserved.PLAYER_ORDER)) {
 			return true;
 		}
-		return players.isDefined(name) || env.isDefined(name);
+		return players.isDefined(name);
+	}
+	
+	public boolean isDefined(String name) {
+		return isKnown(name) || env.isDefined(name);
 	}
 
 	public IValue get(String name) throws CommonException {

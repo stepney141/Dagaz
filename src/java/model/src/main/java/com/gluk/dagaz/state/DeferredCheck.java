@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.gluk.dagaz.api.runtime.ICommand;
+import com.gluk.dagaz.api.runtime.IProcessor;
 import com.gluk.dagaz.api.state.IDeferredCheck;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.exceptions.CommonException;
@@ -23,12 +24,12 @@ public abstract class DeferredCheck implements IDeferredCheck {
 		}
 	}
 	
-	public boolean check(IEnvironment env) throws CommonException {
+	public boolean check(IProcessor processor, IEnvironment env) throws CommonException {
 		if ((env == null) || commands.isEmpty()) {
 			return true;
 		}
 		for (ICommand c: commands) {
-			if (!c.execute(this, env)) {
+			if (!c.execute(processor, this, env)) {
 				return false;
 			}
 		}

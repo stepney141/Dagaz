@@ -13,7 +13,6 @@ public class LetStatement extends AbstractStatement {
 
 	private void addLetCommand() throws CommonException {
 		letCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_LET, build);
-		build.addCommand(letCommand);
 		letCommand.addArgument(name);
 		build.addLocalName(name);
 	}
@@ -25,7 +24,6 @@ public class LetStatement extends AbstractStatement {
 				throw new CommonException("Syntax error");
 			}
 			ICommand getCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
-			build.addCommand(getCommand);
 			getCommand.addArgument(name);
 			addLetCommand();
 		}

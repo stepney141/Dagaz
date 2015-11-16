@@ -24,7 +24,6 @@ public class LogStatement extends AbstractStatement {
 			throw new CommonException("Syntax error");
 		}
 		ICommand logCommand = CommandFactory.getInstance().createCommand(IReserved.CMD_LOG, build);
-		build.addCommand(logCommand);
 		for (String s: names) {
 			logCommand.addArgument(s);
 		}
