@@ -1,4 +1,4 @@
-package com.gluk.dagaz.state;
+п»їpackage com.gluk.dagaz.state;
 
 import com.gluk.dagaz.api.model.IReserved;
 import com.gluk.dagaz.api.state.IEnvironment;
@@ -14,7 +14,7 @@ public class StateEnvironment implements IEnvironment {
 	private IEnvironment env;
 	
 	public String toString() {
-		// TODO: Вывести содержимое закреплённого State
+		// TODO: Р’С‹РІРµСЃС‚Рё СЃРѕРґРµСЂР¶РёРјРѕРµ Р·Р°РєСЂРµРїР»С‘РЅРЅРѕРіРѕ State
 		return "";
 	}
 	
