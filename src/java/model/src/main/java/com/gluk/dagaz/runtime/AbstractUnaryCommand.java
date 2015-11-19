@@ -4,6 +4,10 @@ import com.gluk.dagaz.exceptions.CommonException;
 
 public abstract class AbstractUnaryCommand extends AbstractCommand {
 
+	public AbstractUnaryCommand(String mnemonic) {
+		super(mnemonic);
+	}
+
 	public void addArgument(Object arg) throws CommonException {
 		if (!(arg instanceof Integer)) {
 			throw new CommonException("Invalid argument");
@@ -12,5 +16,6 @@ public abstract class AbstractUnaryCommand extends AbstractCommand {
 		if (arity != 1) {
 			throw new CommonException("Bad arity [" + Integer.toString(arity) + "]");
 		}
+		super.addArgument(arg);
 	}
 }

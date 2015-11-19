@@ -13,6 +13,11 @@ public class StateEnvironment implements IEnvironment {
 	private IState state;
 	private IEnvironment env;
 	
+	public String toString() {
+		// TODO: Вывести содержимое закреплённого State
+		return "";
+	}
+	
 	public StateEnvironment(State state, IEnvironment env) {
 		this.state = state;
 		this.env   = env;

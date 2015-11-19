@@ -7,6 +7,10 @@ import com.gluk.dagaz.exceptions.CommonException;
 
 public class EqCommand extends AbstractBinaryCommand { // a b -- ?
 
+	public EqCommand() {
+		super("eq");
+	}
+
 	public boolean execute(IProcessor processor, IDeferredCheck state, IEnvironment env) throws CommonException { 
 		String b = processor.getStack().pop().getString();
 		String a = processor.getStack().pop().getString();

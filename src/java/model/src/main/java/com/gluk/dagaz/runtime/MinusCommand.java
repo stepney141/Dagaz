@@ -9,6 +9,10 @@ public class MinusCommand extends AbstractCommand {
 
 	private int arity = 0;
 
+	public MinusCommand() {
+		super("sub");
+	}
+
 	public void addArgument(Object arg) throws CommonException {
 		if (!(arg instanceof Integer)) {
 			throw new CommonException("Invalid argument");
@@ -17,6 +21,7 @@ public class MinusCommand extends AbstractCommand {
 		if ((arity < 1) || (arity > 2)) {
 			throw new CommonException("Invalid argument value [" + Integer.toString(arity) + "]");
 		}
+		super.addArgument(arg);
 	}
 
 	public boolean execute(IProcessor processor, IDeferredCheck state, IEnvironment env) throws CommonException { // n [n] -- n

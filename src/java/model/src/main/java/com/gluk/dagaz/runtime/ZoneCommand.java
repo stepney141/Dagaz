@@ -1,5 +1,6 @@
 package com.gluk.dagaz.runtime;
 
+import com.gluk.dagaz.api.model.IReserved;
 import com.gluk.dagaz.api.runtime.IProcessor;
 import com.gluk.dagaz.api.state.IDeferredCheck;
 import com.gluk.dagaz.api.state.IEnvironment;
@@ -9,6 +10,10 @@ public class ZoneCommand extends AbstractCommand { // [s] -- ?
 	
 	private String zone = null;
 	private String name = null;
+
+	public ZoneCommand() {
+		super(IReserved.CMD_ZONE);
+	}
 
 	@Override
 	public void addArgument(Object arg) throws CommonException {
@@ -20,6 +25,7 @@ public class ZoneCommand extends AbstractCommand { // [s] -- ?
 		} else {
 			name = (String)arg;
 		}
+		super.addArgument(arg);
 	}
 	
 	public boolean execute(IProcessor processor, IDeferredCheck state, IEnvironment env) throws CommonException {

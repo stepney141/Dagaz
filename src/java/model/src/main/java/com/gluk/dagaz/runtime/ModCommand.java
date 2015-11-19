@@ -7,6 +7,10 @@ import com.gluk.dagaz.exceptions.CommonException;
 
 public class ModCommand extends AbstractBinaryCommand { // a b -- n
 
+	public ModCommand() {
+		super("mod");
+	}
+
 	public boolean execute(IProcessor processor, IDeferredCheck state, IEnvironment env) throws CommonException { 
 		int b = processor.getStack().pop().getNumber();
 		int a = processor.getStack().pop().getNumber();

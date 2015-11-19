@@ -39,6 +39,10 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 		return hash;
 	}
 	
+	public String toString() {
+		return Long.toString(hash);
+	}
+	
 	public boolean isDefined(String name) {
 		// Проверка определения значения уровня доски
 		if (board.getDefaultValue(name) != null) {

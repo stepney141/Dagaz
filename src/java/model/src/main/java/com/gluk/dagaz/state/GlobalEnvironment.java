@@ -11,6 +11,21 @@ import com.gluk.dagaz.runtime.Value;
 public class GlobalEnvironment implements IEnvironment {
 	
 	private Map<String, IValue> values = new HashMap<String, IValue>();
+	
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		boolean f = false;
+		for (String name: values.keySet()) {
+			if (f) {
+				sb.append(",");
+			}
+			sb.append(name);
+			sb.append("=");
+			sb.append(values.get(name).toString());
+			f = true;
+		}
+		return sb.toString();
+	}
 
 	public boolean isDefined(String name) {
 		return values.containsKey(name);

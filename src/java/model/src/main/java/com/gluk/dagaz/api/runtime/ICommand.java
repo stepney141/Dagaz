@@ -6,8 +6,9 @@ import com.gluk.dagaz.exceptions.CommonException;
 
 public interface ICommand {
 	boolean execute(IProcessor processor, IDeferredCheck state, IEnvironment env) throws CommonException;  // Выполнение команды (false прерывает рассчёт хода)
-	void addArgument(Object arg) throws CommonException;                                                   // Определение аргумента
+	void    addArgument(Object arg) throws CommonException;                                                // Определение аргумента
 	boolean isDeferred();                                                                                  // Перенести команду в отложенную проверку?
-	void setDeferred();                                                                                    // Пометить команду как отложенную
-	String getValueName();
+	void    setDeferred();                                                                                 // Пометить команду как отложенную
+	String  getValueName();
+	int     getOffset();
 }

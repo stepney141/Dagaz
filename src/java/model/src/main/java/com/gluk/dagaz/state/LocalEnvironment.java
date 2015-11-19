@@ -17,6 +17,23 @@ public class LocalEnvironment implements IEnvironment, ITransactional {
 	private Map<String, Stack<DataFixup>> fixups = new HashMap<String, Stack<DataFixup>>();
 	private int deep = 0;
 	
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		boolean f = false;
+		for (String name: fixups.keySet()) {
+			Stack<DataFixup> stack = fixups.get(name);
+			if (stack.isEmpty()) continue;
+			if (f) {
+				sb.append(",");
+			}
+			sb.append(name);
+			sb.append("=");
+			sb.append(stack.peek().toString());
+			f = true;
+		}
+		return sb.toString();
+	}
+	
 	public LocalEnvironment(IEnvironment env) {
 		this.env = env;
 	}

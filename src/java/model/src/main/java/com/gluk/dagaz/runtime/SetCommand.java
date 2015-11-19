@@ -1,5 +1,6 @@
 package com.gluk.dagaz.runtime;
 
+import com.gluk.dagaz.api.model.IReserved;
 import com.gluk.dagaz.api.runtime.IProcessor;
 import com.gluk.dagaz.api.state.IDeferredCheck;
 import com.gluk.dagaz.api.state.IEnvironment;
@@ -10,12 +11,17 @@ public class SetCommand extends AbstractCommand { // v --
 
 	private String name = null;
 
+	public SetCommand() {
+		super(IReserved.CMD_SET);
+	}
+
 	@Override
 	public void addArgument(Object arg) throws CommonException {
 		if ((name != null) || !(arg instanceof String)) {
 			throw new CommonException("Invalid argument");
 		}
 		name = (String)arg;
+		super.addArgument(arg);
 	}
 
 	public boolean execute(IProcessor processor, IDeferredCheck state, IEnvironment env) throws CommonException {

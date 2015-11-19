@@ -1,5 +1,6 @@
 package com.gluk.dagaz.runtime;
 
+import com.gluk.dagaz.api.model.IReserved;
 import com.gluk.dagaz.api.runtime.IProcessor;
 import com.gluk.dagaz.api.state.IDeferredCheck;
 import com.gluk.dagaz.api.state.IEnvironment;
@@ -8,6 +9,15 @@ import com.gluk.dagaz.exceptions.CommonException;
 public class IfCommand extends AbstractCommand { // ? --
 
 	private int offset = 1;
+	
+	public IfCommand() {
+		super(IReserved.CMD_IF);
+	}
+
+	@Override
+	public int getOffset() {
+		return offset - 1;
+	}
 	
 	@Override
 	public void addArgument(Object arg) throws CommonException {

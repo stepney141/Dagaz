@@ -6,6 +6,7 @@ import com.gluk.dagaz.api.runtime.ICommand;
 import com.gluk.dagaz.exceptions.CommonException;
 
 public interface IBuild {
+	void     disassemble();                             // Вывод листинга
 	int      getSize();                                 // Количество команд
 	ICommand getCommand(int ix) throws CommonException; // Получение команды
 	void     addCommand(ICommand command);              // Добавить команду

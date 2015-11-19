@@ -7,6 +7,10 @@ import com.gluk.dagaz.exceptions.CommonException;
 
 public class GtCommand extends AbstractBinaryCommand { // a b -- ?
 
+	public GtCommand() {
+		super("gt");
+	}
+
 	public boolean execute(IProcessor processor, IDeferredCheck state, IEnvironment env) throws CommonException { 
 		int b = processor.getStack().pop().getNumber();
 		int a = processor.getStack().pop().getNumber();

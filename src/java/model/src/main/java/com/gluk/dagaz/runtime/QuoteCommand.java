@@ -9,12 +9,17 @@ public class QuoteCommand extends AbstractCommand { // -- 'v
 
 	private String name = null;
 
+	public QuoteCommand() {
+		super("quote");
+	}
+
 	@Override
 	public void addArgument(Object arg) throws CommonException {
 		if ((name != null) || !(arg instanceof String)) {
 			throw new CommonException("Invalid argument");
 		}
 		name = (String)arg;
+		super.addArgument(arg);
 	}
 	
 	public boolean execute(IProcessor processor, IDeferredCheck state, IEnvironment env) throws CommonException {

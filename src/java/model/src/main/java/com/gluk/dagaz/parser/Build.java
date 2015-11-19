@@ -1,9 +1,13 @@
 package com.gluk.dagaz.parser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+
+import org.apache.log4j.Logger;
 
 import com.gluk.dagaz.api.model.IBoard;
 import com.gluk.dagaz.api.model.IPlayers;
@@ -13,6 +17,8 @@ import com.gluk.dagaz.exceptions.CommonException;
 
 public class Build implements IBuild {
 
+	private static final Logger LOGGER = Logger.getLogger(Build.class);
+	
 	private IPlayers players;
 	private IBoard board;
 	private String pieceType;
@@ -87,5 +93,43 @@ public class Build implements IBuild {
 
 	public IPlayers getPlayers() {
 		return players;
+	}
+
+	public void disassemble() {
+		Map<Integer, String> labels = new HashMap<Integer, String>(); 
+		Integer curr = 0;
+		int offset = 0;
+		for (ICommand c: commands) {
+			int o = c.getOffset();
+			if ((o != 0) && (offset + o >= 0) && (offset + o <= getSize())) {
+				String l = labels.get(offset + o);
+				if (l == null) {
+					curr++;
+					l = curr.toString();
+					labels.put(offset + o, l);
+				}
+			}
+			offset++;
+		}
+		offset = 0;
+		for (ICommand c: commands) {
+			StringBuffer sb = new StringBuffer();
+			String l = labels.get(offset);
+			if (l != null) {
+				sb.append(l);
+				sb.append(":");
+			}
+			sb.append("\t");
+			sb.append(c.toString());
+			int o = c.getOffset();
+			if (o != 0) {
+				String j = labels.get(offset + o);
+				if (j != null) {
+					sb.append(j);
+				}
+			}
+			LOGGER.info(sb.toString());
+			offset++;
+		}
 	}
 }

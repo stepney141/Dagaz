@@ -100,4 +100,8 @@ public class Value implements IValue {
 	public boolean isReference() {
 		return isReference;
 	}
+	
+	public String toString() {
+		return value;
+	}
 }

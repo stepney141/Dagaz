@@ -14,9 +14,10 @@ public class DataFixup {
 	
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(deep);
-		sb.append(": ");
 		sb.append(value.getString());
+		sb.append("[");
+		sb.append(deep);
+		sb.append("]");
 		return sb.toString();
 	}
 

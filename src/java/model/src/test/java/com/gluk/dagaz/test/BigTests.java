@@ -246,5 +246,8 @@ public class BigTests {
 		root.end();
 		root.tag("end-move");
 		root.end();
+
+		root.tag("any");
+		root.end();
 	}
 }
