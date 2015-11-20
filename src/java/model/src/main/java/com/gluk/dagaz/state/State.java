@@ -4,13 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+import com.gluk.dagaz.api.model.IBoard;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.api.state.IPiece;
 import com.gluk.dagaz.api.state.IState;
 import com.gluk.dagaz.api.state.ITransactional;
 import com.gluk.dagaz.api.state.IValue;
 import com.gluk.dagaz.exceptions.CommonException;
-import com.gluk.dagaz.model.Board;
 import com.gluk.dagaz.undo.AbstractUndo;
 import com.gluk.dagaz.undo.UndoDrop;
 import com.gluk.dagaz.undo.UndoMove;
@@ -22,7 +22,7 @@ import com.gluk.dagaz.utils.PieceHandler;
 
 public class State extends DeferredCheck implements ITransactional, Cloneable {
 
-	private Board board;
+	private IBoard board;
 	private Map<String, IPiece> pieces = new HashMap<String, IPiece>();
 	private PieceHandler hand = null;
 	private Map<String, Map<String, IValue>> values = new HashMap<String, Map<String, IValue>>();
@@ -31,16 +31,53 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 	private long hash = 0L;
 	private int deep = 0;
 	
-	public State(Board board) {
+	public State(IBoard board) {
 		this.board = board;
+	}
+	
+	public IBoard getBoard() {
+		return board;
+	}
+	
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		boolean f = false;
+		for (String pos: pieces.keySet()) {
+			if ((currentPos != null) && pos.equals(currentPos)) {
+				sb.append("<");
+			} else if (f) {
+				sb.append(" ");
+			}
+			sb.append(pos);
+			sb.append("=");
+			sb.append(pieces.get(pos).toString());
+			if ((hand != null) && hand.getPosition().equals(pos) && !hand.isEmpty()) {
+				sb.append("|");
+				sb.append(hand.getPiece().toString());
+			}
+			if ((currentPos != null) && pos.equals(currentPos)) {
+				sb.append(">");
+				f = false;
+			} else {
+				f = true;
+			}
+		}
+		for (String name: values.keySet()) {
+			IValue value = values.get(name).get("");
+			if (value == null) continue;
+			if (f) {
+				sb.append(" ");
+			}
+			sb.append(name);
+			sb.append("=");
+			sb.append(value.toString());
+			f = true;
+		}
+		return sb.toString();
 	}
 	
 	public long getZobristHash() {
 		return hash;
-	}
-	
-	public String toString() {
-		return Long.toString(hash);
 	}
 	
 	public boolean isDefined(String name) {
@@ -246,6 +283,8 @@ public class State extends DeferredCheck implements ITransactional, Cloneable {
 				r.changeFlag(name, "", value);
 			}
 		}
+		// Копировать текущую позицию
+		r.changeCurrentPosition(getCurrentPosition());
 		return r;
 	}
 	

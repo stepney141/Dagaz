@@ -15,6 +15,26 @@ public class Grid {
 		this.board = board;
 	}
 	
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		boolean f = false;
+		for (List<String> x: dimensions) {
+			if (f) {
+				sb.append(" x ");
+			}
+			boolean ff = false;
+			for (String s: x) {
+				if (ff) {
+					sb.append(",");
+				}
+				sb.append(s);
+				ff = true;
+			}
+			f = true;
+		}
+		return sb.toString();
+	}
+	
 	private void addRange(String dimension, int start, int end, boolean isNumeric, List<String> r) throws CommonException {
 		while (true) {
 			StringBuffer sb = new StringBuffer();

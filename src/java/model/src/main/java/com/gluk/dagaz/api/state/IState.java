@@ -1,8 +1,10 @@
 package com.gluk.dagaz.api.state;
 
+import com.gluk.dagaz.api.model.IBoard;
 import com.gluk.dagaz.exceptions.CommonException;
 
 public interface IState {
+	IBoard getBoard();                                                                  // Получение описания доски
 	long getZobristHash();                                                              // Получение хэша состояния
 	boolean isDefined(String name);                                                     // Проверка определения имени
 	IValue getValue(String name) throws CommonException;                                // Получение значения

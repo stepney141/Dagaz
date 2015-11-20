@@ -7,24 +7,21 @@ import org.junit.Test;
 
 import com.gluk.dagaz.api.application.IMoveLogger;
 import com.gluk.dagaz.api.model.IBoard;
-import com.gluk.dagaz.api.model.IPlayers;
 import com.gluk.dagaz.api.model.IReserved;
 import com.gluk.dagaz.api.parser.IBuild;
 import com.gluk.dagaz.api.runtime.ICommand;
-import com.gluk.dagaz.api.state.IDeferredCheck;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.api.state.IValue;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.mock.MockMoveLogger;
 import com.gluk.dagaz.mock.MockProcessor;
-import com.gluk.dagaz.mock.MockState;
 import com.gluk.dagaz.model.Board;
-import com.gluk.dagaz.model.Players;
 import com.gluk.dagaz.parser.Build;
 import com.gluk.dagaz.runtime.CommandFactory;
 import com.gluk.dagaz.runtime.Value;
 import com.gluk.dagaz.state.GlobalEnvironment;
 import com.gluk.dagaz.state.LocalEnvironment;
+import com.gluk.dagaz.state.State;
 
 // TODO: take, put
 
@@ -32,13 +29,12 @@ public class RuntimeTests {
 
 	@Test
 	public void testEndCommand() throws CommonException {
-		IPlayers players = new Players();
 		IBoard board = new Board();
 		MockMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		IEnvironment env = new GlobalEnvironment();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_END, build);
 		assertFalse(logger.isClosed());
 		assertFalse(c.execute(processor, state, env));
@@ -47,13 +43,12 @@ public class RuntimeTests {
 	
 	@Test
 	public void testLogCommand() throws CommonException {
-		IPlayers players = new Players();
 		IBoard board = new Board();
 		MockMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		IEnvironment env = new GlobalEnvironment();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_LOG, build);
 		c.addArgument("e2");
 		c.addArgument(" - ");
@@ -64,13 +59,12 @@ public class RuntimeTests {
 
 	@Test
 	public void testCheckCommand() throws CommonException {
-		IPlayers players = new Players();
 		IBoard board = new Board();
 		IMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		IEnvironment env = new GlobalEnvironment();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_CHECK, build);
 		processor.getStack().push(Value.create(true));
 		processor.getStack().push(Value.create(false));
@@ -81,13 +75,12 @@ public class RuntimeTests {
 	
 	@Test
 	public void testGetCommand() throws CommonException {
-		IPlayers players = new Players();
 		IBoard board = new Board();
 		IMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		IEnvironment env = new GlobalEnvironment();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_GET, build);
 		env.set("x", Value.quote("y"));
 		env.set("y", Value.create(1));
@@ -107,13 +100,12 @@ public class RuntimeTests {
 	
 	@Test
 	public void testQuoteCommand() throws CommonException {
-		IPlayers players = new Players();
 		IBoard board = new Board();
 		IMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		IEnvironment env = new GlobalEnvironment();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_QUOTE, build);
 		processor.getStack().push(Value.create("x"));
 		assertTrue(c.execute(processor, state, env));
@@ -138,13 +130,12 @@ public class RuntimeTests {
 	
 	@Test
 	public void testIfCommand() throws CommonException {
-		IPlayers players = new Players();
 		IBoard board = new Board();
 		IMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		IEnvironment env = new GlobalEnvironment();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_IF, build);
 		processor.incNextCommand(1);
 		c.addArgument(10);
@@ -160,13 +151,12 @@ public class RuntimeTests {
 	
 	@Test
 	public void testJumpCommand() throws CommonException {
-		IPlayers players = new Players();
 		IBoard board = new Board();
 		IMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		IEnvironment env = new GlobalEnvironment();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_JUMP, build);
 		processor.incNextCommand(1);
 		c.addArgument(10);
@@ -177,13 +167,12 @@ public class RuntimeTests {
 	
 	@Test
 	public void testDecCommand() throws CommonException {
-		IPlayers players = new Players();
 		IBoard board = new Board();
 		IMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		IEnvironment env = new GlobalEnvironment();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_DEC, build);
 		c.addArgument("x");
 		env.set("x", Value.create(3));
@@ -206,13 +195,12 @@ public class RuntimeTests {
 	
 	@Test
 	public void testIncCommand() throws CommonException {
-		IPlayers players = new Players();
 		IBoard board = new Board();
 		IMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		IEnvironment env = new GlobalEnvironment();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_INC, build);
 		c.addArgument("x");
 		env.set("x", Value.create(0));
@@ -226,13 +214,12 @@ public class RuntimeTests {
 
 	@Test
 	public void testSetCommand() throws CommonException {
-		IPlayers players = new Players();
 		IBoard board = new Board();
 		IMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		IEnvironment env = new GlobalEnvironment();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_SET, build);
 		c.addArgument("x");
 		assertFalse(env.isDefined("x"));
@@ -245,14 +232,13 @@ public class RuntimeTests {
 	
 	@Test
 	public void testLetCommand() throws CommonException {
-		IPlayers players = new Players();
 		IEnvironment ge = new GlobalEnvironment();
 		LocalEnvironment env = new LocalEnvironment(ge);
 		IBoard board = new Board();
 		IMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_LET, build);
 		c.addArgument("x");
 		assertFalse(env.isDefined("x"));
@@ -265,13 +251,12 @@ public class RuntimeTests {
 	
 	@Test
 	public void testDelCommand() throws CommonException {
-		IPlayers players = new Players();
 		IBoard board = new Board();
 		IMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		IEnvironment env = new GlobalEnvironment();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_DEL, build);
 		c.addArgument("x");
 		env.set("x", Value.create(0));
@@ -282,13 +267,12 @@ public class RuntimeTests {
 
 	@Test
 	public void testPlusCommand() throws CommonException {
-		IPlayers players = new Players();
 		IBoard board = new Board();
 		IMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		IEnvironment env = new GlobalEnvironment();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_PLUS, build);
 		c.addArgument(0);
 		assertTrue(c.execute(processor, state, env));
@@ -316,13 +300,12 @@ public class RuntimeTests {
 	
 	@Test
 	public void testMinusCommand() throws CommonException {
-		IPlayers players = new Players();
 		IBoard board = new Board();
 		IMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		IEnvironment env = new GlobalEnvironment();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_MINUS, build);
 		c.addArgument(1);
 		processor.getStack().push(Value.create(-3));
@@ -339,13 +322,12 @@ public class RuntimeTests {
 
 	@Test
 	public void testMulCommand() throws CommonException {
-		IPlayers players = new Players();
 		IBoard board = new Board();
 		IMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		IEnvironment env = new GlobalEnvironment();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_MUL, build);
 		c.addArgument(0);
 		assertTrue(c.execute(processor, state, env));
@@ -367,13 +349,12 @@ public class RuntimeTests {
 
 	@Test
 	public void testDivCommand() throws CommonException {
-		IPlayers players = new Players();
 		IBoard board = new Board();
 		IMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		IEnvironment env = new GlobalEnvironment();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_DIV, build);
 		c.addArgument(2);
 		processor.getStack().push(Value.create(6));
@@ -385,13 +366,12 @@ public class RuntimeTests {
 
 	@Test
 	public void testModCommand() throws CommonException {
-		IPlayers players = new Players();
 		IBoard board = new Board();
 		IMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		IEnvironment env = new GlobalEnvironment();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_MOD, build);
 		c.addArgument(2);
 		processor.getStack().push(Value.create(5));
@@ -403,13 +383,12 @@ public class RuntimeTests {
 
 	@Test
 	public void testDropCommand() throws CommonException {
-		IPlayers players = new Players();
 		IBoard board = new Board();
 		IMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		IEnvironment env = new GlobalEnvironment();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_DROP, build);
 		processor.getStack().push(Value.create(1));
 		assertTrue(c.execute(processor, state, env));
@@ -418,13 +397,12 @@ public class RuntimeTests {
 
 	@Test
 	public void testEqCommand() throws CommonException {
-		IPlayers players = new Players();
 		IBoard board = new Board();
 		IMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		IEnvironment env = new GlobalEnvironment();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_EQ, build);
 		processor.getStack().push(Value.create("123"));
 		processor.getStack().push(Value.create(123));
@@ -440,13 +418,12 @@ public class RuntimeTests {
 
 	@Test
 	public void testNeCommand() throws CommonException {
-		IPlayers players = new Players();
 		IBoard board = new Board();
 		IMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		IEnvironment env = new GlobalEnvironment();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_NE, build);
 		processor.getStack().push(Value.create("abc"));
 		processor.getStack().push(Value.create("cba"));
@@ -457,13 +434,12 @@ public class RuntimeTests {
 
 	@Test
 	public void testLtCommand() throws CommonException {
-		IPlayers players = new Players();
 		IBoard board = new Board();
 		IMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		IEnvironment env = new GlobalEnvironment();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_LT, build);
 		processor.getStack().push(Value.create(1));
 		processor.getStack().push(Value.create(2));
@@ -484,13 +460,12 @@ public class RuntimeTests {
 
 	@Test
 	public void testLeCommand() throws CommonException {
-		IPlayers players = new Players();
 		IBoard board = new Board();
 		IMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		IEnvironment env = new GlobalEnvironment();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_LE, build);
 		processor.getStack().push(Value.create(1));
 		processor.getStack().push(Value.create(2));
@@ -511,13 +486,12 @@ public class RuntimeTests {
 
 	@Test
 	public void testGtCommand() throws CommonException {
-		IPlayers players = new Players();
 		IBoard board = new Board();
 		IMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		IEnvironment env = new GlobalEnvironment();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_GT, build);
 		processor.getStack().push(Value.create(1));
 		processor.getStack().push(Value.create(2));
@@ -538,13 +512,12 @@ public class RuntimeTests {
 
 	@Test
 	public void testGeCommand() throws CommonException {
-		IPlayers players = new Players();
 		IBoard board = new Board();
 		IMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		IEnvironment env = new GlobalEnvironment();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_GE, build);
 		processor.getStack().push(Value.create(1));
 		processor.getStack().push(Value.create(2));
@@ -565,13 +538,12 @@ public class RuntimeTests {
 
 	@Test
 	public void testNotCommand() throws CommonException {
-		IPlayers players = new Players();
 		IBoard board = new Board();
 		IMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		IEnvironment env = new GlobalEnvironment();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_NOT, build);
 		processor.getStack().push(Value.create(0));
 		assertTrue(c.execute(processor, state, env));
@@ -581,13 +553,12 @@ public class RuntimeTests {
 
 	@Test
 	public void testZoneCommand() throws CommonException {
-		IPlayers players = new Players();
 		IBoard board = new Board();
 		IMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		IEnvironment env = new GlobalEnvironment();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_ZONE, build);
 		c.addArgument("start");
 		board.addPosition("a1");
@@ -605,13 +576,12 @@ public class RuntimeTests {
 
 	@Test
 	public void testAnyCommand() throws CommonException {
-		IPlayers players = new Players();
 		IBoard board = new Board();
 		IMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		IEnvironment env = new GlobalEnvironment();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		ICommand c = CommandFactory.getInstance().createCommand(IReserved.CMD_ANY, build);
 		
 		assertFalse(processor.execCommand(c, state, env));

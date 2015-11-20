@@ -23,6 +23,14 @@ public class MoveLogger implements IMoveLogger {
 		this.state = state;
 	}
 	
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		for (String s: notationList) {
+			sb.append(s);
+		}
+		return sb.toString();
+	}
+	
 	public void clear() {
 		notationList.clear();
 		undo.clear();

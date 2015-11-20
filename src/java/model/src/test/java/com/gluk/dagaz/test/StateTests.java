@@ -215,7 +215,6 @@ public class StateTests {
 		assertFalse(newState.isDefined("y"));
 		assertTrue(newState.getValue("x").getNumber() == 3);                          // наследуются значения не привязанные к позиции
 		assertTrue(newState.getValue("y") == null);                                   // Значения, временно привязанные к позициям (позиционные флаги), сбрасываюся 
-		assertTrue(newState.getCurrentPosition() == null);                                   // Текущая позиция сбрасывается тоже
 		assertFalse(newState.rollback());                                             // Нет точек сохранения для клонированного состояния
 		
 		assertTrue(state.rollback());                                                 // Откат к точке сохранения (5)

@@ -33,17 +33,24 @@ public class Piece implements IPiece {
 		return r;
 	}
 	
-	public boolean equals(Piece p) {
-		return this == p;
-	}
-	
-	public int hashCode() {
-		return super.hashCode();
-	}
-
 	public Piece(String name, String owner) {
 		this.type = name;
 		this.owner = owner;
+	}
+	
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(type);
+		sb.append("[");
+		sb.append(owner);
+		for (String name: attributes.keySet()) {
+			sb.append(" ");
+			sb.append(name);
+			sb.append("=");
+			sb.append(attributes.get(name).toString());
+		}
+		sb.append("]");
+		return sb.toString();
 	}
 
 	public String getName() {

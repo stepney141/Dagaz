@@ -36,7 +36,7 @@ public class ZoneCommand extends AbstractCommand { // [s] -- ?
 		if (pos == null) {
 			pos = processor.getStack().pop().getString();
 		}
-		processor.getStack().push(Value.create(processor.getBoard().inZone(zone, pos, env)));
+		processor.getStack().push(Value.create(state.getBoard().inZone(zone, pos, env)));
 		return true;
 	}
 }

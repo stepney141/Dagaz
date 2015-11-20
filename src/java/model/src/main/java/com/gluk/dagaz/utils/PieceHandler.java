@@ -12,6 +12,16 @@ public class PieceHandler {
 		this.piece = piece;
 	}
 	
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(pos);
+		if (piece != null) {
+			sb.append("=");
+			sb.append(piece.toString());
+		}
+		return sb.toString();
+	}
+	
 	public boolean isEmpty() {
 		return piece == null;
 	}

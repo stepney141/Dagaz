@@ -56,7 +56,7 @@ public class BigTests {
 		IEnvironment se = new StateEnvironment(state, pe);
 		IEnvironment env = new LocalEnvironment(se);
 		MockMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		AbstractStatement root = new SeqStatement();
 

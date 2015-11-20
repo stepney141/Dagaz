@@ -8,14 +8,11 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.gluk.dagaz.api.model.IPlayers;
 import com.gluk.dagaz.api.parser.IBuild;
-import com.gluk.dagaz.api.state.IDeferredCheck;
 import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.exceptions.CommonException;
 import com.gluk.dagaz.mock.MockMoveLogger;
 import com.gluk.dagaz.mock.MockProcessor;
-import com.gluk.dagaz.mock.MockState;
 import com.gluk.dagaz.mock.MockStatement;
 import com.gluk.dagaz.model.Board;
 import com.gluk.dagaz.model.Grid;
@@ -36,13 +33,12 @@ public class ParserTests {
 
 	@Test
 	public void testExpressionStatement() throws CommonException { // (* (+ 3 (/ 4 2) 1) (% 8 3) ) = 12
-		IPlayers players = new Players();
 		IEnvironment ge = new GlobalEnvironment();
 		IEnvironment env = new LocalEnvironment(ge);
 		Board board = new Board();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		MockMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		AbstractStatement root = new MockStatement();
 		root.setBuild(build);
@@ -67,13 +63,12 @@ public class ParserTests {
 
 	@Test
 	public void testAndStatement() throws CommonException { // (and (dec! a) b (dec! c) ) 
-		IPlayers players = new Players();
 		IEnvironment ge = new GlobalEnvironment();
 		IEnvironment env = new LocalEnvironment(ge);
 		Board board = new Board();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		MockMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		AbstractStatement root = new MockStatement();
 		root.setBuild(build);
@@ -114,13 +109,12 @@ public class ParserTests {
 
 	@Test
 	public void testOrStatement() throws CommonException { // (or (dec! a) b (dec! c) ) 
-		IPlayers players = new Players();
 		IEnvironment ge = new GlobalEnvironment();
 		IEnvironment env = new LocalEnvironment(ge);
 		Board board = new Board();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		MockMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		AbstractStatement root = new MockStatement();
 		root.setBuild(build);
@@ -169,13 +163,12 @@ public class ParserTests {
 	
 	@Test
 	public void testIfStatement() throws CommonException { // (if (> x 3) (set! x 3) x) 
-		IPlayers players = new Players();
 		IEnvironment ge = new GlobalEnvironment();
 		IEnvironment env = new LocalEnvironment(ge);
 		Board board = new Board();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		MockMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		AbstractStatement root = new SeqStatement();
 		root.setBuild(build);
@@ -202,13 +195,12 @@ public class ParserTests {
 	
 	@Test
 	public void testIfElseStatement() throws CommonException { // (if (> x 3) x (set! x 10) else (set! x 0) x) 
-		IPlayers players = new Players();
 		IEnvironment ge = new GlobalEnvironment();
 		IEnvironment env = new LocalEnvironment(ge);
 		Board board = new Board();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		MockMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		AbstractStatement root = new SeqStatement();
 		root.setBuild(build);
@@ -241,13 +233,12 @@ public class ParserTests {
 
 	@Test
 	public void testWhileStatement() throws CommonException { // (while (dec! x) x (inc! y)) 
-		IPlayers players = new Players();
 		IEnvironment ge = new GlobalEnvironment();
 		IEnvironment env = new LocalEnvironment(ge);
 		Board board = new Board();
-		IDeferredCheck state = new MockState();
+		State state = new State(board);
 		MockMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		AbstractStatement root = new SeqStatement();
 		root.setBuild(build);
@@ -300,10 +291,8 @@ public class ParserTests {
 		g.addDirection("w", deltas);
 		
 		State state = new State(board);
-		IEnvironment se = new StateEnvironment(state, pe);
-		IEnvironment env = new LocalEnvironment(se);
 		MockMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		AbstractStatement root = new SeqStatement();
 		
@@ -317,18 +306,18 @@ public class ParserTests {
 		root.end();
 		
 		state.setCurrentPosition("a1");
-		processor.execute(state, env);
-		assertTrue(env.get("x").getString().equals("b2"));
+		processor.execute(state, pe);
+		assertTrue(pe.get("x").getString().equals("b2"));
 		assertTrue(state.getCurrentPosition().equals("a1"));
 		
 		state.setCurrentPosition("a2");
-		processor.execute(state, env);
-		assertFalse(env.get("x").getBoolean());
+		processor.execute(state, pe);
+		assertFalse(pe.get("x").getBoolean());
 		assertTrue(state.getCurrentPosition().equals("a2"));
 
 		state.setCurrentPosition("b1");
-		processor.execute(state, env);
-		assertFalse(env.get("x").getBoolean());
+		processor.execute(state, pe);
+		assertFalse(pe.get("x").getBoolean());
 		assertTrue(state.getCurrentPosition().equals("b1"));
 	}
 
@@ -353,7 +342,7 @@ public class ParserTests {
 		IEnvironment se = new StateEnvironment(state, pe);
 		IEnvironment env = new LocalEnvironment(se);
 		MockMoveLogger logger = new MockMoveLogger();
-		IBuild build = new Build(players, board);
+		IBuild build = new Build();
 		MockProcessor processor = new MockProcessor(build, logger);
 		AbstractStatement root = new SeqStatement();
 

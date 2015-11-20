@@ -64,7 +64,8 @@ public class RandomAI implements IAIPlugin, IMoveCallback {
 		for (IBuild build: moves) {
 			IMoveGenerator gen = new MoveGenerator(this, env);
 			IMoveLogger logger = new MoveLogger(state, gen);
-			IProcessor processor = new Processor(build, logger);
+			IProcessor processor = new Processor(logger);
+			processor.addBuild(build);
 			processor.execute(state, env);
 		}
 		if (variantsCount == 0L) {

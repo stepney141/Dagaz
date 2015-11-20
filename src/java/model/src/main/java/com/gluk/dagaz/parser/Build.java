@@ -9,8 +9,6 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
-import com.gluk.dagaz.api.model.IBoard;
-import com.gluk.dagaz.api.model.IPlayers;
 import com.gluk.dagaz.api.parser.IBuild;
 import com.gluk.dagaz.api.runtime.ICommand;
 import com.gluk.dagaz.exceptions.CommonException;
@@ -19,22 +17,17 @@ public class Build implements IBuild {
 
 	private static final Logger LOGGER = Logger.getLogger(Build.class);
 	
-	private IPlayers players;
-	private IBoard board;
 	private String pieceType;
 	
 	protected List<ICommand> commands = new ArrayList<ICommand>();
 	private List<Integer> fixups = new ArrayList<Integer>();
 	private Set<String> localNames = new HashSet<String>();
 	
-	public Build(IPlayers players, IBoard board, String pieceType) {
-		this.players = players;
-		this.board = board;
+	public Build(String pieceType) {
 		this.pieceType = pieceType;
 	}
 	
-	public Build(IPlayers players, IBoard board) {
-		this.board = board;
+	public Build() {
 		this.pieceType = "";
 	}
 	
@@ -44,10 +37,6 @@ public class Build implements IBuild {
 
 	public int getOffset() {
 		return commands.size();
-	}
-
-	public IBoard getBoard() {
-		return board;
 	}
 
 	public void addFixup(int offset) {
@@ -89,10 +78,6 @@ public class Build implements IBuild {
 
 	public String getPieceType() {
 		return pieceType;
-	}
-
-	public IPlayers getPlayers() {
-		return players;
 	}
 
 	public void disassemble() {

@@ -8,20 +8,10 @@ import com.gluk.dagaz.api.parser.IBuild;
 import com.gluk.dagaz.api.parser.IBuilderCallback;
 import com.gluk.dagaz.api.parser.IStatement;
 import com.gluk.dagaz.exceptions.CommonException;
-import com.gluk.dagaz.model.Board;
-import com.gluk.dagaz.model.Players;
 import com.gluk.dagaz.runtime.CommandFactory;
 import com.gluk.dagaz.statements.StatementFactory;
 
 public class CodeBuilder extends AbstractBuilder {
-	
-	private Players players;
-	private Board board;
-	
-	public CodeBuilder(Players players, Board board) {
-		this.players = players;
-		this.board   = board;
-	}
 	
 	private void buildCode(IStatement s, Node c) throws CommonException {
 		NodeIterator nl = getIterator(c, ALL_XP);
@@ -62,7 +52,7 @@ public class CodeBuilder extends AbstractBuilder {
 			NodeIterator ml = getIterator(p, MOVE_XP);
 			Node m;
 			while ((m = ml.nextNode())!= null) {
-				IBuild build = new Build(players, board, pieceType);
+				IBuild build = new Build(pieceType);
 				buildMove(build, p, m);
 				callback.addBuild(build);
 			}

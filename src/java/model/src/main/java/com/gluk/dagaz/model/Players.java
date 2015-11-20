@@ -14,6 +14,19 @@ public class Players implements IPlayers {
 	
 	private List<String> turnOrder = new ArrayList<String>();
 	private Map<String, Map<String, String>> syms = new HashMap<String, Map<String, String>>();
+	
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		boolean f = false;
+		for (String player: turnOrder) {
+			if (f) {
+				sb.append(",");
+			}
+			sb.append(player);
+			f = true;
+		}
+		return sb.toString();
+	}
 
 	public void addPlayer(String name) throws CommonException {
 		turnOrder.add(name);

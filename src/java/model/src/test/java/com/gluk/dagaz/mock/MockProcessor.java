@@ -3,7 +3,6 @@ package com.gluk.dagaz.mock;
 import java.util.Stack;
 
 import com.gluk.dagaz.api.application.IMoveLogger;
-import com.gluk.dagaz.api.model.IBoard;
 import com.gluk.dagaz.api.parser.IBuild;
 import com.gluk.dagaz.api.runtime.ICommand;
 import com.gluk.dagaz.api.state.IDeferredCheck;
@@ -15,7 +14,8 @@ import com.gluk.dagaz.utils.AnyUndo;
 public class MockProcessor extends AbstractProcessor {
 	
 	public MockProcessor(IBuild build, IMoveLogger logger) {
-		super(build, logger);
+		super(logger);
+		addBuild(build);
 	}
 	
 	public Stack<AnyUndo> getUndoStack() {
@@ -42,9 +42,5 @@ public class MockProcessor extends AbstractProcessor {
 		nextCommand = 1;
 		currCommand = 1;
 		return c.execute(this, state, env);
-	}
-
-	public IBoard getBoard() {
-		return build.getBoard();
 	}
 }

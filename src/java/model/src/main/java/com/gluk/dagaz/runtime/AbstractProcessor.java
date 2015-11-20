@@ -1,6 +1,8 @@
 package com.gluk.dagaz.runtime;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
@@ -13,21 +15,24 @@ import com.gluk.dagaz.api.state.IEnvironment;
 import com.gluk.dagaz.api.state.ITransactional;
 import com.gluk.dagaz.api.state.IValue;
 import com.gluk.dagaz.exceptions.CommonException;
+import com.gluk.dagaz.state.LocalEnvironment;
+import com.gluk.dagaz.state.State;
+import com.gluk.dagaz.state.StateEnvironment;
 import com.gluk.dagaz.utils.AnyUndo;
 
 public abstract class AbstractProcessor implements IProcessor {
 	
 	private IMoveLogger logger;
 	
-	protected IBuild              build;
+	protected List<IBuild>       builds = new ArrayList<IBuild>();
 	protected Stack<IValue>       stack = new Stack<IValue>();
 	protected Stack<AnyUndo>      undo  = new Stack<AnyUndo>();
 	protected Set<ITransactional> trans = new HashSet<ITransactional>();
+	
 	protected int nextCommand;
 	protected int currCommand;
 	
-	public AbstractProcessor(IBuild build, IMoveLogger logger) {
-		this.build  = build;
+	public AbstractProcessor(IMoveLogger logger) {
 		this.logger = logger;
 	}
 	
@@ -81,6 +86,8 @@ public abstract class AbstractProcessor implements IProcessor {
 	}
 	
 	public void clear() {
+		nextCommand = 0;
+		currCommand = 0;
 		logger.clear();
 		stack.clear();
 		trans.clear();
@@ -91,22 +98,50 @@ public abstract class AbstractProcessor implements IProcessor {
 		nextCommand += delta;
 	}
 
-	public void execute(IDeferredCheck state, IEnvironment env) throws CommonException {
-		clear();
-		nextCommand = 0;
-		currCommand = 0;
+	public void addBuild(IBuild build) {
+		builds.add(build);
+	}
+	
+	protected IEnvironment createEnvironment(State state, IEnvironment pe) throws CloneNotSupportedException {
+		StateEnvironment se = new StateEnvironment(state, pe);
+		LocalEnvironment env = new LocalEnvironment(se);
+		trans.add(env);
+		return env;
+	}
+	
+	private ICommand getCommand(IBuild build, IDeferredCheck state) throws CommonException {
+		ICommand c = build.getCommand(nextCommand);
+		nextCommand++;
+		currCommand++;
+		if (c.isDeferred()) {
+			state.addDeferredCommand(c);
+			return null;
+		}
+		return c;
+	}
+	
+	private void execute(IBuild build, IDeferredCheck state, IEnvironment env) throws CommonException {
 		while (nextCommand < build.getSize()) {
-			ICommand c = build.getCommand(nextCommand);
-			nextCommand++;
-			currCommand++;
-			if (c.isDeferred()) {
-				state.addDeferredCommand(c);
-				continue;
-			}
+			ICommand c = getCommand(build, state);
+			if (c == null) continue;
 			if (!c.execute(this, state, env)) {
 				if (!rollback()) {
 					break;
 				}
+			}
+		}
+	}
+
+	public void execute(State old, IEnvironment pe) throws CommonException {
+		for (IBuild build: builds) {
+			try {
+				clear();
+				State state = (State)old.clone();
+				trans.add(state);
+				IEnvironment env = createEnvironment(state, pe);
+				execute(build, state, env);
+			} catch (CloneNotSupportedException e) {
+				throw new CommonException(e.toString(), e);
 			}
 		}
 	}
