@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Turkish Dama</title>
+</head>
+<body>
+
+<img id="Board"     style="display:none" src="images/Board.png">
+<img id="WhiteMan"  style="display:none" src="images/ManWhite.png">
+<img id="BlackMan"  style="display:none" src="images/ManBlack.png">
+<img id="WhiteKing" style="display:none" src="images/KingWhite.png">
+<img id="BlackKing" style="display:none" src="images/KingBlack.png">
+
+<table id="Table" style="margin:auto; font-family:sans-serif; font-size:14px">
+	<tr style="height:548px; vertical-align:top">
+		<td id="CanvasCell" style="width:548px">
+			<canvas id="BoardCanvas" width="548" height="548" style="cursor:default">Broken canvas...</canvas>
+		</td>
+		<td style="width:300px;">
+			<div id="ScrollDiv" style="height:510px; overflow:auto">
+				<p id="GameSession"></p>
+				<p id="HelpText"></p>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div style="height:100px; width:500px; margin-left:auto; margin-right:auto">
+				<table>
+					<tr id="PieceInfo" style="display:none">
+						<td>
+							<img id="PieceInfoImage" />
+						</td>
+						<td id="PieceInfoText"></td>
+					</tr>
+				</table>
+			</div>
+		</td>
+	</tr>
+</table>
+
+<script>
+var ctx = BoardCanvas.getContext("2d");
+var boardImage = document.getElementById("Board");
+
+function drawBoard() {
+  ctx.beginPath();
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = "#000000";
+  ctx.fillStyle = "#000000";
+  ctx.drawImage(boardImage, 0, 0);
+}
+
+function draw() {
+  ctx.clearRect(0, 0, Board.width, Board.height);
+  drawBoard();
+}
+
+draw();
+
+</script>
+
+</body>
+</html>
