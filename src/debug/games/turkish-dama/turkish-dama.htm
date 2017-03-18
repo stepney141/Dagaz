@@ -40,6 +40,7 @@
 </table>
 
 <script>
+
 var ctx = BoardCanvas.getContext("2d");
 var boardImage = document.getElementById("Board");
 
@@ -47,7 +48,7 @@ function drawBoard() {
   ctx.beginPath();
   ctx.lineWidth = 2;
   ctx.strokeStyle = "#000000";
-  ctx.fillStyle = "#000000";
+  ctx.fillStyle = "#C0C0C0";
   ctx.drawImage(boardImage, 0, 0);
 }
 
@@ -56,7 +57,11 @@ function draw() {
   drawBoard();
 }
 
-draw();
+if (boardImage.complete && (boardImage.naturalWidth > 0))  {
+  draw();
+} else {
+  boardImage.onload = draw;
+}
 
 </script>
 
