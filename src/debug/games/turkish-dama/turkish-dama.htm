@@ -42,14 +42,20 @@
 <script>
 
 var ctx = BoardCanvas.getContext("2d");
-var boardImage = document.getElementById("Board");
+var res = [];
+res[0] = document.getElementById("Board");
+res[1] = document.getElementById("WhiteMan");
+res[2] = document.getElementById("WhiteKing");
+res[3] = document.getElementById("BlackMan");
+res[4] = document.getElementById("BlackKing");
 
 function drawBoard() {
   ctx.beginPath();
   ctx.lineWidth = 2;
   ctx.strokeStyle = "#000000";
   ctx.fillStyle = "#C0C0C0";
-  ctx.drawImage(boardImage, 0, 0);
+  ctx.drawImage(res[0], 0, 0);
+  ctx.drawImage(res[1], 12, 12);
 }
 
 function draw() {
@@ -57,13 +63,22 @@ function draw() {
   drawBoard();
 }
 
-if (boardImage.complete && (boardImage.naturalWidth > 0))  {
-  draw();
-} else {
-  boardImage.onload = draw;
+function waitResLoaded() {
+  var allDone = true;
+  for (var i = 0; i < res.length; i++) {
+       var image = res[i];
+       if (!image.complete || (image.naturalWidth == 0))  {
+           image.onload = waitResLoaded;
+           allDone = false;
+       }
+  }
+  if (allDone) {
+       draw();
+  }
 }
 
-</script>
+waitResLoaded();
 
+</script>
 </body>
 </html>
