@@ -764,3 +764,32 @@ QUnit.test( "King's capturing chain", function( assert ) {
   Dagaz.Model.design = undefined;
   Dagaz.Model.board = undefined;
 });
+
+QUnit.test( "Move List", function( assert ) {
+  Dagaz.Model.InitGame();
+  var design = Dagaz.Model.getDesign();
+  var board  = Dagaz.Model.getInitBoard();
+  board.clear();
+  assert.equal( board.moves.length, 0, "No board moves");
+
+  design.setup("White", "King", Dagaz.Model.stringToPos("d8"));
+  design.setup("Black", "Man", Dagaz.Model.stringToPos("b7"));
+  design.setup("Black", "Man", Dagaz.Model.stringToPos("e7"));
+  design.setup("Black", "Man", Dagaz.Model.stringToPos("a6"));
+  design.setup("Black", "Man", Dagaz.Model.stringToPos("b6"));
+  design.setup("Black", "Man", Dagaz.Model.stringToPos("d6"));
+  design.setup("Black", "Man", Dagaz.Model.stringToPos("e6"));
+  design.setup("Black", "Man", Dagaz.Model.stringToPos("g6"));
+  design.setup("Black", "Man", Dagaz.Model.stringToPos("h6"));
+  design.setup("Black", "Man", Dagaz.Model.stringToPos("e5"));
+  design.setup("Black", "Man", Dagaz.Model.stringToPos("b3"));
+  design.setup("Black", "Man", Dagaz.Model.stringToPos("c3"));
+  design.setup("Black", "Man", Dagaz.Model.stringToPos("f3"));
+  design.setup("Black", "Man", Dagaz.Model.stringToPos("a2"));
+  design.setup("Black", "Man", Dagaz.Model.stringToPos("d1"));
+
+  board.generate();
+
+  Dagaz.Model.design = undefined;
+  Dagaz.Model.board = undefined;
+});
