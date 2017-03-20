@@ -773,6 +773,7 @@ QUnit.test( "Move List", function( assert ) {
   assert.equal( board.moves.length, 0, "No board moves");
 
   design.setup("White", "King", Dagaz.Model.stringToPos("d8"));
+  design.setup("Black", "Man", Dagaz.Model.stringToPos("e8"));
   design.setup("Black", "Man", Dagaz.Model.stringToPos("b7"));
   design.setup("Black", "Man", Dagaz.Model.stringToPos("e7"));
   design.setup("Black", "Man", Dagaz.Model.stringToPos("a6"));
@@ -789,6 +790,8 @@ QUnit.test( "Move List", function( assert ) {
   design.setup("Black", "Man", Dagaz.Model.stringToPos("d1"));
 
   board.generate();
+  assert.equal( board.moves.length, 42, "42 moves generated");
+  assert.equal( board.moves[0].toString(), "d8 - g8 - g3 - d3 - d7 - h7 - h5 - a5 - a7 - e7 - e1 - c1 - c6 - a6 - a1 x e8 x g6 x f3 x d6 x e7 x h6 x e5 x a6 x b7 x e6 x d1 x c3 x b6 x a2", "d8 - g8 - g3 - d3 - d7 - h7 - h5 - a5 - a7 - e7 - e1 - c1 - c6 - a6 - a1 x e8 x g6 x f3 x d6 x e7 x h6 x e5 x a6 x b7 x e6 x d1 x c3 x b6 x a2");
 
   Dagaz.Model.design = undefined;
   Dagaz.Model.board = undefined;
