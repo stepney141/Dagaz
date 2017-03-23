@@ -23,10 +23,10 @@ public class Board extends AbstractDoc implements IBoard {
 	private final static String DIR_TAG    = "dir";
 	private final static String ZONE_TAG   = "zone";
 	private final static String A_TAG      = "z2j-a";
-	private final static String X_TAG      = "x";
-	private final static String Y_TAG      = "y";
-	private final static String DX_TAG     = "dx";
-	private final static String DY_TAG     = "dy";
+	private final static String X_TAG      = "left";
+	private final static String Y_TAG      = "top";
+	private final static String DX_TAG     = "width";
+	private final static String DY_TAG     = "height";
 	
 	private final static String ALL_XP     = "*";
 	private final static String HEAD_XP    = "*[1]";
@@ -55,6 +55,9 @@ public class Board extends AbstractDoc implements IBoard {
 	
 	private IGame game;
 	private Grid proxy = null;
+	
+	private int width  = 0;
+	private int height = 0;
 	
 	public Board(IGame game) {
 		this.game = game;
@@ -175,6 +178,8 @@ public class Board extends AbstractDoc implements IBoard {
 	}
 
 	private void extractDirections(IDoc dest) throws Exception {
+		dest.open(DX_TAG);dest.add(Integer.toString(width));dest.close();
+		dest.open(DY_TAG);dest.add(Integer.toString(height));dest.close();
 		dest.open(DIR_TAG);
 		for (String dir: dirl) {
 			dest.open(NAME_TAG); dest.add(dir); dest.close();
@@ -191,8 +196,8 @@ public class Board extends AbstractDoc implements IBoard {
 			}
 			Rect s = poss.get(src);
 			if (s != null) {
-				dest.open(X_TAG); dest.add(Integer.toString(s.x)); dest.close();
-				dest.open(Y_TAG); dest.add(Integer.toString(s.y)); dest.close();
+				dest.open(X_TAG);  dest.add(Integer.toString(s.x));  dest.close();
+				dest.open(Y_TAG);  dest.add(Integer.toString(s.y));  dest.close();
 				dest.open(DX_TAG); dest.add(Integer.toString(s.dx)); dest.close();
 				dest.open(DY_TAG); dest.add(Integer.toString(s.dy)); dest.close();
 			}
@@ -298,6 +303,12 @@ public class Board extends AbstractDoc implements IBoard {
 		Rect r = new Rect(poss.size(), x, y, dx, dy);
 		poss.put(name, r);
 		posl.add(name);
+		if (x + dx > width) {
+			width = x + dx; 
+		}
+		if (y + dy > height) {
+			height = y + dy; 
+		}
 	}
 
 	public void delPos(String name) throws Exception {
