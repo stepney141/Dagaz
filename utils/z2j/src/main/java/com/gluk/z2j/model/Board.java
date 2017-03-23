@@ -23,6 +23,10 @@ public class Board extends AbstractDoc implements IBoard {
 	private final static String DIR_TAG    = "dir";
 	private final static String ZONE_TAG   = "zone";
 	private final static String A_TAG      = "z2j-a";
+	private final static String X_TAG      = "x";
+	private final static String Y_TAG      = "y";
+	private final static String DX_TAG     = "dx";
+	private final static String DY_TAG     = "dy";
 	
 	private final static String ALL_XP     = "*";
 	private final static String HEAD_XP    = "*[1]";
@@ -43,7 +47,7 @@ public class Board extends AbstractDoc implements IBoard {
 	private List<String> dirl  = new ArrayList<String>();
 	private List<String> zonel = new ArrayList<String>();
 	
-	private Map<String, Integer> poss = new HashMap<String, Integer>();
+	private Map<String, Rect> poss = new HashMap<String, Rect>();
 	private Map<String, Integer> dirs = new HashMap<String, Integer>();
 	private Map<String, Map<String, String>> links = new HashMap<String, Map<String, String>>();
 	private Map<String, Map<String, String>> syms = new HashMap<String, Map<String, String>>();
@@ -70,11 +74,11 @@ public class Board extends AbstractDoc implements IBoard {
 	}
 
 	public int getPosition(String pos) {
-		Integer r = poss.get(pos);
+		Rect r = poss.get(pos);
 		if (r == null) {
 			return -1;
 		}
-		return r;
+		return r.offset;
 	}
 
 	public int getDirection(String dir) {
@@ -133,7 +137,10 @@ public class Board extends AbstractDoc implements IBoard {
 							if (!poss.containsKey(pos)) {
 								throw new Exception("Internal error");
 							}
-							dest.open(POS_TAG); dest.add(poss.get(pos).toString()); dest.close();
+							Rect p = poss.get(pos);
+							if (p != null) {
+								dest.open(POS_TAG); dest.add(Integer.toString(p.offset)); dest.close();
+							}
 						}
 					}
 					dest.close();
@@ -182,7 +189,13 @@ public class Board extends AbstractDoc implements IBoard {
 			if (!poss.containsKey(src)) {
 				throw new Exception("Internal error");
 			}
-			int s = poss.get(src);
+			Rect s = poss.get(src);
+			if (s != null) {
+				dest.open(X_TAG); dest.add(Integer.toString(s.x)); dest.close();
+				dest.open(Y_TAG); dest.add(Integer.toString(s.y)); dest.close();
+				dest.open(DX_TAG); dest.add(Integer.toString(s.dx)); dest.close();
+				dest.open(DY_TAG); dest.add(Integer.toString(s.dy)); dest.close();
+			}
 			for (String dir: dirl) {
 				dest.open(DIR_TAG);
 				Map<String, String> l = links.get(src);
@@ -192,7 +205,11 @@ public class Board extends AbstractDoc implements IBoard {
 						if (!poss.containsKey(dst)) {
 							throw new Exception("Internal error");
 						}
-						int delta = poss.get(dst) - s;
+						int delta = 0;
+						Rect d = poss.get(dst);
+						if ((s != null) && (d != null)) {
+							delta = d.offset - s.offset;
+						}
 						dest.add(Integer.toString(delta));
 					} else {
 						dest.add("0");
@@ -274,12 +291,12 @@ public class Board extends AbstractDoc implements IBoard {
 		dest.close();
 	}	
 
-	public void addPos(String name) throws Exception {
+	public void addPos(String name, int x, int y, int dx, int dy) throws Exception {
 		if (poss.containsKey(name)) {
 			throw new Exception("Position [" + name + "] already exists");
 		}
-		Integer n = poss.size();
-		poss.put(name, n);
+		Rect r = new Rect(poss.size(), x, y, dx, dy);
+		poss.put(name, r);
 		posl.add(name);
 	}
 
@@ -338,11 +355,29 @@ public class Board extends AbstractDoc implements IBoard {
 		NodeIterator nl = XPathAPI.selectNodeIterator(doc, POS_XP);
 		Node n;
 		while ((n = nl.nextNode())!= null) {
-			addPos(n.getLocalName());
+			int x = 0, y = 0, dx = 0, dy = 0;
+			NodeIterator kl = XPathAPI.selectNodeIterator(n, A_TAG);
+			Node k = kl.nextNode();
+			if (k != null) {
+				x = Integer.parseInt(n.getTextContent());
+				k = kl.nextNode();
+			}
+			if (k != null) {
+				y = Integer.parseInt(n.getTextContent());
+				k = kl.nextNode();
+			}
+			if (k != null) {
+				dx = Integer.parseInt(n.getTextContent()) - x;
+				k = kl.nextNode();
+			}
+			if (k != null) {
+				dy = Integer.parseInt(n.getTextContent()) - y;
+				addPos(n.getLocalName(), x, y, dx, dy);
+			}
 		}
 		nl = XPathAPI.selectNodeIterator(doc, DUMMY_XP);
 		while ((n = nl.nextNode())!= null) {
-			addPos(n.getLocalName());
+			addPos(n.getLocalName(), 0, 0, 0, 0);
 		}
 		nl = XPathAPI.selectNodeIterator(doc, KILL_XP);
 		while ((n = nl.nextNode())!= null) {

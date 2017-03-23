@@ -44,12 +44,12 @@
 
 (define board-def
   (board
-     (image "images/Checkers/Shaag/checkbd2.bmp")
+     (image "images/board.bmp")
      (grid
-         (start-rectangle 6 6 55 55)
+         (start-rectangle 2 2 70 70)
          (dimensions
-             ("a/b/c/d/e/f/g/h" (50 0)) ; files
-             ("8/7/6/5/4/3/2/1" (0 50)) ; ranks
+           ("a/b/c/d/e/f/g/h" (68 0)) ; files
+           ("8/7/6/5/4/3/2/1" (0 68)) ; ranks
          )
          (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0))
      )
@@ -77,8 +77,8 @@
 
   (piece
      (name Man)
-     (image White "images/Checkers/Shaag/chkrRM.bmp"
-            Black "images/Checkers/Shaag/chkrBM.bmp")
+     (image White "images/ManWhite.bmp"
+            Black "images/ManBlack.bmp")
      (moves
          (move-type jumptype)
          (checker-jump n notype) (checker-jump w notype) (checker-jump e notype)
@@ -91,8 +91,8 @@
   )
   (piece
      (name King)
-     (image White "images/Checkers/Shaag/chkrRK.bmp"
-            Black "images/Checkers/Shaag/chkrBK.bmp")
+     (image White "images/KingWhite.bmp"
+            Black "images/KingBlack.bmp")
      (moves
          (move-type jumptype)
          (king-jump n) (king-jump w) (king-jump e) (king-jump s)

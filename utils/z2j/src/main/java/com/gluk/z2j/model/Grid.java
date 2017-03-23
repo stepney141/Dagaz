@@ -15,14 +15,23 @@ import com.gluk.z2j.api.model.IGrid;
 
 public class Grid extends AbstractDoc implements IGrid {
 	
-	private final static String DIM_XP = "/grid/dimensions/z2j-l/z2j-a";
+	private final static String RSZ_XP = "/grid/start-rectangle/z2j-a";
+	private final static String DIM_XP = "/grid/dimensions/z2j-l";
 	private final static String DIR_XP = "/grid/directions/*";
+	private final static String OFS_XP = "z2j-l/z2j-a";
 	private final static String ALL_XP = "z2j-a";
 
 	private List<List<String>> dims = new ArrayList<List<String>>();
+	private List<Integer> dimx = new ArrayList<Integer>();
+	private List<Integer> dimy = new ArrayList<Integer>();
 	private Map<String, List<Integer>> dirs = new HashMap<String, List<Integer>>();
 	
 	private IBoard board;
+	
+	private int startX  = 0;
+	private int startY  = 0;
+	private int dx = 0;
+	private int dy = 0;
 	
 	public Grid(IBoard board) {
 		this.board = board;
@@ -49,7 +58,7 @@ public class Grid extends AbstractDoc implements IGrid {
 		}
 	}
 
-	public void addDimension(String dim) throws Exception {
+	public void addDimension(String dim, Integer x, Integer y) throws Exception {
 		StringBuffer sb = new StringBuffer();
 		List<String> r = new ArrayList<String>();
 		int start = 0;
@@ -141,6 +150,8 @@ public class Grid extends AbstractDoc implements IGrid {
 			isNumeric = false;
 		}
 		dims.add(r);
+		dimx.add(x);
+		dimy.add(y);
 	}
 
 	public void addDirection(String name, List<Integer> deltas) throws Exception {
@@ -150,26 +161,53 @@ public class Grid extends AbstractDoc implements IGrid {
 		dirs.put(name, deltas);
 	}
 	
-	private void extractPositions(int ix, Stack<String> stack) throws Exception {
+	private void extractPositions(int ix, Stack<String> stack, Stack<Integer> xStack, Stack<Integer> yStack) throws Exception {
 		int sz = stack.size();
 		if (ix < 0) {
 			StringBuffer sb = new StringBuffer();
 			for (int i = stack.size() - 1; i >= 0; i--) {
 				sb.append(stack.get(i));
 			}
-			board.addPos(sb.toString());
+			int x = startX;
+			for (int i = 0; i < xStack.size(); i++) {
+				x += xStack.get(i);
+			}
+			int y = startY;
+			for (int i = 0; i < yStack.size(); i++) {
+				y += yStack.get(i);
+			}
+			board.addPos(sb.toString(), x, y, dx, dy);
 			return;
 		}
 		List<String> d = dims.get(ix);
 		if (d.isEmpty()) {
 			throw new Exception("Dimension [" + Integer.toString(ix) + "] is empty");
 		}
+		Integer deltaX = dimx.get(ix);
+		if (deltaX == null) {
+			deltaX = 0;
+		}
+		Integer deltaY = dimy.get(ix);
+		if (deltaY == null) {
+			deltaY = 0;
+		}
+		int x = 0, y = 0;
 		for (String s: d) {
 			while (stack.size() > sz) {
 				stack.pop();
 			}
 			stack.add(s);
-			extractPositions(ix - 1, stack);
+			while (xStack.size() > sz) {
+				xStack.pop();
+			}
+			xStack.add(x);
+			while (yStack.size() > sz) {
+				yStack.pop();
+			}
+			yStack.add(y);
+			extractPositions(ix - 1, stack, xStack, yStack);
+			x += deltaX;
+			y += deltaY;
 		}
 	}
 	
@@ -199,11 +237,45 @@ public class Grid extends AbstractDoc implements IGrid {
 		}
 	}
 	
+	private void getRect() throws Exception {
+		NodeIterator nl = XPathAPI.selectNodeIterator(doc, RSZ_XP);
+		Node n = nl.nextNode();
+		if (n != null) {
+			startX = Integer.parseInt(n.getTextContent());
+			n = nl.nextNode();
+		}
+		if (n != null) {
+			startY = Integer.parseInt(n.getTextContent());
+			n = nl.nextNode();
+		}
+		if (n != null) {
+			dx = Integer.parseInt(n.getTextContent()) - startX;
+			n = nl.nextNode();
+		}
+		if (n != null) {
+			dy = Integer.parseInt(n.getTextContent()) - startY;
+		}
+	}
+	
 	private void getDims() throws Exception {
 		NodeIterator nl = XPathAPI.selectNodeIterator(doc, DIM_XP);
 		Node n;
 		while ((n = nl.nextNode())!= null) {
-			addDimension(n.getTextContent());
+			NodeIterator kl = XPathAPI.selectNodeIterator(n, ALL_XP);
+			Node k = kl.nextNode();
+			if (k != null) {
+				int x = 0, y = 0;
+				kl = XPathAPI.selectNodeIterator(n, OFS_XP);
+				k = kl.nextNode();
+				if (k != null) {
+					x = Integer.parseInt(k.getTextContent());
+					k = kl.nextNode();
+				}
+				if (k != null) {
+					y = Integer.parseInt(k.getTextContent());
+				}
+				addDimension(k.getTextContent(), x, y);
+			}
 		}
 	}
 	
@@ -224,9 +296,10 @@ public class Grid extends AbstractDoc implements IGrid {
 	}
 
 	public void extract() throws Exception {
+		getRect();
 		getDims();
 		getDirs();
-		extractPositions(dims.size() - 1, new Stack<String>());
+		extractPositions(dims.size() - 1, new Stack<String>(), new Stack<Integer>(), new Stack<Integer>());
 		for (String dir: dirs.keySet()) {
 			List<Integer> deltas = dirs.get(dir);
 			extractLinks(0, dir, deltas, new StringBuffer(), new StringBuffer());
