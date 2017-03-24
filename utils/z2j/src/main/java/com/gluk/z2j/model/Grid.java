@@ -255,6 +255,7 @@ public class Grid extends AbstractDoc implements IGrid {
 		if (n != null) {
 			dy = Integer.parseInt(n.getTextContent()) - startY;
 		}
+		board.setMargins(startX, startY);
 	}
 	
 	private void getDims() throws Exception {
@@ -265,14 +266,14 @@ public class Grid extends AbstractDoc implements IGrid {
 			Node k = kl.nextNode();
 			if (k != null) {
 				int x = 0, y = 0;
-				kl = XPathAPI.selectNodeIterator(n, OFS_XP);
-				k = kl.nextNode();
-				if (k != null) {
-					x = Integer.parseInt(k.getTextContent());
-					k = kl.nextNode();
+				NodeIterator ml = XPathAPI.selectNodeIterator(n, OFS_XP);
+				Node m = ml.nextNode();
+				if (m != null) {
+					x = Integer.parseInt(m.getTextContent());
+					m = ml.nextNode();
 				}
-				if (k != null) {
-					y = Integer.parseInt(k.getTextContent());
+				if (m != null) {
+					y = Integer.parseInt(m.getTextContent());
 				}
 				addDimension(k.getTextContent(), x, y);
 			}

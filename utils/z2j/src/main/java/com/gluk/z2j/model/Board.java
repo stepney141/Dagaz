@@ -27,6 +27,7 @@ public class Board extends AbstractDoc implements IBoard {
 	private final static String Y_TAG      = "top";
 	private final static String DX_TAG     = "width";
 	private final static String DY_TAG     = "height";
+	private final static String IMG_TAG    = "image";
 	
 	private final static String ALL_XP     = "*";
 	private final static String HEAD_XP    = "*[1]";
@@ -42,6 +43,7 @@ public class Board extends AbstractDoc implements IBoard {
 	private final static String UNLINK_XP  = "/board/unlink";
 	private final static String SYMS_XP    = "/board/symmetry";
 	private final static String ZONE_XP    = "/board/zone";
+	private final static String IMG_XP     = "/board/image/z2j-a";
 
 	private List<String> posl  = new ArrayList<String>();
 	private List<String> dirl  = new ArrayList<String>();
@@ -54,13 +56,22 @@ public class Board extends AbstractDoc implements IBoard {
 	private Map<String, Map<String, List<String>>> zones = new HashMap<String, Map<String, List<String>>>();
 	
 	private IGame game;
-	private Grid proxy = null;
+	private Grid proxy  = null;
 	
-	private int width  = 0;
-	private int height = 0;
+	private int marginX = 0;
+	private int marginY = 0;
+	private int width   = 0;
+	private int height  = 0;
+	
+	private String img  = "";
 	
 	public Board(IGame game) {
 		this.game = game;
+	}
+	
+	public void setMargins(int x, int y) {
+		marginX = x;
+		marginY = y;
 	}
 	
 	private String getValue(Node doc, String xp) throws Exception {
@@ -177,9 +188,15 @@ public class Board extends AbstractDoc implements IBoard {
 		}
 	}
 
+	private void extractBoard(IDoc dest) throws Exception {
+		if (!img.isEmpty()) {
+			dest.open(IMG_TAG);dest.add(img);dest.close();
+		}
+		dest.open(DX_TAG);dest.add(Integer.toString(width + 2 * marginX));dest.close();
+		dest.open(DY_TAG);dest.add(Integer.toString(height + 2 * marginY));dest.close();
+	}
+	
 	private void extractDirections(IDoc dest) throws Exception {
-		dest.open(DX_TAG);dest.add(Integer.toString(width));dest.close();
-		dest.open(DY_TAG);dest.add(Integer.toString(height));dest.close();
 		dest.open(DIR_TAG);
 		for (String dir: dirl) {
 			dest.open(NAME_TAG); dest.add(dir); dest.close();
@@ -303,11 +320,11 @@ public class Board extends AbstractDoc implements IBoard {
 		Rect r = new Rect(poss.size(), x, y, dx, dy);
 		poss.put(name, r);
 		posl.add(name);
-		if (x + dx > width) {
-			width = x + dx; 
+		if (x + dx - marginX > width) {
+			width = x + dx - marginX; 
 		}
-		if (y + dy > height) {
-			height = y + dy; 
+		if (y + dy - marginY > height) {
+			height = y + dy - marginY; 
 		}
 	}
 
@@ -459,12 +476,22 @@ public class Board extends AbstractDoc implements IBoard {
 		}
 	}
 	
+	private void getImg() throws Exception {
+		NodeIterator nl = XPathAPI.selectNodeIterator(doc, IMG_XP);
+		Node n = nl.nextNode();
+		if (n != null) {
+			img = n.getTextContent();
+		}
+	}
+	
 	public void extract(IDoc dest) throws Exception {
 		getPositions();
 		getLinks();
 		getSyms();
 		getZones();
+		getImg();
 		dest.open(BOARD_TAG);
+		extractBoard(dest);
 		extractDirections(dest);
   		extractOpposite(dest);
 		extractSyms(dest);

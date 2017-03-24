@@ -116,7 +116,6 @@ MoveList.prototype.getPositions = function() {
    .compact()
    .flatten()
    .uniq()
-   .map(Dagaz.Model.posToString)
    .value();
 }
 
@@ -144,7 +143,6 @@ MoveList.prototype.getAttacking = function() {
    .filter(function(pos) {
        return this.board.getPiece(pos) !== null;
     }, this)
-   .map(Dagaz.Model.posToString)
    .value();
 }
 

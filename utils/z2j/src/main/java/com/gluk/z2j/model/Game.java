@@ -22,6 +22,9 @@ public class Game extends AbstractDoc implements IGame {
 	private final static String      POS_TAG = "pos";
 	private final static String  RESERVE_TAG = "reserve";
 	private final static String  PLAYERS_TAG = "players";
+	private final static String   PLAYER_TAG = "player";
+	private final static String      IMG_TAG = "image";
+	private final static String      RES_TAG = "res";
 	private final static String   OPTION_TAG = "option";
 	private final static String    PIECE_TAG = "piece";
 	private final static String     MODE_TAG = "mode";
@@ -48,6 +51,7 @@ public class Game extends AbstractDoc implements IGame {
 	private final static String  PIECES_XP   = "/game/piece";
 	private final static String   SETUP_XP   = "/game/board-setup/*";
 	private final static String  OPTION_XP   = "/game/option";
+	private final static String     IMG_XP   = "image/*";
 	private final static String   FIRST_XP   = "*[1]";
 	private final static String  SECOND_XP   = "*[2]";
 	
@@ -346,6 +350,26 @@ public class Game extends AbstractDoc implements IGame {
 			}
 		}
 	}
+	
+	private void extractImages(IDoc dest, Node doc) throws Exception {
+		String player = "";
+		NodeIterator nl = XPathAPI.selectNodeIterator(doc, IMG_XP);
+		Node n;
+		while ((n = nl.nextNode())!= null) {
+			String t = n.getLocalName();
+			if (t.equals(A_XP)) {
+				if (!player.isEmpty()) {
+					dest.open(IMG_TAG);
+					dest.open(PLAYER_TAG); dest.add(player); dest.close();
+					dest.open(RES_TAG); dest.add(n.getTextContent()); dest.close();
+					dest.close();
+					player = "";
+				}
+			} else {
+				player = t;
+			}
+		}
+	}
 
 	private void extractPieces(IDoc dest) throws Exception {
 		NodeIterator nl = XPathAPI.selectNodeIterator(doc, PIECES_XP);
@@ -356,6 +380,7 @@ public class Game extends AbstractDoc implements IGame {
 			extract(p, n);
 			p.close();
 			dest.open(PIECE_TAG);
+			extractImages(dest, n);
 			p.extract(dest);
 			List<Move> ml = moves.get(p.getIx());
 			if (ml != null) {

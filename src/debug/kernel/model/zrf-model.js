@@ -1145,6 +1145,13 @@ function ZrfBoard(game) {
   this.player   = 1;
 }
 
+ZrfBoard.prototype.setup = function(view) {
+  _.each(_.keys(this.pieces), function(pos) {
+     var piece = this.pieces[pos];
+     view.addPiece(piece.toString(), pos);
+  }, this);
+}
+
 ZrfBoard.prototype.copy = function() {
   var r = new ZrfBoard(this.game);
   r.parent = this;
@@ -1658,6 +1665,7 @@ ZrfMove.prototype.isAttacked = function(pos) {
 }
 
 ZrfMove.prototype.applyTo = function(obj, part) {
+  if (!part) part = 1;
   var r = false;
   var n = function (action) {
       var p = action[3];
@@ -1700,6 +1708,7 @@ ZrfMove.prototype.applyTo = function(obj, part) {
 }
 
 ZrfMove.prototype.movePiece = function(from, to, piece, part) {
+  if (!part) part = 1;
   if (piece === null) {
       this.actions.push([ [from], [to], null, part]);
   } else {
@@ -1708,10 +1717,12 @@ ZrfMove.prototype.movePiece = function(from, to, piece, part) {
 }
 
 ZrfMove.prototype.dropPiece = function(pos, piece, part) {
+  if (!part) part = 1;
   this.actions.push([null, [pos], [piece], part]);
 }
 
 ZrfMove.prototype.capturePiece = function(pos, part) {
+  if (!part) part = 1;
   if (Dagaz.Model.deferredStrike === true) {
       part = -part;
   }

@@ -11,4 +11,5 @@ public interface IBoard {
 	void addSym(String player, String from, String to) throws Exception;
 	void addZone(String name, String player, String pos) throws Exception;
 	void addZone(String name, String pos) throws Exception;
+	void setMargins(int x, int y);
 }
