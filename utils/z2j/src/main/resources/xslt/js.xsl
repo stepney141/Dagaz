@@ -72,16 +72,7 @@ Dagaz.View.configure = function(view) {
 <xsl:text> 
 </xsl:text><xsl:for-each select="board/pos">
     view.defPosition("<xsl:value-of select="name"/>", <xsl:value-of select="left"/>, <xsl:value-of select="top"/>, <xsl:value-of select="width"/>, <xsl:value-of select="height"/>);</xsl:for-each>
-<xsl:text> 
-
-</xsl:text><xsl:for-each select="/game/board-setup/*">
-   <xsl:variable name="player" select="name(.)"/>
-   <xsl:for-each select="*">
-       <xsl:variable name="piece" select="name(.)"/>
-       <xsl:for-each select="pos">    view.addPiece("<xsl:value-of select="$player"/><xsl:text> </xsl:text><xsl:value-of select="$piece"/>", <xsl:value-of select="text()"/>);
-</xsl:for-each>
-   </xsl:for-each>
-</xsl:for-each>}
+}
 </xsl:template>
 
 <xsl:template name="apply-options">

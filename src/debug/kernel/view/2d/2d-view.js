@@ -6,15 +6,18 @@ Dagaz.View.markType = {
 };
 
 var isConfigured = false;
+var isValid      = false;
 
 Dagaz.View.configure = function(view) {}
 
 function View2D() {
-  this.pos   = [];
-  this.res   = [];
-  this.piece = [];
-  this.board = [];
-  this.setup = [];
+  this.pos    = [];
+  this.res    = [];
+  this.piece  = [];
+  this.board  = [];
+  this.setup  = [];
+  this.target = [];
+  this.strike = [];
 }
 
 Dagaz.View.getView = function() {
@@ -81,7 +84,11 @@ View2D.prototype.addPiece = function(piece, pos) {
 }
 
 View2D.prototype.markPositions = function(type, positions) {
-
+  if (type === 0) {
+      this.target = positions;
+  } else {
+      this.strike = positions;
+  }
 }
 
 View2D.prototype.movePiece = function(from, to, piece) {
@@ -100,12 +107,36 @@ View2D.prototype.commit = function() {
 
 }
 
+var drawMarks = function(ctx, self, list, color) {
+   _.each(list, function(p) {
+        var pos = this.pos[p];
+        var x = pos.x; var y = pos.y;
+        if (pos.dx > 0) {
+            x += pos.dx / 2 | 0;
+        }
+        if (pos.dy > 0) {
+            y += pos.dy / 2 | 0;
+        }
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.arc(x, y, pos.dx / 6, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.stroke();
+   }, self);
+}
+
+View2D.prototype.invalidate = function() {
+   isValid = false;
+}
+
 View2D.prototype.draw = function(canvas) {
   if (!isConfigured) {
       Dagaz.View.configure(this);
+      var board = Dagaz.Model.getInitBoard();
+      board.setup(this);
       isConfigured = true;
   }
-  if (this.allResLoaded()) {
+  if (this.allResLoaded() && !isValid) {
       var ctx = canvas.getContext("2d");
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       _.each(this.board, function(b) {
@@ -115,14 +146,13 @@ View2D.prototype.draw = function(canvas) {
            var pos = this.pos[p.pos];
            var x = pos.x; var y = pos.y;
            var piece = this.piece[p.name];
-           if (pos.dx > piece.dx) {
-               x += (pos.dx - piece.dx) / 2 | 0;
-           }
-           if (pos.dy > piece.dy) {
-               y += (pos.dy - piece.dy) / 2 | 0;
-           }
+           x += (pos.dx - piece.dx) / 2 | 0;
+           y += (pos.dy - piece.dy) / 2 | 0;
            ctx.drawImage(piece.h, x, y);
       }, this);
+      drawMarks(ctx, this, this.target, "#00FF00");
+      drawMarks(ctx, this, this.strike, "#FF0000");
+      isValid = true;
   }
 }
 
