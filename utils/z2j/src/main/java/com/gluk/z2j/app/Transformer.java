@@ -19,7 +19,7 @@ public class Transformer extends AbstractDoc {
 	private String name;
 	private String template;
 	
-	public Transformer(String dir, String name, String template) {
+	public Transformer(String dir, String name, String template, String ext) {
 		this.template = template;
 		StringBuffer sb = new StringBuffer();
 		sb.append(dir);
@@ -30,7 +30,7 @@ public class Transformer extends AbstractDoc {
 		} else {
 			sb.append(name);
 		}
-		sb.append(".js");
+		sb.append(ext);
 		this.name = sb.toString();
 	}
 

@@ -361,7 +361,7 @@ public class Game extends AbstractDoc implements IGame {
 				if (!player.isEmpty()) {
 					dest.open(IMG_TAG);
 					dest.open(PLAYER_TAG); dest.add(player); dest.close();
-					dest.open(RES_TAG); dest.add(n.getTextContent()); dest.close();
+					dest.open(RES_TAG); dest.add(n.getTextContent().replace(".bmp", ".png")); dest.close();
 					dest.close();
 					player = "";
 				}

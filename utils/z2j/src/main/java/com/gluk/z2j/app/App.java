@@ -49,7 +49,11 @@ public class App {
 			game.extract(result);
 			game = new Game(name);
 			lib.extract(game);
-			Transformer script = new Transformer(dir, name, "js.xsl");
+			Transformer script = new Transformer(dir, name, "js.xsl", ".js");
+			game.extract(script);
+			game = new Game(name);
+			lib.extract(game);
+			script = new Transformer(dir, name, "htm.xsl", ".htm");
 			game.extract(script);
 		} catch (Exception e) {
 			LOGGER.error(e.toString(), e);

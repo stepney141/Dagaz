@@ -480,7 +480,7 @@ public class Board extends AbstractDoc implements IBoard {
 		NodeIterator nl = XPathAPI.selectNodeIterator(doc, IMG_XP);
 		Node n = nl.nextNode();
 		if (n != null) {
-			img = n.getTextContent();
+			img = n.getTextContent().replace(".bmp", ".png");
 		}
 	}
 	
