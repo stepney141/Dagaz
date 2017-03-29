@@ -5,19 +5,22 @@ Dagaz.View.markType = {
    ATTACKING: 1
 };
 
+var STEP_CNT     = 10;
+
 var isConfigured = false;
 var isValid      = false;
 
 Dagaz.View.configure = function(view) {}
 
 function View2D() {
-  this.pos    = [];
-  this.res    = [];
-  this.piece  = [];
-  this.board  = [];
-  this.setup  = [];
-  this.target = [];
-  this.strike = [];
+  this.pos     = [];
+  this.res     = [];
+  this.piece   = [];
+  this.board   = [];
+  this.setup   = [];
+  this.target  = [];
+  this.strike  = [];
+  this.changes = [];
 }
 
 Dagaz.View.getView = function() {
@@ -25,6 +28,27 @@ Dagaz.View.getView = function() {
       Dagaz.View.view = new View2D();
   }
   return Dagaz.View.view;
+}
+
+View2D.prototype.pointToPos = function(x, y) {
+  for (var i = 0; i < this.pos.length; i++) {
+       if ((x > this.pos[i].x) &&
+           (y > this.pos[i].y) &&
+           (x < this.pos[i].x + this.pos[i].dx) &&
+           (y < this.pos[i].y + this.pos[i].dy)) {
+           return i;
+       }
+  }
+  return null;
+}
+
+View2D.prototype.posToIx = function(pos) {
+  for (var i = 0; i < this.setup.length; i++) {
+       if (this.setup[i].pos === pos) {
+           return i;
+       }
+  }
+  return null;
 }
 
 View2D.prototype.defPosition = function(name, x, y, dx, dy) {
@@ -84,27 +108,64 @@ View2D.prototype.addPiece = function(piece, pos) {
 }
 
 View2D.prototype.markPositions = function(type, positions) {
-  if (type === 0) {
+  if (type === Dagaz.View.markType.TARGET) {
       this.target = positions;
   } else {
       this.strike = positions;
   }
+  this.invalidate();
 }
 
 View2D.prototype.movePiece = function(from, to, piece) {
-
+  this.setup = _.filter(this.setup, function(frame) {
+      return frame.pos !== to;
+  });
+  var ix = this.posToIx(from);
+  if (ix === null) return;
+  this.changes.push({
+      from:  from,
+      to:    to,
+      op:    ix,
+      np:    piece.toString(),
+      dx:    ((this.pos[to].x - this.pos[from].x) / STEP_CNT) | 0,
+      dy:    ((this.pos[to].y - this.pos[from].y) / STEP_CNT) | 0
+  });
 }
 
 View2D.prototype.dropPiece = function(pos, piece) {
-
+  this.setup = _.filter(this.setup, function(frame) {
+      return frame.pos !== to;
+  });
+  this.changes.push({
+      to:    to,
+      np:    piece.toString()
+  });
 }
 
 View2D.prototype.capturePiece = function(pos) {
-
+  var ix = this.posToIx(from);
+  if (ix === null) return;
+  this.changes.push({
+      from:  from,
+      op:    ix
+  });
 }
 
 View2D.prototype.commit = function() {
-
+   var steps = STEP_CNT;
+   var moves = _.chain(this.changes)
+    .filter(function(frame) {
+        return !_.isUndefined(frame.from) && !_.isUndefined(frame.to);
+     })
+    .size()
+    .value();
+   if (moves === 0) {
+        steps = 1;
+   }
+   _.each(this.changes, function(frame) {
+      frame.cnt = steps;
+   });
+   this.invalidate();
 }
 
 var drawMarks = function(ctx, self, list, color) {
@@ -127,6 +188,60 @@ var drawMarks = function(ctx, self, list, color) {
 
 View2D.prototype.invalidate = function() {
    isValid = false;
+}
+
+View2D.prototype.animate = function() {
+  _.chain(this.changes)
+   .filter(function(frame) {
+        return !_.isUndefined(frame.cnt);
+    })
+   .each(function(frame) {
+        if (!_.isUndefined(frame.op)) {
+            var piece = this.setup[frame.op];
+            if (!_.isUndefined(frame.dx)) {
+                piece.x += frame.dx;
+            }
+            if (!_.isUndefined(frame.dy)) {
+                piece.y += frame.dy;
+            }
+        }
+        frame.cnt--;
+    });
+  _.chain(this.changes)
+   .filter(function(frame) {
+        return frame.cnt <= 0;
+    })
+   .each(function(frame) {
+        if (_.isUndefined(frame.to)) {
+            this.setup = _.filter(this.setup, function(frame) {
+               return frame.pos !== to;
+            });
+        } else {
+            if (!_.isUndefined(frame.op)) {
+                var piece = this.setup[frame.op];
+                if (frame.np) {
+                    piece.name = frame.np;
+                }
+                piece.pos = frame.to;
+                piece.x = this.pos[frame.to].x;
+                piece.y = this.pos[frame.to].y;
+            } else {
+                this.setup.push({
+                    pos:  frame.to,
+                    name: frame.np,
+                    x:    this.pos[frame.to].x,
+                    y:    this.pos[frame.to].y
+                });
+            }
+        }
+        frame.done = true;
+    }, this);
+    this.changes = _.filter(this.changes, function(frame) {
+        return _.isUndefined(frame.done);
+    });
+    if (this.changes.length === 0) {
+        isValid = true;
+    }
 }
 
 View2D.prototype.draw = function(canvas) {
@@ -152,7 +267,7 @@ View2D.prototype.draw = function(canvas) {
       }, this);
       drawMarks(ctx, this, this.target, "#00FF00");
       drawMarks(ctx, this, this.strike, "#FF0000");
-      isValid = true;
+      this.animate();
   }
 }
 

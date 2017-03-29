@@ -70,12 +70,13 @@
 </xsl:text><script src="../../kernel/dagaz.js"></script><xsl:text>
 </xsl:text><script src="../../kernel/model/zrf-model.js"></script><xsl:text>
 </xsl:text>
-<xsl:for-each select="option[position() &gt; 2]">
+<xsl:for-each select="option[position() &gt; 2 and not (name = preceding-sibling::option/name)]">
   <xsl:element name = "script">
     <xsl:attribute name = "src">../../kernel/model/<xsl:value-of select="name"/>.js</xsl:attribute>
-  </xsl:element>
-</xsl:for-each><xsl:text>
-</xsl:text><script src="../../kernel/view/2d/2d-view.js"></script><xsl:text>
+  </xsl:element><xsl:text>
+</xsl:text>
+</xsl:for-each>
+<script src="../../kernel/view/2d/2d-view.js"></script><xsl:text>
 </xsl:text>
 <xsl:element name = "script">
   <xsl:attribute name = "src"><xsl:value-of select="name"/>.js</xsl:attribute>

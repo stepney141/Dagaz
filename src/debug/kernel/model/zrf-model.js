@@ -1403,14 +1403,11 @@ Dagaz.Model.noReserve = function(board, piece) {
   return false;
 }
 
-ZrfBoard.prototype.movePiece = function(from, to, pieces) {
+ZrfBoard.prototype.movePiece = function(from, to, piece) {
   this.lastf = from;
   this.lastt = to;
-  if (pieces === null) {
-      pieces = [ this.getPiece(from) ];
-  }
   this.setPiece(from, null);
-  this.setPiece(to, pieces[0]);
+  this.setPiece(to, (piece === null) ? this.getPiece(from) : piece);
 }
 
 ZrfBoard.prototype.dropPiece = function(pos, piece) {
@@ -1680,7 +1677,7 @@ ZrfMove.prototype.applyTo = function(obj, part) {
       return (action[0] !== null) && (action[1] !== null);
     })
    .each(function (action) {
-      obj.movePiece(action[0][0], action[1][0], action[2]);
+      obj.movePiece(action[0][0], action[1][0], (action[2] === null) ? null : action[2][0]);
       r = true;
     }, this);
   _.chain(this.actions)

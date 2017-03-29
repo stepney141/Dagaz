@@ -12,16 +12,16 @@ Dagaz.Controller.createApp = function(canvas) {
   return Dagaz.Controller.app;
 }
 
-App.prototype.tick = function() {
-  this.view.draw(this.canvas);
-}
+Dagaz.Model.InitGame();
+var app = Dagaz.Controller.createApp(Canvas);
 
 App.prototype.exec = function() {
-  this.tick();
-  _.delay(this.exec, 100);
+  this.view.draw(this.canvas);
+  _.delay(function() {
+     app.exec();
+  }, 100);
 }
 
-Dagaz.Model.InitGame();
-Dagaz.Controller.createApp(Canvas).exec();
+app.exec();
 
 })();
