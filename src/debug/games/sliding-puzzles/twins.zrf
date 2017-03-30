@@ -1,0 +1,61 @@
+(version "3.0")
+
+(define step (
+  $1 (verify empty?)
+  add
+))
+
+(define T
+  (piece
+     (name  $1$2)
+     (help  " ")
+     (image You "images/$1.bmp")
+     (attribute value $2)
+     (moves
+        (step n) (step s) (step w) (step e)
+     )
+  )
+)
+
+(game
+  (title "5 Twins")
+  (option "sliding-puzzle" true)
+
+  (players You)
+  (turn-order You)
+
+  (board
+     (grid
+         (start-rectangle 0 0 100 100)
+         (dimensions
+           ("a/b/c/d/e" (100 0)) ; files
+           ("3/2/1" (0 100)) ; ranks
+         )
+         (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0))
+     )
+  )
+
+  (T R 1)
+  (T RBC 2) (T RTP 2)
+  (T RRC 3) (T RLC 3)
+  (T RBP 4) (T RTC 4)
+  (T RP 5)
+  (T RRP 6) (T RLP 6)
+  (T RC 7)
+  (T R 8)
+  (T R 9)
+
+  (board-setup
+     (You 
+         (R1 b3)
+         (RBC2 c3) (RTP2 c2)
+         (RRC3 d3) (RLC3 e3)
+         (RBP4 a2) (RTC4 a1)
+         (RP5 b2)
+         (RRP6 d2) (RLP6 e2)
+         (RC7 b1)
+         (R8 c1)
+         (R9 d1)
+     )
+  )
+)

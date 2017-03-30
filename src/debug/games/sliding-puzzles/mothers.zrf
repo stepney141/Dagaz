@@ -1,0 +1,61 @@
+(version "3.0")
+
+(define step (
+  $1 (verify empty?)
+  add
+))
+
+(define T
+  (piece
+     (name  $1$2)
+     (help  " ")
+     (image You "images/$1.bmp")
+     (attribute value $2)
+     (moves
+        (step n) (step s) (step w) (step e)
+     )
+  )
+)
+
+(game
+  (title "Mother's puzzle")
+  (option "sliding-puzzle" true)
+
+  (players You)
+  (turn-order You)
+
+  (board
+     (grid
+         (start-rectangle 0 0 100 100)
+         (dimensions
+           ("a/b/c/d/e" (100 0)) ; files
+           ("5/4/3/2/1" (0 100)) ; ranks
+         )
+         (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0))
+     )
+  )
+
+  (T BR 1) (T BLR 1) (T BL 1) 
+  (T RR 2) (T RLB 2) (T RT 2)
+  (T BR 3) (T BL 3) 
+  (T BR 4) (T BL 4) 
+  (T RB 5) (T RRT 5) (T RL 5)
+  (T BR 6) (T BL 6) 
+  (T BR 7) (T BL 7) 
+  (T BR 8) (T BLR 8) (T BL 8) 
+  (T B 9) 
+
+  (board-setup
+     (You 
+         (BR1 a5) (BLR1 b5) (BL1 c5)
+         (RR2 d5) (RLB2 e5) (RT2 e4)
+         (BR3 a4) (BL3 b4) 
+         (BR4 c4) (BL4 d4) 
+         (RB5 a3) (RRT5 a2) (RL5 b2)
+         (BR6 b3) (BL6 c3) 
+         (BR7 d3) (BL7 e3) 
+         (BR8 c2) (BLR8 d2) (BL8 e2)
+         (B9 c1)
+     )
+  )
+)

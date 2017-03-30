@@ -1,0 +1,63 @@
+(version "3.0")
+
+(define step (
+  $1 (verify empty?)
+  add
+))
+
+(define T
+  (piece
+     (name  $1$2)
+     (help  " ")
+     (image You "images/$1.bmp")
+     (attribute value $2)
+     (moves
+        (step n) (step s) (step w) (step e)
+     )
+  )
+)
+
+(game
+  (title "Red Donkey")
+  (option "sliding-puzzle" true)
+
+  (players You)
+  (turn-order You)
+
+  (board
+     (grid
+         (start-rectangle 0 0 100 100)
+         (dimensions
+           ("a/b/c/d" (100 0)) ; files
+           ("5/4/3/2/1" (0 100)) ; ranks
+         )
+         (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0))
+     )
+  )
+
+  (T BB 1) (T BT 1) 
+  (T RRBF 2) (T RLBF 2) (T RRTF 2) (T RLTF 2)
+  (T BB 3) (T BT 3) 
+  (T BB 4) (T BT 4) 
+  (T BR 5) (T BL 5) 
+  (T BB 6) (T BT 6) 
+  (T B 7)
+  (T B 8)
+  (T B 9)
+  (T B 10)
+
+  (board-setup
+     (You 
+         (BB1 a5) (BT1 a4) 
+         (RRBF2 b5) (RLBF2 c5) (RRTF2 b4) (RLTF2 c4)
+         (BB3 d5) (BT3 d4) 
+         (BB4 a3) (BT4 a2) 
+         (BR5 b3) (BL5 c3) 
+         (BB6 d3) (BT6 d2) 
+         (B7 b2)
+         (B8 c2)
+         (B9 a1)
+         (B10 d1)
+     )
+  )
+)

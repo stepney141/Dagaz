@@ -1,0 +1,61 @@
+(version "3.0")
+
+(define step (
+  $1 (verify empty?)
+  add
+))
+
+(define T
+  (piece
+     (name  $1$2)
+     (help  " ")
+     (image You "images/$1.bmp")
+     (attribute value $2)
+     (moves
+        (step n) (step s) (step w) (step e)
+     )
+  )
+)
+
+(game
+  (title "Daddy's puzzle")
+  (option "sliding-puzzle" true)
+
+  (players You)
+  (turn-order You)
+
+  (board
+     (grid
+         (start-rectangle 0 0 100 100)
+         (dimensions
+           ("a/b/c/d" (100 0)) ; files
+           ("5/4/3/2/1" (0 100)) ; ranks
+         )
+         (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0))
+     )
+  )
+
+  (T RRBF 1) (T RLBF 1) (T RRTF 1) (T RLTF 1)
+  (T BR 2) (T BL 2) 
+  (T BR 3) (T BL 3) 
+  (T B 4)
+  (T B 5)
+  (T BB 6) (T BT 6) 
+  (T BB 7) (T BT 7) 
+  (T BR 8) (T BL 8) 
+  (T BR 9) (T BL 9) 
+
+  (board-setup
+     (You 
+         (RRBF1 a5) (RLBF1 b5) (RRTF1 a4) (RLTF1 b4)
+         (BR2 c5) (BL2 d5) 
+         (BR3 c4) (BL3 d4) 
+         (B4 a3)
+         (B5 b3)
+         (BB6 a2) (BT6 a1) 
+         (BB7 b2) (BT7 b1) 
+         (BR8 c2) (BL8 d2) 
+         (BR9 c1) (BL9 d1) 
+     )
+  )
+)
