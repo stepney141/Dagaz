@@ -70,11 +70,31 @@
 </xsl:text><script src="../../kernel/dagaz.js"></script><xsl:text>
 </xsl:text><script src="../../kernel/model/zrf-model.js"></script><xsl:text>
 </xsl:text>
-<xsl:for-each select="option[position() &gt; 2 and not (name = preceding-sibling::option/name)]">
-  <xsl:element name = "script">
-    <xsl:attribute name = "src">../../kernel/model/<xsl:value-of select="name"/>.js</xsl:attribute>
-  </xsl:element><xsl:text>
+<xsl:for-each select="option[not (name = preceding-sibling::option/name)]">
+  <xsl:choose>
+    <xsl:when test="name = 'z2j'"/>
+    <xsl:when test="name = 'zrf'"/>
+    <xsl:when test="name = 'pass-turn'"/>
+    <xsl:when test="name = 'pass-partial'"/>
+    <xsl:when test="name = 'moves-limit'"/>
+    <xsl:when test="name = 'discard-cascades'"/>
+    <xsl:when test="name = 'animate-captures'"/>
+    <xsl:when test="name = 'animate-drops'"/>
+    <xsl:when test="name = 'highlight-goals'"/>
+    <xsl:when test="name = 'prevent-flipping'"/>
+    <xsl:when test="name = 'progressive-levels'"/>
+    <xsl:when test="name = 'selection-screen'"/>
+    <xsl:when test="name = 'show-moves-list'"/>
+    <xsl:when test="name = 'silent-?-moves'"/>
+    <xsl:when test="name = 'smart-moves'"/>
+    <xsl:when test="name = 'recycle-captures'"/>
+    <xsl:otherwise>
+      <xsl:element name = "script">
+        <xsl:attribute name = "src">../../kernel/model/<xsl:value-of select="name"/>.js</xsl:attribute>
+      </xsl:element><xsl:text>
 </xsl:text>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:for-each>
 <script src="../../kernel/view/2d/2d-view.js"></script><xsl:text>
 </xsl:text>

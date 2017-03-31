@@ -30,16 +30,29 @@ Dagaz.View.getView = function() {
   return Dagaz.View.view;
 }
 
+var inRect = function(pos) {
+  return (x > this.pos[pos].x) &&
+         (y > this.pos[pos].y) &&
+         (x < this.pos[pos].x + this.pos[pos].dx) &&
+         (y < this.pos[pos].y + this.pos[pos].dy);
+}
+
 View2D.prototype.pointToPos = function(x, y) {
-  for (var i = 0; i < this.pos.length; i++) {
-       if ((x > this.pos[i].x) &&
-           (y > this.pos[i].y) &&
-           (x < this.pos[i].x + this.pos[i].dx) &&
-           (y < this.pos[i].y + this.pos[i].dy)) {
-           return i;
-       }
+  var list = _.chain(this.setup)
+   .map(function(piece) {
+       return piece.pos;
+    }, this)
+   .filter(inRect, this)
+   .sortBy(function(pos) {
+       return -pos;
+    })
+   .value();
+  if (list.length !== 0) {
+      return [ list[0] ];
   }
-  return null;
+  return _.chain(_.range(this.pos.length))
+   .filter(inRect, this)
+   .value();
 }
 
 View2D.prototype.posToIx = function(pos) {
@@ -244,6 +257,14 @@ View2D.prototype.animate = function() {
     }
 }
 
+View2D.prototype.blink = function() {
+    if (this.target.length === 0) {
+        this.target = [0];
+    } else {
+        this.target = [];
+    }
+}
+
 View2D.prototype.draw = function(canvas) {
   if (!isConfigured) {
       Dagaz.View.configure(this);
@@ -257,15 +278,35 @@ View2D.prototype.draw = function(canvas) {
       _.each(this.board, function(b) {
            ctx.drawImage(b.h, b.x, b.y);
       });
-      _.each(this.setup, function(p) {
+      _.chain(_.range(this.setup.length))
+       .sortBy(function(ix) {
+           var order = this.setup[ix].pos;
+           var list = _.chain(this.changes)
+            .filter(function(change) {
+                return !_.isUndefined(change.to);
+             })
+            .map(function(change) {
+                return change.op;
+             })
+            .compact()
+            .value();
+           if (_.indexOf(list, ix) >= 0) {
+               order += 1000;
+           }
+           return order;
+        }, this)
+       .map(function(ix) {
+           return this.setup[ix];
+        }, this)
+       .each(function(p) {
            var pos = this.pos[p.pos];
            var x = pos.x; var y = pos.y;
            var piece = this.piece[p.name];
            x += (pos.dx - piece.dx) / 2 | 0;
            y += (pos.dy - piece.dy) / 2 | 0;
            ctx.drawImage(piece.h, x, y);
-      }, this);
-      drawMarks(ctx, this, this.target, "#00FF00");
+        }, this);
+      drawMarks(ctx, this, this.target, "#00AA00");
       drawMarks(ctx, this, this.strike, "#FF0000");
       this.animate();
   }

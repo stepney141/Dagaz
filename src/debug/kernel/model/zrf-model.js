@@ -11,7 +11,6 @@ Dagaz.Model.sharedPieces    = false;
 Dagaz.Model.recycleCaptures = false;
 Dagaz.Model.smartFrom       = false;
 Dagaz.Model.smartTo         = false;
-Dagaz.Model.smartShow       = false;
 
 Dagaz.Model.checkVersion = function(design, name, value) {  
   if (name == "z2j") {
@@ -31,6 +30,8 @@ Dagaz.Model.checkVersion = function(design, name, value) {
          (name != "progressive-levels") &&
          (name != "selection-screen")   &&
          (name != "show-moves-list")    &&
+         (name != "smart-moves")        &&
+         (name != "recycle-captures")   &&
          (name != "silent-?-moves")) {
          design.failed = true;
      }
@@ -40,9 +41,6 @@ Dagaz.Model.checkVersion = function(design, name, value) {
          }
          if ((value === "to") || (value === "true")) {
             Dagaz.Model.smartTo = true;
-         }
-         if (value === "show") {
-            Dagaz.Model.smartShow = true;
          }
      }
      if ((name == "recycle-captures") && (value === "true")) {

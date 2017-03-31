@@ -1,0 +1,42 @@
+(version "3.0")
+
+(define drop-stone (
+  (verify empty?) add
+))
+
+(game
+  (title "Go")
+
+  (option "pass turn"    true)
+  (option "go-extension" true)
+  (option "ko" true)
+
+  (players Black White)
+  (turn-order Black White)
+
+  (board
+      (image "images/Go/board.bmp")
+      (grid
+          (start-rectangle 0 0 39 37)
+          (dimensions
+            ("a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s" (39 0)) ; files
+            ("a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s" (0 37)) ; ranks
+          )
+          (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0))
+      )
+  )
+
+  (piece
+     (name Stone)
+     (drops (drop-stone))
+  )  
+)
+
+(variant
+  (title "Three-color Go")
+  
+  (option "ko" situation)
+
+  (players Black White Red)
+  (turn-order Black White Red)
+)

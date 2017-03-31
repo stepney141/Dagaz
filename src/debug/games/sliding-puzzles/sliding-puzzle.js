@@ -8,6 +8,12 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+var isEmpty = function(board, pos, value) {
+  var piece = board.getPiece(pos);
+  if (piece === null) return true;
+  return (piece.getValue(0) === value);
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
@@ -28,20 +34,24 @@ Dagaz.Model.CheckInvariants = function(board) {
        var delta  = action[1][0] - pos;
        var piece  = board.getPiece(pos);
        var value  = piece.getValue(0);
+       if (isEmpty(board, action[1][0], value)) {
        _.chain(_.range(design.positions.length))
         .filter(function(pos) {
             if (board.getPiece(pos) === null) return false;
             return board.getPiece(pos).getValue(0) === value;
          })
         .each(function(pos) {
+            var piece = ;
             if ((pos + delta < 0) || 
                 (pos + delta >= design.positions.length) ||
-                (board.getPiece(pos + delta) !== null)) {
+                !isEmpty(board, pos + delta, value)) {
                 move.failed = true;
             } else {
                 move.movePiece(pos, pos + delta, null, 1);
-            }
          });
+       } else {
+            move.failed = true;
+       }
     });
   CheckInvariants(board);
 }

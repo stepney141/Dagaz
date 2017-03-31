@@ -67,6 +67,7 @@
   (title "Turkish Dama")
   (description "Turkish Dama example game.")
 
+  (option "smart-moves"      true)
   (option "maximal captures" true)
 
   (players White Black)

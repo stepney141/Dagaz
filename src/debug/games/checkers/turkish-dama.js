@@ -22,6 +22,7 @@ ZRF = {
 Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "1");
     design.checkVersion("zrf", "2.0");
+    design.checkVersion("smart-moves", "true");
     design.checkVersion("maximal-captures", "true");
 
     design.addDirection("w");

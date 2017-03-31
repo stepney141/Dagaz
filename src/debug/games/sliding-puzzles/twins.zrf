@@ -1,8 +1,7 @@
 (version "3.0")
 
 (define step (
-  $1 (verify empty?)
-  add
+  $1 add
 ))
 
 (define T
@@ -19,6 +18,7 @@
 
 (game
   (title "5 Twins")
+  (option "smart-moves"    from)
   (option "sliding-puzzle" true)
 
   (players You)
