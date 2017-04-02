@@ -33,15 +33,15 @@ Dagaz.View.getView = function() {
 Dagaz.View.inRect = function(view, pos, x, y) {
   return (x > view.pos[pos].x) &&
          (y > view.pos[pos].y) &&
-         (x < view.pos[pos].x + this.pos[pos].dx) &&
-         (y < view.pos[pos].y + this.pos[pos].dy);
+         (x < view.pos[pos].x + view.pos[pos].dx) &&
+         (y < view.pos[pos].y + view.pos[pos].dy);
 }
 
 Dagaz.View.pointToPos = function(view, x, y) {
   var list = _.chain(view.setup)
    .map(function(piece) {
        return piece.pos;
-    }, view)
+    })
    .filter(function(pos) {
       return Dagaz.View.inRect(view, pos, x, y);
     })
@@ -50,7 +50,7 @@ Dagaz.View.pointToPos = function(view, x, y) {
     })
    .value();
   if (list.length !== 0) {
-      return [ list[0] ];
+      return list.slice(0, 1);
   }
   return _.chain(_.range(view.pos.length))
    .filter(function(pos) {
@@ -63,9 +63,9 @@ View2D.prototype.pointToPos = function(x, y) {
   return Dagaz.View.pointToPos(this, x, y);
 }
 
-View2D.prototype.posToIx = function(pos) {
-  for (var i = 0; i < this.setup.length; i++) {
-       if (this.setup[i].pos === pos) {
+var posToIx = function(view, pos) {
+  for (var i = 0; i < view.setup.length; i++) {
+       if (view.setup[i].pos === pos) {
            return i;
        }
   }
@@ -137,26 +137,28 @@ View2D.prototype.markPositions = function(type, positions) {
   this.invalidate();
 }
 
-View2D.prototype.movePiece = function(from, to, piece) {
+View2D.prototype.delPiece = function(pos) {
   this.setup = _.filter(this.setup, function(frame) {
-      return frame.pos !== to;
+      return frame.pos !== pos;
   });
-  var ix = this.posToIx(from);
+}
+
+View2D.prototype.movePiece = function(from, to, piece) {
+  var ix = posToIx(this, from);
   if (ix === null) return;
+  this.delPiece(to);
   this.changes.push({
       from:  from,
       to:    to,
       op:    ix,
-      np:    piece.toString(),
+      np:    (piece === null) ? null : piece.toString(),
       dx:    ((this.pos[to].x - this.pos[from].x) / STEP_CNT) | 0,
       dy:    ((this.pos[to].y - this.pos[from].y) / STEP_CNT) | 0
   });
 }
 
 View2D.prototype.dropPiece = function(pos, piece) {
-  this.setup = _.filter(this.setup, function(frame) {
-      return frame.pos !== to;
-  });
+  this.delPiece(pos);
   this.changes.push({
       to:    to,
       np:    piece.toString()
@@ -164,7 +166,7 @@ View2D.prototype.dropPiece = function(pos, piece) {
 }
 
 View2D.prototype.capturePiece = function(pos) {
-  var ix = this.posToIx(from);
+  var ix = posToIx(this, from);
   if (ix === null) return;
   this.changes.push({
       from:  from,
@@ -174,22 +176,19 @@ View2D.prototype.capturePiece = function(pos) {
 
 View2D.prototype.commit = function() {
    var steps = STEP_CNT;
-   var moves = _.chain(this.changes)
-    .filter(function(frame) {
-        return !_.isUndefined(frame.from) && !_.isUndefined(frame.to);
-     })
-    .size()
-    .value();
-   if (moves === 0) {
-        steps = 1;
+   var moves = _.filter(this.changes, function(frame) {
+       return !_.isUndefined(frame.from) && !_.isUndefined(frame.to);
+   });
+   if (moves.length === 0) {
+       steps = 1;
    }
    _.each(this.changes, function(frame) {
-      frame.cnt = steps;
+       frame.cnt = steps;
    });
    this.invalidate();
 }
 
-var drawMarks = function(ctx, self, list, color) {
+var drawMarks = function(ctx, view, list, color) {
    _.each(list, function(p) {
         var pos = this.pos[p];
         var x = pos.x; var y = pos.y;
@@ -204,18 +203,24 @@ var drawMarks = function(ctx, self, list, color) {
         ctx.arc(x, y, pos.dx / 6, 0, 2 * Math.PI);
         ctx.fill();
         ctx.stroke();
-   }, self);
+   }, view);
 }
 
 View2D.prototype.invalidate = function() {
    isValid = false;
 }
 
+var isCommitted = function(frame) {
+  return !_.isUndefined(frame.cnt);
+}
+
+var isDone = function(frame) {
+  return frame.cnt <= 0;
+}
+
 View2D.prototype.animate = function() {
   _.chain(this.changes)
-   .filter(function(frame) {
-        return !_.isUndefined(frame.cnt);
-    })
+   .filter(isCommitted)
    .each(function(frame) {
         if (!_.isUndefined(frame.op)) {
             var piece = this.setup[frame.op];
@@ -227,16 +232,13 @@ View2D.prototype.animate = function() {
             }
         }
         frame.cnt--;
-    });
+    }, this);
   _.chain(this.changes)
-   .filter(function(frame) {
-        return frame.cnt <= 0;
-    })
+   .filter(isCommitted)
+   .filter(isDone)
    .each(function(frame) {
         if (_.isUndefined(frame.to)) {
-            this.setup = _.filter(this.setup, function(frame) {
-               return frame.pos !== to;
-            });
+            this.delPiece(frame.from);
         } else {
             if (!_.isUndefined(frame.op)) {
                 var piece = this.setup[frame.op];
