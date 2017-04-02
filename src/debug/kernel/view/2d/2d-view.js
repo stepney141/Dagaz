@@ -30,19 +30,21 @@ Dagaz.View.getView = function() {
   return Dagaz.View.view;
 }
 
-var inRect = function(pos) {
-  return (x > this.pos[pos].x) &&
-         (y > this.pos[pos].y) &&
-         (x < this.pos[pos].x + this.pos[pos].dx) &&
-         (y < this.pos[pos].y + this.pos[pos].dy);
+Dagaz.View.inRect = function(view, pos, x, y) {
+  return (x > view.pos[pos].x) &&
+         (y > view.pos[pos].y) &&
+         (x < view.pos[pos].x + this.pos[pos].dx) &&
+         (y < view.pos[pos].y + this.pos[pos].dy);
 }
 
-View2D.prototype.pointToPos = function(x, y) {
-  var list = _.chain(this.setup)
+Dagaz.View.pointToPos = function(view, x, y) {
+  var list = _.chain(view.setup)
    .map(function(piece) {
        return piece.pos;
-    }, this)
-   .filter(inRect, this)
+    }, view)
+   .filter(function(pos) {
+      return Dagaz.View.inRect(view, pos, x, y);
+    })
    .sortBy(function(pos) {
        return -pos;
     })
@@ -50,9 +52,15 @@ View2D.prototype.pointToPos = function(x, y) {
   if (list.length !== 0) {
       return [ list[0] ];
   }
-  return _.chain(_.range(this.pos.length))
-   .filter(inRect, this)
+  return _.chain(_.range(view.pos.length))
+   .filter(function(pos) {
+      return Dagaz.View.inRect(view, pos, x, y);
+    })
    .value();
+}
+
+View2D.prototype.pointToPos = function(x, y) {
+  return Dagaz.View.pointToPos(this, x, y);
 }
 
 View2D.prototype.posToIx = function(pos) {

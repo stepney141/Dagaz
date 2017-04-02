@@ -69,6 +69,7 @@
 <script src="http://underscorejs.ru/underscore-min.js"></script><xsl:text>
 </xsl:text><script src="../../kernel/dagaz.js"></script><xsl:text>
 </xsl:text><script src="../../kernel/model/zrf-model.js"></script><xsl:text>
+</xsl:text><script src="../../kernel/view/2d/2d-view.js"></script><xsl:text>
 </xsl:text>
 <xsl:for-each select="option[not (name = preceding-sibling::option/name)]">
   <xsl:choose>
@@ -95,10 +96,8 @@
 </xsl:text>
     </xsl:otherwise>
   </xsl:choose>
-</xsl:for-each>
-<script src="../../kernel/view/2d/2d-view.js"></script><xsl:text>
-</xsl:text>
-<xsl:element name = "script">
+</xsl:for-each><xsl:text>
+</xsl:text><xsl:element name = "script">
   <xsl:attribute name = "src"><xsl:value-of select="name"/>.js</xsl:attribute>
 </xsl:element><xsl:text>
 </xsl:text><script src="../../kernel/controller/app.js"></script><xsl:text>
