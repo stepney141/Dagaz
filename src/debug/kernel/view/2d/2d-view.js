@@ -65,7 +65,7 @@ View2D.prototype.pointToPos = function(x, y) {
 
 var posToIx = function(view, pos) {
   for (var i = 0; i < view.setup.length; i++) {
-       if (view.setup[i].pos === pos) {
+       if (view.setup[i].pos == pos) {
            return i;
        }
   }
@@ -262,6 +262,7 @@ View2D.prototype.animate = function() {
     this.changes = _.filter(this.changes, function(frame) {
         return _.isUndefined(frame.done);
     });
+    // DEBUG:
     if (this.changes.length === 0) {
         isValid = true;
     }
@@ -281,6 +282,9 @@ View2D.prototype.draw = function(canvas) {
       var board = Dagaz.Model.getInitBoard();
       board.setup(this);
       isConfigured = true;
+      // DEBUG:
+      this.movePiece(16, 32, null);
+      this.commit();
   }
   if (this.allResLoaded() && !isValid) {
       var ctx = canvas.getContext("2d");
@@ -309,8 +313,8 @@ View2D.prototype.draw = function(canvas) {
            return this.setup[ix];
         }, this)
        .each(function(p) {
+           var x = p.x; var y = p.y;
            var pos = this.pos[p.pos];
-           var x = pos.x; var y = pos.y;
            var piece = this.piece[p.name];
            x += (pos.dx - piece.dx) / 2 | 0;
            y += (pos.dy - piece.dy) / 2 | 0;
@@ -318,7 +322,11 @@ View2D.prototype.draw = function(canvas) {
         }, this);
       drawMarks(ctx, this, this.target, "#00AA00");
       drawMarks(ctx, this, this.strike, "#FF0000");
+      // DEBUG:
       this.animate();
+/*    if (this.changes.length > 0) {
+          this.blink();
+      } */
   }
 }
 

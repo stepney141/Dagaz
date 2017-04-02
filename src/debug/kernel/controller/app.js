@@ -22,13 +22,6 @@ App.prototype.exec = function() {
   }, 100);
 }
 
-App.prototype.init = function() {
-  this.view.draw(this.canvas);
-  this.view.movePiece(16, 32, null);
-  this.view.commit();
-}
-
-app.init();
 app.exec();
 
 })();
