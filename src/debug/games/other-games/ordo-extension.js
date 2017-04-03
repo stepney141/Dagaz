@@ -27,7 +27,7 @@ var buildGroup = function(group, player) {
             var p = design.navigate(player, pos, design.dirs[j]);
             if (p !== null) {
                 var piece = board.getPiece(p);
-                if ((piece !== null) && (piece.player === player)) {
+                if ((piece !== null) && (piece.player == player)) {
                     ix = Model.find(group, p);
                     if (ix < 0) {
                         group.push(p);
@@ -43,7 +43,7 @@ var checkCoherence = function(board, player, group) {
   var len = design.positions.length;
   for (var p = 0; p < len; p++) {
        var piece = board.getPiece(p);
-       if ((piece !== null) && (piece.player === player)) {
+       if ((piece !== null) && (piece.player == player)) {
            ix = Model.find(group, p);
            if (ix < 0) {
                return false;
@@ -63,7 +63,7 @@ Model.Game.CheckInvariants = function(board) {
        if (p !== null) {
            var group = [ p ];
            buildGroup(group, board.player);
-           if (checkCoherence(b, board.player, group) === false) {
+           if (!checkCoherence(b, board.player, group)) {
                m.failed = true;
            }
        }

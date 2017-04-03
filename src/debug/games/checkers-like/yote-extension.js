@@ -3,7 +3,7 @@
 var checkVersion = Model.Game.checkVersion;
 
 Model.Game.checkVersion = function(design, name, value) {
-  if (name !== "yote-extension") {
+  if (name != "yote-extension") {
      checkVersion(design, name, value);
   }
 }
@@ -22,9 +22,9 @@ Model.Game.CheckInvariants = function(board) {
                 var captured = [];
                 var len = design.positions.length;
                 for (var p = 0; p < len; p++) {
-                    if (p !== fp[0]) {
+                    if (p != fp[0]) {
                        var piece = board.getPiece(p);
-                       if ((piece !== null) && (piece.player !== board.player)) {
+                       if ((piece !== null) && (piece.player != board.player)) {
                            captured.push(p);
                        }
                     }

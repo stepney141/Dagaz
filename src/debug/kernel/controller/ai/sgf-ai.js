@@ -18,7 +18,7 @@ function SgfAi(design, params) {
 var createBot = Dagaz.Model.createBot;
 
 Dagaz.Model.createBot = function(design, type, params) {
-  if (type === "sgf") {
+  if (type == "sgf") {
       return new SgfAi(design, params);
   } else {
       if (!_.isUndefined(createBot)) {
@@ -119,7 +119,7 @@ SgfAi.prototype.getMove = function() {
               sgf:   moves[r].sgf,
               pos:   moves[r].pos
           });
-          return { move: move, ai: (this.board.moves.length === 1) ? "once" : "sgf" };
+          return { move: move, ai: (this.board.moves.length == 1) ? "once" : "sgf" };
       }
   } else {
       delete this.ix;

@@ -96,8 +96,8 @@
 </xsl:text>
     </xsl:otherwise>
   </xsl:choose>
-</xsl:for-each><xsl:text>
-</xsl:text><xsl:element name = "script">
+</xsl:for-each>
+<xsl:element name = "script">
   <xsl:attribute name = "src"><xsl:value-of select="name"/>.js</xsl:attribute>
 </xsl:element><xsl:text>
 </xsl:text><script src="../../kernel/controller/app.js"></script><xsl:text>

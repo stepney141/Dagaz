@@ -36,7 +36,7 @@ function term(end, esc) {
 function rgx(regexp) {
     return new Pattern(function (str, pos) {
         var m = regexp.exec(str.slice(pos));
-        if (m && m.index === 0)
+        if (m && m.index == 0)
             return { res: m[0], end: pos + m[0].length };
     });
 }

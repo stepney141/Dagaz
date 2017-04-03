@@ -29,7 +29,7 @@ var checkAlive = function(group, player, neigbors) {
                     return true;
                 } else {
                     ix = Model.find(group, p);
-                    if ((ix < 0) && (piece.player === player)) {
+                    if ((ix < 0) && (piece.player == player)) {
                         group.push(p);
                     }
                 }
@@ -46,7 +46,7 @@ Model.Game.CheckInvariants = function(board) {
        var suicide = true;
        var group = [];
        var m = board.moves[i];
-       if ((m.actions.length === 1) && (m.actions[0][0] === null) && (m.actions[0][1] !== null)) {
+       if ((m.actions.length == 1) && (m.actions[0][0] === null) && (m.actions[0][1] !== null)) {
            var pos    = m.actions[0][1][0];
            var design = Model.Game.design;
            var neigbors = [];
@@ -55,7 +55,7 @@ Model.Game.CheckInvariants = function(board) {
                 if (p !== null) {
                     var piece = board.getPiece(p);
                     if (piece !== null) {
-                        if (piece.player === board.player) {
+                        if (piece.player == board.player) {
                             group.push(p);
                         } else {
                             neigbors.push(p);
@@ -70,7 +70,7 @@ Model.Game.CheckInvariants = function(board) {
                 if (p !== null) {
                     var q = board.getPiece(p);
                     var g = [ p ];
-                    if (checkAlive(g, q.player, neigbors) === false) {
+                    if (!checkAlive(g, q.player, neigbors)) {
                         suicide = false;
                         while (g.length > 0) {
                             m.capturePiece(g.pop(), 1);
@@ -79,13 +79,13 @@ Model.Game.CheckInvariants = function(board) {
                 }
            }
        }
-       if (suicide === true) {
-           if (checkAlive(group, board.player, neigbors) === true) {
+       if (suicide) {
+           if (checkAlive(group, board.player, neigbors)) {
                suicide = false;
            }
        }
-       if (suicide === true) {
-           if ((suicideMode === false) || (group.length === 0)) {
+       if (suicide) {
+           if (!suicideMode || (group.length == 0)) {
                m.failed = true;
            } else {
                m.capturePiece(pos, 1);
@@ -99,7 +99,7 @@ Model.Game.CheckInvariants = function(board) {
 }
 
 Model.Move.moveToString = function(move, part) {
-  if (move.actions.length === 0) return "";
+  if (move.actions.length == 0) return "";
   return _.chain(move.actions)
    .filter(function (action) {
        return (action[0] === null) && (action[1] !== null) && (action[2] !== null);

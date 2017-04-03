@@ -3,7 +3,7 @@
 var checkVersion = Model.Game.checkVersion;
 
 Model.Game.checkVersion = function(design, name, value) {
-  if (name !== "chess-promotion") {
+  if (name != "chess-promotion") {
      checkVersion(design, name, value);
   }
 }
@@ -27,7 +27,7 @@ Model.Game.CheckInvariants = function(board) {
             tp = m.actions[j][1];
             if ((fp !== null) && (tp !== null)) {
                 var piece = board.getPiece(fp[0]);
-                if ((piece !== null) && (piece.getType() === "Pawn")) {
+                if ((piece !== null) && (piece.getType() == "Pawn")) {
                     var p = design.navigate(board.player, tp[0], design.getDirection("n"));
                     if (p === null) {
                         var promoted = [];

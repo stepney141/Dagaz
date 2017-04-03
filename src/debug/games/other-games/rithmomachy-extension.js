@@ -3,7 +3,7 @@
 var checkVersion = Model.Game.checkVersion;
 
 Model.Game.checkVersion = function(design, name, value) {
-  if (name !== "rithmomachy-extension") {
+  if (name != "rithmomachy-extension") {
      checkVersion(design, name, value);
   }
 }
@@ -37,7 +37,7 @@ Model.Game.CheckInvariants = function(board) {
                           .difference(f.captured)
                           .map(function (n) { return piece[n];})
                           .value();
-                if (np.length === 0) {
+                if (np.length == 0) {
                     this.capturePiece(f.pos, 1);
                 } else {
                     this.movePiece(f.pos, f.pos, np, 1);

@@ -20,35 +20,35 @@ var partialMode   = false;
 Dagaz.Model.checkVersion = function(aDesign, aName, aValue) {
   if (aName == "zrf-advanced") {
      var mode = null;
-     if ((aValue === "simple")    || (aValue === "true")) {
+     if ((aValue == "simple")    || (aValue == "true")) {
          mode = aValue;
          simpleMode = true;
      }
-     if ((aValue === "composite") || (aValue === "true")) {
+     if ((aValue == "composite") || (aValue == "true")) {
          mode = aValue;
          compositeMode = true;
      }
-     if ((aValue === "mark")      || (aValue === "true")) {
+     if ((aValue == "mark")      || (aValue == "true")) {
          mode = aValue;
          markMode = true;
      }
-     if ((aValue === "fork")      || (aValue === "true")) {
+     if ((aValue == "fork")      || (aValue == "true")) {
          mode = aValue;
          Dagaz.Model.forkMode = true;
      }
-     if ((aValue === "last")      || (aValue === "true")) {
+     if ((aValue == "last")      || (aValue == "true")) {
          mode = aValue;
          lastMode = true;
      }
-     if ((aValue === "deferred")   || (aValue === "true")) {
+     if ((aValue == "deferred")   || (aValue == "true")) {
          mode = aValue;
          Dagaz.Model.deferredStrike = true;
      }
-     if ((aValue === "shared")    || (aValue === "true")) {
+     if ((aValue == "shared")    || (aValue == "true")) {
          mode = aValue;
          Dagaz.Model.sharedPieces = true;
      }
-     if ((aValue === "partial")   || (aValue === "true")) {
+     if ((aValue == "partial")   || (aValue == "true")) {
          mode = aValue;
          partialMode = true;
      }
@@ -136,7 +136,7 @@ Dagaz.Model.isLastTo = function(aPos, aBoard) {
 
 Dagaz.Model.getMark = function(aGen) {
   if (markMode) {
-      if (aGen.marks.length === 0) {
+      if (aGen.marks.length == 0) {
           return null;
       }
       return aGen.marks.pop();
@@ -154,7 +154,7 @@ Dagaz.Model.setMark = function(aGen) {
 }
 
 Dagaz.Model.getPartList = function(board, gen) {
-  if (partialMode === true) {
+  if (partialMode) {
       var r = [];
       var design = Dagaz.Model.getDesign();
       for (var pos = 0; pos < design.positions.length; pos++) {

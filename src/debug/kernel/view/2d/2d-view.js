@@ -49,7 +49,7 @@ Dagaz.View.pointToPos = function(view, x, y) {
        return -pos;
     })
    .value();
-  if (list.length !== 0) {
+  if (list.length > 0) {
       return list.slice(0, 1);
   }
   return _.chain(_.range(view.pos.length))
@@ -121,7 +121,7 @@ View2D.prototype.allResLoaded = function() {
 
 View2D.prototype.addPiece = function(piece, pos) {
   this.setup.push({
-       pos:  pos,
+       pos:  +pos,
        name: piece,
        x:    this.pos[pos].x,
        y:    this.pos[pos].y
@@ -129,7 +129,7 @@ View2D.prototype.addPiece = function(piece, pos) {
 }
 
 View2D.prototype.markPositions = function(type, positions) {
-  if (type === Dagaz.View.markType.TARGET) {
+  if (type == Dagaz.View.markType.TARGET) {
       this.target = positions;
   } else {
       this.strike = positions;
@@ -139,7 +139,7 @@ View2D.prototype.markPositions = function(type, positions) {
 
 View2D.prototype.delPiece = function(pos) {
   this.setup = _.filter(this.setup, function(frame) {
-      return frame.pos !== pos;
+      return frame.pos != pos;
   });
 }
 
@@ -175,11 +175,11 @@ View2D.prototype.capturePiece = function(pos) {
 }
 
 View2D.prototype.commit = function() {
-   var steps = STEP_CNT;
+   var steps = STEP_CNT + 1;
    var moves = _.filter(this.changes, function(frame) {
        return !_.isUndefined(frame.from) && !_.isUndefined(frame.to);
    });
-   if (moves.length === 0) {
+   if (moves.length == 0) {
        steps = 1;
    }
    _.each(this.changes, function(frame) {
@@ -219,6 +219,9 @@ var isDone = function(frame) {
 }
 
 View2D.prototype.animate = function() {
+    this.changes = _.filter(this.changes, function(frame) {
+        return _.isUndefined(frame.done);
+    });
   _.chain(this.changes)
    .filter(isCommitted)
    .each(function(frame) {
@@ -230,6 +233,7 @@ View2D.prototype.animate = function() {
             if (!_.isUndefined(frame.dy)) {
                 piece.y += frame.dy;
             }
+            piece.z = 1;
         }
         frame.cnt--;
     }, this);
@@ -248,6 +252,7 @@ View2D.prototype.animate = function() {
                 piece.pos = frame.to;
                 piece.x = this.pos[frame.to].x;
                 piece.y = this.pos[frame.to].y;
+                delete piece.z;
             } else {
                 this.setup.push({
                     pos:  frame.to,
@@ -259,20 +264,8 @@ View2D.prototype.animate = function() {
         }
         frame.done = true;
     }, this);
-    this.changes = _.filter(this.changes, function(frame) {
-        return _.isUndefined(frame.done);
-    });
-    // DEBUG:
-    if (this.changes.length === 0) {
+    if (this.changes.length == 0) {
         isValid = true;
-    }
-}
-
-View2D.prototype.blink = function() {
-    if (this.target.length === 0) {
-        this.target = [0];
-    } else {
-        this.target = [];
     }
 }
 
@@ -282,9 +275,6 @@ View2D.prototype.draw = function(canvas) {
       var board = Dagaz.Model.getInitBoard();
       board.setup(this);
       isConfigured = true;
-      // DEBUG:
-      this.movePiece(16, 32, null);
-      this.commit();
   }
   if (this.allResLoaded() && !isValid) {
       var ctx = canvas.getContext("2d");
@@ -294,18 +284,10 @@ View2D.prototype.draw = function(canvas) {
       });
       _.chain(_.range(this.setup.length))
        .sortBy(function(ix) {
-           var order = this.setup[ix].pos;
-           var list = _.chain(this.changes)
-            .filter(function(change) {
-                return !_.isUndefined(change.to);
-             })
-            .map(function(change) {
-                return change.op;
-             })
-            .compact()
-            .value();
-           if (_.indexOf(list, ix) >= 0) {
-               order += 1000;
+           var piece = this.setup[ix];
+           var order = piece.pos;
+           if (!_.isUndefined(piece.z)) {
+               order += this.pos.length;
            }
            return order;
         }, this)
@@ -322,11 +304,7 @@ View2D.prototype.draw = function(canvas) {
         }, this);
       drawMarks(ctx, this, this.target, "#00AA00");
       drawMarks(ctx, this, this.strike, "#FF0000");
-      // DEBUG:
       this.animate();
-/*    if (this.changes.length > 0) {
-          this.blink();
-      } */
   }
 }
 

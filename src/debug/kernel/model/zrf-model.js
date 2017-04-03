@@ -36,26 +36,26 @@ Dagaz.Model.checkVersion = function(design, name, value) {
          design.failed = true;
      }
      if (name == "smart-moves") {
-         if ((value === "from") || (value === "true")) {
+         if ((value == "from") || (value == "true")) {
             Dagaz.Model.smartFrom = true;
          }
-         if ((value === "to") || (value === "true")) {
+         if ((value == "to") || (value == "true")) {
             Dagaz.Model.smartTo = true;
          }
      }
-     if ((name == "recycle-captures") && (value === "true")) {
+     if ((name == "recycle-captures") && (value == "true")) {
          Dagaz.Model.recycleCaptures = true;
      }
-     if ((name == "discard-cascades") && (value === "true")) {
+     if ((name == "discard-cascades") && (value == "true")) {
          Dagaz.Model.discardCascades = true;
      }
-     if ((name == "pass-partial") && (value === "true")) {
+     if ((name == "pass-partial") && (value == "true")) {
          Dagaz.Model.passPartial = true;
      }
-     if ((name == "pass-turn") && (value === "true")) {
+     if ((name == "pass-turn") && (value == "true")) {
          Dagaz.Model.passTurn = 1;
      }
-     if ((name == "pass-turn") && (value === "forced")) {
+     if ((name == "pass-turn") && (value == "forced")) {
          Dagaz.Model.passTurn = 2;
      }
      if (name == "moves-limit") {
@@ -115,7 +115,7 @@ Dagaz.Model.commands[Dagaz.Model.ZRF_JUMP] = function(gen, param) {
 }
 
 Dagaz.Model.commands[Dagaz.Model.ZRF_IF] = function(gen, param) {
-   if (gen.stack.length === 0) {
+   if (gen.stack.length == 0) {
        return null;
    }
    var f = gen.stack.pop();
@@ -156,7 +156,7 @@ Dagaz.Model.commands[Dagaz.Model.ZRF_GET_FLAG] = function(gen, param) {
 }
 
 Dagaz.Model.commands[Dagaz.Model.ZRF_SET_FLAG] = function(gen, param) {
-   if (gen.stack.length === 0) {
+   if (gen.stack.length == 0) {
        return null;
    }
    value = gen.stack.pop();
@@ -176,7 +176,7 @@ Dagaz.Model.commands[Dagaz.Model.ZRF_SET_PFLAG] = function(gen, param) {
    if (gen.pos === null) {
        return null;
    }
-   if (gen.stack.length === 0) {
+   if (gen.stack.length == 0) {
        return null;
    }
    value = gen.stack.pop();
@@ -200,7 +200,7 @@ Dagaz.Model.commands[Dagaz.Model.ZRF_SET_ATTR] = function(gen, param) {
    if (gen.pos === null) {
        return null;
    }
-   if (gen.stack.length === 0) {
+   if (gen.stack.length == 0) {
        return null;
    }
    var value = gen.stack.pop();
@@ -259,7 +259,7 @@ Dagaz.Model.commands[Dagaz.Model.ZRF_LITERAL] = function(gen, param) {
 Dagaz.Model.functions = {};
 
 Dagaz.Model.functions[Dagaz.Model.ZRF_VERIFY] = function(gen) {
-   if (gen.stack.length === 0) {
+   if (gen.stack.length == 0) {
        return null;
    }
    var f = gen.stack.pop();
@@ -271,7 +271,7 @@ Dagaz.Model.functions[Dagaz.Model.ZRF_VERIFY] = function(gen) {
 }
 
 Dagaz.Model.functions[Dagaz.Model.ZRF_SET_POS] = function(gen) {
-   if (gen.stack.length === 0) {
+   if (gen.stack.length == 0) {
        return null;
    }
    var pos = gen.stack.pop();
@@ -284,7 +284,7 @@ Dagaz.Model.functions[Dagaz.Model.ZRF_SET_POS] = function(gen) {
 }
 
 Dagaz.Model.functions[Dagaz.Model.ZRF_NAVIGATE] = function(gen) {
-   if (gen.stack.length === 0) {
+   if (gen.stack.length == 0) {
        return null;
    }
    var dir = gen.stack.pop();
@@ -306,7 +306,7 @@ Dagaz.Model.functions[Dagaz.Model.ZRF_NAVIGATE] = function(gen) {
 }
 
 Dagaz.Model.functions[Dagaz.Model.ZRF_OPPOSITE] = function(gen) {
-   if (gen.stack.length === 0) {
+   if (gen.stack.length == 0) {
        return null;
    }
    var dir = gen.stack.pop();
@@ -373,11 +373,11 @@ Dagaz.Model.functions[Dagaz.Model.ZRF_FLIP] = function(gen) {
 
 Dagaz.Model.functions[Dagaz.Model.ZRF_END] = function(gen) {
    var board = gen.board;
-   if (gen.generated === true) {
-       if (gen.moveType === 2) {
+   if (gen.generated) {
+       if (gen.moveType == 2) {
            board.changeMove(gen.move);
        }
-       if (gen.moveType === 1) {
+       if (gen.moveType == 1) {
            board.addMove(gen.move);
        }
    }
@@ -386,7 +386,7 @@ Dagaz.Model.functions[Dagaz.Model.ZRF_END] = function(gen) {
 }
 
 Dagaz.Model.functions[Dagaz.Model.ZRF_NOT] = function(gen) {
-   if (gen.stack.length === 0) {
+   if (gen.stack.length == 0) {
        return null;
    }
    var f = gen.stack.pop();
@@ -404,7 +404,7 @@ Dagaz.Model.functions[Dagaz.Model.ZRF_IS_EMPTY] = function(gen) {
 }
 
 Dagaz.Model.isFriend = function(piece, player) {
-   return (piece.player === player);
+   return (piece.player == player);
 }
 
 Dagaz.Model.functions[Dagaz.Model.ZRF_IS_ENEMY] = function(gen) {
@@ -475,7 +475,7 @@ Dagaz.Model.functions[Dagaz.Model.ZRF_PUSH] = function(gen) {
 }
 
 Dagaz.Model.functions[Dagaz.Model.ZRF_POP] = function(gen) {
-   if (gen.marks.length === 0) {
+   if (gen.marks.length == 0) {
        return null;
    }
    gen.pos = gen.marks.pop();
@@ -483,10 +483,10 @@ Dagaz.Model.functions[Dagaz.Model.ZRF_POP] = function(gen) {
 }
 
 Dagaz.getRandom = function(moves, restrict, cnt) {
-  if (moves.length === 1) return 0;
+  if (moves.length == 1) return 0;
   if (moves.length > 0) {
       var r = _.random(0, moves.length - 1);
-      if (moves.length === restrict.length) return r;
+      if (moves.length == restrict.length) return r;
       var c = 0;
       if (!_.isUndefined(cnt)) {
           c = cnt;
@@ -696,7 +696,7 @@ ZrfDesign.prototype.addDirection = function(name) {
 
 ZrfDesign.prototype.addPlayer = function(player, symmetries) {
   var ix = this.playerNames.length;
-  if (this.playerNames.length === 0) {
+  if (this.playerNames.length == 0) {
       ix = 0;
       this.playerNames.push("opposite");
   }
@@ -713,7 +713,7 @@ ZrfDesign.prototype.nextPlayer = function(player) {
 }
 
 ZrfDesign.prototype.prevPlayer = function(player) {
-  if (player === 1) {
+  if (player == 1) {
       return this.playerNames.length;
   } else {
       return player - 1;
@@ -729,7 +729,7 @@ ZrfDesign.prototype.navigate = function(player, pos, dir) {
   if (!_.isUndefined(this.players[player])) {
       dir = this.players[player][dir];
   }
-  if (this.positions[pos][dir] !== 0) {
+  if (this.positions[pos][dir] != 0) {
       return + pos + this.positions[pos][dir];
   } else {
       return null;
@@ -877,7 +877,7 @@ ZrfMoveGenerator.prototype.movePiece = function(from, to, piece) {
   this.move.movePiece(from, to, piece, this.level);
   this.lastf = from;
   this.lastt = to;
-  if (from !== to) {
+  if (from != to) {
       this.setPiece(from, null);
   }
   this.setPiece(to, piece);
@@ -890,13 +890,13 @@ ZrfMoveGenerator.prototype.dropPiece = function(pos, piece) {
 
 ZrfMoveGenerator.prototype.capturePiece = function(pos) {
   this.move.capturePiece(pos, this.level);
-  if (Dagaz.Model.deferredStrike !== true) {
+  if (!Dagaz.Model.deferredStrike) {
       this.setPiece(pos, null);
   }
 }
 
 Dagaz.Model.getMark = function(gen) {
-  if (gen.marks.length === 0) {
+  if (gen.marks.length == 0) {
       return null;
   } else {
       var pos = gen.marks.pop();
@@ -949,7 +949,7 @@ ZrfMoveGenerator.prototype.setPiece = function(pos, piece) {
 
 Dagaz.Model.isLastFrom = function(pos, board) {
   if (!_.isUndefined(board.lastf)) {
-      return (board.lastf === pos)
+      return (board.lastf == pos)
   } else {
       return false;
   }
@@ -958,7 +958,7 @@ Dagaz.Model.isLastFrom = function(pos, board) {
 ZrfMoveGenerator.prototype.isLastFrom = function(pos) {
   if (this.parent !== null) {
       if (!_.isUndefined(this.parent.lastf)) {
-          return (this.parent.lastf === pos);
+          return (this.parent.lastf == pos);
       } else {
           return false;
       }
@@ -968,7 +968,7 @@ ZrfMoveGenerator.prototype.isLastFrom = function(pos) {
 
 Dagaz.Model.isLastTo = function(pos, board) {
   if (!_.isUndefined(board.lastt)) {
-      return (board.lastt === pos)
+      return (board.lastt == pos)
   } else {
       return false;
   }
@@ -977,7 +977,7 @@ Dagaz.Model.isLastTo = function(pos, board) {
 ZrfMoveGenerator.prototype.isLastTo = function(pos) {
   if (this.parent !== null) {
       if (!_.isUndefined(this.parent.lastt)) {
-          return (this.parent.lastt === pos);
+          return (this.parent.lastt == pos);
       } else {
           return false;
       }
@@ -1064,7 +1064,7 @@ Dagaz.Model.createPiece = function(type, player) {
 
 ZrfPiece.prototype.isEquals = function(piece) {
   if (piece === null) return false;
-  if ((piece.type === this.type) && (piece.player === this.player)) {
+  if ((piece.type == this.type) && (piece.player == this.player)) {
       return true;
   } else {
       return false;
@@ -1099,7 +1099,7 @@ ZrfPiece.prototype.getValue = function(name) {
 }
 
 ZrfPiece.prototype.setValue = function(name, value) {
-  if (this.getValue(name) === value) {
+  if (this.getValue(name) == value) {
       return this;
   }
   var piece = new ZrfPiece(this.type, this.player);
@@ -1115,7 +1115,7 @@ ZrfPiece.prototype.promote = function(type) {
 }
 
 ZrfPiece.prototype.changeOwner = function(player) {
-  if (this.player === player) {
+  if (this.player == player) {
       return this;
   } else {
       return Dagaz.Model.createPiece(this.type, player);
@@ -1162,12 +1162,12 @@ ZrfBoard.prototype.copy = function() {
 }
 
 ZrfBoard.prototype.isEquals = function(board) {
-  if (board.zSign !== this.zSign) return false;
+  if (board.zSign != this.zSign) return false;
   var a = _.keys(this.pieces);
   var b = _.keys(board.pieces);
-  if (a.length !== b.length) return false;
-  if (_.difference(a, b).length !== 0) return false;
-  if (_.difference(b, a).length !== 0) return false;
+  if (a.length != b.length) return false;
+  if (_.difference(a, b).length != 0) return false;
+  if (_.difference(b, a).length != 0) return false;
   var f = function(pos) { this.getPiece(pos); };
   a = _.map(a, f, this);
   b = _.map(b, f, board);
@@ -1175,7 +1175,7 @@ ZrfBoard.prototype.isEquals = function(board) {
      var x = a.pop();
      var y = b.pop();
      if (x === null) return false;
-     if (x.isEquals(y) === false) return false;
+     if (!x.isEquals(y)) return false;
   }
   return true;
 }
@@ -1267,18 +1267,18 @@ var addPrior = function(priors, mode, gen) {
 
 var CompleteMove = function(board, gen) {
   var positions = Dagaz.Model.getPartList(board, gen);
-  if (Dagaz.Model.passPartial !== true) { var t = 2; } 
+  if (!Dagaz.Model.passPartial) { var t = 2; } 
       else { var t = 1; }
   while (positions.length > 0) {
        pos = positions.pop();
        var piece = gen.getPieceInternal(pos);
-       if (Dagaz.Model.isFriend(piece, board.player) || (Dagaz.Model.sharedPieces === true)) {
+       if (Dagaz.Model.isFriend(piece, board.player) || Dagaz.Model.sharedPieces) {
            _.each(board.game.design.pieces[piece.type], function(move) {
-                if ((move.type === 0) && (move.mode === gen.mode)) {
+                if ((move.type == 0) && (move.mode == gen.mode)) {
                     var g = gen.copy(move.template, move.params);
                     g.moveType = t;
                     g.generate();
-                    if ((g.generated === true) && (g.moveType === 0)) {
+                    if (g.generated && (g.moveType == 0)) {
                         CompleteMove(board, g);
                         t = 1;
                     }
@@ -1290,17 +1290,17 @@ var CompleteMove = function(board, gen) {
 
 ZrfBoard.prototype.generateInternal = function(callback, cont) {
   var design = this.game.design;
-  if ((this.moves.length === 0) && (design.failed !== true) && (this.player > 0)) {
+  if ((this.moves.length == 0) && !design.failed && (this.player > 0)) {
       var priors = [];
       _.chain(_.keys(this.pieces))
        .filter(function(pos)  
-          { return (Dagaz.Model.sharedPieces === true) || 
-                   (Dagaz.Model.isFriend(this.pieces[pos], this.player)); 
+          { return Dagaz.Model.sharedPieces || 
+                   Dagaz.Model.isFriend(this.pieces[pos], this.player); 
           }, this)
        .each(function(pos) {
            var piece = this.pieces[pos];
            _.chain(design.pieces[piece.type])
-            .filter(function(move) { return (move.type === 0); })
+            .filter(function(move) { return (move.type == 0); })
             .each(function(move) {
                 var g = Dagaz.Model.createGen(move.template, move.params, this.game.design);
                 g.init(this, pos);
@@ -1309,10 +1309,10 @@ ZrfBoard.prototype.generateInternal = function(callback, cont) {
         }, this);
       _.each(design.positions, function(pos) {
         _.chain(design.pieces)
-         .filter(function(tp) { return (Dagaz.Model.noReserve(this, tp) !== true); }, this)
+         .filter(function(tp) { return !Dagaz.Model.noReserve(this, tp); }, this)
          .each(function(tp) {
                _.chain(design.pieces[tp])
-                .filter(function(move) { return (move.type === 1); })
+                .filter(function(move) { return (move.type == 1); })
                 .each(function(move) {
                     var g = Dagaz.Model.createGen(move.template, move.params, this.game.design);
                     g.init(this, pos);
@@ -1322,48 +1322,48 @@ ZrfBoard.prototype.generateInternal = function(callback, cont) {
            }, this);
       }, this);
       this.forks = [];
-      if (callback.checkContinue() === true) {
+      if (callback.checkContinue()) {
           for (var i = 0; i <= design.modes.length; i++) {
                var f = false;
                if (!_.isUndefined(priors[i])) {
                    while (priors[i].length > 0) {
                       var g = priors[i].pop();
                       g.generate();
-                      if (g.generated === true) {
-                          if ((cont === true) && (g.moveType === 0)) {
+                      if (g.generated) {
+                          if (cont && (g.moveType == 0)) {
                               CompleteMove(this, g);
                           }
                           f = true;
                       }
                    }
                }
-               if (f === true) break;
+               if (f) break;
                if (i >= design.modes.length) break;
           }
           while (this.forks.length > 0) {
                var g = this.forks.pop();
                g.generate();
-               if (g.generated === true) {
-                   if ((cont === true) && (g.moveType === 0)) {
+               if (g.generated) {
+                   if (cont && (g.moveType == 0)) {
                         CompleteMove(this, g);
                    }
                }
           }
       }
-      if (cont === true) {
+      if (cont) {
           Dagaz.Model.CheckInvariants(this);
           Dagaz.Model.PostActions(this);
-          if (Dagaz.Model.passTurn === 1) {
+          if (Dagaz.Model.passTurn == 1) {
               this.moves.push(new ZrfMove());
           }
-          if (Dagaz.Model.passTurn === 2) {
-              if (this.moves.length === 0) {
+          if (Dagaz.Model.passTurn == 2) {
+              if (this.moves.length == 0) {
                   this.moves.push(new ZrfMove());
               }
           }
       }
   }
-  if (this.moves.length === 0) {
+  if (this.moves.length == 0) {
       this.player = 0;
   }
 }
@@ -1414,7 +1414,7 @@ ZrfBoard.prototype.dropPiece = function(pos, piece) {
 }
 
 ZrfBoard.prototype.capturePiece = function(pos) {
-  if (Dagaz.Model.recycleCaptures === true) {
+  if (Dagaz.Model.recycleCaptures) {
       var piece = this.getPiece(pos);
           if (piece != null) {
               Dagaz.Model.incReserve(this, piece);
@@ -1507,7 +1507,7 @@ ZrfMove.prototype.getControlList = function() {
 
 var pushItem = function(r, list, control, ix) {
    if ((list === null) || (list.length < 1) || 
-       (list.length === 1) || (ix >= control.length)) {
+       (list.length == 1) || (ix >= control.length)) {
        r.push(list);
        return ix;
    }
@@ -1574,13 +1574,13 @@ ZrfMove.prototype.clone = function(level) {
   var o = true;
   r.actions = _.chain(this.actions)
    .filter(function(action) {
-        if ((action[0] !== null) && (action[1] !== null) && (o === true)) {
-            if (Dagaz.Model.discardCascades === true) {
+        if ((action[0] !== null) && (action[1] !== null) && o) {
+            if (Dagaz.Model.discardCascades) {
                 o = false;
             }
             return true;
         }
-        if ((Dagaz.Model.forkMode === true) || (Math.abs(action[3]) < level)) {
+        if (Dagaz.Model.forkMode || (Math.abs(action[3]) < level)) {
             return true;
         }
         return false;
@@ -1590,7 +1590,7 @@ ZrfMove.prototype.clone = function(level) {
 }
 
 Dagaz.Model.moveToString = function(move, part) {
-  if (move.actions.length === 0) {
+  if (move.actions.length == 0) {
       return "Pass";
   }
   var r = "";
@@ -1600,20 +1600,20 @@ Dagaz.Model.moveToString = function(move, part) {
         if (p < 0) {
             p = -p;
         }
-        if (part === 0) {
+        if (part == 0) {
             p = 0;
         }
-        return (p === part);
+        return (p == part);
   };
   _.chain(move.actions)
    .filter(n)
    .filter(function(action) {
        return (action[0] !== null) && (action[1] !== null) && 
-              (action[0] !== action[1]) && (action[0][0] != action[1][0]);
+              (action[0] != action[1]) && (action[0][0] != action[1][0]);
     })
    .each(function(action) {
        if (l !== action[0][0]) {
-           if (r !== "") {
+           if (r.length > 0) {
                r = r + " ";
            }
            r = r + Dagaz.Model.posToString(action[0][0]);
@@ -1628,7 +1628,7 @@ Dagaz.Model.moveToString = function(move, part) {
        return (action[1] === null);
     })
    .each(function(action) {
-       if (r !== "") {
+       if (r.length > 0) {
            r = r + " ";
        }
        r = r + "x ";
@@ -1647,10 +1647,10 @@ ZrfMove.prototype.isAttacked = function(pos) {
    .filter(function(action) {
        var fp = action[0];
        var tp = action[1];
-       if ((fp !== null) && (fp[0] === pos) && (tp === null)) {
+       if ((fp !== null) && (fp[0] == pos) && (tp === null)) {
           return true;
        }
-       if ((tp !== null) && (tp[0] === pos) && (fp !== null) && (fp[0] !== tp[0])) {
+       if ((tp !== null) && (tp[0] == pos) && (fp !== null) && (fp[0] != tp[0])) {
           return true;
        }
        return false;
@@ -1667,7 +1667,7 @@ ZrfMove.prototype.applyTo = function(obj, part) {
       if ((p < 0) && (part < 0)) {
           p = part;
       }
-      return (p === part);
+      return (p == part);
     };
   _.chain(this.actions)
    .filter(n)
@@ -1718,7 +1718,7 @@ ZrfMove.prototype.dropPiece = function(pos, piece, part) {
 
 ZrfMove.prototype.capturePiece = function(pos, part) {
   if (!part) part = 1;
-  if (Dagaz.Model.deferredStrike === true) {
+  if (Dagaz.Model.deferredStrike) {
       part = -part;
   }
   this.actions.push([ [pos], null, null, part]);

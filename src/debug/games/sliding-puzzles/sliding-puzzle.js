@@ -3,15 +3,20 @@
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name !== "sliding-puzzle") {
+  if (name != "sliding-puzzle") {
      checkVersion(design, name, value);
   }
+}
+
+var isEqual = function(a, b) {
+  if ((a == 0) || (b == 0)) return false;
+  return a == b;
 }
 
 var isEmpty = function(board, pos, value) {
   var piece = board.getPiece(pos);
   if (piece === null) return true;
-  return (piece.getValue(0) === value);
+  return isEqual(piece.getValue(0), value);
 }
 
 var CheckInvariants = Dagaz.Model.CheckInvariants;
@@ -19,11 +24,11 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 Dagaz.Model.CheckInvariants = function(board) {
   _.chain(board.moves)
    .filter(function(move) {
-       if (move.actions.length !== 1) return false;
+       if (move.actions.length != 1) return false;
        var action = move.actions[0];
        if (action[0] === null) return false;
        if (action[1] === null) return false;
-       if (action[0] === action[1]) return false;
+       if (action[0][0] == action[1][0]) return false;
        if (board.getPiece(action[0][0]) === null) return false;
        return true;
     })
@@ -38,7 +43,7 @@ Dagaz.Model.CheckInvariants = function(board) {
        _.chain(_.range(design.positions.length))
         .filter(function(pos) {
             if (board.getPiece(pos) === null) return false;
-            return board.getPiece(pos).getValue(0) === value;
+            return isEqual(board.getPiece(pos).getValue(0), value);
          })
         .each(function(pos) {
             var piece = ;

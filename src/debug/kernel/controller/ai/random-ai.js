@@ -9,7 +9,7 @@ function RandomAi(design, params) {
 var createBot = Dagaz.Model.createBot;
 
 Dagaz.Model.createBot = function(design, type, params) {
-  if (type === "random") {
+  if (type == "random") {
       return new RandomAi(design, params);
   } else {
       if (!_.isUndefined(createBot)) {
@@ -27,7 +27,7 @@ RandomAi.prototype.getMove = function() {
   this.board.generate(this.design);
   var r = Dagaz.getRandom(this.board.moves, this.restrict, this.params.maxIterations);
   if (!_.isUndefined(r)) {
-      return { move: this.board.moves[r], ai: (this.board.moves.length === 1) ? "once" : "random" };
+      return { move: this.board.moves[r], ai: (this.board.moves.length == 1) ? "once" : "random" };
   }
 }
 

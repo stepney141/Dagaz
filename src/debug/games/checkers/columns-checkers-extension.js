@@ -3,7 +3,7 @@
 var checkVersion = Model.Game.checkVersion;
 
 Model.Game.checkVersion = function(design, name, value) {
-  if (name !== "columns-checkers-extension") {
+  if (name != "columns-checkers-extension") {
      checkVersion(design, name, value);
   }
 }
@@ -24,7 +24,7 @@ Model.Game.PostActions = function(board) {
                 if (piece === null) {
                     piece = board.getPiece(fp[0]);
                 }
-                if ((pc !== null) && (Object.prototype.toString.call(pc[0]) === "[object Object]")) {
+                if ((pc !== null) && _.isObject(pc[0])) {
                     piece.pop();
                     piece.push(pc[0]);
                 }

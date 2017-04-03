@@ -39,12 +39,12 @@ Dagaz.Model.PostActions = function(board) {
          return piece.type;
       })
      .countBy(function(type) {
-         return (type === 0) ? "Mans" : "Kings";
+         return (type == 0) ? "Mans" : "Kings";
       })
      .defaults({ Mans: 0, Kings: 0 })
      .value();
   };
-  if (mode !== 0) {
+  if (mode != 0) {
       var caps = _.map(board.moves, captures);
       var all = _.chain(caps)
        .map(function(captured) {
@@ -61,7 +61,7 @@ Dagaz.Model.PostActions = function(board) {
       board.moves = _.chain(board.moves)
        .filter(function(move) {
            var c = captures(move);
-           if ((mode === 2) && (kings > 0)) {
+           if ((mode == 2) && (kings > 0)) {
                return c.Kings >= kings;
            } else {
                return c.Mans + c.Kings >= all;

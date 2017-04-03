@@ -21,7 +21,7 @@ var checkNeighbors = function(board, pos) {
        var p = design.navigate(board.player, pos, design.dirs[i]);
        if (p !== null) {
            var piece = board.getPiece(p);
-           if ((piece !== null) && (piece.player === board.player)) {
+           if ((piece !== null) && (piece.player == board.player)) {
                return true;
            }
        }
@@ -36,7 +36,7 @@ var checkDir = function(board, pos, dir, changed) {
   while (p !== null) {
       var piece = board.getPiece(p);
       if (piece === null) return false;
-      if (piece.player === board.player) break;
+      if (piece.player == board.player) break;
       changed.push(p);
       p = design.navigate(board.player, p, dir);
       r = true;
@@ -52,25 +52,25 @@ Model.Game.CheckInvariants = function(board) {
   for (var i in board.moves) {
        var m = board.moves[i];
        var f = false;
-       if ((m.actions.length === 1) && (m.actions[0][0] === null) && (m.actions[0][1] !== null)) {
+       if ((m.actions.length == 1) && (m.actions[0][0] === null) && (m.actions[0][1] !== null)) {
            var pos = m.actions[0][1][0];
            for (var j = 0; j < design.dirs.length; j++) {
                 var changed = [];
-                if (checkDir(board, pos, design.dirs[j], changed) === true) {
+                if (checkDir(board, pos, design.dirs[j], changed)) {
                     while (changed.length > 0) {
                         m.dropPiece(changed.pop(), Model.Game.createPiece(0, board.player), 1);
                         f = true;
                     }
                 }
            }
-           if (f === true) {
+           if (f) {
                moves.push(m);
            }
        }
   }
-  if ((moves.length === 0) && (othelloMode === false)) {
+  if ((moves.length == 0) && !othelloMode) {
        for (var p = 0; p < len; p++) {
-            if ((board.getPiece(p) === null) && (checkNeighbors(board, p) === true)) {
+            if ((board.getPiece(p) === null) && checkNeighbors(board, p)) {
                  m = Model.Game.createMove();
                  m.dropPiece(p, Model.Game.createPiece(0, board.player), 1);
                  moves.push(m);

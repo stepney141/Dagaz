@@ -3,7 +3,7 @@
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name !== "xiangqi-extension") {
+  if (name != "xiangqi-extension") {
      checkVersion(design, name, value);
   }
 }
@@ -16,10 +16,10 @@ var kingsOpposite = function(board, player) {
        return board.getPiece(pos) !== null;
     })
    .filter(function(pos) {
-       return board.getPiece(pos).type === king;
+       return board.getPiece(pos).type == king;
     })
    .filter(function(pos) {
-       return board.getPiece(pos).player === player;
+       return board.getPiece(pos).player == player;
     })
    .value();
   var dir = design.getDirection("n");
@@ -28,8 +28,8 @@ var kingsOpposite = function(board, player) {
       if (pos !== null) {
           var piece = board.getPiece(pos);
           if (piece === null) continue;
-          if (piece.type !== king) break;
-          if (piece.player !== player) return true;
+          if (piece.type != king) break;
+          if (piece.player != player) return true;
       }
   }
   return false;
@@ -41,7 +41,7 @@ Dagaz.Model.CheckInvariants = function(board) {
   var design = board.game.design;
   _.chain(board.moves)
    .filter(function(move) {
-       return move.actions.length === 1;
+       return move.actions.length == 1;
     })
    .filter(function(move) {
        return (move.actions[0] !== null) && (move.actions[1] !== null);

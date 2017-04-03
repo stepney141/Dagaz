@@ -23,7 +23,7 @@ MoveList.prototype.getMoves = function() {
 
 var getActions = function(move, level) {
   return _.filter(move.actions, function(action) {
-      return action[3] === level;
+      return action[3] == level;
   });
 }
 
@@ -69,11 +69,11 @@ var getPositions = function(move, level, stage) {
         })
        .value();
       if (r.length > 0) return r[0];
-      if (stage === 1) return null;
+      if (stage == 1) return null;
       r = _.chain(actions)
        .filter(isDrop)
        .filter(function(action) {
-           return action[1].length === 1;
+           return action[1].length == 1;
         })
        .map(getTo)
        .value();
@@ -81,7 +81,7 @@ var getPositions = function(move, level, stage) {
       r = _.chain(actions)
        .filter(isCapturing)
        .filter(function(action) {
-           return action[0].length === 1;
+           return action[0].length == 1;
         })
        .map(getFrom)
        .value();
@@ -125,7 +125,7 @@ var getAttacking = function(move, level, stage) {
    .filter(isMove)
    .size()
    .value();
-  if ((stage === 0) && (n > 0)) return null;
+  if ((stage == 0) && (n > 0)) return null;
   return _.chain(actions)
    .filter(isCapturing)
    .map(getTo)
@@ -170,7 +170,7 @@ MoveList.prototype.done = function(view) {
         .value() <= this.level;
     }, this)
    .value();
-  if (frame.length === 1) {
+  if (frame.length == 1) {
       var move = frame[0];
       move.applyTo(view, -1);
   }
@@ -248,21 +248,21 @@ MoveList.prototype.setPosition = function(name, view) {
          getPositions(this.board.moves[ix], this.level, this.stage),
          pos) >= 0;
   }, this);
-  if ((frame.length === 0) && (this.stage == 0) && (Dagaz.Model.smartTo === true)) {
+  if ((frame.length == 0) && (this.stage == 0) && Dagaz.Model.smartTo) {
       var src = _.filter(this.stack.peekBack(), function(ix) {
           return _.indexOf(
              getPositions(this.board.moves[ix], this.level, 1),
              pos) >= 0;
           }, this);
-      if (src.length === 1) {
+      if (src.length == 1) {
           frame = src;
           this.stage = 1;
           this.from  = getPair(this.board.moves[frame[0]], this.level, 0)[0];
       }
   }
-  if (frame.length === 0) return null;
+  if (frame.length == 0) return null;
   this.stack.push(frame);
-  if ((this.stage == 0) && (Dagaz.Model.smartFrom === true)) {
+  if ((this.stage == 0) && Dagaz.Model.smartFrom) {
       var dst = _.chain(frame)
        .map(function(ix) {
            return this.board.moves[ix];  
@@ -273,7 +273,7 @@ MoveList.prototype.setPosition = function(name, view) {
        .compact()
        .flatten()
        .value();
-       if (dst.length === 1) {
+       if (dst.length == 1) {
            this.stage = 1;
            this.from = pos;
            pos = dst[0];
@@ -301,7 +301,7 @@ MoveList.prototype.setPosition = function(name, view) {
             .filter(isCapturing)
             .map(getFrom)
             .value();
-           if (r.length === 0) {
+           if (r.length == 0) {
                return null;
            } else {
                return r;
@@ -310,7 +310,7 @@ MoveList.prototype.setPosition = function(name, view) {
        .flatten()
        .uniq()
        .value();
-      if (caps.length === 1) {
+      if (caps.length == 1) {
           var pos = caps[0];
           if (pos !== null) {
               move.capturePiece(pos);
@@ -352,8 +352,8 @@ MoveList.prototype.setPosition = function(name, view) {
         }, this)
        .compact()
        .filter(function(action) {
-           return (determinate(getFrom(action), pos).length === 1) ||
-                  (determinate(getTo(action), pos).length === 1);
+           return (determinate(getFrom(action), pos).length == 1) ||
+                  (determinate(getTo(action), pos).length == 1);
         })
        .first()
        .each(function(action) {

@@ -11,7 +11,7 @@ var rowSize = function(design) {
 
 var numToPos = function(design, num, sz) {
   var pos = (+num * 2) - 1;
-  if (((pos / sz | 0) % 2) === 1) {
+  if (((pos / sz | 0) % 2) == 1) {
       pos--;
   }
   return Dagaz.Model.posToString(pos, design);

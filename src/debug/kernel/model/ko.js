@@ -32,9 +32,9 @@ Dagaz.Model.CheckInvariants = function(board) {
            var r = 0;
            var m = board.moves[i];
            var b = board.apply(m);
-           if (superKo === 0) {
+           if (superKo == 0) {
                if (!_.isUndefined(board.parent)) {
-                   if (b.equals(board.parent) === true) {
+                   if (b.equals(board.parent)) {
                        r = 1;
                    }
                }
@@ -42,8 +42,8 @@ Dagaz.Model.CheckInvariants = function(board) {
                var p = board;
                while (!_.isUndefined(p.parent)) {
                    var q = p.parent;
-                   if ((superKo === 1) || (q.player === b.player)) {
-                       if (q.equals(b) === true) {
+                   if ((superKo == 1) || (q.player == b.player)) {
+                       if (q.equals(b)) {
                            r++;
                            if (numKo < 2) {
                                break;

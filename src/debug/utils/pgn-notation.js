@@ -33,20 +33,20 @@ Dagaz.Model.compareMove = function(move, notation, design, board) {
           if (m[1]) {
               var piece = board.getPiece(action[0][0]);
               if (piece === null) return false;
-              if (m[1] === "N") {
-                  if (design.getPieceType("Knight") !== piece.type) return false;
+              if (m[1] == "N") {
+                  if (design.getPieceType("Knight") != piece.type) return false;
               }
-              if (m[1] === "B") {
-                  if (design.getPieceType("Bishop") !== piece.type) return false;
+              if (m[1] == "B") {
+                  if (design.getPieceType("Bishop") != piece.type) return false;
               }
-              if (m[1] === "R") {
-                  if (design.getPieceType("Rook") !== piece.type) return false;
+              if (m[1] == "R") {
+                  if (design.getPieceType("Rook") != piece.type) return false;
               }
-              if (m[1] === "Q") {
-                  if (design.getPieceType("Queen") !== piece.type) return false;
+              if (m[1] == "Q") {
+                  if (design.getPieceType("Queen") != piece.type) return false;
               }
-              if (m[1] === "K") {
-                  if (design.getPieceType("King") !== piece.type) return false;
+              if (m[1] == "K") {
+                  if (design.getPieceType("King") != piece.type) return false;
               }
           }
           return true;

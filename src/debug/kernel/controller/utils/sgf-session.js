@@ -22,7 +22,7 @@ SgfSession.prototype.getNode = function() {
 SgfSession.prototype.getFavoriteMove = function() {
   if (_.isUndefined(node)) return null;
   if (_.isUndefined(node.child)) return null;
-  if (_.isUndefined(node.child.length === 0)) return null;
+  if (node.child.length == 0) return null;
   var child = node.child.peekBack();
   if (_.isUndefined(child.move)) return null;
   return child.move;
@@ -132,7 +132,7 @@ SgfSession.prototype.getSgf = function(node, board) {
       r = r + ";" + name + "[" + node.props[name] + "]";
   });
   r = r + this.nodeToStr(node, board);
-  if (node.child.length === 1) {
+  if (node.child.length == 1) {
       return r + this.getSgf(node.child[0], node.board);
   }
   _.chain(node.child)
@@ -150,7 +150,7 @@ SgfSession.prototype.toString = function() {
 }
 
 var isMove = function(data) {
-  return (data.name == "W") || (data.name == "B") && (data.arg.length === 1);
+  return (data.name == "W") || (data.name == "B") && (data.arg.length == 1);
 }
 
 var isSetup = function(data) {
@@ -158,12 +158,12 @@ var isSetup = function(data) {
 }
 
 var isPass = function(data) {
-  return isMove(data) && (data.arg.length === 1) &&
-        ((data.arg[0] === "") || (data.arg[0] === "tt"));
+  return isMove(data) && (data.arg.length == 1) &&
+        ((data.arg[0].length == 0) || (data.arg[0] == "tt"));
 }
 
 var isProp = function(data) {
-  return !isMove(data) && !isSetup(data) && (data.arg.length === 1);
+  return !isMove(data) && !isSetup(data) && (data.arg.length == 1);
 }
 
 var createPiece = function(prefix) {
@@ -177,7 +177,7 @@ var createPiece = function(prefix) {
 }
 
 var parse = function(node, data) {
-  if (data.length === 0) return;
+  if (data.length == 0) return;
   var head = _.first(data);
   if (!_.isArray(head)) {
       if (isMove(head)) {

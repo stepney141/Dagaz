@@ -3,14 +3,14 @@
 var checkVersion = Model.Game.checkVersion;
 
 Model.Game.checkVersion = function(design, name, value) {
-  if (name !== "kauri-extension") {
+  if (name != "kauri-extension") {
      checkVersion(design, name, value);
   }
 }
 
 var isKauri = function(pieces) {
   for (var i in pieces) {
-       if (pieces[i].toString() === "Kauri") {
+       if (pieces[i].toString() == "Kauri") {
            return true;
        }
   }
@@ -30,8 +30,8 @@ Model.Game.CheckInvariants = function(board) {
            pc = m.actions[j][2];
            if ((fp !== null) && (tp !== null) && (pc !== null)) {
                var piece = board.getPiece(tp[0]);
-               if (pc[0].toString() === "Kauri") {
-                   if (isKauri(piece) !== true) {
+               if (pc[0].toString() == "Kauri") {
+                   if (!isKauri(piece)) {
                        var dir = design.getDirection("win");
                        if (dir !== null) {
                            var dest = design.navigate(board.player, tp[0], dir);
@@ -41,7 +41,7 @@ Model.Game.CheckInvariants = function(board) {
                        }
                    }
                } else {
-                   if (isKauri(piece) === true) {
+                   if (isKauri(piece)) {
                        var dir = design.getDirection("loss");
                        if (dir !== null) {
                            var dest = design.navigate(board.player, tp[0], dir);

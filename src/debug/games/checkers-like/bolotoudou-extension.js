@@ -4,8 +4,8 @@ var checkVersion = Model.Game.checkVersion;
 var strongMode = false;
 
 Model.Game.checkVersion = function(design, name, value) {
-  if (name === "bolotoudou-extension") {
-      if (value === "strong") {
+  if (name == "bolotoudou-extension") {
+      if (value == "strong") {
           strongMode = true;
       }
   } else {
@@ -18,11 +18,11 @@ var markEnemies = function(board, pos, dir, captured) {
   var opposite = design.players[0][dir];
   for (var i = 0; i < design.dirs.length; i++) {
        var d = design.dirs[i];
-       if ((d !== dir) && (d !== opposite)) {
+       if ((d != dir) && (d != opposite)) {
            var p = design.navigate(board.player, pos, d);
            if (p !== null) {
                var piece = board.getPiece(p);
-               if ((piece !== null) && (piece.player !== board.player)) {
+               if ((piece !== null) && (piece.player != board.player)) {
                    if (Model.find(captured, p) < 0) {
                        captured.push(p);
                    }
@@ -39,13 +39,13 @@ var checkLine = function(board, pos, dir, player, captured, line) {
   if (p === null) return false;
   var piece = board.getPiece(p);
   if (piece === null) return false;
-  if (piece.player !== player) return false;
+  if (piece.player != player) return false;
   line.push(p);
   p = design.navigate(player, p, dir);
   if (p === null) return false;
   piece = board.getPiece(p);
   if (piece === null) return false;
-  if (piece.player !== player) return false;
+  if (piece.player != player) return false;
   line.push(p);
   var opposite = design.navigate(0, pos, dir);
   for (var i in lines) {
@@ -61,13 +61,13 @@ var checkMiddle = function(board, pos, dir, opposite, player, captured, line) {
   if (p === null) return false;
   var piece = board.getPiece(p);
   if (piece === null) return false;
-  if (piece.player !== player) return false;
+  if (piece.player != player) return false;
   line.push(p);
   p = design.navigate(player, pos, opposite);
   if (p === null) return false;
   piece = board.getPiece(p);
   if (piece === null) return false;
-  if (piece.player !== player) return false;
+  if (piece.player != player) return false;
   line.push(p);
   for (var i in lines) {
       markEnemies(board, lines[i], dir, opposite, captured);
@@ -81,7 +81,7 @@ var checkLines = function(board, pos, player, captured) {
   var len = design.dirs.length;
   for (var d = 0; d < len; d++) {
        var line = [];
-       if (checkLine(board, pos, design.dirs[d], player, captured, line) === true) {
+       if (checkLine(board, pos, design.dirs[d], player, captured, line)) {
            r = true;
        }
   }
@@ -90,7 +90,7 @@ var checkLines = function(board, pos, player, captured) {
        var o = design.navigate(0, pos, design.dirs[d]);
        if (Model.find(dirs, o) < 0) {
            var line = [];
-           if (checkMiddle(board, pos, design.dirs[d], o, player, captured, line) === true) {
+           if (checkMiddle(board, pos, design.dirs[d], o, player, captured, line)) {
                r = true;
            }
            dirs.push(design.dirs[d]);
@@ -115,13 +115,13 @@ var clearAttributes = function(board, player, move, line) {
   for (var p = 0; p < len; p++) {
        var piece = board.getPiece(p);
        if (piece !== null) 
-           if ((piece.player === player) && (piece.getValue(0) === true)) {
+           if ((piece.player == player) && piece.getValue(0)) {
                var ix = Model.find(line, p);
                if (ix < 0) {
                    var q = Model.Game.createPiece(piece.type, piece.player);
                    for (var j in move.actions) {
                         var tp = m.actions[j][1];
-                        if (tp === p) {
+                        if (tp == p) {
                             m.actions[j][2] = [q];
                             q = null;
                             break;
@@ -146,7 +146,7 @@ var copyMove = function(old, new, move, captured, line) {
           for (var j in move.actions) {
                var fp = m.actions[j][0];
                var tp = m.actions[j][1];
-               if ((tp !== null) && (tp[0] === line[i])) {
+               if ((tp !== null) && (tp[0] == line[i])) {
                    var pos = tp[0];
                    if (fp !== null) {
                        pos = fp[0];
@@ -160,7 +160,7 @@ var copyMove = function(old, new, move, captured, line) {
                    }
                }
           }
-          if (f === true) {
+          if (f) {
               var pos = line[i];
               var piece = new.getPiece(pos);
               if (piece !== null) {
@@ -245,7 +245,7 @@ Model.Game.CheckInvariants = function(board) {
             if ((fp !== null) && (tp !== null)) {
                 var piece = board.getPiece(fp[0]);
                 if (piece !== null) {
-                    if (piece.getValue(0) === true) {
+                    if (piece.getValue(0)) {
                         priority = true;
                         break;
                     }
@@ -262,25 +262,25 @@ Model.Game.CheckInvariants = function(board) {
             var tp = m.actions[j][1];
             var pn = m.actions[j][3];
             if ((fp === null) && (tp !== null)) {
-                if (checkLines(board, tp[0], board.player, []) === true) {
+                if (checkLines(board, tp[0], board.player, [])) {
                    m.failed = true;
                    break;
                 }
             }
             if ((fp !== null) && (tp !== null)) {
                 var piece = board.getPiece(fp[0]);
-                if ((priority === true) && (piece.getValue(0) !== true)) {
+                if (priority && !piece.getValue(0)) {
                     m.failed = true;
                     break;
                 }
                 var b = board.apply(m);
-                if (strongMode === true) {
-                    if (isCapturePresent(m) === false) {
+                if (strongMode) {
+                    if (!isCapturePresent(m)) {
                         var len = design.dirs.length;
                         for (var d = 0; d < len; d++) {
                              var line = [];
                              var captured = [];
-                             if (checkLine(b, tp[0], design.dirs[d], board.player, captured, line) === true) {
+                             if (checkLine(b, tp[0], design.dirs[d], board.player, captured, line)) {
                                  moves.push([captured, line]);
                              }
                         }
@@ -290,7 +290,7 @@ Model.Game.CheckInvariants = function(board) {
                              if (Model.find(dirs, o) < 0) {
                                  var line = [];
                                  var captured = [];
-                                 if (checkMiddle(b, tp[0], design.dirs[d], o, board.player, captured, line) === true) {
+                                 if (checkMiddle(b, tp[0], design.dirs[d], o, board.player, captured, line)) {
                                      moves.push([captured, line]);
                                  }
                                  dirs.push(design.dirs[d]);
@@ -300,7 +300,7 @@ Model.Game.CheckInvariants = function(board) {
                     }
                 } else {
                     var captured = [];
-                    if (checkLines(b, tp[0], board.player, captured) === true) {
+                    if (checkLines(b, tp[0], board.player, captured)) {
                         if (captured.length > 0) {
                             captured.push(null);
                             m.actions.push([captured, null, null, pn]);
