@@ -5,10 +5,16 @@ Dagaz.View.markType = {
    ATTACKING: 1
 };
 
-var STEP_CNT     = 10;
+var STEP_CNT     = 5;
 
+var self         = null;
 var isConfigured = false;
 var isValid      = false;
+var mouseX       = 0;
+var mouseY       = 0;
+var mousePressed = false;
+var hintedPiece  = null;
+var fromPos      = null;
 
 Dagaz.View.configure = function(view) {}
 
@@ -37,7 +43,7 @@ Dagaz.View.inRect = function(view, pos, x, y) {
          (y < view.pos[pos].y + view.pos[pos].dy);
 }
 
-Dagaz.View.pointToPos = function(view, x, y) {
+Dagaz.View.pointToPositions = function(view, x, y) {
   var list = _.chain(view.setup)
    .map(function(piece) {
        return piece.pos;
@@ -59,8 +65,8 @@ Dagaz.View.pointToPos = function(view, x, y) {
    .value();
 }
 
-View2D.prototype.pointToPos = function(x, y) {
-  return Dagaz.View.pointToPos(this, x, y);
+View2D.prototype.pointToPositions = function(x, y) {
+  return Dagaz.View.pointToPositions(this, x, y);
 }
 
 var posToIx = function(view, pos) {
@@ -137,16 +143,25 @@ View2D.prototype.markPositions = function(type, positions) {
   this.invalidate();
 }
 
-View2D.prototype.delPiece = function(pos) {
-  this.setup = _.filter(this.setup, function(frame) {
-      return frame.pos != pos;
+View2D.prototype.capturePiece = function(pos) {
+  var ix = posToIx(this, from);
+  if (ix === null) return;
+  this.changes.push({
+      from:  from,
+      op:    ix
+  });
+}
+
+View2D.prototype.dropPiece = function(pos, piece) {
+  this.changes.push({
+      to:    to,
+      np:    piece.toString()
   });
 }
 
 View2D.prototype.movePiece = function(from, to, piece) {
   var ix = posToIx(this, from);
   if (ix === null) return;
-  this.delPiece(to);
   this.changes.push({
       from:  from,
       to:    to,
@@ -157,25 +172,8 @@ View2D.prototype.movePiece = function(from, to, piece) {
   });
 }
 
-View2D.prototype.dropPiece = function(pos, piece) {
-  this.delPiece(pos);
-  this.changes.push({
-      to:    to,
-      np:    piece.toString()
-  });
-}
-
-View2D.prototype.capturePiece = function(pos) {
-  var ix = posToIx(this, from);
-  if (ix === null) return;
-  this.changes.push({
-      from:  from,
-      op:    ix
-  });
-}
-
 View2D.prototype.commit = function() {
-   var steps = STEP_CNT + 1;
+   var steps = STEP_CNT;
    var moves = _.filter(this.changes, function(frame) {
        return !_.isUndefined(frame.from) && !_.isUndefined(frame.to);
    });
@@ -237,36 +235,61 @@ View2D.prototype.animate = function() {
         }
         frame.cnt--;
     }, this);
+  var captured = _.chain(this.changes)
+   .filter(isCommitted)
+   .filter(isDone)
+   .map(function(frame) {
+       if (_.isUndefined(frame.to)) {
+           return frame.from;
+       } else {
+           return frame.to;
+       }
+    })
+   .map(function(pos) {
+       return posToIx(this, pos);
+    }, this)
+   .compact()
+   .value();
   _.chain(this.changes)
    .filter(isCommitted)
    .filter(isDone)
    .each(function(frame) {
-        if (_.isUndefined(frame.to)) {
-            this.delPiece(frame.from);
-        } else {
-            if (!_.isUndefined(frame.op)) {
-                var piece = this.setup[frame.op];
-                if (frame.np) {
-                    piece.name = frame.np;
-                }
-                piece.pos = frame.to;
-                piece.x = this.pos[frame.to].x;
-                piece.y = this.pos[frame.to].y;
-                delete piece.z;
-            } else {
-                this.setup.push({
-                    pos:  frame.to,
-                    name: frame.np,
-                    x:    this.pos[frame.to].x,
-                    y:    this.pos[frame.to].y
-                });
+        if (!_.isUndefined(frame.op) && !_.isUndefined(frame.to)) {
+            var piece = this.setup[frame.op];
+            if (frame.np) {
+                piece.name = frame.np;
             }
+            piece.pos = +frame.to;
+            piece.x = this.pos[frame.to].x;
+            piece.y = this.pos[frame.to].y;
+            delete piece.z;
+        }
+        if (_.isUndefined(frame.op) && !_.isUndefined(frame.to)) {
+            this.setup.push({
+                pos:  frame.to,
+                name: frame.np,
+                x:    this.pos[frame.to].x,
+                y:    this.pos[frame.to].y
+            });
         }
         frame.done = true;
     }, this);
+    this.setup = _.chain(_.range(this.setup.length))
+    .filter(function(ix) {
+        return _.indexOf(captured, ix) < 0;
+     })
+    .map(function(ix) {
+        return this.setup[ix];
+     }, this)
+    .value();
     if (this.changes.length == 0) {
         isValid = true;
     }
+}
+
+Dagaz.View.showMarks = function(view, ctx) {
+  drawMarks(ctx, view, view.target, "#00AA00");
+  drawMarks(ctx, view, view.strike, "#FF0000");
 }
 
 View2D.prototype.draw = function(canvas) {
@@ -302,10 +325,86 @@ View2D.prototype.draw = function(canvas) {
            y += (pos.dy - piece.dy) / 2 | 0;
            ctx.drawImage(piece.h, x, y);
         }, this);
-      drawMarks(ctx, this, this.target, "#00AA00");
-      drawMarks(ctx, this, this.strike, "#FF0000");
+      Dagaz.View.showMarks(this, ctx);
       this.animate();
   }
+}
+
+var debug = function(text) {
+  PieceInfoText.innerHTML = text;
+  PieceInfo.style.display = "inline";
+}
+
+View2D.prototype.debugClick = function() {
+  var pos = this.pointToPositions(mouseX, mouseY);
+  if ((fromPos !== null) && (_.indexOf(pos, fromPos) < 0)) {
+      this.movePiece(fromPos, pos, null);
+      this.commit();
+      this.markPositions(0, []);
+      fromPos = null;
+  } else {
+      this.markPositions(0, pos);
+      fromPos = pos[0];
+  }
+}
+
+View2D.prototype.debugDrag = function() {
+  var pos = this.pointToPositions(mouseX, mouseY);
+  if (_.indexOf(pos, fromPos) < 0) {
+      this.movePiece(fromPos, pos, null);
+      this.commit();
+      fromPos = null;
+  }
+}
+
+Dagaz.View.showHint = function(view) {
+  var pos = view.pointToPositions(mouseX, mouseY);
+  var ix  = posToIx(view, pos);
+  if (ix !== null) {
+      var piece = view.piece[view.setup[ix].name];
+      if (hintedPiece !== piece) {
+          var text = piece.name;
+          if (piece.help) {
+              text = piece.help;
+          }
+          PieceInfoImage.src = piece.h.src;
+          PieceInfoText.innerHTML = text;
+          PieceInfo.style.display = "inline";
+          hintedPiece = piece;
+      }
+  } else {
+      PieceInfo.style.display = "none";
+      hintedPiece = null;
+  }
+}
+
+var mouseUpdate = function(event) {
+  mouseX = (event.clientX + document.body.scrollLeft) - (Table.offsetLeft + CanvasCell.offsetLeft + Board.offsetLeft);
+  mouseY = (event.clientY + document.body.scrollTop) - (Table.offsetTop + CanvasCell.offsetTop + Board.offsetTop);
+}
+
+var mouseMove = function(event) {
+  mouseUpdate(event);
+  Dagaz.View.showHint(self);
+}
+
+var mouseUp = function() { 
+  self.debugDrag();
+  mousePressed = false; 
+  self.markPositions(0, []);
+}
+
+var mouseDown = function(event) { 
+  mousePressed = true; 
+  self.debugClick();
+  event.preventDefault(); 
+}
+
+View2D.prototype.init = function(canvas) {
+  self = this;
+  canvas.onmousemove = mouseMove;
+  canvas.onmouseup   = mouseUp;
+  canvas.onmousedown = mouseDown;
 }
 
 })();

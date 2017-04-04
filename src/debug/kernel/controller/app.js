@@ -22,6 +22,7 @@ App.prototype.exec = function() {
   }, 100);
 }
 
+app.view.init(app.canvas);
 app.exec();
 
 })();

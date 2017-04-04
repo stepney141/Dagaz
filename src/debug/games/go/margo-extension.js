@@ -8,7 +8,7 @@ Model.Game.checkVersion = function(design, name, value) {
   }
 }
 
-Dagaz.View.pointToPos = function(view, x, y) {
+Dagaz.View.pointToPositions = function(view, x, y) {
   var list = _.chain(_.range(view.pos.length))
    .filter(function(pos) {
       return Dagaz.View.inRect(view, pos, x, y);

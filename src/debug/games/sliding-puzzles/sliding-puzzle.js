@@ -61,4 +61,7 @@ Dagaz.Model.CheckInvariants = function(board) {
   CheckInvariants(board);
 }
 
+Dagaz.View.showHint  = function(view)       {}
+Dagaz.View.showMarks = function(view, ctx)  {}
+
 })();
