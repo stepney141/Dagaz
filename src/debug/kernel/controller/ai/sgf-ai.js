@@ -1,35 +1,26 @@
 (function() {
 
-function SgfAi(design, params) {
+function SgfAi(design, parent, params) {
   this.design   = design;
   this.params   = params;
-  this.frames   = [];
-  this.restrict = [];
-  if (!_.isUndefined(params.sgf)) {
-      this.ix = 0;
-      this.frames.push({
-          board: Dagaz.Model.getInitBoard(),
-          sgf:   params.sgf,
-          pos:   0
-      });
-  }
+  this.parent   = parent;
 }
 
-var createBot = Dagaz.Model.createBot;
+var findBot = Dagaz.Model.findBot;
 
-Dagaz.Model.createBot = function(design, type, params) {
+Dagaz.Model.findBot = function(design, type, parent, params) {
   if (type == "sgf") {
-      return new SgfAi(design, params);
+      return new SgfAi(design, parent, params);
   } else {
-      if (!_.isUndefined(createBot)) {
-          return createBot(design, type, params);
+      if (!_.isUndefined(findBot)) {
+          return findBot(design, type, parent, params);
       }
   }
 }
 
 var compareMove = Dagaz.Model.compareMove;
 
-Dagaz.Model.compareMove = function(move, notation, design, board) {
+Dagaz.Model.compareMove = function(move, notation) {
   if (_.chain(move.actions)
    .filter(function(action) {
        return (action[1] !== null);
@@ -43,7 +34,7 @@ Dagaz.Model.compareMove = function(move, notation, design, board) {
        return r;
     })
    .value() == notation) return true;
-  return compareMove(move, notation, board);
+  return compareMove(move, notation);
 }
 
 var getMoves = function(sgf, pos, r) {
@@ -67,62 +58,87 @@ var getMoves = function(sgf, pos, r) {
   return r;
 }
 
-SgfAi.prototype.setBoard = function(board) {
-  this.board = board;
-  this.restrict = [];
-  for (var i = 0; i < this.frames.length; i++) {
-      if (board.isEquals(this.frames[i].board)) {
-          this.ix = i;
-          return;
+var getCtx = Dagaz.AI.getCtx;
+
+Dagaz.AI.getCtx = function(board) {
+  r = getCtx(board);
+  r.frames = [];
+  if (!_.isUndefined()) {
+      r.frames.push({
+          sgf: params.OPENING,
+          pos: 0
+      });
+  }
+  r.ix = 0;
+  return r;
+}
+
+var nextCtx = Dagaz.AI.nextCtx;
+
+Dagaz.AI.nextCtx = function(ctx, board) {
+  var r = nextCtx(ctx, board);
+  r.frames = [];
+  for (var i = 0; i < ctx.frames.length; i++) {
+      r.frames.push(ctx.frames[i]);
+      if (board.isEquals(ctx.frames[i].board)) {
+          r.ix = i;
+          break;
       }
   }
-  if (this.ix < this.frames.length) {
-      var frame = this.frames[this.ix];
-      delete this.ix;
+  if (r.ix < ctx.frames.length) {
+      var frame = ctx.frames[r.ix];
+      delete r.ix;
       var moves = getMoves(frame.sgf, frame.pos);
       var variant = _.chain(moves)
-       .filter(function(v) {
-           return Dagaz.Model.compareMove(this.board.move, v.notation, this.board.parent);
-        })
+       .filter(function(move) {
+           return Dagaz.Model.compareMove(board.move, move.notation, board, this.design);
+        }, this)
        .first()
        .value();
       if (!_.isUndefined(variant)) {
-          this.ix = this.frames.length;
-          this.frames.push({
-              board: this.board.parent,
+          r.ix = r.frames.length;
+          r.frames.push({
+              board: board.parent,
               sgf:   variant.sgf,
               pos:   variant.pos
           });
       }
   } else {
-      delete this.ix;
+      delete r.ix;
   }
+  return r;
 }
 
 SgfAi.prototype.getMove = function() {
-  this.board.generate(this.design);
-  if ((this.board.moves.length > this.restrict.length) && (this.ix < this.frames.length)) {
-      var frame = this.frames[this.ix];
-      delete this.ix;
-      var moves = getMoves(frame.sgf, frame.pos);
-      var r = Dagaz.getRandom(moves, this.restrict, this.params.maxIterations);
-      var move = _.chain(this.board.moves)
-       .filter(function(move) {
-           return Dagaz.Model.compareMove(move, moves[r].notation, this.board);
-        })
-       .first()
-       .value();
-      if (!_.isUndefined(move)) {
-          this.ix = this.frames.length;
-          this.frames.push({
-              board: this.board,
-              sgf:   moves[r].sgf,
-              pos:   moves[r].pos
-          });
-          return { move: move, ai: (this.board.moves.length == 1) ? "once" : "sgf" };
-      }
+  var r = Dagaz.AI.prepare(ctx, this.design);
+  if (r) {
+      return r;
   } else {
-      delete this.ix;
+      if (ctx.ix < ctx.frames.length) {
+          var frame = ctx.frames[ctx.ix];
+          delete ctx.ix;
+          var moves = getMoves(frame.sgf, frame.pos);
+          var r = Dagaz.getRandom(moves, ctx.restrict, this.params.MAX_ITERATIONS);
+          var move = _.chain(ctx.board.moves)
+           .filter(function(move) {
+               return Dagaz.Model.compareMove(move, moves[r].notation);
+            })
+           .first()
+           .value();
+          if (!_.isUndefined(move)) {
+              ctx.ix = this.frames.length;
+              ctx.frames.push({
+                  board: this.board,
+                  sgf:   moves[r].sgf,
+                  pos:   moves[r].pos
+              });
+              return { move: move, ai: "sgf" };
+          }
+      } else {
+         if (parent !== null) {
+             return parent.getMove();
+         }
+      }
   }
 }
 

@@ -566,6 +566,7 @@ function ZrfDesign() {
   this.templates      = [];
   this.options        = [];
   this.modes          = [];
+  this.price          = [];
   this.failed         = false;
 }
 
@@ -633,8 +634,9 @@ ZrfDesign.prototype.getAttribute = function(type, name) {
   return this.attrs[name][type];
 }
 
-ZrfDesign.prototype.addPiece = function(name, type) {
+ZrfDesign.prototype.addPiece = function(name, type, price) {
   this.pieceNames[type] = name;
+  this.price[type] = price ? price : 1;
 }
 
 ZrfDesign.prototype.addMove = function(type, template, params, mode) {
@@ -712,6 +714,8 @@ ZrfDesign.prototype.nextPlayer = function(player) {
   }
 }
 
+ZrfDesign.prototype.nextOrder = ZrfDesign.prototype.nextPlayer;
+
 ZrfDesign.prototype.prevPlayer = function(player) {
   if (player == 1) {
       return this.playerNames.length;
@@ -719,6 +723,8 @@ ZrfDesign.prototype.prevPlayer = function(player) {
       return player - 1;
   }
 }
+
+ZrfDesign.prototype.prevOrder = ZrfDesign.prototype.prevPlayer;
 
 ZrfDesign.prototype.addPosition = function(name, links) {
   this.positionNames.push(name);
@@ -1144,6 +1150,7 @@ function ZrfBoard(game) {
 }
 
 ZrfBoard.prototype.setup = function(view) {
+  view.clear();
   _.each(_.keys(this.pieces), function(pos) {
      var piece = this.pieces[pos];
      view.addPiece(piece.toString(), pos);
@@ -1440,17 +1447,9 @@ ZrfBoard.prototype.apply = function(move) {
    .each(function (part) {
       move.applyTo(r, part);
    }, this);
-  r.player = this.game.design.nextPlayer(this.player);
+  r.player = this.game.design.nextOrder(this.player);
   r.move = move;
   return r;
-}
-
-ZrfBoard.prototype.applyAll = function(move) {
-  return _.chain(move.determinate())
-  .map(function (move) {
-     return this.apply(move);
-   }, this)
-  .value();
 }
 
 function ZrfMove() {
@@ -1461,7 +1460,7 @@ Dagaz.Model.createMove = function() {
   return new ZrfMove();
 }
 
-Dagaz.Model.compareMove = function(move, notation, design, board) {
+Dagaz.Model.compareMove = function(move, notation) {
   return (move.toString() == notation);
 }
 

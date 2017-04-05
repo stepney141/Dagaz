@@ -1,33 +1,31 @@
 (function() {
 
-function RandomAi(design, params) {
+function RandomAi(design, parent, params) {
   this.design   = design;
   this.params   = params;
-  this.restrict = [];
+  this.parent   = parent;
 }
 
-var createBot = Dagaz.Model.createBot;
+var findBot = Dagaz.AI.findBot;
 
-Dagaz.Model.createBot = function(design, type, params) {
+Dagaz.Model.findBot = function(design, type, parent, params) {
   if (type == "random") {
-      return new RandomAi(design, params);
+      return new RandomAi(design, parent, params);
   } else {
       if (!_.isUndefined(createBot)) {
-          return createBot(design, type, params);
+          return createBot(design, type, parent, params);
       }
   }
 }
 
-RandomAi.prototype.setBoard = function(board) {
-  this.board = board;
-  this.restrict = [];
-}
-
-RandomAi.prototype.getMove = function() {
-  this.board.generate(this.design);
-  var r = Dagaz.getRandom(this.board.moves, this.restrict, this.params.maxIterations);
-  if (!_.isUndefined(r)) {
-      return { move: this.board.moves[r], ai: (this.board.moves.length == 1) ? "once" : "random" };
+RandomAi.prototype.getMove = function(ctx) {
+  var r = Dagaz.AI.prepare(ctx, this.design);
+  if (r) {
+      return r;
+  } else {
+      var ix = Dagaz.getRandom(ctx.moves, ctx.restrict, this.params.MAX_ITERATIONS);
+      if (_.isUndefined(ix)) { ix = 0; }
+      return { move: ctx.moves[ix], ai: "random" };
   }
 }
 

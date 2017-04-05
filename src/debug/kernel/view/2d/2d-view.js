@@ -125,6 +125,10 @@ View2D.prototype.allResLoaded = function() {
   return true;
 }
 
+View2D.prototype.clear = function() {
+  this.setup = [];
+}
+
 View2D.prototype.addPiece = function(piece, pos) {
   this.setup.push({
        pos:  +pos,
