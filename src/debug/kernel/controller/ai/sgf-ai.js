@@ -136,7 +136,7 @@ SgfAi.prototype.getMove = function() {
           }
       } else {
          if (parent !== null) {
-             return parent.getMove();
+             return parent.getMove(ctx);
          }
       }
   }

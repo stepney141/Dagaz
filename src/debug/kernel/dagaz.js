@@ -17,9 +17,9 @@ Dagaz.AI.nextCtx = function(ctx, board) {
   return Dagaz.AI.getCtx(board);
 }
 
-Dagaz.AI.prepare = function(ctx, design) {
+Dagaz.AI.prepare = function(ctx) {
   if (_.isUndefined(ctx.moves)) {
-      ctx.board.generate(design);
+      ctx.board.generate(ctx.design);
       ctx.moves = _.chain(ctx.board.moves)
        .map(function(move) {
            return move.determinate();
