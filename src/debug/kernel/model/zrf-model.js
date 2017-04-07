@@ -482,27 +482,6 @@ Dagaz.Model.functions[Dagaz.Model.ZRF_POP] = function(gen) {
    return 0;
 }
 
-Dagaz.getRandom = function(moves, restrict, cnt) {
-  if (moves.length == 1) return 0;
-  if (moves.length > 0) {
-      var r = _.random(0, moves.length - 1);
-      if (moves.length == restrict.length) return r;
-      var c = 0;
-      if (!_.isUndefined(cnt)) {
-          c = cnt;
-      }
-      while (Dagaz.find(this.restrict, r) >= 0) {
-          if (c > 0) {
-              c--;
-              if (c == 0) return r;
-          }
-          r = _.random(0, moves.length - 1);       
-      }
-      restrict.push(r);
-      return r;
-  }
-}
-
 if (!_.isUndefined(Array.indexOf)) {
    Dagaz.find = function(array, value) {
       return Array.prototype.indexOf.call(array, value);

@@ -2,7 +2,7 @@
 
 var MAXVALUE  = 1000000;
 
-function MaxMinAi(parent, params) {
+function MaxMinAi(params, parent) {
   this.params = params;
   this.parent = parent;
   if (_.isUndefined(this.params.MIN_DEEP)) {
@@ -18,13 +18,11 @@ function MaxMinAi(parent, params) {
 
 var findBot = Dagaz.AI.findBot;
 
-Dagaz.Model.findBot = function(type, parent, params) {
+Dagaz.AI.findBot = function(type, params, parent) {
   if (type == "maxmin") {
-      return new MaxMinAi(parent, params);
+      return new MaxMinAi(params, parent);
   } else {
-      if (!_.isUndefined(findBot)) {
-          return findBot(type, parent, params);
-      }
+      return findBot(type, params, parent);
   }
 }
 
@@ -61,7 +59,7 @@ Dagaz.AI.eval = function(design, params, board) {
   return r;
 }
 
-MaxMinAi.prototype.eval = function(board, design, player) {
+MaxMinAi.prototype.eval = function(design, board, player) {
   if (_.isUndefined(this.params.eval)) {
       this.params.eval = Dagaz.AI.eval;
   }
@@ -94,115 +92,148 @@ MaxMinAi.prototype.isDiscarded = function(board, move) {
   return this.params.isDiscarded(board, move);
 }
 
-Dagaz.AI.heuristic = function(self, board, move) {
+Dagaz.AI.heuristic = function(self, design, params, board, move) {
   var b = board.apply(move);
-  var r = self.eval(b, board.player) - self.eval(board, board.player);
+  var r = self.eval(design, b, board.player) - self.eval(design, board, board.player);
   if (self.isForced(b, move)) {
       r += MAXVALUE;
   }
   if (self.isDiscarded(b, move)) {
       r -= MAXVALUE;
   }
+  if (params.NOISE_FACTOR) {
+      r += _.random(0, params.NOISE_FACTOR);
+  }
   return r;
 }
 
-MaxMinAi.prototype.heuristic = function(board, move) {
+MaxMinAi.prototype.heuristic = function(design, board, move) {
   if (_.isUndefined(this.params.heuristic)) {
       this.params.heuristic = Dagaz.AI.heuristic;
   }
-  return this.params.heuristic(this, board, move);
+  return this.params.heuristic(this, design, this.params, board, move);
 }
 
-MaxMinAi.prototype.arrangeMoves = function(frame, level) {
-  frame.moves = _.chain(frame.moves)
-   .filter(function(move) {
-       return !this.isDiscarded(frame.board, move);
-    }, this)
-   .sortBy(function(move) {
-       return -this.heuristic(frame.board, move);
-    }, this)
-   .map(function(move) {
-       return {
-          level: level,
-          board: frame.board.apply(move),
-          move:  move
-       };
-    })
-   .value();
-}
-
-// TODO: Recursive changed flag
-MaxMinAi.prototype.sortEvals = function(ctx, frame) {
-  if (frame.changed) {
-      var sign = (frame.board.player != ctx.board.player) : -1 : 1;
-      frame.moves = _.chain(frame.moves)
-       .each(function(child) {
-           this.sortEvals(ctx, child);
+MaxMinAi.prototype.expand = function(ctx, frame) {
+  if (frame.isLeaf) {
+      frame.isLeaf = false;
+      frame.childs = _.chain(Dagaz.AI.generate(ctx, frame.board))
+       .filter(function(move) {
+           return !this.isDiscarded(frame.board, move);
         }, this)
-       .filter(function(child) {
-           return !_.isUndefined(child.eval);
-        })
-       .sortBy(function(child) {
-           return -child.eval * sign;
-        })
-       .value();
-      if (frame.moves.length > 0) {
-          frame.eval = frame.moves[0].eval;
-          if (_.isUndefined(frame.deep)) {
-              frame.deep = frame.level;
-          }
-          if (frame.moves[0].deep > frame.deep) {
-              frame.deep = frame.moves[0].deep;
-          }
-      } else {
-          frame.eval = -MAXVALUE * sign;
-      }
-      frame.changed = false;
-  }
-}
-
-MaxMinAi.prototype.calculate = function(ctx, frame) {
-  if (_.isUndefined(frame.moves)) {
-      frame.board.generate(ctx.design);
-      frame.moves = _.chain(frame.board.moves)
+       .sortBy(function(move) {
+           return -this.heuristic(ctx.design, frame.board, move);
+        }, this)
        .map(function(move) {
-           return move.determinate();
-        })
-       .flatten()
+           var board = frame.board.apply(move);
+           return {
+              isLeaf: true,
+              level:  frame.level + 1,
+              eval:   this.eval(ctx.design, this.params, board),
+              board:  board,
+              move:   move
+           };
+        }, this)
        .value();
-      this.arrangeMoves(frame, frame.level + 1);
-      frame.changed = true;
       ctx.cnt++;
   }
 }
 
-MaxMinAi.prototype.getFrame = function(ctx) {
-  // TODO: Shedule
-
-  return null;
+MaxMinAi.prototype.getEval = function(ctx, frame) {
+  if (frame.isLeaf) {
+      if (frame.level > ctx.deep) {
+          ctx.deep = frame.level;
+      }
+      return frame.eval;
+  }
+  var isChanged = false;
+  _.each(frame.childs, function(child) {
+      var value = this.getEval(ctx, child);
+      if (value !== null) {
+          if (frame.board.player != ctx.board.player) {
+              if (frame.eval > child.eval) {
+                  frame.eval = child.eval;
+                  isChanged  = true;
+              }
+          } else {
+              if (frame.eval < child.eval) {
+                  frame.eval = child.eval;
+                  isChanged  = true;
+              }
+          }
+      }
+  });
+  if (isChanged) {
+      frame.childs = _.chain(frame.childs)
+       .sortBy(function(child) {
+           if (frame.board.player != ctx.board.player) {
+               return frame.eval;
+           } else {
+               return -frame.eval;
+           }
+        })
+       .value();
+      return frame.eval;
+  } else {
+      return null;
+  }
 }
 
-var prepare = Dagaz.AI.prepare;
+MaxMinAi.prototype.shedule = function(frame) {
+  if (frame.isLeaf) {
+      if (frame.level >= this.params.MAX_DEEP) {
+          return null;
+      } else {
+          return frame;
+      }
+  } else {
+      var r = null;
+      for (var i = 0; i < frame.childs.length; i++) {
+           var child = this.shedule(frame.childs[i]);
+           if (child !== null) {
+               if (child.level < this.params.MIN_DEEP) {
+                   return child;
+               }
+               if (r === null) {
+                   r = child;
+               }
+           }
+      }
+      return r;
+  }
+}
 
-Dagaz.AI.prepare = function(ctx) {
-  var r = prepare(ctx);
-  if (r) return r;
-  this.arrangeMoves(ctx, ctx.board, 1);
-  ctx.cnt = 0;
+MaxMinAi.prototype.setContext = function(ctx, board) {
+  if (parent !== null) {
+      parent.setContext(ctx, board);
+  }
+  if (!_.isUndefined(ctx.childs)) {
+      delete ctx.childs;
+  }
+  ctx.board  = board;
+  ctx.level  = 1;
+  ctx.cnt    = 0;
+  ctx.isLeaf = true;
 }
 
 MaxMinAi.prototype.getMove = function(ctx) {
   var timestamp = getTime();
   while (getTime() - timestamp < this.params.TIME_FRAME) {
-      var frame = this.getFrame(ctx);
+      var frame = this.shedule(ctx);
       if (frame === null) break;
-      this.calculate(ctx, frame);
+      this.expand(ctx, frame);
+      if (ctx.childs.length == 0) {
+          return { ai: "nothing" };
+      }
+      if (ctx.childs.length == 1) {
+          return { move: ctx.childs[0].move, ai: "once" };
+      }
   }
-  this.sortEvals(ctx, ctx);
+  this.getEval(ctx, ctx);
   if (ctx.moves.length > 0) {
       return {
-         move: ctx.moves[0].move,
-         eval: ctx.moves[0].eval,
+         move: ctx.childs[0].move,
+         eval: ctx.childs[0].eval,
          deep: ctx.deep,
          time: getTime() - timestamp,
          cnt:  ctx.cnt,

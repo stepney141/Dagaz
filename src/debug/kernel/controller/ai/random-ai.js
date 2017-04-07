@@ -1,32 +1,51 @@
 (function() {
 
-function RandomAi(design, parent, params) {
-  this.design   = design;
-  this.params   = params;
-  this.parent   = parent;
+function RandomAi(params) {
+  this.params = params;
 }
 
 var findBot = Dagaz.AI.findBot;
 
-Dagaz.Model.findBot = function(design, type, parent, params) {
+Dagaz.AI.findBot = function(type, params, parent) {
   if (type == "random") {
-      return new RandomAi(design, parent, params);
+      return new RandomAi(params);
   } else {
-      if (!_.isUndefined(createBot)) {
-          return createBot(design, type, parent, params);
-      }
+      return findBot(type, params, parent);
   }
 }
 
-RandomAi.prototype.getMove = function(ctx) {
-  var r = Dagaz.AI.prepare(ctx, this.design);
-  if (r) {
-      return r;
-  } else {
-      var ix = Dagaz.getRandom(ctx.moves, ctx.restrict, this.params.MAX_ITERATIONS);
-      if (_.isUndefined(ix)) { ix = 0; }
-      return { move: ctx.moves[ix], ai: "random" };
+RandomAi.prototype.setContext = function(ctx, board) {
+  if (!_.isUndefined(ctx.childs)) {
+      delete ctx.childs;
   }
+  ctx.board  = board;
+}
+
+RandomAi.prototype.getMove = function(ctx) {
+  if (_.isUndefined(ctx.childs)) {
+      ctx.childs = _.chain(Dagaz.AI.generate(ctx, ctx.board))
+       .map(function(move) {
+           return {
+              move: move
+           };
+        }, this)
+       .value();
+  }
+  var len = ctx.childs.length;
+  if (ctx.childs.length == 0) {
+      return { ai: "nothing" };
+  }
+  if (ctx.childs.length == 1) {
+      return { move: ctx.childs[0].move, ai: "once" };
+  }
+  if (_.isUndefined(this.params.rand)) {
+      this.params.rand = _.random;
+  }
+  var ix = this.params.rand(0, len - 1);
+  return {
+      move: ctx.childs[ix].move,
+      ai:   "random"
+  };
 }
 
 })();
