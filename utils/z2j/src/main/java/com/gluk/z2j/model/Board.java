@@ -290,8 +290,12 @@ public class Board extends AbstractDoc implements IBoard {
 	}
 	
 	private void extractSyms(IDoc dest) throws Exception {
-		dest.open(PLAYER_TAG);
+		boolean f = false;
 		for (String player: syms.keySet()) {
+			if (!f) {
+				dest.open(PLAYER_TAG);
+				f = true;
+			}
 			dest.open(NAME_TAG);dest.add(player);dest.close();
 			Map<String, String> l = syms.get(player);
 			int i = 0;
@@ -310,7 +314,9 @@ public class Board extends AbstractDoc implements IBoard {
 				dest.close();
 			}
 		}
-		dest.close();
+		if (f) {
+			dest.close();
+		}
 	}	
 
 	public void addPos(String name, int x, int y, int dx, int dy) throws Exception {

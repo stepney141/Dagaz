@@ -246,9 +246,6 @@ public class Game extends AbstractDoc implements IGame {
 			}
 			dest.open(NAME_TAG);dest.add(n.getLocalName()); dest.close();
 		}
-		if (players.size() != 2) {
-			throw new Exception("Not Supported");
-		}
 		dest.close();
 	}
 	

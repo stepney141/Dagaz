@@ -217,8 +217,8 @@ MaxMinAi.prototype.setContext = function(ctx, board) {
 }
 
 MaxMinAi.prototype.getMove = function(ctx) {
-  var timestamp = getTime();
-  while (getTime() - timestamp < this.params.TIME_FRAME) {
+  var timestamp = Date.now();
+  while (Date.now() - timestamp < this.params.TIME_FRAME) {
       var frame = this.shedule(ctx);
       if (frame === null) break;
       this.expand(ctx, frame);
@@ -235,7 +235,7 @@ MaxMinAi.prototype.getMove = function(ctx) {
          move: ctx.childs[0].move,
          eval: ctx.childs[0].eval,
          deep: ctx.deep,
-         time: getTime() - timestamp,
+         time: Date.now() - timestamp,
          cnt:  ctx.cnt,
          ai:   "maxmin"
       };

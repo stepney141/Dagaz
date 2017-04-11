@@ -79,6 +79,10 @@ var posToIx = function(view, pos) {
   return null;
 }
 
+View2D.prototype.isEmpty = function(pos) {
+  return posToIx(this, pos) === null;
+}
+
 View2D.prototype.defPosition = function(name, x, y, dx, dy) {
   this.pos.push({
       name: name,
@@ -291,14 +295,14 @@ View2D.prototype.animate = function() {
         return frame.phase == phase;
     })
    .filter(function(frame) {
-        return frame.from;
+        return !_.isUndefined(frame.from);
     })
    .each(function(frame) {
         frame.op = posToIx(this, frame.from);
     }, this);
   this.changes = _.filter(this.changes, function(frame) {
         if (frame.phase > phase) return true;
-        if (!frame.from) return true;
+        if (_.isUndefined(frame.from)) return true;
         return !_.isUndefined(frame.op);
     });
   _.chain(this.changes)
@@ -374,6 +378,9 @@ View2D.prototype.animate = function() {
     .value();
     if (this.changes.length == 0) {
         isValid = true;
+        if (this.controller) {
+            this.controller.done();
+        }
     }
 }
 
@@ -388,6 +395,9 @@ View2D.prototype.draw = function(canvas) {
       var board = Dagaz.Model.getInitBoard();
       board.setup(this);
       isConfigured = true;
+      if (this.controller) {
+          this.controller.done();
+      }
   }
   if (this.allResLoaded() && !isValid) {
       var ctx = canvas.getContext("2d");
@@ -420,33 +430,6 @@ View2D.prototype.draw = function(canvas) {
   }
 }
 
-var debug = function(text) {
-  PieceInfoText.innerHTML = text;
-  PieceInfo.style.display = "inline";
-}
-
-View2D.prototype.debugClick = function() {
-  var pos = this.pointToPositions(mouseX, mouseY);
-  if ((fromPos !== null) && (_.indexOf(pos, fromPos) < 0)) {
-      this.movePiece(fromPos, pos, null);
-      this.commit();
-      this.markPositions(0, []);
-      fromPos = null;
-  } else {
-      this.markPositions(0, pos);
-      fromPos = pos[0];
-  }
-}
-
-View2D.prototype.debugDrag = function() {
-  var pos = this.pointToPositions(mouseX, mouseY);
-  if (_.indexOf(pos, fromPos) < 0) {
-      this.movePiece(fromPos, pos, null);
-      this.commit();
-      fromPos = null;
-  }
-}
-
 Dagaz.View.showHint = function(view) {
   var pos = view.pointToPositions(mouseX, mouseY);
   var ix  = posToIx(view, pos);
@@ -469,8 +452,8 @@ Dagaz.View.showHint = function(view) {
 }
 
 var mouseUpdate = function(event) {
-  mouseX = (event.clientX + document.body.scrollLeft) - (Table.offsetLeft + CanvasCell.offsetLeft + Board.offsetLeft);
-  mouseY = (event.clientY + document.body.scrollTop) - (Table.offsetTop + CanvasCell.offsetTop + Board.offsetTop);
+  mouseX = (event.clientX + document.body.scrollLeft) - (Table.offsetLeft + CanvasCell.offsetLeft + Canvas.offsetLeft);
+  mouseY = (event.clientY + document.body.scrollTop) - (Table.offsetTop + CanvasCell.offsetTop + Canvas.offsetTop);
 }
 
 var mouseMove = function(event) {
@@ -479,22 +462,28 @@ var mouseMove = function(event) {
 }
 
 var mouseUp = function() { 
-  self.debugDrag();
+  var pos = self.pointToPositions(mouseX, mouseY);
+  if (pos && self.controller) {
+      self.controller.mouseUp(self, pos[0]);
+  }
   mousePressed = false; 
-  self.markPositions(0, []);
 }
 
 var mouseDown = function(event) { 
   mousePressed = true; 
-  self.debugClick();
+  var pos = self.pointToPositions(mouseX, mouseY);
+  if (pos && self.controller) {
+      self.controller.mouseDown(self, pos[0]);
+  }
   event.preventDefault(); 
 }
 
-View2D.prototype.init = function(canvas) {
+View2D.prototype.init = function(canvas, controller) {
   self = this;
   canvas.onmousemove = mouseMove;
   canvas.onmouseup   = mouseUp;
   canvas.onmousedown = mouseDown;
+  this.controller    = controller;
 }
 
 })();

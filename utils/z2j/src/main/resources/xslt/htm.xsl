@@ -9,12 +9,16 @@
 <html><head><title><xsl:value-of select="title"/></title></head><body><xsl:text>
 </xsl:text>
 
+<xsl:choose>
+<xsl:when test="board/image">
 <xsl:element name = "img">
   <xsl:attribute name = "id">Board</xsl:attribute>
   <xsl:attribute name = "style">display:none</xsl:attribute>
   <xsl:attribute name = "src"><xsl:value-of select="board/image"/></xsl:attribute>
 </xsl:element><xsl:text>
 </xsl:text>
+</xsl:when>
+</xsl:choose>
 
 <xsl:for-each select="piece">
   <xsl:variable name="piece" select="name"/>

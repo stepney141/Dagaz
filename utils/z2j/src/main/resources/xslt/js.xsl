@@ -63,8 +63,10 @@ Dagaz.Model.BuildDesign = function(design) {<xsl:call-template name="apply-optio
    </xsl:for-each>
 </xsl:for-each>}
 
-Dagaz.View.configure = function(view) {
-    view.defBoard("Board");<xsl:for-each select="/game/piece">
+Dagaz.View.configure = function(view) {<xsl:choose>
+  <xsl:when test="board/image">view.defBoard("Board");</xsl:when>
+</xsl:choose>  
+<xsl:for-each select="/game/piece">
    <xsl:variable name="piece" select="name"/>
    <xsl:for-each select="image/player">
     view.defPiece("<xsl:value-of select="."/><xsl:value-of select="$piece"/>", "<xsl:value-of select="."/><xsl:text> </xsl:text><xsl:value-of select="$piece"/>");</xsl:for-each>
