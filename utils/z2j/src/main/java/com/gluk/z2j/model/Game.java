@@ -18,6 +18,8 @@ import com.gluk.z2j.api.model.IGame;
 public class Game extends AbstractDoc implements IGame {
 	
 	private final static String    GAME_TAG  = "game";
+	private final static String    GOAL_TAG  = "goal";
+	private final static String     WIN_TAG  = "win";
 	private final static String    BOARD_TAG = "board";
 	private final static String      POS_TAG = "pos";
 	private final static String  RESERVE_TAG = "reserve";
@@ -51,6 +53,8 @@ public class Game extends AbstractDoc implements IGame {
 	private final static String  PIECES_XP   = "/game/piece";
 	private final static String   SETUP_XP   = "/game/board-setup/*";
 	private final static String  OPTION_XP   = "/game/option";
+	private final static String     WIN_XP   = "/game/win-condition";
+	private final static String     ABS_XP   = "and/absolute-config | absolute-config";
 	private final static String     IMG_XP   = "image/*";
 	private final static String   FIRST_XP   = "*[1]";
 	private final static String  SECOND_XP   = "*[2]";
@@ -416,6 +420,43 @@ public class Game extends AbstractDoc implements IGame {
 		}
 	}
 	
+	private void extractGoals(IDoc dest) throws Exception {
+		NodeIterator nl = XPathAPI.selectNodeIterator(doc, WIN_XP);
+		Node n;
+		for (int i = 0; (n = nl.nextNode())!= null; i++) {
+			dest.open(GOAL_TAG);
+			dest.open(N_TAG); dest.add(Integer.toString(i)); dest.close();
+			NodeIterator kl = XPathAPI.selectNodeIterator(n, FIRST_XP);
+			Node k = kl.nextNode();
+			if (k != null) {
+				dest.open(PLAYER_TAG); dest.add(k.getLocalName());  dest.close();
+			}
+			kl = XPathAPI.selectNodeIterator(n, ABS_XP);
+			while ((k = kl.nextNode())!= null) {
+				dest.open(WIN_TAG);
+				NodeIterator ml = XPathAPI.selectNodeIterator(k, FIRST_XP);
+				Node m = ml.nextNode();
+				if (m != null) {
+					dest.open(PIECE_TAG); dest.add(m.getLocalName());  dest.close();
+					ml = XPathAPI.selectNodeIterator(k, SECOND_XP);
+					m = ml.nextNode();
+					if (m != null) {
+						Integer pos = getNameIndex(m.getLocalName());
+						dest.open(POS_TAG); dest.add(Integer.toString(pos));  dest.close();
+						NodeIterator ol = XPathAPI.selectNodeIterator(m, ALL_XP);
+						Node o;
+						while ((o = ol.nextNode())!= null) {
+							pos = getNameIndex(o.getLocalName());
+							dest.open(POS_TAG); dest.add(Integer.toString(pos));  dest.close();
+						}
+					}
+				}
+				dest.close();
+			}
+			dest.close();
+		}
+	}
+	
 	public void extract(IDoc dest) throws Exception {
 		dest.open(GAME_TAG);
 		if (board == null) {
@@ -430,6 +471,7 @@ public class Game extends AbstractDoc implements IGame {
 		extractPieces(dest);
 		extractTemplates(dest);
 		extractSetup(dest);
+		extractGoals(dest);
 		dest.close();
 	}
 }

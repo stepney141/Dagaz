@@ -8,7 +8,7 @@ function SgfAi(params, parent) {
 var findBot = Dagaz.Model.findBot;
 
 Dagaz.Model.findBot = function(type, params, parent) {
-  if (type == "sgf") {
+  if ((type == "sgf") || (type == "opening")) {
       return new SgfAi(params, parent);
   } else {
       return findBot(type, params, parent);

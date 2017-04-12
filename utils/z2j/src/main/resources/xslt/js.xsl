@@ -61,6 +61,18 @@ Dagaz.Model.BuildDesign = function(design) {<xsl:call-template name="apply-optio
        <xsl:for-each select="reserve">    design.reserve("<xsl:value-of select="$player"/>", "<xsl:value-of select="$piece"/>", <xsl:value-of select="text()"/>);
 </xsl:for-each>
    </xsl:for-each>
+</xsl:for-each>
+
+<xsl:for-each select="/game/goal">
+   <xsl:variable name="n" select="n"/>
+   <xsl:variable name="player" select="player"/>
+   <xsl:for-each select="win">    design.goal(<xsl:value-of select="$n"/>, "<xsl:value-of select="$player"/>", "<xsl:value-of select="piece"/>", [<xsl:for-each select="pos">
+     <xsl:choose>
+        <xsl:when test="position() > 1">, </xsl:when>
+     </xsl:choose>
+     <xsl:value-of select="."/>
+</xsl:for-each>]);
+</xsl:for-each>
 </xsl:for-each>}
 
 Dagaz.View.configure = function(view) {<xsl:choose>

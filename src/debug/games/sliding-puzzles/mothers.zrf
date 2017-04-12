@@ -58,4 +58,21 @@
          (B00009 c1)
      )
   )
+
+  (win-condition (You) (and 
+     (absolute-config R01002 (d5))
+     (absolute-config R10102 (e5))
+     (absolute-config R00012 (e4))
+     (absolute-config R00105 (c5))
+     (absolute-config R01015 (c4))
+     (absolute-config R10005 (d4))
+  ))
+  (win-condition (You) (and 
+     (absolute-config R01002 (d5))
+     (absolute-config R10102 (e5))
+     (absolute-config R00012 (e4))
+     (absolute-config R00105 (d4))
+     (absolute-config R01015 (d3))
+     (absolute-config R10005 (e3))
+  ))
 )

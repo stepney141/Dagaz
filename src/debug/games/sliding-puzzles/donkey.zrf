@@ -48,16 +48,23 @@
 
   (board-setup
      (You 
-         (B00101 a5) (B00011 a4) 
+         (B00101 a5)  (B00011 a4) 
          (R0110F2 b5) (R1010F2 c5) (R0101F2 b4) (R1001F2 c4)
-         (B00103 d5) (B00013 d4) 
-         (B00104 a3) (B00014 a2) 
-         (B01005 b3) (B10005 c3) 
-         (B00106 d3) (B00016 d2) 
+         (B00103 d5)  (B00013 d4) 
+         (B00104 a3)  (B00014 a2) 
+         (B01005 b3)  (B10005 c3) 
+         (B00106 d3)  (B00016 d2) 
          (B00007 b2)
          (B00008 c2)
          (B00009 a1)
          (B000010 d1)
      )
   )
+
+  (win-condition (You) (and 
+     (absolute-config R0110F2 (b2))
+     (absolute-config R1010F2 (c2))
+     (absolute-config R0101F2 (b1))
+     (absolute-config R1001F2 (c1))
+  ))
 )

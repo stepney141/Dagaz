@@ -1,0 +1,95 @@
+(version "3.0")
+
+(define step (
+  $1 add
+))
+
+(define T
+  (piece
+     (name  $1$2)
+     (help  " ")
+     (image You "images/$1.bmp")
+     (attribute value $2)
+     (moves
+        (step n) (step s) (step w) (step e)
+     )
+  )
+)
+
+(game
+  (title "Domino puzzle")
+  (option "smart-moves"    from)
+  (option "sliding-puzzle" true)
+
+  (players You)
+  (turn-order You)
+
+  (board
+     (grid
+         (start-rectangle 0 0 50 50)
+         (dimensions
+           ("a/b/c/d/e/f/g" (50 0)) ; files
+           ("7/6/5/4/3/2/1" (0 50)) ; ranks
+         )
+         (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0))
+     )
+  )
+
+  (T HB 1)  (T HT 1)
+  (T HB 2)  (T HT 2)
+  (T HR 3)  (T HL 3)
+  (T HB 4)  (T HT 4)
+  (T HR 5)  (T HL 5)
+  (T HB 6)  (T HT 6)
+  (T HB 7)  (T HT 7)
+  (T HR 8)  (T HL 8)
+  (T HB 9)  (T HT 9)
+  (T HB 10) (T HT 10)
+  (T HB 11) (T HT 11)
+  (T HB 12) (T HT 12)
+  (T HB 13) (T HT 13)
+  (T HR 14) (T HL 14)
+  (T HB 15) (T HT 15)
+  (T HR 16) (T HL 16)
+  (T HR 17) (T HL 17)
+  (T HR 18) (T HL 18)
+  (T HR 19) (T HL 19)
+  (T HR 20) (T HL 20)
+  (T HR 21) (T HL 21)
+  (T HR 22) (T HL 22)
+  (T HR 23) (T HL 23)
+  (T H  24)
+
+  (board-setup
+     (You 
+        (HB1  c7) (HT1  c6)
+        (HB2  d7) (HT2  d6)
+        (HR3  e7) (HL3  f7)
+        (HB4  g7) (HT4  g6)
+        (HR5  a6) (HL5  b6)
+        (HB6  e6) (HT6  e5)
+        (HB7  f6) (HT7  f5)
+        (HR8  a5) (HL8  b5)
+        (HB9  c5) (HT9  c4)
+        (HB10 d5) (HT10 d4)
+        (HB11 g5) (HT11 g4)
+        (HB12 a4) (HT12 a3)
+        (HB13 b4) (HT13 b3)
+        (HR14 e4) (HL14 f4)
+        (HB15 c3) (HT15 c2)
+        (HR16 d3) (HL16 e3)
+        (HR17 f3) (HL17 g3)
+        (HR18 a2) (HL18 b2)
+        (HR19 d2) (HL19 e2)
+        (HR20 f2) (HL20 g2)
+        (HR21 a1) (HL21 b1)
+        (HR22 c1) (HL22 d1)
+        (HR23 e1) (HL23 f1)
+        (H24  g1)
+     )
+  )
+
+  (win-condition (You)
+     (absolute-config H24 (a7))
+  )
+)

@@ -546,6 +546,7 @@ function ZrfDesign() {
   this.options        = [];
   this.modes          = [];
   this.price          = [];
+  this.goals          = [];
   this.failed         = false;
 }
 
@@ -578,6 +579,20 @@ ZrfDesign.prototype.setup = function(player, piece, pos) {
       var board = Dagaz.Model.getInitBoard();
       board.setPiece(pos, Dagaz.Model.createPiece(t, o));
   }
+}
+
+ZrfDesign.prototype.goal = function(n, player, piece, pos) {
+  var o = Dagaz.find(this.playerNames, player);
+  if (_.isUndefined(this.goals[o])) {
+      this.goals[o] = [];
+  }
+  if (_.isUndefined(this.goals[o][n])) {
+      this.goals[o][n] = [];
+  }
+  this.goals[o][n].push({
+      piece: Dagaz.find(this.pieceNames, piece),
+      positions: pos
+  });
 }
 
 ZrfDesign.prototype.getTemplate = function(ix) {
@@ -1126,6 +1141,30 @@ function ZrfBoard(game) {
   this.forks    = [];
   this.moves    = [];
   this.player   = 1;
+}
+
+ZrfBoard.prototype.checkGoals = function(design) {
+  var r = 0;
+  _.each(_.keys(design.goals), function(player) {
+     _.each(design.goals[player], function(goal) {
+        var board = this;
+        var s = _.reduce(goal, function(acc, g) {
+            var type = g.piece;
+            if (!_.reduce(g.positions, function(acc, pos) {
+               var piece = board.getPiece(pos);
+               if ((piece !== null) && 
+                   (piece.player == player) &&
+                   (piece.type == type)) return true;
+               return acc;
+            }, false)) return false;
+            return acc;
+        }, true);
+        if (s != 0) {
+            r = (player == this.player) ? s : -s; 
+        }
+     }, this);
+  }, this);
+  return r;
 }
 
 ZrfBoard.prototype.setup = function(view) {

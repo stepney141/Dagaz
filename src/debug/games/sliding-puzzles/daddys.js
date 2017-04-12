@@ -53,13 +53,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("c1", [-1, 1, 0, -4]);
     design.addPosition("d1", [-1, 0, 0, -4]);
 
-
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
     design.addCommand(0, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
-
 
     design.addPiece("R0110F1", 0);
     design.addMove(0, 0, [3], 0);
@@ -187,6 +185,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("You", "B10008", 15);
     design.setup("You", "B01009", 18);
     design.setup("You", "B10009", 19);
+
+    design.goal(0, "You", "R0110F1", [12]);
+    design.goal(0, "You", "R1010F1", [13]);
+    design.goal(0, "You", "R0101F1", [16]);
+    design.goal(0, "You", "R1001F1", [17]);
 }
 
 Dagaz.View.configure = function(view) {

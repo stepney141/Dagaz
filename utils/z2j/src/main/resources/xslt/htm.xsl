@@ -73,6 +73,7 @@
 <script src="http://underscorejs.ru/underscore-min.js"></script><xsl:text>
 </xsl:text><script src="../../kernel/dagaz.js"></script><xsl:text>
 </xsl:text><script src="../../kernel/model/zrf-model.js"></script><xsl:text>
+</xsl:text><script src="../../kernel/model/zobrist.js"></script><xsl:text>
 </xsl:text><script src="../../kernel/view/2d/2d-view.js"></script><xsl:text>
 </xsl:text>
 <xsl:for-each select="option[not (name = preceding-sibling::option/name)]">

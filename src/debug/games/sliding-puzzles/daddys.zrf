@@ -58,4 +58,21 @@
          (B01009 c1) (B10009 d1) 
      )
   )
+
+  (win-condition (You) (and 
+     (absolute-config R0110F1 (a2))
+     (absolute-config R1010F1 (b2))
+     (absolute-config R0101F1 (a1))
+     (absolute-config R1001F1 (b1))
+  ))
+)
+
+(variant
+  (title "Daddy's puzzle")
+  (win-condition (You) (and 
+     (absolute-config R0110F1 (c2))
+     (absolute-config R1010F1 (d2))
+     (absolute-config R0101F1 (c1))
+     (absolute-config R1001F1 (d1))
+  ))
 )

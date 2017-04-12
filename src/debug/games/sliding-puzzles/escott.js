@@ -113,13 +113,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("g1", [-1, 1, 0, -8]);
     design.addPosition("h1", [-1, 0, 0, -8]);
 
-
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
     design.addCommand(0, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
-
 
     design.addPiece("HBR1", 0);
     design.addMove(0, 0, [3], 0);
@@ -533,6 +531,39 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("You", "HBL10", 69);
     design.setup("You", "HTR10", 76);
     design.setup("You", "HTL10", 77);
+
+    design.goal(0, "You", "HBR7", [0]);
+    design.goal(0, "You", "HBLR7", [1]);
+    design.goal(0, "You", "HBLR7", [2]);
+    design.goal(0, "You", "HBL7", [3]);
+    design.goal(0, "You", "HTR7", [8]);
+    design.goal(0, "You", "HTLR7", [9]);
+    design.goal(0, "You", "HBLC7", [10]);
+    design.goal(0, "You", "HTBL7", [11]);
+    design.goal(0, "You", "HTBR7", [18]);
+    design.goal(0, "You", "HTBL7", [19]);
+    design.goal(0, "You", "HTR7", [26]);
+    design.goal(0, "You", "HTL7", [27]);
+    design.goal(0, "You", "HBR10", [16]);
+    design.goal(0, "You", "HBL10", [17]);
+    design.goal(0, "You", "HTR10", [24]);
+    design.goal(0, "You", "HTL10", [25]);
+    design.goal(0, "You", "HBR1", [52]);
+    design.goal(0, "You", "HBL1", [53]);
+    design.goal(0, "You", "HTBR1", [60]);
+    design.goal(0, "You", "HTBL1", [61]);
+    design.goal(0, "You", "HTBR1", [68]);
+    design.goal(0, "You", "HTRC1", [69]);
+    design.goal(0, "You", "HBLR1", [70]);
+    design.goal(0, "You", "HBL1", [71]);
+    design.goal(0, "You", "HTR1", [76]);
+    design.goal(0, "You", "HTLR1", [77]);
+    design.goal(0, "You", "HTLR1", [78]);
+    design.goal(0, "You", "HTL1", [79]);
+    design.goal(0, "You", "HBR2", [54]);
+    design.goal(0, "You", "HBL2", [55]);
+    design.goal(0, "You", "HTR2", [62]);
+    design.goal(0, "You", "HTL2", [63]);
 }
 
 Dagaz.View.configure = function(view) {
