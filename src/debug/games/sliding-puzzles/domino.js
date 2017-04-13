@@ -89,282 +89,329 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
     design.addPiece("HB1", 0);
+    design.addAttribute(0, 0, 1);
     design.addMove(0, 0, [3], 0);
     design.addMove(0, 0, [2], 0);
     design.addMove(0, 0, [0], 0);
     design.addMove(0, 0, [1], 0);
 
     design.addPiece("HT1", 1);
+    design.addAttribute(1, 0, 1);
     design.addMove(1, 0, [3], 0);
     design.addMove(1, 0, [2], 0);
     design.addMove(1, 0, [0], 0);
     design.addMove(1, 0, [1], 0);
 
     design.addPiece("HB2", 2);
+    design.addAttribute(2, 0, 2);
     design.addMove(2, 0, [3], 0);
     design.addMove(2, 0, [2], 0);
     design.addMove(2, 0, [0], 0);
     design.addMove(2, 0, [1], 0);
 
     design.addPiece("HT2", 3);
+    design.addAttribute(3, 0, 2);
     design.addMove(3, 0, [3], 0);
     design.addMove(3, 0, [2], 0);
     design.addMove(3, 0, [0], 0);
     design.addMove(3, 0, [1], 0);
 
     design.addPiece("HR3", 4);
+    design.addAttribute(4, 0, 3);
     design.addMove(4, 0, [3], 0);
     design.addMove(4, 0, [2], 0);
     design.addMove(4, 0, [0], 0);
     design.addMove(4, 0, [1], 0);
 
     design.addPiece("HL3", 5);
+    design.addAttribute(5, 0, 3);
     design.addMove(5, 0, [3], 0);
     design.addMove(5, 0, [2], 0);
     design.addMove(5, 0, [0], 0);
     design.addMove(5, 0, [1], 0);
 
     design.addPiece("HB4", 6);
+    design.addAttribute(6, 0, 4);
     design.addMove(6, 0, [3], 0);
     design.addMove(6, 0, [2], 0);
     design.addMove(6, 0, [0], 0);
     design.addMove(6, 0, [1], 0);
 
     design.addPiece("HT4", 7);
+    design.addAttribute(7, 0, 4);
     design.addMove(7, 0, [3], 0);
     design.addMove(7, 0, [2], 0);
     design.addMove(7, 0, [0], 0);
     design.addMove(7, 0, [1], 0);
 
     design.addPiece("HR5", 8);
+    design.addAttribute(8, 0, 5);
     design.addMove(8, 0, [3], 0);
     design.addMove(8, 0, [2], 0);
     design.addMove(8, 0, [0], 0);
     design.addMove(8, 0, [1], 0);
 
     design.addPiece("HL5", 9);
+    design.addAttribute(9, 0, 5);
     design.addMove(9, 0, [3], 0);
     design.addMove(9, 0, [2], 0);
     design.addMove(9, 0, [0], 0);
     design.addMove(9, 0, [1], 0);
 
     design.addPiece("HB6", 10);
+    design.addAttribute(10, 0, 6);
     design.addMove(10, 0, [3], 0);
     design.addMove(10, 0, [2], 0);
     design.addMove(10, 0, [0], 0);
     design.addMove(10, 0, [1], 0);
 
     design.addPiece("HT6", 11);
+    design.addAttribute(11, 0, 6);
     design.addMove(11, 0, [3], 0);
     design.addMove(11, 0, [2], 0);
     design.addMove(11, 0, [0], 0);
     design.addMove(11, 0, [1], 0);
 
     design.addPiece("HB7", 12);
+    design.addAttribute(12, 0, 7);
     design.addMove(12, 0, [3], 0);
     design.addMove(12, 0, [2], 0);
     design.addMove(12, 0, [0], 0);
     design.addMove(12, 0, [1], 0);
 
     design.addPiece("HT7", 13);
+    design.addAttribute(13, 0, 7);
     design.addMove(13, 0, [3], 0);
     design.addMove(13, 0, [2], 0);
     design.addMove(13, 0, [0], 0);
     design.addMove(13, 0, [1], 0);
 
     design.addPiece("HR8", 14);
+    design.addAttribute(14, 0, 8);
     design.addMove(14, 0, [3], 0);
     design.addMove(14, 0, [2], 0);
     design.addMove(14, 0, [0], 0);
     design.addMove(14, 0, [1], 0);
 
     design.addPiece("HL8", 15);
+    design.addAttribute(15, 0, 8);
     design.addMove(15, 0, [3], 0);
     design.addMove(15, 0, [2], 0);
     design.addMove(15, 0, [0], 0);
     design.addMove(15, 0, [1], 0);
 
     design.addPiece("HB9", 16);
+    design.addAttribute(16, 0, 9);
     design.addMove(16, 0, [3], 0);
     design.addMove(16, 0, [2], 0);
     design.addMove(16, 0, [0], 0);
     design.addMove(16, 0, [1], 0);
 
     design.addPiece("HT9", 17);
+    design.addAttribute(17, 0, 9);
     design.addMove(17, 0, [3], 0);
     design.addMove(17, 0, [2], 0);
     design.addMove(17, 0, [0], 0);
     design.addMove(17, 0, [1], 0);
 
     design.addPiece("HB10", 18);
+    design.addAttribute(18, 0, 10);
     design.addMove(18, 0, [3], 0);
     design.addMove(18, 0, [2], 0);
     design.addMove(18, 0, [0], 0);
     design.addMove(18, 0, [1], 0);
 
     design.addPiece("HT10", 19);
+    design.addAttribute(19, 0, 10);
     design.addMove(19, 0, [3], 0);
     design.addMove(19, 0, [2], 0);
     design.addMove(19, 0, [0], 0);
     design.addMove(19, 0, [1], 0);
 
     design.addPiece("HB11", 20);
+    design.addAttribute(20, 0, 11);
     design.addMove(20, 0, [3], 0);
     design.addMove(20, 0, [2], 0);
     design.addMove(20, 0, [0], 0);
     design.addMove(20, 0, [1], 0);
 
     design.addPiece("HT11", 21);
+    design.addAttribute(21, 0, 11);
     design.addMove(21, 0, [3], 0);
     design.addMove(21, 0, [2], 0);
     design.addMove(21, 0, [0], 0);
     design.addMove(21, 0, [1], 0);
 
     design.addPiece("HB12", 22);
+    design.addAttribute(22, 0, 12);
     design.addMove(22, 0, [3], 0);
     design.addMove(22, 0, [2], 0);
     design.addMove(22, 0, [0], 0);
     design.addMove(22, 0, [1], 0);
 
     design.addPiece("HT12", 23);
+    design.addAttribute(23, 0, 12);
     design.addMove(23, 0, [3], 0);
     design.addMove(23, 0, [2], 0);
     design.addMove(23, 0, [0], 0);
     design.addMove(23, 0, [1], 0);
 
     design.addPiece("HB13", 24);
+    design.addAttribute(24, 0, 13);
     design.addMove(24, 0, [3], 0);
     design.addMove(24, 0, [2], 0);
     design.addMove(24, 0, [0], 0);
     design.addMove(24, 0, [1], 0);
 
     design.addPiece("HT13", 25);
+    design.addAttribute(25, 0, 13);
     design.addMove(25, 0, [3], 0);
     design.addMove(25, 0, [2], 0);
     design.addMove(25, 0, [0], 0);
     design.addMove(25, 0, [1], 0);
 
     design.addPiece("HR14", 26);
+    design.addAttribute(26, 0, 14);
     design.addMove(26, 0, [3], 0);
     design.addMove(26, 0, [2], 0);
     design.addMove(26, 0, [0], 0);
     design.addMove(26, 0, [1], 0);
 
     design.addPiece("HL14", 27);
+    design.addAttribute(27, 0, 14);
     design.addMove(27, 0, [3], 0);
     design.addMove(27, 0, [2], 0);
     design.addMove(27, 0, [0], 0);
     design.addMove(27, 0, [1], 0);
 
     design.addPiece("HB15", 28);
+    design.addAttribute(28, 0, 15);
     design.addMove(28, 0, [3], 0);
     design.addMove(28, 0, [2], 0);
     design.addMove(28, 0, [0], 0);
     design.addMove(28, 0, [1], 0);
 
     design.addPiece("HT15", 29);
+    design.addAttribute(29, 0, 15);
     design.addMove(29, 0, [3], 0);
     design.addMove(29, 0, [2], 0);
     design.addMove(29, 0, [0], 0);
     design.addMove(29, 0, [1], 0);
 
     design.addPiece("HR16", 30);
+    design.addAttribute(30, 0, 16);
     design.addMove(30, 0, [3], 0);
     design.addMove(30, 0, [2], 0);
     design.addMove(30, 0, [0], 0);
     design.addMove(30, 0, [1], 0);
 
     design.addPiece("HL16", 31);
+    design.addAttribute(31, 0, 16);
     design.addMove(31, 0, [3], 0);
     design.addMove(31, 0, [2], 0);
     design.addMove(31, 0, [0], 0);
     design.addMove(31, 0, [1], 0);
 
     design.addPiece("HR17", 32);
+    design.addAttribute(32, 0, 17);
     design.addMove(32, 0, [3], 0);
     design.addMove(32, 0, [2], 0);
     design.addMove(32, 0, [0], 0);
     design.addMove(32, 0, [1], 0);
 
     design.addPiece("HL17", 33);
+    design.addAttribute(33, 0, 17);
     design.addMove(33, 0, [3], 0);
     design.addMove(33, 0, [2], 0);
     design.addMove(33, 0, [0], 0);
     design.addMove(33, 0, [1], 0);
 
     design.addPiece("HR18", 34);
+    design.addAttribute(34, 0, 18);
     design.addMove(34, 0, [3], 0);
     design.addMove(34, 0, [2], 0);
     design.addMove(34, 0, [0], 0);
     design.addMove(34, 0, [1], 0);
 
     design.addPiece("HL18", 35);
+    design.addAttribute(35, 0, 18);
     design.addMove(35, 0, [3], 0);
     design.addMove(35, 0, [2], 0);
     design.addMove(35, 0, [0], 0);
     design.addMove(35, 0, [1], 0);
 
     design.addPiece("HR19", 36);
+    design.addAttribute(36, 0, 19);
     design.addMove(36, 0, [3], 0);
     design.addMove(36, 0, [2], 0);
     design.addMove(36, 0, [0], 0);
     design.addMove(36, 0, [1], 0);
 
     design.addPiece("HL19", 37);
+    design.addAttribute(37, 0, 19);
     design.addMove(37, 0, [3], 0);
     design.addMove(37, 0, [2], 0);
     design.addMove(37, 0, [0], 0);
     design.addMove(37, 0, [1], 0);
 
     design.addPiece("HR20", 38);
+    design.addAttribute(38, 0, 20);
     design.addMove(38, 0, [3], 0);
     design.addMove(38, 0, [2], 0);
     design.addMove(38, 0, [0], 0);
     design.addMove(38, 0, [1], 0);
 
     design.addPiece("HL20", 39);
+    design.addAttribute(39, 0, 20);
     design.addMove(39, 0, [3], 0);
     design.addMove(39, 0, [2], 0);
     design.addMove(39, 0, [0], 0);
     design.addMove(39, 0, [1], 0);
 
     design.addPiece("HR21", 40);
+    design.addAttribute(40, 0, 21);
     design.addMove(40, 0, [3], 0);
     design.addMove(40, 0, [2], 0);
     design.addMove(40, 0, [0], 0);
     design.addMove(40, 0, [1], 0);
 
     design.addPiece("HL21", 41);
+    design.addAttribute(41, 0, 21);
     design.addMove(41, 0, [3], 0);
     design.addMove(41, 0, [2], 0);
     design.addMove(41, 0, [0], 0);
     design.addMove(41, 0, [1], 0);
 
     design.addPiece("HR22", 42);
+    design.addAttribute(42, 0, 22);
     design.addMove(42, 0, [3], 0);
     design.addMove(42, 0, [2], 0);
     design.addMove(42, 0, [0], 0);
     design.addMove(42, 0, [1], 0);
 
     design.addPiece("HL22", 43);
+    design.addAttribute(43, 0, 22);
     design.addMove(43, 0, [3], 0);
     design.addMove(43, 0, [2], 0);
     design.addMove(43, 0, [0], 0);
     design.addMove(43, 0, [1], 0);
 
     design.addPiece("HR23", 44);
+    design.addAttribute(44, 0, 23);
     design.addMove(44, 0, [3], 0);
     design.addMove(44, 0, [2], 0);
     design.addMove(44, 0, [0], 0);
     design.addMove(44, 0, [1], 0);
 
     design.addPiece("HL23", 45);
+    design.addAttribute(45, 0, 23);
     design.addMove(45, 0, [3], 0);
     design.addMove(45, 0, [2], 0);
     design.addMove(45, 0, [0], 0);
     design.addMove(45, 0, [1], 0);
 
     design.addPiece("H24", 46);
+    design.addAttribute(46, 0, 24);
     design.addMove(46, 0, [3], 0);
     design.addMove(46, 0, [2], 0);
     design.addMove(46, 0, [0], 0);

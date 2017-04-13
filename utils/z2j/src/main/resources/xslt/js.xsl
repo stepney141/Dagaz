@@ -45,7 +45,9 @@ Dagaz.Model.BuildDesign = function(design) {<xsl:call-template name="apply-optio
 <xsl:for-each select="/game/piece">
     <xsl:variable name="ix" select="position() - 1"/>
 
-    design.addPiece("<xsl:value-of select="name"/>", <xsl:value-of select="$ix"/>);<xsl:for-each select="drop">
+    design.addPiece("<xsl:value-of select="name"/>", <xsl:value-of select="$ix"/>);<xsl:for-each select="attr">
+    design.addAttribute(<xsl:value-of select="$ix"/>, <xsl:value-of select="name"/>, <xsl:value-of select="value"/>);</xsl:for-each>
+<xsl:for-each select="drop">
     design.addDrop(<xsl:value-of select="$ix"/>, <xsl:value-of select="template"/>, [<xsl:call-template name="apply-params"/>], <xsl:value-of select="mode"/>);</xsl:for-each>
     <xsl:for-each select="move">
     design.addMove(<xsl:value-of select="$ix"/>, <xsl:value-of select="template"/>, [<xsl:call-template name="apply-params"/>], <xsl:value-of select="mode"/>);</xsl:for-each>

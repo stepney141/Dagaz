@@ -55,78 +55,91 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
     design.addPiece("R00001", 0);
+    design.addAttribute(0, 0, 1);
     design.addMove(0, 0, [3], 0);
     design.addMove(0, 0, [2], 0);
     design.addMove(0, 0, [0], 0);
     design.addMove(0, 0, [1], 0);
 
     design.addPiece("R0010C2", 1);
+    design.addAttribute(1, 0, 2);
     design.addMove(1, 0, [3], 0);
     design.addMove(1, 0, [2], 0);
     design.addMove(1, 0, [0], 0);
     design.addMove(1, 0, [1], 0);
 
     design.addPiece("R0001P2", 2);
+    design.addAttribute(2, 0, 2);
     design.addMove(2, 0, [3], 0);
     design.addMove(2, 0, [2], 0);
     design.addMove(2, 0, [0], 0);
     design.addMove(2, 0, [1], 0);
 
     design.addPiece("R0100C3", 3);
+    design.addAttribute(3, 0, 3);
     design.addMove(3, 0, [3], 0);
     design.addMove(3, 0, [2], 0);
     design.addMove(3, 0, [0], 0);
     design.addMove(3, 0, [1], 0);
 
     design.addPiece("R1000C3", 4);
+    design.addAttribute(4, 0, 3);
     design.addMove(4, 0, [3], 0);
     design.addMove(4, 0, [2], 0);
     design.addMove(4, 0, [0], 0);
     design.addMove(4, 0, [1], 0);
 
     design.addPiece("R0010P4", 5);
+    design.addAttribute(5, 0, 4);
     design.addMove(5, 0, [3], 0);
     design.addMove(5, 0, [2], 0);
     design.addMove(5, 0, [0], 0);
     design.addMove(5, 0, [1], 0);
 
     design.addPiece("R0001C4", 6);
+    design.addAttribute(6, 0, 4);
     design.addMove(6, 0, [3], 0);
     design.addMove(6, 0, [2], 0);
     design.addMove(6, 0, [0], 0);
     design.addMove(6, 0, [1], 0);
 
     design.addPiece("R0000P5", 7);
+    design.addAttribute(7, 0, 5);
     design.addMove(7, 0, [3], 0);
     design.addMove(7, 0, [2], 0);
     design.addMove(7, 0, [0], 0);
     design.addMove(7, 0, [1], 0);
 
     design.addPiece("R0100P6", 8);
+    design.addAttribute(8, 0, 6);
     design.addMove(8, 0, [3], 0);
     design.addMove(8, 0, [2], 0);
     design.addMove(8, 0, [0], 0);
     design.addMove(8, 0, [1], 0);
 
     design.addPiece("R1000P6", 9);
+    design.addAttribute(9, 0, 6);
     design.addMove(9, 0, [3], 0);
     design.addMove(9, 0, [2], 0);
     design.addMove(9, 0, [0], 0);
     design.addMove(9, 0, [1], 0);
 
     design.addPiece("R0000C7", 10);
+    design.addAttribute(10, 0, 7);
     design.addMove(10, 0, [3], 0);
     design.addMove(10, 0, [2], 0);
     design.addMove(10, 0, [0], 0);
     design.addMove(10, 0, [1], 0);
 
     design.addPiece("R00008", 11);
+    design.addAttribute(11, 0, 8);
     design.addMove(11, 0, [3], 0);
     design.addMove(11, 0, [2], 0);
     design.addMove(11, 0, [0], 0);
     design.addMove(11, 0, [1], 0);
 
     design.addPiece("R00009", 12);
+    design.addAttribute(12, 0, 9);
     design.addMove(12, 0, [3], 0);
     design.addMove(12, 0, [2], 0);
     design.addMove(12, 0, [0], 0);

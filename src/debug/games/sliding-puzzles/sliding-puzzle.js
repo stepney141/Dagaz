@@ -26,8 +26,8 @@ Dagaz.Model.CheckInvariants = function(board) {
    .filter(function(move) {
        if (move.actions.length != 1) return false;
        var action = move.actions[0];
-       if (action[0] === null) return false;
-       if (action[1] === null) return false;
+       if (!action[0]) return false;
+       if (!action[1]) return false;
        if (action[0][0] == action[1][0]) return false;
        if (board.getPiece(action[0][0]) === null) return false;
        return true;
@@ -46,13 +46,13 @@ Dagaz.Model.CheckInvariants = function(board) {
             return isEqual(board.getPiece(pos).getValue(0), value);
          })
         .each(function(pos) {
-            var piece = ;
-            if ((pos + delta < 0) || 
-                (pos + delta >= design.positions.length) ||
-                !isEmpty(board, pos + delta, value)) {
+            var target = pos + delta;
+            if ((target < 0) || 
+                (target >= design.positions.length) ||
+                !isEmpty(board, target, value)) {
                 move.failed = true;
             } else {
-                move.movePiece(pos, pos + delta, null, 1);
+                move.movePiece(pos, target, null, 1);
          });
        } else {
             move.failed = true;

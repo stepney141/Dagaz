@@ -39,6 +39,7 @@ public class Game extends AbstractDoc implements IGame {
 	private final static String     DROP_TAG = "drop";
 	private final static String TEMPLATE_TAG = "template";
 	private final static String    PARAM_TAG = "param";
+	private final static String     ATTR_TAG = "attr";
  	private final static String      CMD_TAG = "c";
  	private final static String        D_TAG = "d";
  	private final static String        I_TAG = "i";
@@ -56,6 +57,7 @@ public class Game extends AbstractDoc implements IGame {
 	private final static String     WIN_XP   = "/game/win-condition";
 	private final static String     ABS_XP   = "and/absolute-config | absolute-config";
 	private final static String     IMG_XP   = "image/*";
+	private final static String    ATTR_XP   = "attribute";
 	private final static String   FIRST_XP   = "*[1]";
 	private final static String  SECOND_XP   = "*[2]";
 	
@@ -382,6 +384,17 @@ public class Game extends AbstractDoc implements IGame {
 			p.close();
 			dest.open(PIECE_TAG);
 			extractImages(dest, n);
+			NodeIterator kl = XPathAPI.selectNodeIterator(n, ATTR_XP);
+			Node k;
+			while ((k = kl.nextNode())!= null) {
+				dest.open(ATTR_TAG);
+				String name = getValue(k, FIRST_XP);
+				String value = getValue(k, SECOND_XP);
+				Integer ix = getNameIndex(name);
+				dest.open(NAME_TAG); dest.add(Integer.toString(ix)); dest.close();
+				dest.open(VALUE_TAG); dest.add(value); dest.close();
+				dest.close();
+			}
 			p.extract(dest);
 			List<Move> ml = moves.get(p.getIx());
 			if (ml != null) {
