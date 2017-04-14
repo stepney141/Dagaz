@@ -700,6 +700,10 @@ ZrfDesign.prototype.addPlayer = function(player, symmetries) {
   this.playerNames.push(player);
 }
 
+ZrfDesign.prototype.isPuzzle = function() {
+  return _.chain(_.keys(this.players)).max().value() == 1;
+}
+
 ZrfDesign.prototype.nextPlayer = function(player) {
   if (player + 1 >= this.playerNames.length) {
       return 1;
@@ -1454,17 +1458,7 @@ ZrfBoard.prototype.apply = function(move) {
   var r = this.copy();
   delete r.lastf;
   delete r.lastt;
-  var mx = _.reduce(move.actions, function (mx, action) {
-      if (action[3] > mx) {
-          mx = action[3];
-      }
-      return mx;
-  }, 1);
-  _.chain(_.range(1, mx + 1))
-   .push(-1)
-   .each(function (part) {
-      move.applyTo(r, part);
-   }, this);
+  move.applyAll(r);
   r.player = this.game.design.nextOrder(this.player);
   r.move = move;
   return r;
@@ -1717,6 +1711,23 @@ ZrfMove.prototype.applyTo = function(obj, part) {
       obj.commit();
   }
   return r;
+}
+
+ZrfMove.prototype.applyAll = function(obj) {
+  var mx = _.chain(this.actions)
+   .map(function(action) {
+      return action[3];
+    })
+   .push(0)
+   .max()
+   .value();
+  if (mx > 0) {
+      _.chain(_.range(1, mx + 1))
+       .push(-1)
+       .each(function (part) {
+          this.applyTo(obj, part);
+       }, this);
+  }
 }
 
 ZrfMove.prototype.movePiece = function(from, to, piece, part) {

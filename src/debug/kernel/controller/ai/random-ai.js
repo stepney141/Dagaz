@@ -33,16 +33,17 @@ RandomAi.prototype.getMove = function(ctx) {
   }
   var len = ctx.childs.length;
   if (ctx.childs.length == 0) {
-      return { ai: "nothing" };
+      return { done: true, ai: "nothing" };
   }
   if (ctx.childs.length == 1) {
-      return { move: ctx.childs[0].move, ai: "once" };
+      return { done: true, move: ctx.childs[0].move, ai: "once" };
   }
   if (_.isUndefined(this.params.rand)) {
       this.params.rand = _.random;
   }
   var ix = this.params.rand(0, len - 1);
   return {
+      done: true,
       move: ctx.childs[ix].move,
       ai:   "random"
   };

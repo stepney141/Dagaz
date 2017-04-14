@@ -11,8 +11,17 @@ function MaxMinAi(params, parent) {
   if (_.isUndefined(this.params.MAX_DEEP)) {
       this.params.MAX_DEEP = 5;
   }
-  if (_.isUndefined(this.params.TIME_FRAME)) {
-      this.params.TIME_FRAME = 300;
+  if (_.isUndefined(this.params.AI_FRAME)) {
+      this.params.AI_FRAME = 300;
+  }
+  if (_.isUndefined(this.params.MATERIAL_WEIGHT)) {
+      this.params.MATERIAL_WEIGHT = 1;
+  }
+  if (_.isUndefined(this.params.MOBILITY_WEIGHT)) {
+      this.params.MOBILITY_WEIGHT = 0;
+  }
+  if (_.isUndefined(this.params.NOISE_FACTOR)) {
+      this.params.NOISE_FACTOR = 5;
   }
 }
 
@@ -218,15 +227,15 @@ MaxMinAi.prototype.setContext = function(ctx, board) {
 
 MaxMinAi.prototype.getMove = function(ctx) {
   var timestamp = Date.now();
-  while (Date.now() - timestamp < this.params.TIME_FRAME) {
+  while (Date.now() - timestamp < this.params.AI_FRAME) {
       var frame = this.shedule(ctx);
       if (frame === null) break;
       this.expand(ctx, frame);
       if (ctx.childs.length == 0) {
-          return { ai: "nothing" };
+          return { done: true, ai: "nothing" };
       }
       if (ctx.childs.length == 1) {
-          return { move: ctx.childs[0].move, ai: "once" };
+          return { done: true, move: ctx.childs[0].move, ai: "once" };
       }
   }
   this.getEval(ctx, ctx);

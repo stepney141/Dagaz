@@ -13,6 +13,10 @@ Dagaz.Model.getMoveList = function(board) {
   return new MoveList(board);
 }
 
+MoveList.prototype.getLevel = function() {
+  return this.level;
+}
+
 MoveList.prototype.getMoves = function() {
   return _.chain(this.stack.peekBack())
    .map(function(ix) {

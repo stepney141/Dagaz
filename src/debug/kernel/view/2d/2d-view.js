@@ -392,12 +392,12 @@ Dagaz.View.showMarks = function(view, ctx) {
 View2D.prototype.draw = function(canvas) {
   if (!isConfigured) {
       Dagaz.View.configure(this);
-      var board = Dagaz.Model.getInitBoard();
-      board.setup(this);
-      isConfigured = true;
       if (this.controller) {
+          var board = this.controller.getBoard();
+          board.setup(this);
           this.controller.done();
       }
+      isConfigured = true;
   }
   if (this.allResLoaded() && !isValid) {
       var ctx = canvas.getContext("2d");

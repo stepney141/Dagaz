@@ -54,6 +54,7 @@ BruteforceAi.prototype.getMove = function(ctx) {
               moves.unshift(back);
           }
           return {
+              done: true,
               move: m,
               ai:   "bruteforce"
           };
@@ -61,6 +62,7 @@ BruteforceAi.prototype.getMove = function(ctx) {
   }
   if (back !== null) {
       return {
+         done: true,
          move: back,
          ai:   "back"
       };
@@ -68,7 +70,7 @@ BruteforceAi.prototype.getMove = function(ctx) {
   if (parent !== null) {
       return parent.getMove(ctx);
   }
-  return { ai: "nothing" };
+  return { done: true, ai: "nothing" };
 }
 
 })();
