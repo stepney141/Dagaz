@@ -13,91 +13,6 @@ Model.Game.checkVersion = function(design, name, value) {
   }
 }
 
-var checkAlive = function(group, player, neigbors) {
-  var design = Model.Game.design;
-  for (var i = 0; i < group.length; i++) {
-       var pos = group[i];
-       for (var j = 0; j < design.dirs.length; j++) {
-            var p = design.navigate(player, pos, design.dirs[j]);
-            var ix = Model.find(neigbors, p);
-            if (ix >= 0) {
-                neigbors[ix] = null;
-            }
-            if (p !== null) {
-                var piece = board.getPiece(p);
-                if (piece === null) {
-                    return true;
-                } else {
-                    ix = Model.find(group, p);
-                    if ((ix < 0) && (piece.player == player)) {
-                        group.push(p);
-                    }
-                }
-            }
-       }
-  }
-  return false;
-}
-
-var CheckInvariants = Model.Game.CheckInvariants;
-
-Model.Game.CheckInvariants = function(board) {
-  for (var i in board.moves) {
-       var suicide = true;
-       var group = [];
-       var m = board.moves[i];
-       if ((m.actions.length == 1) && (m.actions[0][0] === null) && (m.actions[0][1] !== null)) {
-           var pos    = m.actions[0][1][0];
-           var design = Model.Game.design;
-           var neigbors = [];
-           for (var j = 0; j < design.dirs.length; j++) {
-                var p = design.navigate(board.player, pos, design.dirs[j]);
-                if (p !== null) {
-                    var piece = board.getPiece(p);
-                    if (piece !== null) {
-                        if (piece.player == board.player) {
-                            group.push(p);
-                        } else {
-                            neigbors.push(p);
-                        }
-                    } else {
-                        suicide = false;
-                    }
-                }
-           }
-           while (neigbors.length > 0) {
-                var p = neigbors.pop();
-                if (p !== null) {
-                    var q = board.getPiece(p);
-                    var g = [ p ];
-                    if (!checkAlive(g, q.player, neigbors)) {
-                        suicide = false;
-                        while (g.length > 0) {
-                            m.capturePiece(g.pop(), 1);
-                        }
-                    }
-                }
-           }
-       }
-       if (suicide) {
-           if (checkAlive(group, board.player, neigbors)) {
-               suicide = false;
-           }
-       }
-       if (suicide) {
-           if (!suicideMode || (group.length == 0)) {
-               m.failed = true;
-           } else {
-               m.capturePiece(pos, 1);
-               while (group.length > 0) {
-                  m.capturePiece(g.pop(), 1);
-               }
-           }
-       }
-  }
-  CheckInvariants(board);
-}
-
 Model.Move.moveToString = function(move, part) {
   if (move.actions.length == 0) return "";
   return _.chain(move.actions)
@@ -109,6 +24,108 @@ Model.Move.moveToString = function(move, part) {
     })
    .first()
    .value();
+}
+
+var expand = function(design, board, group, player) {
+   for (var i = 0; i < group.length; i++) {
+        var pos = group[i];
+        _.each(_.range(design.dirs.length), function(dir) {
+            var p = design.navigate(board.player, pos, dir);
+            if (p !== null) {
+                var piece = board.getPiece(p);
+                if ((piece !== null) && (piece.player == player)) {
+                    if (_.indexOf(group, p) < 0) group.push(p);
+                }
+            }
+        });
+   }
+}
+
+var capture = function(move, group) {
+   _.each(group, function(pos) {
+        move.capturePiece(pos);
+   });
+}
+
+var change = function(move, board, group, dame, cnt) {
+   _.each(group, function(pos) {
+        var piece = board.getPiece(pos);
+        if (piece !== null) {
+            piece = piece.setValue(0, dame);
+            if (cnt) {
+                piece = piece.setValue(1, cnt);
+            }
+            move.movePiece(pos, pos, piece);
+        }
+   });
+}
+
+var CheckInvariants = Model.Game.CheckInvariants;
+
+Model.Game.CheckInvariants = function(board) {
+  var design = Model.Game.design;
+  _.chain(board.moves)
+   .filter(function(move) {
+      return actions.length == 1;
+    })
+   .each(function(move) {
+      var dame   = -1;
+      var cnt    = 1;
+      var pos    = move.actions[0][1][0];
+      var friend = [];
+      var enemy  = [];
+      _.each(_.range(design.dirs.length), function(dir) {
+          var p = design.navigate(board.player, pos, dir);
+          if (p !== null) {
+              var piece = board.getPiece(p);
+              if (piece === null) {
+                  dame++;
+              } else {
+                  if (piece.player != board.player) {
+                      if (_.indexOf(enemy, p) < 0) {
+                          var d = piece.getValue(0);
+                          var g = [ p ];
+                          expand(design, board, g, piece.player);
+                          if (d <= 1) {
+                              capture(move, g);
+                              dame++;
+                          } else {
+                              change(move, board, g, d - 1);
+                          }
+                          _.each(g, function(pos) {
+                               enemy.push(pos);
+                          });
+                      }
+                  } else {
+                      if (_.indexOf(friend, p) < 0) {
+                          var g = [ p ];
+                          expand(design, board, g, board.player);
+                          dame += piece.getValue(0);
+                          cnt  += piece.getValue(1);
+                          _.each(g, function(pos) {
+                               friend.push(pos);
+                          });
+                      }
+                  }
+              }
+          }
+      });
+      if (dame == 0) {
+          if (!suicideMode || (cnt == 1)) {
+              move.failed = true;
+          } else {
+              capture(move, friend);
+              move.actions.shift();
+          }
+      } else {
+          change(move, board, friend, dame, cnt);
+          var piece = move.actions[0][2][0];
+          piece = piece.setValue(0, dame);
+          piece = piece.setValue(1, cnt);
+          move.actions[0][2][0] = piece;
+      }
+  });
+  CheckInvariants(board);
 }
 
 })();

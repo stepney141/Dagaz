@@ -132,7 +132,7 @@ MaxMinAi.prototype.getMove = function(ctx) {
   if (ctx.childs) {
       var len = ctx.childs.length;
       if (ctx.childs.length == 1) {
-          return { done: true, move: ctx.childs[0].move, ai: "sgf" };
+          return { done: true, move: ctx.childs[0].move, ai: "opening" };
       }
       if (_.isUndefined(this.params.rand)) {
           this.params.rand = _.random;
@@ -147,7 +147,7 @@ MaxMinAi.prototype.getMove = function(ctx) {
       return {
           done: true,
           move: ctx.childs[n].move,
-          ai:   "sgf"
+          ai:   "opening"
       };
   }
   if (parent !== null) {
