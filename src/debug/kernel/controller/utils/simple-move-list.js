@@ -63,9 +63,10 @@ SimpleMoveList.prototype.getAttacking = function() {
                 return action[0];
             })
            .value();
+      })
      .flatten()
+     .compact()
      .value();
-  }); 
 }
 
 SimpleMoveList.prototype.setPosition = function(pos) {
@@ -79,7 +80,7 @@ SimpleMoveList.prototype.setPosition = function(pos) {
            .size()
            .value() > 0;
       });
-      if (moves) {
+      if (moves.length > 0) {
           this.moves = moves.slice(0, 1);
           return;
       }

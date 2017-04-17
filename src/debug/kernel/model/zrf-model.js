@@ -1016,11 +1016,7 @@ Dagaz.Model.getAttrInternal = function(gen, name, pos) {
 ZrfMoveGenerator.prototype.getAttr = function(name, pos) {
   var piece = this.getPiece(pos);
   if (piece !== null) {
-      var value = piece.getValue(name);
-      if (value === null) {
-          value = this.design.getAttribute(piece.type, name);
-      }
-      return value;
+      return piece.getValue(name);
   }
   return Dagaz.Model.getAttrInternal(this, name, pos);
 }
@@ -1099,7 +1095,8 @@ ZrfPiece.prototype.getValue = function(name) {
          return this.values[name];
      }
   }
-  return null;
+  var design = Dagaz.Model.getDesign();
+  return design.getAttribute(this.type, name);
 }
 
 ZrfPiece.prototype.setValue = function(name, value) {
@@ -1145,6 +1142,7 @@ function ZrfBoard(game) {
   this.forks    = [];
   this.moves    = [];
   this.player   = 1;
+  this.changed  = [];
 }
 
 ZrfBoard.prototype.checkGoals = function(design) {
@@ -1181,9 +1179,10 @@ ZrfBoard.prototype.setup = function(view) {
 
 ZrfBoard.prototype.copy = function() {
   var r = new ZrfBoard(this.game);
-  r.parent = this;
-  r.player = this.player;
-  r.zSign  = this.zSign;
+  r.parent  = this;
+  r.player  = this.player;
+  r.zSign   = this.zSign;
+  r.reserve = this.reserve;
   _.each(_.keys(this.pieces), function(pos) {
       r.pieces[pos] = this.pieces[pos];
   }, this);
@@ -1433,13 +1432,17 @@ Dagaz.Model.noReserve = function(board, piece) {
 ZrfBoard.prototype.movePiece = function(from, to, piece) {
   this.lastf = from;
   this.lastt = to;
-  this.setPiece(from, null);
-  this.setPiece(to, (piece === null) ? this.getPiece(from) : piece);
+  if (Dagaz.find(this.changed, from) < 0) {
+      this.setPiece(from, null);
+  }
+  this.setPiece(to, (piece === null) ? this.parent.getPiece(from) : piece);
+  this.changed.push(to);
 }
 
 ZrfBoard.prototype.dropPiece = function(pos, piece) {
   Dagaz.Model.decReserve(this, piece);
   this.setPiece(pos, piece);
+  this.changed.push(pos);
 }
 
 ZrfBoard.prototype.capturePiece = function(pos) {
@@ -1450,9 +1453,14 @@ ZrfBoard.prototype.capturePiece = function(pos) {
           }
   }
   this.setPiece(pos, null);
+  this.changed = _.filter(this.changed, function(p) {
+     return p != pos; 
+  });
 }
 
-ZrfBoard.prototype.commit = function() {}
+ZrfBoard.prototype.commit = function() {
+  this.changed = [];
+}
 
 ZrfBoard.prototype.apply = function(move) {
   var r = this.copy();

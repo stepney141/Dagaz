@@ -35,24 +35,29 @@ Dagaz.Model.CheckInvariants = function(board) {
    .each(function(move) {
        var design = board.game.design;
        var action = move.actions[0];
-       var pos    = action[0][0];
-       var delta  = action[1][0] - pos;
-       var piece  = board.getPiece(pos);
+       var from   = action[0][0];
+       var delta  = action[1][0] - from;
+       var piece  = board.getPiece(from);
        var value  = piece.getValue(0);
        if (isEmpty(board, action[1][0], value)) {
        _.chain(_.range(design.positions.length))
+        .filter(function(pos) {
+            return pos != from;
+         })
         .filter(function(pos) {
             if (board.getPiece(pos) === null) return false;
             return isEqual(board.getPiece(pos).getValue(0), value);
          })
         .each(function(pos) {
             var target = pos + delta;
-            if ((target < 0) || 
+            if ((Dagaz.find(design.positions[pos], delta) < 0) ||
+                (target < 0) || 
                 (target >= design.positions.length) ||
                 !isEmpty(board, target, value)) {
                 move.failed = true;
             } else {
                 move.movePiece(pos, target, null, 1);
+            }
          });
        } else {
             move.failed = true;
@@ -61,7 +66,7 @@ Dagaz.Model.CheckInvariants = function(board) {
   CheckInvariants(board);
 }
 
-Dagaz.View.showHint  = function(view)       {}
-Dagaz.View.showMarks = function(view, ctx)  {}
+// Dagaz.View.showHint  = function(view)       {}
+// Dagaz.View.showMarks = function(view, ctx)  {}
 
 })();
