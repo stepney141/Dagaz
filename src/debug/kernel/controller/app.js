@@ -44,7 +44,7 @@ App.prototype.done = function() {
 App.prototype.setPosition = function(pos) {
   this.list.setPosition(pos);
   var moves = this.list.getMoves();
-  if (moves.length == 1) {
+  if (this.list.canDone()  && (moves.length > 0)) {
       this.move = moves[0];
       this.state = STATE.EXEC;
       return;
@@ -110,7 +110,7 @@ App.prototype.getContext = function(player) {
 App.prototype.exec = function() {
   this.view.draw(this.canvas);
   if (this.state == STATE.IDLE) {
-      var ctx = this.getContext(this.board.player);      
+      var ctx = this.getContext(this.getBoard().player);      
       var ai  = this.getAI();
       if ((ctx !== null) && (ai !== null)) {
          ai.setContext(ctx, this.board);
@@ -129,7 +129,7 @@ App.prototype.exec = function() {
   if (this.state == STATE.BUZY) {
       var ctx = this.getContext(this.board.player);
       var result = this.getAI().getMove(ctx);
-      if (!result.move) {
+      if (_.isUndefined(result.move)) {
           this.state = STATE.DONE;
           return;
       }
@@ -141,6 +141,7 @@ App.prototype.exec = function() {
   }
   if (this.state == STATE.EXEC) {
       if (!_.isUndefined(this.list)) {
+          this.list.done();
           this.view.markPositions(Dagaz.View.markType.ATTACKING, []);
           delete this.list;
       }

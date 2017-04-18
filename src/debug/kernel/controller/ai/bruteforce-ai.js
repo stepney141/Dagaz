@@ -1,5 +1,7 @@
 (function() {
 
+Dagaz.Model.checkVersion(Dagaz.Model.getDesign(), "distinct-moves", "true");
+
 function BruteforceAi(params, parent) {
   this.params = params;
   this.parent = parent;

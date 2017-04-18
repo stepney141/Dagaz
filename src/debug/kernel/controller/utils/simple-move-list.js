@@ -34,19 +34,28 @@ var isCapturing = function(action) {
 }
 
 SimpleMoveList.prototype.getPositions = function() {
-  if (_.isUndefined(this.moves)) {
-      return [];
-  } else {
-      return _.map(this.moves, function(move) {
-          return _.chain(move.actions)
-           .filter(isMove)
-           .map(function(action) {
-               return action[1][0];
-            })
-           .first()
-           .value();
-      });
+  var moves = this.board.moves;
+  if (!_.isUndefined(this.moves)) {
+      moves = this.moves;
   }
+  return _.chain(moves)
+   .map(function(move) {
+      return _.chain(move.actions)
+       .filter(isMove)
+       .slice(0, 1)
+       .map(function(action) {
+            if (_.isUndefined(this.moves)) {
+                return +action[0];
+            } else {
+                return +action[1];
+            }
+        }, this)
+       .value();
+    }, this)
+   .flatten()
+   .compact()
+   .uniq()
+   .value();
 }
 
 SimpleMoveList.prototype.getAttacking = function() {
@@ -56,45 +65,57 @@ SimpleMoveList.prototype.getAttacking = function() {
   }
   return _.chain(moves)
      .map(function(move) {
-          return 
-          _.chain(move.actions)
+          return _.chain(move.actions)
            .filter(isCapturing)
            .map(function(action) {
-                return action[0];
+                return +action[0];
             })
            .value();
       })
      .flatten()
      .compact()
+     .uniq()
      .value();
 }
 
+SimpleMoveList.prototype.canDone = function() {
+  if (_.isUndefined(this.moves)) return false;
+  return this.moves.length == 1;
+}
+
+SimpleMoveList.prototype.done = function(view) {
+  delete this.moves;
+}
+
 SimpleMoveList.prototype.setPosition = function(pos) {
+  var moves = [];
   if (!_.isUndefined(this.moves)) {
-      var moves = _.filter(this.moves, function(move) {
+      moves = _.filter(this.moves, function(move) {
           return _.chain(move.actions)
            .filter(isMove)
+           .slice(0, 1)
            .filter(function(action) {
                return action[1][0] == pos;
             })
            .size()
            .value() > 0;
       });
-      if (moves.length > 0) {
-          this.moves = moves.slice(0, 1);
-          return;
-      }
   }
-  var moves = _.filter(this.board.moves, function(move) {
+  if (moves.length > 0) {
+      this.moves = moves;
+      return;
+  }
+  moves = _.filter(this.board.moves, function(move) {
       return _.chain(move.actions)
        .filter(isMove)
+       .slice(0, 1)
        .filter(function(action) {
            return action[0][0] == pos;
         })
        .size()
        .value() > 0;
   });
-  if (moves) {
+  if (moves.length > 0) {
       this.moves = moves;
   }
 }

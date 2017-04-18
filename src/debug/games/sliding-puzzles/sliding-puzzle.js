@@ -1,10 +1,22 @@
 (function() {
 
 var checkVersion = Dagaz.Model.checkVersion;
+var distinctMode = false;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "sliding-puzzle") {
-     checkVersion(design, name, value);
+  if (name == "sliding-puzzle") {
+      if (value == "distinct") {
+          distinctMode = true;
+      }
+      if (value == "all") {
+          distinctMode = false;
+      }
+  } else {
+      if (name == "distinct-moves") {
+          distinctMode = value == "true";
+          return;
+      }
+      checkVersion(design, name, value);
   }
 }
 
@@ -17,6 +29,20 @@ var isEmpty = function(board, pos, value) {
   var piece = board.getPiece(pos);
   if (piece === null) return true;
   return isEqual(piece.getValue(0), value);
+}
+
+var isSubset = function(x, y) {
+  for (var i = 0; i < x.actions.length; i++) {
+       var action = x.actions[i];
+       if (_.chain(y.actions)
+            .filter(function(a) {
+                return a[0][0] == action[0][0] &&
+                       a[1][0] == action[1][0];
+             })
+            .size()
+            .value() == 0) return false;
+  }
+  return true;
 }
 
 var CheckInvariants = Dagaz.Model.CheckInvariants;
@@ -63,10 +89,27 @@ Dagaz.Model.CheckInvariants = function(board) {
             move.failed = true;
        }
     });
+  if (distinctMode) {
+      var moves = [];
+      _.chain(board.moves)
+       .filter(function(move) {
+            return (_.isUndefined(move.failed));
+        })
+       .each(function(move) {
+           if (_.chain(moves)
+            .filter(function(m) {
+                return isSubset(m, move) && isSubset(move, m);
+             })
+            .size()
+            .value() == 0) {
+                moves.push(move);
+           }
+        });
+      board.moves = moves;
+  }
   CheckInvariants(board);
 }
 
 // Dagaz.View.showHint  = function(view)       {}
-// Dagaz.View.showMarks = function(view, ctx)  {}
 
 })();

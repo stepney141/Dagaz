@@ -96,7 +96,7 @@
     <xsl:when test="name = 'recycle-captures'"/>
     <xsl:otherwise>
       <xsl:element name = "script">
-        <xsl:attribute name = "src">../../kernel/model/<xsl:value-of select="name"/>.js</xsl:attribute>
+        <xsl:attribute name = "src"><xsl:value-of select="name"/>.js</xsl:attribute>
       </xsl:element><xsl:text>
 </xsl:text>
     </xsl:otherwise>
