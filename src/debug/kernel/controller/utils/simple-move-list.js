@@ -52,8 +52,8 @@ SimpleMoveList.prototype.getPositions = function() {
         }, this)
        .value();
     }, this)
-   .flatten()
    .compact()
+   .flatten()
    .uniq()
    .value();
 }

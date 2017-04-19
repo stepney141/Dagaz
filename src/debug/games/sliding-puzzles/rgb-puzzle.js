@@ -317,8 +317,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("You", "R1010F1", 1);
     design.setup("You", "R0101F1", 6);
     design.setup("You", "R1001F1", 7);
-    design.setup("You", "B01002", 1);
-    design.setup("You", "B10002", 2);
+    design.setup("You", "B01002", 2);
+    design.setup("You", "B10002", 3);
     design.setup("You", "B00103", 4);
     design.setup("You", "B00013", 10);
     design.setup("You", "B00104", 5);

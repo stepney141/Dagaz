@@ -9,6 +9,8 @@ var STATE = {
     DONE: 5
 };
 
+var isDrag = false;
+
 function App(canvas, params) {
   this.design = Dagaz.Model.getDesign();
   this.canvas = canvas;
@@ -61,9 +63,26 @@ App.prototype.setPosition = function(pos) {
   }
 }
 
+App.prototype.mouseLocate = function(view, pos) {
+  if ((this.state == STATE.IDLE) && !_.isUndefined(this.list) && !isDrag) {
+      if (_.isUndefined(this.positions)) {
+          this.positions = this.list.getPositions();
+      }
+      if (_.indexOf(this.positions, pos) >= 0) {
+          Canvas.style.cursor = "pointer";
+      } else {
+          Canvas.style.cursor = "default";
+      }
+  }
+}
+
 App.prototype.mouseDown = function(view, pos) {
   if ((this.state == STATE.IDLE) && !_.isUndefined(this.list)) {
-      this.setPosition(pos);
+      if (this.list && this.positions && (_.indexOf(this.positions, pos) >= 0)) {
+          this.setPosition(pos);
+          Canvas.style.cursor = "move";
+          isDrag = true;
+      }
   }
 }
 
@@ -71,7 +90,9 @@ App.prototype.mouseUp = function(view, pos) {
   if ((this.state == STATE.IDLE) && !_.isUndefined(this.list)) {
       this.setPosition(pos);
       this.view.markPositions(Dagaz.View.markType.TARGET, []);
+      Canvas.style.cursor = "default";
   }
+  isDrag = false;
 }
 
 App.prototype.getAI = function() {
@@ -115,6 +136,7 @@ App.prototype.exec = function() {
       if ((ctx !== null) && (ai !== null)) {
          ai.setContext(ctx, this.board);
          this.state = STATE.BUZY;
+         Canvas.style.cursor = "wait";
          this.timestamp = Date.now();
       } else {
          if (_.isUndefined(this.list)) {
@@ -131,12 +153,12 @@ App.prototype.exec = function() {
       var result = this.getAI().getMove(ctx);
       if (_.isUndefined(result.move)) {
           this.state = STATE.DONE;
+          Canvas.style.cursor = "default";
           return;
       }
       if (result.done || (Date.now() - this.timestamp >= this.params.AI_WAIT)) {
           this.move  = result.move;
           this.state = STATE.EXEC;
-          return;
       }
   }
   if (this.state == STATE.EXEC) {
@@ -147,6 +169,9 @@ App.prototype.exec = function() {
       }
       this.move.applyAll(this.view);
       this.board = this.board.apply(this.move);
+      if (!_.isUndefined(this.positions)) {
+          delete this.positions;
+      }
       if (this.board.checkGoals(this.design) != 0) {
           this.state = STATE.DONE;
       } else {
