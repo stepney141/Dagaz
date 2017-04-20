@@ -40,7 +40,13 @@ Dagaz.Controller.createApp = function(canvas) {
 }
 
 App.prototype.done = function() {
-  this.state = STATE.IDLE;
+  if (this.state != STATE.DONE) {
+      this.state = STATE.IDLE;
+  } else {
+      if (this.doneMessage) {
+          alert(this.doneMessage);
+      }
+  }
 }
 
 App.prototype.setPosition = function(pos) {
@@ -49,6 +55,7 @@ App.prototype.setPosition = function(pos) {
   if (this.list.canDone()  && (moves.length > 0)) {
       this.move = moves[0];
       this.state = STATE.EXEC;
+      Canvas.style.cursor = "default";
       return;
   }
   if (this.list.getLevel() > 0) {
@@ -79,8 +86,8 @@ App.prototype.mouseLocate = function(view, pos) {
 App.prototype.mouseDown = function(view, pos) {
   if ((this.state == STATE.IDLE) && !_.isUndefined(this.list)) {
       if (this.list && this.positions && (_.indexOf(this.positions, pos) >= 0)) {
-          this.setPosition(pos);
           Canvas.style.cursor = "move";
+          this.setPosition(pos);
           isDrag = true;
       }
   }
@@ -140,20 +147,28 @@ App.prototype.exec = function() {
          this.timestamp = Date.now();
       } else {
          if (_.isUndefined(this.list)) {
-             this.list = Dagaz.Model.getMoveList(this.board);
+             var player = this.design.playerNames[this.board.player];
+             this.list  = Dagaz.Model.getMoveList(this.board);
+             if (!_.isUndefined(this.move)) {
+                 this.list.setLastMove(this.move);
+             }
              if (this.list.getMoves().length == 0) {
                  this.state = STATE.DONE;
+                 Canvas.style.cursor = "default";
+                 this.doneMessage = player + " loss";
                  return;
              }
          }
       }
   }
   if (this.state == STATE.BUZY) {
+      var player = this.design.playerNames[this.board.player];
       var ctx = this.getContext(this.board.player);
       var result = this.getAI().getMove(ctx);
       if (_.isUndefined(result.move)) {
           this.state = STATE.DONE;
           Canvas.style.cursor = "default";
+          this.doneMessage = player + " win"
           return;
       }
       if (result.done || (Date.now() - this.timestamp >= this.params.AI_WAIT)) {
@@ -173,7 +188,10 @@ App.prototype.exec = function() {
           delete this.positions;
       }
       if (this.board.checkGoals(this.design) != 0) {
+          var player = this.design.playerNames[this.board.player];
           this.state = STATE.DONE;
+          Canvas.style.cursor = "default";
+          this.doneMessage = player + " win"
       } else {
           this.state = STATE.WAIT;
       }

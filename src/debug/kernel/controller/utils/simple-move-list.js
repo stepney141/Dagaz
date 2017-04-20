@@ -9,6 +9,10 @@ Dagaz.Model.getMoveList = function(board) {
   return new SimpleMoveList(board);
 }
 
+SimpleMoveList.prototype.setLastMove = function(move) {
+  this.lastMove = move;
+}
+
 SimpleMoveList.prototype.getLevel = function() {
   if (_.isUndefined(this.moves)) {
       return 0;
@@ -87,6 +91,16 @@ SimpleMoveList.prototype.done = function(view) {
   delete this.moves;
 }
 
+var isReverted = function(action, move) {
+  return _.chain(move.actions)
+   .filter(function(a) {
+        return (a[0][0] == action[1][0]) &&
+               (action[0][0] == a[1][0]);
+    })
+   .size()
+   .value() > 0;
+}
+
 SimpleMoveList.prototype.setPosition = function(pos) {
   var moves = [];
   if (!_.isUndefined(this.moves)) {
@@ -117,6 +131,17 @@ SimpleMoveList.prototype.setPosition = function(pos) {
   });
   if (moves.length > 0) {
       this.moves = moves;
+  }
+  if (!_.isUndefined(this.lastMove) && (this.moves.length > 1)) {
+      this.moves = _.filter(this.moves, function(move) {
+         for (var i = 0; i < move.actions.length; i++) {
+              var action = move.actions[i];
+              if (isReverted(action, this.lastMove)) {
+                  return false;
+              }
+         }
+         return true;
+      }, this);
   }
 }
 

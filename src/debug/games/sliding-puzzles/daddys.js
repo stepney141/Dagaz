@@ -204,10 +204,10 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("You", "B01009", 18);
     design.setup("You", "B10009", 19);
 
-    design.goal(0, "You", "R0110F1", [12]);
-    design.goal(0, "You", "R1010F1", [13]);
-    design.goal(0, "You", "R0101F1", [16]);
-    design.goal(0, "You", "R1001F1", [17]);
+    design.goal(0, "You", "R0110F1", [14]);
+    design.goal(0, "You", "R1010F1", [15]);
+    design.goal(0, "You", "R0101F1", [18]);
+    design.goal(0, "You", "R1001F1", [19]);
 }
 
 Dagaz.View.configure = function(view) {
