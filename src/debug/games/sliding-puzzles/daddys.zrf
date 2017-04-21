@@ -69,7 +69,6 @@
 
 (variant
   (title "Daddy's puzzle")
-  (default)
   (win-condition (You) (and 
      (absolute-config R0110F1 (c2))
      (absolute-config R1010F1 (d2))

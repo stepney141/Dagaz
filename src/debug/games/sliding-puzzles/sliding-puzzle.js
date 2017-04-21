@@ -45,6 +45,20 @@ var isSubset = function(x, y) {
   return true;
 }
 
+Dagaz.Model.getPieceTypes = function(piece, board) {
+  var tag = piece.getValue(0);
+  return _.chain(board.pieces)
+   .compact()
+   .filter(function(piece) {
+        return piece.getValue(0) == tag;
+    })
+   .map(function(piece) {
+        return piece.type;
+    })
+   .uniq()
+   .value();
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {

@@ -11,6 +11,7 @@ Dagaz.Model.sharedPieces    = false;
 Dagaz.Model.recycleCaptures = false;
 Dagaz.Model.smartFrom       = false;
 Dagaz.Model.smartTo         = false;
+Dagaz.Model.showGoals       = true;
 
 Dagaz.Model.checkVersion = function(design, name, value) {  
   if (name == "z2j") {
@@ -34,6 +35,9 @@ Dagaz.Model.checkVersion = function(design, name, value) {
          (name != "recycle-captures")   &&
          (name != "silent-?-moves")) {
          design.failed = true;
+     }
+     if (name == "highlight-goals") {
+         Dagaz.Model.showGoals = (value == "true");
      }
      if (name == "smart-moves") {
          if ((value == "from") || (value == "true")) {
@@ -593,6 +597,27 @@ ZrfDesign.prototype.goal = function(n, player, piece, pos) {
       piece: Dagaz.find(this.pieceNames, piece),
       positions: pos
   });
+}
+
+Dagaz.Model.getPieceTypes = function(piece) {
+  return [ piece.type ];
+}
+
+ZrfDesign.prototype.getGoalPositions = function(player, pieces) {
+  if (Dagaz.Model.showGoals && !_.isUndefined(this.goals[player]) && !_.isUndefined(this.goals[player][0])) {
+      return _.chain(this.goals[player][0])
+       .filter(function(goal) {
+            return _.indexOf(pieces, goal.piece) >= 0;
+        })
+       .map(function(goal) {
+            return goal.positions;
+        })
+       .flatten()
+       .uniq()
+       .value();
+  } else {
+      return [];
+  }
 }
 
 ZrfDesign.prototype.getTemplate = function(ix) {

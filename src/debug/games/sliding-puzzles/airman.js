@@ -295,8 +295,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("You", "B100014", 29);
 
     design.goal(0, "You", "R0110F1", [22]);
-    design.goal(0, "You", "R1010F1", [22]);
-    design.goal(0, "You", "R0101F1", [29]);
+    design.goal(0, "You", "R1010F1", [23]);
+    design.goal(0, "You", "R0101F1", [28]);
     design.goal(0, "You", "R1001F1", [29]);
 }
 

@@ -71,16 +71,28 @@ App.prototype.setPosition = function(pos) {
 }
 
 App.prototype.mouseLocate = function(view, pos) {
-  if ((this.state == STATE.IDLE) && !_.isUndefined(this.list) && !isDrag) {
-      if (_.isUndefined(this.positions)) {
-          this.positions = this.list.getPositions();
+  if (this.currPos != pos) {
+      if ((this.state == STATE.IDLE) && !_.isUndefined(this.list) && !isDrag) {
+          if (_.isUndefined(this.positions)) {
+              this.positions = this.list.getPositions();
+          }
+          if (_.indexOf(this.positions, pos) >= 0) {
+              Canvas.style.cursor = "pointer";
+          } else {
+              Canvas.style.cursor = "default";
+          }
       }
-      if (_.indexOf(this.positions, pos) >= 0) {
-          Canvas.style.cursor = "pointer";
-      } else {
-          Canvas.style.cursor = "default";
+      this.view.markPositions(Dagaz.View.markType.GOAL, []);
+      if (!isDrag && !_.isUndefined(this.board)) {
+          var piece = this.board.getPiece(pos);
+          if (piece !== null) {
+              var types = Dagaz.Model.getPieceTypes(piece, this.board);
+              var positions = this.design.getGoalPositions(this.board.player, types);
+              this.view.markPositions(Dagaz.View.markType.GOAL, positions);
+          }
       }
   }
+  currPos = pos;
 }
 
 App.prototype.mouseDown = function(view, pos) {
@@ -91,6 +103,7 @@ App.prototype.mouseDown = function(view, pos) {
           isDrag = true;
       }
   }
+  this.view.markPositions(Dagaz.View.markType.GOAL, []);
 }
 
 App.prototype.mouseUp = function(view, pos) {

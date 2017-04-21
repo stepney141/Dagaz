@@ -2,7 +2,8 @@
 
 Dagaz.View.markType = {
    TARGET:    0,
-   ATTACKING: 1
+   ATTACKING: 1,
+   GOAL:      2
 };
 
 var STEP_CNT     = 3;
@@ -26,6 +27,7 @@ function View2D() {
   this.setup   = [];
   this.target  = [];
   this.strike  = [];
+  this.goal    = [];
   this.changes = [];
   this.vectors = [];
 }
@@ -146,8 +148,12 @@ View2D.prototype.addPiece = function(piece, pos) {
 View2D.prototype.markPositions = function(type, positions) {
   if (type == Dagaz.View.markType.TARGET) {
       this.target = positions;
-  } else {
+  } 
+  if (type == Dagaz.View.markType.ATTACKING) {
       this.strike = positions;
+  }
+  if (type == Dagaz.View.markType.GOAL) {
+      this.goal   = positions;
   }
   this.invalidate();
 }
@@ -396,6 +402,7 @@ View2D.prototype.animate = function() {
 Dagaz.View.showMarks = function(view, ctx) {
   drawMarks(ctx, view, view.target, "#00AA00");
   drawMarks(ctx, view, view.strike, "#FF0000");
+  drawMarks(ctx, view, view.goal,   "#FFFF00");
 }
 
 View2D.prototype.draw = function(canvas) {
