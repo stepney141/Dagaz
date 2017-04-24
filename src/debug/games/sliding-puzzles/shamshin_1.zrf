@@ -1,0 +1,74 @@
+(version "3.0")
+
+(define step (
+  $1 add
+))
+
+(define T
+  (piece
+     (name  $1$2)
+     (help  " ")
+     (image You "images/$1.bmp")
+     (attribute value $2)
+     (moves
+        (step n) (step s) (step w) (step e)
+     )
+  )
+)
+
+(game
+  (title "Shamshin's puzzle")
+  (option "smart-moves"    from)
+  (option "sliding-puzzle" true)
+
+  (players You)
+  (turn-order You)
+
+  (board
+     (grid
+         (start-rectangle 0 0 100 100)
+         (dimensions
+           ("a/b/c/d/e/f" (100 0)) ; files
+           ("6/5/4/3/2/1" (0 100)) ; ranks
+         )
+         (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0))
+     )
+  )
+
+  (T R0110F 1) (T R1010F 1) (T R0111  1) (T R1011  1) (T R0101F 1) (T R1001F 1)
+  (T B0100  2) (T B1000  2) 
+  (T B0100  3) (T B1000  3) 
+  (T B0010  4) (T B0001  4) 
+  (T B0100  5) (T B1000  5) 
+  (T B0010  6) (T B0001  6) 
+  (T B0100  7) (T B1000  7) 
+  (T B0100  8) (T B0011  8) (T B1000  8) 
+  (T B0110F 9) (T B1010F 9) (T B0101F 9) (T B1001F 9)
+  (T B0100 10) (T B1000 10) 
+  (T B0100 11) (T B1000 11) 
+
+  (board-setup
+     (You 
+         (R0110F1 a6) (R1010F1 b6) (R01111  a5) (R10111  b5) (R0101F1 a4) (R1001F1 b4)
+         (B01002  c6) (B10002  d6) 
+         (B01003  e6) (B10003  f6) 
+         (B00104  c5) (B00014  c4) 
+         (B01005  d5) (B10005  e5) 
+         (B00106  f5) (B00016  f4) 
+         (B01007  d4) (B10007  e4) 
+         (B01008  a3) (B00118  b3) (B10008  c3) 
+         (B0110F9 e3) (B1010F9 f3) (B0101F9 e2) (B1001F9 f2)
+         (B010010 a2) (B100010 b2) 
+         (B010011 c2) (B100011 d2) 
+     )
+  )
+
+  (win-condition (You) (and 
+     (absolute-config R0110F1 (e3))
+     (absolute-config R1010F1 (f3))
+     (absolute-config R01111  (e2))
+     (absolute-config R10111  (f2))
+     (absolute-config R0101F1 (e1))
+     (absolute-config R1001F1 (f1))
+  ))
+)
