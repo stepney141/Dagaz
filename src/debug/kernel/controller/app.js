@@ -175,12 +175,12 @@ App.prototype.exec = function() {
       }
   }
   if (this.state == STATE.BUZY) {
-      var player = this.design.playerNames[this.board.player];
       var ctx = this.getContext(this.board.player);
       var result = this.getAI().getMove(ctx);
       if (_.isUndefined(result.move)) {
           this.state = STATE.DONE;
           Canvas.style.cursor = "default";
+          var player = this.design.playerNames[this.board.player];
           this.doneMessage = player + " win"
           return;
       }

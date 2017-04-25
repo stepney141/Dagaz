@@ -213,8 +213,8 @@ MaxMinAi.prototype.shedule = function(frame) {
 }
 
 MaxMinAi.prototype.setContext = function(ctx, board) {
-  if (parent !== null) {
-      parent.setContext(ctx, board);
+  if (this.parent !== null) {
+      this.parent.setContext(ctx, board);
   }
   if (!_.isUndefined(ctx.childs)) {
       delete ctx.childs;
@@ -249,8 +249,8 @@ MaxMinAi.prototype.getMove = function(ctx) {
          ai:   "maxmin"
       };
   } else {
-      if (parent !== null) {
-          return parent.getMove(ctx);
+      if (this.parent !== null) {
+          return this.parent.getMove(ctx);
       }
   }
 }

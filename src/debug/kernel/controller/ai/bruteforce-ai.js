@@ -18,8 +18,8 @@ Dagaz.AI.findBot = function(type, params, parent) {
 }
 
 BruteforceAi.prototype.setContext = function(ctx, board) {
-  if (parent !== null) {
-      parent.setContext(ctx, board);
+  if (this.parent !== null) {
+      this.parent.setContext(ctx, board);
   }
   ctx.board = board;
 }
@@ -46,7 +46,7 @@ BruteforceAi.prototype.getMove = function(ctx) {
   while (moves.length > 0) {
       var m = moves.pop();
       var b = ctx.board.apply(m);
-      if ((board.parent !== null) && (b.zSign == board.parent.zSign)) {
+      if ((ctx.board.parent !== null) && (b.zSign == ctx.board.parent.zSign)) {
           back = m;
           continue;
       }
@@ -63,14 +63,15 @@ BruteforceAi.prototype.getMove = function(ctx) {
       }
   }
   if (back !== null) {
+      moves.unshift(back);
       return {
          done: true,
          move: back,
          ai:   "back"
       };
   }
-  if (parent !== null) {
-      return parent.getMove(ctx);
+  if (this.parent !== null) {
+      return this.parent.getMove(ctx);
   }
   return { done: true, ai: "nothing" };
 }
