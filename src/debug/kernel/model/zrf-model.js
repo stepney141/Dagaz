@@ -12,6 +12,7 @@ Dagaz.Model.recycleCaptures = false;
 Dagaz.Model.smartFrom       = false;
 Dagaz.Model.smartTo         = false;
 Dagaz.Model.showGoals       = true;
+Dagaz.Model.showMoves       = true;
 
 Dagaz.Model.checkVersion = function(design, name, value) {  
   if (name == "z2j") {
@@ -35,6 +36,9 @@ Dagaz.Model.checkVersion = function(design, name, value) {
          (name != "recycle-captures")   &&
          (name != "silent-?-moves")) {
          design.failed = true;
+     }
+     if (name == "show-moves-list") {
+         Dagaz.Model.showMoves = (value == "true");
      }
      if (name == "highlight-goals") {
          Dagaz.Model.showGoals = (value == "true");

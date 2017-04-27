@@ -5,7 +5,7 @@ Dagaz.Model.checkVersion(Dagaz.Model.getDesign(), "distinct-moves", "true");
 function BruteforceAi(params) {
   this.params = params;
   if (_.isUndefined(this.params.AI_FRAME)) {
-      this.params.AI_FRAME = 100;
+      this.params.AI_FRAME = 500;
   }
 }
 
@@ -36,11 +36,10 @@ var isCached = function(ctx, board) {
 }
 
 var cache = function(ctx, board) {
-  var r = getCache(ctx, board);
-  if (r != null) {
-      return r;
-  }
   var ix = getKey(board);
+  if (isCached(ctx, board)) {
+      return ctx.cache[ix];
+  }
   ctx.cache[ix] = _.chain(Dagaz.AI.generate(ctx, board))
    .map(function(m) {
        var b = board.apply(m);
@@ -70,17 +69,27 @@ var cache = function(ctx, board) {
   return ctx.cache[ix];
 }
 
+var debug = function(moves) {
+  var r = ""
+  _.each(moves, function(move) {
+      if (r) r = r + "; ";
+      r = r + Dagaz.Model.moveToString(move);
+  });
+  return r;
+}
+
 BruteforceAi.prototype.checkMoves = function(ctx, board, timestamp) {
   var design = Dagaz.Model.getDesign();
   if (board.checkGoals(design) != 0) return 1;
-  if (isCached(board)) return -1;
+  if (isCached(ctx, board)) return -1;
   if (Date.now() - timestamp > this.params.AI_FRAME) return 0;
   var moves = cache(ctx, board);  
   var back  = [];
   while (moves.length > 1) {
       var m = moves.pop();
       var b = board.apply(m);
-      var r = this.checkMoves(ctx, b, timestamp);
+      var r = 0;
+      r = this.checkMoves(ctx, b, timestamp);
       if (r > 0) {
           while (moves.length > 1) moves.pop();
           moves.push(m);
@@ -99,9 +108,8 @@ BruteforceAi.prototype.checkMoves = function(ctx, board, timestamp) {
 }
 
 BruteforceAi.prototype.getMove = function(ctx) {
-  var timestamp = Date.now();
-  this.checkMoves(ctx, ctx.board, timestamp);
-  var moves = cache(ctx, board);
+  this.checkMoves(ctx, ctx.board, Date.now());
+  var moves = cache(ctx, ctx.board);
   if (moves.length > 1) {
       return {
           done:  true,

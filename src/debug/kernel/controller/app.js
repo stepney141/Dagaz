@@ -195,6 +195,9 @@ App.prototype.exec = function() {
           this.view.markPositions(Dagaz.View.markType.ATTACKING, []);
           delete this.list;
       }
+      if (Dagaz.Model.showMoves) {
+          console.log(this.move.toString());
+      }
       this.move.applyAll(this.view);
       this.board = this.board.apply(this.move);
       if (!_.isUndefined(this.positions)) {

@@ -131,17 +131,17 @@ SimpleMoveList.prototype.setPosition = function(pos) {
   });
   if (moves.length > 0) {
       this.moves = moves;
-  }
-  if (!_.isUndefined(this.lastMove) && (this.moves.length > 1)) {
-      this.moves = _.filter(this.moves, function(move) {
-         for (var i = 0; i < move.actions.length; i++) {
-              var action = move.actions[i];
-              if (isReverted(action, this.lastMove)) {
-                  return false;
-              }
-         }
-         return true;
-      }, this);
+      if (!_.isUndefined(this.lastMove) && (this.moves.length > 1)) {
+          this.moves = _.filter(this.moves, function(move) {
+             for (var i = 0; i < move.actions.length; i++) {
+                  var action = move.actions[i];
+                  if (isReverted(action, this.lastMove)) {
+                      return false;
+                  }
+             }
+             return true;
+          }, this);
+      }
   }
 }
 
