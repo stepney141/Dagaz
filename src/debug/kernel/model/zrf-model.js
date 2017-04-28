@@ -12,7 +12,7 @@ Dagaz.Model.recycleCaptures = false;
 Dagaz.Model.smartFrom       = false;
 Dagaz.Model.smartTo         = false;
 Dagaz.Model.showGoals       = true;
-Dagaz.Model.showMoves       = true;
+Dagaz.Model.showMoves       = false;
 
 Dagaz.Model.checkVersion = function(design, name, value) {  
   if (name == "z2j") {

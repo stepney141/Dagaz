@@ -85,42 +85,35 @@ var debug = function(moves) {
   return r;
 }
 
-BruteforceAi.prototype.checkMoves = function(ctx, board, timestamp) {
-  var design = Dagaz.Model.getDesign();
-  if (board.checkGoals(design) != 0) return 1;
-  if (isCached(ctx, board)) return -1;
-  if (Date.now() - timestamp > this.params.AI_FRAME) return 0;
-  var moves = cache(ctx, board);  
-  var back  = [];
-  while (moves.length > 1) {
-      var m = moves.pop();
-      var b = board.apply(m);
-      var r = 0;
-      r = this.checkMoves(ctx, b, timestamp);
-      if (r > 0) {
-          while (moves.length > 1) moves.pop();
-          moves.push(m);
-          return r;
-      }
-      if (r == 0) back.push(m);
+var isDead = function(ctx, board, move) {
+  var b = board.apply(move);
+  var moves = cache(ctx, b);
+  for (var i = 1; i < moves.length; i++) {
+       if (!isDead(ctx, b, moves[i]) return false;
   }
-  if (back.length == 0) {
-      return -1;
-  }
-  while (back.length > 0) {
-      var m = back.pop();
-      moves.push(m);
-  }
-  return 0;
+  return true;
 }
 
 BruteforceAi.prototype.getMove = function(ctx) {
-//this.checkMoves(ctx, ctx.board, Date.now());
+  var cnt = 0;
+  var queue = [ ctx.board ];
+  var timestamp = Date.now();
+  while (Date.now() - timestamp < this.params.AI_FRAME) {
+      var board = queue.shift();
+      var moves = cache(ctx, board);
+      for (var i = 1; i < moves.length; i++) {
+           queue.push(board.apply(moves[i]));
+      }
+      cnt++;
+  }
+  console.log(cnt);
   var moves = cache(ctx, ctx.board);
-  if (moves.length > 1) {
+  while (moves.length > 1) {
+      var move = moves.pop();
+      if (isDead(ctx, ctx.board, move)) continue;
       return {
           done:  true,
-          move:  moves.pop(),
+          move:  move,
           ai:    "bruteforce"
       };
   }
