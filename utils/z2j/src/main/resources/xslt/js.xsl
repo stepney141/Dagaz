@@ -63,8 +63,8 @@ Dagaz.Model.BuildDesign = function(design) {<xsl:call-template name="apply-optio
        <xsl:for-each select="reserve">    design.reserve("<xsl:value-of select="$player"/>", "<xsl:value-of select="$piece"/>", <xsl:value-of select="text()"/>);
 </xsl:for-each>
    </xsl:for-each>
-</xsl:for-each>
-
+</xsl:for-each><xsl:text>
+</xsl:text>
 <xsl:for-each select="/game/goal">
    <xsl:variable name="n" select="n"/>
    <xsl:variable name="player" select="player"/>
@@ -78,18 +78,18 @@ Dagaz.Model.BuildDesign = function(design) {<xsl:call-template name="apply-optio
 </xsl:for-each>}
 
 Dagaz.View.configure = function(view) {
-    <xsl:choose>
-  <xsl:when test="board/image">view.defBoard("Board");</xsl:when>
+<xsl:choose>
+  <xsl:when test="board/image">    view.defBoard("Board");
+</xsl:when>
 </xsl:choose>  
 <xsl:for-each select="/game/piece">
    <xsl:variable name="piece" select="name"/>
-   <xsl:for-each select="image/player">
-    view.defPiece("<xsl:value-of select="."/><xsl:value-of select="$piece"/>", "<xsl:value-of select="."/><xsl:text> </xsl:text><xsl:value-of select="$piece"/>");</xsl:for-each>
+   <xsl:for-each select="image/player">    view.defPiece("<xsl:value-of select="."/><xsl:value-of select="$piece"/>", "<xsl:value-of select="."/><xsl:text> </xsl:text><xsl:value-of select="$piece"/>");
+</xsl:for-each>
 </xsl:for-each>
 <xsl:text> 
-</xsl:text><xsl:for-each select="board/pos">
-    view.defPosition("<xsl:value-of select="name"/>", <xsl:value-of select="left"/>, <xsl:value-of select="top"/>, <xsl:value-of select="width"/>, <xsl:value-of select="height"/>);</xsl:for-each>
-}
+</xsl:text><xsl:for-each select="board/pos">    view.defPosition("<xsl:value-of select="name"/>", <xsl:value-of select="left"/>, <xsl:value-of select="top"/>, <xsl:value-of select="width"/>, <xsl:value-of select="height"/>);
+</xsl:for-each>}
 </xsl:template>
 
 <xsl:template name="apply-options">

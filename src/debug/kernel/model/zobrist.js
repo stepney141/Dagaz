@@ -37,9 +37,13 @@ Dagaz.Model.getZobristHash = function() {
   return Dagaz.Model.zobrist;
 }
 
+Dagaz.Model.getPieceType = function(piece) {
+  return piece.type;
+}
+
 Dagaz.Model.zupdate = function(value, piece, pos) {
   var z = Dagaz.Model.getZobristHash();
-  return z.update(value, piece.player, piece.type, pos);
+  return z.update(value, piece.player, Dagaz.Model.getPieceType(piece), pos);
 }
 
 })();

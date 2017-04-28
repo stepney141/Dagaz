@@ -63,14 +63,17 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("e1", [-1, 1, 0, -6]);
     design.addPosition("f1", [-1, 0, 0, -6]);
 
+
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
     design.addCommand(0, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
+
     design.addPiece("B01001", 0);
     design.addAttribute(0, 0, 1);
+    design.addAttribute(0, 1, 'B0100');
     design.addMove(0, 0, [3], 0);
     design.addMove(0, 0, [2], 0);
     design.addMove(0, 0, [0], 0);
@@ -78,6 +81,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("B10001", 1);
     design.addAttribute(1, 0, 1);
+    design.addAttribute(1, 1, 'B1000');
     design.addMove(1, 0, [3], 0);
     design.addMove(1, 0, [2], 0);
     design.addMove(1, 0, [0], 0);
@@ -85,6 +89,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("B00002", 2);
     design.addAttribute(2, 0, 2);
+    design.addAttribute(2, 1, 'B0000');
     design.addMove(2, 0, [3], 0);
     design.addMove(2, 0, [2], 0);
     design.addMove(2, 0, [0], 0);
@@ -92,6 +97,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("B00003", 3);
     design.addAttribute(3, 0, 3);
+    design.addAttribute(3, 1, 'B0000');
     design.addMove(3, 0, [3], 0);
     design.addMove(3, 0, [2], 0);
     design.addMove(3, 0, [0], 0);
@@ -99,6 +105,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("B01004", 4);
     design.addAttribute(4, 0, 4);
+    design.addAttribute(4, 1, 'B0100');
     design.addMove(4, 0, [3], 0);
     design.addMove(4, 0, [2], 0);
     design.addMove(4, 0, [0], 0);
@@ -106,6 +113,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("B10004", 5);
     design.addAttribute(5, 0, 4);
+    design.addAttribute(5, 1, 'B1000');
     design.addMove(5, 0, [3], 0);
     design.addMove(5, 0, [2], 0);
     design.addMove(5, 0, [0], 0);
@@ -113,6 +121,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("B01005", 6);
     design.addAttribute(6, 0, 5);
+    design.addAttribute(6, 1, 'B0100');
     design.addMove(6, 0, [3], 0);
     design.addMove(6, 0, [2], 0);
     design.addMove(6, 0, [0], 0);
@@ -120,6 +129,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("B10005", 7);
     design.addAttribute(7, 0, 5);
+    design.addAttribute(7, 1, 'B1000');
     design.addMove(7, 0, [3], 0);
     design.addMove(7, 0, [2], 0);
     design.addMove(7, 0, [0], 0);
@@ -127,6 +137,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("R0110F6", 8);
     design.addAttribute(8, 0, 6);
+    design.addAttribute(8, 1, 'R0110F');
     design.addMove(8, 0, [3], 0);
     design.addMove(8, 0, [2], 0);
     design.addMove(8, 0, [0], 0);
@@ -134,6 +145,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("R1010F6", 9);
     design.addAttribute(9, 0, 6);
+    design.addAttribute(9, 1, 'R1010F');
     design.addMove(9, 0, [3], 0);
     design.addMove(9, 0, [2], 0);
     design.addMove(9, 0, [0], 0);
@@ -141,6 +153,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("R0101F6", 10);
     design.addAttribute(10, 0, 6);
+    design.addAttribute(10, 1, 'R0101F');
     design.addMove(10, 0, [3], 0);
     design.addMove(10, 0, [2], 0);
     design.addMove(10, 0, [0], 0);
@@ -148,6 +161,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("R1001F6", 11);
     design.addAttribute(11, 0, 6);
+    design.addAttribute(11, 1, 'R1001F');
     design.addMove(11, 0, [3], 0);
     design.addMove(11, 0, [2], 0);
     design.addMove(11, 0, [0], 0);
@@ -155,6 +169,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("B01007", 12);
     design.addAttribute(12, 0, 7);
+    design.addAttribute(12, 1, 'B0100');
     design.addMove(12, 0, [3], 0);
     design.addMove(12, 0, [2], 0);
     design.addMove(12, 0, [0], 0);
@@ -162,6 +177,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("B10007", 13);
     design.addAttribute(13, 0, 7);
+    design.addAttribute(13, 1, 'B1000');
     design.addMove(13, 0, [3], 0);
     design.addMove(13, 0, [2], 0);
     design.addMove(13, 0, [0], 0);
@@ -169,6 +185,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("B00108", 14);
     design.addAttribute(14, 0, 8);
+    design.addAttribute(14, 1, 'B0010');
     design.addMove(14, 0, [3], 0);
     design.addMove(14, 0, [2], 0);
     design.addMove(14, 0, [0], 0);
@@ -176,6 +193,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("B00018", 15);
     design.addAttribute(15, 0, 8);
+    design.addAttribute(15, 1, 'B0001');
     design.addMove(15, 0, [3], 0);
     design.addMove(15, 0, [2], 0);
     design.addMove(15, 0, [0], 0);
@@ -183,6 +201,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("B00109", 16);
     design.addAttribute(16, 0, 9);
+    design.addAttribute(16, 1, 'B0010');
     design.addMove(16, 0, [3], 0);
     design.addMove(16, 0, [2], 0);
     design.addMove(16, 0, [0], 0);
@@ -190,6 +209,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("B00019", 17);
     design.addAttribute(17, 0, 9);
+    design.addAttribute(17, 1, 'B0001');
     design.addMove(17, 0, [3], 0);
     design.addMove(17, 0, [2], 0);
     design.addMove(17, 0, [0], 0);
@@ -197,6 +217,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("B001010", 18);
     design.addAttribute(18, 0, 10);
+    design.addAttribute(18, 1, 'B0010');
     design.addMove(18, 0, [3], 0);
     design.addMove(18, 0, [2], 0);
     design.addMove(18, 0, [0], 0);
@@ -204,6 +225,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("B000110", 19);
     design.addAttribute(19, 0, 10);
+    design.addAttribute(19, 1, 'B0001');
     design.addMove(19, 0, [3], 0);
     design.addMove(19, 0, [2], 0);
     design.addMove(19, 0, [0], 0);
@@ -211,6 +233,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("B001011", 20);
     design.addAttribute(20, 0, 11);
+    design.addAttribute(20, 1, 'B0010');
     design.addMove(20, 0, [3], 0);
     design.addMove(20, 0, [2], 0);
     design.addMove(20, 0, [0], 0);
@@ -218,6 +241,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("B000111", 21);
     design.addAttribute(21, 0, 11);
+    design.addAttribute(21, 1, 'B0001');
     design.addMove(21, 0, [3], 0);
     design.addMove(21, 0, [2], 0);
     design.addMove(21, 0, [0], 0);
@@ -225,6 +249,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("B000012", 22);
     design.addAttribute(22, 0, 12);
+    design.addAttribute(22, 1, 'B0000');
     design.addMove(22, 0, [3], 0);
     design.addMove(22, 0, [2], 0);
     design.addMove(22, 0, [0], 0);
@@ -232,6 +257,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("B000013", 23);
     design.addAttribute(23, 0, 13);
+    design.addAttribute(23, 1, 'B0000');
     design.addMove(23, 0, [3], 0);
     design.addMove(23, 0, [2], 0);
     design.addMove(23, 0, [0], 0);
@@ -239,6 +265,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("B010014", 24);
     design.addAttribute(24, 0, 14);
+    design.addAttribute(24, 1, 'B0100');
     design.addMove(24, 0, [3], 0);
     design.addMove(24, 0, [2], 0);
     design.addMove(24, 0, [0], 0);
@@ -246,6 +273,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("B100014", 25);
     design.addAttribute(25, 0, 14);
+    design.addAttribute(25, 1, 'B1000');
     design.addMove(25, 0, [3], 0);
     design.addMove(25, 0, [2], 0);
     design.addMove(25, 0, [0], 0);
@@ -253,6 +281,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("B010015", 26);
     design.addAttribute(26, 0, 15);
+    design.addAttribute(26, 1, 'B0100');
     design.addMove(26, 0, [3], 0);
     design.addMove(26, 0, [2], 0);
     design.addMove(26, 0, [0], 0);
@@ -260,6 +289,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("B100015", 27);
     design.addAttribute(27, 0, 15);
+    design.addAttribute(27, 1, 'B1000');
     design.addMove(27, 0, [3], 0);
     design.addMove(27, 0, [2], 0);
     design.addMove(27, 0, [0], 0);
@@ -328,8 +358,8 @@ Dagaz.View.configure = function(view) {
     view.defPiece("YouB010014", "You B010014");
     view.defPiece("YouB100014", "You B100014");
     view.defPiece("YouB010015", "You B010015");
-    view.defPiece("YouB100015", "You B100015"); 
-
+    view.defPiece("YouB100015", "You B100015");
+ 
     view.defPosition("a5", 0, 0, 100, 100);
     view.defPosition("b5", 100, 0, 100, 100);
     view.defPosition("c5", 200, 0, 100, 100);

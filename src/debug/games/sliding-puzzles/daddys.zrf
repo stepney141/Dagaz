@@ -1,20 +1,6 @@
 (version "3.0")
 
-(define step (
-  $1 add
-))
-
-(define T
-  (piece
-     (name  $1$2)
-     (help  " ")
-     (image You "images/$1.bmp")
-     (attribute value $2)
-     (moves
-        (step n) (step s) (step w) (step e)
-     )
-  )
-)
+(include "common.zrf")
 
 (game
   (title "Daddy's puzzle")
@@ -69,6 +55,7 @@
 
 (variant
   (title "Daddy's puzzle")
+  (default)
   (win-condition (You) (and 
      (absolute-config R0110F1 (c2))
      (absolute-config R1010F1 (d2))

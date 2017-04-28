@@ -48,14 +48,17 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("d1", [-1, 1, 0, -5]);
     design.addPosition("e1", [-1, 0, 0, -5]);
 
+
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
     design.addCommand(0, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
+
     design.addPiece("R00001", 0);
     design.addAttribute(0, 0, 1);
+    design.addAttribute(0, 1, 'R0000');
     design.addMove(0, 0, [3], 0);
     design.addMove(0, 0, [2], 0);
     design.addMove(0, 0, [0], 0);
@@ -63,6 +66,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("R0010C2", 1);
     design.addAttribute(1, 0, 2);
+    design.addAttribute(1, 1, 'R0010C');
     design.addMove(1, 0, [3], 0);
     design.addMove(1, 0, [2], 0);
     design.addMove(1, 0, [0], 0);
@@ -70,6 +74,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("R0001P2", 2);
     design.addAttribute(2, 0, 2);
+    design.addAttribute(2, 1, 'R0001P');
     design.addMove(2, 0, [3], 0);
     design.addMove(2, 0, [2], 0);
     design.addMove(2, 0, [0], 0);
@@ -77,6 +82,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("R0100C3", 3);
     design.addAttribute(3, 0, 3);
+    design.addAttribute(3, 1, 'R0100C');
     design.addMove(3, 0, [3], 0);
     design.addMove(3, 0, [2], 0);
     design.addMove(3, 0, [0], 0);
@@ -84,6 +90,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("R1000C3", 4);
     design.addAttribute(4, 0, 3);
+    design.addAttribute(4, 1, 'R1000C');
     design.addMove(4, 0, [3], 0);
     design.addMove(4, 0, [2], 0);
     design.addMove(4, 0, [0], 0);
@@ -91,6 +98,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("R0010P4", 5);
     design.addAttribute(5, 0, 4);
+    design.addAttribute(5, 1, 'R0010P');
     design.addMove(5, 0, [3], 0);
     design.addMove(5, 0, [2], 0);
     design.addMove(5, 0, [0], 0);
@@ -98,6 +106,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("R0001C4", 6);
     design.addAttribute(6, 0, 4);
+    design.addAttribute(6, 1, 'R0001C');
     design.addMove(6, 0, [3], 0);
     design.addMove(6, 0, [2], 0);
     design.addMove(6, 0, [0], 0);
@@ -105,6 +114,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("R0000P5", 7);
     design.addAttribute(7, 0, 5);
+    design.addAttribute(7, 1, 'R0000P');
     design.addMove(7, 0, [3], 0);
     design.addMove(7, 0, [2], 0);
     design.addMove(7, 0, [0], 0);
@@ -112,6 +122,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("R0100P6", 8);
     design.addAttribute(8, 0, 6);
+    design.addAttribute(8, 1, 'R0100P');
     design.addMove(8, 0, [3], 0);
     design.addMove(8, 0, [2], 0);
     design.addMove(8, 0, [0], 0);
@@ -119,6 +130,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("R1000P6", 9);
     design.addAttribute(9, 0, 6);
+    design.addAttribute(9, 1, 'R1000P');
     design.addMove(9, 0, [3], 0);
     design.addMove(9, 0, [2], 0);
     design.addMove(9, 0, [0], 0);
@@ -126,6 +138,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("R0000C7", 10);
     design.addAttribute(10, 0, 7);
+    design.addAttribute(10, 1, 'R0000C');
     design.addMove(10, 0, [3], 0);
     design.addMove(10, 0, [2], 0);
     design.addMove(10, 0, [0], 0);
@@ -133,6 +146,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("R00008", 11);
     design.addAttribute(11, 0, 8);
+    design.addAttribute(11, 1, 'R0000');
     design.addMove(11, 0, [3], 0);
     design.addMove(11, 0, [2], 0);
     design.addMove(11, 0, [0], 0);
@@ -140,6 +154,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("R00009", 12);
     design.addAttribute(12, 0, 9);
+    design.addAttribute(12, 1, 'R0000');
     design.addMove(12, 0, [3], 0);
     design.addMove(12, 0, [2], 0);
     design.addMove(12, 0, [0], 0);
@@ -179,8 +194,8 @@ Dagaz.View.configure = function(view) {
     view.defPiece("YouR1000P6", "You R1000P6");
     view.defPiece("YouR0000C7", "You R0000C7");
     view.defPiece("YouR00008", "You R00008");
-    view.defPiece("YouR00009", "You R00009"); 
-
+    view.defPiece("YouR00009", "You R00009");
+ 
     view.defPosition("a3", 0, 0, 100, 100);
     view.defPosition("b3", 100, 0, 100, 100);
     view.defPosition("c3", 200, 0, 100, 100);

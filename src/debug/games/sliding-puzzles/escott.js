@@ -113,14 +113,17 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("g1", [-1, 1, 0, -8]);
     design.addPosition("h1", [-1, 0, 0, -8]);
 
+
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
     design.addCommand(0, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
+
     design.addPiece("HBR1", 0);
     design.addAttribute(0, 0, 1);
+    design.addAttribute(0, 1, 'HBR');
     design.addMove(0, 0, [3], 0);
     design.addMove(0, 0, [2], 0);
     design.addMove(0, 0, [0], 0);
@@ -128,6 +131,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HBL1", 1);
     design.addAttribute(1, 0, 1);
+    design.addAttribute(1, 1, 'HBL');
     design.addMove(1, 0, [3], 0);
     design.addMove(1, 0, [2], 0);
     design.addMove(1, 0, [0], 0);
@@ -135,6 +139,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HTBR1", 2);
     design.addAttribute(2, 0, 1);
+    design.addAttribute(2, 1, 'HTBR');
     design.addMove(2, 0, [3], 0);
     design.addMove(2, 0, [2], 0);
     design.addMove(2, 0, [0], 0);
@@ -142,6 +147,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HTBL1", 3);
     design.addAttribute(3, 0, 1);
+    design.addAttribute(3, 1, 'HTBL');
     design.addMove(3, 0, [3], 0);
     design.addMove(3, 0, [2], 0);
     design.addMove(3, 0, [0], 0);
@@ -149,6 +155,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HTRC1", 4);
     design.addAttribute(4, 0, 1);
+    design.addAttribute(4, 1, 'HTRC');
     design.addMove(4, 0, [3], 0);
     design.addMove(4, 0, [2], 0);
     design.addMove(4, 0, [0], 0);
@@ -156,6 +163,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HBLR1", 5);
     design.addAttribute(5, 0, 1);
+    design.addAttribute(5, 1, 'HBLR');
     design.addMove(5, 0, [3], 0);
     design.addMove(5, 0, [2], 0);
     design.addMove(5, 0, [0], 0);
@@ -163,6 +171,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HTR1", 6);
     design.addAttribute(6, 0, 1);
+    design.addAttribute(6, 1, 'HTR');
     design.addMove(6, 0, [3], 0);
     design.addMove(6, 0, [2], 0);
     design.addMove(6, 0, [0], 0);
@@ -170,6 +179,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HTLR1", 7);
     design.addAttribute(7, 0, 1);
+    design.addAttribute(7, 1, 'HTLR');
     design.addMove(7, 0, [3], 0);
     design.addMove(7, 0, [2], 0);
     design.addMove(7, 0, [0], 0);
@@ -177,6 +187,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HTL1", 8);
     design.addAttribute(8, 0, 1);
+    design.addAttribute(8, 1, 'HTL');
     design.addMove(8, 0, [3], 0);
     design.addMove(8, 0, [2], 0);
     design.addMove(8, 0, [0], 0);
@@ -184,6 +195,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HBR2", 9);
     design.addAttribute(9, 0, 2);
+    design.addAttribute(9, 1, 'HBR');
     design.addMove(9, 0, [3], 0);
     design.addMove(9, 0, [2], 0);
     design.addMove(9, 0, [0], 0);
@@ -191,6 +203,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HBL2", 10);
     design.addAttribute(10, 0, 2);
+    design.addAttribute(10, 1, 'HBL');
     design.addMove(10, 0, [3], 0);
     design.addMove(10, 0, [2], 0);
     design.addMove(10, 0, [0], 0);
@@ -198,6 +211,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HTR2", 11);
     design.addAttribute(11, 0, 2);
+    design.addAttribute(11, 1, 'HTR');
     design.addMove(11, 0, [3], 0);
     design.addMove(11, 0, [2], 0);
     design.addMove(11, 0, [0], 0);
@@ -205,6 +219,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HTL2", 12);
     design.addAttribute(12, 0, 2);
+    design.addAttribute(12, 1, 'HTL');
     design.addMove(12, 0, [3], 0);
     design.addMove(12, 0, [2], 0);
     design.addMove(12, 0, [0], 0);
@@ -212,6 +227,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HBR3", 13);
     design.addAttribute(13, 0, 3);
+    design.addAttribute(13, 1, 'HBR');
     design.addMove(13, 0, [3], 0);
     design.addMove(13, 0, [2], 0);
     design.addMove(13, 0, [0], 0);
@@ -219,6 +235,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HBLRC3", 14);
     design.addAttribute(14, 0, 3);
+    design.addAttribute(14, 1, 'HBLRC');
     design.addMove(14, 0, [3], 0);
     design.addMove(14, 0, [2], 0);
     design.addMove(14, 0, [0], 0);
@@ -226,6 +243,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HLR3", 15);
     design.addAttribute(15, 0, 3);
+    design.addAttribute(15, 1, 'HLR');
     design.addMove(15, 0, [3], 0);
     design.addMove(15, 0, [2], 0);
     design.addMove(15, 0, [0], 0);
@@ -233,6 +251,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HL3", 16);
     design.addAttribute(16, 0, 3);
+    design.addAttribute(16, 1, 'HL');
     design.addMove(16, 0, [3], 0);
     design.addMove(16, 0, [2], 0);
     design.addMove(16, 0, [0], 0);
@@ -240,6 +259,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HTR3", 17);
     design.addAttribute(17, 0, 3);
+    design.addAttribute(17, 1, 'HTR');
     design.addMove(17, 0, [3], 0);
     design.addMove(17, 0, [2], 0);
     design.addMove(17, 0, [0], 0);
@@ -247,6 +267,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HTL3", 18);
     design.addAttribute(18, 0, 3);
+    design.addAttribute(18, 1, 'HTL');
     design.addMove(18, 0, [3], 0);
     design.addMove(18, 0, [2], 0);
     design.addMove(18, 0, [0], 0);
@@ -254,6 +275,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HBR4", 19);
     design.addAttribute(19, 0, 4);
+    design.addAttribute(19, 1, 'HBR');
     design.addMove(19, 0, [3], 0);
     design.addMove(19, 0, [2], 0);
     design.addMove(19, 0, [0], 0);
@@ -261,6 +283,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HBL4", 20);
     design.addAttribute(20, 0, 4);
+    design.addAttribute(20, 1, 'HBL');
     design.addMove(20, 0, [3], 0);
     design.addMove(20, 0, [2], 0);
     design.addMove(20, 0, [0], 0);
@@ -268,6 +291,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HTR4", 21);
     design.addAttribute(21, 0, 4);
+    design.addAttribute(21, 1, 'HTR');
     design.addMove(21, 0, [3], 0);
     design.addMove(21, 0, [2], 0);
     design.addMove(21, 0, [0], 0);
@@ -275,6 +299,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HTL4", 22);
     design.addAttribute(22, 0, 4);
+    design.addAttribute(22, 1, 'HTL');
     design.addMove(22, 0, [3], 0);
     design.addMove(22, 0, [2], 0);
     design.addMove(22, 0, [0], 0);
@@ -282,6 +307,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HBR5", 23);
     design.addAttribute(23, 0, 5);
+    design.addAttribute(23, 1, 'HBR');
     design.addMove(23, 0, [3], 0);
     design.addMove(23, 0, [2], 0);
     design.addMove(23, 0, [0], 0);
@@ -289,6 +315,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HBL5", 24);
     design.addAttribute(24, 0, 5);
+    design.addAttribute(24, 1, 'HBL');
     design.addMove(24, 0, [3], 0);
     design.addMove(24, 0, [2], 0);
     design.addMove(24, 0, [0], 0);
@@ -296,6 +323,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HTR5", 25);
     design.addAttribute(25, 0, 5);
+    design.addAttribute(25, 1, 'HTR');
     design.addMove(25, 0, [3], 0);
     design.addMove(25, 0, [2], 0);
     design.addMove(25, 0, [0], 0);
@@ -303,6 +331,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HTLRC5", 26);
     design.addAttribute(26, 0, 5);
+    design.addAttribute(26, 1, 'HTLRC');
     design.addMove(26, 0, [3], 0);
     design.addMove(26, 0, [2], 0);
     design.addMove(26, 0, [0], 0);
@@ -310,6 +339,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HLR5", 27);
     design.addAttribute(27, 0, 5);
+    design.addAttribute(27, 1, 'HLR');
     design.addMove(27, 0, [3], 0);
     design.addMove(27, 0, [2], 0);
     design.addMove(27, 0, [0], 0);
@@ -317,6 +347,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HL5", 28);
     design.addAttribute(28, 0, 5);
+    design.addAttribute(28, 1, 'HL');
     design.addMove(28, 0, [3], 0);
     design.addMove(28, 0, [2], 0);
     design.addMove(28, 0, [0], 0);
@@ -324,6 +355,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HR6", 29);
     design.addAttribute(29, 0, 6);
+    design.addAttribute(29, 1, 'HR');
     design.addMove(29, 0, [3], 0);
     design.addMove(29, 0, [2], 0);
     design.addMove(29, 0, [0], 0);
@@ -331,6 +363,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HLR6", 30);
     design.addAttribute(30, 0, 6);
+    design.addAttribute(30, 1, 'HLR');
     design.addMove(30, 0, [3], 0);
     design.addMove(30, 0, [2], 0);
     design.addMove(30, 0, [0], 0);
@@ -338,6 +371,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HBRLC6", 31);
     design.addAttribute(31, 0, 6);
+    design.addAttribute(31, 1, 'HBRLC');
     design.addMove(31, 0, [3], 0);
     design.addMove(31, 0, [2], 0);
     design.addMove(31, 0, [0], 0);
@@ -345,6 +379,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HBL6", 32);
     design.addAttribute(32, 0, 6);
+    design.addAttribute(32, 1, 'HBL');
     design.addMove(32, 0, [3], 0);
     design.addMove(32, 0, [2], 0);
     design.addMove(32, 0, [0], 0);
@@ -352,6 +387,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HTR6", 33);
     design.addAttribute(33, 0, 6);
+    design.addAttribute(33, 1, 'HTR');
     design.addMove(33, 0, [3], 0);
     design.addMove(33, 0, [2], 0);
     design.addMove(33, 0, [0], 0);
@@ -359,6 +395,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HTL6", 34);
     design.addAttribute(34, 0, 6);
+    design.addAttribute(34, 1, 'HTL');
     design.addMove(34, 0, [3], 0);
     design.addMove(34, 0, [2], 0);
     design.addMove(34, 0, [0], 0);
@@ -366,6 +403,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HBR7", 35);
     design.addAttribute(35, 0, 7);
+    design.addAttribute(35, 1, 'HBR');
     design.addMove(35, 0, [3], 0);
     design.addMove(35, 0, [2], 0);
     design.addMove(35, 0, [0], 0);
@@ -373,6 +411,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HBLR7", 36);
     design.addAttribute(36, 0, 7);
+    design.addAttribute(36, 1, 'HBLR');
     design.addMove(36, 0, [3], 0);
     design.addMove(36, 0, [2], 0);
     design.addMove(36, 0, [0], 0);
@@ -380,6 +419,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HBL7", 37);
     design.addAttribute(37, 0, 7);
+    design.addAttribute(37, 1, 'HBL');
     design.addMove(37, 0, [3], 0);
     design.addMove(37, 0, [2], 0);
     design.addMove(37, 0, [0], 0);
@@ -387,6 +427,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HTR7", 38);
     design.addAttribute(38, 0, 7);
+    design.addAttribute(38, 1, 'HTR');
     design.addMove(38, 0, [3], 0);
     design.addMove(38, 0, [2], 0);
     design.addMove(38, 0, [0], 0);
@@ -394,6 +435,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HTLR7", 39);
     design.addAttribute(39, 0, 7);
+    design.addAttribute(39, 1, 'HTLR');
     design.addMove(39, 0, [3], 0);
     design.addMove(39, 0, [2], 0);
     design.addMove(39, 0, [0], 0);
@@ -401,6 +443,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HBLC7", 40);
     design.addAttribute(40, 0, 7);
+    design.addAttribute(40, 1, 'HBLC');
     design.addMove(40, 0, [3], 0);
     design.addMove(40, 0, [2], 0);
     design.addMove(40, 0, [0], 0);
@@ -408,6 +451,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HTBL7", 41);
     design.addAttribute(41, 0, 7);
+    design.addAttribute(41, 1, 'HTBL');
     design.addMove(41, 0, [3], 0);
     design.addMove(41, 0, [2], 0);
     design.addMove(41, 0, [0], 0);
@@ -415,6 +459,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HTBR7", 42);
     design.addAttribute(42, 0, 7);
+    design.addAttribute(42, 1, 'HTBR');
     design.addMove(42, 0, [3], 0);
     design.addMove(42, 0, [2], 0);
     design.addMove(42, 0, [0], 0);
@@ -422,6 +467,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HTL7", 43);
     design.addAttribute(43, 0, 7);
+    design.addAttribute(43, 1, 'HTL');
     design.addMove(43, 0, [3], 0);
     design.addMove(43, 0, [2], 0);
     design.addMove(43, 0, [0], 0);
@@ -429,6 +475,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HBR8", 44);
     design.addAttribute(44, 0, 8);
+    design.addAttribute(44, 1, 'HBR');
     design.addMove(44, 0, [3], 0);
     design.addMove(44, 0, [2], 0);
     design.addMove(44, 0, [0], 0);
@@ -436,6 +483,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HBL8", 45);
     design.addAttribute(45, 0, 8);
+    design.addAttribute(45, 1, 'HBL');
     design.addMove(45, 0, [3], 0);
     design.addMove(45, 0, [2], 0);
     design.addMove(45, 0, [0], 0);
@@ -443,6 +491,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HTR8", 46);
     design.addAttribute(46, 0, 8);
+    design.addAttribute(46, 1, 'HTR');
     design.addMove(46, 0, [3], 0);
     design.addMove(46, 0, [2], 0);
     design.addMove(46, 0, [0], 0);
@@ -450,6 +499,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HTL8", 47);
     design.addAttribute(47, 0, 8);
+    design.addAttribute(47, 1, 'HTL');
     design.addMove(47, 0, [3], 0);
     design.addMove(47, 0, [2], 0);
     design.addMove(47, 0, [0], 0);
@@ -457,6 +507,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HBR9", 48);
     design.addAttribute(48, 0, 9);
+    design.addAttribute(48, 1, 'HBR');
     design.addMove(48, 0, [3], 0);
     design.addMove(48, 0, [2], 0);
     design.addMove(48, 0, [0], 0);
@@ -464,6 +515,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HBL9", 49);
     design.addAttribute(49, 0, 9);
+    design.addAttribute(49, 1, 'HBL');
     design.addMove(49, 0, [3], 0);
     design.addMove(49, 0, [2], 0);
     design.addMove(49, 0, [0], 0);
@@ -471,6 +523,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HR9", 50);
     design.addAttribute(50, 0, 9);
+    design.addAttribute(50, 1, 'HR');
     design.addMove(50, 0, [3], 0);
     design.addMove(50, 0, [2], 0);
     design.addMove(50, 0, [0], 0);
@@ -478,6 +531,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HLR9", 51);
     design.addAttribute(51, 0, 9);
+    design.addAttribute(51, 1, 'HLR');
     design.addMove(51, 0, [3], 0);
     design.addMove(51, 0, [2], 0);
     design.addMove(51, 0, [0], 0);
@@ -485,6 +539,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HTRLC9", 52);
     design.addAttribute(52, 0, 9);
+    design.addAttribute(52, 1, 'HTRLC');
     design.addMove(52, 0, [3], 0);
     design.addMove(52, 0, [2], 0);
     design.addMove(52, 0, [0], 0);
@@ -492,6 +547,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HTL9", 53);
     design.addAttribute(53, 0, 9);
+    design.addAttribute(53, 1, 'HTL');
     design.addMove(53, 0, [3], 0);
     design.addMove(53, 0, [2], 0);
     design.addMove(53, 0, [0], 0);
@@ -499,6 +555,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HBR10", 54);
     design.addAttribute(54, 0, 10);
+    design.addAttribute(54, 1, 'HBR');
     design.addMove(54, 0, [3], 0);
     design.addMove(54, 0, [2], 0);
     design.addMove(54, 0, [0], 0);
@@ -506,6 +563,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HBL10", 55);
     design.addAttribute(55, 0, 10);
+    design.addAttribute(55, 1, 'HBL');
     design.addMove(55, 0, [3], 0);
     design.addMove(55, 0, [2], 0);
     design.addMove(55, 0, [0], 0);
@@ -513,6 +571,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HTR10", 56);
     design.addAttribute(56, 0, 10);
+    design.addAttribute(56, 1, 'HTR');
     design.addMove(56, 0, [3], 0);
     design.addMove(56, 0, [2], 0);
     design.addMove(56, 0, [0], 0);
@@ -520,6 +579,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("HTL10", 57);
     design.addAttribute(57, 0, 10);
+    design.addAttribute(57, 1, 'HTL');
     design.addMove(57, 0, [3], 0);
     design.addMove(57, 0, [2], 0);
     design.addMove(57, 0, [0], 0);
@@ -682,8 +742,8 @@ Dagaz.View.configure = function(view) {
     view.defPiece("YouHBR10", "You HBR10");
     view.defPiece("YouHBL10", "You HBL10");
     view.defPiece("YouHTR10", "You HTR10");
-    view.defPiece("YouHTL10", "You HTL10"); 
-
+    view.defPiece("YouHTL10", "You HTL10");
+ 
     view.defPosition("a10", 0, 0, 50, 50);
     view.defPosition("b10", 50, 0, 50, 50);
     view.defPosition("c10", 100, 0, 50, 50);
