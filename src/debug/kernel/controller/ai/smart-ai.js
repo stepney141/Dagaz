@@ -98,15 +98,31 @@ BruteforceAi.prototype.getMove = function(ctx) {
   var cnt = 0;
   var queue = [ ctx.board ];
   var timestamp = Date.now();
-  while (Date.now() - timestamp < this.params.AI_FRAME) {
+  var goal = null;
+  while ((goal === null) && (Date.now() - timestamp < this.params.AI_FRAME)) {
       var board = queue.shift();
       var moves = cache(ctx, board);
       for (var i = 1; i < moves.length; i++) {
-           queue.push(board.apply(moves[i]));
+           var b = board.apply(moves[i]);
+           if (b.checkGoals(ctx.design) != 0) {
+               goal = b;
+               break;
+           }
+           queue.push(b);
       }
       cnt++;
   }
   console.log(cnt);
+  while (goal != null) {
+     if (goal.parent.zSign == ctx.board.zSign) {
+         return {
+             done:  true,
+             move:  goal.move,
+             ai:    "best"
+         };
+     }
+     goal = goal.parent;
+  }
   var moves = cache(ctx, ctx.board);
   while (moves.length > 1) {
       var move = moves.pop();
