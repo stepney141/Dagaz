@@ -10,6 +10,9 @@
   - Семейство Рендзю
     - Go Moky
     - Рендзю
+    - Нинуки Рендзю (Пента)
+    - Керио Пента
+    - Боку
     - Quantum tic-tac-toe
   - Morris family
   - Go family
@@ -21,6 +24,16 @@
     - MarGo
     - War Go
     - Watermelon
+  - Breakthrough games
+    - French Military game (2 variants)
+    - Shafran's game
+    - Asalto
+    - Gala
+    - Arimaa
+    - Kamisado
+    - Elementals
+    - Джунгли
+    - Doubutsu Shogi
   - Custodian games
     - Seega
     - Hasami Shogi
@@ -31,9 +44,9 @@
     - Ультима
     - Rithmomachy
   - Checkers-like games
-    - Asalto
-    - Волки и козлик Шафрана
+    - Fox and Geese (4 variants)
     - 4 Fields Kono
+    - Nam Dinh
     - Алькуэрк
     - Dablot
     - Konane
@@ -93,8 +106,7 @@
     - Congo
     - Flip Chess
     - Platform Chess
-  - Семейство Джунгли
-    - Джунгли
+  - Игры с неполной информацией
     - Luzhanqi
     - Stratego
     - Banqi
@@ -112,7 +124,6 @@
     - Mini Shogi
     - Micro Shogi
     - Kyoto Shogi
-    - Doubutsu Shogi
     - Tori Shogi
     - Chu Shogi
     - Tenjiku Shogi
@@ -122,9 +133,7 @@
     - Минг-манг
   - Halma family
   - Other games
-    - Elementals
     - Abalone
-    - Kamisado
     - Ордо
     - Lines of action
     - Pasang
