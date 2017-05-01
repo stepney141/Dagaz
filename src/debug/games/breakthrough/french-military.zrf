@@ -1,3 +1,5 @@
+(version "3.0")
+
 (define shift (
    $1 (verify empty?) 
    add
@@ -8,6 +10,7 @@
     (history "This game war popular in French military circles during and after the Franco-Prussian War of 1870-1871.")
 
     (option "highlight goals" false)
+    (option "ko" situation)
 
     (players Red Black)
     (turn-order Red Black)

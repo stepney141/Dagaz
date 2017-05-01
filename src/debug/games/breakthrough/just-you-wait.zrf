@@ -1,3 +1,5 @@
+(version "2.0")
+
 (define shift (
    $1 (verify empty?) 
    add
@@ -122,8 +124,7 @@
         (Black (BlackPiece a1 b1 c1 d1 c2))
    )
 
-   (loss-condition (White Black) stalemated)
-   (loss-condition (White Black) repetition)
+   (loss-condition (White) stalemated)
    (win-condition  (White) (absolute-config WhitePiece (a1)))
    (win-condition  (White) (absolute-config WhitePiece (b1)))
    (win-condition  (White) (absolute-config WhitePiece (c1)))

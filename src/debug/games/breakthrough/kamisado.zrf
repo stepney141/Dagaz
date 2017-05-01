@@ -1,3 +1,5 @@
+(version "3.0")
+
 (define slide (
    $1
    (while empty?
@@ -22,8 +24,9 @@
    (title "Kamisado")
    (history "Invented by Peter Burley in 2008.")
 
-   (option "pass turn"       forced)
-   (option "highlight goals" false)
+   (option "pass turn"          forced)
+   (option "highlight goals"    false)
+   (option "kamisado-extension" true)
 
    (players    White Black)
    (turn-order White Black)

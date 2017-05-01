@@ -66,7 +66,7 @@ Model.Game.CheckInvariants = function(board) {
   var design = Model.Game.design;
   _.chain(board.moves)
    .filter(function(move) {
-      return actions.length == 1;
+      return move.actions.length == 1;
     })
    .each(function(move) {
       var dame   = -1;
