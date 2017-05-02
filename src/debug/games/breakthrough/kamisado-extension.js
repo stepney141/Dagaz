@@ -1,5 +1,7 @@
 (function() {
 
+Dagaz.View.showHint = function(view) {}
+
 var checkVersion = Model.Game.checkVersion;
 
 Model.Game.checkVersion = function(design, name, value) {

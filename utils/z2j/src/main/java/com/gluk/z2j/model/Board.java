@@ -393,19 +393,19 @@ public class Board extends AbstractDoc implements IBoard {
 			NodeIterator kl = XPathAPI.selectNodeIterator(n, A_TAG);
 			Node k = kl.nextNode();
 			if (k != null) {
-				x = Integer.parseInt(n.getTextContent());
+				x = Integer.parseInt(k.getTextContent());
 				k = kl.nextNode();
 			}
 			if (k != null) {
-				y = Integer.parseInt(n.getTextContent());
+				y = Integer.parseInt(k.getTextContent());
 				k = kl.nextNode();
 			}
 			if (k != null) {
-				dx = Integer.parseInt(n.getTextContent()) - x;
+				dx = Integer.parseInt(k.getTextContent()) - x;
 				k = kl.nextNode();
 			}
 			if (k != null) {
-				dy = Integer.parseInt(n.getTextContent()) - y;
+				dy = Integer.parseInt(k.getTextContent()) - y;
 				addPos(n.getLocalName(), x, y, dx, dy);
 			}
 		}
@@ -450,8 +450,10 @@ public class Board extends AbstractDoc implements IBoard {
 	
 	private void getSyms() throws Exception {
 		NodeIterator nl = XPathAPI.selectNodeIterator(doc, SYMS_XP);
+		boolean f = true;
 		Node n;
 		while ((n = nl.nextNode())!= null) {
+			f = false;
 			String player = getValue(n, HEAD_XP);
 			NodeIterator tl = XPathAPI.selectNodeIterator(n, TAIL_XP);
 			Node t;
@@ -459,6 +461,16 @@ public class Board extends AbstractDoc implements IBoard {
 				String from = t.getLocalName();
 				String to = getValue(t, HEAD_XP);
 				addSym(player, from, to);
+			}
+		}
+		if (f) {
+			for (String player: game.getPlayers()) {
+				if (!f) {
+					for (String dir: dirl) {
+						addSym(player, dir, dir);
+					}
+				}
+				f = false;
 			}
 		}
 	}

@@ -12,8 +12,8 @@
    (piece
       (name $1Dragon)
       (help "Dragon: must be moved in a straight line, either directly forwards or diagonally forwards.")
-      (image White "images/Kamisado/w$2.bmp"
-             Black "images/Kamisado/b$2.bmp")
+      (image White "images/kamisado/w$2.bmp"
+             Black "images/kamisado/b$2.bmp")
       (moves
          (slide n) (slide nw) (slide ne)
       )

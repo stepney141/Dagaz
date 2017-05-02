@@ -66,6 +66,7 @@ public class Game extends AbstractDoc implements IGame {
 	
 	private AbstractDoc               proxy  = null;
 	private Map<String, Integer>    players  = new HashMap<String, Integer>();
+	private List<String>             pnames  = new ArrayList<String>();
 	private List<String>              modes  = new ArrayList<String>();
 	private List<MoveTemplate>    templates  = new ArrayList<MoveTemplate>();
 	private Map<Integer, List<Move>>  moves  = new HashMap<Integer, List<Move>>();
@@ -100,7 +101,7 @@ public class Game extends AbstractDoc implements IGame {
 	}
 
 	public Collection<String> getPlayers() {
-		return players.keySet();
+		return pnames;
 	}
 
 	public boolean isPlayer(String name) {
@@ -245,11 +246,8 @@ public class Game extends AbstractDoc implements IGame {
 			if (i > 1) {
 				throw new Exception("Not Supported");
 			}
-			if (i == 0) {
-				players.put(n.getLocalName(), 1);
-			} else {
-				players.put(n.getLocalName(), -1);
-			}
+			players.put(n.getLocalName(), i + 1);
+			pnames.add(n.getLocalName());
 			dest.open(NAME_TAG);dest.add(n.getLocalName()); dest.close();
 		}
 		dest.close();
