@@ -22,6 +22,7 @@ ZRF = {
 Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "1");
     design.checkVersion("highlight-goals", "false");
+    design.checkVersion("ko", "situation");
 
     design.addDirection("w");
     design.addDirection("e");
@@ -29,7 +30,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addDirection("n");
 
     design.addPlayer("Red", [1, 0, 3, 2]);
-    design.addPlayer("Black", [0, 1, 2, 3]);
+    design.addPlayer("Green", [0, 1, 2, 3]);
 
     design.addPosition("a9", [0, 1, 7, 0]);
     design.addPosition("b9", [-1, 1, 7, 0]);
@@ -164,14 +165,14 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Red", "Fox", 54);
     design.setup("Red", "Rat", 48);
     design.setup("Red", "Lion", 62);
-    design.setup("Black", "Elephant", 20);
-    design.setup("Black", "Tiger", 6);
-    design.setup("Black", "Cat", 12);
-    design.setup("Black", "Dog", 18);
-    design.setup("Black", "Panther", 16);
-    design.setup("Black", "Fox", 8);
-    design.setup("Black", "Rat", 14);
-    design.setup("Black", "Lion", 0);
+    design.setup("Green", "Elephant", 20);
+    design.setup("Green", "Tiger", 6);
+    design.setup("Green", "Cat", 12);
+    design.setup("Green", "Dog", 18);
+    design.setup("Green", "Panther", 16);
+    design.setup("Green", "Fox", 8);
+    design.setup("Green", "Rat", 14);
+    design.setup("Green", "Lion", 0);
 
     design.goal(0, "Red", "Elephant", [3]);
     design.goal(1, "Red", "Lion", [3]);
@@ -181,34 +182,34 @@ Dagaz.Model.BuildDesign = function(design) {
     design.goal(5, "Red", "Dog", [3]);
     design.goal(6, "Red", "Cat", [3]);
     design.goal(7, "Red", "Rat", [3]);
-    design.goal(8, "Black", "Elephant", [59]);
-    design.goal(9, "Black", "Lion", [59]);
-    design.goal(10, "Black", "Tiger", [59]);
-    design.goal(11, "Black", "Panther", [59]);
-    design.goal(12, "Black", "Fox", [59]);
-    design.goal(13, "Black", "Dog", [59]);
-    design.goal(14, "Black", "Cat", [59]);
-    design.goal(15, "Black", "Rat", [59]);
+    design.goal(8, "Green", "Elephant", [59]);
+    design.goal(9, "Green", "Lion", [59]);
+    design.goal(10, "Green", "Tiger", [59]);
+    design.goal(11, "Green", "Panther", [59]);
+    design.goal(12, "Green", "Fox", [59]);
+    design.goal(13, "Green", "Dog", [59]);
+    design.goal(14, "Green", "Cat", [59]);
+    design.goal(15, "Green", "Rat", [59]);
 }
 
 Dagaz.View.configure = function(view) {
     view.defBoard("Board");
     view.defPiece("RedElephant", "Red Elephant");
-    view.defPiece("BlackElephant", "Black Elephant");
+    view.defPiece("GreenElephant", "Green Elephant");
     view.defPiece("RedLion", "Red Lion");
-    view.defPiece("BlackLion", "Black Lion");
+    view.defPiece("GreenLion", "Green Lion");
     view.defPiece("RedTiger", "Red Tiger");
-    view.defPiece("BlackTiger", "Black Tiger");
+    view.defPiece("GreenTiger", "Green Tiger");
     view.defPiece("RedPanther", "Red Panther");
-    view.defPiece("BlackPanther", "Black Panther");
+    view.defPiece("GreenPanther", "Green Panther");
     view.defPiece("RedFox", "Red Fox");
-    view.defPiece("BlackFox", "Black Fox");
+    view.defPiece("GreenFox", "Green Fox");
     view.defPiece("RedDog", "Red Dog");
-    view.defPiece("BlackDog", "Black Dog");
+    view.defPiece("GreenDog", "Green Dog");
     view.defPiece("RedCat", "Red Cat");
-    view.defPiece("BlackCat", "Black Cat");
+    view.defPiece("GreenCat", "Green Cat");
     view.defPiece("RedRat", "Red Rat");
-    view.defPiece("BlackRat", "Black Rat");
+    view.defPiece("GreenRat", "Green Rat");
  
     view.defPosition("a9", 4, 3, 66, 66);
     view.defPosition("b9", 70, 3, 66, 66);

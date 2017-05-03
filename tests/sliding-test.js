@@ -14,10 +14,10 @@ QUnit.test( "One tile", function( assert ) {
 
   board.generate();
   assert.equal( board.moves.length, 4, "4 moves generated");
-  assert.equal( board.moves[0].toString(), "c3 - d3", "c3 - d3");
-  assert.equal( board.moves[1].toString(), "c3 - b3", "c3 - b3");
-  assert.equal( board.moves[2].toString(), "c3 - c2", "c3 - c2");
-  assert.equal( board.moves[3].toString(), "c3 - c4", "c3 - c4");
+  assert.equal( board.moves[0].toString(), "c3-d3", "c3-d3");
+  assert.equal( board.moves[1].toString(), "c3-b3", "c3-b3");
+  assert.equal( board.moves[2].toString(), "c3-c2", "c3-c2");
+  assert.equal( board.moves[3].toString(), "c3-c4", "c3-c4");
 
   var board = board.apply(board.moves[0]);
   assert.equal( board.getPiece(Dagaz.Model.stringToPos("d3")).toString(), "You B00009", "B00009 on d3");
@@ -41,12 +41,12 @@ QUnit.test( "One piece", function( assert ) {
 
   board.generate();
   assert.equal( board.moves.length, 6, "6 moves generated");
-  assert.equal( board.moves[0].toString(), "a2 - b2 a3 - b3", "a2 - b2 a3 - b3");
-  assert.equal( board.moves[1].toString(), "a2 - a1 a3 - a2", "a2 - a1 a3 - a2");
-  assert.equal( board.moves[2].toString(), "a2 - a3 - a4", "a2 - a3 - a4");
-  assert.equal( board.moves[3].toString(), "a3 - b3 a2 - b2", "a3 - b3 a2 - b2");
-  assert.equal( board.moves[4].toString(), "a3 - a2 - a1", "a3 - a2 - a1");
-  assert.equal( board.moves[5].toString(), "a3 - a4 a2 - a3", "a3 - a4 a2 - a3");
+  assert.equal( board.moves[0].toString(), "a2-b2", "a2-b2 a3-b3");
+  assert.equal( board.moves[1].toString(), "a2-a1", "a2-a1 a3-a2");
+  assert.equal( board.moves[2].toString(), "a2-a3", "a2-a3-a4");
+  assert.equal( board.moves[3].toString(), "a3-b3", "a3-b3 a2-b2");
+  assert.equal( board.moves[4].toString(), "a3-a2", "a3-a2-a1");
+  assert.equal( board.moves[5].toString(), "a3-a4", "a3-a4 a2-a3");
 
   Dagaz.Model.design = undefined;
   Dagaz.Model.board = undefined;
@@ -70,8 +70,8 @@ QUnit.test( "More pieces", function( assert ) {
 
   board.generate();
   assert.equal( board.moves.length, 2, "2 moves generated");
-  assert.equal( board.moves[0].toString(), "d4 - c4 c5 - b5 c4 - b4", "d4 - c4 c5 - b5 c4 - b4");
-  assert.equal( board.moves[1].toString(), "d4 - d3 c5 - c4 - c3", "d4 - d3 c5 - c4 - c3");
+  assert.equal( board.moves[0].toString(), "d4-c4", "d4-c4 c5-b5 c4-b4");
+  assert.equal( board.moves[1].toString(), "d4-d3", "d4-d3 c5-c4-c3");
 
   var board = board.apply(board.moves[0]);
   assert.equal( board.checkGoals(design), 0, "No win");
@@ -86,11 +86,11 @@ QUnit.test( "More pieces", function( assert ) {
 
   board.generate();
   assert.equal( board.moves.length, 5, "5 moves generated");
-  assert.equal( board.moves[0].toString(), "e4 - d4 d5 - c5 e5 - d5", "e4 - d4 d5 - c5 e5 - d5");
-  assert.equal( board.moves[1].toString(), "e4 - e3 d5 - d4 e5 - e4", "e4 - e3 d5 - d4 e5 - e4");
-  assert.equal( board.moves[2].toString(), "c4 - d4 b5 - c5 b4 - c4", "c4 - d4 b5 - c5 b4 - c4");
-  assert.equal( board.moves[3].toString(), "c4 - b4 b5 - a5 b4 - a4", "c4 - b4 b5 - a5 b4 - a4");
-  assert.equal( board.moves[4].toString(), "c4 - c3 b5 - b4 - b3", "c4 - c3 b5 - b4 - b3");
+  assert.equal( board.moves[0].toString(), "e4-d4", "e4-d4 d5-c5 e5-d5");
+  assert.equal( board.moves[1].toString(), "e4-e3", "e4-e3 d5-d4 e5-e4");
+  assert.equal( board.moves[2].toString(), "c4-d4", "c4-d4 b5-c5 b4-c4");
+  assert.equal( board.moves[3].toString(), "c4-b4", "c4-b4 b5-a5 b4-a4");
+  assert.equal( board.moves[4].toString(), "c4-c3", "c4-c3 b5-b4-b3");
 
   Dagaz.Model.design = undefined;
   Dagaz.Model.board = undefined;
@@ -106,11 +106,11 @@ QUnit.test( "Simple Move list", function( assert ) {
   assert.equal( m.getLevel(), 0, "Move list generated");
   var moves = m.getMoves();
   assert.equal( moves.length, 5, "5 moves generated");
-  assert.equal( moves[0].toString(), "c1 - d1", "c1 - d1");
-  assert.equal( moves[1].toString(), "c1 - b1", "c1 - b1");
-  assert.equal( moves[2].toString(), "b2 - b1 a3 - a2 - a1", "b2 - b1 a3 - a2 - a1");
-  assert.equal( moves[3].toString(), "a2 - a1 a3 - a2 b2 - b1", "a2 - a1 a3 - a2 b2 - b1");
-  assert.equal( moves[4].toString(), "a3 - a2 - a1 b2 - b1", "a3 - a2 - a1 b2 - b1");
+  assert.equal( moves[0].toString(), "c1-d1", "c1-d1");
+  assert.equal( moves[1].toString(), "c1-b1", "c1-b1");
+  assert.equal( moves[2].toString(), "b2-b1", "b2-b1 a3-a2-a1");
+  assert.equal( moves[3].toString(), "a2-a1", "a2-a1 a3-a2 b2-b1");
+  assert.equal( moves[4].toString(), "a3-a2", "a3-a2-a1 b2-b1");
 
   assert.equal( m.getLevel(), 0, "Level 0");
   assert.deepEqual( m.getPositions(), [Dagaz.Model.stringToPos("c1"), Dagaz.Model.stringToPos("b2"), Dagaz.Model.stringToPos("a2"), Dagaz.Model.stringToPos("a3")], "Initial positions");
@@ -122,22 +122,22 @@ QUnit.test( "Simple Move list", function( assert ) {
   assert.deepEqual( m.getPositions(), [Dagaz.Model.stringToPos("b1")], "Position b1 is marked");
   var moves = m.getMoves();
   assert.equal( moves.length, 1, "1 moves generated");
-  assert.equal( moves[0].toString(), "b2 - b1 a3 - a2 - a1", "b2 - b1 a3 - a2 - a1");
+  assert.equal( moves[0].toString(), "b2-b1", "b2-b1 a3-a2-a1");
 
   m.setPosition(Dagaz.Model.stringToPos("c1"));
   assert.deepEqual( m.canDone(), false, "Incompleted move");
   assert.deepEqual( m.getPositions(), [Dagaz.Model.stringToPos("d1"), Dagaz.Model.stringToPos("b1")], "Positions b1 and d1 are marked");
   var moves = m.getMoves();
   assert.equal( moves.length, 2, "2 moves generated");
-  assert.equal( moves[0].toString(), "c1 - d1", "c1 - d1");
-  assert.equal( moves[1].toString(), "c1 - b1", "c1 - b1");
+  assert.equal( moves[0].toString(), "c1-d1", "c1-d1");
+  assert.equal( moves[1].toString(), "c1-b1", "c1-b1");
 
   m.setPosition(Dagaz.Model.stringToPos("b1"));
   assert.deepEqual( m.canDone(), true, "Completed move");
   assert.deepEqual( m.getPositions(), [Dagaz.Model.stringToPos("b1")], "Position b1 is marked only");
   var moves = m.getMoves();
   assert.equal( moves.length, 1, "1 moves generated");
-  assert.equal( moves[0].toString(), "c1 - b1", "c1 - b1");
+  assert.equal( moves[0].toString(), "c1-b1", "c1-b1");
 
   m.done();
   assert.equal( m.getLevel(), 0, "Level 0");
@@ -163,37 +163,37 @@ QUnit.test( "Bruteforce AI", function( assert ) {
   var result = ai.getMove(ctx);
   assert.ok( result.move !== null, "Move found");
   assert.ok( result.done, "Move is done");
-  assert.equal( result.move.toString(), "b2 - b1 a3 - a2 - a1", "b2 - b1 a3 - a2 - a1");
+  assert.equal( result.move.toString(), "b2-b1", "b2-b1 a3-a2-a1");
 
   board = board.apply(result.move);
   ai.setContext(ctx, board);
   result = ai.getMove(ctx);
-  assert.equal( result.move.toString(), "c3 - b3 - a3", "c3 - b3 - a3");
+  assert.equal( result.move.toString(), "c3-b3", "c3-b3-a3");
 
   board = board.apply(result.move);
   ai.setContext(ctx, board);
   result = ai.getMove(ctx);
-  assert.equal( result.move.toString(), "e3 - d3 - c3", "e3 - d3 - c3");
+  assert.equal( result.move.toString(), "e3-d3", "e3-d3-c3");
 
   board = board.apply(result.move);
   ai.setContext(ctx, board);
   result = ai.getMove(ctx);
-  assert.equal( result.move.toString(), "e2 - d2 c2 - b2 d2 - c2", "e2 - d2 c2 - b2 d2 - c2");
+  assert.equal( result.move.toString(), "e2-d2", "e2-d2 c2-b2 d2-c2");
 
   board = board.apply(result.move);
   ai.setContext(ctx, board);
   result = ai.getMove(ctx);
-  assert.equal( result.move.toString(), "d3 - e3 c3 - d3", "d3 - e3 c3 - d3");
+  assert.equal( result.move.toString(), "d3-e3", "d3-e3 c3-d3");
 
   board = board.apply(result.move);
   ai.setContext(ctx, board);
   result = ai.getMove(ctx);
-  assert.equal( result.move.toString(), "b3 - c3 a3 - b3", "b3 - c3 a3 - b3");
+  assert.equal( result.move.toString(), "b3-c3", "b3-c3 a3-b3");
 
   board = board.apply(result.move);
   ai.setContext(ctx, board);
   result = ai.getMove(ctx);
-  assert.equal( result.move.toString(), "c1 - d1", "c1 - d1");
+  assert.equal( result.move.toString(), "c1-d1", "c1-d1");
 
   Dagaz.Model.design = undefined;
   Dagaz.Model.board = undefined;

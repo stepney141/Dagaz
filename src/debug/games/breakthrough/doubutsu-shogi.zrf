@@ -1,0 +1,122 @@
+(version "3.0")
+
+(define step (
+  (verify (in-zone? board-zone))
+  $1 (verify empty?)
+  add
+))
+
+(game
+  (title "Doubutsu Shogi")
+
+  (option "highlight goals" false)
+  (option "ko" situation)
+
+  (players Green Red)
+  (turn-order Green Red)
+
+  (move-sound "Audio\Pickup.wav")
+  (release-sound "Audio\Pickup.wav")
+  (capture-sound "")
+  (drop-sound "")
+
+  (board
+        (image "images/doubutsu-shogi/board.BMP")
+        (grid
+               (start-rectangle 12 12 115 105)
+               (dimensions ("r/a/b/c/g" (93 0))
+                           ("4/3/2/1" (0 94))
+               )
+               (directions (n 0 -1) (s 0 1))
+        )
+        (zone (name board-zone) (players Green Red)
+              (positions a1 b1 c1
+                         a2 b2 c2
+                         a3 b3 c3
+                         a4 b4 c4
+              )
+        )
+        (zone (name promotion-zone) (players Green)
+              (positions a4 b4 c4)
+        )
+        (zone (name promotion-zone) (players Red)
+              (positions a1 b1 c1)
+        )
+        (symmetry Red (n s) (s n))
+  )
+
+  (piece
+        (name  King)
+        (help  "Lion: steps 1 square in any direction to a safe square")
+        (image Green "images/doubutsu-shogi/king-green.BMP"
+               Red   "images/doubutsu-shogi/king-red.BMP"
+        )
+        (moves
+               (step n) 
+               (step s) 
+        )
+  )
+  (piece
+        (name  Za)
+        (help  "Chick: steps 1 square to forward, promote on last row")
+        (image Green "images/doubutsu-shogi/za-green.BMP"
+               Red   "images/doubutsu-shogi/za-red.BMP"
+        )
+        (moves
+               (step n) 
+               (step s) 
+        )
+  )
+  (piece
+        (name  Sang)
+        (help  "Elephant: steps 1 square on any diagonal")
+        (image Green "images/doubutsu-shogi/sang-green.BMP"
+               Red   "images/doubutsu-shogi/sang-red.BMP"
+        )
+        (moves
+               (step n) 
+               (step s) 
+        )
+  )
+  (piece
+        (name  Jang)
+        (help  "Giraffe: steps 1 square on any orthogonal")
+        (image Green "images/doubutsu-shogi/jang-green.BMP"
+               Red   "images/doubutsu-shogi/jang-red.BMP"
+        )
+        (moves
+               (step n) 
+               (step s) 
+        )
+  )
+  (piece
+        (name  Hu)
+        (help  "Hen: steps 1 square in any direction except diagonally backwards")
+        (image Green "images/doubutsu-shogi/hu-green.BMP"
+               Red   "images/doubutsu-shogi/hu-red.BMP"
+        )
+        (moves
+               (step n) 
+               (step s) 
+        )
+  )
+
+  (board-setup
+        ( Green (Sang a1)
+                (King b1)
+                (Jang c1)
+                (Za   b2)
+        )
+        ( Red   (Sang c4)
+                (King b4)
+                (Jang a4)
+                (Za   b3)
+        )
+  )
+
+  (loss-condition (Green Red) (pieces-remaining 0 King))
+  (loss-condition (Green Red) repetition)
+
+  (win-condition  (Green) (absolute-config King (a4 b4 c4)))
+  (win-condition  (Red)   (absolute-config King (a1 b1 c1)))
+)

@@ -28,24 +28,24 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   if (superKo !== null) {
-      for (var i in board.moves) {
+      for (var i = 0; i < board.moves.length; i++) {
            var r = 0;
            var m = board.moves[i];
            var b = board.apply(m);
            if (superKo == 0) {
-               if (!_.isUndefined(board.parent)) {
-                   if (b.equals(board.parent)) {
+               if (board.parent) {
+                   if (b.zSign == board.parent.zSign) {
                        r = 1;
                    }
                }
            } else {
-               var p = board;
-               while (!_.isUndefined(p.parent)) {
+               var p = b;
+               while (p.parent) {
                    var q = p.parent;
                    if ((superKo == 1) || (q.player == b.player)) {
-                       if (q.equals(b)) {
+                       if (b.zSign == q.zSign) {
                            r++;
-                           if (numKo < 2) {
+                           if ((numKo < 2) || (r >= numKo)) {
                                break;
                            }
                        }

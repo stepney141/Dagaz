@@ -1091,15 +1091,6 @@ Dagaz.Model.createPiece = function(type, player) {
   return Dagaz.Model.cachePiece[player][type];
 }
 
-ZrfPiece.prototype.isEquals = function(piece) {
-  if (piece === null) return false;
-  if ((piece.type == this.type) && (piece.player == this.player)) {
-      return true;
-  } else {
-      return false;
-  }
-}
-
 Dagaz.Model.pieceToString = function(piece) {
   return piece.getOwner() + " " + piece.getType();
 }
@@ -1198,24 +1189,27 @@ ZrfBoard.prototype.traceMoves = function() {
   return moves.reverse();
 }
 
-ZrfBoard.prototype.checkGoals = function(design) {
+ZrfBoard.prototype.checkGoals = function(design, player) {
+  if (!player) {
+      player = this.player;
+  }
   var r = 0;
-  _.each(_.keys(design.goals), function(player) {
-     _.each(design.goals[player], function(goal) {
+  _.each(_.keys(design.goals), function(p) {
+     _.each(design.goals[p], function(goal) {
         var board = this;
         var s = _.reduce(goal, function(acc, g) {
             var type = g.piece;
             if (!_.reduce(g.positions, function(acc, pos) {
                var piece = board.getPiece(pos);
                if ((piece !== null) && 
-                   (piece.player == player) &&
+                   (piece.player == p) &&
                    (piece.type == type)) return true;
                return acc;
             }, false)) return false;
             return acc;
         }, true);
         if (s != 0) {
-            r = (player == this.player) ? s : -s; 
+            r = (p == player) ? s : -s; 
         }
      }, this);
   }, this);
@@ -1240,25 +1234,6 @@ ZrfBoard.prototype.copy = function() {
       r.pieces[pos] = this.pieces[pos];
   }, this);
   return r;
-}
-
-ZrfBoard.prototype.isEquals = function(board) {
-  if (board.zSign != this.zSign) return false;
-  var a = _.keys(this.pieces);
-  var b = _.keys(board.pieces);
-  if (a.length != b.length) return false;
-  if (_.difference(a, b).length != 0) return false;
-  if (_.difference(b, a).length != 0) return false;
-  var f = function(pos) { this.getPiece(pos); };
-  a = _.map(a, f, this);
-  b = _.map(b, f, board);
-  while ((a.length > 0) && (b.length > 0)) {
-     var x = a.pop();
-     var y = b.pop();
-     if (x === null) return false;
-     if (!x.isEquals(y)) return false;
-  }
-  return true;
 }
 
 Dagaz.Model.getInitBoard = function() {

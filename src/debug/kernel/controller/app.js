@@ -203,8 +203,8 @@ App.prototype.exec = function() {
       if (!_.isUndefined(this.positions)) {
           delete this.positions;
       }
-      if (this.board.checkGoals(this.design) != 0) {
-          var player = this.design.playerNames[this.board.player];
+      if (this.board.checkGoals(this.design, this.board.parent.player) != 0) {
+          var player = this.design.playerNames[this.board.parent.player];
           this.state = STATE.DONE;
           Canvas.style.cursor = "default";
           this.doneMessage = player + " win"

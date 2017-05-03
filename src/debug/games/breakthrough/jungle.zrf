@@ -7,7 +7,7 @@
    (piece
       (name $1)
       (image Red "images/jungle/Red$1.bmp"
-             Black "images/jungle/Black$1.bmp")
+             Green "images/jungle/Black$1.bmp")
       (moves
          (shift n) (shift s) (shift w) (shift e)
       )
@@ -19,8 +19,8 @@
 
     (option "highlight goals" false)
 
-    (players Red Black)
-    (turn-order Red Black)
+    (players Red Green)
+    (turn-order Red Green)
 
     (board
         (image "images/jungle/board.bmp")
@@ -37,7 +37,7 @@
            (positions c9 d8 e9)
         )
         (zone (name trap)  
-           (players Black) 
+           (players Green) 
            (positions c1 d2 e1)
         )
    )
@@ -62,7 +62,7 @@
          (Rat      g3)
          (Lion     g1)
       )
-      (Black
+      (Green
          (Elephant g7)
          (Tiger    g9)
          (Cat      f8)
@@ -83,12 +83,12 @@
    (win-condition (Red) (absolute-config Cat      (d9)))
    (win-condition (Red) (absolute-config Rat      (d9)))
 
-   (win-condition (Black) (absolute-config Elephant (d1)))
-   (win-condition (Black) (absolute-config Lion     (d1)))
-   (win-condition (Black) (absolute-config Tiger    (d1)))
-   (win-condition (Black) (absolute-config Panther  (d1)))
-   (win-condition (Black) (absolute-config Fox      (d1)))
-   (win-condition (Black) (absolute-config Dog      (d1)))
-   (win-condition (Black) (absolute-config Cat      (d1)))
-   (win-condition (Black) (absolute-config Rat      (d1)))
+   (win-condition (Green) (absolute-config Elephant (d1)))
+   (win-condition (Green) (absolute-config Lion     (d1)))
+   (win-condition (Green) (absolute-config Tiger    (d1)))
+   (win-condition (Green) (absolute-config Panther  (d1)))
+   (win-condition (Green) (absolute-config Fox      (d1)))
+   (win-condition (Green) (absolute-config Dog      (d1)))
+   (win-condition (Green) (absolute-config Cat      (d1)))
+   (win-condition (Green) (absolute-config Rat      (d1)))
 )

@@ -22,8 +22,8 @@ ZRF = {
 Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "1");
     design.checkVersion("zrf", "3.0");
-//  design.checkVersion("highlight-goals", "false");
-//  design.checkVersion("ko", "situation");
+    design.checkVersion("highlight-goals", "false");
+    design.checkVersion("ko", "situation");
 
     design.addDirection("w");
     design.addDirection("e");
@@ -34,8 +34,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addDirection("sw");
     design.addDirection("nw");
 
-    design.addPlayer("Red", [1, 0, 3, 2, 6, 7, 4, 5]);
-    design.addPlayer("Black", [0, 1, 2, 3, 4, 5, 6, 7]);
+    design.addPlayer("Green", [1, 0, 3, 2, 6, 7, 4, 5]);
+    design.addPlayer("Red", [0, 1, 2, 3, 4, 5, 6, 7]);
 
     design.addPosition("a7", [null, null, null, null, null, null, null, null]);
     design.addPosition("b7", [0, 0, 3, 0, 0, 4, 2, 0]);
@@ -69,7 +69,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
 
-    design.addPiece("BlackPiece", 0);
+    design.addPiece("RedPiece", 0);
     design.addMove(0, 0, [3], 0);
     design.addMove(0, 0, [2], 0);
     design.addMove(0, 0, [1], 0);
@@ -79,25 +79,25 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 0, [6], 0);
     design.addMove(0, 0, [5], 0);
 
-    design.addPiece("RedPiece", 1);
+    design.addPiece("GreenPiece", 1);
     design.addMove(1, 0, [3], 0);
     design.addMove(1, 0, [1], 0);
     design.addMove(1, 0, [0], 0);
     design.addMove(1, 0, [7], 0);
     design.addMove(1, 0, [4], 0);
 
-    design.setup("Red", "RedPiece", 15);
-    design.setup("Red", "RedPiece", 19);
-    design.setup("Red", "RedPiece", 17);
-    design.setup("Black", "BlackPiece", 10);
+    design.setup("Green", "GreenPiece", 15);
+    design.setup("Green", "GreenPiece", 19);
+    design.setup("Green", "GreenPiece", 17);
+    design.setup("Red", "RedPiece", 10);
 
-    design.goal(0, "Black", "BlackPiece", [19]);
+    design.goal(0, "Red", "RedPiece", [19]);
 }
 
 Dagaz.View.configure = function(view) {
     view.defBoard("Board");
-    view.defPiece("BlackBlackPiece", "Black BlackPiece");
     view.defPiece("RedRedPiece", "Red RedPiece");
+    view.defPiece("GreenGreenPiece", "Green GreenPiece");
  
     view.defPosition("a7", 5, 5, 48, 48);
     view.defPosition("b7", 69, 5, 48, 48);
