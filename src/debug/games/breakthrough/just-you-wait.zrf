@@ -9,7 +9,6 @@
     (title "Just You Wait!")
     (history "Invented by Isaak Shafran.")
 
-    (option "pass turn"       forced)
     (option "highlight goals" false)
 
     (players Black White)

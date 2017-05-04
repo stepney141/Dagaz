@@ -22,7 +22,6 @@ ZRF = {
 Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "1");
     design.checkVersion("zrf", "2.0");
-    design.checkVersion("pass-turn", "forced");
     design.checkVersion("highlight-goals", "false");
 
     design.addDirection("nw");

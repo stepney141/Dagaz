@@ -439,7 +439,7 @@ View2D.prototype.draw = function(canvas) {
            var piece = this.piece[p.name];
            x += (pos.dx - piece.dx) / 2 | 0;
            y += (pos.dy - piece.dy) / 2 | 0;
-           ctx.drawImage(piece.h, x, y);
+           ctx.drawImage(piece.h, x, y, piece.dx, piece.dy);
         }, this);
       Dagaz.View.showMarks(this, ctx);
       this.animate();

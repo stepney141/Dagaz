@@ -12,7 +12,7 @@ Dagaz.Model.recycleCaptures = false;
 Dagaz.Model.smartFrom       = false;
 Dagaz.Model.smartTo         = false;
 Dagaz.Model.showGoals       = true;
-Dagaz.Model.showMoves       = false;
+Dagaz.Model.showMoves       = true;
 
 Dagaz.Model.checkVersion = function(design, name, value) {  
   if (name == "z2j") {
@@ -847,7 +847,7 @@ Dagaz.Model.createGen = function(template, params, design) {
 
 ZrfMoveGenerator.prototype.init = function(board, pos) {
   this.board    = board;
-  this.pos      = pos;
+  this.pos      = +pos;
 }
 
 ZrfMoveGenerator.prototype.clone = function() {
@@ -1195,7 +1195,9 @@ ZrfBoard.prototype.checkGoals = function(design, player) {
   }
   var r = 0;
   _.each(_.keys(design.goals), function(p) {
-     _.each(design.goals[p], function(goal) {
+     _.chain(design.goals[p])
+      .compact()
+      .each(function(goal) {
         var board = this;
         var s = _.reduce(goal, function(acc, g) {
             var type = g.piece;
@@ -1208,8 +1210,8 @@ ZrfBoard.prototype.checkGoals = function(design, player) {
             }, false)) return false;
             return acc;
         }, true);
-        if (s != 0) {
-            r = (p == player) ? s : -s; 
+        if (s) {
+            r = (p == player) ? 1: -1; 
         }
      }, this);
   }, this);

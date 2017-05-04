@@ -31,8 +31,7 @@ RandomAi.prototype.getMove = function(ctx) {
         }, this)
        .value();
   }
-  var len = ctx.childs.length;
-  if (ctx.childs.length == 0) {
+  if (ctx.childs.length == 0) {      
       return { done: true, ai: "nothing" };
   }
   if (ctx.childs.length == 1) {
@@ -41,7 +40,7 @@ RandomAi.prototype.getMove = function(ctx) {
   if (_.isUndefined(this.params.rand)) {
       this.params.rand = _.random;
   }
-  var ix = this.params.rand(0, len - 1);
+  var ix = this.params.rand(0, ctx.childs.length - 1);
   return {
       done: true,
       move: ctx.childs[ix].move,

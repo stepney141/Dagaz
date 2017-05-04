@@ -168,7 +168,7 @@ App.prototype.exec = function() {
              if (this.list.getMoves().length == 0) {
                  this.state = STATE.DONE;
                  Canvas.style.cursor = "default";
-                 this.doneMessage = player + " loss";
+                 alert(player + " loss");
                  return;
              }
          }
@@ -176,12 +176,12 @@ App.prototype.exec = function() {
   }
   if (this.state == STATE.BUZY) {
       var ctx = this.getContext(this.board.player);
+      var player = this.design.playerNames[this.board.player];
       var result = this.getAI().getMove(ctx);
       if (_.isUndefined(result.move)) {
           this.state = STATE.DONE;
           Canvas.style.cursor = "default";
-          var player = this.design.playerNames[this.board.player];
-          this.doneMessage = player + " win"
+          alert(player + " loss");
           return;
       }
       if (result.done || (Date.now() - this.timestamp >= this.params.AI_WAIT)) {
@@ -203,7 +203,7 @@ App.prototype.exec = function() {
       if (!_.isUndefined(this.positions)) {
           delete this.positions;
       }
-      if (this.board.checkGoals(this.design, this.board.parent.player) != 0) {
+      if (this.board.checkGoals(this.design, this.board.parent.player) > 0) {
           var player = this.design.playerNames[this.board.parent.player];
           this.state = STATE.DONE;
           Canvas.style.cursor = "default";

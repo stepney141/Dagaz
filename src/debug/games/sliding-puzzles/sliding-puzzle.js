@@ -2,7 +2,7 @@
 
 var checkVersion = Dagaz.Model.checkVersion;
 var distinctMode = false;
-var uniqueMode   = false;
+var uniqueMode   = true;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
   if (name == "sliding-puzzle") {
