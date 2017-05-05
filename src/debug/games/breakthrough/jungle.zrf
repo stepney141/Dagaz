@@ -28,6 +28,8 @@
       (name $1)
       (image Red "images/jungle/Red$1.bmp"
              Green "images/jungle/Black$1.bmp")
+      (glyph Red "images/jungle/Red$1Glyph.bmp"
+             Green "images/jungle/Black$1Glyph.bmp")
       (attribute weight $2)
       (moves
          (shift n) (shift s) (shift w) (shift e)
@@ -82,6 +84,8 @@
       (attribute weight 1)
       (image Red "images/jungle/RedRat.bmp"
              Green "images/jungle/BlackRat.bmp")
+      (glyph Red "images/jungle/RedRatGlyph.bmp"
+             Green "images/jungle/BlackRatGlyph.bmp")
       (moves
          (rat-shift n) (rat-shift s) (rat-shift w) (rat-shift e)
       )
@@ -93,6 +97,8 @@
       (name Panther)
       (image Red "images/jungle/RedPanther.bmp"
              Green "images/jungle/BlackPanther.bmp")
+      (glyph Red "images/jungle/RedPantherGlyph.bmp"
+             Green "images/jungle/BlackPantherGlyph.bmp")
       (attribute weight 5)
       (moves
          (shift n) (shift s) (shift w) (shift e)
@@ -103,6 +109,8 @@
       (name Tiger)
       (image Red "images/jungle/RedTiger.bmp"
              Green "images/jungle/BlackTiger.bmp")
+      (glyph Red "images/jungle/RedTigerGlyph.bmp"
+             Green "images/jungle/BlackTigerGlyph.bmp")
       (attribute weight 7)
       (moves
          (shift n) (shift s) (shift w) (shift e)
@@ -113,6 +121,8 @@
       (name Lion)
       (image Red "images/jungle/RedLion.bmp"
              Green "images/jungle/BlackLion.bmp")
+      (image Red "images/jungle/RedLionGlyph.bmp"
+             Green "images/jungle/BlackLionGlyph.bmp")
       (attribute weight 7)
       (moves
          (shift n) (shift s) (shift w) (shift e)
