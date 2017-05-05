@@ -34,6 +34,7 @@
     - Elementals
     - Джунгли
     - Doubutsu Shogi
+    - Italian Damone
   - Custodian games
     - Seega
     - Hasami Shogi
@@ -60,7 +61,6 @@
     - Armenian Tama
     - Checkers
     - Italian Checkers
-    - Italian Damone
     - International Checkers
     - Russian Checkers
     - 80 Cells Checkers
@@ -137,6 +137,7 @@
     - Ордо
     - Lines of action
     - Pasang
+    - Шакти
   - Real Time games
     - Тамск
     - Питон
@@ -147,3 +148,4 @@
   - Halma puzzles
   - LightOff puzzles
   - Sliding puzzles
+  - Sokoban

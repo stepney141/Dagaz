@@ -594,10 +594,8 @@ ZrfDesign.prototype.goal = function(n, player, piece, pos) {
   if (_.isUndefined(this.goals[o])) {
       this.goals[o] = [];
   }
-  if (_.isUndefined(this.goals[o][n])) {
-      this.goals[o][n] = [];
-  }
-  this.goals[o][n].push({
+  this.goals[o].push({
+      num: n,
       piece: Dagaz.find(this.pieceNames, piece),
       positions: pos
   });
@@ -608,8 +606,11 @@ Dagaz.Model.getPieceTypes = function(piece) {
 }
 
 ZrfDesign.prototype.getGoalPositions = function(player, pieces) {
-  if (Dagaz.Model.showGoals && !_.isUndefined(this.goals[player]) && !_.isUndefined(this.goals[player][0])) {
-      return _.chain(this.goals[player][0])
+  if (Dagaz.Model.showGoals && !_.isUndefined(this.goals[player])) {
+      return _.chain(this.goals[player])
+       .filter(function(goal) {
+            return goal.num == 0;
+        })
        .filter(function(goal) {
             return _.indexOf(pieces, goal.piece) >= 0;
         })
@@ -620,7 +621,7 @@ ZrfDesign.prototype.getGoalPositions = function(player, pieces) {
        .uniq()
        .value();
   } else {
-      return [];
+       return [];
   }
 }
 
@@ -1195,25 +1196,30 @@ ZrfBoard.prototype.checkGoals = function(design, player) {
   }
   var r = 0;
   _.each(_.keys(design.goals), function(p) {
-     _.chain(design.goals[p])
-      .compact()
-      .each(function(goal) {
-        var board = this;
-        var s = _.reduce(goal, function(acc, g) {
-            var type = g.piece;
-            if (!_.reduce(g.positions, function(acc, pos) {
-               var piece = board.getPiece(pos);
-               if ((piece !== null) && 
-                   (piece.player == p) &&
-                   (piece.type == type)) return true;
-               return acc;
-            }, false)) return false;
-            return acc;
-        }, true);
-        if (s) {
-            r = (p == player) ? 1: -1; 
-        }
-     }, this);
+      var board  = this;
+      var groups = _.groupBy(design.goals[p], function(goal) {
+          return goal.num;
+      });
+      var goals  = _.map(_.keys(groups), function(num) {
+          return groups[num];
+      });
+      var s = _.reduce(goals, function(acc, goal) {
+          if (_.reduce(goal, function(acc, g) {
+                   var type = g.piece;
+                   if (!_.reduce(g.positions, function(acc, pos) {
+                             var piece = board.getPiece(pos);
+                             if ((piece !== null) && 
+                                 (piece.player == p) &&
+                                 (piece.type == type)) return true;
+                             return acc;
+                          }, false)) return false;
+                   return acc;
+                }, true)) return true;
+          return acc;
+      }, false); 
+      if (s) {
+          r = (p == player) ? 1: -1; 
+      }
   }, this);
   return r;
 }

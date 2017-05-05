@@ -24,77 +24,8 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var rowSize = 0;
-
-var getX = function(pos) {
-  return pos % rowSize;
-}
-
-var getY = function(pos) {
-  return (pos / rowSize) | 0;
-}
-
-var sum = function(acc, x) {
-  return acc + x;
-}
-
-Dagaz.AI.eval = function(board) {
-  var design = board.game.design;
-  var player = board.player;
-  if (!rowSize) {
-      rowSize = Dagaz.Model.stringToPos("a2", design) -
-                Dagaz.Model.stringToPos("a1", design);
-  }
-  var r = 0;
-  if (design.goals[player] && design.goals[player][0]) {
-      r += _.chain(design.goals[player][0])
-       .map(function(goal) {
-           return _.chain(goal.positions)
-            .filter(function(pos) {
-                var piece = board.getPiece(pos);
-                if (piece === null) return false;
-                return piece.type != goal.piece;
-             })
-            .size()
-            .value();
-        })
-       .reduce(sum, 0)
-       .value();
-      r += _.chain(design.goals[player][0])
-       .map(function(goal) {
-           return _.chain(_.keys(board.pieces))
-            .filter(function(pos) {
-                var piece = board.getPiece(pos);
-                if (piece === null) return false;
-                return piece.type == goal.piece;
-             })
-            .map(function(pos) {
-                return _.chain(goal.positions)
-                 .map(function(p) {
-                      var d = Math.abs(pos - p);
-                      var x = getX(d);
-                      var y = getX(d);
-                      return x + y;
-                  })
-                 .min()
-                 .value();
-             })
-            .reduce(sum, 0)
-            .value();
-        })
-       .reduce(sum, 0)
-       .value();
-  }
-  return r;
-}
-
 var simpleHeuristic = function(move) {
   return move.actions.length;
-}
-
-var smartHeuristic = function(board, move) {
-  var b = board.apply(move);
-  return Dagaz.AI.eval(b) - Dagaz.AI.eval(board);
 }
 
 Dagaz.AI.heuristic = function(board, move) {

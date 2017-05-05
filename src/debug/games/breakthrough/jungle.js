@@ -21,7 +21,9 @@ ZRF = {
 
 Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "1");
+    design.checkVersion("zrf", "3.0");
     design.checkVersion("highlight-goals", "false");
+    design.checkVersion("jungle-extension", "true");
     design.checkVersion("ko", "situation");
 
     design.addDirection("w");
@@ -98,6 +100,10 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addZone("trap", 1, [2, 10, 4]);
     design.addZone("trap", 2, [58, 52, 60]);
+    design.addZone("water", 1, [22, 29, 36, 23, 30, 37, 25, 32, 39, 26, 33, 40]);
+    design.addZone("water", 2, [22, 29, 36, 23, 30, 37, 25, 32, 39, 26, 33, 40]);
+    design.addZone("home", 1, [59]);
+    design.addZone("home", 2, [3]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
@@ -105,57 +111,112 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(0, ZRF.FUNCTION,	0);	// not
     design.addCommand(0, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(0, ZRF.IN_ZONE,	0);	// home
+    design.addCommand(0, ZRF.FUNCTION,	0);	// not
+    design.addCommand(0, ZRF.FUNCTION,	20);	// verify
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
+    design.addCommand(1, ZRF.FUNCTION,	24);	// from
+    design.addCommand(1, ZRF.PARAM,	0);	// $1
+    design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(1, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(1, ZRF.FUNCTION,	0);	// not
+    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(1, ZRF.IN_ZONE,	1);	// water
+    design.addCommand(1, ZRF.FUNCTION,	0);	// not
+    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(1, ZRF.IN_ZONE,	0);	// home
+    design.addCommand(1, ZRF.FUNCTION,	0);	// not
+    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(1, ZRF.FUNCTION,	25);	// to
+    design.addCommand(1, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("Elephant", 0);
+    design.addCommand(2, ZRF.FUNCTION,	24);	// from
+    design.addCommand(2, ZRF.PARAM,	0);	// $1
+    design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(2, ZRF.IN_ZONE,	1);	// water
+    design.addCommand(2, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(2, ZRF.IN_ZONE,	1);	// water
+    design.addCommand(2, ZRF.FUNCTION,	0);	// not
+    design.addCommand(2, ZRF.IF,	6);
+    design.addCommand(2, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(2, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(2, ZRF.PARAM,	1);	// $2
+    design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(2, ZRF.JUMP,	-7);
+    design.addCommand(2, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(2, ZRF.FUNCTION,	0);	// not
+    design.addCommand(2, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(2, ZRF.FUNCTION,	25);	// to
+    design.addCommand(2, ZRF.FUNCTION,	28);	// end
+
+
+    design.addPiece("Rat", 0);
+    design.addAttribute(0, 0, 1);
     design.addMove(0, 0, [3], 0);
     design.addMove(0, 0, [2], 0);
     design.addMove(0, 0, [0], 0);
     design.addMove(0, 0, [1], 0);
 
-    design.addPiece("Lion", 1);
-    design.addMove(1, 0, [3], 0);
-    design.addMove(1, 0, [2], 0);
-    design.addMove(1, 0, [0], 0);
-    design.addMove(1, 0, [1], 0);
+    design.addPiece("Cat", 1);
+    design.addAttribute(1, 0, 2);
+    design.addMove(1, 1, [3], 0);
+    design.addMove(1, 1, [2], 0);
+    design.addMove(1, 1, [0], 0);
+    design.addMove(1, 1, [1], 0);
 
-    design.addPiece("Tiger", 2);
-    design.addMove(2, 0, [3], 0);
-    design.addMove(2, 0, [2], 0);
-    design.addMove(2, 0, [0], 0);
-    design.addMove(2, 0, [1], 0);
+    design.addPiece("Dog", 2);
+    design.addAttribute(2, 0, 3);
+    design.addMove(2, 1, [3], 0);
+    design.addMove(2, 1, [2], 0);
+    design.addMove(2, 1, [0], 0);
+    design.addMove(2, 1, [1], 0);
 
-    design.addPiece("Panther", 3);
-    design.addMove(3, 0, [3], 0);
-    design.addMove(3, 0, [2], 0);
-    design.addMove(3, 0, [0], 0);
-    design.addMove(3, 0, [1], 0);
+    design.addPiece("Fox", 3);
+    design.addAttribute(3, 0, 4);
+    design.addMove(3, 1, [3], 0);
+    design.addMove(3, 1, [2], 0);
+    design.addMove(3, 1, [0], 0);
+    design.addMove(3, 1, [1], 0);
 
-    design.addPiece("Fox", 4);
-    design.addMove(4, 0, [3], 0);
-    design.addMove(4, 0, [2], 0);
-    design.addMove(4, 0, [0], 0);
-    design.addMove(4, 0, [1], 0);
+    design.addPiece("Panther", 4);
+    design.addAttribute(4, 0, 5);
+    design.addMove(4, 1, [3], 0);
+    design.addMove(4, 1, [2], 0);
+    design.addMove(4, 1, [0], 0);
+    design.addMove(4, 1, [1], 0);
+    design.addMove(4, 2, [0, 0], 0);
+    design.addMove(4, 2, [1, 1], 0);
 
-    design.addPiece("Dog", 5);
-    design.addMove(5, 0, [3], 0);
-    design.addMove(5, 0, [2], 0);
-    design.addMove(5, 0, [0], 0);
-    design.addMove(5, 0, [1], 0);
+    design.addPiece("Tiger", 5);
+    design.addAttribute(5, 0, 7);
+    design.addMove(5, 1, [3], 0);
+    design.addMove(5, 1, [2], 0);
+    design.addMove(5, 1, [0], 0);
+    design.addMove(5, 1, [1], 0);
+    design.addMove(5, 2, [3, 3], 0);
+    design.addMove(5, 2, [2, 2], 0);
+    design.addMove(5, 2, [0, 0], 0);
+    design.addMove(5, 2, [1, 1], 0);
 
-    design.addPiece("Cat", 6);
-    design.addMove(6, 0, [3], 0);
-    design.addMove(6, 0, [2], 0);
-    design.addMove(6, 0, [0], 0);
-    design.addMove(6, 0, [1], 0);
+    design.addPiece("Lion", 6);
+    design.addAttribute(6, 0, 7);
+    design.addMove(6, 1, [3], 0);
+    design.addMove(6, 1, [2], 0);
+    design.addMove(6, 1, [0], 0);
+    design.addMove(6, 1, [1], 0);
+    design.addMove(6, 2, [3, 3], 0);
+    design.addMove(6, 2, [2, 2], 0);
+    design.addMove(6, 2, [0, 0], 0);
+    design.addMove(6, 2, [1, 1], 0);
 
-    design.addPiece("Rat", 7);
-    design.addMove(7, 0, [3], 0);
-    design.addMove(7, 0, [2], 0);
-    design.addMove(7, 0, [0], 0);
-    design.addMove(7, 0, [1], 0);
+    design.addPiece("Elephant", 7);
+    design.addAttribute(7, 0, 8);
+    design.addMove(7, 1, [3], 0);
+    design.addMove(7, 1, [2], 0);
+    design.addMove(7, 1, [0], 0);
+    design.addMove(7, 1, [1], 0);
 
     design.setup("Red", "Elephant", 42);
     design.setup("Red", "Tiger", 56);
@@ -194,22 +255,22 @@ Dagaz.Model.BuildDesign = function(design) {
 
 Dagaz.View.configure = function(view) {
     view.defBoard("Board");
-    view.defPiece("RedElephant", "Red Elephant");
-    view.defPiece("GreenElephant", "Green Elephant");
-    view.defPiece("RedLion", "Red Lion");
-    view.defPiece("GreenLion", "Green Lion");
-    view.defPiece("RedTiger", "Red Tiger");
-    view.defPiece("GreenTiger", "Green Tiger");
-    view.defPiece("RedPanther", "Red Panther");
-    view.defPiece("GreenPanther", "Green Panther");
-    view.defPiece("RedFox", "Red Fox");
-    view.defPiece("GreenFox", "Green Fox");
-    view.defPiece("RedDog", "Red Dog");
-    view.defPiece("GreenDog", "Green Dog");
-    view.defPiece("RedCat", "Red Cat");
-    view.defPiece("GreenCat", "Green Cat");
     view.defPiece("RedRat", "Red Rat");
     view.defPiece("GreenRat", "Green Rat");
+    view.defPiece("RedCat", "Red Cat");
+    view.defPiece("GreenCat", "Green Cat");
+    view.defPiece("RedDog", "Red Dog");
+    view.defPiece("GreenDog", "Green Dog");
+    view.defPiece("RedFox", "Red Fox");
+    view.defPiece("GreenFox", "Green Fox");
+    view.defPiece("RedPanther", "Red Panther");
+    view.defPiece("GreenPanther", "Green Panther");
+    view.defPiece("RedTiger", "Red Tiger");
+    view.defPiece("GreenTiger", "Green Tiger");
+    view.defPiece("RedLion", "Red Lion");
+    view.defPiece("GreenLion", "Green Lion");
+    view.defPiece("RedElephant", "Red Elephant");
+    view.defPiece("GreenElephant", "Green Elephant");
  
     view.defPosition("a9", 4, 3, 66, 66);
     view.defPosition("b9", 70, 3, 66, 66);
