@@ -8,7 +8,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var checkDir = function(board, player, pos, name) {
+var checkDir = function(board, player, pos, name, except) {
   var design = Dagaz.Model.design;
   var dir = design.getDirection(name);
   if (dir !== null) {
@@ -26,6 +26,7 @@ var checkDir = function(board, player, pos, name) {
               }
           }
       }
+      if (p == except) return false;
       piece = board.getPiece(p);
       if ((piece !== null) && (piece.player != player)) {
           p = design.navigate(player, p, dir);
@@ -40,19 +41,19 @@ var checkDir = function(board, player, pos, name) {
   return false;
 }
 
-var kish = function(board) {
+var kish = function(board, pos) {
   var design = Dagaz.Model.design;
   var len = design.positions.length;
   for (var p = 0; p < len; p++) {
        var piece = board.getPiece(p);
        if ((piece !== null) && (piece.player != board.player)) {
-           if (checkDir(board, piece.player, p, "n") ||
-               checkDir(board, piece.player, p, "w") ||
-               checkDir(board, piece.player, p, "e")) {
+           if (checkDir(board, piece.player, p, "n", pos) ||
+               checkDir(board, piece.player, p, "w", pos) ||
+               checkDir(board, piece.player, p, "e", pos)) {
                return true;
            }
            if (piece.type > 0) {
-               if (checkDir(board, piece.player, p, "s")) {
+               if (checkDir(board, piece.player, p, "s", pos)) {
                    return true;
                }
            }
@@ -64,11 +65,11 @@ var kish = function(board) {
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
-  if (kish(board)) {
-      for (var i in board.moves) {
-          var m = board.moves[i];
-          var pos = null;
-          for (var j in m.actions) {
+  for (var i in board.moves) {
+       var m = board.moves[i];
+       if (kish(board, m.actions[0][0][0])) {
+           var pos = null;
+           for (var j in m.actions) {
                tp = m.actions[j][1];
                if (tp === null) {
                    pos = null;
@@ -76,11 +77,11 @@ Dagaz.Model.CheckInvariants = function(board) {
                } else {
                    pos = tp[0];
                }
-          }
-          if (pos !== null) {
-              var b = board.apply(m);
-              var piece = b.getPiece(pos);
-              if (piece !== null) {
+           }
+           if (pos !== null) {
+               var b = board.apply(m);
+               var piece = b.getPiece(pos);
+               if (piece !== null) {
                   if (checkDir(b, board.player, pos, "n") ||
                       checkDir(b, board.player, pos, "w") ||
                       checkDir(b, board.player, pos, "e")) {
@@ -94,8 +95,8 @@ Dagaz.Model.CheckInvariants = function(board) {
                       }
                   }
               }
-          }
-      }
+           }
+       }
   }
   CheckInvariants(board);
 }
