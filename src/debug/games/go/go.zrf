@@ -86,4 +86,13 @@
 
   (players Black White Red)
   (turn-order Black White Red)
+
+  (piece
+     (name Stone)
+     (help " ")
+     (image Black "images/go/bs.bmp"
+            White "images/go/ws.bmp"
+            Red   "images/go/rs.bmp")
+     (drops (drop-stone))
+  )  
 )
