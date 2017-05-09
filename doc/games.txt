@@ -7,6 +7,7 @@
     - Селус
     - Тогыз Кумалак
     - Tschuba
+    - Redu
   - Семейство Рендзю
     - Go Moky
     - Рендзю
@@ -14,6 +15,9 @@
     - Керио Пента
     - Боку
     - Quantum tic-tac-toe
+  - Connect Games
+    - Shannon's game
+    - Hex
   - Morris family
   - Go family
     - Atari Go
@@ -41,7 +45,7 @@
     - Makyek
     - 4 Fields Gonu
     - Тафл
-    - Евклид
+    - Евклид (варианты с составными ходами и захватом короля)
     - Ультима
     - Rithmomachy
   - Checkers-like games
@@ -70,6 +74,7 @@
     - Ставропольские шашки
     - Северные шашки
     - Столбовые шашки
+    - Russian Chip
   - Гонки
     - Шен
     - Сенет
@@ -94,6 +99,9 @@
     - Advanced Omega Chess
     - Таврели
     - Platform Chess
+  - Minic games
+    - Chessence
+    - Annan Shogi
   - Cheskers family
     - Cheskers
     - Шабел
@@ -117,9 +125,9 @@
     - Xiangqi-42
     - Janggi
     - Gwangsanghui
+    - Xiang Hex
   - Shogi Family
     - Shogi
-    - Annan Shogi
     - Yonin Shogi (4)
     - Mini Shogi
     - Micro Shogi
@@ -130,6 +138,7 @@
   - Reversi Family
     - Reversi
     - Отелло
+    - Desdemona
     - Минг-манг
   - Halma family
   - Other games
@@ -138,6 +147,12 @@
     - Lines of action
     - Pasang
     - Шакти
+    - Klin Zha
+    - Ninny Chess
+    - Ki Shogi
+    - Escalation (столбовая)
+    - Viruses (варианты)
+    - Three Crowns
   - Real Time games
     - Тамск
     - Питон
@@ -149,3 +164,5 @@
   - LightOff puzzles
   - Sliding puzzles
   - Sokoban
+  - Chameleon Chess
+  - Быки и коровы

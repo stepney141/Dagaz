@@ -1,0 +1,53 @@
+(version "3.0")
+
+(define drop-stone (
+  (verify empty?) add
+))
+
+(game
+  (title "Renju")
+
+  (option "pass turn"          true)
+  (option "renju-restrictions" true)
+  (option "renju-extension"    true)
+
+  (move-sound    "Audio/Pickup.wav")
+  (release-sound "Audio/Pickup.wav")
+  (drop-sound    "Audio/Pickup.wav")
+  (capture-sound "")
+
+  (players Black White)
+  (turn-order Black White)
+
+  (board
+      (image "images/15x15.bmp")
+      (grid
+          (start-rectangle 10 10 42 42)
+          (dimensions
+            ("a/b/c/d/e/f/g/h/i/j/k/l/m/n/o" (32 0)) ; files
+            ("a/b/c/d/e/f/g/h/i/j/k/l/m/n/o" (0 32)) ; ranks
+          )
+          (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0))
+      )
+      (zone (name first-move)  
+          (players Black) 
+          (positions hh)
+      )
+      (zone (name second-move)  
+          (players White) 
+          (positions gg gh gi hg hi ig ih ii)
+      )
+      (zone (name third-move)  
+          (players Black) 
+          (positions gg gh gj hg hj jg jh jj ff fg fh fi fj gf gj hf hj if ij jf jg jh ji jj)
+      )
+  )
+
+  (piece
+     (name Stone)
+     (help " ")
+     (image Black "images/bs.bmp"
+            White "images/ws.bmp")
+     (drops (drop-stone))
+  )  
+)
