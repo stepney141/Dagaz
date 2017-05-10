@@ -1,17 +1,17 @@
 (function() {
 
-var checkVersion = Model.Game.checkVersion;
+var checkVersion = Dagaz.Model.checkVersion;
 
-Model.Game.checkVersion = function(design, name, value) {
+Dagaz.Model.checkVersion = function(design, name, value) {
   if (name != "rithmomachy-extension") {
      checkVersion(design, name, value);
   }
 }
 
-var CheckInvariants = Model.Game.CheckInvariants;
+var CheckInvariants = Dagaz.Model.CheckInvariants;
 
-Model.Game.CheckInvariants = function(board) {
-  var design = Model.Game.design;
+Dagaz.Model.CheckInvariants = function(board) {
+  var design = Dagaz.Model.design;
   _.each(board.moves, function (move) {
        var b = board.apply(move);
        var pos = move.action[0][1][0];
@@ -19,7 +19,7 @@ Model.Game.CheckInvariants = function(board) {
         .filter(function (p) {
             var piece = this.getPiece(p);
             if (piece === null) return false;
-            return !Model.Game.isFriend(piece, board.player);
+            return !Dagaz.Model.isFriend(piece, board.player);
          }, b)
         .map(function (p) {
             return { pos: p, captured: [] };

@@ -178,15 +178,22 @@ App.prototype.exec = function() {
       var ctx = this.getContext(this.board.player);
       var player = this.design.playerNames[this.board.player];
       var result = this.getAI().getMove(ctx);
-      if (_.isUndefined(result.move)) {
+      if (result) {
+          if (_.isUndefined(result.move)) {
+              this.state = STATE.DONE;
+              Canvas.style.cursor = "default";
+              alert(player + " loss");
+              return;
+          }
+          if (result.done || (Date.now() - this.timestamp >= this.params.AI_WAIT)) {
+              this.move  = result.move;
+              this.state = STATE.EXEC;
+          }
+      } else {
           this.state = STATE.DONE;
           Canvas.style.cursor = "default";
-          alert(player + " loss");
+          alert("Invalid AI move");
           return;
-      }
-      if (result.done || (Date.now() - this.timestamp >= this.params.AI_WAIT)) {
-          this.move  = result.move;
-          this.state = STATE.EXEC;
       }
   }
   if (this.state == STATE.EXEC) {

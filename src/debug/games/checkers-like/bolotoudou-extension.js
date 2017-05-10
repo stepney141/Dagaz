@@ -1,9 +1,9 @@
 (function() {
 
-var checkVersion = Model.Game.checkVersion;
+var checkVersion = Dagaz.Model.checkVersion;
 var strongMode = false;
 
-Model.Game.checkVersion = function(design, name, value) {
+Dagaz.Model.checkVersion = function(design, name, value) {
   if (name == "bolotoudou-extension") {
       if (value == "strong") {
           strongMode = true;
@@ -14,7 +14,7 @@ Model.Game.checkVersion = function(design, name, value) {
 }
 
 var markEnemies = function(board, pos, dir, captured) {
-  var design = Model.Game.design;
+  var design = Dagaz.Model.design;
   var opposite = design.players[0][dir];
   for (var i = 0; i < design.dirs.length; i++) {
        var d = design.dirs[i];
@@ -33,7 +33,7 @@ var markEnemies = function(board, pos, dir, captured) {
 }
 
 var checkLine = function(board, pos, dir, player, captured, line) {
-  var design = Model.Game.design;
+  var design = Dagaz.Model.design;
   line.push(pos);
   var p = design.navigate(player, pos, dir);
   if (p === null) return false;
@@ -55,7 +55,7 @@ var checkLine = function(board, pos, dir, player, captured, line) {
 }
 
 var checkMiddle = function(board, pos, dir, opposite, player, captured, line) {
-  var design = Model.Game.design;
+  var design = Dagaz.Model.design;
   line.push(pos);
   var p = design.navigate(player, pos, dir);
   if (p === null) return false;
@@ -77,7 +77,7 @@ var checkMiddle = function(board, pos, dir, opposite, player, captured, line) {
 
 var checkLines = function(board, pos, player, captured) {
   var r = false;
-  var design = Model.Game.design;
+  var design = Dagaz.Model.design;
   var len = design.dirs.length;
   for (var d = 0; d < len; d++) {
        var line = [];
@@ -118,7 +118,7 @@ var clearAttributes = function(board, player, move, line) {
            if ((piece.player == player) && piece.getValue(0)) {
                var ix = Model.find(line, p);
                if (ix < 0) {
-                   var q = Model.Game.createPiece(piece.type, piece.player);
+                   var q = Dagaz.Model.createPiece(piece.type, piece.player);
                    for (var j in move.actions) {
                         var tp = m.actions[j][1];
                         if (tp == p) {
@@ -232,11 +232,11 @@ var separate = function(moves) {
   moves = m;
 }
 
-var CheckInvariants = Model.Game.CheckInvariants;
+var CheckInvariants = Dagaz.Model.CheckInvariants;
 
-Model.Game.CheckInvariants = function(board) {
+Dagaz.Model.CheckInvariants = function(board) {
   var priority = false;
-  var design = Model.Game.design;
+  var design = Dagaz.Model.design;
   for (var i in board.moves) {
        var m = board.moves[i];
        for (var j in m.actions) {

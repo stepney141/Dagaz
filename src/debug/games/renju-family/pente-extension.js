@@ -1,8 +1,8 @@
 (function() {
 
-var checkVersion = Model.Game.checkVersion;
+var checkVersion = Dagaz.Model.checkVersion;
 
-Model.Game.checkVersion = function(design, name, value) {
+Dagaz.Model.checkVersion = function(design, name, value) {
   if (name != "pente-extension") {
      checkVersion(design, name, value);
   }
@@ -16,10 +16,10 @@ var capture = function(design, board, move, pos, dir) {
   }
 }
 
-var CheckInvariants = Model.Game.CheckInvariants;
+var CheckInvariants = Dagaz.Model.CheckInvariants;
 
-Model.Game.CheckInvariants = function(board) {
-  var design = Model.Game.design;
+Dagaz.Model.CheckInvariants = function(board) {
+  var design = Dagaz.Model.design;
   _.chain(board.moves)
    .filter(function(move) {
        return move.actions.length > 0;
@@ -31,8 +31,7 @@ Model.Game.CheckInvariants = function(board) {
            if (p !== null) {
                var piece = board.getPiece(p);
                if ((piece !== null) && (piece.player != board.player) && (piece.getValue(dir) == 2)) {
-                   // TODO: Increment capturing count
-
+                   move.addValue(piece.player, 2);
                    capture(design, board, move, p, dir);
                }
            }

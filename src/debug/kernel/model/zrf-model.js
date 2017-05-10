@@ -1165,6 +1165,23 @@ function ZrfBoard(game) {
   this.player   = 1;
   this.changed  = [];
   this.parent   = null;
+  this.values   = [];
+}
+
+ZrfBoard.prototype.getValue = function(name) {
+  if (_.isUndefined(this.values[name])) {
+      return null;
+  } else {
+      return this.values[name];
+  }
+}
+
+ZrfBoard.prototype.setValue = function(name, value) {
+  if (value === null) {
+      delete this.values[name];
+  } else {
+      this.values[name] = value;
+  }
 }
 
 ZrfBoard.prototype.traceMoves = function() {
@@ -1734,7 +1751,7 @@ ZrfMove.prototype.applyTo = function(obj, part) {
    .each(function (action) {
       obj.movePiece(action[0][0], action[1][0], (action[2] === null) ? null : action[2][0]);
       r = true;
-    }, this);
+    });
   _.chain(this.actions)
    .filter(n)
    .filter(function (action) {
@@ -1743,7 +1760,7 @@ ZrfMove.prototype.applyTo = function(obj, part) {
    .each(function (action) {
       obj.dropPiece(action[1][0], action[2][0]);
       r = true;
-    }, this);
+    });
   _.chain(this.actions)
    .filter(n)
    .filter(function (action) {
@@ -1752,7 +1769,15 @@ ZrfMove.prototype.applyTo = function(obj, part) {
    .each(function (action) {
       obj.capturePiece(action[0][0]);
       r = true;
-    }, this);
+    });
+  _.chain(this.actions)
+   .filter(n)
+   .filter(function (action) {
+      return (action[0] === null) && (action[1] === null) && (action[2] !== null);
+    })
+   .each(function (action) {
+      action[2][0].exec(obj);
+    });
   if (r) {
       obj.commit();
   }
@@ -1796,6 +1821,31 @@ ZrfMove.prototype.capturePiece = function(pos, part) {
       part = -part;
   }
   this.actions.push([ [pos], null, null, part]);
+}
+
+ZrfMove.prototype.setValue = function(name, value, part) {
+  if (!part) part = 1;
+  this.actions.push([ null, null, [{
+      exec: function(obj) {
+          if (obj.setValue) {
+              obj.setValue(name, value);
+          }
+      }
+  }], part]);
+}
+
+ZrfMove.prototype.addValue = function(name, value, part) {
+  if (!part) part = 1;
+  this.actions.push([ null, null, [{
+      exec: function(obj) {
+          if (obj.getValue && obj.setValue) {
+              var acc = obj.getValue(name);
+              if (!acc) acc = 0;
+              acc += value;
+              obj.setValue(name, acc);
+          }
+      }
+  }], part]);
 }
 
 })();

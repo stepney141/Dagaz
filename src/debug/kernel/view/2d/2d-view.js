@@ -172,9 +172,11 @@ View2D.prototype.capturePiece = function(pos, phase) {
 
 View2D.prototype.dropPiece = function(pos, piece, phase) {
   if (!phase) { phase = 0; }
+  var ix = posToIx(this, to);
   this.changes.push({
       phase: phase,
       steps: 1,
+      ix:    ix,
       to:    to,
       np:    piece.toString()
   });
@@ -188,29 +190,30 @@ View2D.prototype.addVector = function(from, to, steps) {
   this.vectors[from][to] = steps;
 }
 
-View2D.prototype.addPhase = function(from, to, piece, phase, steps) {
+View2D.prototype.addPhase = function(ix, from, to, piece, phase, steps) {
   this.changes.push({
       phase: phase,
       steps: steps,
       from:  from,
       to:    to,
+      ix:    ix,
       np:    (piece === null) ? null : piece.toString(),
       dx:    ((this.pos[to].x - this.pos[from].x) / steps) | 0,
       dy:    ((this.pos[to].y - this.pos[from].y) / steps) | 0
   });
 }
 
-View2D.prototype.vectorFound = function(from, to, piece, phase) {
+View2D.prototype.vectorFound = function(ix, from, to, piece, phase) {
   if (!phase) { phase = 1; }
   if (this.vectors[from]) {
       if (this.vectors[from][to]) {
-          this.addPhase(from, to, piece, phase, this.vectors[from][to]);
+          this.addPhase(ix, from, to, piece, phase, this.vectors[from][to]);
           return true;
       }
       var list = _.keys(this.vectors[from]);
       for (var i = 0; i < list.length; i++) {
           var pos = list[i];
-          this.addPhase(from, pos, piece, phase, this.vectors[from][pos]);
+          this.addPhase(ix, from, pos, piece, phase, this.vectors[from][pos]);
           if (this.vectorFound(pos, to, piece, phase + 1)) {
               return true;
           }
@@ -223,8 +226,9 @@ View2D.prototype.vectorFound = function(from, to, piece, phase) {
 View2D.prototype.movePiece = function(from, to, piece, phase, steps) {
   if (!phase) { phase = 1; }
   if (!steps) { steps = STEP_CNT; }
-  if (!this.vectorFound(from, to, piece)) {
-      this.addPhase(from, to, piece, phase, steps);
+  var ix = posToIx(this, from);
+  if (!this.vectorFound(ix, from, to, piece)) {
+      this.addPhase(ix, from, to, piece, phase, steps);
   }
 }
 
@@ -330,7 +334,7 @@ View2D.prototype.animate = function() {
         }
         frame.cnt--;
     }, this);
-/*var captured = _.chain(this.changes)
+  var captured = _.chain(this.changes)
    .filter(function(frame) {
         return frame.phase == phase;
     })
@@ -350,12 +354,12 @@ View2D.prototype.animate = function() {
    .difference(
        _.chain(this.changes)
         .map(function(frame) {
-             return frame.from;
+             return frame.ix;
          })
         .compact()
         .value()
     )
-   .value();*/
+   .value();
   _.chain(this.changes)
    .filter(function(frame) {
         return frame.phase == phase;
@@ -383,14 +387,14 @@ View2D.prototype.animate = function() {
         }
         frame.done = true;
     }, this);
-/*  this.setup = _.chain(_.range(this.setup.length))
+    this.setup = _.chain(_.range(this.setup.length))
     .filter(function(ix) {
         return _.indexOf(captured, ix) < 0;
      })
     .map(function(ix) {
         return this.setup[ix];
      }, this)
-    .value(); */
+    .value();
     if ((len > 0) && (this.changes.length == 0)) {
         isValid = true;
         if (this.controller) {

@@ -2,16 +2,16 @@
 
 Dagaz.View.showHint = function(view) {}
 
-var checkVersion = Model.Game.checkVersion;
+var checkVersion = Dagaz.Model.checkVersion;
 
-Model.Game.checkVersion = function(design, name, value) {
+Dagaz.Model.checkVersion = function(design, name, value) {
   if (name != "kamisado-extension") {
      checkVersion(design, name, value);
   }
 }
 
 var getColor = function(player, pos) {
-  var design = Model.Game.design;
+  var design = Dagaz.Model.design;
   return _.chain(_.keys(design.zones))
    .filter(function(zone) {
        if (_.isUndefined(design.zones[zone][player])) return false;
@@ -21,9 +21,9 @@ var getColor = function(player, pos) {
    .value();
 }
 
-var CheckInvariants = Model.Game.CheckInvariants;
+var CheckInvariants = Dagaz.Model.CheckInvariants;
 
-Model.Game.CheckInvariants = function(board) {
+Dagaz.Model.CheckInvariants = function(board) {
   var color  = null;
   if (board.lastt !== null) {
       color = getColor(board.player, board.lastt);

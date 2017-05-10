@@ -14,7 +14,7 @@ var isEqual = function(a, b) {
 }
 
 var calcType = function(board, player, pos, piece) {
-  var design = Model.Game.design;
+  var design = Dagaz.Model.design;
   var value  = piece.getValue(1);
   var name   = piece.type.slice(0, 1);
   _.each(_.range(design.dirs.length), function(dir) {
@@ -35,7 +35,7 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   CheckInvariants(board);
-  var design = Model.Game.design;
+  var design = Dagaz.Model.design;
   _.each(board.moves, function(move) {
       var b = board.apply(move);
       _.chain(move.actions)

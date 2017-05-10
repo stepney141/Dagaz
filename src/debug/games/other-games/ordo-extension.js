@@ -1,8 +1,8 @@
 (function() {
 
-var checkVersion = Model.Game.checkVersion;
+var checkVersion = Dagaz.Model.checkVersion;
 
-Model.Game.checkVersion = function(design, name, value) {
+Dagaz.Model.checkVersion = function(design, name, value) {
   if (name != "ordo-extension") {
      checkVersion(design, name, value);
   }
@@ -20,7 +20,7 @@ var getPos = function(move) {
 }
 
 var buildGroup = function(group, player) {
-  var design = Model.Game.design;
+  var design = Dagaz.Model.design;
   for (var i = 0; i < group.length; i++) {
        var pos = group[i];
        for (var j = 0; j < design.dirs.length; j++) {
@@ -39,7 +39,7 @@ var buildGroup = function(group, player) {
 }
 
 var checkCoherence = function(board, player, group) {
-  var design = Model.Game.design;
+  var design = Dagaz.Model.design;
   var len = design.positions.length;
   for (var p = 0; p < len; p++) {
        var piece = board.getPiece(p);
@@ -53,9 +53,9 @@ var checkCoherence = function(board, player, group) {
   return true;
 }
 
-var CheckInvariants = Model.Game.CheckInvariants;
+var CheckInvariants = Dagaz.Model.CheckInvariants;
 
-Model.Game.CheckInvariants = function(board) {
+Dagaz.Model.CheckInvariants = function(board) {
   for (var i in board.moves) {
        var m = board.moves[i];
        var b = board.apply(m);

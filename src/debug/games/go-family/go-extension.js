@@ -1,9 +1,9 @@
 (function() {
 
-var checkVersion = Model.Game.checkVersion;
+var checkVersion = Dagaz.Model.checkVersion;
 var suicideMode = false;
 
-Model.Game.checkVersion = function(design, name, value) {
+Dagaz.Model.checkVersion = function(design, name, value) {
   if (name == "go-extension") {
      if (value == "suicide") {
          suicideMode = true;
@@ -20,7 +20,7 @@ Model.Move.moveToString = function(move, part) {
        return (action[0] === null) && (action[1] !== null) && (action[2] !== null);
     })
    .map(function (action) {
-       return Model.Game.posToString(action[1][0]);
+       return Dagaz.Model.posToString(action[1][0]);
     })
    .first()
    .value();
@@ -60,10 +60,10 @@ var change = function(move, board, group, dame, cnt) {
    });
 }
 
-var CheckInvariants = Model.Game.CheckInvariants;
+var CheckInvariants = Dagaz.Model.CheckInvariants;
 
-Model.Game.CheckInvariants = function(board) {
-  var design = Model.Game.design;
+Dagaz.Model.CheckInvariants = function(board) {
+  var design = Dagaz.Model.design;
   _.chain(board.moves)
    .filter(function(move) {
       return move.actions.length == 1;
@@ -87,6 +87,7 @@ Model.Game.CheckInvariants = function(board) {
                           var g = [ p ];
                           expand(design, board, g, piece.player);
                           if (d <= 1) {
+                              move.addValue(piece.player, g.length);
                               capture(move, g);
                               dame++;
                           } else {
@@ -114,6 +115,7 @@ Model.Game.CheckInvariants = function(board) {
           if (!suicideMode || (cnt == 1)) {
               move.failed = true;
           } else {
+              move.addValue(board.player, friend.length);
               capture(move, friend);
               move.actions.shift();
           }

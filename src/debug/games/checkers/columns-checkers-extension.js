@@ -1,16 +1,16 @@
 (function() {
 
-var checkVersion = Model.Game.checkVersion;
+var checkVersion = Dagaz.Model.checkVersion;
 
-Model.Game.checkVersion = function(design, name, value) {
+Dagaz.Model.checkVersion = function(design, name, value) {
   if (name != "columns-checkers-extension") {
      checkVersion(design, name, value);
   }
 }
 
-var PostActions = Model.Game.PostActions;
+var PostActions = Dagaz.Model.PostActions;
 
-Model.Game.PostActions = function(board) {
+Dagaz.Model.PostActions = function(board) {
   PostActions(board);
   for (var i in board.moves) {
        var m = board.moves[i];

@@ -1,9 +1,9 @@
 (function() {
 
-var checkVersion = Model.Game.checkVersion;
+var checkVersion = Dagaz.Model.checkVersion;
 var strictMode = false;
 
-Model.Game.checkVersion = function(design, name, value) {
+Dagaz.Model.checkVersion = function(design, name, value) {
   if (name == "jungle-extension") {
       if (value == "strict") {
           strictMode = true;
@@ -23,10 +23,10 @@ var isGe = function(a, b) {
   return a >= b;
 }
 
-var CheckInvariants = Model.Game.CheckInvariants;
+var CheckInvariants = Dagaz.Model.CheckInvariants;
 
-Model.Game.CheckInvariants = function(board) {
-  var design = Model.Game.design;
+Dagaz.Model.CheckInvariants = function(board) {
+  var design = Dagaz.Model.design;
   board.moves = _.each(board.moves)
    .filter(function(move) {
        if (move.actions.length != 1) return false;

@@ -42,7 +42,7 @@ var calculatePath = function(design, board, goals, target, isValid) {
   });
   for (var i = 0; i < path.length; i++) {
       var step = path[i];
-      if (step.position == target) break;
+      if (step.position == target) return path;
       _.each(_.range(design.dirs.length), function(dir) {
           var pos = design.navigate(board.player, step.position, dir);
           if ((_.indexOf(_.map(path, function(s) {
@@ -68,7 +68,8 @@ BreakthroughAi.prototype.getMove = function(ctx) {
         return ctx.board.getPiece(pos).player == ctx.board.player;
     })
    .value();
-  if ((friend.length == 1) && (ctx.board.moves.length > 1)) {
+  var moves = Dagaz.AI.generate(ctx, ctx.board);
+  if ((friend.length == 1) && (moves.length > 1)) {
       var target = friend[0];
       var piece  = ctx.board.getPiece(target);
       if (design.goals[piece.player]) {
@@ -83,7 +84,7 @@ BreakthroughAi.prototype.getMove = function(ctx) {
            .uniq()
            .value();
          var path = calculatePath(design, ctx.board, goals, target, isEmpty);
-         if (!path) {
+         if (path.length == 0) {
              path = calculatePath(design, ctx.board, goals, target, isAny);
          }
          if (path) {

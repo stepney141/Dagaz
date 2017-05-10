@@ -1,10 +1,10 @@
 (function() {
 
-var checkVersion = Model.Game.checkVersion;
+var checkVersion = Dagaz.Model.checkVersion;
 var multiMode = false;
 var koMode    = false;
 
-Model.Game.checkVersion = function(design, name, value) {
+Dagaz.Model.checkVersion = function(design, name, value) {
   if (name == "morris-extension") {
       if (value == "multi") {
           multiMode = true;
@@ -18,7 +18,7 @@ Model.Game.checkVersion = function(design, name, value) {
 }
 
 var getEmptyPositions = function(board) {
-  return _.chain(_.range(Model.Game.design.positions.length))
+  return _.chain(_.range(Dagaz.Model.design.positions.length))
    .filter(function(pos) {
        return (board.getPiece(pos) === null);
     })
@@ -26,7 +26,7 @@ var getEmptyPositions = function(board) {
 }
 
 var getEnemyPositions = function(board) {
-  return _.chain(_.range(Model.Game.design.positions.length))
+  return _.chain(_.range(Dagaz.Model.design.positions.length))
    .filter(function(pos) {
        var piece = board.getPiece(pos);
        if (piece === null) return false;
@@ -37,7 +37,7 @@ var getEnemyPositions = function(board) {
 }
 
 var getFriendPositions = function(board) {
-  return _.chain(_.range(Model.Game.design.positions.length))
+  return _.chain(_.range(Dagaz.Model.design.positions.length))
    .filter(function(pos) {
        var piece = board.getPiece(pos);
        if (piece === null) return false;
@@ -55,7 +55,7 @@ var isFriend = function(board, pos, player) {
 
 var countLines = function(board, pos, player) {
   var r = 0;
-  var design = Model.Game.design;
+  var design = Dagaz.Model.design;
   _.chain(_.range(design.dirs.length))
    .each(function(dir) {
        var p = design.navigate(player, pos, dir);
@@ -71,13 +71,13 @@ var countLines = function(board, pos, player) {
 
 var createResultMoves = function(board, src, dests) {
   dests = _.filter(function(p) {
-      var m = Model.Game.createMove();
+      var m = Dagaz.Model.createMove();
       m.movePiece(src, p, null, 1);
       var b = board.apply(m);
       return countLines(b, p, board.player) > 0;
   });
   if (dests.length > 0) {
-      var move = Model.Game.createMove();
+      var move = Dagaz.Model.createMove();
       move.actions.push([ [src], dests, null, 1]);
       move.actions.push([ getEnemyPositions(board), null, null, 1]);
       board.moves.push(move);
@@ -86,13 +86,13 @@ var createResultMoves = function(board, src, dests) {
 
 var createNoResultMoves = function(board, src, dests) {
   dests = _.filter(function(p) {
-      var m = Model.Game.createMove();
+      var m = Dagaz.Model.createMove();
       m.movePiece(src, p, null, 1);
       var b = board.apply(m);
       return countLines(b, p, board.player) == 0;
   });
   if (dests.length > 0) {
-      var move = Model.Game.createMove();
+      var move = Dagaz.Model.createMove();
       move.actions.push([ [src], dests, null, 1]);
       board.moves.push(move);
   }
@@ -106,10 +106,10 @@ var isMovePhase = function(board) {
   return (fp !== null) && (tp !== null);
 }
 
-var CheckInvariants = Model.Game.CheckInvariants;
+var CheckInvariants = Dagaz.Model.CheckInvariants;
 
-Model.Game.CheckInvariants = function(board) {
-  var design = Model.Game.design;
+Dagaz.Model.CheckInvariants = function(board) {
+  var design = Dagaz.Model.design;
   var friends = getFriendPositions(board);
   if (isMovePhase(board) && (friends.length == 3)) {
       board.moves = [];

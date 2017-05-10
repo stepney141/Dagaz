@@ -1,8 +1,8 @@
 (function() {
 
-var checkVersion = Model.Game.checkVersion;
+var checkVersion = Dagaz.Model.checkVersion;
 
-Model.Game.checkVersion = function(design, name, value) {
+Dagaz.Model.checkVersion = function(design, name, value) {
   if (name != "renju-extension") {
      checkVersion(design, name, value);
   }
@@ -18,7 +18,7 @@ var nvl = function(value, default) {
 }
 
 var updateLine = function(move, board, pos, dir, player, value) {
-  var design = Model.Game.design;
+  var design = Dagaz.Model.design;
   pos = design.navigate(player, pos, dir);
   while (pos !== null) {
       var piece = board.getPiece(pos);
@@ -30,10 +30,10 @@ var updateLine = function(move, board, pos, dir, player, value) {
   }
 }
 
-var CheckInvariants = Model.Game.CheckInvariants;
+var CheckInvariants = Dagaz.Model.CheckInvariants;
 
-Model.Game.CheckInvariants = function(board) {
-  var design = Model.Game.design;
+Dagaz.Model.CheckInvariants = function(board) {
+  var design = Dagaz.Model.design;
   _.chain(board.moves)
    .filter(function(move) {
        if (move.actions.length != 1) return false;

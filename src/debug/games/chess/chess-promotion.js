@@ -1,25 +1,25 @@
 (function() {
 
-var checkVersion = Model.Game.checkVersion;
+var checkVersion = Dagaz.Model.checkVersion;
 
-Model.Game.checkVersion = function(design, name, value) {
+Dagaz.Model.checkVersion = function(design, name, value) {
   if (name != "chess-promotion") {
      checkVersion(design, name, value);
   }
 }
 
 var promote = function(arr, name, player) {
-  var design = Model.Game.design;
+  var design = Dagaz.Model.design;
   var t = design.getPieceType(name);
   if (t !== null) {
-      arr.push(Model.Game.createPiece(t, player));
+      arr.push(Dagaz.Model.createPiece(t, player));
   }
 }
 
-var CheckInvariants = Model.Game.CheckInvariants;
+var CheckInvariants = Dagaz.Model.CheckInvariants;
 
-Model.Game.CheckInvariants = function(board) {
-  var design = Model.Game.design;
+Dagaz.Model.CheckInvariants = function(board) {
+  var design = Dagaz.Model.design;
   for (var i in board.moves) {
        var m = board.moves[i];
        for (var j in m.actions) {
