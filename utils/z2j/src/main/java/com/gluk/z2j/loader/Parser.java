@@ -18,7 +18,7 @@ import com.gluk.z2j.api.loader.IScaner;
 
 public class Parser implements IParser {
 	
-	private final static String  Z2J_VERSION = "1";
+	private final static String  Z2J_VERSION = "2";
 
 	private final static String GAME_CMD    = "game";
 	private final static String INCLUDE_CMD = "include";

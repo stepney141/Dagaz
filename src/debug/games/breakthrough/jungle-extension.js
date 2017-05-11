@@ -27,7 +27,7 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
-  board.moves = _.each(board.moves)
+  board.moves = _.chain(board.moves)
    .filter(function(move) {
        if (move.actions.length != 1) return false;
        return (move.actions[0][0] !== null) && (move.actions[0][1] !== null);
@@ -38,9 +38,9 @@ Dagaz.Model.CheckInvariants = function(board) {
        if (target === null) return true;
        var from = move.actions[0][0][0];
        var piece = board.getPiece(from);
+       if (design.inZone(1, board.player, from) != design.inZone(1, board.player, to)) return false;
        if (isGe(piece.getValue(0), target.getValue(0))) return true;
        if (design.inZone(0, target.player, to)) return true;
-       if (design.inZone(1, board.player, from) != design.inZone(1, board.player, to)) return true;
        return false;
     })
    .value();

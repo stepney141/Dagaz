@@ -102,6 +102,13 @@ public class Board extends AbstractDoc implements IBoard {
 		}
 		return r;
 	}
+	
+	public int getZone(String name) {
+		for (int i = 0; i < zonel.size(); i++) {
+			if (zonel.get(i).equals(name)) return i;
+		}
+		return -1;
+	}
 
 	public void open(String tag) throws Exception {
 		if (proxy != null) {
@@ -498,7 +505,7 @@ public class Board extends AbstractDoc implements IBoard {
 		NodeIterator nl = XPathAPI.selectNodeIterator(doc, IMG_XP);
 		Node n = nl.nextNode();
 		if (n != null) {
-			img = n.getTextContent().replace(".bmp", ".png");
+			img = n.getTextContent().toLowerCase().replace(".bmp", ".png");
 		}
 	}
 	

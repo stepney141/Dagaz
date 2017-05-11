@@ -28,9 +28,11 @@ var isAny = function(board, pos) {
   return pos !== null;
 }
 
-var isEmpty = function(board, pos) {
+var isNoEnemy = function(board, pos) {
   if (pos === null) return false;
-  return board.getPiece(pos) === null;
+  var piece = board.getPiece(pos);
+  if (piece === null) return true;
+  return piece.player == board.player;
 }
 
 var calculatePath = function(design, board, goals, target, isValid) {
@@ -42,6 +44,7 @@ var calculatePath = function(design, board, goals, target, isValid) {
   });
   for (var i = 0; i < path.length; i++) {
       var step = path[i];
+      if (!isValid(board, step.position)) continue;
       if (step.position == target) return path;
       _.each(_.range(design.dirs.length), function(dir) {
           var pos = design.navigate(board.player, step.position, dir);
@@ -83,11 +86,11 @@ BreakthroughAi.prototype.getMove = function(ctx) {
            .flatten()
            .uniq()
            .value();
-         var path = calculatePath(design, ctx.board, goals, target, isEmpty);
+         var path = calculatePath(design, ctx.board, goals, target, isNoEnemy);
          if (path.length == 0) {
              path = calculatePath(design, ctx.board, goals, target, isAny);
          }
-         if (path) {
+         if (path.length > 0) {
              var moves = _.chain(Dagaz.AI.generate(ctx, ctx.board))
               .filter(function(move) {
                   return move.actions.length == 1;

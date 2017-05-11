@@ -75,7 +75,7 @@
 </xsl:text><script src="../../kernel/model/zrf-model.js"></script><xsl:text>
 </xsl:text><script src="../../kernel/model/zobrist.js"></script><xsl:text>
 </xsl:text><script src="../../kernel/view/2d/2d-view.js"></script><xsl:text>
-</xsl:text><script src="../../kernel/controller/utils/simple-move-list.js"></script><xsl:text>
+</xsl:text><script src="../../kernel/controller/utils/move-list.js"></script><xsl:text>
 </xsl:text>
 <xsl:for-each select="option[not (name = preceding-sibling::option/name)]">
   <xsl:choose>

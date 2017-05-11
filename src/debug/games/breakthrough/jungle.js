@@ -23,7 +23,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "1");
     design.checkVersion("zrf", "3.0");
     design.checkVersion("highlight-goals", "false");
-    design.checkVersion("jungle-extension", "true");
+    design.checkVersion("jungle-extension", "strict");
     design.checkVersion("ko", "situation");
 
     design.addDirection("w");
@@ -111,7 +111,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(0, ZRF.FUNCTION,	0);	// not
     design.addCommand(0, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(0, ZRF.IN_ZONE,	0);	// home
+    design.addCommand(0, ZRF.IN_ZONE,	2);	// home
     design.addCommand(0, ZRF.FUNCTION,	0);	// not
     design.addCommand(0, ZRF.FUNCTION,	20);	// verify
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
@@ -126,7 +126,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(1, ZRF.IN_ZONE,	1);	// water
     design.addCommand(1, ZRF.FUNCTION,	0);	// not
     design.addCommand(1, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(1, ZRF.IN_ZONE,	0);	// home
+    design.addCommand(1, ZRF.IN_ZONE,	2);	// home
     design.addCommand(1, ZRF.FUNCTION,	0);	// not
     design.addCommand(1, ZRF.FUNCTION,	20);	// verify
     design.addCommand(1, ZRF.FUNCTION,	25);	// to

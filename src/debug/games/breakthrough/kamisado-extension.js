@@ -24,11 +24,11 @@ var getColor = function(player, pos) {
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
-  var color  = null;
-  if (board.lastt !== null) {
+  var color  = -1;
+  if (board.lastt) {
       color = getColor(board.player, board.lastt);
       var piece = board.getPiece(board.lastt);
-      if (piece.player == board.player) {
+      if ((piece !== null) && (piece.player == board.player)) {
           var enemy = _.chain(_.keys(board.pieces))
            .filter(function(pos) {
                return board.getPiece(pos) !== null;
@@ -41,10 +41,10 @@ Dagaz.Model.CheckInvariants = function(board) {
             })
            .first()
            .value();
-          color = getColor(board.player, enemy);
+          color = getColor(board.player, enemy); 
       }
   }
-  if (color != null) {
+  if (color >= 0) {
       _.chain(board.moves)
        .filter(function(move) {
             return move.actions.length == 1;
@@ -55,8 +55,8 @@ Dagaz.Model.CheckInvariants = function(board) {
        .each(function(move) {
             var pos = move.actions[0][0][0];
             var piece = board.getPiece(pos);
-            if (piece !== null) {
-                move.failed = piece.type != color;
+            if ((piece !== null) && (piece.type != color)) {
+                move.failed = true;
             }
         });
   }

@@ -130,12 +130,22 @@ public class Game extends AbstractDoc implements IGame {
 		return false;
 	}
 
+	public boolean isZone(String name) {
+		if (board != null) {
+			return (board.getZone(name) >= 0);
+		}
+		return false;
+	}
+
 	public int getNameIndex(String name) {
 		if (isPosition(name)) {
 			return board.getPosition(name);
 		}
 		if (isDirection(name)) {
 			return board.getDirection(name);
+		}
+		if (isZone(name)) {
+			return board.getZone(name);
 		}
 		if (isAttribute(name)) {
 			return attrs.get(name);
@@ -362,7 +372,7 @@ public class Game extends AbstractDoc implements IGame {
 				if (!player.isEmpty()) {
 					dest.open(IMG_TAG);
 					dest.open(PLAYER_TAG); dest.add(player); dest.close();
-					dest.open(RES_TAG); dest.add(n.getTextContent().replace(".bmp", ".png")); dest.close();
+					dest.open(RES_TAG); dest.add(n.getTextContent().toLowerCase().replace(".bmp", ".png")); dest.close();
 					dest.close();
 					player = "";
 				}
