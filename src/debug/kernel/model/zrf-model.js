@@ -1257,6 +1257,8 @@ ZrfBoard.prototype.copy = function() {
   r.player  = this.player;
   r.zSign   = this.zSign;
   r.reserve = this.reserve;
+  r.lastf   = this.lastf;
+  r.lastt   = this.lastt;
   _.each(_.keys(this.pieces), function(pos) {
       r.pieces[pos] = this.pieces[pos];
   }, this);
@@ -1519,8 +1521,6 @@ ZrfBoard.prototype.commit = function() {
 
 ZrfBoard.prototype.apply = function(move) {
   var r = this.copy();
-  delete r.lastf;
-  delete r.lastt;
   move.applyAll(r);
   r.player = this.game.design.nextOrder(this.player);
   r.move = move;
@@ -1846,6 +1846,10 @@ ZrfMove.prototype.addValue = function(name, value, part) {
           }
       }
   }], part]);
+}
+
+ZrfMove.prototype.isPass = function() {
+  return this.actions.length == 0;
 }
 
 })();

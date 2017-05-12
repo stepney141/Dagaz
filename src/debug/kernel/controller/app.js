@@ -10,6 +10,7 @@ var STATE = {
 };
 
 var isDrag = false;
+var passForced = false;
 
 function App(canvas, params) {
   this.design = Dagaz.Model.getDesign();
@@ -162,9 +163,24 @@ App.prototype.exec = function() {
          if (_.isUndefined(this.list)) {
              var player = this.design.playerNames[this.board.player];
              this.list  = Dagaz.Model.getMoveList(this.board);
+             console.log("Player: " + player);
              if (!_.isUndefined(this.move)) {
                  this.list.setLastMove(this.move);
              }
+             if ((this.list.getMoves().length == 1) && this.list.getMoves()[0].isPass()) {
+                  if (passForced) {
+                      this.state = STATE.DONE;
+                      Canvas.style.cursor = "default";
+                      alert("Draw");
+                  } else {
+                      this.board = this.board.apply(this.list.getMoves()[0]);                 
+                      this.state = STATE.IDLE;
+                      delete this.list;
+                      passForced = true;
+                  }
+                  return;
+             }
+             passForced = false;
              if (this.list.getMoves().length == 0) {
                  this.state = STATE.DONE;
                  Canvas.style.cursor = "default";
@@ -186,6 +202,20 @@ App.prototype.exec = function() {
               return;
           }
           if (result.done || (Date.now() - this.timestamp >= this.params.AI_WAIT)) {
+              if (result.move.isPass()) {
+                  if (passForced) {
+                      this.state = STATE.DONE;
+                      Canvas.style.cursor = "default";
+                      alert("Draw");
+                  } else {
+                      this.board = this.board.apply(this.list.getMoves()[0]);                 
+                      this.state = STATE.IDLE;
+                      delete this.list;
+                      passForced = true;
+                  }
+              } else {
+                  passForced = false;
+              }
               this.move  = result.move;
               this.state = STATE.EXEC;
           }
