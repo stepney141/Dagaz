@@ -1497,6 +1497,7 @@ ZrfBoard.prototype.movePiece = function(from, to, piece) {
 }
 
 ZrfBoard.prototype.dropPiece = function(pos, piece) {
+  this.lastt = pos;
   Dagaz.Model.decReserve(this, piece);
   this.setPiece(pos, piece);
   this.changed.push(pos);
