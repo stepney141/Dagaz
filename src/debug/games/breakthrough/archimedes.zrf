@@ -9,7 +9,9 @@
 
 (game
   (title "Archimedes")
+  (history "Invented by Scott Marley and Philip Cohen in 1988.")
 
+  (option "pass turn"          forced)
   (option "archimedes-extension" true)
 
   (players Black White)
