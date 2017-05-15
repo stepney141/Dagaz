@@ -1,6 +1,6 @@
 (function() {
 
-var Z2J_VERSION = 1;
+var Z2J_VERSION = 2;
 
 Dagaz.Model.deferredStrike  = false;
 Dagaz.Model.discardCascades = false;
