@@ -12,6 +12,7 @@
   (history "Invented by Scott Marley and Philip Cohen in 1988.")
 
   (option "pass turn"          forced)
+  (option "highlight goals"     false)
   (option "archimedes-extension" true)
 
   (players Black White)

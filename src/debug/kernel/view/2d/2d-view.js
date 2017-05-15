@@ -160,24 +160,24 @@ View2D.prototype.markPositions = function(type, positions) {
 
 View2D.prototype.capturePiece = function(pos, phase) {
   if (!phase) { phase = 0; }
-  var ix = posToIx(this, from);
+  var ix = posToIx(this, pos);
   if (ix === null) return;
   this.changes.push({
       phase: phase,
       steps: 1,
-      from:  from,
+      from:  pos,
       op:    ix
   });
 }
 
 View2D.prototype.dropPiece = function(pos, piece, phase) {
   if (!phase) { phase = 0; }
-  var ix = posToIx(this, to);
+  var ix = posToIx(this, pos);
   this.changes.push({
       phase: phase,
       steps: 1,
       ix:    ix,
-      to:    to,
+      to:    pos,
       np:    piece.toString()
   });
 }
