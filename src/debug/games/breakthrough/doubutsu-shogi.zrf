@@ -57,7 +57,7 @@
   (option "animate captures" false)
   (option "highlight goals"  false)
   (option "ko" situation)
-  (option "doubutsu-shogi"   true)
+  (option "doubutsu-shogi-extension" true)
 
   (players Green Red)
   (turn-order Green Red)

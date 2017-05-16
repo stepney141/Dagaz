@@ -26,7 +26,7 @@ public class SeqForm extends AbstractForm {
 			deep++;
 		} else {
 			if (form == null) {
-				form = parser.createForm(tag);
+				form = FormFactory.getInstance().createForm(tag, parser); 
 			}
 			form.open(tag);
 		}

@@ -29,7 +29,7 @@ public class IfForm extends SeqForm {
 			return;
 		}
 		if (cond == null) {
-			cond = new ApplyForm(tag, parser);
+			cond = FormFactory.getInstance().createForm(tag, parser);
 			cond.open(tag);
 			form = cond;
 			return;

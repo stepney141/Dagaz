@@ -38,6 +38,8 @@ public interface IConst {
 	final static int ZRF_BACK      = 7;
 	final static int ZRF_PUSH      = 8;
 	final static int ZRF_POP       = 9;
+	final static int ZRF_IS_PIECE  = 10;
+	final static int ZRF_CREATE    = 11;
 	
 	final static int NO_HINT       = 0;
 	final static int WHILE_HINT    = 1;

@@ -115,6 +115,8 @@ Dagaz.Model.ZRF_MARK      = 6;
 Dagaz.Model.ZRF_BACK      = 7;
 Dagaz.Model.ZRF_PUSH      = 8;
 Dagaz.Model.ZRF_POP       = 9;
+Dagaz.Model.ZRF_IS_PIECE  = 10;
+Dagaz.Model.ZRF_CREATE    = 11;
 
 Dagaz.Model.commands = {};
 
@@ -408,6 +410,32 @@ Dagaz.Model.functions[Dagaz.Model.ZRF_IS_EMPTY] = function(gen) {
    }
    var piece = gen.getPiece(gen.pos);
    gen.stack.push(piece === null);
+   return 0;
+}
+
+Dagaz.Model.functions[Dagaz.Model.ZRF_IS_PIECE] = function(gen) {
+   if (gen.pos === null) {
+       return null;
+   }
+   if (gen.stack.length == 0) {
+       return null;
+   }
+   var type = gen.stack.pop();
+   var piece = gen.getPiece(gen.pos);
+   gen.stack.push(piece.type == type);
+   return 0;
+}
+
+Dagaz.Model.functions[Dagaz.Model.ZRF_CREATE] = function(gen) {
+   if (gen.pos === null) {
+       return null;
+   }
+   if (gen.stack.length == 0) {
+       return null;
+   }
+   var type = gen.stack.pop();
+   var piece = new ZrfPiece(type, gen.board.player);
+   gen.dropPiece(gen.pos, piece);
    return 0;
 }
 

@@ -129,7 +129,7 @@
       (name Lion)
       (image Red "images/jungle/RedLion.bmp"
              Green "images/jungle/BlackLion.bmp")
-      (image Red "images/jungle/RedLionGlyph.bmp"
+      (glyph Red "images/jungle/RedLionGlyph.bmp"
              Green "images/jungle/BlackLionGlyph.bmp")
       (attribute weight 7)
       (moves

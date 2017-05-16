@@ -47,6 +47,9 @@ public class ApplyForm extends SeqForm {
 	private final static String CHG_OWN    = "change-owner";
 	private final static String OPPOSITE   = "opposite";
 	private final static String VERIFY     = "verify";
+	private final static String PIECE      = "piece?";
+	private final static String NOT_PIECE  = "not-piece?";
+	private final static String CREATE     = "create";
 	
 	private final static int FROM_FLAG     = 0x01;
 
@@ -78,7 +81,7 @@ public class ApplyForm extends SeqForm {
 			if (func.equals(L_TAG)) {
 				deep++;
 			} else {
-				form = new ApplyForm(tag, parser);
+				form = FormFactory.getInstance().createForm(tag, parser);
 				form.open("");
 			}
 			return;
@@ -315,6 +318,23 @@ public class ApplyForm extends SeqForm {
 	}
 	
 	private boolean state(IMoveTemplate template, List<Integer> params, IGame game) throws Exception {
+		if (func.equals(CREATE)) {
+			String name = forms.get(0).getName();
+			int ix = game.getNameIndex(name);
+			template.addCommand(ZRF_LITERAL, ix, name, "LITERAL");
+			template.addCommand(ZRF_FUNCTION, ZRF_CREATE, "create", "FUNCTION");
+			return true;
+		}
+		if (func.equals(PIECE) || func.equals(NOT_PIECE)) {
+			String name = forms.get(0).getName();
+			int ix = game.getNameIndex(name);
+			template.addCommand(ZRF_LITERAL, ix, name, "LITERAL");
+			template.addCommand(ZRF_FUNCTION, ZRF_IS_PIECE, "piece?", "FUNCTION");
+			if (func.equals(NOT_PIECE)) {
+				template.addCommand(ZRF_FUNCTION, ZRF_NOT, "not", "FUNCTION");
+			}
+			return true;
+		}
 		if (func.equals(EMPTY) || func.equals(NOT_EMPTY) || func.equals(ENEMY) || func.equals(NOT_ENEMY) || 
 			func.equals(FRIEND) || func.equals(NOT_FRIEND) || func.equals(LASTF) || func.equals(NOT_LASTF) || 
 			func.equals(LASTT) || func.equals(NOT_LASTT) || func.equals(CAPTURE) || func.equals(FLIP) || func.equals(CHG_OWN)) {

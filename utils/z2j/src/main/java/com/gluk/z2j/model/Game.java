@@ -52,6 +52,7 @@ public class Game extends AbstractDoc implements IGame {
 	private final static String   MODES_XP   = "/game/piece/*/move-type/*";
 	private final static String   ATTRS_XP   = "/game/piece/attribute/*[1]";
 	private final static String  PIECES_XP   = "/game/piece";
+	private final static String PIECENM_XP   = "/game/piece/name/*";
 	private final static String   SETUP_XP   = "/game/board-setup/*";
 	private final static String  OPTION_XP   = "/game/option";
 	private final static String     WIN_XP   = "/game/win-condition";
@@ -72,6 +73,7 @@ public class Game extends AbstractDoc implements IGame {
 	private Map<Integer, List<Move>>  moves  = new HashMap<Integer, List<Move>>();
 	private Map<String, Integer>      names  = new HashMap<String, Integer>();
 	private Map<String, Integer>      attrs  = new HashMap<String, Integer>();
+	private List<String>             pieces  = new ArrayList<String>();
 	
 	private int flags;
 	private int priorities = 0;
@@ -116,6 +118,10 @@ public class Game extends AbstractDoc implements IGame {
 		return modes.contains(name);
 	}
 
+	public boolean isPiece(String name) {
+		return pieces.contains(name);
+	}
+
 	public boolean isPosition(String name) {
 		if (board != null) {
 			return (board.getPosition(name) >= 0);
@@ -138,6 +144,9 @@ public class Game extends AbstractDoc implements IGame {
 	}
 
 	public int getNameIndex(String name) {
+		if (isPiece(name)) {
+			return pieces.indexOf(name);
+		}
 		if (isPosition(name)) {
 			return board.getPosition(name);
 		}
@@ -383,8 +392,13 @@ public class Game extends AbstractDoc implements IGame {
 	}
 
 	private void extractPieces(IDoc dest) throws Exception {
-		NodeIterator nl = XPathAPI.selectNodeIterator(doc, PIECES_XP);
+		NodeIterator nl = XPathAPI.selectNodeIterator(doc, PIECENM_XP);
 		Node n;
+		while ((n = nl.nextNode())!= null) {
+			String name = n.getLocalName();
+			pieces.add(name);
+		}
+		nl = XPathAPI.selectNodeIterator(doc, PIECES_XP);
 		for (int i = 0; (n = nl.nextNode())!= null; i++) {
 			Piece p = new Piece(this, i);
 			p.open(PIECE_TAG);

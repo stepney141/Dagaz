@@ -5,21 +5,13 @@ import com.gluk.z2j.api.form.IMoveParser;
 import com.gluk.z2j.api.loader.IDoc;
 import com.gluk.z2j.api.model.IGame;
 import com.gluk.z2j.api.model.IPiece;
-import com.gluk.z2j.form.AndForm;
 import com.gluk.z2j.form.ApplyForm;
-import com.gluk.z2j.form.IfForm;
 import com.gluk.z2j.form.ModeForm;
-import com.gluk.z2j.form.OrForm;
 import com.gluk.z2j.form.SeqForm;
-import com.gluk.z2j.form.WhileForm;
 
 public class MoveParser implements IDoc, IMoveParser {
 	
 	private final static String MODE_TAG    = "move-type";
-	private final static String IF_TAG      = "if";
-	private final static String WHILE_TAG   = "while";
-	private final static String AND_TAG     = "and";
-	private final static String OR_TAG      = "or";
 	private final static String FROM_TAG    = "from";
 	
 	private IGame game;
@@ -52,22 +44,6 @@ public class MoveParser implements IDoc, IMoveParser {
 		return game.isDirection(name) || game.isPosition(name);
 	}
 	
-	public IForm createForm(String tag) throws Exception {
-		if (tag.equals(IF_TAG)) {
-			return new IfForm(this);
-		}
-		if (tag.equals(WHILE_TAG)) {
-			return new WhileForm(this);
-		}
-		if (tag.equals(AND_TAG)) {
-			return new AndForm(this);
-		}
-		if (tag.equals(OR_TAG)) {
-			return new OrForm(this);
-		}
-		return new ApplyForm(tag, this);
-	}
-
 	public void open(String tag) throws Exception {
 		if (deep == 0) {
 			deep++;
