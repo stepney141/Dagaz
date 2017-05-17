@@ -8,7 +8,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var isAttacked = function(design, board, pos, player, dir) {
+var isAttackedBy = function(design, board, pos, player, dir) {
   var p = design.navigate(player, pos, dir);
   while (p !== null) {
       var piece = board.getPiece(p);
@@ -18,6 +18,16 @@ var isAttacked = function(design, board, pos, player, dir) {
       p = design.navigate(player, p, dir);
   }
   return false;
+}
+
+var isAttacked = function(design, board, pos, player) {
+  var cnt = 0;
+  _.each(design.allDirections(), function(dir) {
+      if (isAttackedBy(design, board, pos, player, dir)) {
+          cnt++;
+      }
+  });
+  return cnt >= 3;
 }
 
 var CheckInvariants = Dagaz.Model.CheckInvariants;
@@ -31,16 +41,10 @@ Dagaz.Model.CheckInvariants = function(board) {
    .each(function(move) {
        var c = [];
        var b = board.apply(move);
-       _.each(_.range(design.positions.length), function(pos) {
+       _.each(design.allPositions(), function(pos) {
            var piece = b.getPiece(pos);
            if (piece != null) {
-               var cnt = 0;
-               _.each(_.range(design.dirs.length), function(dir) {
-                   if (isAttacked(design, b, pos, piece.player, dir)) {
-                       cnt++;
-                   }
-               });
-               if (cnt >= 3) {
+               if (isAttacked(design, b, pos, piece.player)) {
                    c.push(pos);
                }
            }
@@ -49,6 +53,21 @@ Dagaz.Model.CheckInvariants = function(board) {
        if (_.indexOf(c, t) >= 0) {
            move.failed = true;
        } else {
+           if (b.checkGoals(design, board.player) != 0 ) {
+               b.generateInternal(b, false);
+               _.chain(b.moves)
+                .filter(function(m) {
+                    return m.actions.length > 0;
+                 })
+                .each(function(m) {
+                    var r = b.apply(m);
+                    if (isAttacked(design, r, t, board.player)) {
+                        move.failed = true;
+                    }
+                 });
+           }
+       }
+       if (_.isUndefined(move.failed)) {
            _.each(c, function(pos) {
                 move.capturePiece(pos);
            });

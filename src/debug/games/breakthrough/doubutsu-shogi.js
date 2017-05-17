@@ -25,7 +25,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("highlight-goals", "false");
     design.checkVersion("ko", "situation");
-    design.checkVersion("doubutsu-shogi", "true");
+//  design.checkVersion("doubutsu-shogi-extension", "true");
 
     design.addDirection("nx");
     design.addDirection("n");
@@ -39,7 +39,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addDirection("th");
     design.addDirection("tn");
 
-    design.addPlayer("Green", [null, 2, 1, 4, 3, 6, 5, 8, 7, null, null]);
+    design.addPlayer("Green", [0, 2, 1, 4, 3, 6, 5, 8, 7, 9, 10]);
     design.addPlayer("Red", [0, 2, 1, 1, 2, 3, 4, 5, 6, 10, 7]);
 
     design.addPosition("r4", [0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5]);

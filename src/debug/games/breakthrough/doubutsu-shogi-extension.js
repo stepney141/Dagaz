@@ -19,7 +19,7 @@ Dagaz.Model.CheckInvariants = function(board) {
       if ((piece !== null) && design.inZone(1, board.player, tp)) {
           if (piece.type == 0) {
               var b = board.apply(move);
-              b.generate(design);
+              b.generateInternal(b, false);
               _.chain(b.moves)
                .map(function(m) {
                     return m.actions[0][1][0];

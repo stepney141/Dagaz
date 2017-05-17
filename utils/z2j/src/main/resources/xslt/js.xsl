@@ -122,7 +122,7 @@ Dagaz.View.configure = function(view) {
     </xsl:choose>
     <xsl:choose>
        <xsl:when test="text()"><xsl:value-of select="text()"/></xsl:when>
-       <xsl:otherwise>null</xsl:otherwise>
+       <xsl:otherwise><xsl:value-of select="position() - 1"/></xsl:otherwise>
     </xsl:choose>
   </xsl:for-each>
 </xsl:template>

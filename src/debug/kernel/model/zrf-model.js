@@ -593,6 +593,14 @@ Dagaz.Model.getDesign = function() {
   return Dagaz.Model.design;
 }
 
+ZrfDesign.prototype.allPositions = function() {
+  return _.range(this.positions.length);
+}
+
+ZrfDesign.prototype.allDirections = function() {
+  return _.range(this.dirs.length);
+}
+
 ZrfDesign.prototype.reserve = function(player, piece, cnt) {
   var o = Dagaz.find(this.playerNames, player);
   var t = Dagaz.find(this.pieceNames, piece);
