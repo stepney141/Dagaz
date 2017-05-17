@@ -1,66 +1,14 @@
-﻿- Games
-  - Mancala
-    - Оваре
-    - Дакон
-    - Ohojitxi
-    - Габата
-    - Селус
-    - Тогыз Кумалак
-    - Tschuba
-    - Redu
-  - Семейство Рендзю
-    - Go Moky
-    - Рендзю
-    - Нинуки Рендзю (Пента)
-    - Керио Пента
-    - Боку
-    - Quantum tic-tac-toe
-  - Connect Games
-    - Shannon's game
-    - Hex
-  - Morris family
-  - Go family
-    - Atari Go
-    - Go
-    - Stoical Go
-    - Pen and Pencil Go
-    - Three Colors Go (3)
-    - MarGo
-    - War Go
-    - Watermelon
-  - Breakthrough games
-    - French Military game (2 variants)
-    - Shafran's game
-    - Asalto
-    - Gala
-    - Arimaa
-    - Kamisado
-    - Elementals
-    - Джунгли
-    - Doubutsu Shogi
-    - Italian Damone
-  - Custodian games
-    - Seega
-    - Hasami Shogi
-    - Makyek
-    - 4 Fields Gonu
-    - Тафл
-    - Евклид (варианты с составными ходами и захватом короля)
-    - Ультима
-    - Rithmomachy
+﻿- Stalemate games
+  - Lewthwaite's game (4 variants)
   - Checkers-like games
     - Fox and Geese (4 variants)
     - 4 Fields Kono
-    - Nam Dinh
     - Алькуэрк
     - Dablot
     - Konane
-    - Йотай
-    - Болотуду
     - Фанорона
   - Checkers family
     - Turkish Dama
-    - Bahrain Dama
     - Greek Checkers
     - Armenian Tama
     - Checkers
@@ -74,20 +22,50 @@
     - Ставропольские шашки
     - Северные шашки
     - Столбовые шашки
-    - Russian Chip
-  - Гонки
-    - Шен
-    - Сенет
-    - Ур
-    - Таб
-    - Дальдоза
-    - Сакхо
-    - Пулук
-    - Ludo
-  - Семейство Нард
-    - Табула
-    - Длинные Нарды
-    - Короткие Нарды
+  - 4 Fields Gonu
+  - Watermelon
+- Breakthrough games
+  - French Military game (2 variants)
+  - Shafran's game
+  - Джунгли
+  - Kamisado
+  - Tafl family
+  - Italian Damone
+  - Archimedes
+  - Doubutsu Shogi
+  - Arimaa
+  - Ордо
+- Control games
+  - Asalto
+  - Gala
+  - Elementals
+- Elimination games
+  - Atari Go
+  - Pasang
+  - Seega
+  - Makyek
+  - Nam Dinh
+  - Евклид (варианты с составными ходами и захватом короля)
+  - Abalone
+  - Cheskers
+  - Shatra
+  - Yonin Shogi
+  - Ультима
+  - Игры с неполной информацией
+    - Luzhanqi
+    - Banqi
+- Checkmate games
+  - Knight's Court
+  - Andalusia
+  - Kantorai
+  - Xiangqi Family
+    - Xiangqi
+    - Mini Xiang
+    - Mini Xiangqi
+    - Xiangqi-42
+    - Janggi
+    - Gwangsanghui
+    - Xiang Hex
   - Chess Family
     - Чатуранга
     - Чатурандж
@@ -99,70 +77,87 @@
     - Advanced Omega Chess
     - Таврели
     - Platform Chess
-  - Minic games
-    - Chessence
-    - Annan Shogi
-  - Cheskers family
-    - Cheskers
-    - Шабел
-    - Shatra
-  - Chess-like games
-    - Kantorai Shogi
-    - Andalusia
-    - Chessence
-    - Cubic Chess
-    - Congo
-    - Flip Chess
-    - Platform Chess
-  - Игры с неполной информацией
-    - Luzhanqi
-    - Stratego
-    - Banqi
-  - Xiangqi Family
-    - Xiangqi
-    - Mini Xiang
-    - Mini Xiangqi
-    - Xiangqi-42
-    - Janggi
-    - Gwangsanghui
-    - Xiang Hex
+  - Шабел
   - Shogi Family
     - Shogi
-    - Yonin Shogi (4)
     - Mini Shogi
     - Micro Shogi
     - Kyoto Shogi
     - Tori Shogi
     - Chu Shogi
     - Tenjiku Shogi
-  - Reversi Family
-    - Reversi
-    - Отелло
-    - Desdemona
-    - Минг-манг
+    - Annan Shogi
+  - Escalation (столбовая)
+  - Шакти
+  - Cubic Chess
+  - Congo
+  - Flip Chess
+  - Chessence
+- Arrange games
+  - Семейство Рендзю
+    - Рендзю
+    - Нинуки Рендзю (Пента)
+    - Боку
   - Halma family
-  - Other games
-    - Abalone
-    - Ордо
-    - Lines of action
-    - Pasang
-    - Шакти
-    - Klin Zha
-    - Ninny Chess
-    - Ki Shogi
-    - Escalation (столбовая)
-    - Viruses (варианты)
-    - Three Crowns
-  - Real Time games
-    - Тамск
-    - Питон
+  - Hasami Shogi
+  - Morris family
+  - Йотай
+  - Болотуду
+  - Quantum tic-tac-toe
+  - Rithmomachy
+- Connect Games
+  - Shannon's game
+  - Hex
+  - Gonnect
+- Territory games
+  - Reversi
+  - Отелло
+  - Desdemona
+  - Минг-манг
+  - Тибетское Го
+  - Go
+  - Three Colors Go
+  - Stoical Go
+  - Pen and Pencil Go
+  - MarGo
+  - War Go
+- Гонки
+  - Шен
+  - Сенет
+  - Ур
+  - Таб
+  - Дальдоза
+  - Сакхо
+  - Пулук
+  - Ludo
+  - Семейство Нард
+    - Табула
+    - Длинные Нарды
+    - Короткие Нарды
+- Mancala
+  - Оваре
+  - Дакон
+  - Ohojitxi
+  - Габата
+  - Селус
+  - Тогыз Кумалак
+  - Tschuba
+  - Redu
+- Other games
+  - Lines of action
+  - Klin Zha
+  - Ninny Chess
+  - Ki Shogi
+  - Viruses (варианты)
+  - Three Crowns
+  - GESS
+  - Тамск
 - Puzzles
-  - Mancala puzzles
-    - Tchuka Ruma
+  - Sliding puzzles
   - Solitair puzzles
   - Halma puzzles
   - LightOff puzzles
-  - Sliding puzzles
   - Sokoban
+  - Mancala puzzles (Tchuka Ruma)
   - Chameleon Chess
   - Быки и коровы
