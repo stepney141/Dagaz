@@ -59,7 +59,7 @@ var getMoves = function(sgf, pos, r) {
 }
 
 MaxMinAi.prototype.setContext = function(ctx, board) {
-  if (this.parent !== null) {
+  if (this.parent) {
       this.parent.setContext(ctx, board);
   }
   if (!_.isUndefined(ctx.childs)) {
@@ -150,7 +150,7 @@ MaxMinAi.prototype.getMove = function(ctx) {
           ai:   "opening"
       };
   }
-  if (this.parent !== null) {
+  if (this.parent) {
       delete ctx.childs;
       return this.parent.getMove(ctx);
   }

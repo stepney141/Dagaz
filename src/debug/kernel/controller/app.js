@@ -11,6 +11,7 @@ var STATE = {
 
 var isDrag = false;
 var passForced = false;
+var once = false;
 
 function App(canvas, params) {
   this.design = Dagaz.Model.getDesign();
@@ -159,11 +160,12 @@ App.prototype.exec = function() {
          this.state = STATE.BUZY;
          Canvas.style.cursor = "wait";
          this.timestamp = Date.now();
+         once = true;
       } else {
          if (_.isUndefined(this.list)) {
              var player = this.design.playerNames[this.board.player];
-             this.list  = Dagaz.Model.getMoveList(this.board);
              console.log("Player: " + player);
+             this.list  = Dagaz.Model.getMoveList(this.board);
              if (!_.isUndefined(this.move)) {
                  this.list.setLastMove(this.move);
              }
@@ -194,6 +196,10 @@ App.prototype.exec = function() {
       var ctx = this.getContext(this.board.player);
       var player = this.design.playerNames[this.board.player];
       var result = this.getAI().getMove(ctx);
+      if (once) {
+          console.log("Player: " + player);
+          once = false;
+      }
       if (result) {
           if (_.isUndefined(result.move)) {
               this.state = STATE.DONE;

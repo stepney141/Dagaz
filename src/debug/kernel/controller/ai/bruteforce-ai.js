@@ -62,7 +62,7 @@ var isLoop = function(ctx, board, move) {
       board = board.apply(move);
   }
   var parent = board.parent;
-  while (parent !== null) {
+  while (parent) {
       if (parent.zSign == board.zSign) return true;
       parent = parent.parent;
   }

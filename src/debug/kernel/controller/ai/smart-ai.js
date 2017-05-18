@@ -52,7 +52,7 @@ var cache = function(ctx, board) {
 
 var isLoop = function(ctx, board) {
   var parent = board.parent;
-  while (parent !== null) {
+  while (parent) {
       if (parent.zSign == board.zSign) return true;
       parent = parent.parent;
   }
