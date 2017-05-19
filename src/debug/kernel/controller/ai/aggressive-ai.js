@@ -22,11 +22,27 @@ AggressiveAi.prototype.setContext = function(ctx, board) {
   ctx.board  = board;
 }
 
+var isSafe = function(design, board, move) {
+  var pos = move.actions[0][1][0];
+  board.generate(design);
+  var moves = _.filter(board.moves, function(move) {
+      var actions = _.filter(move.actions, function(action) {
+          return (action[0][0] == pos) && (action[1] === null);
+      });
+      return actions.length > 0;
+  });
+  return moves.length == 0;
+}
+
 AggressiveAi.prototype.getMove = function(ctx) {
   var design = Dagaz.Model.getDesign();
   var result = null;
   var captured = 0;
-  _.each(Dagaz.AI.generate(ctx, ctx.board), function(move) {
+  _.chain(Dagaz.AI.generate(ctx, ctx.board))
+   .filter(function(move) {
+       return move.actions.length > 0;
+    })
+   .each(function(move) {
       var board = ctx.board.apply(move);
       if (board.checkGoals(design, ctx.board.player) != 0) {
           result = move;
@@ -43,6 +59,9 @@ AggressiveAi.prototype.getMove = function(ctx) {
               captured = c;
               result = move;
           }
+      }
+      if ((result === null) && isSafe(design, board, move)) {
+          result = move;
       }
   });
   if (result) {

@@ -159,7 +159,7 @@ View2D.prototype.markPositions = function(type, positions) {
 }
 
 View2D.prototype.capturePiece = function(pos, phase) {
-  if (!phase) { phase = 0; }
+  if (!phase) { phase = 1; }
   var ix = posToIx(this, pos);
   if (ix === null) return;
   this.changes.push({
@@ -290,6 +290,10 @@ var isDone = function(frame) {
   return frame.cnt <= 0;
 }
 
+var isNotNull = function(x) {
+  return !_.isUndefined(x) && (x !== null);
+}
+
 View2D.prototype.animate = function() {
     var len = this.changes.length;
     this.changes = _.filter(this.changes, function(frame) {
@@ -306,7 +310,7 @@ View2D.prototype.animate = function() {
         return frame.phase == phase;
     })
    .filter(function(frame) {
-        return !_.isUndefined(frame.from);
+        return !_.isUndefined(frame.from) && _.isUndefined(frame.op);
     })
    .each(function(frame) {
         frame.op = posToIx(this, frame.from);
@@ -350,13 +354,13 @@ View2D.prototype.animate = function() {
    .map(function(pos) {
        return posToIx(this, pos);
     }, this)
-   .compact()
+   .filter(isNotNull)
    .difference(
        _.chain(this.changes)
         .map(function(frame) {
              return frame.ix;
          })
-        .compact()
+        .filter(isNotNull)
         .value()
     )
    .value();
@@ -443,7 +447,12 @@ View2D.prototype.draw = function(canvas) {
            var piece = this.piece[p.name];
            x += (pos.dx - piece.dx) / 2 | 0;
            y += (pos.dy - piece.dy) / 2 | 0;
+/*         ctx.save();
+           ctx.translate(x + pos.dx / 2, y + pos.dy / 2); 
+           ctx.rotate(0.0174533 * 0);
+           ctx.translate(-x - pos.dx /2, -y - pos.dy /2); */
            ctx.drawImage(piece.h, x, y, piece.dx, piece.dy);
+/*         ctx.restore(); */
         }, this);
       Dagaz.View.showMarks(this, ctx);
       this.animate();
