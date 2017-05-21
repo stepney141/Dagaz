@@ -1,4 +1,4 @@
-(version "3.0")
+(version "2.0")
 
 (define shift (
    $1 (verify empty?) 
@@ -21,15 +21,16 @@
                 ("a/b/c" (64 0)) ; columns
                 ("5/4/3/2/1" (0 64)) ; rows
             )
-            (directions (n 0 -1) (s 0 1))
         )
+        (links n  (a2 a4) (c2 c4) (b1 b2) (b2 b3) (b3 b4) (b4 b5))
+        (links s  (a4 a2) (c4 c2) (b2 b1) (b3 b2) (b4 b3) (b5 b4))
         (links e  (a2 b2) (b2 c2) (a4 b4) (b4 c4))
         (links w  (b2 a2) (c2 b2) (b4 a4) (c4 b4))
         (links ne (b1 c2) (a2 b3) (b3 c4) (a4 b5))
         (links se (a2 b1) (a4 b3) (b3 c2) (b5 c4))
         (links sw (c2 b1) (c4 b3) (b3 a2) (b5 a4))
         (links nw (b1 a2) (c2 b3) (b3 a4) (c4 b5))
-        (kill-positions a1 a5 c1 c5)
+        (kill-positions a1 a5 c1 c5 a3 c3)
    )
 
    (piece
