@@ -1,10 +1,13 @@
 ﻿- Stalemate games
-  - Lewthwaite's game (4 variants)
+  * Lewthwaite's game (4 variants)
+  - Hunt
+  - Maharaja
   - Checkers-like games
     - Fox and Geese (4 variants)
-    - 4 Fields Kono
+    > 4 Fields Kono
     - Алькуэрк
     - Dablot
+    - Choko
     - Konane
     - Фанорона
   - Checkers family
@@ -16,25 +19,25 @@
     - International Checkers
     - Russian Checkers
     - 80 Cells Checkers
+    - Czech Checkers
     - Canadian Checkers
     - Frisian Checkers
     - Thai Checkers
-    - Ставропольские шашки
     - Северные шашки
+    - Ставропольские шашки
     - Столбовые шашки
-  - 4 Fields Gonu
   - Watermelon
 - Breakthrough games
-  - French Military game (2 variants)
-  - Shafran's game
-  - Джунгли
-  - Kamisado
-  - Tafl family
+  * French Military game (2 variants) + > Game of Dwarfs
+  * Shafran's game
+  * Джунгли
+  * Kamisado
+  > Tafl family
   - Italian Damone
-  - Archimedes
-  - Doubutsu Shogi
+  * Archimedes
+  > Doubutsu Shogi
   - Arimaa
-  - Ордо
+  > Ордо
 - Control games
   - Asalto
   - Gala
@@ -42,11 +45,14 @@
 - Elimination games
   - Atari Go
   - Pasang
+  > 4 Fields Gonu
   - Seega
-  - Makyek
-  - Nam Dinh
-  - Евклид (варианты с составными ходами и захватом короля)
-  - Abalone
+  - High Jump
+  > Makyek
+  - Йотай
+  > Nam Dinh
+  > Евклид (варианты с составными ходами и захватом короля)
+  > Abalone
   - Cheskers
   - Shatra
   - Yonin Shogi
@@ -74,9 +80,10 @@
     - Sittuyin
     - Courier Chess
     - Шахматы
+    - Hiashatar
     - Advanced Omega Chess
     - Таврели
-    - Platform Chess
+  - Platform Chess
   - Шабел
   - Shogi Family
     - Shogi
@@ -99,10 +106,10 @@
     - Нинуки Рендзю (Пента)
     - Боку
   - Halma family
-  - Hasami Shogi
+  > Hasami Shogi
   - Morris family
-  - Йотай
   - Болотуду
+  > Lines of action
   - Quantum tic-tac-toe
   - Rithmomachy
 - Connect Games
@@ -144,7 +151,6 @@
   - Tschuba
   - Redu
 - Other games
-  - Lines of action
   - Klin Zha
   - Ninny Chess
   - Ki Shogi
@@ -153,7 +159,7 @@
   - GESS
   - Тамск
 - Puzzles
-  - Sliding puzzles
+  * Sliding puzzles
   - Solitair puzzles
   - Halma puzzles
   - LightOff puzzles
