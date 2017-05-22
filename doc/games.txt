@@ -3,6 +3,7 @@
   - Hunt
   - Maharaja
   - Checkers-like games
+    > Bagh Chal
     - Fox and Geese (4 variants)
     > 4 Fields Kono
     - Алькуэрк
@@ -26,12 +27,14 @@
     - Северные шашки
     - Ставропольские шашки
     - Столбовые шашки
+  - Pasang
   - Watermelon
 - Breakthrough games
-  * French Military game (2 variants) + > Game of Dwarfs
+  * French Military game (3 variants)
   * Shafran's game
   * Джунгли
   * Kamisado
+  > Доджем
   > Tafl family
   - Italian Damone
   * Archimedes
@@ -44,7 +47,6 @@
   - Elementals
 - Elimination games
   - Atari Go
-  - Pasang
   > 4 Fields Gonu
   - Seega
   - High Jump
@@ -87,9 +89,12 @@
   - Шабел
   - Shogi Family
     - Shogi
+    - Goro goro shogi
     - Mini Shogi
     - Micro Shogi
     - Kyoto Shogi
+    - Wa Shogi
+    - Whale Shogi, Great Whale Shogi
     - Tori Shogi
     - Chu Shogi
     - Tenjiku Shogi
@@ -129,6 +134,8 @@
   - MarGo
   - War Go
 - Гонки
+  > Toads and Frogs
+  > Grensholm
   - Шен
   - Сенет
   - Ур
@@ -158,6 +165,7 @@
   - Three Crowns
   - GESS
   - Тамск
+  - The Way of Go, BeSiege
 - Puzzles
   * Sliding puzzles
   - Solitair puzzles
