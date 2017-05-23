@@ -11,6 +11,7 @@
     - Choko
     - Konane
     - Фанорона
+    - Bushka
   - Checkers family
     - Turkish Dama
     - Greek Checkers
@@ -47,7 +48,7 @@
   - Elementals
 - Elimination games
   - Atari Go
-  > 4 Fields Gonu
+  * 4 Fields Gonu
   - Seega
   - High Jump
   > Makyek
@@ -115,6 +116,7 @@
   - Morris family
   - Болотуду
   > Lines of action
+  - Three Crowns
   - Quantum tic-tac-toe
   - Rithmomachy
 - Connect Games

@@ -13,6 +13,7 @@ Dagaz.Model.smartFrom       = false;
 Dagaz.Model.smartTo         = false;
 Dagaz.Model.showGoals       = true;
 Dagaz.Model.showMoves       = true;
+Dagaz.Model.showHints       = true;
 
 Dagaz.Model.checkVersion = function(design, name, value) {  
   if (name == "z2j") {
@@ -33,6 +34,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
          (name != "selection-screen")   &&
          (name != "show-moves-list")    &&
          (name != "smart-moves")        &&
+         (name != "show-hints")         &&
          (name != "recycle-captures")   &&
          (name != "silent-?-moves")) {
          design.failed = true;
@@ -68,6 +70,9 @@ Dagaz.Model.checkVersion = function(design, name, value) {
      }
      if (name == "moves-limit") {
          Dagaz.Model.movesLimit = value;
+     }
+     if ((name == "show-hints") && (value == "false")) {
+         Dagaz.Model.showHints = false;
      }
   }
 }

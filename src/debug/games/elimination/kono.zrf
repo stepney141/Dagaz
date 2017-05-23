@@ -26,6 +26,7 @@
    (option "prevent flipping" 2)
    (option "smart moves"      true)
    (option "animate captures" false)
+   (option "show hints"       false)
 
    (players Black White)
    (turn-order Black White)

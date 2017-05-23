@@ -465,23 +465,25 @@ View2D.prototype.debug = function(text) {
 }
 
 Dagaz.View.showHint = function(view) {
-  var pos = view.pointToPositions(mouseX, mouseY);
-  var ix  = posToIx(view, pos);
-  if (ix !== null) {
-      var piece = view.piece[view.setup[ix].name];
-      if (hintedPiece !== piece) {
-          var text = piece.name;
-          if (piece.help) {
-              text = piece.help;
+  if (Dagaz.Model.showHints) {
+      var pos = view.pointToPositions(mouseX, mouseY);
+      var ix  = posToIx(view, pos);
+      if (ix !== null) {
+          var piece = view.piece[view.setup[ix].name];
+          if (hintedPiece !== piece) {
+              var text = piece.name;
+              if (piece.help) {
+                  text = piece.help;
+              }
+              PieceInfoImage.src = piece.h.src;
+              PieceInfoText.innerHTML = text;
+              PieceInfo.style.display = "inline";
+              hintedPiece = piece;
           }
-          PieceInfoImage.src = piece.h.src;
-          PieceInfoText.innerHTML = text;
-          PieceInfo.style.display = "inline";
-          hintedPiece = piece;
+      } else {
+          PieceInfo.style.display = "none";
+          hintedPiece = null;
       }
-  } else {
-      PieceInfo.style.display = "none";
-      hintedPiece = null;
   }
 }
 

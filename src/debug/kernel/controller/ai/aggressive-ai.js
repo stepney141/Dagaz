@@ -3,6 +3,12 @@
 function AggressiveAi(params, parent) {
   this.params = params;
   this.parent = parent;
+  if (_.isUndefined(this.params.rand)) {
+      this.params.rand = _.random;
+  }
+  if (_.isUndefined(this.params.AI_FRAME)) {
+      this.params.AI_FRAME = 100;
+  }
 }
 
 var findBot = Dagaz.AI.findBot;
@@ -35,9 +41,11 @@ var isSafe = function(design, board, move) {
 }
 
 AggressiveAi.prototype.getMove = function(ctx) {
+  var timestamp = Date.now();
   var design = Dagaz.Model.getDesign();
   var result = null;
   var captured = 0;
+  var safe = [];
   _.chain(Dagaz.AI.generate(ctx, ctx.board))
    .filter(function(move) {
        return move.actions.length > 0;
@@ -60,10 +68,14 @@ AggressiveAi.prototype.getMove = function(ctx) {
               result = move;
           }
       }
-      if ((result === null) && isSafe(design, board, move)) {
-          result = move;
+      if ((result === null) && (Date.now() - timestamp < this.params.AI_FRAME) && isSafe(design, board, move)) {
+          safe.push(move);
       }
-  });
+  }, this);
+  if ((result === null) && (safe.length > 0)) {
+      var ix = this.params.rand(0, safe.length - 1);
+      result = safe[ix];
+  }
   if (result) {
       return {
           done: true,

@@ -25,6 +25,7 @@
   (option "prevent flipping" 2)
   (option "animate captures" false)
   (option "animate drops"    false)
+  (option "show hints"       false)
 
   (players    White Black)
   (turn-order White Black)

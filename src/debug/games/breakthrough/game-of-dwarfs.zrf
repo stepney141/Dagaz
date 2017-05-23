@@ -9,6 +9,7 @@
     (title "Game of Dwarfs")
 
     (option "highlight goals" false)
+    (option "show hints"      false)
 
     (players Green Red)
     (turn-order Green Red)
