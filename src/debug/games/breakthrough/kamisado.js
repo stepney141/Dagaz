@@ -24,6 +24,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("zrf", "3.0");
     design.checkVersion("pass-turn", "forced");
     design.checkVersion("highlight-goals", "false");
+    design.checkVersion("stalemate-draw", "true");
     design.checkVersion("kamisado-extension", "true");
 
     design.addDirection("w");

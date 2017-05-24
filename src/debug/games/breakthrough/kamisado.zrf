@@ -26,6 +26,7 @@
 
    (option "pass turn"          forced)
    (option "highlight goals"    false)
+   (option "stalemate draw"     true)
    (option "kamisado-extension" true)
 
    (players    White Black)
