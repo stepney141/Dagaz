@@ -8,6 +8,57 @@
    )
 ))
 
+(define step-1 (
+   $1 (verify empty?)
+   add
+))
+
+(define step-2 (
+   $1 (verify empty?)
+   $1 (verify empty?)
+   add
+))
+
+(define step-3 (
+   $1 (verify empty?)
+   $1 (verify empty?)
+   $1 (verify empty?)
+   add
+))
+
+(define step-4 (
+   $1 (verify empty?)
+   $1 (verify empty?)
+   $1 (verify empty?)
+   $1 (verify empty?)
+   add
+))
+
+(define step-5 (
+   $1 (verify empty?)
+   $1 (verify empty?)
+   $1 (verify empty?)
+   $1 (verify empty?)
+   $1 (verify empty?)
+   add
+))
+
+(define push (
+   $1 (verify enemy?)
+   (verify (or 
+      (piece? OrangeDragon)
+      (piece? BlueDragon)
+      (piece? PurpleDragon)
+      (piece? PinkDragon)
+      (piece? YellowDragon)
+      (piece? RedDragon)
+      (piece? GreenDragon)
+      (piece? BrownDragon)
+   ))
+   cascade $1 (verify empty?)
+   add
+))
+
 (define dragon
    (piece
       (name $1Dragon)
@@ -20,13 +71,29 @@
    )
 )
 
+(define sumo
+   (piece
+      (name $1Sumo)
+      (help "Sumo: May be moved up to a maximum of 5 space and may perform a ''Sumo push'' move.")
+      (image White "images/kamisado/w$2s.bmp"
+             Black "images/kamisado/b$2s.bmp")
+      (moves
+         (step-1 n) (step-1 nw) (step-1 ne)
+         (step-2 n) (step-2 nw) (step-2 ne)
+         (step-3 n) (step-3 nw) (step-3 ne)
+         (step-4 n) (step-4 nw) (step-4 ne)
+         (step-5 n) (step-5 nw) (step-5 ne)
+         (push   n) (push   nw) (push   ne)
+      )
+   )
+)
+
 (game
    (title "Kamisado")
    (history "Invented by Peter Burley in 2008.")
 
    (option "pass turn"          forced)
    (option "highlight goals"    false)
-   (option "stalemate draw"     true)
    (option "kamisado-extension" true)
 
    (players    White Black)
@@ -79,14 +146,14 @@
       )
    )
 
-   (dragon Orange o)
-   (dragon Blue   b)
-   (dragon Purple p)
-   (dragon Pink   i)
-   (dragon Yellow y)
-   (dragon Red    r)
-   (dragon Green  g)
-   (dragon Brown  w)
+   (dragon Orange o) (sumo Orange o)
+   (dragon Blue   b) (sumo Blue   b)
+   (dragon Purple p) (sumo Purple p)
+   (dragon Pink   i) (sumo Pink   i)
+   (dragon Yellow y) (sumo Yellow y)
+   (dragon Red    r) (sumo Red    r)
+   (dragon Green  g) (sumo Green  g)
+   (dragon Brown  w) (sumo Brown  w)
 
    (board-setup
       (White 
@@ -128,4 +195,12 @@
    (win-condition (Black) (absolute-config RedDragon    (a1 b1 c1 d1 e1 f1 g1 h1)))
    (win-condition (Black) (absolute-config GreenDragon  (a1 b1 c1 d1 e1 f1 g1 h1)))
    (win-condition (Black) (absolute-config BrownDragon  (a1 b1 c1 d1 e1 f1 g1 h1)))
+)
+
+(variant
+   (title "Kamisado")
+   (option "pass turn"          forced)
+   (option "highlight goals"    false)
+   (option "kamisado-extension" true)
+   (option "kamisado-setup"     30)
 )

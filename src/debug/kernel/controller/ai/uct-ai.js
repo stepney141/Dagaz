@@ -38,10 +38,15 @@ UctAi.prototype.heuristic = function(design, board, move) {
 
 UctAi.prototype.generate = function(ctx, board) {
   if (_.isUndefined(board.moves)) {
-      board.moves = _.chain(Dagaz.AI.generate(ctx, board))
-       .sortBy(function(move) {
+      board.moves = _.sortBy(Dagaz.AI.generate(ctx, board), function(move) {
            return -this.heuristic(ctx.design, board, move);
-        }, this).value();
+      }, this);
+      if ((board.moves.length == 1) && board.moves[0].isPass()) {
+           var moves = Dagaz.AI.generate(ctx, board.apply(board.moves[0]));
+           if ((moves.length == 0) || ((moves.length == 1) && moves[0].isPass())) {
+               board.moves = [];
+           }
+      }
   }
 }
 

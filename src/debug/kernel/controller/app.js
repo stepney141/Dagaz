@@ -6,7 +6,8 @@ var STATE = {
     WAIT: 2,
     BUZY: 3,
     EXEC: 4,
-    DONE: 5
+    DONE: 5,
+    STOP: 6
 };
 
 var isDrag = false;
@@ -43,7 +44,7 @@ Dagaz.Controller.createApp = function(canvas) {
 
 App.prototype.done = function() {
   if (this.state != STATE.DONE) {
-      this.state = STATE.IDLE;
+      this.state = STATE.STOP;
   } else {
       if (this.doneMessage) {
           alert(this.doneMessage);
@@ -152,6 +153,10 @@ App.prototype.getContext = function(player) {
 
 App.prototype.exec = function() {
   this.view.draw(this.canvas);
+  if (this.state == STATE.STOP) {
+      this.state = STATE.IDLE;
+      return;
+  }
   if (this.state == STATE.IDLE) {
       var ctx = this.getContext(this.getBoard().player);      
       var ai  = this.getAI();

@@ -7,7 +7,7 @@ function AggressiveAi(params, parent) {
       this.params.rand = _.random;
   }
   if (_.isUndefined(this.params.AI_FRAME)) {
-      this.params.AI_FRAME = 100;
+      this.params.AI_FRAME = 300;
   }
 }
 
