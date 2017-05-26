@@ -272,7 +272,7 @@ var drawMarks = function(ctx, view, list, color) {
         }
         ctx.beginPath();
         ctx.fillStyle = color;
-        ctx.arc(x, y, pos.dx / 6, 0, 2 * Math.PI);
+        ctx.arc(x, y, pos.dx / 4, 0, 2 * Math.PI);
         ctx.fill();
         ctx.stroke();
    }, view);

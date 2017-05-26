@@ -6,7 +6,7 @@
 ))
 
 (game
-   (title "Solitaire")
+   (title "Modern Solitaire")
 
    (move-sound    "Audio/Pickup.wav")
    (release-sound "Audio/Pickup.wav")
@@ -24,16 +24,20 @@
    (turn-order You)
 
    (board
-      (image "images/board.bmp")
+      (image "images/modern.bmp")
       (grid
-          (start-rectangle 20 23 117 120)
+          (start-rectangle 12 12 60 60)
           (dimensions
-                ("a/b/c/d/e/f/g" (97 0)) ; files
-                ("7/6/5/4/3/2/1" (0 97)) ; ranks
+                ("a/b/c/d/e/f/g/h" (48 0)) ; files
+                ("8/7/6/5/4/3/2/1" (0 48)) ; ranks
           )
           (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0))
       )
-      (kill-positions a1 a2 a6 a7 b1 b2 b6 b7 f1 f2 f6 f7 g1 g2 g6 g7)
+      (kill-positions a1 a2 a3 a7 a8 b1 b2 b3 b7 b8 f1 f2 f3 f7 f8 g1 g2 g3 g7 g8 h1 h2 h3 h7 h8)
+      (zone (name goal) 
+         (players You) 
+         (positions d5)
+      )
    )
 
    (piece
@@ -47,6 +51,6 @@
    )
 
    (board-setup
-      (You (Stone a3 a4 a5 b3 b4 b5 c1 c2 c3 c4 c5 c6 c7 d1 d2 d3 d5 d6 d7 e1 e2 e3 e4 e5 e6 e7 f3 f4 f5 g3 g4 g5))
+      (You (Stone a4 a5 a6 b4 b5 b6 c1 c2 c3 c4 c5 c6 c7 c8 d1 d2 d3 d4 d6 d7 d8 e1 e2 e3 e4 e5 e6 e7 e8 f4 f5 f6 g4 g5 g6 h4 h5 h6))
    )
 )

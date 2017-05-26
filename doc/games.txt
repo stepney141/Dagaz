@@ -1,6 +1,6 @@
 ﻿- Stalemate games
   * Lewthwaite's game (4 variants)
-  - Hunt
+  * Hunt
   - Maharaja
   - Checkers-like games
     > Bagh Chal
@@ -170,7 +170,7 @@
   - The Way of Go, BeSiege
 - Puzzles
   * Sliding puzzles
-  - Solitair puzzles
+  * Solitair puzzles
   - Halma puzzles
   - LightOff puzzles
   - Sokoban
