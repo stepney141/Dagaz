@@ -1,159 +1,18 @@
-(define step-switch
-  (if (and (on-board? $1) (not-empty? $1))
-      (if (piece? On $1)
-          (change-type Off $1)
-       else
-          (change-type On $1)
-      )
-  )
-)
+(version "3.0")
 
-(define slide-switch
-  mark
-  (while (on-board? $1)
-     $1
-     (if not-empty?
-         (if (piece? On)
-             (change-type Off)
-          else
-             (change-type On)
-         )
-     )
-  )
-  back
-)
-
-(define king-switch (
-  (verify (piece? $1))
-  (step-switch n) (step-switch s) (step-switch nw) (step-switch sw)
-  (step-switch w) (step-switch e) (step-switch ne) (step-switch se)
-  add
+(define touch (
+  (verify not-empty?)
+  (add $1)
 ))
-
-(define wazir-switch (
-  (verify (piece? $1))
-  (step-switch n) (step-switch s)
-  (step-switch w) (step-switch e)
-  add
-))
-
-(define ferz-switch (
-  (verify (piece? $1))
-  (step-switch nw) (step-switch sw)
-  (step-switch ne) (step-switch se)
-  add
-))
-
-(define knight-switch (
-  (verify (piece? $1))
-  (step-switch nnw) (step-switch nne) (step-switch ssw) (step-switch sse)
-  (step-switch nww) (step-switch nee) (step-switch sww) (step-switch see)
-  add
-))
-
-(define rook-switch (
-  (verify (piece? $1))
-  (slide-switch n) (slide-switch s)
-  (slide-switch w) (slide-switch e)
-  add
-))
-
-(define bishop-switch (
-  (verify (piece? $1))
-  (slide-switch nw) (slide-switch se)
-  (slide-switch sw) (slide-switch ne)
-  add
-))
-
-(define queen-switch (
-  (verify (piece? $1))
-  (slide-switch n) (slide-switch s)
-  (slide-switch w) (slide-switch e)
-  (slide-switch nw) (slide-switch se)
-  (slide-switch sw) (slide-switch ne)
-  add
-))
-
-(variant
-   (title "King Light Off 5x5")
-   (piece
-        (name On)
-        (image You "images\TurnOff\bright.bmp")
-        (drops
-           (king-switch Off)
-        )
-   )
-   (piece
-        (name Off)
-        (image You "images\TurnOff\dark.bmp")
-        (drops
-           (king-switch On)
-        )
-   )
-)
-
-(variant
-   (title "Wazir Light Off 5x5")
-   (piece
-        (name On)
-        (image You "images\TurnOff\bright.bmp")
-        (drops
-           (wazir-switch Off)
-        )
-   )
-   (piece
-        (name Off)
-        (image You "images\TurnOff\dark.bmp")
-        (drops
-           (wazir-switch On)
-        )
-   )
-)
-
-(variant
-   (title "Ferz Light Off 5x5")
-   (piece
-        (name On)
-        (image You "images\TurnOff\bright.bmp")
-        (drops
-           (ferz-switch Off)
-        )
-   )
-   (piece
-        (name Off)
-        (image You "images\TurnOff\dark.bmp")
-        (drops
-           (ferz-switch On)
-        )
-   )
-)
-
-(variant
-   (title "Knight Light Off 5x5")
-   (piece
-        (name On)
-        (image You "images\TurnOff\bright.bmp")
-        (drops
-           (knight-switch Off)
-        )
-   )
-   (piece
-        (name Off)
-        (image You "images\TurnOff\dark.bmp")
-        (drops
-           (knight-switch On)
-        )
-   )
-)
 
 (game
-   (title "Rook Light Off 5x5")
-
-   (option "animate drops" false)
+   (title "Light Off 5x5")
 
    (drop-sound "")
    (capture-sound "")
    (change-sound "")
+
+   (option "light-off-extension" rook)
 
    (players You)
    (turn-order You)
@@ -178,15 +37,15 @@
    (piece
         (name On)
         (image You "images\TurnOff\bright.bmp")
-        (drops
-           (rook-switch Off)
+        (moves
+           (touch Off)
         )
    )
    (piece
         (name Off)
         (image You "images\TurnOff\dark.bmp")
-        (drops
-           (rook-switch On)
+        (moves
+           (touch On)
         )
    )
 
@@ -199,45 +58,8 @@
                  a5 b5 c5 d5 e5
                  off 10000
              )
-             (Off off 10000)
         )
    )
 
    (win-condition (You) (pieces-remaining 0 On))
-)
-
-(variant
-   (title "Bishop Light Off 5x5")
-   (piece
-        (name On)
-        (image You "images\TurnOff\bright.bmp")
-        (drops
-           (bishop-switch Off)
-        )
-   )
-   (piece
-        (name Off)
-        (image You "images\TurnOff\dark.bmp")
-        (drops
-           (bishop-switch On)
-        )
-   )
-)
-
-(variant
-   (title "Queen Light Off 5x5")
-   (piece
-        (name On)
-        (image You "images\TurnOff\bright.bmp")
-        (drops
-           (queen-switch Off)
-        )
-   )
-   (piece
-        (name Off)
-        (image You "images\TurnOff\dark.bmp")
-        (drops
-           (queen-switch On)
-        )
-   )
 )

@@ -230,11 +230,6 @@ App.prototype.exec = function() {
               this.move  = result.move;
               this.state = STATE.EXEC;
           }
-      } else {
-          this.state = STATE.DONE;
-          Canvas.style.cursor = "default";
-          alert("Invalid AI move");
-          return;
       }
   }
   if (this.state == STATE.EXEC) {

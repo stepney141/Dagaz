@@ -1,7 +1,7 @@
 ﻿- Stalemate games
   * Lewthwaite's game (4 variants)
   * Hunt
-  - Maharaja
+  > Maharaja
   - Checkers-like games
     > Bagh Chal
     - Fox and Geese (4 variants)
@@ -127,7 +127,7 @@
   - Reversi
   - Отелло
   - Desdemona
-  - Минг-манг
+  > Минг-манг
   - Тибетское Го
   - Go
   - Three Colors Go
@@ -164,16 +164,15 @@
   - Ninny Chess
   - Ki Shogi
   - Viruses (варианты)
-  - Three Crowns
-  - GESS
+  > GESS
   - Тамск
   - The Way of Go, BeSiege
 - Puzzles
   * Sliding puzzles
   * Solitair puzzles
   - Halma puzzles
-  - LightOff puzzles
-  - Sokoban
+  > LightOff puzzles
+  > Sokoban
   - Mancala puzzles (Tchuka Ruma)
-  - Chameleon Chess
+  > Chameleon Chess
   - Быки и коровы
