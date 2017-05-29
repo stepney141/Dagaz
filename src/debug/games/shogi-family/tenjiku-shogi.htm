@@ -1,0 +1,166 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Tenjiku Shogi</title>
+</head>
+<body>
+
+<img id="Board" style="display:none" src="images/board.png">
+<img id="WhiteKnight" style="display:none" src="images/knight_w.png">
+<img id="BlackKnight" style="display:none" src="images/knight_b.png">
+<img id="WhiteIron-General" style="display:none" src="images/iron_w.png">
+<img id="BlackIron-General" style="display:none" src="images/iron_b.png">
+<img id="WhitePawn" style="display:none" src="images/pawn_w.png">
+<img id="BlackPawn" style="display:none" src="images/pawn_b.png">
+<img id="WhiteBishop" style="display:none" src="images/bishop_w.png">
+<img id="BlackBishop" style="display:none" src="images/bishop_b.png">
+<img id="Whitez2j-a" style="display:none" src="images/pbishop_w.png">
+<img id="Blackz2j-a" style="display:none" src="images/pbishop_b.png">
+<img id="WhiteRook" style="display:none" src="images/rook_w.png">
+<img id="BlackRook" style="display:none" src="images/rook_b.png">
+<img id="Whitez2j-a" style="display:none" src="images/prook_w.png">
+<img id="Blackz2j-a" style="display:none" src="images/prook_b.png">
+<img id="WhiteQueen" style="display:none" src="images/queen_w.png">
+<img id="BlackQueen" style="display:none" src="images/queen_b.png">
+<img id="Whitez2j-a" style="display:none" src="images/pqueen_w.png">
+<img id="Blackz2j-a" style="display:none" src="images/pqueen_b.png">
+<img id="WhiteFlying-Ox" style="display:none" src="images/pox_w.png">
+<img id="BlackFlying-Ox" style="display:none" src="images/pox_b.png">
+<img id="WhiteFree-Boar" style="display:none" src="images/fboar_w.png">
+<img id="BlackFree-Boar" style="display:none" src="images/fboar_b.png">
+<img id="WhiteHorned-Falcon" style="display:none" src="images/falcon_w.png">
+<img id="BlackHorned-Falcon" style="display:none" src="images/falcon_b.png">
+<img id="Whitez2j-a" style="display:none" src="images/pfalcon_w.png">
+<img id="Blackz2j-a" style="display:none" src="images/pfalcon_b.png">
+<img id="WhiteSoaring-Eagle" style="display:none" src="images/eagle_w.png">
+<img id="BlackSoaring-Eagle" style="display:none" src="images/eagle_b.png">
+<img id="Whitez2j-a" style="display:none" src="images/peagle_w.png">
+<img id="Blackz2j-a" style="display:none" src="images/peagle_b.png">
+<img id="WhiteWhale" style="display:none" src="images/whale_w.png">
+<img id="BlackWhale" style="display:none" src="images/whale_b.png">
+<img id="WhiteWhite-Horse" style="display:none" src="images/whorse_w.png">
+<img id="BlackWhite-Horse" style="display:none" src="images/whorse_b.png">
+<img id="WhiteLion" style="display:none" src="images/lion_w.png">
+<img id="BlackLion" style="display:none" src="images/lion_b.png">
+<img id="Whitez2j-a" style="display:none" src="images/plion_w.png">
+<img id="Blackz2j-a" style="display:none" src="images/plion_b.png">
+<img id="WhiteDragon-King" style="display:none" src="images/dragon_w.png">
+<img id="BlackDragon-King" style="display:none" src="images/dragon_b.png">
+<img id="Whitez2j-a" style="display:none" src="images/pdragon_w.png">
+<img id="Blackz2j-a" style="display:none" src="images/pdragon_b.png">
+<img id="WhiteDragon-Horse" style="display:none" src="images/horse_w.png">
+<img id="BlackDragon-Horse" style="display:none" src="images/horse_b.png">
+<img id="Whitez2j-a" style="display:none" src="images/phorse_w.png">
+<img id="Blackz2j-a" style="display:none" src="images/phorse_b.png">
+<img id="WhiteKylin" style="display:none" src="images/kylin_w.png">
+<img id="BlackKylin" style="display:none" src="images/kylin_b.png">
+<img id="WhitePhoenix" style="display:none" src="images/phoenix_w.png">
+<img id="BlackPhoenix" style="display:none" src="images/phoenix_b.png">
+<img id="WhiteReverse-Chariot" style="display:none" src="images/reverse_w.png">
+<img id="BlackReverse-Chariot" style="display:none" src="images/reverse_b.png">
+<img id="WhiteSide-Mover" style="display:none" src="images/side_w.png">
+<img id="BlackSide-Mover" style="display:none" src="images/side_b.png">
+<img id="Whitez2j-a" style="display:none" src="images/pside_w.png">
+<img id="Blackz2j-a" style="display:none" src="images/pside_b.png">
+<img id="WhiteVertical-Mover" style="display:none" src="images/vertical_w.png">
+<img id="BlackVertical-Mover" style="display:none" src="images/vertical_b.png">
+<img id="Whitez2j-a" style="display:none" src="images/pvertical_w.png">
+<img id="Blackz2j-a" style="display:none" src="images/pvertical_b.png">
+<img id="WhiteFlying-Stag" style="display:none" src="images/stag_w.png">
+<img id="BlackFlying-Stag" style="display:none" src="images/stag_b.png">
+<img id="WhiteLance" style="display:none" src="images/lance_w.png">
+<img id="BlackLance" style="display:none" src="images/lance_b.png">
+<img id="WhiteKing" style="display:none" src="images/king_w.png">
+<img id="BlackKing" style="display:none" src="images/king_b.png">
+<img id="WhitePrince" style="display:none" src="images/prince_w.png">
+<img id="BlackPrince" style="display:none" src="images/prince_b.png">
+<img id="WhiteBlind-Tiger" style="display:none" src="images/tiger_w.png">
+<img id="BlackBlind-Tiger" style="display:none" src="images/tiger_b.png">
+<img id="WhiteDrunk-Elephant" style="display:none" src="images/elephant_w.png">
+<img id="BlackDrunk-Elephant" style="display:none" src="images/elephant_b.png">
+<img id="WhiteFerocious-Leopard" style="display:none" src="images/leopard_w.png">
+<img id="BlackFerocious-Leopard" style="display:none" src="images/leopard_b.png">
+<img id="WhiteGold-General" style="display:none" src="images/gold_w.png">
+<img id="BlackGold-General" style="display:none" src="images/gold_b.png">
+<img id="Whitez2j-a" style="display:none" src="images/pgold_w.png">
+<img id="Blackz2j-a" style="display:none" src="images/pgold_b.png">
+<img id="WhiteSilver-General" style="display:none" src="images/silver_w.png">
+<img id="BlackSilver-General" style="display:none" src="images/silver_b.png">
+<img id="WhiteCopper-General" style="display:none" src="images/copper_w.png">
+<img id="BlackCopper-General" style="display:none" src="images/copper_b.png">
+<img id="WhiteChariot-Soldier" style="display:none" src="images/chariotsoldier_w.png">
+<img id="BlackChariot-Soldier" style="display:none" src="images/chariotsoldier_b.png">
+<img id="Whitez2j-a" style="display:none" src="images/pchariotsoldier_w.png">
+<img id="Blackz2j-a" style="display:none" src="images/pchariotsoldier_b.png">
+<img id="WhiteDog" style="display:none" src="images/dog_w.png">
+<img id="BlackDog" style="display:none" src="images/dog_b.png">
+<img id="WhiteBishop-General" style="display:none" src="images/bishopgeneral_w.png">
+<img id="BlackBishop-General" style="display:none" src="images/bishopgeneral_b.png">
+<img id="Whitez2j-a" style="display:none" src="images/pbishopgeneral_w.png">
+<img id="Blackz2j-a" style="display:none" src="images/pbishopgeneral_b.png">
+<img id="WhiteRook-General" style="display:none" src="images/rookgeneral_w.png">
+<img id="BlackRook-General" style="display:none" src="images/rookgeneral_b.png">
+<img id="Whitez2j-a" style="display:none" src="images/prookgeneral_w.png">
+<img id="Blackz2j-a" style="display:none" src="images/prookgeneral_b.png">
+<img id="WhiteVice-General" style="display:none" src="images/vicegeneral_w.png">
+<img id="BlackVice-General" style="display:none" src="images/vicegeneral_b.png">
+<img id="WhiteGreat-General" style="display:none" src="images/greatgeneral_w.png">
+<img id="BlackGreat-General" style="display:none" src="images/greatgeneral_b.png">
+<img id="WhiteSide-Soldier" style="display:none" src="images/sidesoldier_w.png">
+<img id="BlackSide-Soldier" style="display:none" src="images/sidesoldier_b.png">
+<img id="Whitez2j-a" style="display:none" src="images/psidesoldier_w.png">
+<img id="Blackz2j-a" style="display:none" src="images/psidesoldier_b.png">
+<img id="WhiteVertical-Soldier" style="display:none" src="images/verticalsoldier_w.png">
+<img id="BlackVertical-Soldier" style="display:none" src="images/verticalsoldier_b.png">
+<img id="Whitez2j-a" style="display:none" src="images/pverticalsoldier_w.png">
+<img id="Blackz2j-a" style="display:none" src="images/pverticalsoldier_b.png">
+<img id="WhiteWater-Buffalo" style="display:none" src="images/waterbuffalo_w.png">
+<img id="BlackWater-Buffalo" style="display:none" src="images/waterbuffalo_b.png">
+<img id="Whitez2j-a" style="display:none" src="images/pwaterbuffalo_w.png">
+<img id="Blackz2j-a" style="display:none" src="images/pwaterbuffalo_b.png">
+<img id="WhiteFire-Demon" style="display:none" src="images/firedemon_w.png">
+<img id="BlackFire-Demon" style="display:none" src="images/firedemon_b.png">
+<img id="WhiteFree-Eagle" style="display:none" src="images/freeeagle_w.png">
+<img id="BlackFree-Eagle" style="display:none" src="images/freeeagle_b.png">
+<img id="WhiteLion-Hawk" style="display:none" src="images/lion-hawk_w.png">
+<img id="BlackLion-Hawk" style="display:none" src="images/lion-hawk_b.png">
+<img id="WhiteHeavenly-Tetrarch" style="display:none" src="images/heaven_w.png">
+<img id="BlackHeavenly-Tetrarch" style="display:none" src="images/heaven_b.png">
+<img id="WhiteMulti-General" style="display:none" src="images/multi-general_w.png">
+<img id="BlackMulti-General" style="display:none" src="images/multi-general_b.png">
+
+<table style="margin:auto; font-family:sans-serif; font-size:14px" id="Table">
+<tr style="height:599px; vertical-align:top">
+<td id="CanvasCell" style="width:599px">
+<canvas id="Canvas" width="599" height="599" style="cursor:default">Broken canvas...</canvas>
+</td><td style="width:300px;">
+<div style="height:510px; overflow:auto" id="ScrollDiv">
+<img id="GlyphImage"><p id="HelpText"></p>
+<p id="GameSession"></p>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div style="height:100px; width:500px; margin-left:auto; margin-right:auto">
+<table>
+<tr style="display:none" id="PieceInfo">
+<td><img id="PieceInfoImage"></td><td id="PieceInfoText"></td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+
+<script src="http://underscorejs.ru/underscore-min.js"></script>
+<script src="../../kernel/dagaz.js"></script>
+<script src="../../kernel/model/zrf-model.js"></script>
+<script src="../../kernel/model/zobrist.js"></script>
+<script src="../../kernel/view/2d/2d-view.js"></script>
+<script src="../../kernel/controller/utils/move-list.js"></script>
+<script src="tenjiku-shogi.js"></script>
+<script src="../../kernel/controller/app.js"></script>
+
+</body>
+</html>

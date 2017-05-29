@@ -56,6 +56,7 @@
   > Nam Dinh
   > Евклид (варианты с составными ходами и захватом короля)
   > Abalone
+  - Walhall
   - Cheskers
   - Shatra
   - Yonin Shogi
@@ -171,7 +172,7 @@
   * Sliding puzzles
   * Solitair puzzles
   - Halma puzzles
-  > LightOff puzzles
+  * LightOff puzzles
   > Sokoban
   - Mancala puzzles (Tchuka Ruma)
   > Chameleon Chess
