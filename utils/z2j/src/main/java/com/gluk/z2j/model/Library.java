@@ -97,7 +97,7 @@ public class Library implements ILibrary {
 			if (c == '_') continue;
 			return false;
 		}
-		return true;
+		return (i > 0);
 	}
 
 	public void extract(Node doc, IDoc dest, IEnvironment env) throws Exception {

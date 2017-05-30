@@ -495,6 +495,9 @@ public class Board extends AbstractDoc implements IBoard {
 				Node z;
 				while ((z = zl.nextNode())!= null) {
 					String pos = z.getLocalName();
+					if (pos.equals(A_TAG)) {
+						pos = z.getTextContent();
+					}
 					addZone(name, player, pos);
 				}
 			}

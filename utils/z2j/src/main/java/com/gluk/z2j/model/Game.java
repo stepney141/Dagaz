@@ -45,6 +45,7 @@ public class Game extends AbstractDoc implements IGame {
  	private final static String        I_TAG = "i";
  	private final static String        P_TAG = "p";
  	private final static String        N_TAG = "n";
+	private final static String        A_TAG = "z2j-a";
 
 	private final static String   TITLE_XP   = "/game/title | /game/description";
 	private final static String PLAYERS_XP   = "/game/turn-order/*";
@@ -336,6 +337,9 @@ public class Game extends AbstractDoc implements IGame {
 				Node p;
 				while ((p = pl.nextNode())!= null) {
 					String pos = p.getLocalName();
+					if (pos.equals(A_TAG)) {
+						pos = p.getTextContent();
+					}
 					if (pos.equals(OFF_TAG)) {
 						p = pl.nextNode();
 						if (p != null) {
