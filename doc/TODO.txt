@@ -1,4 +1,5 @@
 ﻿- perl-скрипт для визуализации данных лога solitaire-ai
+- профилировать solitaire-ai под Chrome
 
 - Rhino/Nashorn API можно использовать для распараллеливания AI (Java-сервер)
 
