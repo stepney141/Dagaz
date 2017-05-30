@@ -27,24 +27,27 @@ var isEquals = function(a, b) {
 
 var step = function(design, stack) {
   if (stack.length == 0) return false;
-  var frame = stack.peekBack();
-  while ((stack.length > 0) && (frame.dir >= design.positions.length)) {
+  var frame = stack.pop();
+  stack.push(frame);
+  while ((stack.length > 0) && (frame.dir >= design.dirs.length)) {
       frame.dir = 0;
       frame.pos++;
       if (frame.pos >= frame.setup.length) {
           stack.pop();
-          frame = stack.peekBack();
+          frame = stack.pop();
+          stack.push(frame);
       }
   }
   if (stack.length == 0) return false;
+  var d = frame.dir;
+  frame.dir++;
   var t = frame.setup[frame.pos];
-  var p = design.navigate(1, t, frame.dir);
+  var p = design.navigate(1, t, d);
   if (p === null) return false;
   if (_.indexOf(frame.setup, p) >= 0) return false;
-  var f = design.navigate(1, p, frame.dir);
+  var f = design.navigate(1, p, d);
   if (f === null) return false;
   if (_.indexOf(frame.setup, f) >= 0) return false;
-  frame.dir++;
   stack.push({
       setup: _.chain(frame.setup)
               .map(function(pos) {
@@ -55,7 +58,7 @@ var step = function(design, stack) {
                    }
                })
               .push(p)
-              .value();
+              .value(),
       pos:   0,
       dir:   0,
       from:  f,
@@ -69,24 +72,29 @@ SolitaireAi.prototype.getMove = function(ctx) {
   var design = Dagaz.Model.getDesign();
   if (!ctx.goal) {
       ctx.goal = _.filter(design.allPositions(), function(pos) {
-          return board.getPiece(pos) !== null;
+          return ctx.board.getPiece(pos) !== null;
       });
+      console.log("Goal: " + ctx.goal);
   }
   if (!ctx.stack) {
       ctx.stack = [];
-      if (design.goals[1]) {
-          ctx.stack.push({
-              setup: design.goals[1][0].positions[0],
-              pos:   0,
-              dir:   0
-          });
-      }
+      ctx.stack.push({
+          setup: [ design.zones[0][1][0] ],
+          pos:   0,
+          dir:   0
+      });
   }
   while (!ctx.completed && (Date.now() - timestamp < this.params.AI_FRAME) && (ctx.stack.length > 0)) {
      if (step(design, ctx.stack)) {
-         if (isEquals(stack.peekBack().setup, ctx.goal)) {
+         var frame = ctx.stack.pop();
+         ctx.stack.push(frame);
+         console.log("Current: " + frame.setup);
+         if (isEquals(frame.setup, ctx.goal)) {
              ctx.completed = true;
              break;
+         }
+         if (frame.setup.length >= ctx.goal.length) {
+             ctx.stack.pop();
          }
      }
   }

@@ -1,7 +1,6 @@
 (version "3.0")
 
 (define change (
-; $1
   (verify not-empty?)
   (add $1)
 ))
