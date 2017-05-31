@@ -18,6 +18,7 @@ import com.gluk.z2j.api.model.IGame;
 public class Game extends AbstractDoc implements IGame {
 	
 	private final static String    GAME_TAG  = "game";
+	private final static String   TITLE_TAG  = "title";
 	private final static String    GOAL_TAG  = "goal";
 	private final static String     WIN_TAG  = "win";
 	private final static String    BOARD_TAG = "board";
@@ -47,7 +48,7 @@ public class Game extends AbstractDoc implements IGame {
  	private final static String        N_TAG = "n";
 	private final static String        A_TAG = "z2j-a";
 
-	private final static String   TITLE_XP   = "/game/title | /game/description";
+	private final static String   TITLE_XP   = "/game/title/*[1]";
 	private final static String PLAYERS_XP   = "/game/turn-order/*";
 	private final static String  PRIORS_XP   = "/game/move-priorities/*";
 	private final static String   MODES_XP   = "/game/piece/*/move-type/*";
@@ -314,8 +315,11 @@ public class Game extends AbstractDoc implements IGame {
 		NodeIterator nl = XPathAPI.selectNodeIterator(doc, TITLE_XP);
 		Node n;
 		while ((n = nl.nextNode())!= null) {
-			String value = getValue(n, A_XP);
-			dest.open(n.getLocalName());dest.add(value);dest.close();
+			String value = n.getLocalName();
+			if (value.equals(A_TAG)) {
+				value = n.getTextContent();
+			}
+			dest.open(TITLE_TAG);dest.add(value);dest.close();
 		}
 	}
 	

@@ -74,7 +74,6 @@ SolitaireAi.prototype.getMove = function(ctx) {
       ctx.goal = _.filter(design.allPositions(), function(pos) {
           return ctx.board.getPiece(pos) !== null;
       });
-      console.log("Goal: " + ctx.goal);
   }
   if (!ctx.stack) {
       ctx.stack = [];
@@ -88,7 +87,6 @@ SolitaireAi.prototype.getMove = function(ctx) {
      if (step(design, ctx.stack)) {
          var frame = ctx.stack.pop();
          ctx.stack.push(frame);
-         console.log("Current: " + frame.setup);
          if (isEquals(frame.setup, ctx.goal)) {
              ctx.completed = true;
              break;

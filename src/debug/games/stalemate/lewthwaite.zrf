@@ -61,7 +61,6 @@
 
 (variant
   (title "Lewthwaite's game (7x7)")
-  (default)
 
   (board
      (image "images/lewthwaite/7x7.bmp")
