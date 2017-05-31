@@ -204,8 +204,12 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPiece("King", 5);
     design.addMove(5, 4, [4], 0);
     design.addMove(5, 4, [2], 0);
+    design.addMove(5, 4, [3], 0);
     design.addMove(5, 4, [0], 0);
     design.addMove(5, 4, [1], 0);
+    design.addMove(5, 4, [5], 0);
+    design.addMove(5, 4, [6], 0);
+    design.addMove(5, 4, [7], 0);
 
     design.addPiece("Maharadja", 6);
     design.addMove(6, 2, [4, 4], 0);

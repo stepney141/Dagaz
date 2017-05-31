@@ -100,6 +100,7 @@
      (image White "images/maharadja/wking.bmp")
      (moves
          (step n) (step s) (step w) (step e)
+         (step nw) (step sw) (step ne) (step se)
      )
   )
   (piece
