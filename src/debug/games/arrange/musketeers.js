@@ -22,14 +22,18 @@ ZRF = {
 Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-captures", "false");
+    design.checkVersion("musketeers-extension", "true");
 
     design.addDirection("w");
     design.addDirection("e");
     design.addDirection("s");
     design.addDirection("n");
 
-    design.addPlayer("White", [1, 0, 3, 2]);
-    design.addPlayer("Red", [0, 1, 2, 3]);
+    design.addPlayer("Red", [1, 0, 3, 2]);
+    design.addPlayer("White", [0, 1, 2, 3]);
+
+    design.addTurn(2);
+    design.addTurn(1);
 
     design.addPosition("a5", [0, 1, 5, 0]);
     design.addPosition("b5", [-1, 1, 5, 0]);

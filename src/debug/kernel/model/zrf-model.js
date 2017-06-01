@@ -776,6 +776,26 @@ ZrfDesign.prototype.addPlayer = function(player, symmetries) {
   this.playerNames.push(player);
 }
 
+ZrfDesign.prototype.addTurn = function(player, mode) {
+  if (!mode) {
+      mode = null;
+  }
+  if (_.isUndefined(this.turns)) {
+      this.turns = [];
+  }
+  this.turns.push({
+      player: player,
+      mode:   mode
+  });
+}
+
+ZrfDesign.prototype.repeatMark = function() {
+  if (_.isUndefined(this.turns)) {
+      this.turns = [];
+  }
+  this.repeat = this.turns.length;
+}
+
 ZrfDesign.prototype.isPuzzle = function() {
   return _.chain(_.keys(this.playerNames)).max().value() == 1;
 }
@@ -788,7 +808,41 @@ ZrfDesign.prototype.nextPlayer = function(player) {
   }
 }
 
-ZrfDesign.prototype.nextOrder = ZrfDesign.prototype.nextPlayer;
+ZrfDesign.prototype.nextTurn = function(board) {
+  var turn = board.turn + 1;
+  if (_.isUndefined(this.turns)) {
+      if (turn >= this.playerNames.length - 1) {
+          turn = 0;
+          if (this.repeat) {
+              turn += this.repeat;
+          }
+      }
+  } else {
+      if (turn >= this.turns.length) {
+          turn = 0;
+          if (this.repeat) {
+              turn += this.repeat;
+          }
+      }
+  }
+  return turn;
+}
+
+ZrfDesign.prototype.currPlayer = function(turn) {
+  if (_.isUndefined(this.turns)) {
+      return turn + 1;
+  } else {
+      return this.turns[turn].player;
+  }
+}
+
+ZrfDesign.prototype.currMode = function(turn) {
+  if (_.isUndefined(this.turns)) {
+      return null;
+  } else {
+      return this.turns[turn].mode;
+  }
+}
 
 ZrfDesign.prototype.prevPlayer = function(player) {
   if (player == 1) {
@@ -798,7 +852,18 @@ ZrfDesign.prototype.prevPlayer = function(player) {
   }
 }
 
-ZrfDesign.prototype.prevOrder = ZrfDesign.prototype.prevPlayer;
+ZrfDesign.prototype.prevTurn = function(board) {
+  if (_.isUndefined(this.turns)) {
+      if (board.turn == 0) {
+          return this.playerNames.length - 2;
+      }
+  } else {
+      if ((board.turn == 0) || (board.turn == this.repeat)) {
+          return this.turns.length - 1;
+      }
+  }
+  return board.turn - 1;
+}
 
 ZrfDesign.prototype.addPosition = function(name, links) {
   this.positionNames.push(name);
@@ -1208,7 +1273,8 @@ function ZrfBoard(game) {
   this.pieces   = [];
   this.forks    = [];
   this.moves    = [];
-  this.player   = 1;
+  this.turn     = 0;
+  this.player   = Dagaz.Model.getDesign().currPlayer(this.turn);
   this.changed  = [];
   this.parent   = null;
   this.values   = [];
@@ -1573,9 +1639,11 @@ ZrfBoard.prototype.commit = function() {
 }
 
 ZrfBoard.prototype.apply = function(move) {
+  var design = Dagaz.Model.design;
   var r = this.copy();
   move.applyAll(r);
-  r.player = this.game.design.nextOrder(this.player);
+  r.turn = design.nextTurn(this);
+  r.player = design.currPlayer(r.turn);
   r.move = move;
   return r;
 }

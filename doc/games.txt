@@ -1,7 +1,7 @@
 ﻿- Stalemate games
   * Lewthwaite's game (4 variants)
   * Hunt
-  > Maharaja
+  * Maharaja
   - Checkers-like games
     > Bagh Chal
     - Fox and Geese (4 variants)
@@ -112,7 +112,7 @@
     - Рендзю
     - Нинуки Рендзю (Пента)
     - Боку
-  > Три мушкетёра
+  * Три мушкетёра
   - Halma family
   > Hasami Shogi
   - Morris family

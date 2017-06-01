@@ -107,7 +107,16 @@ Dagaz.View.configure = function(view) {
     design.addPlayer("<xsl:choose>
                          <xsl:when test="name"><xsl:value-of select="name"/></xsl:when>
                          <xsl:otherwise><xsl:value-of select="/game/players[1]/name"/></xsl:otherwise>
-                      </xsl:choose>", [<xsl:call-template name="apply-dirs"/>]);</xsl:for-each>
+                      </xsl:choose>", [<xsl:call-template name="apply-dirs"/>]);</xsl:for-each><xsl:text>
+</xsl:text>  
+  <xsl:for-each select="/game/turn">
+    <xsl:choose>
+      <xsl:when test="repeat">    design.repeatMark();<xsl:text>
+</xsl:text></xsl:when>
+      <xsl:otherwise>    design.addTurn(<xsl:value-of select="player"/>);<xsl:text>
+</xsl:text></xsl:otherwise>
+    </xsl:choose>
+  </xsl:for-each>
 </xsl:template>
 
 <xsl:template name="apply-positions">

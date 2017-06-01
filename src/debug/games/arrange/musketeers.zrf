@@ -12,7 +12,8 @@
   (title "Three Musketeers")
   (history "Invented by Haar Hoolim.")
 
-  (option "animate captures" false)
+  (option "animate captures"     false)
+  (option "musketeers-extension" true)
 
   (players Red White)
   (turn-order White Red)

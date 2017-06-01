@@ -135,13 +135,12 @@ App.prototype.getAI = function() {
 App.prototype.getBoard = function() {
   if (_.isUndefined(this.board)) {
       this.board  = Dagaz.Model.getInitBoard();
-      this.player = this.board.player;
   }
   return this.board;
 }
 
 App.prototype.getContext = function(player) {
-  if ((player == this.player) && !this.design.isPuzzle()) return null;
+  if ((player == 1) && !this.design.isPuzzle()) return null;
   if (_.isUndefined(this.context)) {
       this.context = [];
   }
@@ -158,7 +157,7 @@ App.prototype.exec = function() {
       return;
   }
   if (this.state == STATE.IDLE) {
-      var ctx = this.getContext(this.getBoard().player);      
+      var ctx = this.getContext(this.getBoard().player);
       var ai  = this.getAI();
       if ((ctx !== null) && (ai !== null)) {
          ai.setContext(ctx, this.board);
@@ -246,11 +245,16 @@ App.prototype.exec = function() {
       if (!_.isUndefined(this.positions)) {
           delete this.positions;
       }
-      if (this.board.checkGoals(this.design, this.board.parent.player) > 0) {
+      var g = this.board.checkGoals(this.design, this.board.parent.player);
+      if (g != 0) {
           var player = this.design.playerNames[this.board.parent.player];
           this.state = STATE.DONE;
           Canvas.style.cursor = "default";
-          this.doneMessage = player + " win"
+          if (g > 0) {
+              this.doneMessage = player + " win"
+          } else {
+              this.doneMessage = player + " loss"
+          }
       } else {
           this.state = STATE.WAIT;
       }

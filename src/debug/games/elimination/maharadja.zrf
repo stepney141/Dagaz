@@ -33,7 +33,8 @@
 (game
   (title "Maharadja")
 
-  (option "animate captures" false)
+  (option "animate captures"   false)
+  (option "maharadja-extension" true)
 
   (players White Black)
   (turn-order White Black)

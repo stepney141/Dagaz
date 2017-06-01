@@ -25,6 +25,8 @@ public class Game extends AbstractDoc implements IGame {
 	private final static String      POS_TAG = "pos";
 	private final static String  RESERVE_TAG = "reserve";
 	private final static String  PLAYERS_TAG = "players";
+	private final static String   REPEAT_TAG = "repeat";
+	private final static String    TURNS_TAG = "turn";
 	private final static String   PLAYER_TAG = "player";
 	private final static String      IMG_TAG = "image";
 	private final static String      RES_TAG = "res";
@@ -49,7 +51,8 @@ public class Game extends AbstractDoc implements IGame {
 	private final static String        A_TAG = "z2j-a";
 
 	private final static String   TITLE_XP   = "/game/title/*[1]";
-	private final static String PLAYERS_XP   = "/game/turn-order/*";
+	private final static String PLAYERS_XP   = "/game/players/*";
+	private final static String   TURNS_XP   = "/game/turn-order/*";
 	private final static String  PRIORS_XP   = "/game/move-priorities/*";
 	private final static String   MODES_XP   = "/game/piece/*/move-type/*";
 	private final static String   ATTRS_XP   = "/game/piece/attribute/*[1]";
@@ -272,6 +275,21 @@ public class Game extends AbstractDoc implements IGame {
 			dest.open(NAME_TAG);dest.add(n.getLocalName()); dest.close();
 		}
 		dest.close();
+		nl = XPathAPI.selectNodeIterator(doc, TURNS_XP);
+		while ((n = nl.nextNode())!= null) {
+			if (n.getLocalName().equals(REPEAT_TAG)) {
+				dest.open(TURNS_TAG);
+				dest.open(REPEAT_TAG); dest.close();
+				dest.close();
+				continue;
+			}
+			Integer player = players.get(n.getLocalName());
+			if (player != null) {
+				dest.open(TURNS_TAG);
+				dest.open(PLAYER_TAG);dest.add(player.toString()); dest.close();
+				dest.close();
+			}
+		}
 	}
 	
 	private void extractOptions(IDoc dest) throws Exception {

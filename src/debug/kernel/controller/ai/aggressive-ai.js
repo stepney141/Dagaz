@@ -33,11 +33,23 @@ var isSafe = function(design, board, move) {
   board.generate(design);
   var moves = _.filter(board.moves, function(move) {
       var actions = _.filter(move.actions, function(action) {
-          return (action[0][0] == pos) && (action[1] === null);
+          return ((action[0][0] == pos) && (action[1] === null)) ||
+                 ((action[1] !== null) && (action[1][0] == pos));
       });
       return actions.length > 0;
   });
   return moves.length == 0;
+}
+
+var isAttack = function(design, board, move) {
+  return _.chain(move.actions)
+          .filter(function(action) {
+              return (action[0] !== null) && (action[1] !== null);
+           })
+          .filter(function(action) {
+              return board.getPiece(action[1][0]) !== null;
+           })
+          .size().value() > 0;
 }
 
 AggressiveAi.prototype.getMove = function(ctx) {
@@ -46,13 +58,14 @@ AggressiveAi.prototype.getMove = function(ctx) {
   var result = null;
   var captured = 0;
   var safe = [];
+  var strike = [];
   _.chain(Dagaz.AI.generate(ctx, ctx.board))
    .filter(function(move) {
        return move.actions.length > 0;
     })
    .each(function(move) {
       var board = ctx.board.apply(move);
-      if (board.checkGoals(design, ctx.board.player) != 0) {
+      if (board.checkGoals(design, ctx.board.player) > 0) {
           result = move;
           captured = null;
       }
@@ -69,12 +82,18 @@ AggressiveAi.prototype.getMove = function(ctx) {
           }
       }
       if ((result === null) && (Date.now() - timestamp < this.params.AI_FRAME) && isSafe(design, board, move)) {
+          if (isAttack(design, ctx.board, move)) {
+              strike.push(move);
+          }
           safe.push(move);
       }
   }, this);
-  if ((result === null) && (safe.length > 0)) {
-      var ix = this.params.rand(0, safe.length - 1);
-      result = safe[ix];
+  if (strike.length == 0) {
+      strike = safe;
+  }
+  if ((result === null) && (strike.length > 0)) {
+      var ix = this.params.rand(0, strike.length - 1);
+      result = strike[ix];
   }
   if (result) {
       return {
