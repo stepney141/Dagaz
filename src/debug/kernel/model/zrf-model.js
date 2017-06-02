@@ -1566,9 +1566,9 @@ ZrfBoard.prototype.generateInternal = function(callback, cont) {
           }
       }
   }
-  if (this.moves.length == 0) {
-      this.player = 0;
-  }
+//  if (this.moves.length == 0) {
+//      this.player = 0;
+//  }
 }
 
 ZrfBoard.prototype.generate = function(design) {

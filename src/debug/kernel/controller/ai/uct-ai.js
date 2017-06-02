@@ -5,7 +5,7 @@ var MAXVALUE  = 1000000;
 function UctAi(params) {
   this.params = params;
   if (_.isUndefined(this.params.AI_FRAME)) {
-      this.params.AI_FRAME = 100;
+      this.params.AI_FRAME = 1000;
   }
   if (_.isUndefined(this.params.UCT_COEFF)) {
       this.params.UCT_COEFF = Math.sqrt(2);
@@ -26,21 +26,19 @@ Dagaz.AI.findBot = function(type, params, parent) {
 }
 
 Dagaz.AI.heuristic = function(self, design, board, move) {
-  return 0;
+  return 1;
 }
 
 UctAi.prototype.heuristic = function(design, board, move) {
   if (_.isUndefined(this.params.heuristic)) {
       this.params.heuristic = Dagaz.AI.heuristic;
   }
-  return this.params.heuristic(this, design, this.params, board, move);
+  return this.params.heuristic(this, design, board, move);
 }
 
 UctAi.prototype.generate = function(ctx, board) {
-  if (_.isUndefined(board.moves)) {
-      board.moves = _.sortBy(Dagaz.AI.generate(ctx, board), function(move) {
-           return -this.heuristic(ctx.design, board, move);
-      }, this);
+  if (board.moves.length == 0) {
+      board.moves = Dagaz.AI.generate(ctx, board);
       if ((board.moves.length == 1) && board.moves[0].isPass()) {
            var moves = Dagaz.AI.generate(ctx, board.apply(board.moves[0]));
            if ((moves.length == 0) || ((moves.length == 1) && moves[0].isPass())) {
@@ -59,6 +57,63 @@ UctAi.prototype.uct = function(win, count, all) {
   }
 }
 
+var pad = function(x) {
+  var r = "";
+  while (x > 0) {
+      r = r + " ";
+      x--;
+  }
+  return r;
+}
+
+var positions = function(list) {
+  var r = "";
+  _.each(list, function(pos) {
+      if (r) {
+          r = r + ",";
+      }
+      r = r + Dagaz.Model.posToString(pos);
+  });
+  return r;
+}
+
+var dump = function(design, board, offset) {
+  var w = [];
+  var b = [];
+  if (!offset) {
+      offset = 0;
+  }
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if (piece !== null) {
+          if (piece.player == 1) {
+              b.push(pos);
+          } else {
+              w.push(pos);
+          }
+      }
+  });
+  return pad(offset) + "Player: " + board.player + ", White: " + positions(w) + ", Black: " + positions(b);
+}
+
+var dumpAll = function(ctx, node, level) {
+  if (!node) {
+      node = ctx;
+  }
+  if (!level) {
+      level = 0;
+  }
+  console.log(dump(ctx.design, node.board, level * 4));
+  if (!_.isUndefined(node.childs)) {
+      for (var i = 0; i < node.childs.length; i++)  {
+           var n = ctx.childs[i];
+           if (level < 2) {
+               dumpAll(ctx, n, level + 1);
+           }
+      }
+  }
+}
+
 UctAi.prototype.setContext = function(ctx, board) {
   ctx.board     = board;
   ctx.timestamp = Date.now();
@@ -71,9 +126,9 @@ UctAi.prototype.setContext = function(ctx, board) {
       for (var i = 0; (i < ctx.childs.length) && (childs === null); i++) {
            var child = ctx.childs[i];
            if (!_.isUndefined(child.childs)) {
-               for (var j = 0; (j < child.childs.length) && (childs === null); j++) {
+               for (var j = 0; j < child.childs.length; j++) {
                     var node = child.childs[j];
-                    if (node.board.checkGoals(design) > 0) {
+                    if (node.board.checkGoals(ctx.design, board.player) > 0) {
                         ctx.result = node.move;
                         break;
                     }
@@ -91,7 +146,6 @@ UctAi.prototype.setContext = function(ctx, board) {
 }
 
 UctAi.prototype.getMove = function(ctx) {
-  var design = Dagaz.Model.getDesign();
   this.generate(ctx, ctx.board);
   if (ctx.board.moves.length == 0) {
       return { done: true, ai: "nothing" };
@@ -100,9 +154,9 @@ UctAi.prototype.getMove = function(ctx) {
       return { done: true, move: ctx.board.moves[0], ai: "once" };
   }
   if (_.isUndefined(ctx.childs)) {
-      ctx.childs = _.map(ctx.board.moves), function(move) {
+      ctx.childs = _.map(ctx.board.moves, function(move) {
            var board = ctx.board.apply(move);
-           if (board.checkGoals(design) > 0) {
+           if (board.checkGoals(ctx.design, ctx.board.player) > 0) {
                ctx.result = move;
            }
            return {
@@ -151,13 +205,32 @@ UctAi.prototype.getMove = function(ctx) {
           this.generate(ctx, node.board);
           if (node.board.moves.length == 0) {
               _.each(stack, function(n) {
-                  if (!Dagaz.Model.stalemateDraw && (n.board.player != node.board.player)) {
-                      n.win++;
-                  }
-                  n.all++;
-              });
+              for (var i = 0; i < stack.length; i++) {
+                   var n = stack[i];
+                   if (!Dagaz.Model.stalemateDraw && (n.board.player == node.board.player)) {
+                       n.win++;
+                   }
+                   n.all++;
+              }
               break;
           }
+
+
+            if (_.isUndefined(node.childs)) {
+              node.childs = [];
+              _.each(node.board.moves, function(m) {
+                   var b = node.board.apply(m);
+                   node.childs.push({
+                       move:  m,
+                       board: b,
+                       init:  0,
+                       win:   0,
+                       all:   0
+                   });
+              });
+          } 
+
+
           node.childs = _.map(node.board.moves), function(move) {
                return {
                    move:  move,
@@ -167,17 +240,38 @@ UctAi.prototype.getMove = function(ctx) {
                    all:   0
                };
           });
-          var ix = this.params.rand(0, node.childs.length - 1);
-          node = node.childs[ix];
-          var goal = node.board.checkGoals(design);
-          if (goal != 0) {
-              _.each(stack, function(n) {
-                  if ((n.player == node.board.player) && (goal > 0)) n.win++;
-                  if ((n.player != node.board.player) && (goal < 0)) n.win++;
-                  n.all++;
-              });
-              break;
+          var votes = 0;
+          for (var i = 0; i < node.childs.length; i++) {
+               var n = node.childs[i];
+               if (_.isUndefined(n.votes)) {
+                   n.votes = this.heuristic(ctx.design, node.board, n.move);
+               }
+               if (n.votes > 0) {
+                   votes += n.votes;
+               }
           }
+          var ix = 0;
+          var v = this.params.rand(0, votes - 1);
+          votes = 0; i = 0;
+          while ((votes < v) && (i < node.childs.length)) {
+              if (node.childs[i].votes > 0) {
+                  ix = i;
+                  votes += node.childs[i].votes;
+              }
+              i++;
+          }
+          node = node.childs[ix];
+          stack.push(node);
+          var goal = node.board.checkGoals(ctx.design, ctx.board.player);
+          if (goal != 0) {
+              for (var i = 0; i < stack.length; i++) {
+                   var n = stack[i];
+                   if ((n.player == node.board.player) && (goal < 0)) n.win++;
+                   if ((n.player != node.board.player) && (goal > 0)) n.win++;
+                   n.all++;
+              }
+              break;
+          } 
       }
   }
   var mx = null;

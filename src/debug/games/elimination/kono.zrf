@@ -27,6 +27,7 @@
    (option "smart moves"      true)
    (option "animate captures" false)
    (option "show hints"       false)
+   (option "kono extension"   true)
 
    (players Black White)
    (turn-order Black White)
