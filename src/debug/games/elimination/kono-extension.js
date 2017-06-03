@@ -23,14 +23,15 @@ Dagaz.Model.checkGoals = function(design, board, player) {
   }
 }
 
-Dagaz.AI.heuristic = function(self, design, board, move) {
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  var r = 1;
   if (move.actions.length > 0) {
       var pos = move.actions[0][1][0];
       if (board.getPiece(pos) !== null) {
-          return 10;
+          r += 10;
       }
   }
-  return 1;
+  return r;
 }
 
 })();

@@ -1,11 +1,9 @@
 (function() {
 
-var MAXVALUE  = 1000000;
-
 function UctAi(params) {
   this.params = params;
   if (_.isUndefined(this.params.AI_FRAME)) {
-      this.params.AI_FRAME = 1000;
+      this.params.AI_FRAME = 3000;
   }
   if (_.isUndefined(this.params.UCT_COEFF)) {
       this.params.UCT_COEFF = Math.sqrt(2);
@@ -25,7 +23,7 @@ Dagaz.AI.findBot = function(type, params, parent) {
   }
 }
 
-Dagaz.AI.heuristic = function(self, design, board, move) {
+Dagaz.AI.heuristic = function(ai, design, board, move) {
   return 1;
 }
 
@@ -57,15 +55,6 @@ UctAi.prototype.uct = function(win, count, all) {
   }
 }
 
-var pad = function(x) {
-  var r = "";
-  while (x > 0) {
-      r = r + " ";
-      x--;
-  }
-  return r;
-}
-
 var positions = function(list) {
   var r = "";
   _.each(list, function(pos) {
@@ -77,12 +66,9 @@ var positions = function(list) {
   return r;
 }
 
-var dump = function(design, board, offset) {
+var dump = function(design, board) {
   var w = [];
   var b = [];
-  if (!offset) {
-      offset = 0;
-  }
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
       if (piece !== null) {
@@ -93,25 +79,47 @@ var dump = function(design, board, offset) {
           }
       }
   });
-  return pad(offset) + "Player: " + board.player + ", White: " + positions(w) + ", Black: " + positions(b);
+  return "Player: " + board.player + ", White: " + positions(w) + ", Black: " + positions(b);
 }
 
-var dumpAll = function(ctx, node, level) {
-  if (!node) {
-      node = ctx;
-  }
-  if (!level) {
-      level = 0;
-  }
-  console.log(dump(ctx.design, node.board, level * 4));
-  if (!_.isUndefined(node.childs)) {
-      for (var i = 0; i < node.childs.length; i++)  {
-           var n = ctx.childs[i];
-           if (level < 2) {
-               dumpAll(ctx, n, level + 1);
-           }
+UctAi.prototype.simulate = function(ctx, board) {
+  var deep = 0;
+  while (Date.now() - ctx.timestamp < this.params.AI_FRAME) {
+      this.generate(ctx, board);
+      if (board.moves.length == 0) {
+//        console.log("Deep: " + deep + ", " + dump(ctx.design, board));
+          return (board.player != ctx.board.player) && !Dagaz.Model.stalemateDraw;
       }
+      var goal = board.checkGoals(ctx.design, ctx.board.player);
+      if (goal != 0) {
+//        console.log("Goal: " + goal + ", Deep: " + deep + ", " + dump(ctx.design, board));
+          if ((goal < 0) && (board.player == ctx.board.player)) return true;
+          if ((goal > 0) && (board.player != ctx.board.player)) return true;
+          return false;
+      }
+      var votes  = 0;
+      var childs = _.map(board.moves, function(move) {
+          var r  = this.heuristic(ctx.design, board, move);
+          if (r < 0) {
+              r = 0;
+          }
+          votes += r;
+          return r;
+      }, this);
+      var ix = 0;
+      var v = this.params.rand(0, votes - 1);
+      votes = 0; i = 0;
+      while ((votes < v) && (i < childs.length)) {
+          if (childs[i] > 0) {
+              ix = i;
+              votes += childs[i];
+          }
+          i++;
+      }
+      board = board.apply(board.moves[ix]);
+      deep++;
   }
+  return false;
 }
 
 UctAi.prototype.setContext = function(ctx, board) {
@@ -121,28 +129,7 @@ UctAi.prototype.setContext = function(ctx, board) {
   ctx.init      = 0;
   ctx.win       = 0;
   ctx.all       = 0;
-  if (!_.isUndefined(ctx.childs)) {
-      var childs = null;
-      for (var i = 0; (i < ctx.childs.length) && (childs === null); i++) {
-           var child = ctx.childs[i];
-           if (!_.isUndefined(child.childs)) {
-               for (var j = 0; j < child.childs.length; j++) {
-                    var node = child.childs[j];
-                    if (node.board.checkGoals(ctx.design, board.player) > 0) {
-                        ctx.result = node.move;
-                        break;
-                    }
-                    if ((node.board.zSign == board.zSign) && (node.board.player == board.player)) {
-                        ctx.init  = node.init;
-                        ctx.win   = node.win;
-                        ctx.all   = node.all;
-                        childs    = node.childs;
-                    }
-               }
-           }
-      }
-      ctx.childs = childs;
-  }
+  delete ctx.childs;
 }
 
 UctAi.prototype.getMove = function(ctx) {
@@ -162,7 +149,6 @@ UctAi.prototype.getMove = function(ctx) {
            return {
                move:  move,         // possible Move
                board: board,        // result Board
-               init:  0,            // childs initialized (count)
                win:   0,            // wins on current Node
                all:   0             // views on current Node
            };
@@ -178,110 +164,38 @@ UctAi.prototype.getMove = function(ctx) {
       };
   }
   while (Date.now() - ctx.timestamp < this.params.AI_FRAME) {
-      var node  = ctx;
-      var stack = [ node ];
-      while (node.childs && (Date.now() - ctx.timestamp < this.params.AI_FRAME)) {
-          var child = null;
-          if (node.init < node.childs.length) {
-              child = node.childs[node.init];
-              node.init++;
-          }
-          if (!child) {
-              var mx = null;
-              for (var i = 0; i < node.childs.length; i++) {
-                   var value = this.uct(node.childs[i].win, node.childs[i].all, node.all);
-                   if ((mx === null) || (value > mx)) {
-                       mx = value;
-                       child = node.childs[i];
-                   }
-              }
-          }
-          if (child) {
-              node = child;
-              stack.push(node);
-          }
+      var node = null;
+      if (ctx.init < ctx.childs.length) {
+          node = ctx.childs[ctx.init];
+          ctx.init++;
       }
-      while (Date.now() - ctx.timestamp < this.params.AI_FRAME) {
-          this.generate(ctx, node.board);
-          if (node.board.moves.length == 0) {
-              _.each(stack, function(n) {
-              for (var i = 0; i < stack.length; i++) {
-                   var n = stack[i];
-                   if (!Dagaz.Model.stalemateDraw && (n.board.player == node.board.player)) {
-                       n.win++;
-                   }
-                   n.all++;
+      if (node === null) {
+          var mx = null;
+          _.each(ctx.childs, function(child) {
+              var value = this.uct(child.win, child.all, ctx.all);
+              if ((mx === null) || (value > mx)) {
+                   mx = value;
+                   node = child;
               }
-              break;
-          }
-
-
-            if (_.isUndefined(node.childs)) {
-              node.childs = [];
-              _.each(node.board.moves, function(m) {
-                   var b = node.board.apply(m);
-                   node.childs.push({
-                       move:  m,
-                       board: b,
-                       init:  0,
-                       win:   0,
-                       all:   0
-                   });
-              });
-          } 
-
-
-          node.childs = _.map(node.board.moves), function(move) {
-               return {
-                   move:  move,
-                   board: node.board.apply(move),
-                   init:  0,
-                   win:   0,
-                   all:   0
-               };
-          });
-          var votes = 0;
-          for (var i = 0; i < node.childs.length; i++) {
-               var n = node.childs[i];
-               if (_.isUndefined(n.votes)) {
-                   n.votes = this.heuristic(ctx.design, node.board, n.move);
-               }
-               if (n.votes > 0) {
-                   votes += n.votes;
-               }
-          }
-          var ix = 0;
-          var v = this.params.rand(0, votes - 1);
-          votes = 0; i = 0;
-          while ((votes < v) && (i < node.childs.length)) {
-              if (node.childs[i].votes > 0) {
-                  ix = i;
-                  votes += node.childs[i].votes;
-              }
-              i++;
-          }
-          node = node.childs[ix];
-          stack.push(node);
-          var goal = node.board.checkGoals(ctx.design, ctx.board.player);
-          if (goal != 0) {
-              for (var i = 0; i < stack.length; i++) {
-                   var n = stack[i];
-                   if ((n.player == node.board.player) && (goal < 0)) n.win++;
-                   if ((n.player != node.board.player) && (goal > 0)) n.win++;
-                   n.all++;
-              }
-              break;
-          } 
+          }, this);
       }
+      if (this.simulate(ctx, node.board)) {
+          node.win++;
+          ctx.win++;
+      }
+      node.all++;
+      ctx.all++;
   }
   var mx = null;
   for (var i = 0; i < ctx.childs.length; i++) {
-      if ((mx === null) || (ctx.childs[i].all > mx)) {
-          mx = ctx.childs[i].all;
+      if ((mx === null) || (ctx.childs[i].win > mx)) {
+          mx = ctx.childs[i].win;
           ctx.result = ctx.childs[i].move;
+//        console.log("Win = " + ctx.childs[i].win + ", All = " + ctx.childs[i].all);
       }
   }
   if (ctx.result) {
+      console.log("Win = " + ctx.win + ", All = " + ctx.all + ", Init = " + ctx.init + ", Moves = " + ctx.board.moves.length);
       return {
            done: true,
            move: ctx.result,
