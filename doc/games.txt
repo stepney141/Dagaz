@@ -36,6 +36,7 @@
   * Джунгли
   * Kamisado
   > Доджем
+  - Gauntlet
   > Tafl family
   - Italian Damone
   * Archimedes
@@ -88,6 +89,10 @@
     - Advanced Omega Chess
     - Таврели
   - Platform Chess
+  - Morph Chess
+  - Philosophers Chess
+  - Caissa
+  - Chad
   - Шабел
   - Shogi Family
     - Shogi
@@ -174,6 +179,7 @@
   * Solitair puzzles
   - Halma puzzles
   * LightOff puzzles
+  > Ханойские башни (перемешивание выполнением серии случайных ходов)
   > Sokoban
   - Mancala puzzles (Tchuka Ruma)
   > Chameleon Chess
