@@ -234,6 +234,23 @@ View2D.prototype.movePiece = function(from, to, piece, phase, steps) {
 
 View2D.prototype.commit = function() {
    _.chain(this.changes)
+    .filter(function(frame) {
+       return !_.isUndefined(frame.from) && !_.isUndefined(frame.to);
+     })
+    .filter(function(frame) {
+       return _.indexOf(_.chain(this.changes)
+               .filter(function(frame) {
+                   return !_.isUndefined(frame.from) && _.isUndefined(frame.to);
+                })
+               .map(function(frame) {
+                   return frame.from;
+                })
+               .value(), frame.to) >= 0;
+     }, this)
+    .each(function(frame) {
+       delete frame.ix;
+     });
+   _.chain(this.changes)
     .map(function(frame) {
        return frame.phase;
      })

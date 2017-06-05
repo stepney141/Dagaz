@@ -8,6 +8,9 @@ function UctAi(params) {
   if (_.isUndefined(this.params.UCT_COEFF)) {
       this.params.UCT_COEFF = Math.sqrt(2);
   }
+  if (_.isUndefined(this.params.MAX_DEEP)) {
+      this.params.MAX_DEEP = 100;
+  }
   if (_.isUndefined(this.params.rand)) {
       this.params.rand = _.random;
   }
@@ -85,6 +88,7 @@ var dump = function(design, board) {
 UctAi.prototype.simulate = function(ctx, board) {
   var deep = 0;
   while (Date.now() - ctx.timestamp < this.params.AI_FRAME) {
+      if (deep > this.params.MAX_DEEP) break;
       this.generate(ctx, board);
       if (board.moves.length == 0) {
 //        console.log("Deep: " + deep + ", " + dump(ctx.design, board));
@@ -188,10 +192,10 @@ UctAi.prototype.getMove = function(ctx) {
   }
   var mx = null;
   for (var i = 0; i < ctx.childs.length; i++) {
-      if ((mx === null) || (ctx.childs[i].win > mx)) {
-          mx = ctx.childs[i].win;
+      var weight = ctx.childs[i].win;
+      if ((mx === null) || (weight > mx)) {
+          mx = weight;
           ctx.result = ctx.childs[i].move;
-//        console.log("Win = " + ctx.childs[i].win + ", All = " + ctx.childs[i].all);
       }
   }
   if (ctx.result) {

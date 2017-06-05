@@ -5,7 +5,7 @@
   - Checkers-like games
     > Bagh Chal
     - Fox and Geese (4 variants)
-    > 4 Fields Kono
+    * 4 Fields Kono
     - Алькуэрк
     - Dablot
     - Choko
@@ -35,7 +35,7 @@
   * Shafran's game
   * Джунгли
   * Kamisado
-  > Доджем
+  * Доджем
   - Gauntlet
   > Tafl family
   - Italian Damone

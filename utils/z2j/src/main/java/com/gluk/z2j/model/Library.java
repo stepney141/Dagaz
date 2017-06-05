@@ -18,6 +18,7 @@ public class Library implements ILibrary {
 	
 	private final static String GAME_TAG    = "game";
 	
+	private final static String A_XP        = "z2j-a";
 	private final static String L_XP        = "z2j-l";
 	private final static String ALL_XP      = "*";
 	private final static String TAIL_XP     = "*[position() > 1]";
@@ -99,10 +100,26 @@ public class Library implements ILibrary {
 		}
 		return (i > 0);
 	}
+	
+	private String getType(Node doc) throws Exception {
+		String type = "";
+		NodeIterator al = XPathAPI.selectNodeIterator(doc, ALL_XP);
+		Node a = al.nextNode();
+		if (a != null) {
+			if (a.getLocalName().equals(A_XP)) {
+				type = a.getTextContent();
+			} else {
+				if (!a.getLocalName().equals(L_XP)) {
+					type = a.getLocalName();
+				}
+			}
+		}
+		return type;
+	}
 
 	public void extract(Node doc, IDoc dest, IEnvironment env) throws Exception {
 		Node n;
-		String type = getValue(doc, TYPE_XP);
+		String type = getType(doc);
 		Node m = macro.get(type);
 		if (m != null) {
 			Environment e = new Environment(env);
