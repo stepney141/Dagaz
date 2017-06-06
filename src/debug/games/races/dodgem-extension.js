@@ -27,4 +27,23 @@ Dagaz.Model.checkGoals = function(design, board, player) {
   }
 }
 
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  var r = 1;
+  for (var i = 0; i < move.actions.length; i++) {
+      if ((move.actions[i][0] !== null) && (move.actions[i][1] !== null)) {
+           var d = move.actions[i][1][0] - move.actions[i][0][0];
+           if ((board.player == 1) && (d < -1)) {
+                r += 10;
+           }
+           if ((board.player == 2) && (d == 1)) {
+                r += 10;
+           }
+      }
+      if ((move.actions[i][0] !== null) && (move.actions[i][1] === null)) {
+           r += 5;
+      }
+  }
+  return r;
+}
+
 })();

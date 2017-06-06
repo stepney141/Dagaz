@@ -8,6 +8,9 @@ function UctAi(params) {
   if (_.isUndefined(this.params.UCT_COEFF)) {
       this.params.UCT_COEFF = Math.sqrt(2);
   }
+  if (_.isUndefined(this.params.UCT_WEIGHT)) {
+      this.params.UCT_WEIGHT = 0.7;
+  }
   if (_.isUndefined(this.params.MAX_DEEP)) {
       this.params.MAX_DEEP = 100;
   }
@@ -82,24 +85,29 @@ var dump = function(design, board) {
           }
       }
   });
-  return "Player: " + board.player + ", White: " + positions(w) + ", Black: " + positions(b);
+  return "Player: " + board.player + "; P1: " + positions(b) + "; P2: " + positions(w);
 }
 
 UctAi.prototype.simulate = function(ctx, board) {
   var deep = 0;
   while (Date.now() - ctx.timestamp < this.params.AI_FRAME) {
       if (deep > this.params.MAX_DEEP) break;
-      this.generate(ctx, board);
-      if (board.moves.length == 0) {
-//        console.log("Deep: " + deep + ", " + dump(ctx.design, board));
-          return (board.player != ctx.board.player) && !Dagaz.Model.stalemateDraw;
-      }
       var goal = board.checkGoals(ctx.design, ctx.board.player);
       if (goal != 0) {
-//        console.log("Goal: " + goal + ", Deep: " + deep + ", " + dump(ctx.design, board));
-          if ((goal < 0) && (board.player == ctx.board.player)) return true;
-          if ((goal > 0) && (board.player != ctx.board.player)) return true;
-          return false;
+          var r = false;
+          if ((goal > 0) && (board.player != ctx.board.player)) r = true;
+          if (r) {
+              console.log("Goal: " + goal + "; Deep: " + deep + "; " + dump(ctx.design, board));
+          }
+          return r;
+      }
+      this.generate(ctx, board);
+      if (board.moves.length == 0) {
+          var r = (board.player != ctx.board.player) && !Dagaz.Model.stalemateDraw;
+          if (r) {
+              console.log("Player: " + board.player + "; Deep: " + deep + "; " + dump(ctx.design, board));
+          }
+          return r;
       }
       var votes  = 0;
       var childs = _.map(board.moves, function(move) {
@@ -192,14 +200,19 @@ UctAi.prototype.getMove = function(ctx) {
   }
   var mx = null;
   for (var i = 0; i < ctx.childs.length; i++) {
-      var weight = ctx.childs[i].win;
-      if ((mx === null) || (weight > mx)) {
-          mx = weight;
+      var u = 0;
+      if (ctx.childs[i].win > 0) {
+          u = ctx.childs[i].win / ctx.childs[i].all;
+      }
+      var h = this.heuristic(ctx.design, ctx.board, ctx.childs[i].move);
+      var w = this.params.UCT_WEIGHT * u + (1 - this.params.UCT_WEIGHT) * h;
+      if ((mx === null) || (w > mx)) {
+          mx = w;
           ctx.result = ctx.childs[i].move;
       }
+      console.log("Weight: " + w + "; Win = " + ctx.childs[i].win + "; All = " + ctx.childs[i].all + "; Move = " + ctx.childs[i].move.toString());
   }
   if (ctx.result) {
-      console.log("Win = " + ctx.win + ", All = " + ctx.all + ", Init = " + ctx.init + ", Moves = " + ctx.board.moves.length);
       return {
            done: true,
            move: ctx.result,

@@ -218,7 +218,7 @@ App.prototype.exec = function() {
                       Canvas.style.cursor = "default";
                       alert("Draw");
                   } else {
-                      this.board = this.board.apply(this.list.getMoves()[0]);                 
+                      this.board = this.board.apply(result.move);                 
                       this.state = STATE.IDLE;
                       delete this.list;
                       passForced = true;

@@ -23,6 +23,16 @@ Dagaz.Model.checkGoals = function(design, board, player) {
   }
 }
 
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  var r = 1;
+  for (var i = 0; i < move.actions.length; i++) {
+      if ((move.actions[i][0] !== null) && (move.actions[i][1] === null)) {
+           r += 10;
+      }
+  }
+  return r;
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
