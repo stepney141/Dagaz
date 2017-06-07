@@ -195,6 +195,24 @@
    (win-condition (Black) (absolute-config RedDragon    (a1 b1 c1 d1 e1 f1 g1 h1)))
    (win-condition (Black) (absolute-config GreenDragon  (a1 b1 c1 d1 e1 f1 g1 h1)))
    (win-condition (Black) (absolute-config BrownDragon  (a1 b1 c1 d1 e1 f1 g1 h1)))
+
+   (win-condition (White) (absolute-config OrangeSumo (a8 b8 c8 d8 e8 f8 g8 h8)))
+   (win-condition (White) (absolute-config BlueSumo   (a8 b8 c8 d8 e8 f8 g8 h8)))
+   (win-condition (White) (absolute-config PurpleSumo (a8 b8 c8 d8 e8 f8 g8 h8)))
+   (win-condition (White) (absolute-config PinkSumo   (a8 b8 c8 d8 e8 f8 g8 h8)))
+   (win-condition (White) (absolute-config YellowSumo (a8 b8 c8 d8 e8 f8 g8 h8)))
+   (win-condition (White) (absolute-config RedSumo    (a8 b8 c8 d8 e8 f8 g8 h8)))
+   (win-condition (White) (absolute-config GreenSumo  (a8 b8 c8 d8 e8 f8 g8 h8)))
+   (win-condition (White) (absolute-config BrownSumo  (a8 b8 c8 d8 e8 f8 g8 h8)))
+
+   (win-condition (Black) (absolute-config OrangeSumo (a1 b1 c1 d1 e1 f1 g1 h1)))
+   (win-condition (Black) (absolute-config BlueSumo   (a1 b1 c1 d1 e1 f1 g1 h1)))
+   (win-condition (Black) (absolute-config PurpleSumo (a1 b1 c1 d1 e1 f1 g1 h1)))
+   (win-condition (Black) (absolute-config PinkSumo   (a1 b1 c1 d1 e1 f1 g1 h1)))
+   (win-condition (Black) (absolute-config YellowSumo (a1 b1 c1 d1 e1 f1 g1 h1)))
+   (win-condition (Black) (absolute-config RedSumo    (a1 b1 c1 d1 e1 f1 g1 h1)))
+   (win-condition (Black) (absolute-config GreenSumo  (a1 b1 c1 d1 e1 f1 g1 h1)))
+   (win-condition (Black) (absolute-config BrownSumo  (a1 b1 c1 d1 e1 f1 g1 h1)))
 )
 
 (variant

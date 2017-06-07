@@ -489,6 +489,23 @@ Dagaz.Model.BuildDesign = function(design) {
     design.goal(13, "Black", "RedDragon", [56, 57, 58, 59, 60, 61, 62, 63]);
     design.goal(14, "Black", "GreenDragon", [56, 57, 58, 59, 60, 61, 62, 63]);
     design.goal(15, "Black", "BrownDragon", [56, 57, 58, 59, 60, 61, 62, 63]);
+
+    design.goal(16, "White", "OrangeSumo", [0, 1, 2, 3, 4, 5, 6, 7]);
+    design.goal(17, "White", "BlueSumo", [0, 1, 2, 3, 4, 5, 6, 7]);
+    design.goal(18, "White", "PurpleSumo", [0, 1, 2, 3, 4, 5, 6, 7]);
+    design.goal(19, "White", "PinkSumo", [0, 1, 2, 3, 4, 5, 6, 7]);
+    design.goal(20, "White", "YellowSumo", [0, 1, 2, 3, 4, 5, 6, 7]);
+    design.goal(21, "White", "RedSumo", [0, 1, 2, 3, 4, 5, 6, 7]);
+    design.goal(22, "White", "GreenSumo", [0, 1, 2, 3, 4, 5, 6, 7]);
+    design.goal(23, "White", "BrownSumo", [0, 1, 2, 3, 4, 5, 6, 7]);
+    design.goal(24, "Black", "OrangeSumo", [56, 57, 58, 59, 60, 61, 62, 63]);
+    design.goal(25, "Black", "BlueSumo", [56, 57, 58, 59, 60, 61, 62, 63]);
+    design.goal(26, "Black", "PurpleSumo", [56, 57, 58, 59, 60, 61, 62, 63]);
+    design.goal(27, "Black", "PinkSumo", [56, 57, 58, 59, 60, 61, 62, 63]);
+    design.goal(28, "Black", "YellowSumo", [56, 57, 58, 59, 60, 61, 62, 63]);
+    design.goal(29, "Black", "RedSumo", [56, 57, 58, 59, 60, 61, 62, 63]);
+    design.goal(30, "Black", "GreenSumo", [56, 57, 58, 59, 60, 61, 62, 63]);
+    design.goal(31, "Black", "BrownSumo", [56, 57, 58, 59, 60, 61, 62, 63]);
 }
 
 Dagaz.View.configure = function(view) {
