@@ -36,6 +36,8 @@
 	The rules of Tenjiku Shogi were first given in a book called 'Shogi Zushiki', published in 1634.\\
 	(Tenjiku was the Japanese name for India which was considered an 'exotic' land in the 16th century)")
 
+   (option "tenjiku-shogi-extension" true)
+
    (players Black White)
    (turn-order Black White)
 
@@ -934,15 +936,18 @@
 
 (variant
    (title "Tenjiku Shogi")
-;  (default)
+   (default)
    (board-setup
       (White
 	(King 8a)
 	(Queen 9b)
+	(Fire-Demon 7c)
+	(Lion-Hawk 8c)
       )
       (Black
 	(King 9p)
 	(Queen 8o)
+	(Fire-Demon 10n)
       )
    )
 )

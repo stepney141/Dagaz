@@ -16,6 +16,7 @@ var mouseY       = 0;
 var mousePressed = false;
 var hintedPiece  = null;
 var fromPos      = null;
+var deferred     = [];
 
 Dagaz.View.configure = function(view) {}
 
@@ -160,6 +161,16 @@ View2D.prototype.markPositions = function(type, positions) {
 
 View2D.prototype.capturePiece = function(pos, phase) {
   if (!phase) { phase = 1; }
+  _.chain(this.changes)
+   .filter(function(frame) {
+      return !_.isUndefined(frame.from) && !_.isUndefined(frame.to);
+    })
+   .filter(function(frame) {
+      return frame.to == pos;
+    })
+   .each(function(frame) {
+      deferred.push(pos);
+    });
   var ix = posToIx(this, pos);
   if (ix === null) return;
   this.changes.push({
@@ -420,6 +431,20 @@ View2D.prototype.animate = function() {
         isValid = true;
         if (this.controller) {
             this.controller.done();
+        }
+        if (deferred.length > 0) {
+            deferred = _.map(deferred, function(pos) {
+               return posToIx(this, pos);
+            }, this);
+            this.setup = _.chain(_.range(this.setup.length))
+           .filter(function(ix) {
+               return _.indexOf(deferred, ix) < 0;
+            })
+           .map(function(ix) {
+               return this.setup[ix];
+            }, this)
+           .value();
+            deferred = [];
         }
     }
 }
