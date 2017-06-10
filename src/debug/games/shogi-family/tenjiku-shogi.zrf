@@ -42,7 +42,7 @@
    (turn-order Black White)
 
    (board 
-	   (image "Images/board.bmp")
+	   (image "Images/16x16.bmp")
 	   (grid
 	     (start-rectangle 5 5 54 54)
 	     (dimensions
