@@ -47,8 +47,9 @@
 (game
    (title "XiangQi")
 
-   (option "smart moves"      true)
-   (option "animate captures" false)
+   (option "smart moves"       true)
+   (option "animate captures"  false)
+   (option "xiangqi-extension" true)
 
    (move-sound "Audio\Pickup.wav")
    (release-sound "Audio\Pickup.wav")

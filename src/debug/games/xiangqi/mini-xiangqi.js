@@ -23,6 +23,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("smart-moves", "true");
     design.checkVersion("animate-captures", "false");
+    design.checkVersion("xiangqi-extension", "true");
 
     design.addDirection("w");
     design.addDirection("e");
