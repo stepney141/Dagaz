@@ -49,6 +49,7 @@
 
    (option "smart moves"       true)
    (option "animate captures"  false)
+   (option "ko"                situation)
    (option "xiangqi-extension" true)
 
    (move-sound "Audio\Pickup.wav")
