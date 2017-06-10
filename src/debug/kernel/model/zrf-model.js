@@ -881,6 +881,12 @@ ZrfDesign.prototype.navigate = function(player, pos, dir) {
   }
 }
 
+ZrfDesign.prototype.getZone = function(name) {
+  var zone = Dagaz.find(this.zoneNames, name);
+  if (zone < 0) return null;
+  return zone;
+}
+
 ZrfDesign.prototype.addZone = function(name, player, positions) {
   var zone = Dagaz.find(this.zoneNames, name);
   if (zone < 0) {
