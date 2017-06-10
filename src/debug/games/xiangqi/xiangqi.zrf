@@ -1,11 +1,24 @@
 (define step (
   $1 (verify not-friend?)
+  (verify (in-zone? $2))
+  add
+))
+
+(define step-n (
+  n (verify not-friend?)
   add
 ))
 
 (define step-2 (
   $1 (verify empty?)
   $2 (verify not-friend?)
+  add
+))
+
+(define step-e (
+  $1 (verify empty?)
+  $1 (verify not-friend?)
+  (verify (in-zone? $2))
   add
 ))
 
@@ -85,6 +98,24 @@
                     a7 b7 c7 d7 e7 f7 g7 h7 i7
                     a6 b6 c6 d6 e6 f6 g6 h6 i6)
       )
+      (zone
+         (name enemy)
+         (players Black)
+         (positions a1 b1 c1 d1 e1 f1 g1 h1 i1
+                    a2 b2 c2 d2 e2 f2 g2 h2 i2
+                    a3 b3 c3 d3 e3 f3 g3 h3 i3
+                    a4 b4 c4 d4 e4 f4 g4 h4 i4
+                    a5 b5 c5 d5 e5 f5 g5 h5 i5)
+      )
+      (zone
+         (name enemy)
+         (players Red)
+         (positions a10 b10 c10 d10 e10 f10 g10 h10 i10
+                    a9 b9 c9 d9 e9 f9 g9 h9 i9
+                    a8 b8 c8 d8 e8 f8 g8 h8 i8
+                    a7 b7 c7 d7 e7 f7 g7 h7 i7
+                    a6 b6 c6 d6 e6 f6 g6 h6 i6)
+      )
    )
 
    (piece
@@ -93,7 +124,7 @@
       (image Red "images/rsoldier.bmp" 
              Black "images/bsoldier.bmp")
       (moves
-         (step n) (step w) (step e)
+         (step-n) (step w enemy) (step e enemy)
       )
    )
    (piece
@@ -112,7 +143,7 @@
       (image Red "images/relephant.bmp" 
              Black "images/belephant.bmp")
       (moves
-         (step-2 nw nw) (step-2 sw sw) (step-2 ne ne) (step-2 se se)
+         (step-e nw home) (step-e sw home) (step-e ne home) (step-e se home)
       )
    )
    (piece
@@ -139,7 +170,7 @@
       (image Red "images/rmandarin.bmp" 
              Black "images/bmandarin.bmp")
       (moves
-         (step nw) (step sw) (step ne) (step se)
+         (step nw fortress) (step sw fortress) (step ne fortress) (step se fortress)
       )
    )
    (piece
@@ -148,7 +179,7 @@
       (image Red "images/rgeneral.bmp"  
              Black "images/bgeneral.bmp")
       (moves
-         (step n) (step s) (step w) (step e)
+         (step n fortress) (step s fortress) (step w fortress) (step e fortress)
       )
    )
 
@@ -215,6 +246,20 @@
       (zone
          (name home)
          (players Black)
+         (positions a4 b4 c4 d4 e4 f4 g4
+                    a5 b5 c5 d5 e5 f5 g5
+                    a6 b6 c6 d6 e6 f6 g6)
+      )
+      (zone
+         (name enemy)
+         (players Black)
+         (positions a1 b1 c1 d1 e1 f1 g1
+                    a2 b2 c2 d2 e2 f2 g2
+                    a3 b3 c4 d3 e3 f3 g3)
+      )
+      (zone
+         (name enemy)
+         (players Red)
          (positions a4 b4 c4 d4 e4 f4 g4
                     a5 b5 c5 d5 e5 f5 g5
                     a6 b6 c6 d6 e6 f6 g6)
