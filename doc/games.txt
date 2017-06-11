@@ -88,7 +88,7 @@
     - Hiashatar
     - Advanced Omega Chess
     - Таврели
-  - Platform Chess
+  > Platform Chess
   - Morph Chess
   - Philosophers Chess
   - Caissa

@@ -51,5 +51,5 @@
     (White (Knight d4))
   )
 
-   (loss-condition (White) stalemated)
+  (loss-condition (White) stalemated)
 )
