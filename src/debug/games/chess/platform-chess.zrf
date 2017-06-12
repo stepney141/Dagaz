@@ -1,3 +1,9 @@
+(define check-platform
+  mark down
+  (verify not-empty?)
+  back
+)
+
 (define platform-step (
   $1 (verify empty?)
   add
@@ -6,32 +12,38 @@
 (define pawn-shift (
   $1
   (if empty?
+      (check-platform)
       add
       $1
   )
   (verify empty?)
+  (check-platform)
   add
 ))
 
 (define pawn-step (
   $1 (verify enemy?)
+  (check-platform)
   add
 ))
 
 (define step (
   $1 (verify not-friend?)
+  (check-platform)
   add
 ))
 
 (define leap (
   $1 $2 (verify not-friend?)
+  (check-platform)
   add
 ))
 
 (define slide (
   $1 
-  (while empty? add $1)
+  (while empty? (check-platform) add $1)
   (verify not-friend?)
+  (check-platform)
   add
 ))
 
