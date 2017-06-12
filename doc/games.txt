@@ -1,7 +1,6 @@
 ﻿- Stalemate games
   * Lewthwaite's game (4 variants)
   * Hunt
-  * Maharaja
   - Checkers-like games
     > Bagh Chal
     - Fox and Geese (4 variants)
@@ -48,8 +47,10 @@
   - Gala
   - Elementals
 - Elimination games
-  - Atari Go
+  * Maharaja
   * 4 Fields Gonu
+  > EleHunt
+  - Atari Go
   - Seega
   - High Jump
   > Makyek
