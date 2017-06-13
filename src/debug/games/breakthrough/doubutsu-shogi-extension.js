@@ -8,11 +8,32 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+var checkGoals = Dagaz.Model.checkGoals;
+
+Dagaz.Model.checkGoals = function(design, board, player) {
+  var kings = _.chain(design.allPositions())
+   .filter(function(pos) {
+       var piece = board.getPiece(pos);
+       if (piece === null) return false;
+       return (piece.type == 0) && (piece.player != player);
+    })
+   .value();
+  if (kings.length == 0) {
+      return 1;
+  } else {
+      return checkGoals(design, board, player);
+  }
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
-  _.each(board.moves, function(move) {
+  _.chain(board.moves)
+   .filter(function(move) {
+      return move.actions == 1;
+    })
+   .each(function(move) {
       var fp = move.actions[0][0][0];
       var tp = move.actions[0][1][0];
       var piece = board.getPiece(fp);

@@ -25,7 +25,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("highlight-goals", "false");
     design.checkVersion("ko", "situation");
-//  design.checkVersion("doubutsu-shogi-extension", "true");
+    design.checkVersion("doubutsu-shogi-extension", "true");
 
     design.addDirection("nx");
     design.addDirection("n");
@@ -40,7 +40,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addDirection("tn");
 
     design.addPlayer("Green", [0, 2, 1, 4, 3, 6, 5, 8, 7, 9, 10]);
-    design.addPlayer("Red", [0, 2, 1, 1, 2, 3, 4, 5, 6, 10, 7]);
+    design.addPlayer("Red", [0, 2, 1, 3, 4, 5, 6, 7, 8, 10, 9]);
 
     design.addPosition("r4", [0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5]);
     design.addPosition("a4", [16, 0, 5, 1, 0, 0, 0, 0, 6, 3, -1]);
@@ -130,6 +130,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(1, ZRF.FUNCTION,	24);	// from
+    design.addCommand(1, ZRF.IN_ZONE,	0);	// board-zone
+    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
     design.addCommand(1, ZRF.PARAM,	0);	// $1
     design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(1, ZRF.FUNCTION,	3);	// friend?
@@ -195,6 +197,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(1, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(2, ZRF.FUNCTION,	24);	// from
+    design.addCommand(2, ZRF.IN_ZONE,	0);	// board-zone
+    design.addCommand(2, ZRF.FUNCTION,	0);	// not
+    design.addCommand(2, ZRF.FUNCTION,	20);	// verify
     design.addCommand(2, ZRF.PARAM,	0);	// $1
     design.addCommand(2, ZRF.FUNCTION,	21);	// position
     design.addCommand(2, ZRF.ON_BOARD_DIR,	0);	// name

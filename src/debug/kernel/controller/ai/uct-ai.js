@@ -30,7 +30,16 @@ Dagaz.AI.findBot = function(type, params, parent) {
 }
 
 Dagaz.AI.heuristic = function(ai, design, board, move) {
-  return 1;
+  var r = 1;
+  for (var i = 0; i < move.actions.length; i++) {
+       if ((move.actions[i][0] !== null) && (move.actions[i][1] !== null)) {
+           var piece = board.getPiece(move.actions[i][1][0]);
+           if (piece !== null) {
+               r += 9;
+           }
+       }
+  }
+  return r;
 }
 
 UctAi.prototype.heuristic = function(design, board, move) {

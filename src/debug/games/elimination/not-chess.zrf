@@ -68,3 +68,31 @@
 
   (loss-condition (White Black) stalemated)
 )
+
+(variant
+  (title "Not Chess (easy)")
+  (board-setup
+    (White 
+         (Man a1 c1 e1 g1)
+         (Knight b1 d1 f1 h1)
+    )
+    (Black
+         (Man b8 d8 f8)
+         (Knight c8 e8 g8)
+    )
+  )
+)
+
+(variant
+  (title "Not Chess (hard)")
+  (board-setup
+    (White 
+         (Man c1 e1 g1)
+         (Knight b1 d1 f1)
+    )
+    (Black
+         (Man b8 d8 f8 h8)
+         (Knight a8 c8 e8 g8)
+    )
+  )
+)

@@ -109,7 +109,7 @@
         (zone (name promotion-zone) (players Red)
               (positions a1 b1 c1)
         )
-        (symmetry Red (n s) (s n) (th tn))
+        (symmetry Red (n s) (s n) (w w) (e e) (nw nw) (sw sw) (ne ne) (se se) (th tn) (tn th))
   )
 
   (piece

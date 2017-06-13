@@ -24,7 +24,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("zrf", "3.0");
     design.checkVersion("highlight-goals", "false");
     design.checkVersion("show-hints", "false");
-    design.checkVersion("ko", "situation");
+    design.checkVersion("ko", "false");
 
     design.addDirection("w");
     design.addDirection("e");

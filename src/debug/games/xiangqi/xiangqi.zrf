@@ -4,8 +4,8 @@
   add
 ))
 
-(define step-n (
-  n (verify not-friend?)
+(define step-pawn (
+  $1 (verify not-friend?)
   add
 ))
 
@@ -126,7 +126,7 @@
       (image Red "images/rsoldier.bmp" 
              Black "images/bsoldier.bmp")
       (moves
-         (step-n) (step w enemy) (step e enemy)
+         (step-pawn n) (step w enemy) (step e enemy)
       )
    )
    (piece
