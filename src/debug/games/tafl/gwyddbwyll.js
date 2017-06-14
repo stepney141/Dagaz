@@ -139,8 +139,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("White", "Man", 25);
     design.setup("White", "Man", 31);
     design.setup("White", "Man", 17);
-    design.setup("White", "Man", 38);
-    design.setup("White", "Man", 10);
 
     design.goal(0, "White", "King", [42, 0, 48, 6]);
 }

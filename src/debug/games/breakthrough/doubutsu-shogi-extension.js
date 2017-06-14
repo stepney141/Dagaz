@@ -31,7 +31,7 @@ Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
   _.chain(board.moves)
    .filter(function(move) {
-      return move.actions == 1;
+      return move.actions.length == 1;
     })
    .each(function(move) {
       var fp = move.actions[0][0][0];

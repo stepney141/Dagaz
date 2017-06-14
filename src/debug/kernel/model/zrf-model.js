@@ -872,7 +872,7 @@ ZrfDesign.prototype.addPosition = function(name, links) {
 
 ZrfDesign.prototype.findDirection = function(from, to) {
   if (from >= this.positions.length) return null;
-  var dir = Dagaz.find(this.positions[from], to);
+  var dir = Dagaz.find(this.positions[from], to - from);
   if (dir < 0) return null;
   return dir;
 }
