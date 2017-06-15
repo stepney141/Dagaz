@@ -34,7 +34,7 @@
   * Shafran's game
   * Джунгли
   * Kamisado
-  * Доджем
+  > Prairie or Trespass
   > Neutron
   - Gauntlet
   > Tafl family
@@ -73,10 +73,8 @@
   - Andalusia
   - Kantorai
   - Xiangqi Family
-    - Xiangqi
-    - Mini Xiang
-    - Mini Xiangqi
-    - Xiangqi-42
+    > Xiangqi
+    > Xiangqi-42 (Mini Xiangqi)
     - Janggi
     - Gwangsanghui
     - Xiang Hex
@@ -131,7 +129,6 @@
   - Quantum tic-tac-toe
   - Rithmomachy
 - Connect Games
-  - Shannon's game
   - Hex
   - Gonnect
 - Territory games
@@ -147,6 +144,8 @@
   - MarGo
   - War Go
 - Гонки
+  * Доджем
+  > Agon
   > Toads and Frogs
   > Grensholm
   - Шен

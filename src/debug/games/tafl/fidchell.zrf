@@ -1,6 +1,6 @@
 (define step (
   $1 (verify empty?)
-  (verify (not-in-zone? throne))
+; (verify (not-in-zone? throne))
   (verify (not-in-zone? goal))
   add
 ))
