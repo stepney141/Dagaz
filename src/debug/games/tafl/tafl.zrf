@@ -309,6 +309,7 @@
   (title "Alea Evangeli")
   (default)
 
+  (players White Black)
   (turn-order White Black)
 
   (board

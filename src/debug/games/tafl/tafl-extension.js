@@ -73,7 +73,7 @@ var captured = function(design, board, pos) {
 var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {
-  if ((player != 1) && board.parent) {
+  if ((design.playerNames[player] != "Black") && board.parent) {
       var kings = _.chain(design.allPositions())
        .filter(function(pos) {
            var piece = board.getPiece(pos);
