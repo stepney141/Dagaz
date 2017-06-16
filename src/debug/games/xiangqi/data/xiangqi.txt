@@ -1,3 +1,6 @@
+b3b10 a10b10
+h3h10 i10h10
+
 b3e3 b10c8 b1c3 a10b10 g4g5 c7c6 h1g3 h10g8 a1a2
 b3e3 b10c8 b1c3 a10b10 g4g5 c7c6 h1g3 h10g8 h3h5
 b3e3 b10c8 b1c3 a10b10 g4g5 c7c6 h1g3 h10g8 h3i3
