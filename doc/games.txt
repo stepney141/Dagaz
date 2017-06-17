@@ -69,7 +69,7 @@
     - Luzhanqi
     - Banqi
 - Checkmate games
-  - Knight's Court
+  > Knight's Court
   - Andalusia
   - Kantorai
   - Xiangqi Family
