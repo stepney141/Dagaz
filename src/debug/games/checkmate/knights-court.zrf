@@ -51,7 +51,7 @@
   (board
      (image "images/knights-court/board.bmp")
      (grid
-         (start-rectangle 2 2 70 70)
+         (start-rectangle 0 0 68 68)
          (dimensions
            ("x/a/b/c/y" (68 0)) ; files
            ("3/2/1" (0 68)) ; ranks
