@@ -8,7 +8,7 @@
     - Алькуэрк
     - Dablot
     - Choko
-    - Konane
+    > Konane
     - Фанорона
     - Bushka
   - Checkers family
@@ -36,7 +36,7 @@
   * Kamisado
   > Prairie or Trespass
   > Neutron
-  - Gauntlet
+  > Gauntlet
   > Tafl family
   - Italian Damone
   * Archimedes
