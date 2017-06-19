@@ -1,5 +1,5 @@
 (define to-reserve
-  (if enemy?
+  (if (and enemy? (not-piece? Knight))
       cascade
       a1 wh
       (while not-empty? wh)
@@ -38,7 +38,9 @@
   (title "Knight's Court")
   (history "Copyright (c) 2000 Jason D. Wittman.")
 
-  (option "animate captures"   false)
+  (option "animate captures" false)
+  (option "show hints" false)
+  (option "knights-court-extension" true)
 
   (players White Black)
   (turn-order White Black)
@@ -69,7 +71,7 @@
      (links nw (c2 b3) (b2 a3) (c1 b2) (b1 a2))
      (links nx (a1 a2) (a2 a3) (a3 b1) (b1 b2) (b2 b3) (b3 c1) (c1 c2) (c2 c3)
                (x1 a1) (x2 a1) (x3 a1) (y1 a1) (y2 a1) (y3 a1))
-    (symmetry Black (wh wb))
+    (symmetry Black (wh wb) (wb wh) (n n) (s s) (w w) (e e) (nw nw) (ne ne) (sw sw) (se se) (nx nx))
     (zone (name reserve) (players White Black)
           (positions x1 x2 x3 y1 y2 y3)
     )

@@ -38,6 +38,9 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
                r += 9;
            }
        }
+       if ((move.actions[i][0] !== null) && (move.actions[i][1] == null)) {
+           r += 9;
+       }
   }
   return r;
 }

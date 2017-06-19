@@ -32,6 +32,7 @@
   (history "Copyright (c) 1980 Phillip L. Leduc.")
 
   (option "animate captures" false)
+  (option "highlight goals"  false)
 
   (players White Black)
   (turn-order White Black)
@@ -356,7 +357,6 @@
 
 (variant
   (title "Gauntlet (8x7)")
-  (default)
 
   (board
     (image "images/gauntlet/8x7.bmp")
@@ -387,7 +387,7 @@
 )
 
 (variant
-  (title "Gauntlet (7x6 easy)")
+  (title "Gauntlet (7x6)")
 
   (board
     (image "images/gauntlet/7x6.bmp")
@@ -417,7 +417,7 @@
 )
 
 (variant
-  (title "Gauntlet (6x5 easy)")
+  (title "Gauntlet (6x5)")
 
   (board
     (image "images/gauntlet/6x5.bmp")
@@ -446,7 +446,7 @@
 )
 
 (variant
-  (title "Gauntlet (5x4 easy)")
+  (title "Gauntlet (5x4)")
 
   (board
     (image "images/gauntlet/5x4.bmp")

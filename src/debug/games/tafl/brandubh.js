@@ -93,6 +93,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(0, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(0, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(0, ZRF.IN_ZONE,	0);	// throne
+    design.addCommand(0, ZRF.FUNCTION,	0);	// not
+    design.addCommand(0, ZRF.FUNCTION,	20);	// verify
     design.addCommand(0, ZRF.IN_ZONE,	1);	// goal
     design.addCommand(0, ZRF.FUNCTION,	0);	// not
     design.addCommand(0, ZRF.FUNCTION,	20);	// verify
