@@ -24,6 +24,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("zrf", "3.0");
     design.checkVersion("animate-captures", "false");
     design.checkVersion("highlight-goals", "false");
+    design.checkVersion("show-hints", "false");
     design.checkVersion("ko", "situation");
     design.checkVersion("doubutsu-shogi-extension", "true");
 
@@ -217,7 +218,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(2, ZRF.FUNCTION,	28);	// end
 
 
-    design.addPiece("King", 0);
+    design.addPiece("King", 0, 0);
     design.addMove(0, 0, [1, 9, 9], 0);
     design.addMove(0, 0, [2, 9, 9], 0);
     design.addMove(0, 0, [3, 9, 9], 0);
@@ -227,25 +228,25 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 0, [5, 9, 9], 0);
     design.addMove(0, 0, [8, 9, 9], 0);
 
-    design.addPiece("Za", 1);
+    design.addPiece("Za", 1, 1);
     design.addMove(1, 1, [1, 9, 9], 0);
     design.addMove(1, 2, [16, 0], 0);
 
-    design.addPiece("Sang", 2);
+    design.addPiece("Sang", 2, 4);
     design.addMove(2, 0, [7, 9, 9], 0);
     design.addMove(2, 0, [6, 9, 9], 0);
     design.addMove(2, 0, [5, 9, 9], 0);
     design.addMove(2, 0, [8, 9, 9], 0);
     design.addMove(2, 2, [16, 0], 0);
 
-    design.addPiece("Jang", 3);
+    design.addPiece("Jang", 3, 6);
     design.addMove(3, 0, [1, 9, 9], 0);
     design.addMove(3, 0, [2, 9, 9], 0);
     design.addMove(3, 0, [3, 9, 9], 0);
     design.addMove(3, 0, [4, 9, 9], 0);
     design.addMove(3, 2, [16, 0], 0);
 
-    design.addPiece("Hu", 4);
+    design.addPiece("Hu", 4, 7);
     design.addMove(4, 0, [1, 9, 9], 0);
     design.addMove(4, 0, [2, 9, 9], 0);
     design.addMove(4, 0, [3, 9, 9], 0);

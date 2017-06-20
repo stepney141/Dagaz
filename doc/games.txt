@@ -45,7 +45,7 @@
   > Ордо
 - Control games
   - Asalto
-  - Gala
+  > Gala
   - Elementals
 - Elimination games
   * Maharaja
