@@ -23,6 +23,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "1");
     design.checkVersion("zrf", "3.0");
     design.checkVersion("highlight-goals", "false");
+    design.checkVersion("show-hints", "false");
     design.checkVersion("jungle-extension", "strict");
     design.checkVersion("ko", "situation");
 
@@ -152,35 +153,35 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(2, ZRF.FUNCTION,	28);	// end
 
 
-    design.addPiece("Rat", 0);
+    design.addPiece("Rat", 0, 1);
     design.addAttribute(0, 0, 1);
     design.addMove(0, 0, [3], 0);
     design.addMove(0, 0, [2], 0);
     design.addMove(0, 0, [0], 0);
     design.addMove(0, 0, [1], 0);
 
-    design.addPiece("Cat", 1);
+    design.addPiece("Cat", 1, 2);
     design.addAttribute(1, 0, 2);
     design.addMove(1, 1, [3], 0);
     design.addMove(1, 1, [2], 0);
     design.addMove(1, 1, [0], 0);
     design.addMove(1, 1, [1], 0);
 
-    design.addPiece("Dog", 2);
+    design.addPiece("Dog", 2, 3);
     design.addAttribute(2, 0, 3);
     design.addMove(2, 1, [3], 0);
     design.addMove(2, 1, [2], 0);
     design.addMove(2, 1, [0], 0);
     design.addMove(2, 1, [1], 0);
 
-    design.addPiece("Fox", 3);
+    design.addPiece("Fox", 3, 4);
     design.addAttribute(3, 0, 4);
     design.addMove(3, 1, [3], 0);
     design.addMove(3, 1, [2], 0);
     design.addMove(3, 1, [0], 0);
     design.addMove(3, 1, [1], 0);
 
-    design.addPiece("Panther", 4);
+    design.addPiece("Panther", 4, 5);
     design.addAttribute(4, 0, 5);
     design.addMove(4, 1, [3], 0);
     design.addMove(4, 1, [2], 0);
@@ -189,7 +190,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(4, 2, [0, 0], 0);
     design.addMove(4, 2, [1, 1], 0);
 
-    design.addPiece("Tiger", 5);
+    design.addPiece("Tiger", 5, 5);
     design.addAttribute(5, 0, 7);
     design.addMove(5, 1, [3], 0);
     design.addMove(5, 1, [2], 0);
@@ -200,7 +201,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(5, 2, [0, 0], 0);
     design.addMove(5, 2, [1, 1], 0);
 
-    design.addPiece("Lion", 6);
+    design.addPiece("Lion", 6, 7);
     design.addAttribute(6, 0, 7);
     design.addMove(6, 1, [3], 0);
     design.addMove(6, 1, [2], 0);
@@ -211,7 +212,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(6, 2, [0, 0], 0);
     design.addMove(6, 2, [1, 1], 0);
 
-    design.addPiece("Elephant", 7);
+    design.addPiece("Elephant", 7, 8);
     design.addAttribute(7, 0, 8);
     design.addMove(7, 1, [3], 0);
     design.addMove(7, 1, [2], 0);

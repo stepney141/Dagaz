@@ -18,6 +18,21 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+Dagaz.AI.eval = function(design, params, board, player) {
+  var r = 0;
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if (piece !== null) {
+          if (piece.player != player) {
+             r--;
+          } else {
+             r++;
+          }
+      }
+  });
+  return r;
+}
+
 var isLast = function(design, board, pos, name) {
   var dir = design.getDirection(name);
   if (dir === null) return false;

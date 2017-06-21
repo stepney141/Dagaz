@@ -8,6 +8,31 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+Dagaz.AI.eval = function(design, params, board, player) {
+  var r = 0;
+  var soldier = design.getPieceType("Soldier");
+  var cannon  = design.getPieceType("Cannon");
+  var enemy   = design.getZone("enemy");
+  positions = _.filter(design.allPositions(), function(pos) {
+      return board.getPiece(pos) !== null;
+  });
+  _.each(positions, function(pos) {
+      var piece = board.getPiece(pos);
+      var v = design.price[piece.type];
+      if ((piece.type == cannon) && (positions.length > 16)) {
+          v++;
+      }
+      if ((piece.type == soldier) && design.inZone(enemy, piece.player, pos)) {
+          v++;
+      }
+      if (piece.player != player) {
+         v = -v;
+      }
+      r += v;
+  });
+  return r;
+}
+
 var findGeneral = function(design, board, player) {
   var general   = design.getPieceType("General");
   var fortress  = design.getZone("fortress");
@@ -77,7 +102,7 @@ Dagaz.Model.CheckInvariants = function(board) {
           if (checkDirection(design, b, board.player, pos, n, soldier, chariot, general, cannon) ||
               checkDirection(design, b, board.player, pos, w, soldier, chariot, general, cannon) ||
               checkDirection(design, b, board.player, pos, e, soldier, chariot, general, cannon) ||
-              checkDirection(design, b, board.player, pos, s, soldier, chariot, general, cannon) ||
+              checkDirection(design, b, board.player, pos, s, null, chariot, general, cannon) ||
               checkHorse(design, b, board.player, pos, nw, n, horse) ||
               checkHorse(design, b, board.player, pos, nw, w, horse) ||
               checkHorse(design, b, board.player, pos, ne, n, horse) ||

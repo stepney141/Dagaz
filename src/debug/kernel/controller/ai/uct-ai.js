@@ -73,6 +73,28 @@ UctAi.prototype.generate = function(ctx, board) {
   }
 }
 
+Dagaz.AI.isForced = function(ai, design, board, move) {
+  var r = false;
+  _.each(move.actions, function(action) {
+      if ((action[0] !== null) && (action[1] !== null)) {
+          if (board.getPiece(action[1][0]) !== null) {
+              r = true;
+          }
+      }
+  });
+  return r;
+}
+
+UctAi.prototype.getForcedMoves = function(ctx, board) {
+  var moves = Dagaz.AI.generate(ctx, board);
+  if (moves.length < 2) {
+      return moves;
+  }
+  return _.filter(moves, function(move) {
+     return Dagaz.AI.isForced(this, ctx.design, board, move);
+  }, this);
+}
+
 UctAi.prototype.uct = function(win, count, all) {
   if ((count > 0) && (all > 0)) {
       return Math.sqrt(Math.log(all) / count) * this.params.UCT_COEFF +
@@ -185,6 +207,15 @@ UctAi.prototype.simulate = function(ctx, node, eval) {
       deep++;
   }
   if (Dagaz.AI.eval) {
+      var moves = this.getForcedMoves(ctx, board);
+      while (moves.length > 0) {
+          var ix = 0;
+          if (moves.length > 1) {
+             ix = this.params.rand(0, moves.length - 1);
+          }
+          board = board.apply(moves[ix]);
+          moves = this.getForcedMoves(ctx, board);
+      }
       var e = Dagaz.AI.eval(ctx.design, this.params, board, ctx.board.player);
       if (e < eval) {
           node.loss++;
