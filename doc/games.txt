@@ -40,7 +40,7 @@
   > Tafl family
   - Italian Damone
   * Archimedes
-  > Doubutsu Shogi
+  * Doubutsu Shogi
   - Arimaa
   > Ордо
 - Control games
@@ -60,7 +60,7 @@
   > Евклид (варианты с составными ходами и захватом короля)
   > Abalone
   - Walhall
-  > NotChess
+  * NotChess
   - Cheskers
   - Shatra
   - Yonin Shogi
@@ -69,12 +69,12 @@
     - Luzhanqi
     - Banqi
 - Checkmate games
-  > Knight's Court
+  * Knight's Court
   - Andalusia
   - Kantorai
   - Xiangqi Family
-    > Xiangqi
-    > Xiangqi-42 (Mini Xiangqi)
+    * Xiangqi
+    * Xiangqi-42 (Mini Xiangqi)
     - Janggi
     - Gwangsanghui
     - Xiang Hex
@@ -97,7 +97,7 @@
   - Шабел
   - Shogi Family
     - Shogi
-    - Goro goro shogi
+    > Goro goro shogi
     - Mini Shogi
     - Micro Shogi
     - Kyoto Shogi
