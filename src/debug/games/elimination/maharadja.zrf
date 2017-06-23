@@ -2,6 +2,7 @@
   $1
   (if empty?
       add
+      (verify (in-zone? third-rank))
       $1
   )
   (verify empty?)
@@ -27,6 +28,27 @@
   $1 
   (while empty? add $1)
   (verify not-friend?)
+  add
+))
+
+(define O-O (
+  $1 (verify empty?)
+  $1 (verify empty?)
+  to
+  $1 (verify friend?) (verify (piece? Rook))
+  cascade
+  $2 $2
+  add
+))
+
+(define O-O-O (
+  $1 (verify empty?)
+  $1 (verify empty?)
+  $1 (verify empty?)
+  to
+  $1 (verify friend?) (verify (piece? Rook))
+  cascade
+  $2 $2
   add
 ))
 
@@ -56,6 +78,12 @@
               (n 0 -1) (s 0 1) (e 1 0) (w -1 0)
               (nw -1 -1) (sw -1 1) (ne 1 -1) (se 1 1)
          )
+     )
+     (zone (name third-rank) (players White)
+           (positions a3 b3 c3 d3 e3 f3 g3 h3)
+     )
+     (zone (name third-rank) (players Black)
+           (positions a6 b6 c6 d6 e6 f6 g6 h6)
      )
   )
 
@@ -102,6 +130,7 @@
      (moves
          (step n) (step s) (step w) (step e)
          (step nw) (step sw) (step ne) (step se)
+         (O-O e w) (O-O-O w e)
      )
   )
   (piece

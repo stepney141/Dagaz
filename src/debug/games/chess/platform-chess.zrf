@@ -1,3 +1,8 @@
+(define boom (
+  capture
+  add
+))
+
 (define check-platform
   mark down
   (verify not-empty?)
@@ -14,6 +19,7 @@
   (if empty?
       (check-platform)
       add
+      (verify (in-zone? third-rank))
       $1
   )
   (verify empty?)
@@ -24,6 +30,18 @@
 (define pawn-step (
   $1 (verify enemy?)
   (check-platform)
+  add
+))
+
+(define en-passant (
+  $1
+  (verify enemy?)
+  (verify last-to?)
+  (verify (or (piece? Pawn) (piece? Bomb)))
+  capture
+  n mark n
+  (verify last-from?)
+  back
   add
 ))
 
@@ -44,6 +62,27 @@
   (while empty? (check-platform) add $1)
   (verify not-friend?)
   (check-platform)
+  add
+))
+
+(define O-O (
+  $1 (verify empty?)
+  $1 (verify empty?)
+  to
+  $1 (verify friend?) (verify (piece? Rook))
+  cascade
+  $2 $2
+  add
+))
+
+(define O-O-O (
+  $1 (verify empty?)
+  $1 (verify empty?)
+  $1 (verify empty?)
+  to
+  $1 (verify friend?) (verify (piece? Rook))
+  cascade
+  $2 $2
   add
 ))
 
@@ -120,6 +159,13 @@
          (g5 dc) (g6 dc) (h5 dc) (h6 dc)
          (g7 dd) (g8 dd) (h7 dd) (h8 dd)
      )
+     (symmetry Black (n s) (s n) (nw sw) (sw nw) (ne se) (se ne) (w w) (e e) (up up) (down down))
+     (zone (name third-rank) (players White)
+           (positions a3 b3 c3 d3 e3 f3 g3 h3)
+     )
+     (zone (name third-rank) (players Black)
+           (positions a6 b6 c6 d6 e6 f6 g6 h6)
+     )
   )
 
   (piece
@@ -136,6 +182,15 @@
             Black "images/bpawn.bmp")
      (moves
          (pawn-shift n) (pawn-step nw) (pawn-step ne)
+         (en-passant e) (en-passant w)
+     )
+  )
+  (piece
+     (name Bomb)
+     (image White "images/wbomb.bmp"
+            Black "images/bbomb.bmp")
+     (moves
+         (pawn-shift n) (boom)
      )
   )
   (piece
@@ -179,6 +234,7 @@
      (moves
          (step n) (step s) (step w) (step e)
          (step nw) (step sw) (step ne) (step se)
+         (O-O e w) (O-O-O w e)
      )
   )
 

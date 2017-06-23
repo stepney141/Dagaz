@@ -15,14 +15,14 @@ Dagaz.Model.CheckInvariants = function(board) {
        var to   = move.actions[0][1][0];
        var dir  = design.findDirection(from, to);
        if (dir !== null) {
-           var d = design.navigate(board.player, from, down);
-           var p = design.navigate(board.player, from, up);
+           var d = design.navigate(1, from, down);
+           var p = design.navigate(1, from, up);
            while ((d === null) && (p !== null)) {
                var piece = board.getPiece(p);
                if (piece !== null) {
-                   var t = design.navigate(board.player, p, dir);
+                   var t = design.navigate(1, p, dir);
                    if (t !== null) {
-                       t = design.navigate(board.player, t, dir);
+                       t = design.navigate(1, t, dir);
                    }
                    if (t !== null) {
                        move.movePiece(p, t, piece);
