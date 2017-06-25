@@ -2,16 +2,23 @@
   $1 add
 ))
 
+(define check-down
+  mark down
+  (verify empty?)
+  back
+)
+
 (define leap (
   $1 $2 (verify empty?)
-  add
+  (check-down)
+ add
 ))
 
 (define shaman-step (
   $1 (verify empty?)
-  add
+  (check-down) add
   $1 (verify empty?)
-  add
+  (check-down) add
 ))
 
 (game

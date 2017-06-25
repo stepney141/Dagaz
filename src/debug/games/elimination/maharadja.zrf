@@ -44,11 +44,11 @@
 (define O-O-O (
   $1 (verify empty?)
   $1 (verify empty?)
-  $1 (verify empty?)
   to
+  $1 (verify empty?)
   $1 (verify friend?) (verify (piece? Rook))
   cascade
-  $2 $2
+  $2 $2 $2
   add
 ))
 

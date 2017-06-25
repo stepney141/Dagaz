@@ -78,11 +78,11 @@
 (define O-O-O (
   $1 (verify empty?)
   $1 (verify empty?)
-  $1 (verify empty?)
   to
+  $1 (verify empty?)
   $1 (verify friend?) (verify (piece? Rook))
   cascade
-  $2 $2
+  $2 $2 $2
   add
 ))
 
@@ -165,6 +165,12 @@
      )
      (zone (name third-rank) (players Black)
            (positions a6 b6 c6 d6 e6 f6 g6 h6)
+     )
+     (zone (name last-rank) (players White)
+           (positions a8 b8 c8 d8 e8 f8 g8 h8)
+     )
+     (zone (name last-rank) (players Black)
+           (positions a1 b1 c1 d1 e1 f1 g1 h1)
      )
   )
 
