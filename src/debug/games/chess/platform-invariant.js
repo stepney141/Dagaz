@@ -115,7 +115,7 @@ var changePieces = function(design, board, move) {
       if (action[1] == null) return;
       var piece = board.getPiece(action[0][0]);
       if (piece !== null) {
-          if ((piece.type == pawn) && (design.inZone(zone, board.player, action[1][0])) {
+          if ((piece.type == pawn) && design.inZone(zone, board.player, action[1][0])) {
                piece = piece.promote(queen);
           }
           piece = piece.setValue(0, true);
@@ -136,8 +136,8 @@ Dagaz.Model.CheckInvariants = function(board) {
       if (move.actions.length == 2) {
           var k = getPiece(board, move.actions[0]);
           var r = getPiece(board, move.actions[1]);
-          if ((k.type == king) &&
-              (r.type == rook)) {
+          if ((k !== null) && (k.type == king) &&
+              (r !== null) && (r.type == rook)) {
               if (k.getValue(0) || r.getValue(0)) {
                   move.failed = true;
               }

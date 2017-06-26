@@ -1,7 +1,7 @@
 (function() {
 
 var checkVersion = Dagaz.Model.checkVersion;
-var percent = 10;
+var percent = 15;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
   if (name == "platform-setup") {

@@ -120,6 +120,8 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addZone("third-rank", 1, [56, 57, 58, 59, 60, 61, 62, 63]);
     design.addZone("third-rank", 2, [32, 33, 34, 35, 36, 37, 38, 39]);
+    design.addZone("last-rank", 1, [16, 17, 18, 19, 20, 21, 22, 23]);
+    design.addZone("last-rank", 2, [72, 73, 74, 75, 76, 77, 78, 79]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
@@ -310,11 +312,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(9, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(9, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(9, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(9, ZRF.FUNCTION,	25);	// to
     design.addCommand(9, ZRF.PARAM,	2);	// $3
     design.addCommand(9, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(9, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(9, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(9, ZRF.FUNCTION,	25);	// to
     design.addCommand(9, ZRF.PARAM,	3);	// $4
     design.addCommand(9, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(9, ZRF.FUNCTION,	3);	// friend?
@@ -326,6 +328,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(9, ZRF.PARAM,	4);	// $5
     design.addCommand(9, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(9, ZRF.PARAM,	5);	// $6
+    design.addCommand(9, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(9, ZRF.PARAM,	6);	// $7
     design.addCommand(9, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(9, ZRF.FUNCTION,	25);	// to
     design.addCommand(9, ZRF.FUNCTION,	28);	// end
@@ -390,7 +394,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(7, 7, [4, 9], 0);
     design.addMove(7, 7, [5, 9], 0);
     design.addMove(7, 8, [1, 1, 1, 0, 0], 0);
-    design.addMove(7, 9, [0, 0, 0, 0, 1, 1], 0);
+    design.addMove(7, 9, [0, 0, 0, 0, 1, 1, 1], 0);
 
     design.setup("White", "Platform", 8);
     design.setup("White", "Platform", 12);
@@ -398,7 +402,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("White", "Platform", 14);
     design.setup("White", "Platform", 15);
     design.setup("White", "Platform", 11);
-    design.setup("White", "Bomb", 64);
+    design.setup("White", "Pawn", 64);
     design.setup("White", "Pawn", 65);
     design.setup("White", "Pawn", 66);
     design.setup("White", "Pawn", 67);

@@ -202,11 +202,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(6, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(6, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(6, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(6, ZRF.FUNCTION,	25);	// to
     design.addCommand(6, ZRF.PARAM,	2);	// $3
     design.addCommand(6, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(6, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(6, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(6, ZRF.FUNCTION,	25);	// to
     design.addCommand(6, ZRF.PARAM,	3);	// $4
     design.addCommand(6, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(6, ZRF.FUNCTION,	3);	// friend?
@@ -218,6 +218,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(6, ZRF.PARAM,	4);	// $5
     design.addCommand(6, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(6, ZRF.PARAM,	5);	// $6
+    design.addCommand(6, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(6, ZRF.PARAM,	6);	// $7
     design.addCommand(6, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(6, ZRF.FUNCTION,	25);	// to
     design.addCommand(6, ZRF.FUNCTION,	28);	// end
@@ -270,7 +272,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(5, 4, [3], 0);
     design.addMove(5, 4, [5], 0);
     design.addMove(5, 5, [1, 1, 1, 0, 0], 0);
-    design.addMove(5, 6, [0, 0, 0, 0, 1, 1], 0);
+    design.addMove(5, 6, [0, 0, 0, 0, 1, 1, 1], 0);
 
     design.addPiece("Maharadja", 6);
     design.addMove(6, 2, [4, 4], 0);

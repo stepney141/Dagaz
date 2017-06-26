@@ -115,7 +115,8 @@
      )
    )
 
-   (option "animate captures" false)
+   (option "animate captures"  false)
+   (option "elehunt-extension" true)
 
    (board-setup
       (Black

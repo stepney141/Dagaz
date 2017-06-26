@@ -22,6 +22,7 @@ ZRF = {
 Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-captures", "false");
+    design.checkVersion("elehunt-extension", "true");
 
     design.addDirection("w");
     design.addDirection("e");
@@ -39,9 +40,6 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPlayer("Black", [1, 0, 4, 6, 2, 7, 3, 5, 12, 12, 12, 12, 12]);
     design.addPlayer("White", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
-    design.addTurn(1);
-    design.addTurn(2);
-
 
     design.addPosition("a0", [0, 1, 10, 0, 0, 11, 0, 0, 0, 0, 0, 0, 100]);
     design.addPosition("b0", [-1, 1, 10, 0, 0, 11, 9, 0, 0, 0, 0, 0, 99]);
@@ -177,6 +175,12 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(0, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(0, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(0, ZRF.FUNCTION,	6);	// mark
+    design.addCommand(0, ZRF.PARAM,	2);	// $3
+    design.addCommand(0, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(0, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(0, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(0, ZRF.FUNCTION,	7);	// back
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
@@ -185,13 +189,25 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(1, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(1, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(1, ZRF.FORK,	3);
-    design.addCommand(1, ZRF.FUNCTION,	25);	// to
-    design.addCommand(1, ZRF.FUNCTION,	28);	// end
+    design.addCommand(1, ZRF.FUNCTION,	6);	// mark
     design.addCommand(1, ZRF.PARAM,	1);	// $2
     design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(1, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(1, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(1, ZRF.FUNCTION,	7);	// back
+    design.addCommand(1, ZRF.FORK,	3);
+    design.addCommand(1, ZRF.FUNCTION,	25);	// to
+    design.addCommand(1, ZRF.FUNCTION,	28);	// end
+    design.addCommand(1, ZRF.PARAM,	2);	// $3
+    design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(1, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(1, ZRF.FUNCTION,	6);	// mark
+    design.addCommand(1, ZRF.PARAM,	3);	// $4
+    design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(1, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(1, ZRF.FUNCTION,	7);	// back
     design.addCommand(1, ZRF.FUNCTION,	25);	// to
     design.addCommand(1, ZRF.FUNCTION,	28);	// end
 
@@ -203,24 +219,24 @@ Dagaz.Model.BuildDesign = function(design) {
 
 
     design.addPiece("Pygmy", 0);
-    design.addMove(0, 0, [4, 3], 0);
-    design.addMove(0, 0, [4, 7], 0);
-    design.addMove(0, 0, [2, 5], 0);
-    design.addMove(0, 0, [2, 6], 0);
-    design.addMove(0, 0, [1, 3], 0);
-    design.addMove(0, 0, [1, 5], 0);
-    design.addMove(0, 0, [0, 7], 0);
-    design.addMove(0, 0, [0, 6], 0);
+    design.addMove(0, 0, [4, 3, 12], 0);
+    design.addMove(0, 0, [4, 7, 12], 0);
+    design.addMove(0, 0, [2, 5, 12], 0);
+    design.addMove(0, 0, [2, 6, 12], 0);
+    design.addMove(0, 0, [1, 3, 12], 0);
+    design.addMove(0, 0, [1, 5, 12], 0);
+    design.addMove(0, 0, [0, 7, 12], 0);
+    design.addMove(0, 0, [0, 6, 12], 0);
 
     design.addPiece("Shaman", 1);
-    design.addMove(1, 1, [4, 4], 0);
-    design.addMove(1, 1, [7, 7], 0);
-    design.addMove(1, 1, [2, 2], 0);
-    design.addMove(1, 1, [5, 5], 0);
-    design.addMove(1, 1, [1, 1], 0);
-    design.addMove(1, 1, [3, 3], 0);
-    design.addMove(1, 1, [0, 0], 0);
-    design.addMove(1, 1, [6, 6], 0);
+    design.addMove(1, 1, [4, 12, 4, 12], 0);
+    design.addMove(1, 1, [7, 12, 7, 12], 0);
+    design.addMove(1, 1, [2, 12, 2, 12], 0);
+    design.addMove(1, 1, [5, 12, 5, 12], 0);
+    design.addMove(1, 1, [1, 12, 1, 12], 0);
+    design.addMove(1, 1, [3, 12, 3, 12], 0);
+    design.addMove(1, 1, [0, 12, 0, 12], 0);
+    design.addMove(1, 1, [6, 12, 6, 12], 0);
 
     design.addPiece("Elephant", 2);
     design.addMove(2, 2, [4], 0);

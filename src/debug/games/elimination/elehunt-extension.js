@@ -9,7 +9,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
 }
 
 var checkLeap = function(design, board, pos, o, d, pygmy) {
-  p = design.navigate(board.player, pos, o);
+  var p = design.navigate(board.player, pos, o);
   if (p === null) return false;
   p = design.navigate(board.player, p, d);
   if (p === null) return false;
@@ -19,7 +19,7 @@ var checkLeap = function(design, board, pos, o, d, pygmy) {
 }
 
 var checkStep = function(design, board, pos, dir, shaman) {
-  p = design.navigate(board.player, pos, dir);
+  var p = design.navigate(board.player, pos, dir);
   if (p === null) return false;
   var piece = board.getPiece(p);
   if (piece !== null) {
@@ -33,7 +33,7 @@ var checkStep = function(design, board, pos, dir, shaman) {
 }
 
 var checkDir = function(design, board, move, pos, dir) {
-  p = design.navigate(board.player, pos, dir);
+  var p = design.navigate(board.player, pos, dir);
   if (p === null) return false;
   var piece = board.getPiece(p);
   if (piece !== null) {
@@ -70,10 +70,12 @@ Dagaz.Model.CheckInvariants = function(board) {
       if (move.actions[0][0] === null) return;
       if (move.actions[0][1] === null) return;
       var pos = move.actions[0][1][0];
-      if (checkDir(design, board, move, pos, unw) &&
-          checkDir(design, board, move, pos, usw) &&
-          checkDir(design, board, move, pos, une) &&
-          checkDir(design, board, move, pos, use)) {
+      var f = true;
+      if (!checkDir(design, board, move, pos, unw)) f = false;
+      if (!checkDir(design, board, move, pos, usw)) f = false;
+      if (!checkDir(design, board, move, pos, une)) f = false;
+      if (!checkDir(design, board, move, pos, use)) f = false;
+      if (f) {
           move.failed = true;
       }
   });
