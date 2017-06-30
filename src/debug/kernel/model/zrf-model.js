@@ -432,7 +432,11 @@ Dagaz.Model.functions[Dagaz.Model.ZRF_IS_PIECE] = function(gen) {
    }
    var type = gen.stack.pop();
    var piece = gen.getPiece(gen.pos);
-   gen.stack.push(piece.type == type);
+   if (piece === null) {
+       gen.stack.push(false);
+   } else {
+       gen.stack.push(piece.type == type);
+   }
    return 0;
 }
 

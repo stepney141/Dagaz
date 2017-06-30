@@ -132,7 +132,11 @@ Dagaz.Model.CheckInvariants = function(board) {
   var rook   = design.getPieceType("Rook");
   _.each(board.moves, function(move) {
       var b = board.apply(move);
-      var list = [ findPiece(design, b, board.player, king) ];
+      var list = [];
+      var pos  = findPiece(design, b, board.player, king);
+      if (pos) {
+          list.push(+pos);
+      }
       if (move.actions.length == 2) {
           var k = getPiece(board, move.actions[0]);
           var r = getPiece(board, move.actions[1]);
