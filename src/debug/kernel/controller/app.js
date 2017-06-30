@@ -79,7 +79,8 @@ App.prototype.mouseLocate = function(view, pos) {
           if (_.isUndefined(this.positions)) {
               this.positions = this.list.getPositions();
           }
-          if (_.indexOf(this.positions, pos) >= 0) {
+          var positions = _.intersection(this.positions, pos);
+          if (positions.length > 0) {
               Canvas.style.cursor = "pointer";
           } else {
               Canvas.style.cursor = "default";
@@ -99,10 +100,11 @@ App.prototype.mouseLocate = function(view, pos) {
 }
 
 App.prototype.mouseDown = function(view, pos) {
-  if ((this.state == STATE.IDLE) && !_.isUndefined(this.list)) {
-      if (this.list && this.positions && (_.indexOf(this.positions, pos) >= 0)) {
+  if ((this.state == STATE.IDLE) && !_.isUndefined(this.list) && this.list && this.positions) {
+      var positions = _.intersection(this.positions, pos);
+      if (positions.length > 0) {
           Canvas.style.cursor = "move";
-          this.setPosition(pos);
+          this.setPosition(positions[0]);
           isDrag = true;
       }
   }
@@ -110,10 +112,20 @@ App.prototype.mouseDown = function(view, pos) {
 }
 
 App.prototype.mouseUp = function(view, pos) {
+/*if ((this.state == STATE.IDLE) && !_.isUndefined(this.list) && this.list && this.positions) {
+      var positions = _.intersection(this.positions, pos);
+      if (positions.length > 0) {
+          this.setPosition(positions[0]);
+          this.view.markPositions(Dagaz.View.markType.TARGET, []);
+          Canvas.style.cursor = "default";
+      }
+  } */
   if ((this.state == STATE.IDLE) && !_.isUndefined(this.list)) {
-      this.setPosition(pos);
-      this.view.markPositions(Dagaz.View.markType.TARGET, []);
-      Canvas.style.cursor = "default";
+      if (pos.length > 0) {
+          this.setPosition(pos[0]);
+          this.view.markPositions(Dagaz.View.markType.TARGET, []);
+          Canvas.style.cursor = "default";
+      }
   }
   isDrag = false;
 }
