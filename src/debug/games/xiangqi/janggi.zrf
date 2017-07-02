@@ -175,8 +175,8 @@
       (image Red "images/rmandarin.bmp" 
              Black "images/bmandarin.bmp")
       (moves
-         (step-palace n)  (step-palace s) (step-palace nw) (step-palace sw)
-         (step-palace w)  (step-palace e) (step-palace ne) (step-palace se)
+         (step-palace n)  (step-palace s) (step-fortress nw) (step-fortress sw)
+         (step-palace w)  (step-palace e) (step-fortress ne) (step-fortress se)
       )
    )
    (piece
@@ -185,8 +185,8 @@
       (image Red "images/rgeneral.bmp"  
              Black "images/bgeneral.bmp")
       (moves
-         (step-palace n)  (step-palace s) (step-palace nw) (step-palace sw)
-         (step-palace w)  (step-palace e) (step-palace ne) (step-palace se)
+         (step-palace n)  (step-palace s) (step-fortress nw) (step-fortress sw)
+         (step-palace w)  (step-palace e) (step-fortress ne) (step-fortress se)
       )
    )
 
