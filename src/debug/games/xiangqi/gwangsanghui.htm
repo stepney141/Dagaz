@@ -1,0 +1,96 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Gwangsanghui</title>
+</head>
+<body>
+
+<img id="Board" style="display:none" src="images/gwangsanghui/gwangsanghui.png">
+<img id="RedPawn" style="display:none" src="images/gwangsanghui/rpawn.png">
+<img id="BlackPawn" style="display:none" src="images/gwangsanghui/bpawn.png">
+<img id="RedSoldier" style="display:none" src="images/gwangsanghui/rsoldier.png">
+<img id="BlackSoldier" style="display:none" src="images/gwangsanghui/bsoldier.png">
+<img id="RedKing" style="display:none" src="images/gwangsanghui/rking.png">
+<img id="BlackKing" style="display:none" src="images/gwangsanghui/bking.png">
+<img id="RedWestGeneral" style="display:none" src="images/gwangsanghui/rgeneral.png">
+<img id="BlackWestGeneral" style="display:none" src="images/gwangsanghui/bgeneral.png">
+<img id="RedEastGeneral" style="display:none" src="images/gwangsanghui/rgeneral.png">
+<img id="BlackEastGeneral" style="display:none" src="images/gwangsanghui/bgeneral.png">
+<img id="RedGuard" style="display:none" src="images/gwangsanghui/rguard.png">
+<img id="BlackGuard" style="display:none" src="images/gwangsanghui/bguard.png">
+<img id="RedWestGuard" style="display:none" src="images/gwangsanghui/rguard.png">
+<img id="BlackWestGuard" style="display:none" src="images/gwangsanghui/bguard.png">
+<img id="RedEastGuard" style="display:none" src="images/gwangsanghui/rguard.png">
+<img id="BlackEastGuard" style="display:none" src="images/gwangsanghui/bguard.png">
+<img id="RedElephant" style="display:none" src="images/gwangsanghui/relephant.png">
+<img id="BlackElephant" style="display:none" src="images/gwangsanghui/belephant.png">
+<img id="RedWestElephant" style="display:none" src="images/gwangsanghui/relephant.png">
+<img id="BlackWestElephant" style="display:none" src="images/gwangsanghui/belephant.png">
+<img id="RedEastElephant" style="display:none" src="images/gwangsanghui/relephant.png">
+<img id="BlackEastElephant" style="display:none" src="images/gwangsanghui/belephant.png">
+<img id="RedChariot" style="display:none" src="images/gwangsanghui/rrook.png">
+<img id="BlackChariot" style="display:none" src="images/gwangsanghui/brook.png">
+<img id="RedWestChariot" style="display:none" src="images/gwangsanghui/rrook.png">
+<img id="BlackWestChariot" style="display:none" src="images/gwangsanghui/brook.png">
+<img id="RedEastChariot" style="display:none" src="images/gwangsanghui/rrook.png">
+<img id="BlackEastChariot" style="display:none" src="images/gwangsanghui/brook.png">
+<img id="RedCannon" style="display:none" src="images/gwangsanghui/rcannon.png">
+<img id="BlackCannon" style="display:none" src="images/gwangsanghui/bcannon.png">
+<img id="RedWestCannon" style="display:none" src="images/gwangsanghui/rcannon.png">
+<img id="BlackWestCannon" style="display:none" src="images/gwangsanghui/bcannon.png">
+<img id="RedEastCannon" style="display:none" src="images/gwangsanghui/rcannon.png">
+<img id="BlackEastCannon" style="display:none" src="images/gwangsanghui/bcannon.png">
+<img id="RedHorse" style="display:none" src="images/gwangsanghui/rhorse.png">
+<img id="BlackHorse" style="display:none" src="images/gwangsanghui/bhorse.png">
+<img id="RedWestHorse" style="display:none" src="images/gwangsanghui/rhorse.png">
+<img id="BlackWestHorse" style="display:none" src="images/gwangsanghui/bhorse.png">
+<img id="RedEastHorse" style="display:none" src="images/gwangsanghui/rhorse.png">
+<img id="BlackEastHorse" style="display:none" src="images/gwangsanghui/bhorse.png">
+<img id="RedWarrior" style="display:none" src="images/gwangsanghui/rwarrior.png">
+<img id="BlackWarrior" style="display:none" src="images/gwangsanghui/bwarrior.png">
+<img id="RedKnight" style="display:none" src="images/gwangsanghui/rknight.png">
+<img id="BlackKnight" style="display:none" src="images/gwangsanghui/bknight.png">
+<img id="RedKiller" style="display:none" src="images/gwangsanghui/rkiller.png">
+<img id="BlackKiller" style="display:none" src="images/gwangsanghui/bkiller.png">
+<img id="RedForward" style="display:none" src="images/gwangsanghui/rforward.png">
+<img id="BlackForward" style="display:none" src="images/gwangsanghui/bforward.png">
+<img id="RedBackward" style="display:none" src="images/gwangsanghui/rbackward.png">
+<img id="BlackBackward" style="display:none" src="images/gwangsanghui/bbackward.png">
+
+<table style="margin:auto; font-family:sans-serif; font-size:14px" id="Table">
+<tr style="height:700px; vertical-align:top">
+<td id="CanvasCell" style="width:744px">
+<canvas id="Canvas" width="747" height="700" style="cursor:default">Broken canvas...</canvas>
+</td><td style="width:300px;">
+<div style="height:510px; overflow:auto" id="ScrollDiv">
+<img id="GlyphImage"><p id="HelpText"></p>
+<p id="GameSession"></p>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div style="height:100px; width:500px; margin-left:auto; margin-right:auto">
+<table>
+<tr style="display:none" id="PieceInfo">
+<td><img id="PieceInfoImage"></td><td id="PieceInfoText"></td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+
+<script src="http://underscorejs.ru/underscore-min.js"></script>
+<script src="../../kernel/dagaz.js"></script>
+<script src="../../kernel/model/zrf-model.js"></script>
+<script src="../../kernel/model/zobrist.js"></script>
+<script src="../../kernel/model/ko.js"></script>
+<script src="../../kernel/view/2d/2d-view.js"></script>
+<script src="../../kernel/controller/utils/move-list.js"></script>
+<!-- <script src="gwangsanghui-extension.js"></script> -->
+<script src="gwangsanghui.js"></script>
+<script src="../../kernel/controller/app.js"></script>
+
+</body>
+</html>

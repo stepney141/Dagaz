@@ -30,40 +30,41 @@
   add
 ))
 
-(define step (
+(define step-1 (
+  $1 (verify not-friend?)
+  (verify (not-piece? Xing))
+  add
+))
+
+(define step-2 (
+  $1 (verify empty?)
+  $1 (verify not-friend?)
+  (verify (not-piece? Xing))
+  add
+))
+
+(define step-3 (
+  $1 (verify empty?)
+  $1 (verify empty?)
   $1 (verify not-friend?)
   (verify (not-piece? Xing))
   add
 ))
 
 (define step-4 (
-  $1 (verify not-friend?)
-  (if (not-piece? Xing) add)
-  (verify empty?)
-  $1 (verify not-friend?)
-  (if (not-piece? Xing) add)
-  (verify empty?)
-  $1 (verify not-friend?)
-  (if (not-piece? Xing) add)
-  (verify empty?)
+  $1 (verify empty?)
+  $1 (verify empty?)
+  $1 (verify empty?)
   $1 (verify not-friend?)
   (verify (not-piece? Xing))
   add
 ))
 
 (define step-5 (
-  $1 (verify not-friend?)
-  (if (not-piece? Xing) add)
-  (verify empty?)
-  $1 (verify not-friend?)
-  (if (not-piece? Xing) add)
-  (verify empty?)
-  $1 (verify not-friend?)
-  (if (not-piece? Xing) add)
-  (verify empty?)
-  $1 (verify not-friend?)
-  (if (not-piece? Xing) add)
-  (verify empty?)
+  $1 (verify empty?)
+  $1 (verify empty?)
+  $1 (verify empty?)
+  $1 (verify empty?)
   $1 (verify not-friend?)
   (verify (not-piece? Xing))
   add
@@ -139,8 +140,8 @@
 
    (option "smart moves"       true)
    (option "animate captures"  false)
-;  (option "ko"                situation)
-;  (option "qiquo-extension"   true)
+;   (option "ko"                situation)
+;   (option "qiquo-extension"   true)
 
    (players Chu Han Qi Wei Zhao Yan Qin Zhou)
    (turn-order Chu Han Qi Wei Zhao Yan Qin)
@@ -280,6 +281,12 @@
             Yan   "Images/qiquo/l-yan.bmp" 
             Qin   "Images/qiquo/l-qin.bmp")
      (moves                     
+        (step-1 n)  (step-1 s)  (step-1 w)  (step-1 e)
+        (step-1 nw) (step-1 sw) (step-1 ne) (step-1 se)
+        (step-2 n)  (step-2 s)  (step-2 w)  (step-2 e)
+        (step-2 nw) (step-2 sw) (step-2 ne) (step-2 se)
+        (step-3 n)  (step-3 s)  (step-3 w)  (step-3 e)
+        (step-3 nw) (step-3 sw) (step-3 ne) (step-3 se)
         (step-4 n)  (step-4 s)  (step-4 w)  (step-4 e)
         (step-4 nw) (step-4 sw) (step-4 ne) (step-4 se)
      )
@@ -300,6 +307,14 @@
             Yan   "Images/qiquo/s-yan.bmp" 
             Qin   "Images/qiquo/s-qin.bmp")
      (moves                   
+        (step-1 n)  (step-1 s)  (step-1 w)  (step-1 e)
+        (step-1 nw) (step-1 sw) (step-1 ne) (step-1 se)
+        (step-2 n)  (step-2 s)  (step-2 w)  (step-2 e)
+        (step-2 nw) (step-2 sw) (step-2 ne) (step-2 se)
+        (step-3 n)  (step-3 s)  (step-3 w)  (step-3 e)
+        (step-3 nw) (step-3 sw) (step-3 ne) (step-3 se)
+        (step-4 n)  (step-4 s)  (step-4 w)  (step-4 e)
+        (step-4 nw) (step-4 sw) (step-4 ne) (step-4 se)
         (step-5 n)  (step-5 s)  (step-5 w)  (step-5 e)
         (step-5 nw) (step-5 sw) (step-5 ne) (step-5 se)
      )
@@ -338,7 +353,7 @@
             Yan   "Images/qiquo/k-yan.bmp" 
             Qin   "Images/qiquo/k-qin.bmp")
      (moves                   
-        (step nw) (step sw) (step ne) (step se)
+        (step-1 nw) (step-1 sw) (step-1 ne) (step-1 se)
      )
   )
   (piece
@@ -354,7 +369,7 @@
             Yan   "Images/qiquo/c-yan.bmp" 
             Qin   "Images/qiquo/c-qin.bmp")
      (moves                   
-        (step n) (step s) (step w) (step e)
+        (step-1 n) (step-1 s) (step-1 w) (step-1 e)
      )
   )
 

@@ -267,9 +267,6 @@ public class Game extends AbstractDoc implements IGame {
 		NodeIterator nl = XPathAPI.selectNodeIterator(doc, PLAYERS_XP);
 		Node n;
 		for (int i = 0; (n = nl.nextNode())!= null; i++) {
-			if (i > 1) {
-				throw new Exception("Not Supported");
-			}
 			players.put(n.getLocalName(), i + 1);
 			pnames.add(n.getLocalName());
 			dest.open(NAME_TAG);dest.add(n.getLocalName()); dest.close();

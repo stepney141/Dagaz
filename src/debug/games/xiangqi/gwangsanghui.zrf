@@ -99,7 +99,7 @@
    (board
       (image "images/gwangsanghui/gwangsanghui.bmp")
       (grid
-         (start-rectangle 12 12 60 60)
+         (start-rectangle 14 13 62 61)
          (dimensions
              ("a/b/c/d/e/f/g/h/i/j/k/l/m/n/o" (48 0)) ; files
              ("14/13/12/11/10/9/8/7/6/5/4/3/2/1" (0 48)) ; ranks

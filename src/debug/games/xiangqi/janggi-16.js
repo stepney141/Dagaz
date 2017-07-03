@@ -351,22 +351,22 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPiece("Mandarin", 5, 3);
     design.addMove(5, 8, [4], 0);
     design.addMove(5, 8, [2], 0);
-    design.addMove(5, 8, [7], 0);
-    design.addMove(5, 8, [6], 0);
+    design.addMove(5, 1, [7], 0);
+    design.addMove(5, 1, [6], 0);
     design.addMove(5, 8, [0], 0);
     design.addMove(5, 8, [1], 0);
-    design.addMove(5, 8, [3], 0);
-    design.addMove(5, 8, [5], 0);
+    design.addMove(5, 1, [3], 0);
+    design.addMove(5, 1, [5], 0);
 
     design.addPiece("General", 6, 0);
     design.addMove(6, 8, [4], 0);
     design.addMove(6, 8, [2], 0);
-    design.addMove(6, 8, [7], 0);
-    design.addMove(6, 8, [6], 0);
+    design.addMove(6, 1, [7], 0);
+    design.addMove(6, 1, [6], 0);
     design.addMove(6, 8, [0], 0);
     design.addMove(6, 8, [1], 0);
-    design.addMove(6, 8, [3], 0);
-    design.addMove(6, 8, [5], 0);
+    design.addMove(6, 1, [3], 0);
+    design.addMove(6, 1, [5], 0);
 
     design.setup("Red", "Soldier", 54);
     design.setup("Red", "Soldier", 56);
