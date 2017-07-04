@@ -299,10 +299,11 @@ public class Board extends AbstractDoc implements IBoard {
 	private void extractSyms(IDoc dest) throws Exception {
 		boolean f = false;
 		for (String player: syms.keySet()) {
-			if (!f) {
-				dest.open(PLAYER_TAG);
-				f = true;
-			}
+			if (f) {
+				dest.close();
+			} 
+			f = true;
+			dest.open(PLAYER_TAG);
 			dest.open(NAME_TAG);dest.add(player);dest.close();
 			Map<String, String> l = syms.get(player);
 			int i = 0;
