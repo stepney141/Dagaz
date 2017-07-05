@@ -103,11 +103,20 @@ Dagaz.View.configure = function(view) {
 </xsl:template>
 
 <xsl:template name="apply-players">
-  <xsl:for-each select="board/player">
-    design.addPlayer("<xsl:choose>
-                         <xsl:when test="name"><xsl:value-of select="name"/></xsl:when>
-                         <xsl:otherwise><xsl:value-of select="/game/players[1]/name"/></xsl:otherwise>
-                      </xsl:choose>", [<xsl:call-template name="apply-dirs"/>]);</xsl:for-each><xsl:text>
+  <xsl:for-each select="players/name">
+    <xsl:variable name="player" select="."/>
+    design.addPlayer("<xsl:value-of select="."/>", [<xsl:choose>
+      <xsl:when test="position() = 1">
+        <xsl:for-each select="/game/board/player[not(name)]">
+          <xsl:call-template name="apply-dirs"/>
+        </xsl:for-each>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:for-each select="/game/board/player[name = $player]">
+          <xsl:call-template name="apply-dirs"/>
+        </xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose>]);</xsl:for-each><xsl:text>
 </xsl:text>  
   <xsl:for-each select="/game/turn">
     <xsl:choose>
