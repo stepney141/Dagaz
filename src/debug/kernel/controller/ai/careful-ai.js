@@ -11,7 +11,7 @@ function CarefulAi(params, parent) {
 var findBot = Dagaz.AI.findBot;
 
 Dagaz.AI.findBot = function(type, params, parent) {
-  if (type == "common") {
+  if (type == "opening") {
       return new CarefulAi(params, parent);
   } else {
       return findBot(type, params, parent);
