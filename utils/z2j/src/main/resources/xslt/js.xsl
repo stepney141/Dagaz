@@ -122,7 +122,9 @@ Dagaz.View.configure = function(view) {
     <xsl:choose>
       <xsl:when test="repeat">    design.repeatMark();<xsl:text>
 </xsl:text></xsl:when>
-      <xsl:otherwise>    design.addTurn(<xsl:value-of select="player"/>);<xsl:text>
+      <xsl:otherwise>    design.addTurn(<xsl:value-of select="player"/><xsl:choose>
+        <xsl:when test="mode">, <xsl:value-of select="mode"/></xsl:when>
+      </xsl:choose>);<xsl:text>
 </xsl:text></xsl:otherwise>
     </xsl:choose>
   </xsl:for-each>

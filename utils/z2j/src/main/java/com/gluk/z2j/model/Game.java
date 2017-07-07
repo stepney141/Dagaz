@@ -284,6 +284,13 @@ public class Game extends AbstractDoc implements IGame {
 			if (player != null) {
 				dest.open(TURNS_TAG);
 				dest.open(PLAYER_TAG);dest.add(player.toString()); dest.close();
+				NodeIterator kl = XPathAPI.selectNodeIterator(n, ALL_XP);
+				Node k;
+				while ((k = kl.nextNode())!= null) {
+					String name = k.getLocalName();
+					Integer mode = addMode(name);
+					dest.open(MODE_TAG);dest.add(mode.toString()); dest.close();
+				}
 				dest.close();
 			}
 		}
@@ -522,9 +529,9 @@ public class Game extends AbstractDoc implements IGame {
 		}
 		extractTiltle(dest);
 		extractOptions(dest);
+		extractModes(dest);
 		extractPlayers(dest);
 		board.extract(dest);
-		extractModes(dest);
 		extractAttrs();
 		extractPieces(dest);
 		extractTemplates(dest);

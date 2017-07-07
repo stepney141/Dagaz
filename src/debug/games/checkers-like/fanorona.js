@@ -24,6 +24,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("smart-moves", "true");
     design.checkVersion("pass-partial", "true");
     design.checkVersion("animate-captures", "false");
+    design.checkVersion("fanorona-extension", "true");
 
     design.addDirection("w");
     design.addDirection("e");

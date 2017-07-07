@@ -4,12 +4,12 @@
 ))
 
 (define second-move (
-  (verify (or 
-     (and (on-board? n) (empty? n))
-     (and (on-board? s) (empty? s))
-     (and (on-board? w) (empty? w))
-     (and (on-board? e) (empty? e))
-  ))
+;  (verify (or 
+;     (and (on-board? n) (empty? n))
+;     (and (on-board? s) (empty? s))
+;     (and (on-board? w) (empty? w))
+;     (and (on-board? e) (empty? e))
+;  ))
   capture add
 ))
 
@@ -41,6 +41,7 @@
   (title "Konane")
 
   (option "animate captures" false)
+  (option "konane-extension" true)
 
   (players Black White)
   (turn-order 
