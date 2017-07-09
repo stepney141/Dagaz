@@ -1,5 +1,3 @@
-(version "2.0")
-
 (define checker-shift (
    $1 (verify empty?)
    (if (in-zone? promotion)
@@ -13,10 +11,10 @@
    $1 (verify enemy?) 
    capture 
    $1 (verify empty?)
-   (if (not-in-zone? promotion)
-      (add-partial jump-type)
+   (if (in-zone? promotion)
+       (add-partial King jump-type)
     else
-      (add King)
+       (add-partial jump-type)
    )
 ))
 
@@ -42,17 +40,8 @@
    )
 ))
 
-(define greek-jump (
-   $1 (while empty? 
-       $1 (verify not-last-from?)
-   )
-   (verify enemy?) capture
-   $1 (verify empty?)
-   (add-partial jump-type)
-))
-
 (game
-  (title "Turkish Dama")
+  (title "Russian Checkers")
 
   (move-sound "Audio\Pickup.wav")
   (release-sound "Audio\Pickup.wav")
@@ -61,7 +50,7 @@
 
   (option "animate captures" false)
   (option "smart moves"      true)
-  (option "maximal captures" true)
+  (option "zrf-advanced"     deferred)
   (option "ko"               situation)
 
   (players White Black)
@@ -69,21 +58,21 @@
   (move-priorities jump-type normal-type)
 
   (board
-     (image "images/turkish.bmp")
+     (image "images/8x8.bmp")
      (grid
          (start-rectangle 2 2 52 52)
          (dimensions
            ("a/b/c/d/e/f/g/h" (50 0)) ; files
            ("8/7/6/5/4/3/2/1" (0 50)) ; ranks
          )
-         (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0))
+         (directions (ne 1 -1) (nw -1 -1) (se 1 1) (sw -1 1))
      )
-     (symmetry Black (n s) (s n))
+     (symmetry Black (nw se) (se nw) (ne sw) (sw ne))
      (zone (name promotion) (players White)
-           (positions a8 b8 c8 d8 e8 f8 g8 h8)
+           (positions b8 d8 f8 h8)
      )
      (zone (name promotion) (players Black)
-           (positions a1 b1 c1 d1 e1 f1 g1 h1)
+           (positions a1 c1 e1 g1)
      )
   )
 
@@ -93,9 +82,9 @@
             Black "images/bman.bmp")
      (moves
          (move-type jump-type)
-         (checker-jump n) (checker-jump w) (checker-jump e)
+         (checker-jump nw) (checker-jump ne) (checker-jump sw) (checker-jump se)
          (move-type normal-type)
-         (checker-shift n) (checker-shift w) (checker-shift e)
+         (checker-shift nw) (checker-shift ne)
      )
   )
   (piece
@@ -104,15 +93,15 @@
             Black "images/bking.bmp")
      (moves
          (move-type jump-type)
-         (king-jump n) (king-jump w) (king-jump e) (king-jump s)
+         (king-jump nw) (king-jump ne) (king-jump sw) (king-jump se)
          (move-type normal-type)
-         (king-shift n) (king-shift w) (king-shift e) (king-shift s)
+         (king-shift nw) (king-shift ne) (king-shift sw) (king-shift se)
      )
   )
 
   (board-setup
-    (White (Man a2 b2 c2 d2 e2 f2 g2 h2  a3 b3 c3 d3 e3 f3 g3 h3))
-    (Black (Man a7 b7 c7 d7 e7 f7 g7 h7  a6 b6 c6 d6 e6 f6 g6 h6))
+    (White (Man a1 c1 e1 g1  b2 d2 f2 h2  a3 c3 e3 g3) )
+    (Black (Man b8 d8 f8 h8  a7 c7 e7 g7  b6 d6 f6 h6) )
   )
 
   (loss-condition (White Black) (pieces-remaining 0))
@@ -121,16 +110,30 @@
 )
 
 (variant
-  (title "Greek Checkers")
-  (piece
-     (name King)
-     (image White "images/wking.bmp"
-            Black "images/bking.bmp")
-     (moves
-         (move-type jump-type)
-         (greek-jump n) (greek-jump w) (greek-jump e) (greek-jump s)
-         (move-type normal-type)
-         (king-shift n) (king-shift w) (king-shift e) (king-shift s)
+  (title "80 Cells Checkers")
+  (history  "Copyright (c) Nikolay Spancireti (1916-1991).")
+
+  (board
+     (image "images/10x8.bmp")
+     (grid
+         (start-rectangle 2 2 52 52)
+         (dimensions
+           ("a/b/c/d/e/f/g/h/i/j" (50 0)) ; files
+           ("8/7/6/5/4/3/2/1" (0 50)) ; ranks
+         )
+         (directions (ne 1 -1) (nw -1 -1) (se 1 1) (sw -1 1))
      )
+     (symmetry Black (nw se) (se nw) (ne sw) (sw ne))
+     (zone (name promotion) (players White)
+           (positions b8 d8 f8 h8 j8)
+     )
+     (zone (name promotion) (players Black)
+           (positions a1 c1 e1 g1 i1)
+     )
+  )
+
+  (board-setup
+    (White (Man a1 c1 e1 g1 i1  b2 d2 f2 h2 j2  a3 c3 e3 g3 i3) )
+    (Black (Man b8 d8 f8 h8 j8  a7 c7 e7 g7 i7  b6 d6 f6 h6 j6) )
   )
 )
