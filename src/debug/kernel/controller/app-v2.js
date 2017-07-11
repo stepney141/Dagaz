@@ -52,37 +52,73 @@ App.prototype.done = function() {
   }
 }
 
-App.prototype.setPosition = function(pos) {
-  this.list.setPosition(pos);
-  var moves = this.list.getMoves();
-  if (this.list.canDone()  && (moves.length > 0)) {
-      this.move = moves[0];
-      this.state = STATE.EXEC;
-      Canvas.style.cursor = "default";
-      return;
-  }
-  if (this.list.getLevel() > 0) {
-      if (this.params.SHOW_TARGETS) {
-          var targets = this.list.getPositions();
-          this.view.markPositions(Dagaz.View.markType.TARGET, targets);
+App.prototype.getStarts = function() {
+  if (_.isUndefined(this.starts)) {
+      if (_.isUndefined(this.list)) {
+          this.starts = [];
+      } else {
+          this.starts = this.list.getStarts();
       }
   }
-  if (this.params.SHOW_ATTACKING) {
-      var attacking = this.list.getAttacking();
-      this.view.markPositions(Dagaz.View.markType.ATTACKING, attacking);
+  return this.starts;
+}
+
+App.prototype.getStops = function() {
+  if (_.isUndefined(this.stops)) {
+      if (_.isUndefined(this.list)) {
+          this.stops = [];
+      } else {
+          this.stops = this.list.getStops();
+      }
   }
+  return this.stops;
+}
+
+App.prototype.getTargets = function() {
+  if (_.isUndefined(this.targets)) {
+      if (_.isUndefined(this.list)) {
+          this.targets = [];
+      } else {
+          this.targets = this.list.getTargets();
+      }
+  }
+  return this.targets;
+}
+
+App.prototype.clearPositions = function() {
+  delete this.starts;
+  delete this.stops;
+  delete this.targets;
+}
+
+App.prototype.setPosition = function(pos) {
+  this.move = this.list.setPosition(pos);
+  this.clearPositions();
+  if (this.params.SHOW_TARGETS) {
+      this.view.markPositions(Dagaz.View.markType.TARGET, this.getTargets());
+  }
+  if (this.params.SHOW_ATTACKING) {
+      this.view.markPositions(Dagaz.View.markType.ATTACKING, this.list.getCaptures());
+  }
+  this.state = STATE.EXEC;
+  Canvas.style.cursor = "default";
 }
 
 App.prototype.mouseLocate = function(view, pos) {
   if (this.currPos != pos) {
-      if ((this.state == STATE.IDLE) && !_.isUndefined(this.list) && !isDrag) {
-          if (_.isUndefined(this.positions)) {
-              this.positions = this.list.getPositions();
-          }
-          if (_.indexOf(this.positions, pos) >= 0) {
-              Canvas.style.cursor = "pointer";
+      if ((this.state == STATE.IDLE) && !_.isUndefined(this.list)) {
+          if (isDrag) {
+              if (_.intersection(this.getStops(), pos).length > 0) {
+                  Canvas.style.cursor = "pointer";
+              } else {
+                  Canvas.style.cursor = "move";
+              }
           } else {
-              Canvas.style.cursor = "default";
+              if (_.intersection(this.getStarts(), pos).length > 0) {
+                  Canvas.style.cursor = "pointer";
+              } else {
+                  Canvas.style.cursor = "default";
+              }
           }
       }
       this.view.markPositions(Dagaz.View.markType.GOAL, []);
@@ -95,26 +131,36 @@ App.prototype.mouseLocate = function(view, pos) {
           }
       }
   }
-  currPos = pos;
+  this.currPos = pos;
 }
 
 App.prototype.mouseDown = function(view, pos) {
+  this.view.markPositions(Dagaz.View.markType.GOAL, []);
   if ((this.state == STATE.IDLE) && !_.isUndefined(this.list)) {
-      if (this.list && this.positions && (_.indexOf(this.positions, pos) >= 0)) {
+      var positions = _.intersection(this.getTargets(), pos);
+      if (positions.length == 0) {
+          positions = _.intersection(this.getStops(), pos);
+      }
+      if (positions.length == 0) {
+          positions = _.intersection(this.getStarts(), pos);
+      }
+      if (positions.length > 0) {
           Canvas.style.cursor = "move";
-          this.setPosition(pos);
+          this.setPosition(positions[0]);
           isDrag = true;
       }
   }
-  this.view.markPositions(Dagaz.View.markType.GOAL, []);
 }
 
 App.prototype.mouseUp = function(view, pos) {
   if ((this.state == STATE.IDLE) && !_.isUndefined(this.list)) {
-      this.setPosition(pos);
-      this.view.markPositions(Dagaz.View.markType.TARGET, []);
-      Canvas.style.cursor = "default";
+      var positions = _.intersection(this.getTargets(), pos);
+      if (positions.length > 0) {
+          this.setPosition(positions[0]);
+      }
   }
+  this.view.markPositions(Dagaz.View.markType.TARGET, []);
+  Canvas.style.cursor = "default";
   isDrag = false;
 }
 
@@ -169,17 +215,14 @@ App.prototype.exec = function() {
          if (_.isUndefined(this.list)) {
              var player = this.design.playerNames[this.board.player];
              console.log("Player: " + player);
-             this.list  = Dagaz.Model.getMoveList(this.board);
-             if (!_.isUndefined(this.move)) {
-                 this.list.setLastMove(this.move);
-             }
-             if ((this.list.getMoves().length == 1) && this.list.getMoves()[0].isPass()) {
+             this.list = Dagaz.Model.getMoveList(this.board);
+             if (this.list.isPassForced()) {
                   if (passForced) {
                       this.state = STATE.DONE;
                       Canvas.style.cursor = "default";
                       alert("Draw");
                   } else {
-                      this.board = this.board.apply(this.list.getMoves()[0]);                 
+                      this.board = this.board.apply(Dagaz.Model.createMove());                 
                       this.state = STATE.IDLE;
                       delete this.list;
                       passForced = true;
@@ -187,7 +230,7 @@ App.prototype.exec = function() {
                   return;
              }
              passForced = false;
-             if (this.list.getMoves().length == 0) {
+             if (this.list.isEmpty()) {
                  this.state = STATE.DONE;
                  Canvas.style.cursor = "default";
                  alert(player + " loss");
@@ -212,13 +255,13 @@ App.prototype.exec = function() {
               return;
           }
           if (result.done || (Date.now() - this.timestamp >= this.params.AI_WAIT)) {
+              this.board = this.board.apply(result.move);
               if (result.move.isPass()) {
                   if (passForced) {
                       this.state = STATE.DONE;
                       Canvas.style.cursor = "default";
                       alert("Draw");
                   } else {
-                      this.board = this.board.apply(result.move);                 
                       this.state = STATE.IDLE;
                       delete this.list;
                       passForced = true;
@@ -226,37 +269,44 @@ App.prototype.exec = function() {
               } else {
                   passForced = false;
               }
-              this.move  = result.move;
+              this.move = result.move;
               this.state = STATE.EXEC;
           }
       }
   }
   if (this.state == STATE.EXEC) {
-      if (!_.isUndefined(this.list)) {
-          this.list.done();
-          this.view.markPositions(Dagaz.View.markType.ATTACKING, []);
-          delete this.list;
-      }
+      this.state = STATE.IDLE;
       if (Dagaz.Model.showMoves) {
           console.log(this.move.toString());
       }
-      this.move.applyAll(this.view);
-      this.board = this.board.apply(this.move);
-      if (!_.isUndefined(this.positions)) {
-          delete this.positions;
-      }
-      var g = this.board.checkGoals(this.design, this.board.parent.player);
-      if (g != 0) {
-          var player = this.design.playerNames[this.board.parent.player];
-          this.state = STATE.DONE;
-          Canvas.style.cursor = "default";
-          if (g > 0) {
-              this.doneMessage = player + " win"
-          } else {
-              this.doneMessage = player + " loss"
-          }
-      } else {
+      if (!this.move.isPass()) {
+          this.move.applyAll(this.view);
           this.state = STATE.WAIT;
+      }
+      this.view.markPositions(Dagaz.View.markType.ATTACKING, []);
+      if (!_.isUndefined(this.list)) {
+          if (this.list.isDone()) {
+              isDrag = false;
+              var moves = this.list.getMoves();
+              delete this.list;
+              if (moves.length > 0) {
+                  this.board = this.board.apply(moves[0]);
+                  _.each(moves, function(m) {
+                       console.log("Debug: " + m.toString());
+                  });
+                  var g = this.board.checkGoals(this.design, this.board.parent.player);
+                  if (g != 0) {
+                      var player = this.design.playerNames[this.board.parent.player];
+                      this.state = STATE.DONE;
+                      Canvas.style.cursor = "default";
+                      if (g > 0) {
+                          this.doneMessage = player + " win"
+                      } else {
+                          this.doneMessage = player + " loss"
+                      }
+                  }
+              }
+          }
       }
   }
 }

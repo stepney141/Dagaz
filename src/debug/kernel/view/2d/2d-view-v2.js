@@ -47,10 +47,10 @@ Dagaz.View.inRect = function(view, pos, x, y) {
          (y < view.pos[pos].y + view.pos[pos].dy);
 }
 
-Dagaz.View.pointToPositions = function(view, x, y) {
+Dagaz.View.pointToPieces = function(view, x, y) {
   var list = _.chain(view.setup)
    .map(function(piece) {
-       return piece.pos;
+       return +piece.pos;
     })
    .filter(function(pos) {
       return Dagaz.View.inRect(view, pos, x, y);
@@ -59,9 +59,13 @@ Dagaz.View.pointToPositions = function(view, x, y) {
        return -pos;
     })
    .value();
-  if (list.length > 0) {
-      return list.slice(0, 1);
-  }
+}
+
+View2D.prototype.pointToPieces = function(x, y) {
+  return Dagaz.View.pointToPieces(this, x, y);
+}
+
+Dagaz.View.pointToPositions = function(view, x, y) {
   return _.chain(_.range(view.pos.length))
    .filter(function(pos) {
       return Dagaz.View.inRect(view, pos, x, y);
@@ -508,19 +512,21 @@ View2D.prototype.debug = function(text) {
 
 Dagaz.View.showHint = function(view) {
   if (Dagaz.Model.showHints) {
-      var pos = view.pointToPositions(mouseX, mouseY);
-      var ix  = posToIx(view, pos);
-      if (ix !== null) {
-          var piece = view.piece[view.setup[ix].name];
-          if (hintedPiece !== piece) {
-              var text = piece.name;
-              if (piece.help) {
-                  text = piece.help;
+      var positions = view.pointToPieces(mouseX, mouseY);
+      if (positions) {
+          var ix  = posToIx(view, positions[0]);
+          if (ix !== null) {
+              var piece = view.piece[view.setup[ix].name];
+              if (hintedPiece !== piece) {
+                  var text = piece.name;
+                  if (piece.help) {
+                      text = piece.help;
+                  }
+                  PieceInfoImage.src = piece.h.src;
+                  PieceInfoText.innerHTML = text;
+                  PieceInfo.style.display = "inline";
+                  hintedPiece = piece;
               }
-              PieceInfoImage.src = piece.h.src;
-              PieceInfoText.innerHTML = text;
-              PieceInfo.style.display = "inline";
-              hintedPiece = piece;
           }
       } else {
           PieceInfo.style.display = "none";
@@ -539,14 +545,14 @@ var mouseMove = function(event) {
   Dagaz.View.showHint(self);
   var pos = self.pointToPositions(mouseX, mouseY);
   if (pos && self.controller) {
-      self.controller.mouseLocate(self, +pos);
+      self.controller.mouseLocate(self, pos);
   }
 }
 
 var mouseUp = function() { 
   var pos = self.pointToPositions(mouseX, mouseY);
   if (pos && self.controller) {
-      self.controller.mouseUp(self, +pos[0]);
+      self.controller.mouseUp(self, pos);
   }
   mousePressed = false; 
 }
@@ -555,7 +561,7 @@ var mouseDown = function(event) {
   mousePressed = true; 
   var pos = self.pointToPositions(mouseX, mouseY);
   if (pos && self.controller) {
-      self.controller.mouseDown(self, +pos[0]);
+      self.controller.mouseDown(self, pos);
   }
   event.preventDefault(); 
 }

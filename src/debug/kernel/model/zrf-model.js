@@ -402,6 +402,7 @@ Dagaz.Model.functions[Dagaz.Model.ZRF_END] = function(gen) {
        }
    }
    gen.moveType = 0;
+   gen.completed = true;
    return null;
 }
 
@@ -454,6 +455,7 @@ Dagaz.Model.functions[Dagaz.Model.ZRF_CREATE] = function(gen) {
 }
 
 Dagaz.Model.isFriend = function(piece, player) {
+   if (piece === null) return false;
    return (piece.player == player);
 }
 
@@ -1195,11 +1197,12 @@ ZrfMoveGenerator.prototype.setAttr = function(name, pos, value) {
 ZrfMoveGenerator.prototype.generate = function() {
   while (this.cmd < this.template.commands.length) {
      var r = (this.template.commands[this.cmd++])(this);
-     if (r === null) break;
+     if (r === null) return;
      this.cmd += r;
-     if (this.cmd < 0) break;
+     if (this.cmd < 0) return;
   }
   this.cmd = 0;
+  this.completed = true;
 }
 
 function ZrfPiece(type, player) {
@@ -1498,7 +1501,7 @@ var CompleteMove = function(board, gen) {
                     var g = gen.copy(move.template, move.params);
                     g.moveType = t;
                     g.generate();
-                    if (g.generated && (g.moveType == 0)) {
+                    if (g.completed && (g.moveType == 0)) {
                         CompleteMove(board, g);
                         t = 1;
                     }
@@ -1549,7 +1552,7 @@ ZrfBoard.prototype.generateInternal = function(callback, cont) {
                    while (priors[i].length > 0) {
                       var g = priors[i].pop();
                       g.generate();
-                      if (g.generated) {
+                      if (g.completed) {
                           if (cont && (g.moveType == 0)) {
                               CompleteMove(this, g);
                           }
@@ -1563,7 +1566,7 @@ ZrfBoard.prototype.generateInternal = function(callback, cont) {
           while (this.forks.length > 0) {
                var g = this.forks.pop();
                g.generate();
-               if (g.generated) {
+               if (g.completed) {
                    if (cont && (g.moveType == 0)) {
                         CompleteMove(this, g);
                    }
