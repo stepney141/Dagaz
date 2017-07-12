@@ -140,8 +140,8 @@
 
    (option "smart moves"       true)
    (option "animate captures"  false)
-;   (option "ko"                situation)
-;   (option "qiquo-extension"   true)
+   (option "pass turn"         forced)
+   (option "qiquo-extension"   true)
 
    (players Chu Han Qi Wei Zhao Yan Qin Zhou)
    (turn-order Chu Han Qi Wei Zhao Yan Qin)

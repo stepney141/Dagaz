@@ -23,8 +23,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("smart-moves", "true");
     design.checkVersion("animate-captures", "false");
-    design.checkVersion("ko", "situation");
-//  design.checkVersion("qiquo-extension", "true");
+    design.checkVersion("pass-turn", "forced");
+    design.checkVersion("qiquo-extension", "true");
 
     design.addDirection("w");
     design.addDirection("e");
