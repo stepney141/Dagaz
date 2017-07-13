@@ -9,21 +9,21 @@
     - Dablot
     - Choko
     > Konane
-    - Фанорона
+    > Фанорона
     - Bushka
   - Checkers family
-    - Turkish Dama
-    - Greek Checkers
+    > Turkish Dama
+    > Greek Checkers
     - Armenian Tama
-    - Checkers
-    - Italian Checkers
-    - International Checkers
-    - Russian Checkers
-    - 80 Cells Checkers
-    - Czech Checkers
+    > Checkers
+    > Italian Checkers
+    > International Checkers
+    > Russian Checkers
+    > 80 Cells Checkers
+    ? Czech Checkers
     - Canadian Checkers
-    - Frisian Checkers
-    - Thai Checkers
+    > Frisian Checkers
+    > Thai Checkers
     - Северные шашки
     - Ставропольские шашки
     - Столбовые шашки
@@ -36,35 +36,35 @@
   * Kamisado
   > Prairie or Trespass
   > Neutron
-  > Gauntlet
+  * Gauntlet
   > Tafl family
-  - Italian Damone
+  > Italian Damone
   * Archimedes
   * Doubutsu Shogi
   - Arimaa
   > Ордо
 - Control games
   - Asalto
-  > Gala
+  - Gala
   - Elementals
 - Elimination games
   * Maharaja
   * 4 Fields Gonu
-  > EleHunt
+  * EleHunt
   - Atari Go
   - Seega
   - High Jump
-  > Makyek
+  - Makyek
   - Йотай
-  > Nam Dinh
-  > Евклид (варианты с составными ходами и захватом короля)
-  > Abalone
-  - Walhall
+  - Nam Dinh
+  - Евклид (варианты с составными ходами и захватом короля)
+  - Abalone
+  > Walhall
   * NotChess
   - Cheskers
   - Shatra
-  - Yonin Shogi
-  - Ультима
+  > Yonin Shogi
+  > Ультима
   - Игры с неполной информацией
     - Luzhanqi
     - Banqi
@@ -75,9 +75,9 @@
   - Xiangqi Family
     * Xiangqi
     * Xiangqi-42 (Mini Xiangqi)
-    - Janggi
-    - Gwangsanghui
-    - Xiang Hex
+    * Janggi
+    > Gwangsanghui
+    ? Xiang Hex
   - Chess Family
     - Чатуранга
     - Чатурандж
@@ -105,14 +105,14 @@
     - Whale Shogi, Great Whale Shogi
     - Tori Shogi
     - Chu Shogi
-    - Tenjiku Shogi
+    > Tenjiku Shogi
     - Annan Shogi
-  - Escalation (столбовая)
+  - Escalation
   - Шакти
   - Cubic Chess
   - Congo
   - Flip Chess
-  - Chessence
+  > Chessence
 - Arrange games
   - Семейство Рендзю
     - Рендзю
@@ -125,7 +125,7 @@
   - Morris family
   - Болотуду
   > Lines of action
-  - Three Crowns
+  > Three Crowns
   - Quantum tic-tac-toe
   - Rithmomachy
 - Connect Games
@@ -158,8 +158,8 @@
   - Ludo
   - Семейство Нард
     - Табула
-    - Длинные Нарды
-    - Короткие Нарды
+    - Длинные Нарды (варианты)
+    - Короткие Нарды (варианты)
 - Mancala
   - Оваре
   - Дакон
@@ -180,10 +180,10 @@
 - Puzzles
   * Sliding puzzles
   * Solitair puzzles
-  - Halma puzzles
+  > Halma puzzles
   * LightOff puzzles
-  > Ханойские башни (перемешивание выполнением серии случайных ходов)
-  > Sokoban
+  - Ханойские башни (перемешивание выполнением серии случайных ходов)
+  - Sokoban
   - Mancala puzzles (Tchuka Ruma)
   > Chameleon Chess
   - Быки и коровы
