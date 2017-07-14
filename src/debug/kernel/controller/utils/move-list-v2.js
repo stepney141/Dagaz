@@ -208,6 +208,7 @@ var isEq = function(x, y) {
 }
 
 MoveList.prototype.copyActions = function(move, actions) {
+  if (actions.length == 0) return;
   if (move.isPass()) {
       _.each(actions, function(action) {
           move.actions.push([ action[0], action[1], action[2], 1 ]);
@@ -217,7 +218,7 @@ MoveList.prototype.copyActions = function(move, actions) {
       _.each(actions, function(action) {
           _.each(move.actions, function(a) {
                if (isEq(action[0], a[0]) && isEq(action[1], a[1])) {
-                   move.actions.push([ action[0], action[1], action[2], 1 ]);
+                   result.push([ action[0], action[1], action[2], 1 ]);
                }
           });
       });

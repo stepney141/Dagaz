@@ -276,10 +276,10 @@ App.prototype.exec = function() {
   }
   if (this.state == STATE.EXEC) {
       this.state = STATE.IDLE;
-      if (Dagaz.Model.showMoves) {
-          console.log(this.move.toString());
-      }
       if (!this.move.isPass()) {
+          if (Dagaz.Model.showMoves) {
+              console.log(this.move.toString());
+          }
           this.move.applyAll(this.view);
           this.state = STATE.WAIT;
       }

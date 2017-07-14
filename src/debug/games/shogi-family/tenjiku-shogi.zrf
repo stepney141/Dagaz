@@ -14,12 +14,31 @@
   add
 ))
 
+(define step-3 (
+  $1 (verify empty?)
+  $1 (verify empty?)
+  $1 (verify not-friend?)
+  add
+))
+
 (define leap (
   $1 $2 (verify not-friend?)
   add
 ))
 
 (define slide (
+  $1 
+  (while empty?
+     add
+     $1
+  )
+  (verify not-friend?)
+  add
+))
+
+(define slide-2 (
+  $1 (verify empty?)
+  $1 (verify empty?)
   $1 
   (while empty?
      add
@@ -60,7 +79,7 @@
 		     (ne 1 -1) (nw -1 -1) (se 1 1) (sw -1 1)
 	     )
 	  )
-	  (symmetry White (n s)(s n) (nw sw)(sw nw) (ne se)(se ne))
+	  (symmetry White (n s) (s n) (w e) (e w) (nw se) (se nw) (ne sw) (sw ne))
  	  (zone
  	     (name promotion-zone)				
  	     (players White)
@@ -264,7 +283,7 @@
            (slide nw) (slide sw) (slide ne) (slide se)
            (lion-step n left-1-type)
            (move-type left-1-type)
-           (step n)
+           (step n) (step s)
       )
    )
 
@@ -281,7 +300,7 @@
            (slide nw) (slide sw) (slide ne) (slide se)
            (lion-step n left-1-type)
            (move-type left-1-type)
-           (step n)
+           (step n) (step s)
       )
    )
 
@@ -299,9 +318,9 @@
            (lion-step nw left-nw-type)
            (lion-step ne left-ne-type)
            (move-type left-nw-type)
-           (step nw)
+           (step nw) (step se)
            (move-type left-ne-type)
-           (step ne)
+           (step ne) (step sw)
       )
    )
 
@@ -319,9 +338,9 @@
            (lion-step nw left-nw-type)
            (lion-step ne left-ne-type)
            (move-type left-nw-type)
-           (step nw)
+           (step nw) (step se)
            (move-type left-ne-type)
-           (step ne)
+           (step ne) (step sw)
       )
    )
 
@@ -787,6 +806,17 @@
       \\The rules for range-jumping generals are that they can only range-jump behind a piece of lower rank (the number of stars on the piece!) than themselves, but they can capture them like this nonetheless!. The Vice General is a '4 stars' piece that can range-jump behind any Bishop or Rook generals ('3 stars' pieces), and behind normal pieces. The last rule is that range-jumping pieces can not capture a King or Prince by this movement (or range-jumps behind; Because King and Prince are considered '6 stars' pieces... chiefs of all the generals!) But they can do so by normal sliding/stepping (on empty squares) nonetheless!")
       (image White "images/tenjiku/ViceGeneral_W.bmp" 
     	 Black "images/tenjiku/ViceGeneral_B.bmp" )
+      (moves
+           (move-type normal-type)
+           (lion-step n left-2-type) (lion-step s left-2-type) (lion-step w left-2-type) (lion-step e left-2-type)
+           (lion-step nw left-2-type) (lion-step se left-2-type) (lion-step sw left-2-type) (lion-step ne left-2-type)
+           (move-type left-2-type)
+           (lion-step n left-1-type) (lion-step s left-1-type) (lion-step w left-1-type) (lion-step e left-1-type)
+           (lion-step nw left-1-type) (lion-step se left-1-type) (lion-step sw left-1-type) (lion-step ne left-1-type)
+           (move-type left-1-type)
+           (step n) (step s) (step w) (step e)
+           (step nw) (step se) (step sw) (step ne)
+      )
     )
 
     (piece 
@@ -848,6 +878,11 @@
       (description "Vertical Soldier (promoted Iron-General)\\A Vertical Soldier may slide any number of squares straight ahead, or step one square back; On its left and right movements, the piece can do a single OR DOUBLE normal-step (if the passing square is empty) and stops when capturing. It can not jump over other pieces.")
       (image White "images/tenjiku/PVerticalSoldier_W.bmp" 
 	 Black "images/tenjiku/PVerticalSoldier_B.bmp" )
+      (moves
+           (move-type normal-type)
+           (slide n) 
+           (step s) (step w) (step e) (step-2 w) (step-2 e)
+      )
    )
 
    (piece
@@ -893,6 +928,14 @@
            (move-type normal-type)
            (slide w) (slide e)
            (slide nw) (slide sw) (slide ne) (slide se)
+           (lion-step n left-2-type) (lion-step s left-2-type) (lion-step w left-2-type) (lion-step e left-2-type)
+           (lion-step nw left-2-type) (lion-step se left-2-type) (lion-step sw left-2-type) (lion-step ne left-2-type)
+           (move-type left-2-type)
+           (lion-step n left-1-type) (lion-step s left-1-type) (lion-step w left-1-type) (lion-step e left-1-type)
+           (lion-step nw left-1-type) (lion-step se left-1-type) (lion-step sw left-1-type) (lion-step ne left-1-type)
+           (move-type left-1-type)
+           (step n) (step s) (step w) (step e)
+           (step nw) (step se) (step sw) (step ne)
       )
    )
 
@@ -906,15 +949,12 @@
 	 Black "images/tenjiku/FreeEagle_B.bmp" )
       (moves
            (move-type normal-type)
-           (lion-step nw left-nw-type) (lion-step se left-se-type) (lion-step sw left-sw-type) (lion-step ne left-ne-type)
-           (move-type left-nw-type)
-           (step nw) (step sw) (step ne)
-           (move-type left-ne-type)
-           (step ne) (step nw) (step se)
-           (move-type left-se-type)
-           (step se) (step ne) (step sw)
-           (move-type left-sw-type)
-           (step sw) (step se) (step nw)
+           (slide-2 n) (slide-2 s) (slide-2 w) (slide-2 e)
+           (slide-2 nw) (slide-2 sw) (slide-2 ne) (slide-2 se)
+           (step n) (step s) (step w) (step e)
+           (lion-step nw left-1-type) (lion-step se left-1-type) (lion-step sw left-1-type) (lion-step ne left-1-type)
+           (move-type left-1-type)
+           (step nw) (step sw) (step ne) (step se)
       )
    )   
 
@@ -928,6 +968,7 @@
 	 Black "images/tenjiku/Lion-Hawk_B.bmp" )
       (moves
            (move-type normal-type)
+           (slide-2 nw) (slide-2 sw) (slide-2 ne) (slide-2 se)
            (lion-step n left-1-type) (lion-step s left-1-type) (lion-step w left-1-type) (lion-step e left-1-type)
            (lion-step nw left-1-type) (lion-step se left-1-type) (lion-step sw left-1-type) (lion-step ne left-1-type)
            (move-type left-1-type)
@@ -945,6 +986,21 @@
       \-It can 'gap-slide' any number of empty squares in any direction (bypassing any friendly/adverse piece on the first square entirely), except horizontally. For his left and right movements, it can additionally reach/capture the third square if the second is empty.")
       (image White "images/tenjiku/Heaven_W.bmp" 
 	 Black "images/tenjiku/Heaven_B.bmp" )
+      (moves
+           (move-type normal-type)
+           (slide-2 n) (slide-2 s) 
+           (slide-2 nw) (slide-2 sw) (slide-2 ne) (slide-2 se)
+           (step-3 w) (step-3 e)
+           (lion-step nw left-d-type) (lion-step se left-d-type) (lion-step sw left-d-type) (lion-step ne left-d-type)
+           (lion-step n left-v-type) (lion-step s left-v-type)
+           (lion-step w left-h-type) (lion-step e left-h-type)
+           (move-type left-d-type)
+           (step nw) (step sw) (step ne) (step se)
+           (move-type left-v-type)
+           (step n) (step s)
+           (move-type left-h-type)
+           (step w) (step e)
+      )
    )  
 
    (piece 

@@ -108,7 +108,7 @@
     > Tenjiku Shogi
     - Annan Shogi
   - Escalation
-  - Шакти
+  > Шакти
   - Cubic Chess
   - Congo
   - Flip Chess
