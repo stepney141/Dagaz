@@ -159,7 +159,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.LITERAL,	1);	// Soldier
     design.addCommand(0, ZRF.FUNCTION,	11);	// create
     design.addCommand(0, ZRF.FUNCTION,	7);	// back
-    design.addCommand(0, ZRF.FUNCTION,	26);	// capture
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
@@ -188,7 +187,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(1, ZRF.LITERAL,	1);	// Soldier
     design.addCommand(1, ZRF.FUNCTION,	11);	// create
     design.addCommand(1, ZRF.FUNCTION,	7);	// back
-    design.addCommand(1, ZRF.FUNCTION,	26);	// capture
     design.addCommand(1, ZRF.FUNCTION,	25);	// to
     design.addCommand(1, ZRF.FUNCTION,	28);	// end
 
