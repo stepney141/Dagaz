@@ -191,6 +191,9 @@
 
 (variant
   (title "Italian Damone")
+  (default)
+
+  (option "maximal captures" false)
 
   (move-priorities jump-type normal-type)
 
