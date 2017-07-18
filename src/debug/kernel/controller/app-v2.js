@@ -294,20 +294,22 @@ App.prototype.exec = function() {
                   _.each(moves, function(m) {
                        console.log("Debug: " + m.toString());
                   });
-                  var g = this.board.checkGoals(this.design, this.board.parent.player);
-                  if (g != 0) {
-                      var player = this.design.playerNames[this.board.parent.player];
-                      this.state = STATE.DONE;
-                      Canvas.style.cursor = "default";
-                      if (g > 0) {
-                          this.doneMessage = player + " win"
-                      } else {
-                          this.doneMessage = player + " loss"
-                      }
-                  }
               }
           }
       }
+      if (this.board.parent !== null) {
+          var g = this.board.checkGoals(this.design, this.board.parent.player);
+          if (g != 0) {
+              var player = this.design.playerNames[this.board.parent.player];
+              this.state = STATE.DONE;
+              Canvas.style.cursor = "default";
+              if (g > 0) {
+                  this.doneMessage = player + " win"
+              } else {
+                  this.doneMessage = player + " loss"
+              }
+          }
+     }
   }
 }
 

@@ -28,7 +28,7 @@
 
   (option "animate captures" false)
   (option "smart moves"      true)
-  (option "ko"               situation)
+; (option "ko"               situation)
 
   (players Black White)
   (turn-order Black White)
@@ -84,4 +84,13 @@
   (loss-condition (White Black) (pieces-remaining 0))
   (loss-condition (White Black) stalemated)
   (loss-condition (White Black) repetition)
+)
+
+(variant
+  (title "Debug")
+  (default)
+  (board-setup
+    (Black (Man a1 c1 e1 g1  b2 d2 f4 h2  a3 c3 e3 g3) )
+    (White (Man b8 d8 f8 h8  a7 c7 e7 g7  b6 d6 f6 h6) )
+  )
 )

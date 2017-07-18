@@ -62,7 +62,7 @@
   (option "animate captures" false)
   (option "smart moves"      true)
   (option "maximal captures" true)
-  (option "ko"               situation)
+; (option "ko"               situation)
 
   (players White Black)
   (turn-order White Black)

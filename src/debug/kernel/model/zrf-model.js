@@ -1887,7 +1887,7 @@ ZrfMove.prototype.applyTo = function(obj, part) {
       return (action[0] !== null) && (action[1] !== null);
     })
    .each(function (action) {
-      obj.movePiece(action[0][0], action[1][0], (action[2] === null) ? null : action[2][0]);
+      obj.movePiece(action[0][0], action[1][0], (action[2] === null) ? null : action[2][0], action[3]);
       r = true;
     });
   _.chain(this.actions)
@@ -1896,7 +1896,7 @@ ZrfMove.prototype.applyTo = function(obj, part) {
       return (action[0] === null) && (action[1] !== null) && (action[2] !== null);
     })
    .each(function (action) {
-      obj.dropPiece(action[1][0], action[2][0]);
+      obj.dropPiece(action[1][0], action[2][0], action[3]);
       r = true;
     });
   _.chain(this.actions)
@@ -1905,7 +1905,7 @@ ZrfMove.prototype.applyTo = function(obj, part) {
       return (action[0] !== null) && (action[1] === null);
     })
    .each(function (action) {
-      obj.capturePiece(action[0][0]);
+      obj.capturePiece(action[0][0], action[3]);
       r = true;
     });
   _.chain(this.actions)

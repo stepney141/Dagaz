@@ -24,6 +24,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "true");
     design.checkVersion("highlight-goals", "false");
+    design.checkVersion("damone-extension", "true");
 
     design.addDirection("ne");
     design.addDirection("se");
@@ -327,16 +328,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(4, 3, [2], 1);
     design.addMove(4, 3, [1], 1);
 
-    design.addPiece("King", 5);
-    design.addMove(5, 9, [3, 3], 2);
-    design.addMove(5, 9, [0, 0], 2);
-    design.addMove(5, 9, [2, 2], 2);
-    design.addMove(5, 9, [1, 1], 2);
-    design.addMove(5, 3, [3], 1);
-    design.addMove(5, 3, [0], 1);
-    design.addMove(5, 3, [2], 1);
-    design.addMove(5, 3, [1], 1);
-
     design.setup("Black", "Man", 59);
     design.setup("Black", "Man", 52);
     design.setup("Black", "Man", 45);
@@ -370,8 +361,6 @@ Dagaz.View.configure = function(view) {
     view.defPiece("BlackPromotedDama", "Black PromotedDama");
     view.defPiece("WhiteDamone", "White Damone");
     view.defPiece("BlackDamone", "Black Damone");
-    view.defPiece("WhiteKing", "White King");
-    view.defPiece("BlackKing", "Black King");
  
     view.defPosition("a8", 2, 2, 50, 50);
     view.defPosition("b8", 52, 2, 50, 50);

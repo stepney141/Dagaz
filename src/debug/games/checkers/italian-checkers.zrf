@@ -41,7 +41,7 @@
 
   (option "animate captures" false)
   (option "smart moves"      true)
-  (option "ko"               situation)
+; (option "ko"               situation)
   (option "maximal captures" 2)
 
   (players Black White)
@@ -194,6 +194,7 @@
   (default)
 
   (option "maximal captures" false)
+; (option "damone-extension" false)
 
   (move-priorities jump-type normal-type)
 

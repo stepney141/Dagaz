@@ -44,7 +44,7 @@
   - Arimaa
   > Ордо
 - Control games
-  - Asalto
+  > Asalto
   - Gala
   - Elementals
 - Elimination games
@@ -57,7 +57,7 @@
   - Makyek
   - Йотай
   - Nam Dinh
-  - Евклид (варианты с составными ходами и захватом короля)
+  > Евклид
   - Abalone
   > Walhall
   * NotChess
