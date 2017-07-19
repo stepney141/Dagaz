@@ -41,9 +41,10 @@
   (capture-sound "")
   (drop-sound "")
 
-  (option "animate captures" false)
-  (option "smart moves"      true)
-  (option "ko"               situation)
+  (option "animate captures"  false)
+  (option "smart moves"       true)
+  (option "deferred captures" true)
+  (option "ko"                situation)
 
   (players Black White)
   (turn-order Black White)

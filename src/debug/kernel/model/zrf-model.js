@@ -374,7 +374,9 @@ Dagaz.Model.functions[Dagaz.Model.ZRF_CAPTURE] = function(gen) {
    if (gen.getPiece(gen.pos) === null) {
        return 0;
    }
-   gen.capturePiece(gen.pos);
+   if (!gen.capturePiece(gen.pos)) {
+       return null;
+   }
    gen.generated = true;
    return 0;
 }
@@ -912,6 +914,15 @@ ZrfDesign.prototype.addZone = function(name, player, positions) {
   this.zones[zone][player] = Dagaz.int32Array(positions);
 }
 
+ZrfDesign.prototype.zonePositions = function(zone, player) {
+  if (!_.isUndefined(this.zones[zone])) {
+      if (!_.isUndefined(this.zones[zone][player])) {
+          return this.zones[zone][player];
+      }
+  }
+  return [];
+}
+
 ZrfDesign.prototype.inZone = function(zone, player, pos) {
   if (!_.isUndefined(this.zones[zone])) {
       if (!_.isUndefined(this.zones[zone][player])) {
@@ -1052,11 +1063,25 @@ ZrfMoveGenerator.prototype.dropPiece = function(pos, piece) {
   this.setPiece(pos, piece);
 }
 
+ZrfMoveGenerator.prototype.isCaptured = function(pos) {
+  if (this.parent) {
+      return this.parent.isCaptured(pos);
+  }
+  if (_.isUndefined(this.captured)) {
+      this.captured = [];
+  }
+  if (_.indexOf(this.captured, pos) >= 0) return true;
+  this.captured.push(pos);
+  return false;
+}
+
 ZrfMoveGenerator.prototype.capturePiece = function(pos) {
+  if (this.isCaptured(pos)) return false;
   this.move.capturePiece(pos, this.level);
   if (!Dagaz.Model.deferredStrike) {
       this.setPiece(pos, null);
   }
+  return true;
 }
 
 Dagaz.Model.getMark = function(gen) {
@@ -1955,9 +1980,6 @@ ZrfMove.prototype.dropPiece = function(pos, piece, part) {
 
 ZrfMove.prototype.capturePiece = function(pos, part) {
   if (!part) part = 1;
-  if (Dagaz.Model.deferredStrike) {
-      part = -part;
-  }
   this.actions.push([ [pos], null, null, part]);
 }
 

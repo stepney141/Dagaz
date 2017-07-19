@@ -27,6 +27,20 @@
 ))
 
 (define king-jump (
+   $1 (while empty? $1)
+   (verify enemy?)
+   $1 (while empty?
+       mark
+       (while empty? 
+          (opposite $1)
+       ) 
+       capture
+       back
+       (add-partial continue-type) $1
+   )
+))
+
+(define king-continue (
    $1 (while empty? 
        $1 (verify not-last-from?)
    )
@@ -38,17 +52,24 @@
        ) 
        capture
        back
-       (add-partial jump-type) $1
+       (add-partial continue-type) $1
    )
 ))
 
 (define greek-jump (
+   $1 (while empty? $1)
+   (verify enemy?) capture
+   $1 (verify empty?)
+   (add-partial continue-type)
+))
+
+(define greek-continue (
    $1 (while empty? 
        $1 (verify not-last-from?)
    )
    (verify enemy?) capture
    $1 (verify empty?)
-   (add-partial jump-type)
+   (add-partial continue-type)
 ))
 
 (game
@@ -105,6 +126,8 @@
      (moves
          (move-type jump-type)
          (king-jump n) (king-jump w) (king-jump e) (king-jump s)
+         (move-type continue-type)
+         (king-continue n) (king-continue w) (king-continue e) (king-continue s)
          (move-type normal-type)
          (king-shift n) (king-shift w) (king-shift e) (king-shift s)
      )
@@ -129,8 +152,19 @@
      (moves
          (move-type jump-type)
          (greek-jump n) (greek-jump w) (greek-jump e) (greek-jump s)
+         (move-type continue-type)
+         (greek-continue n) (greek-continue w) (greek-continue e) (greek-continue s)
          (move-type normal-type)
          (king-shift n) (king-shift w) (king-shift e) (king-shift s)
      )
+  )
+)
+
+(variant
+  (title "Turkish Dama (debug)")
+  (default)
+  (board-setup
+    (White (King h8) (Man a2 b2 c2 d2 e2 f2 g2 h2  a3 b3 c3 d3 e4 f4 h6))
+    (Black (Man a7 b7 c7 d7 e7 h7 a5 b6 c6 d6 e6 f6 g6))
   )
 )

@@ -41,11 +41,11 @@
   (capture-sound "")
   (drop-sound "")
 
-  (option "animate captures" false)
-  (option "smart moves"      true)
-  (option "maximal captures" 2)
-  (option "zrf-advanced"     deferred)
-  (option "ko"               situation)
+  (option "animate captures"  false)
+  (option "smart moves"       true)
+  (option "maximal captures"  2)
+  (option "deferred captures" true)
+; (option "ko"                situation)
 
   (players White Black)
   (turn-order White Black)

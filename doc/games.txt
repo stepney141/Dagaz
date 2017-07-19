@@ -3,10 +3,10 @@
   * Hunt
   - Checkers-like games
     > Bagh Chal
-    - Fox and Geese (4 variants)
+    > Fox and Geese (4 variants)
     * 4 Fields Kono
     - Алькуэрк
-    - Dablot
+    > Dablot
     - Choko
     > Konane
     > Фанорона

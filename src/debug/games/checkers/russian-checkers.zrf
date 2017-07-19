@@ -48,10 +48,10 @@
   (capture-sound "")
   (drop-sound "")
 
-  (option "animate captures" false)
-  (option "smart moves"      true)
-  (option "zrf-advanced"     deferred)
-  (option "ko"               situation)
+  (option "animate captures"  false)
+  (option "smart moves"       true)
+  (option "deferred captures" true)
+; (option "ko"                situation)
 
   (players White Black)
   (turn-order White Black)
@@ -135,5 +135,14 @@
   (board-setup
     (White (Man a1 c1 e1 g1 i1  b2 d2 f2 h2 j2  a3 c3 e3 g3 i3) )
     (Black (Man b8 d8 f8 h8 j8  a7 c7 e7 g7 i7  b6 d6 f6 h6 j6) )
+  )
+)
+
+(variant
+  (title "Debug")
+  (default)
+  (board-setup
+    (White (Man a1 c1 e1 g1  b2 d2 f4 h2  a3 c3 e3 g3) )
+    (Black (Man b8 d8 f8 h8  a7 c7 e7 g7  b6 d6 f6 h6) )
   )
 )

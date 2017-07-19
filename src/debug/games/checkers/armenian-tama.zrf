@@ -1,3 +1,5 @@
+(version "2.0")
+
 (define checker-shift (
    $1 (verify empty?)
    (if (in-zone? promotion)
@@ -12,9 +14,9 @@
    capture 
    $1 (verify empty?)
    (if (in-zone? promotion)
-       (add King)
+      (add-partial King jump-type)
     else
-       (add-partial jump-type)
+      (add-partial jump-type)
    )
 ))
 
@@ -25,6 +27,20 @@
 ))
 
 (define king-jump (
+   $1 (while empty? $1)
+   (verify enemy?)
+   $1 (while empty?
+       mark
+       (while empty? 
+          (opposite $1)
+       ) 
+       capture
+       back
+       (add-partial continue-type) $1
+   )
+))
+
+(define king-continue (
    $1 (while empty? 
        $1 (verify not-last-from?)
    )
@@ -36,12 +52,12 @@
        ) 
        capture
        back
-       (add-partial jump-type) $1
+       (add-partial continue-type) $1
    )
 ))
 
 (game
-  (title "Spanish Checkers")
+  (title "Armenian Tama")
 
   (move-sound "Audio\Pickup.wav")
   (release-sound "Audio\Pickup.wav")
@@ -50,30 +66,31 @@
 
   (option "animate captures"  false)
   (option "smart moves"       true)
-  (option "maximal captures"  2)
+  (option "maximal captures"  true)
   (option "deferred captures" true)
-  (option "ko"                situation)
+; (option "ko"                situation)
 
   (players White Black)
   (turn-order White Black)
   (move-priorities jump-type normal-type)
 
   (board
-     (image "images/8x8.bmp")
+     (image "images/armenian.bmp")
      (grid
-         (start-rectangle 2 2 52 52)
-         (dimensions
+        (start-rectangle 2 2 52 52)
+        (dimensions
            ("a/b/c/d/e/f/g/h" (50 0)) ; files
            ("8/7/6/5/4/3/2/1" (0 50)) ; ranks
-         )
-         (directions (ne 1 -1) (nw -1 -1) (se 1 1) (sw -1 1))
+        )
+        (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0)
+           (ne 1 -1) (nw -1 -1) (se 1 1) (sw -1 1))
      )
-     (symmetry Black (nw se) (se nw) (ne sw) (sw ne))
+     (symmetry Black (n s) (s n) (w e) (e w) (nw se) (se nw) (ne sw) (sw ne))
      (zone (name promotion) (players White)
-           (positions b8 d8 f8 h8)
+           (positions a8 b8 c8 d8 e8 f8 g8 h8)
      )
      (zone (name promotion) (players Black)
-           (positions a1 c1 e1 g1)
+           (positions a1 b1 c1 d1 e1 f1 g1 h1)
      )
   )
 
@@ -83,9 +100,9 @@
             Black "images/bman.bmp")
      (moves
          (move-type jump-type)
-         (checker-jump nw) (checker-jump ne)
+         (checker-jump n) (checker-jump w) (checker-jump e)
          (move-type normal-type)
-         (checker-shift nw) (checker-shift ne)
+         (checker-shift n) (checker-shift w) (checker-shift e) (checker-shift ne) (checker-shift nw)
      )
   )
   (piece
@@ -94,15 +111,18 @@
             Black "images/bking.bmp")
      (moves
          (move-type jump-type)
-         (king-jump nw) (king-jump ne) (king-jump sw) (king-jump se)
+         (king-jump n) (king-jump w) (king-jump e) (king-jump s)
+         (move-type continue-type)
+         (king-continue n) (king-continue w) (king-continue e) (king-continue s)
          (move-type normal-type)
-         (king-shift nw) (king-shift ne) (king-shift sw) (king-shift se)
+         (king-shift n) (king-shift w) (king-shift e) (king-shift s)
+         (king-shift ne) (king-shift nw) (king-shift se) (king-shift sw)
      )
   )
 
   (board-setup
-    (White (Man a1 c1 e1 g1  b2 d2 f2 h2  a3 c3 e3 g3) )
-    (Black (Man b8 d8 f8 h8  a7 c7 e7 g7  b6 d6 f6 h6) )
+    (White (Man a2 b2 c2 d2 e2 f2 g2 h2  a3 b3 c3 d3 e3 f3 g3 h3))
+    (Black (Man a7 b7 c7 d7 e7 f7 g7 h7  a6 b6 c6 d6 e6 f6 g6 h6))
   )
 
   (loss-condition (White Black) (pieces-remaining 0))
