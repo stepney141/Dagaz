@@ -82,8 +82,8 @@
   )
   (piece
      (name King)
-     (image White "images/wking.bmp"
-            Black "images/bking.bmp")
+     (image White "images/wdamone.bmp"
+            Black "images/bdamone.bmp")
      (moves
          (move-type jump-type)
          (king-jump nw) (king-jump ne) (king-jump sw) (king-jump se)

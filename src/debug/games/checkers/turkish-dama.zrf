@@ -121,8 +121,8 @@
   )
   (piece
      (name King)
-     (image White "images/wking.bmp"
-            Black "images/bking.bmp")
+     (image White "images/wdamone.bmp"
+            Black "images/bdamone.bmp")
      (moves
          (move-type jump-type)
          (king-jump n) (king-jump w) (king-jump e) (king-jump s)
@@ -147,8 +147,8 @@
   (title "Greek Checkers")
   (piece
      (name King)
-     (image White "images/wking.bmp"
-            Black "images/bking.bmp")
+     (image White "images/wdamone.bmp"
+            Black "images/bdamone.bmp")
      (moves
          (move-type jump-type)
          (greek-jump n) (greek-jump w) (greek-jump e) (greek-jump s)
@@ -157,14 +157,5 @@
          (move-type normal-type)
          (king-shift n) (king-shift w) (king-shift e) (king-shift s)
      )
-  )
-)
-
-(variant
-  (title "Turkish Dama (debug)")
-  (default)
-  (board-setup
-    (White (King h8) (Man a2 b2 c2 d2 e2 f2 g2 h2  a3 b3 c3 d3 e4 f4 h6))
-    (Black (Man a7 b7 c7 d7 e7 h7 a5 b6 c6 d6 e6 f6 g6))
   )
 )

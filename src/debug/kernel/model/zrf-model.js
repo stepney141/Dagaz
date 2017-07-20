@@ -1577,7 +1577,7 @@ ZrfBoard.prototype.generateInternal = function(callback, cont) {
                    while (priors[i].length > 0) {
                       var g = priors[i].pop();
                       g.generate();
-                      if (g.completed) {
+                      if (g.completed && !g.move.isPass()) {
                           if (cont && (g.moveType == 0)) {
                               CompleteMove(this, g);
                           }
