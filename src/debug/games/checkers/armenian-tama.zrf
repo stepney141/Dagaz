@@ -14,7 +14,7 @@
    capture 
    $1 (verify empty?)
    (if (in-zone? promotion)
-      (add-partial King jump-type)
+      (add-partial King continue-type)
     else
       (add-partial jump-type)
    )

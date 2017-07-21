@@ -12,7 +12,7 @@
    capture 
    $1 (verify empty?)
    (if (in-zone? promotion)
-       (add-partial King jump-type)
+       (add-partial King continue-type)
     else
        (add-partial jump-type)
    )
@@ -25,9 +25,7 @@
 ))
 
 (define king-jump (
-   $1 (while empty? 
-       $1 (verify not-last-from?)
-   )
+   $1 (while empty?  $1)
    (verify enemy?)
    $1 (while empty?
        mark
@@ -36,7 +34,23 @@
        ) 
        capture
        back
-       (add-partial jump-type) $1
+       (add-partial continue-type) $1
+   )
+))
+
+(define king-continue (
+   $1 (while empty? 
+       $1 (verify not-last-from?)
+   )
+   (verify enemy?) 
+   $1 (while empty?
+       mark
+       (while empty? 
+          (opposite $1)
+       ) 
+       capture
+       back
+       (add-partial continue-type) $1
    )
 ))
 
@@ -94,6 +108,8 @@
      (moves
          (move-type jump-type)
          (king-jump nw) (king-jump ne) (king-jump sw) (king-jump se)
+         (move-type continue-type)
+         (king-continue nw) (king-continue ne) (king-continue sw) (king-continue se)
          (move-type normal-type)
          (king-shift nw) (king-shift ne) (king-shift sw) (king-shift se)
      )
@@ -140,9 +156,8 @@
 
 (variant
   (title "Debug")
-  (default)
   (board-setup
-    (White (Man a1 a3 b2 d2 e1 e3 g1 h2 d4))
+    (White (King d4) (Man a1 a3 b2 d2 e1 e3 g1 h2))
     (Black (Man a7 b8 d6 f8 g5 g7 h8 c5 c7 e7 e5))
   )
 )

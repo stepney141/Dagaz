@@ -25,6 +25,20 @@
 ))
 
 (define king-jump (
+   $1 (while empty? $1)
+   (verify enemy?)
+   $1 (while empty?
+       mark
+       (while empty? 
+          (opposite $1)
+       ) 
+       capture
+       back
+       (add-partial continue-type) $1
+   )
+))
+
+(define king-continue (
    $1 (while empty? 
        $1 (verify not-last-from?)
    )
@@ -36,7 +50,7 @@
        ) 
        capture
        back
-       (add-partial jump-type) $1
+       (add-partial continue-type) $1
    )
 ))
 
@@ -52,7 +66,7 @@
   (option "smart moves"       true)
   (option "maximal captures"  2)
   (option "deferred captures" true)
-  (option "ko"                situation)
+; (option "ko"                situation)
 
   (players White Black)
   (turn-order White Black)
@@ -95,6 +109,8 @@
      (moves
          (move-type jump-type)
          (king-jump nw) (king-jump ne) (king-jump sw) (king-jump se)
+         (move-type continue-type)
+         (king-continue nw) (king-continue ne) (king-continue sw) (king-continue se)
          (move-type normal-type)
          (king-shift nw) (king-shift ne) (king-shift sw) (king-shift se)
      )

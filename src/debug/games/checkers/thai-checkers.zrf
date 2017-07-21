@@ -25,9 +25,7 @@
 ))
 
 (define king-jump (
-   $1 (while empty? 
-       $1 (verify not-last-from?)
-   )
+   $1 (while empty? $1)
    (verify enemy?) capture
    $1 (verify empty?)
    (add-partial jump-type)
@@ -44,7 +42,7 @@
   (option "animate captures"  false)
   (option "smart moves"       true)
   (option "deferred captures" true)
-  (option "ko"                situation)
+; (option "ko"                situation)
 
   (players Black White)
   (turn-order Black White)

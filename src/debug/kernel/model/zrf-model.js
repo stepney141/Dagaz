@@ -1063,20 +1063,27 @@ ZrfMoveGenerator.prototype.dropPiece = function(pos, piece) {
   this.setPiece(pos, piece);
 }
 
-ZrfMoveGenerator.prototype.isCaptured = function(pos) {
+ZrfMoveGenerator.prototype.isCaptured = function(pos, level) {
   if (this.parent) {
-      return this.parent.isCaptured(pos);
+      return this.parent.isCaptured(pos, level);
   }
   if (_.isUndefined(this.captured)) {
       this.captured = [];
   }
-  if (_.indexOf(this.captured, pos) >= 0) return true;
-  this.captured.push(pos);
+  if (this.captured[pos] && (this.captured[pos] < level)) return true;
+  _.each(Dagaz.Model.getDesign().allPositions(), function(p) {
+      if (this.captured[p] && (this.captured[p] >= level)) {
+          delete this.captured[p];
+      }
+  }, this);
+  this.captured[pos] = level;
   return false;
 }
 
 ZrfMoveGenerator.prototype.capturePiece = function(pos) {
-  if (this.isCaptured(pos)) return false;
+  if (Dagaz.Model.deferredStrike) {
+      if (this.isCaptured(pos, this.level)) return false;
+  }
   this.move.capturePiece(pos, this.level);
   if (!Dagaz.Model.deferredStrike) {
       this.setPiece(pos, null);
@@ -1520,7 +1527,7 @@ var CompleteMove = function(board, gen) {
   while (positions.length > 0) {
        pos = positions.pop();
        var piece = gen.getPieceInternal(pos);
-       if (Dagaz.Model.isFriend(piece, board.player) || Dagaz.Model.sharedPieces) {
+       if ((piece !== null) && (Dagaz.Model.isFriend(piece, board.player) || Dagaz.Model.sharedPieces)) {
            _.each(board.game.design.pieces[piece.type], function(move) {
                 if ((move.type == 0) && (move.mode == gen.mode)) {
                     var g = gen.copy(move.template, move.params);
@@ -1592,9 +1599,9 @@ ZrfBoard.prototype.generateInternal = function(callback, cont) {
                var g = this.forks.pop();
                g.generate();
                if (g.completed) {
-                   if (cont && (g.moveType == 0)) {
+                     if (cont && (g.moveType == 0)) {
                         CompleteMove(this, g);
-                   }
+                     }
                }
           }
       }
