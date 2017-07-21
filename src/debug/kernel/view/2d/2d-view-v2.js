@@ -360,13 +360,15 @@ View2D.prototype.animate = function() {
    .each(function(frame) {
         if (!_.isUndefined(frame.op)) {
             var piece = this.setup[frame.op];
-            if (!_.isUndefined(frame.dx)) {
-                piece.x += frame.dx;
+            if (piece) {
+                if (!_.isUndefined(frame.dx)) {
+                    piece.x += frame.dx;
+                }
+                if (!_.isUndefined(frame.dy)) {
+                    piece.y += frame.dy;
+                }
+                piece.z = Math.abs(+frame.dx) + Math.abs(+frame.dy);
             }
-            if (!_.isUndefined(frame.dy)) {
-                piece.y += frame.dy;
-            }
-            piece.z = Math.abs(+frame.dx) + Math.abs(+frame.dy);
         }
         frame.cnt--;
     }, this);
