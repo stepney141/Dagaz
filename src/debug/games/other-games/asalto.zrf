@@ -76,7 +76,7 @@
 )
 
 (variant
-   (title "Fox and Geese (13 mans)")
+   (title "Fox and Geese (13 men)")
 
    (board
       (image "images/asalto/british.bmp")
@@ -98,7 +98,7 @@
 )
 
 (variant
-   (title "Fox and Geese (15 mans)")
+   (title "Fox and Geese (15 men)")
 
    (board
       (image "images/asalto/british.bmp")

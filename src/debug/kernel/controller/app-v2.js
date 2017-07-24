@@ -276,6 +276,7 @@ App.prototype.exec = function() {
   }
   if (this.state == STATE.EXEC) {
       this.state = STATE.IDLE;
+      isDrag = false;
       if (!this.move.isPass()) {
           if (Dagaz.Model.showMoves) {
               console.log(this.move.toString());
@@ -286,7 +287,6 @@ App.prototype.exec = function() {
       this.view.markPositions(Dagaz.View.markType.ATTACKING, []);
       if (!_.isUndefined(this.list)) {
           if (this.list.isDone()) {
-              isDrag = false;
               var moves = this.list.getMoves();
               delete this.list;
               if (moves.length > 0) {

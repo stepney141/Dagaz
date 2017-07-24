@@ -22,13 +22,15 @@ Dagaz.Model.CheckInvariants = function(board) {
          .map(function(action) {
               return action[3];
           }).max().value();
-        _.chain(move.actions)
-         .filter(function(action) {
-              return (action[0] !== null) && (action[1] === null);
-          })
-         .each(function(action) {
-              action[3] = mx;
+          var actions = [];
+          _.each(move.actions, function(action) {
+              var pn = action[3];
+              if ((action[0] !== null) && (action[1] === null)) {
+                  pn = mx;
+              }
+              actions.push([ action[0], action[1], action[2], pn ]);
           });
+          move.actions = actions;
     });
   CheckInvariants(board);
 }
