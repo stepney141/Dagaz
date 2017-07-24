@@ -18,6 +18,18 @@
    )
 ))
 
+(define king-shift (
+   $1 (verify empty?)
+   add
+))
+
+(define king-jump (
+   $1 (verify enemy?) 
+   capture 
+   $1 (verify empty?)
+   (add-partial jump-type)
+))
+
 (game
   (title "English Checkers")
 
@@ -70,9 +82,9 @@
             Black "images/bdamone.bmp")
      (moves
          (move-type jump-type)
-         (checker-jump nw) (checker-jump ne) (checker-jump sw) (checker-jump se)
+         (king-jump nw) (king-jump ne) (king-jump sw) (king-jump se)
          (move-type normal-type)
-         (checker-shift nw) (checker-shift ne) (checker-shift sw) (checker-shift se)
+         (king-shift nw) (king-shift ne) (king-shift sw) (king-shift se)
      )
   )
 
