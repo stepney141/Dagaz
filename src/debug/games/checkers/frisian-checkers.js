@@ -24,6 +24,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "true");
     design.checkVersion("maximal-captures", "2");
+    design.checkVersion("deferred-captures", "true");
     design.checkVersion("international-extension", "true");
 
     design.addDirection("w");

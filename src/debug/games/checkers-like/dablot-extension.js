@@ -30,9 +30,30 @@ Dagaz.Model.checkGoals = function(design, board, player) {
   }
 }
 
+var saveMove = function(moves, move, pn) {
+  var m = Dagaz.Model.createMove();
+  _.chain(move.actions)
+   .filter(function(action) {
+        return action[3] < pn;
+    })
+   .each(function(action) {
+        m.actions.push([ action[0], action[1], action[2], action[3] ]);
+    });
+  var notFound = true;
+  _.each(moves, function(n) {
+      if (n.toString() == m.toString()) {
+          notFound = false;
+      }
+  });
+  if (notFound) {
+      moves.push(m);
+  }
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
+  var moves = [];
   _.chain(board.moves)
    .filter(function(move) {
        return move.actions.length > 1;
@@ -54,17 +75,20 @@ Dagaz.Model.CheckInvariants = function(board) {
             .filter(function(action) {
                  return (action[0] !== null) && (action[1] === null);
              })
-            .map(function(action) {
-                 return action[0][0];
-             })
-            .each(function(pos) {
-                 var p = board.getPiece(pos);
+            .each(function(action) {
+                 var p = board.getPiece(action[0][0]);
                  if ((p === null) || (p.type < piece.type)) {
+                     if (action[3] > 1) {
+                         saveMove(moves, move, action[3]);
+                     }
                      move.failed = true;
                  }
              });
          }
     });
+  _.each(moves, function(move) {
+      board.moves.push(move);
+  });
   CheckInvariants(board);
 }
 

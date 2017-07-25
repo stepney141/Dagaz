@@ -43,9 +43,9 @@
   (option "animate captures"        false)
   (option "smart moves"             true)
   (option "maximal captures"        2)
-; (option "zrf-advanced"            deferred)
+  (option "deferred captures"       true)
+  (option "international-extension" true)
 ; (option "ko"                      situation)
-; (option "international-extension" true)
 
   (players White Black)
   (turn-order White Black)

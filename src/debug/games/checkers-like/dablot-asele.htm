@@ -1,20 +1,20 @@
 <html>
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Frisian Checkers</title>
+<title>Dablot Asele</title>
 </head>
 <body>
 
-<img id="Board" style="display:none" src="images/10x10.png">
-<img id="WhiteMan" style="display:none" src="images/wman.png">
-<img id="BlackMan" style="display:none" src="images/bman.png">
-<img id="WhiteKing" style="display:none" src="images/wdamone.png">
-<img id="BlackKing" style="display:none" src="images/bdamone.png">
+<img id="Board" style="display:none" src="images/dablot/5x5.png">
+<img id="WhiteKing" style="display:none" src="images/dablot/wking.png">
+<img id="BlackKing" style="display:none" src="images/dablot/bking.png">
+<img id="WhiteMan" style="display:none" src="images/dablot/wprince.png">
+<img id="BlackMan" style="display:none" src="images/dablot/bprince.png">
 
 <table style="margin:auto; font-family:sans-serif; font-size:14px" id="Table">
-<tr style="height:504px; vertical-align:top">
-<td id="CanvasCell" style="width:504px">
-<canvas id="Canvas" width="504" height="504" style="cursor:default">Broken canvas...</canvas>
+<tr style="height:507px; vertical-align:top">
+<td id="CanvasCell" style="width:507px">
+<canvas id="Canvas" width="507" height="507" style="cursor:default">Broken canvas...</canvas>
 </td><td style="width:300px;">
 <div style="height:510px; overflow:auto" id="ScrollDiv">
 <img id="GlyphImage"><p id="HelpText"></p>
@@ -43,13 +43,9 @@
 <script src="../../kernel/controller/utils/move-list-v2.js"></script>
 <script src="../../kernel/controller/ai/random-ai.js"></script>
 <script src="../../kernel/controller/ai/uct-ai.js"></script>
-<script src="../../utils/sgf-parser.js"></script>
-<script src="data/frisian.js"></script>
-<script src="../../kernel/controller/ai/sgf-ai.js"></script>
-<script src="maximal-captures.js"></script>
-<script src="deferred-captures.js"></script>
-<script src="international-extension.js"></script>
-<script src="frisian-checkers.js"></script>
+<script src="dablot-invariant.js"></script>
+<script src="dablot-extension.js"></script>
+<script src="dablot-asele.js"></script>
 <script src="../../kernel/controller/app-v2.js"></script>
 
 </body>

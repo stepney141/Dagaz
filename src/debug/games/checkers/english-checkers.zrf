@@ -100,7 +100,6 @@
 
 (variant
   (title "Debug")
-  (default)
   (board-setup
     (Black (Man a1 a3 b2 c1 c3 d2 d4 e1 f2 g3) )
     (White (Man a5 a7 b8 d8 e7 f6 f8 g5 h6 h8) )

@@ -65,7 +65,7 @@
   (option "animate captures"  false)
   (option "smart moves"       true)
   (option "maximal captures"  2)
-; (option "deferred captures" true)
+  (option "deferred captures" true)
 ; (option "ko"                situation)
 
   (players Black White)
