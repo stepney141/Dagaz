@@ -147,7 +147,7 @@
   (board
      (image "images/dablot/5x5.bmp")
      (grid
-        (start-rectangle 6 6 65 65)
+        (start-rectangle 7 7 66 66)
         (dimensions
            ("a/b/c/d/e" (88 0)) ; files
            ("9/7/5/3/1" (0 88)) ; ranks
