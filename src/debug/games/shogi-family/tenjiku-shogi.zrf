@@ -1,3 +1,102 @@
+(define great-general-slide (
+  $1 (while empty? add $1)
+  (if (and enemy?
+           (or (piece? King)
+               (piece? Prince) 
+           )
+      )
+      add
+   else
+      (while (not-piece? King)
+          (if (and enemy?
+                   (not-piece? King)
+                   (not-piece? Prince)
+              )
+              add
+          )
+          (verify (not-piece? King))
+          (verify (not-piece? Prince))
+          (verify (not-piece? Great-General))
+          $1
+      )
+  )
+))
+
+(define vice-general-step 
+  $1 
+  (if not-empty? 
+      (set-flag no-piece false)
+  )
+  (if (and enemy?
+           (or (piece? King)
+               (piece? Prince) 
+           )
+      )
+      add
+  )
+  (verify (not-piece? King))
+  (verify (not-piece? Prince))
+  (verify (not-piece? Great-General))
+)
+
+(define vice-general-slide (
+  (set-flag no-piece true)
+  (vice-general-step $1) (vice-general-step $1) (vice-general-step $1)
+  (if (flag? no-piece)
+      $1 (while empty? add $1)
+  )
+  (if (and enemy?
+           (or (piece? King)
+               (piece? Prince) 
+           )
+      )
+      add
+   else
+      (while (not-piece? King)
+          (if (and enemy?
+                   (not-piece? King)
+                   (not-piece? Prince)
+              )
+              add
+          )
+          (verify (not-piece? King))
+          (verify (not-piece? Prince))
+          (verify (not-piece? Great-General))
+          (verify (not-piece? Vice-General))
+          $1
+      )
+  )
+))
+
+(define general-slide (
+  $1 (while empty? add $1)
+  (if (and enemy?
+           (or (piece? King)
+               (piece? Prince) 
+           )
+      )
+      add
+   else
+      (while (not-piece? King)
+          (if (and enemy?
+                   (not-piece? King)
+                   (not-piece? Prince)
+              )
+              add
+          )
+          (verify (not-piece? King))
+          (verify (not-piece? Prince))
+          (verify (not-piece? Great-General))
+          (verify (not-piece? Vice-General))
+          (verify (not-piece? Rook-General))
+          (verify (not-piece? Rook-General!))
+          (verify (not-piece? Bishop-General))
+          (verify (not-piece? Bishop-General!))
+          $1
+      )
+  )
+))
+
 (define lion-step (
   $1 (verify not-friend?)
   (add-partial $2)
@@ -767,6 +866,10 @@
       \\May promote to Vice-General upon reaching the promotion zone (rank 12 to 16).")
       (image White "images/tenjiku/BishopGeneral_W.bmp" 
 	 Black "images/tenjiku/BishopGeneral_B.bmp" )
+      (moves
+           (move-type normal-type)
+           (general-slide nw) (general-slide se) (general-slide sw) (general-slide ne)
+      )
    )
 
    (piece 
@@ -776,6 +879,10 @@
       (description "Bishop General (promoted Horned-Falcon)\\A Bishop General slides diagonally (exactly like a Bishop) on empty squares; But it can also RANGE-JUMP diagonally (it is like a normal slide but bypassing almost any friendly or adverse pieces on its trajectory). \\The rules for range-jumping generals are that they can only range-jump behind a piece of lower rank (the number of stars on the piece!) than themselves, but they can capture them like this nonetheless!. The Bishop and Rook Generals are the lowest rank (3 stars) so they can not range-jump behind any generals (star pieces), only behind normal pieces so. The last rule is that range-jumping pieces can not capture a King or Prince by this movement (or range-jumps behind; Because King and Prince are considered '6 stars' pieces... chiefs of all the generals!) But they can do so by normal sliding/stepping (on empty squares) nonetheless!")
       (image White "images/tenjiku/PBishopGeneral_W.bmp" 
     	 Black "images/tenjiku/PBishopGeneral_B.bmp" )
+      (moves
+           (move-type normal-type)
+           (general-slide nw) (general-slide se) (general-slide sw) (general-slide ne)
+      )
    )
 
    (piece 
@@ -784,9 +891,12 @@
       (help "Rook General: slides orthogonally on empty squares, OR RANGE-JUMPS orthogonally! Promotes to Great-General.")
       (description "Rook General\\A Rook General slides orthogonally (exactly like a Rook) on empty squares; But it can also RANGE-JUMP orthogonally (it is like a normal slide but bypassing almost any friendly or adverse pieces on its trajectory). \\The rules for range-jumping generals are that they can only range-jump behind a piece of lower rank (the number of stars on the piece!) than themselves, but they can capture them like this nonetheless!. The Bishop and Rook Generals are the lowest rank (3 stars) so they can not range-jump behind any generals (star pieces), only behind normal pieces so. The last rule is that range-jumping pieces can not capture a King or Prince by this movement (or range-jumps behind; Because King and Prince are considered '6 stars' pieces... chiefs of all the generals!) But they can do so by normal sliding/stepping (on empty squares) nonetheless!
       \\May promote to Great-General upon reaching the promotion zone (rank 12 to 16).")
-
       (image White "images/tenjiku/RookGeneral_W.bmp" 
     	 Black "images/tenjiku/RookGeneral_B.bmp" )
+      (moves
+           (move-type normal-type)
+           (general-slide n) (general-slide s) (general-slide w) (general-slide e)
+      )
    )
 
    (piece 
@@ -796,6 +906,10 @@
       (description "Rook General (promoted Soaring-Eagle)\\A Rook General slides orthogonally (exactly like a Rook) on empty squares; But it can also RANGE-JUMP orthogonally (it is like a normal slide but bypassing almost any friendly or adverse pieces on its trajectory). \\The rules for range-jumping generals are that they can only range-jump behind a piece of lower rank (the number of stars on the piece!) than themselves, but they can capture them like this nonetheless!. The Bishop and Rook Generals are the lowest rank (3 stars) so they can not range-jump behind any generals (star pieces), only behind normal pieces so. The last rule is that range-jumping pieces can not capture a King or Prince by this movement (or range-jumps behind; Because King and Prince are considered '6 stars' pieces... chiefs of all the generals!) But they can do so by normal sliding/stepping (on empty squares) nonetheless!")
       (image White "images/tenjiku/PRookGeneral_W.bmp" 
      	 Black "images/tenjiku/PRookGeneral_B.bmp" )
+      (moves
+           (move-type normal-type)
+           (general-slide n) (general-slide s) (general-slide w) (general-slide e)
+      )
    )
 
    (piece 
@@ -808,6 +922,7 @@
     	 Black "images/tenjiku/ViceGeneral_B.bmp" )
       (moves
            (move-type normal-type)
+           (vice-general-slide nw) (vice-general-slide se) (vice-general-slide sw) (vice-general-slide ne)
            (lion-step n left-2-type) (lion-step s left-2-type) (lion-step w left-2-type) (lion-step e left-2-type)
            (lion-step nw left-2-type) (lion-step se left-2-type) (lion-step sw left-2-type) (lion-step ne left-2-type)
            (move-type left-2-type)
@@ -827,6 +942,11 @@
       \\The rules for range-jumping generals are that they can only range-jump behind a piece of lower rank (the number of stars on the piece!) than themselves, but they can capture them like this nonetheless!. The Great General is a '5 stars' piece that can range-jump behind any generals, and behind normal pieces. The last rule is that range-jumping pieces can not capture a King or Prince by this movement (or range-jumps behind; Because King and Prince are considered '6 stars' pieces... chiefs of all the generals!) But they can do so by normal sliding/stepping (on empty squares) nonetheless!")
       (image White "images/tenjiku/GreatGeneral_W.bmp" 
 	  	     Black "images/tenjiku/GreatGeneral_B.bmp" )
+      (moves
+           (move-type normal-type)
+           (great-general-slide n) (great-general-slide s) (great-general-slide w) (great-general-slide e)
+           (great-general-slide nw) (great-general-slide se) (great-general-slide sw) (great-general-slide ne)
+      )
    )
 
    (piece

@@ -338,6 +338,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "Man", 53);
     design.setup("Black", "Man", 55);
     design.setup("Black", "Man", 57);
+    design.setup("Black", "Man", 59);
 }
 
 Dagaz.View.configure = function(view) {

@@ -5,8 +5,8 @@
     - Bagh Chal
     * Fox and Geese (4 variants)
     * 4 Fields Kono
-    > Алькуэрк
-    > Dablot
+    * Алькуэрк
+    * Dablot
     - Choko
     > Konane
     > Фанорона
@@ -17,14 +17,14 @@
     * Armenian Tama
     * Checkers
     * Italian Checkers
-    > International Checkers
+    * International Checkers
     * Russian Checkers
     * 80 Cells Checkers
     ? Czech Checkers
-    - Canadian Checkers
-    > Frisian Checkers
+    * Canadian Checkers
+    * Frisian Checkers
     * Thai Checkers
-    - Северные шашки
+    > Северные шашки
     - Ставропольские шашки
     - Столбовые шашки
   - Pasang
@@ -54,7 +54,7 @@
   - Atari Go
   - Seega
   - High Jump
-  - Makyek
+  > Makyek
   - Йотай
   > Nam Dinh
   > Евклид
