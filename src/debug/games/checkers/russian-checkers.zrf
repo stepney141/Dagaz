@@ -155,6 +155,29 @@
 )
 
 (variant
+  (title "Northern Checkers")
+
+  (option "animate captures"   false)
+  (option "smart moves"        true)
+  (option "northern-extension" true)
+; (option "ko"                 situation)
+)
+
+(variant
+  (title "Northern Kings")
+  (default)
+  (option "animate captures"   false)
+  (option "smart moves"        true)
+  (option "northern-extension" true)
+; (option "ko"                 situation)
+
+  (board-setup
+    (White (King a1 c1 e1 g1  b2 d2 f2 h2  a3 c3 e3 g3) )
+    (Black (King b8 d8 f8 h8  a7 c7 e7 g7  b6 d6 f6 h6) )
+  )
+)
+
+(variant
   (title "Debug")
   (board-setup
     (White (King d4) (Man a1 a3 b2 d2 e1 e3 g1 h2))
