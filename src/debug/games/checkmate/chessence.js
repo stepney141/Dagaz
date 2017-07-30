@@ -22,7 +22,8 @@ ZRF = {
 Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-captures", "false");
-//  design.checkVersion("chessence-extension", "true");
+    design.checkVersion("chessence-extension", "true");
+    design.checkVersion("chessence-invariant", "true");
 
     design.addDirection("nne");
     design.addDirection("e");

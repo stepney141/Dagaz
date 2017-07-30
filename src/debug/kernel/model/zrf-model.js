@@ -1502,6 +1502,7 @@ Dagaz.Model.PostActions = function(board) {
 }
 
 Dagaz.Model.CheckInvariants = function(board) {}
+Dagaz.Model.Extension = function(board) {}
 
 Dagaz.Model.getPartList = function(board, gen) {
   return [ gen.lastt ];
@@ -1605,6 +1606,7 @@ ZrfBoard.prototype.generateInternal = function(callback, cont) {
                }
           }
       }
+      Dagaz.Model.Extension(this);
       if (cont) {
           Dagaz.Model.CheckInvariants(this);
           Dagaz.Model.PostActions(this);

@@ -22,7 +22,8 @@ ZRF = {
 Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-captures", "false");
-//  design.checkVersion("chessence-extension", "true");
+    design.checkVersion("chessence-extension", "true");
+    design.checkVersion("chessence-invariant", "true");
 
     design.addDirection("nne");
     design.addDirection("e");
@@ -145,7 +146,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.FUNCTION,	20);	// verify
     design.addCommand(0, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(0, ZRF.FUNCTION,	0);	// not
-    design.addCommand(0, ZRF.IF,	15);
+    design.addCommand(0, ZRF.IF,	14);
     design.addCommand(0, ZRF.FUNCTION,	6);	// mark
     design.addCommand(0, ZRF.PARAM,	2);	// $3
     design.addCommand(0, ZRF.FUNCTION,	21);	// position
@@ -173,7 +174,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(1, ZRF.FUNCTION,	20);	// verify
     design.addCommand(1, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(1, ZRF.FUNCTION,	0);	// not
-    design.addCommand(1, ZRF.IF,	15);
+    design.addCommand(1, ZRF.IF,	14);
     design.addCommand(1, ZRF.FUNCTION,	6);	// mark
     design.addCommand(1, ZRF.PARAM,	1);	// $2
     design.addCommand(1, ZRF.FUNCTION,	21);	// position
@@ -186,7 +187,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(1, ZRF.JUMP,	-4);
     design.addCommand(1, ZRF.LITERAL,	1);	// Soldier
     design.addCommand(1, ZRF.FUNCTION,	11);	// create
-    design.addCommand(1, ZRF.FUNCTION,	7);	// back
+    design.addCommand(1, ZRF.FUNCTION,	7); 	// back
     design.addCommand(1, ZRF.FUNCTION,	25);	// to
     design.addCommand(1, ZRF.FUNCTION,	28);	// end
 

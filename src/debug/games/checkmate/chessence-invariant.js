@@ -33,7 +33,7 @@ var notSafe = function(design, board, king) {
         .filter(function(action) {
              return (action[0] !== null) && (action[1] !== null);
          })
-        .chain(function(action) {
+        .each(function(action) {
              if (action[1][0] == pos) {
                  r = true;
              }
