@@ -281,10 +281,10 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(4, 5, [1, 1], 0);
     design.addMove(4, 5, [2, 2], 0);
     design.addMove(4, 5, [0, 0], 0);
-    design.addMove(4, 6, [4, 4, 4, 4, 4], 2);
-    design.addMove(4, 6, [1, 1, 1, 1, 1], 2);
-    design.addMove(4, 6, [2, 2, 2, 2, 2], 2);
-    design.addMove(4, 6, [0, 0, 0, 0, 0], 2);
+    design.addMove(4, 6, [4, 4, 4, 4, 4], 1);
+    design.addMove(4, 6, [1, 1, 1, 1, 1], 1);
+    design.addMove(4, 6, [2, 2, 2, 2, 2], 1);
+    design.addMove(4, 6, [0, 0, 0, 0, 0], 1);
 
     design.setup("Dark", "JotunnA", 1);
     design.setup("Dark", "JotunnA", 2);

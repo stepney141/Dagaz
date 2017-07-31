@@ -20,7 +20,7 @@ var findPiece = function(design, board, player, type) {
 }
 
 var notSafe = function(design, board, player, king) {
-  var pos = findPiece(design, board, board.player, king);
+  var pos = findPiece(design, board, player, king);
   if (pos === null) return true;
   var r = false;
   _.each(design.allDirections(), function(dir) {

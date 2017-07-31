@@ -32,7 +32,7 @@ Dagaz.Model.CheckInvariants = function(board) {
              });
              if (piece === null) return false;
              return piece.type > 1;
-        }).value().length > 1) {
+        }).value().length >= 1) {
         _.chain(board.moves)
          .filter(function(move) {
              return move.actions.length == 1;

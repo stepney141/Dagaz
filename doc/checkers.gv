@@ -1,4 +1,4 @@
-digraph dagaz {
+digraph checkers {
     "Alquerque"[style="filled",fillcolor="lightgreen"];
     "Zamma"[style="filled",fillcolor="lightgreen"];
     "Dhamet"[style="filled",fillcolor="lightgreen"];
@@ -6,7 +6,9 @@ digraph dagaz {
     "Dablot"[style="filled",fillcolor="lightblue"];
     "Fox and Geese"[style="filled",fillcolor="lightblue"];
     "Asalto"[style="filled",fillcolor="lightblue"];
+    "Fanorona"[style="filled",fillcolor="green"];
 
+    "Senegalese Checkers"[style="filled",fillcolor="chocolate"];
     "Turkish Dama"[style="filled",fillcolor="lightgreen"];
     "Armenian Tama"[style="filled",fillcolor="lightblue"];
     "Greek Checkers"[style="filled",fillcolor="lightblue"];
@@ -30,9 +32,11 @@ digraph dagaz {
     "Zamma" -> "Dhamet";
     "Zamma" -> "Kharbaga";
     "Alquerque" -> "English Checkers";
+    "Alquerque" -> "Fanorona";
     "Fox and Geese" -> "English Checkers";
     "Fox and Geese" -> "Asalto";
-    "Alquerque" -> "Turkish Dama";
+    "Alquerque" -> "Senegalese Checkers"[style=dotted];
+    "Senegalese Checkers" -> "Turkish Dama";
     "Turkish Dama" -> "Greek Checkers";
     "Turkish Dama" -> "Armenian Tama";
     "Dablot" -> "Italian Draughts"[style=dotted];

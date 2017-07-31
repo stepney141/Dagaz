@@ -26,8 +26,9 @@
   (capture-sound "")
   (drop-sound "")
 
-  (option "animate captures"  false)
-  (option "smart moves"       true)
+  (option "animate captures"   false)
+  (option "smart moves"        true)
+  (option "nam-dinh-invariant" true)
 
   (players Black White)
   (turn-order Black White)
@@ -35,7 +36,7 @@
   (board
      (image "images/nam-dinh/board.bmp")
      (grid
-        (start-rectangle 5 3 64 62)
+        (start-rectangle 6 4 65 63)
         (dimensions
            ("a/b/c/d/e" (88 0)) ; files
            ("5/4/3/2/1" (0 88)) ; ranks

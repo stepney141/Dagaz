@@ -171,7 +171,7 @@
         (move-type normal-type)
         (r-slide n) (r-slide e)
         (r-slide s) (r-slide w)
-        (move-type capture-type)
+        (move-type continue-type)
         (r-jump n) (r-jump e)
         (r-jump s) (r-jump w)
      )
