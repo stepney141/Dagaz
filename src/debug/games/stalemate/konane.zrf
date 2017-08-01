@@ -1,15 +1,4 @@
 (define first-move (
-  (verify (in-zone? first))
-  capture add
-))
-
-(define second-move (
-;  (verify (or 
-;     (and (on-board? n) (empty? n))
-;     (and (on-board? s) (empty? s))
-;     (and (on-board? w) (empty? w))
-;     (and (on-board? e) (empty? e))
-;  ))
   capture add
 ))
 
@@ -44,18 +33,14 @@
   (option "konane-extension" true)
 
   (players Black White)
-  (turn-order 
-      (Black first-type)
-      (White second-type)
-      repeat
-      (Black normal-type)
-      (White normal-type)
-  )
+  (turn-order Black White)
 
   (move-sound "Audio\Pickup.wav")
   (release-sound "Audio\Pickup.wav")
   (capture-sound "")
   (drop-sound "")
+
+  (move-priorities normal-type first-type)
 
   (board
     (image "images/konane/board.bmp")
@@ -80,8 +65,6 @@
      (moves
         (move-type first-type)
         (first-move)
-        (move-type second-type)
-        (second-move)
         (move-type normal-type)
         (jump-1 n) (jump-1 s) (jump-1 w) (jump-1 e)
         (jump-2 n) (jump-2 s) (jump-2 w) (jump-2 e)

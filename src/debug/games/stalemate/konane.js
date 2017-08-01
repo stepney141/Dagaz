@@ -31,11 +31,6 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPlayer("Black", [1, 0, 3, 2]);
     design.addPlayer("White", [0, 1, 2, 3]);
-//  design.addTurn(1, 0);
-//  design.addTurn(2, 1);
-//  design.repeatMark();
-//  design.addTurn(1, 2);
-//  design.addTurn(2, 2);
 
     design.addPosition("a8", [0, 1, 8, 0]);
     design.addPosition("b8", [-1, 1, 8, 0]);
@@ -105,14 +100,20 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addZone("first", 1, [48, 32, 16, 0, 57, 59, 61, 63, 47, 31, 15, 2, 4, 6, 27, 36]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
-    design.addCommand(0, ZRF.IN_ZONE,	0);	// first
-    design.addCommand(0, ZRF.FUNCTION,	20);	// verify
     design.addCommand(0, ZRF.FUNCTION,	26);	// capture
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(1, ZRF.FUNCTION,	24);	// from
+    design.addCommand(1, ZRF.PARAM,	0);	// $1
+    design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(1, ZRF.FUNCTION,	2);	// enemy?
+    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
     design.addCommand(1, ZRF.FUNCTION,	26);	// capture
+    design.addCommand(1, ZRF.PARAM,	1);	// $2
+    design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(1, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
     design.addCommand(1, ZRF.FUNCTION,	25);	// to
     design.addCommand(1, ZRF.FUNCTION,	28);	// end
 
@@ -123,6 +124,15 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(2, ZRF.FUNCTION,	20);	// verify
     design.addCommand(2, ZRF.FUNCTION,	26);	// capture
     design.addCommand(2, ZRF.PARAM,	1);	// $2
+    design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(2, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(2, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(2, ZRF.PARAM,	2);	// $3
+    design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(2, ZRF.FUNCTION,	2);	// enemy?
+    design.addCommand(2, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(2, ZRF.FUNCTION,	26);	// capture
+    design.addCommand(2, ZRF.PARAM,	3);	// $4
     design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(2, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(2, ZRF.FUNCTION,	20);	// verify
@@ -148,57 +158,37 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(3, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(3, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(3, ZRF.PARAM,	4);	// $5
+    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(3, ZRF.FUNCTION,	2);	// enemy?
+    design.addCommand(3, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(3, ZRF.FUNCTION,	26);	// capture
+    design.addCommand(3, ZRF.PARAM,	5);	// $6
+    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(3, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(3, ZRF.FUNCTION,	20);	// verify
     design.addCommand(3, ZRF.FUNCTION,	25);	// to
     design.addCommand(3, ZRF.FUNCTION,	28);	// end
 
-    design.addCommand(4, ZRF.FUNCTION,	24);	// from
-    design.addCommand(4, ZRF.PARAM,	0);	// $1
-    design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(4, ZRF.FUNCTION,	2);	// enemy?
-    design.addCommand(4, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(4, ZRF.FUNCTION,	26);	// capture
-    design.addCommand(4, ZRF.PARAM,	1);	// $2
-    design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(4, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(4, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(4, ZRF.PARAM,	2);	// $3
-    design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(4, ZRF.FUNCTION,	2);	// enemy?
-    design.addCommand(4, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(4, ZRF.FUNCTION,	26);	// capture
-    design.addCommand(4, ZRF.PARAM,	3);	// $4
-    design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(4, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(4, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(4, ZRF.PARAM,	4);	// $5
-    design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(4, ZRF.FUNCTION,	2);	// enemy?
-    design.addCommand(4, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(4, ZRF.FUNCTION,	26);	// capture
-    design.addCommand(4, ZRF.PARAM,	5);	// $6
-    design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(4, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(4, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(4, ZRF.FUNCTION,	25);	// to
-    design.addCommand(4, ZRF.FUNCTION,	28);	// end
+    design.addPriority(0);			// normal-type
+    design.addPriority(1);			// first-type
 
     design.addPiece("Stone", 0);
-//  design.addMove(0, 0, [], 0);
-//  design.addMove(0, 1, [], 1);
-    design.addMove(0, 2, [3, 3], 2);
-    design.addMove(0, 2, [2, 2], 2);
-    design.addMove(0, 2, [0, 0], 2);
-    design.addMove(0, 2, [1, 1], 2);
-    design.addMove(0, 3, [3, 3, 3, 3], 2);
-    design.addMove(0, 3, [2, 2, 2, 2], 2);
-    design.addMove(0, 3, [0, 0, 0, 0], 2);
-    design.addMove(0, 3, [1, 1, 1, 1], 2);
-    design.addMove(0, 4, [3, 3, 3, 3, 3, 3], 2);
-    design.addMove(0, 4, [2, 2, 2, 2, 2, 2], 2);
-    design.addMove(0, 4, [0, 0, 0, 0, 0, 0], 2);
-    design.addMove(0, 4, [1, 1, 1, 1, 1, 1], 2);
+    design.addMove(0, 0, [], 1);
+    design.addMove(0, 1, [3, 3], 0);
+    design.addMove(0, 1, [2, 2], 0);
+    design.addMove(0, 1, [0, 0], 0);
+    design.addMove(0, 1, [1, 1], 0);
+    design.addMove(0, 2, [3, 3, 3, 3], 0);
+    design.addMove(0, 2, [2, 2, 2, 2], 0);
+    design.addMove(0, 2, [0, 0, 0, 0], 0);
+    design.addMove(0, 2, [1, 1, 1, 1], 0);
+    design.addMove(0, 3, [3, 3, 3, 3, 3, 3], 0);
+    design.addMove(0, 3, [2, 2, 2, 2, 2, 2], 0);
+    design.addMove(0, 3, [0, 0, 0, 0, 0, 0], 0);
+    design.addMove(0, 3, [1, 1, 1, 1, 1, 1], 0);
 
-//  design.setup("White", "Stone", 56);
+    design.setup("White", "Stone", 56);
     design.setup("White", "Stone", 40);
     design.setup("White", "Stone", 24);
     design.setup("White", "Stone", 8);
@@ -234,7 +224,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "Stone", 32);
     design.setup("Black", "Stone", 16);
     design.setup("Black", "Stone", 0);
-//  design.setup("Black", "Stone", 57);
+    design.setup("Black", "Stone", 57);
     design.setup("Black", "Stone", 41);
     design.setup("Black", "Stone", 25);
     design.setup("Black", "Stone", 9);
