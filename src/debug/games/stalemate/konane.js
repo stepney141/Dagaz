@@ -22,7 +22,8 @@ ZRF = {
 Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-captures", "false");
-//  design.checkVersion("konane-extension", "true");
+    design.checkVersion("show-hints", "false");
+    design.checkVersion("konane-extension", "true");
 
     design.addDirection("w");
     design.addDirection("e");

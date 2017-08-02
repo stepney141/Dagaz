@@ -19,6 +19,7 @@ var getY = function(pos) {
 var notFriend = function(design, board, pos, dir) {
   var p = design.navigate(board.player, pos, dir);
   if (p === null) return true;
+  if (design.inZone(0, board.player, p)) return true;
   var piece = board.getPiece(p);
   if (piece === null) return true;
   return piece.player != board.player;

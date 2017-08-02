@@ -5,48 +5,15 @@
 
 (define bump (
   $1 (verify empty?)
-  mark $1 (verify enemy?)
-  (while (and enemy? (on-board? $1))
-     capture
-     $1
-  )
-  (if enemy? capture)
-  back (add-partial continue-type)
+  $1 (verify enemy?) 
+  capture $2
+  (add-partial priority-type)
 ))
 
 (define pull (
-  mark (opposite $1) (verify enemy?)
-  (while (and enemy? (on-board? (opposite $1)))
-     capture
-     (opposite $1)
-  )
-  (if enemy? capture)
-  back $1 (verify empty?)
-  (add-partial continue-type)
-))
-
-(define bump-continue (
-  $1 (verify empty?)
-  (verify not-last-from?)
-  mark $1 (verify enemy?)
-  (while (and enemy? (on-board? $1))
-     capture
-     $1
-  )
-  (if enemy? capture)
-  back (add-partial continue-type)
-))
-
-(define pull-continue (
-  mark (opposite $1) (verify enemy?)
-  (while (and enemy? (on-board? (opposite $1)))
-     capture
-     (opposite $1)
-  )
-  (if enemy? capture)
-  back $1 (verify empty?)
-  (verify not-last-from?)
-  (add-partial continue-type)
+  $1 (verify enemy?) capture
+  $2 $2 (verify empty?)
+  (add-partial priority-type)
 ))
 
 (game
@@ -59,7 +26,8 @@
   (option "smart moves"        true)
   (option "pass partial"       true)
   (option "animate captures"   false)
-; (option "fanorona-extension" true)
+  (option "fanorona-extension" true)
+  (option "fanorona-invariant" true)
 
   (players White Black)
   (turn-order White Black)
@@ -87,15 +55,10 @@
             Black "images/fanorona/black.bmp")
      (moves
          (move-type priority-type)
-         (bump n) (bump nw) (bump s) (bump se)
-         (bump w) (bump sw) (bump e) (bump ne)
-         (pull n) (pull nw) (pull s) (pull se)
-         (pull w) (pull sw) (pull e) (pull ne)
-         (move-type continue-type)
-         (bump-continue n) (bump-continue nw) (bump-continue s) (bump-continue se)
-         (bump-continue w) (bump-continue sw) (bump-continue e) (bump-continue ne)
-         (pull-continue n) (pull-continue nw) (pull-continue s) (pull-continue se)
-         (pull-continue w) (pull-continue sw) (pull-continue e) (pull-continue ne)
+         (bump n s) (bump nw se) (bump s n) (bump se nw)
+         (bump w e) (bump sw ne) (bump e w) (bump ne sw)
+         (pull n s) (pull nw se) (pull s n) (pull se nw)
+         (pull w e) (pull sw ne) (pull e w) (pull ne sw)
          (move-type normal-type)
          (step n) (step nw) (step s) (step se)
          (step w) (step sw) (step e) (step ne)
