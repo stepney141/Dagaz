@@ -1658,10 +1658,13 @@ Dagaz.Model.noReserve = function(board, piece) {
 ZrfBoard.prototype.movePiece = function(from, to, piece) {
   this.lastf = from;
   this.lastt = to;
+  if (piece === null) {
+      piece = this.getPiece(from);
+  }
   if (Dagaz.find(this.changed, from) < 0) {
       this.setPiece(from, null);
   }
-  this.setPiece(to, (piece === null) ? this.parent.getPiece(from) : piece);
+  this.setPiece(to, /*(piece === null) ? this.parent.getPiece(from) :*/ piece);
   this.changed.push(to);
 }
 
@@ -1867,6 +1870,8 @@ Dagaz.Model.moveToString = function(move, part) {
        r = r + " - ";
        r = r + Dagaz.Model.posToString(action[1][0]);
        l = action[1][0];
+       // DEBUG:
+       r = r + " [" + action[3] + "]";
     });
   _.chain(move.actions)
    .filter(n)
@@ -1880,6 +1885,8 @@ Dagaz.Model.moveToString = function(move, part) {
        r = r + "x ";
        r = r + Dagaz.Model.posToString(action[0][0]);
        l = action[0][0];
+       // DEBUG:
+       r = r + " [" + action[3] + "]";
     });
   return r;
 }
@@ -1909,11 +1916,7 @@ ZrfMove.prototype.applyTo = function(obj, part) {
   if (!part) part = 1;
   var r = false;
   var n = function (action) {
-      var p = action[3];
-      if ((p < 0) && (part < 0)) {
-          p = part;
-      }
-      return (p == part);
+      return (action[3] == part);
     };
   _.chain(this.actions)
    .filter(n)
@@ -1966,7 +1969,7 @@ ZrfMove.prototype.applyAll = function(obj) {
    .value();
   if (mx > 0) {
       _.chain(_.range(1, mx + 1))
-       .push(-1)
+//     .push(-1)
        .each(function (part) {
           this.applyTo(obj, part);
        }, this);

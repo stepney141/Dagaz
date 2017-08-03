@@ -45,23 +45,30 @@ Dagaz.Model.CheckInvariants = function(board) {
                  break;
              }
              last = from;
-             var cn =_.chain(board.moves)
+/*           var captured = [];
+             _.chain(board.moves)
               .filter(function(move) {
                  return _.chain(move.actions)
                   .filter(function(action) {
-                       if ((action[3] != part)) return false;
+                       if (action[3] != part) return false;
                        if ((action[0] === null) || (action[1] === null)) return false;
                        return (action[0][0] == from) && (action[1][0] == to);
                    }).size().value() > 0;
                })
-              .map(function(move) {
-                 return _.chain(move.actions)
-                  .filter(function(action) {
-                       if ((action[3] != part)) return false;
-                       if ((action[0] === null) || (action[1] !== null)) return false;
-                       return action[0][0];
-                   }).max().value();
-               }).uniq().size().value();
+              .each(function(move) {
+                  _.chain(move.actions)
+                   .filter(function(action) {
+                       if (action[3] != part) return false;
+                       return (action[0] !== null) && (action[1] === null);
+                    })
+                   .each(function(action) {
+                       captured.push(action[0][0]);
+                    });
+               });
+             var cn = _.uniq(captured).length; */
+
+             var cn = 2;
+
              var dir = design.findDirection(from, pos);
              if (dir === null) {
                  dir = design.findDirection(to, pos);
@@ -83,8 +90,12 @@ Dagaz.Model.CheckInvariants = function(board) {
                   }
              }
         }
-        move.actions = actions;
+        move.a = actions;
     });
+  _.each(board.moves, function(move) {
+      move.actions = move.a;
+      delete move.a;
+  });
   CheckInvariants(board);
 }
 

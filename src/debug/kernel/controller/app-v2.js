@@ -33,6 +33,9 @@ function App(canvas, params) {
   if (_.isUndefined(this.params.SHOW_TARGETS)) {
       this.params.SHOW_TARGETS = true;
   }
+  if (_.isUndefined(this.params.SHOW_ATTACKING)) {
+      this.params.SHOW_ATTACKING = true;
+  }
 }
 
 Dagaz.Controller.createApp = function(canvas) {
@@ -284,7 +287,6 @@ App.prototype.exec = function() {
           this.move.applyAll(this.view);
           this.state = STATE.WAIT;
       }
-      this.view.markPositions(Dagaz.View.markType.ATTACKING, []);
       if (!_.isUndefined(this.list)) {
           if (this.list.isDone()) {
               var moves = this.list.getMoves();

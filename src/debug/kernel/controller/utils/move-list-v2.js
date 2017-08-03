@@ -292,4 +292,12 @@ MoveList.prototype.setPosition = function(pos) {
   return result;
 }
 
+MoveList.prototype.dump = function() {
+  if (this.moves) {
+      _.each(this.moves, function(move) {
+           console.log("Dump: " + move.toString());
+      });
+  }
+}
+
 })();
