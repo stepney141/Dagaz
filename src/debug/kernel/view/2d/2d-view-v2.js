@@ -457,7 +457,6 @@ View2D.prototype.animate = function() {
 
 Dagaz.View.showMarks = function(view, ctx) {
   drawMarks(ctx, view, view.target, "#00AA00");
-  drawMarks(ctx, view, view.strike, "#FF0000");
   drawMarks(ctx, view, view.goal,   "#FFFF00");
 }
 
@@ -495,12 +494,16 @@ View2D.prototype.draw = function(canvas) {
            var piece = this.piece[p.name];
            x += (pos.dx - piece.dx) / 2 | 0;
            y += (pos.dy - piece.dy) / 2 | 0;
-/*         ctx.save();
-           ctx.translate(x + pos.dx / 2, y + pos.dy / 2); 
-           ctx.rotate(0.0174533 * 0);
-           ctx.translate(-x - pos.dx /2, -y - pos.dy /2); */
+           var isSaved = false;
+           if (_.indexOf(this.strike, p.pos) >= 0) {
+               ctx.save();
+               ctx.globalAlpha = 0.4;
+               isSaved = true;
+           }
            ctx.drawImage(piece.h, x, y, piece.dx, piece.dy);
-/*         ctx.restore(); */
+           if (isSaved) {
+               ctx.restore();
+           }
         }, this);
       Dagaz.View.showMarks(this, ctx);
       this.animate();

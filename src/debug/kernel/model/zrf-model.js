@@ -1870,8 +1870,6 @@ Dagaz.Model.moveToString = function(move, part) {
        r = r + " - ";
        r = r + Dagaz.Model.posToString(action[1][0]);
        l = action[1][0];
-       // DEBUG:
-       r = r + " [" + action[3] + "]";
     });
   _.chain(move.actions)
    .filter(n)
@@ -1885,8 +1883,6 @@ Dagaz.Model.moveToString = function(move, part) {
        r = r + "x ";
        r = r + Dagaz.Model.posToString(action[0][0]);
        l = action[0][0];
-       // DEBUG:
-       r = r + " [" + action[3] + "]";
     });
   return r;
 }

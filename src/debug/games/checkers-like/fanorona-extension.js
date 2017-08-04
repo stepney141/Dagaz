@@ -17,12 +17,14 @@ Dagaz.Model.CheckInvariants = function(board) {
         return move.actions.length > 1;
     })
    .each(function(move) {
+        var capturing = [];
         var actions = [];
         var mx = _.chain(move.actions)
          .map(function(action) {
               return action[3];
           }).max().value();
         var last = null;
+        var p = 1;
         for (var part = 1; part <= mx; part++) {
              var from = null;
              var to   = null;
@@ -45,30 +47,21 @@ Dagaz.Model.CheckInvariants = function(board) {
                  break;
              }
              last = from;
-/*           var captured = [];
-             _.chain(board.moves)
-              .filter(function(move) {
-                 return _.chain(move.actions)
-                  .filter(function(action) {
-                       if (action[3] != part) return false;
-                       if ((action[0] === null) || (action[1] === null)) return false;
-                       return (action[0][0] == from) && (action[1][0] == to);
-                   }).size().value() > 0;
-               })
-              .each(function(move) {
-                  _.chain(move.actions)
-                   .filter(function(action) {
-                       if (action[3] != part) return false;
-                       return (action[0] !== null) && (action[1] === null);
-                    })
-                   .each(function(action) {
-                       captured.push(action[0][0]);
-                    });
-               });
-             var cn = _.uniq(captured).length; */
-
-             var cn = 2;
-
+             var captured = [];
+             _.each(board.moves, function(m) {
+                 _.each(m.actions, function(a) {
+                     if ((a[3] == part) && (a[0] !== null) && (a[1] !== null) && (a[0][0] == from) && (a[1][0] == to)) {
+                         _.each(m.actions, function(c) {
+                              if ((c[3] == part) && (c[0] !== null) && (c[1] === null) && (_.indexOf(captured, c[0][0]) < 0)) {
+                                  captured.push(c[0][0]);
+                                  return;
+                              }
+                         });
+                         return;
+                     }
+                 });
+             });
+             var cn = captured.length;
              var dir = design.findDirection(from, pos);
              if (dir === null) {
                  dir = design.findDirection(to, pos);
@@ -77,9 +70,14 @@ Dagaz.Model.CheckInvariants = function(board) {
                  move.failed = true;
                  return;
              }
-             actions.push([ [from], [to], null, (cn < 2) ? part : (((part - 1) * 2) + 1) ]);
+             actions.push([ [from], [to], null, p ]);
              while (pos !== null) {
-                  actions.push([ [pos], null, null, (cn < 2) ? part : (((part - 1) * 2) + 2) ]);
+                  if (_.indexOf(capturing, pos) >= 0) {
+                      move.failed = true;
+                      return;
+                  }
+                  capturing.push(pos);
+                  actions.push([ [pos], null, null, (cn > 1) ? (p + 1) : p ]);
                   pos = design.navigate(board.player, pos, dir);
                   if (pos !== null) {
                       var piece = board.getPiece(pos);
@@ -89,12 +87,18 @@ Dagaz.Model.CheckInvariants = function(board) {
                       }
                   }
              }
+             if (cn > 1) {
+                 p++;
+             }
+             p++;
         }
         move.a = actions;
     });
   _.each(board.moves, function(move) {
-      move.actions = move.a;
-      delete move.a;
+      if (move.actions.length > 1) {
+          move.actions = move.a;
+          delete move.a;
+      }
   });
   CheckInvariants(board);
 }

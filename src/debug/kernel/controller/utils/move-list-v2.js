@@ -93,7 +93,7 @@ MoveList.prototype.getStarts = function() {
           });
       }
   }, this);
-  return _.uniq(result);
+  return _.uniq(_.union(result, this.getCaptures()));
 }
 
 MoveList.prototype.isUniqueFrom = function(pos) {
