@@ -23,6 +23,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "false");
+    design.checkVersion("pass-partial", "true");
     design.checkVersion("walhall-extension", "true");
 
     design.addDirection("w");

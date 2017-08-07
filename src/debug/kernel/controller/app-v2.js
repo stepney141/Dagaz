@@ -13,6 +13,7 @@ var STATE = {
 var isDrag = false;
 var passForced = false;
 var once = false;
+var lastPosition = null;
 
 function App(canvas, params) {
   this.design = Dagaz.Model.getDesign();
@@ -150,6 +151,20 @@ App.prototype.mouseDown = function(view, pos) {
       if (positions.length > 0) {
           Canvas.style.cursor = "move";
           this.setPosition(positions[0]);
+          if (this.move && this.move.isPass() && (lastPosition == positions[0])) {
+              if (this.list && this.list.canPass()) {
+                  var moves = this.list.getMoves();
+                  if (moves.length == 1) {
+                      this.board = this.board.apply(moves[0]);
+                      this.state = STATE.IDLE;
+                      delete this.list;
+                      lastPosition = null;
+                      this.view.markPositions(Dagaz.View.markType.ATTACKING, []);
+                      return;
+                  }
+              }
+          }
+          lastPosition = positions[0];
           isDrag = true;
       }
   }
@@ -281,6 +296,7 @@ App.prototype.exec = function() {
       this.state = STATE.IDLE;
       isDrag = false;
       if (!this.move.isPass()) {
+          lastPosition = null;
           if (Dagaz.Model.showMoves) {
               console.log(this.move.toString());
           }

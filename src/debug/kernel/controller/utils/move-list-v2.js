@@ -40,7 +40,7 @@ MoveList.prototype.isDone = function() {
 }
 
 MoveList.prototype.canPass = function() {
-  return _.chain(this.moves).map(getMaxPart).min().value() < this.level;
+  return _.chain(this.moves).map(getMaxPart).min().value() <= this.level;
 }
 
 MoveList.prototype.getActions = function(move) {
@@ -76,9 +76,9 @@ MoveList.prototype.getTargets = function() {
               });
           }
       }, this);
-      if (this.canPass()) {
+/*    if (this.canPass()) {
           result.push(this.position);
-      }
+      } */
   }
   return _.uniq(result);
 }
@@ -127,7 +127,7 @@ MoveList.prototype.getStops = function() {
               }
           }
           if (Dagaz.Model.smartTo) {
-              if (this.isUniqueTo(actions[0][1][0]) && !this.canPass()) {
+              if (this.isUniqueTo(actions[0][1][0]) /* && !this.canPass() */) {
                   result.push(actions[0][1][0]);
               }
           }
@@ -273,10 +273,10 @@ MoveList.prototype.setPosition = function(pos) {
                   return true;
               }
           }
-          if (this.canPass() && result.isPass() && (pos == this.position)) {
+/*        if (this.canPass() && result.isPass() && (pos == this.position)) {
               // Pass partial
-              return this.getMaxPart(move) + 1 == this.level;
-          }
+              return getMaxPart(move) + 1 == this.level;
+          } */
       }, this);
       if (moves.length != 0) {
           this.moves = moves;
@@ -290,14 +290,6 @@ MoveList.prototype.setPosition = function(pos) {
       }
   }
   return result;
-}
-
-MoveList.prototype.dump = function() {
-  if (this.moves) {
-      _.each(this.moves, function(move) {
-           console.log("Dump: " + move.toString());
-      });
-  }
 }
 
 })();

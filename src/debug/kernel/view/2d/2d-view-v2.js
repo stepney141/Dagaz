@@ -391,6 +391,8 @@ View2D.prototype.animate = function() {
    .filter(isNotNull)
    .difference(
        _.chain(this.changes)
+        .filter(isCommitted)
+        .filter(isDone)
         .map(function(frame) {
              return frame.ix;
          })
@@ -407,13 +409,15 @@ View2D.prototype.animate = function() {
    .each(function(frame) {
         if (!_.isUndefined(frame.op) && !_.isUndefined(frame.to)) {
             var piece = this.setup[frame.op];
-            if (frame.np) {
-                piece.name = frame.np;
+            if (piece) {
+                if (frame.np) {
+                    piece.name = frame.np;
+                }
+                piece.pos = +frame.to;
+                piece.x = this.pos[frame.to].x;
+                piece.y = this.pos[frame.to].y;
+                delete piece.z;
             }
-            piece.pos = +frame.to;
-            piece.x = this.pos[frame.to].x;
-            piece.y = this.pos[frame.to].y;
-            delete piece.z;
         }
         if (_.isUndefined(frame.op) && !_.isUndefined(frame.to)) {
             this.setup.push({

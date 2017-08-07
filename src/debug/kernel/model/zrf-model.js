@@ -1664,7 +1664,7 @@ ZrfBoard.prototype.movePiece = function(from, to, piece) {
   if (Dagaz.find(this.changed, from) < 0) {
       this.setPiece(from, null);
   }
-  this.setPiece(to, /*(piece === null) ? this.parent.getPiece(from) :*/ piece);
+  this.setPiece(to, piece);
   this.changed.push(to);
 }
 
@@ -1965,7 +1965,6 @@ ZrfMove.prototype.applyAll = function(obj) {
    .value();
   if (mx > 0) {
       _.chain(_.range(1, mx + 1))
-//     .push(-1)
        .each(function (part) {
           this.applyTo(obj, part);
        }, this);

@@ -385,6 +385,8 @@ View2D.prototype.animate = function() {
    .filter(isNotNull)
    .difference(
        _.chain(this.changes)
+        .filter(isCommitted)
+        .filter(isDone)
         .map(function(frame) {
              return frame.ix;
          })

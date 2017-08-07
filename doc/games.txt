@@ -8,8 +8,8 @@
     * Алькуэрк
     * Dablot
     - Choko
-    > Konane
-    > Фанорона
+    * Konane
+    * Фанорона
     - Bushka
   - Checkers family
     * Turkish Dama
@@ -27,7 +27,7 @@
     > Северные шашки
     - Ставропольские шашки
     - Столбовые шашки
-    > Harzdame
+    * Harzdame
   - Pasang
   - Watermelon
 - Breakthrough games
@@ -57,10 +57,10 @@
   - High Jump
   > Makyek
   - Йотай
-  > Nam Dinh
-  > Евклид
+  * Nam Dinh
+  * Евклид
   - Abalone
-  > Walhall
+  * Walhall
   * NotChess
   - Cheskers
   - Shatra
@@ -113,7 +113,7 @@
   - Cubic Chess
   - Congo
   - Flip Chess
-  > Chessence
+  * Chessence
 - Arrange games
   - Семейство Рендзю
     - Рендзю

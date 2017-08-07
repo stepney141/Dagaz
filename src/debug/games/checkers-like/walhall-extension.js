@@ -8,6 +8,35 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+Dagaz.Model.checkGoals = function(design, board, player) {
+  var all = 0;
+  var goal = 0;
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if ((piece !== null) && (piece.player == 2)) {
+          if (piece.type == 2) {
+              goal++;
+          }
+          all++;
+      }
+  });
+  if (goal >= 4) {
+      if (player == 2) {
+          return 1;
+      } else {
+          return -1;
+      }
+  }
+  if (all < 4) {
+      if (player == 1) {
+          return 1;
+      } else {
+          return -1;
+      }
+  }
+  return 0;
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {

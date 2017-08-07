@@ -94,7 +94,7 @@
   (draw-sound    "")
 
   (option "animate captures"  false)
-; (option "pass partial"      true)
+  (option "pass partial"      true)
   (option "smart moves"       false)
   (option "walhall extension" true)
 
