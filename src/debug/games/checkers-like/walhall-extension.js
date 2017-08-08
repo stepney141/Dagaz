@@ -37,6 +37,21 @@ Dagaz.Model.checkGoals = function(design, board, player) {
   return 0;
 }
 
+var isDefendedDir = function(design, board, pos, dir, type) {
+  var pos = design.navigate(board.player, pos, dir);
+  if (pos === null) return false;
+  var piece = board.getPiece(pos);
+  if (piece === null) return false;
+  return piece.type == type;
+}
+
+var isDefended = function(design, board, pos) {
+  return isDefendedDir(design, board, pos, design.getDirection("n"), design.getPieceType("ValkyrieA")) || isDefendedDir(design, board, pos, design.getDirection("nw"), design.getPieceType("ValkyrieR")) ||
+         isDefendedDir(design, board, pos, design.getDirection("s"), design.getPieceType("ValkyrieA")) || isDefendedDir(design, board, pos, design.getDirection("se"), design.getPieceType("ValkyrieR")) ||
+         isDefendedDir(design, board, pos, design.getDirection("w"), design.getPieceType("ValkyrieA")) || isDefendedDir(design, board, pos, design.getDirection("sw"), design.getPieceType("ValkyrieR")) ||
+         isDefendedDir(design, board, pos, design.getDirection("e"), design.getPieceType("ValkyrieA")) || isDefendedDir(design, board, pos, design.getDirection("ne"), design.getPieceType("ValkyrieR"));
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
@@ -54,6 +69,7 @@ Dagaz.Model.CheckInvariants = function(board) {
         if ((dir !== null) && (piece !== null) && (piece.type <= 2)) {
              var pos = design.navigate(0, from, dir);
              while (pos !== null) {
+                 if (isDefended(design, board, pos)) break;
                  var p = board.getPiece(pos);
                  if ((p === null) || (p.player == piece.player)) break;
                  move.capturePiece(pos);
@@ -61,6 +77,7 @@ Dagaz.Model.CheckInvariants = function(board) {
              }
              pos = design.navigate(board.player, to, dir);
              while (pos !== null) {
+                 if (isDefended(design, board, pos)) break;
                  var p = board.getPiece(pos);
                  if ((p === null) || (p.player == piece.player)) break;
                  move.capturePiece(pos);
