@@ -149,8 +149,8 @@
 
   (piece
      (name Man)
-     (image White "images/wman.bmp"
-            Black "images/bman.bmp")
+     (image White "images/shabel/wman.bmp"
+            Black "images/shabel/bman.bmp")
      (moves
          (move-type jump-type)
          (checker-jump nw) (checker-jump ne) (checker-jump sw) (checker-jump se)
@@ -160,8 +160,8 @@
   )
   (piece
      (name Dama)
-     (image White "images/wdamone.bmp"
-            Black "images/bdamone.bmp")
+     (image White "images/shabel/wdamone.bmp"
+            Black "images/shabel/bdamone.bmp")
      (moves
          (move-type jump-type)
          (dama-jump nw) (dama-jump ne) (dama-jump sw) (dama-jump se)
