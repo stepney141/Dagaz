@@ -1658,6 +1658,9 @@ Dagaz.Model.noReserve = function(board, piece) {
 ZrfBoard.prototype.movePiece = function(from, to, piece) {
   this.lastf = from;
   this.lastt = to;
+  if ((piece === null) && this.parent) {
+      piece = this.parent.getPiece(from);
+  }
   if (piece === null) {
       piece = this.getPiece(from);
   }

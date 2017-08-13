@@ -80,7 +80,7 @@ QUnit.test( "More pieces", function( assert ) {
   assert.equal( board.getPiece(Dagaz.Model.stringToPos("e4")).toString(), "You R00012", "R00012 on e4");
   assert.equal( board.getPiece(Dagaz.Model.stringToPos("c4")).toString(), "You R10005", "R10005 on c4");
   assert.equal( board.getPiece(Dagaz.Model.stringToPos("b5")).toString(), "You R00105", "R00105 on b5");
-  assert.equal( board.getPiece(Dagaz.Model.stringToPos("b4")).toString(), "You R10005", "R10005 on b4");
+  assert.equal( board.getPiece(Dagaz.Model.stringToPos("b4")).toString(), "You R01015", "R01015 on b4");
   assert.equal( board.getPiece(Dagaz.Model.stringToPos("c5")), null, "c5 is empty");
   assert.equal( board.getPiece(Dagaz.Model.stringToPos("d4")), null, "d4 is empty");
 
