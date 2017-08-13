@@ -10,7 +10,7 @@
     - Choko
     * Konane
     * Фанорона
-    - Bushka
+    ? Bushka
   - Checkers family
     * Turkish Dama
     * Greek Checkers
@@ -26,7 +26,7 @@
     * Thai Checkers
     > Северные шашки
     - Ставропольские шашки
-    - Столбовые шашки
+    > Столбовые шашки
     * Harzdame
   - Pasang
   - Watermelon
@@ -54,12 +54,12 @@
   * EleHunt
   - Atari Go
   - Seega
-  - High Jump
+  > High Jump
   > Makyek
   - Йотай
   * Nam Dinh
   * Евклид
-  - Abalone
+  > Abalone
   * Walhall
   * NotChess
   - Cheskers
@@ -71,7 +71,7 @@
     - Banqi
 - Checkmate games
   * Knight's Court
-  - Andalusia
+  ? Andalusia
   - Kantorai
   - Xiangqi Family
     * Xiangqi
@@ -89,13 +89,13 @@
     - Шахматы
     - Hiashatar
     - Advanced Omega Chess
-    - Таврели
+    ? Таврели
   > Platform Chess
   - Morph Chess
   - Philosophers Chess
   - Caissa
   - Chad
-  - Шабел
+  > Шабел
   - Shogi Family
     - Shogi
     > Goro goro shogi
@@ -122,6 +122,8 @@
   - Cavalier au Cordeau
   * Три мушкетёра
   - Halma family
+    - Halma
+    - Pyon Pyon Shogi (2 variants)
   > Hasami Shogi
   - Morris family
   - Болотуду
@@ -186,5 +188,5 @@
   - Ханойские башни (перемешивание выполнением серии случайных ходов)
   - Sokoban
   - Mancala puzzles (Tchuka Ruma)
-  > Chameleon Chess
+  > Chameleon Chess puzzles
   - Быки и коровы

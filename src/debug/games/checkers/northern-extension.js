@@ -18,17 +18,34 @@ Dagaz.Model.CheckInvariants = function(board) {
     })
    .each(function(move) {
         var actions = [];
-        _.each(move.actions, function(action) {
-            var a = action;
-            if ((action[0] !== null) && (action[1] === null)) {
-                var pos = action[0][0];
-                var piece = board.getPiece(pos);
-                if ((piece !== null) && (piece.type == 1)) {
-                     piece = piece.promote(0);
-                     a = [ [ pos ], [ pos ], [ piece ], action[3] ];
+        var last  = null;
+        _.each(move.actions, function(a) {
+            if (a[0] !== null) {
+                if (a[1] !== null) {
+                    actions.push(a);
+                    if (last !== null) {
+                        var piece = board.getPiece(last);
+                        if (piece !== null) {
+                            piece = piece.promote(0);
+                            actions.push([ [last], [last], [piece], a[3] ]);
+                        }
+                        last = null;
+                    }
+                } else {
+                    last = a[0][0];
+                    var piece = board.getPiece(last);
+                    if (piece === null) {
+                        move.failed = true;
+                    } else {
+                        if (piece.type == 0) {
+                            actions.push(a);
+                            last = null;
+                        }
+                    }
                 }
+            } else {
+                move.failed = true;
             }
-            actions.push(a);
         });
         move.actions = actions;
     });

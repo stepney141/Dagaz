@@ -1,5 +1,7 @@
 (function() {
 
+Dagaz.Model.deferredStrike = true;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
@@ -8,41 +10,78 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var PostActions = Dagaz.Model.PostActions;
+var CheckInvariants = Dagaz.Model.CheckInvariants;
 
-Dagaz.Model.PostActions = function(board) {
-  PostActions(board);
-  for (var i in board.moves) {
-       var m = board.moves[i];
-       var captured = [];
-       var piece = null;
-       for (var j in m.actions) {
-            var fp = m.actions[j][0];
-            var tp = m.actions[j][1];
-            var pc = m.actions[j][2];
-            if ((fp !== null) && (tp !== null)) {
-                if (piece === null) {
-                    piece = board.getPiece(fp[0]);
+Dagaz.Model.CheckInvariants = function(board) {
+  _.chain(board.moves)
+   .filter(function(move) {
+        return move.actions.length > 1;
+    })
+   .each(function(move) {
+        var actions  = [];
+        var captured = [];
+        var piece = null;
+        var last  = null;
+        var maxpn = null;
+        _.each(move.actions, function(action) {
+            if (action[0] !== null) {
+                if (action[1] !== null) {
+                    if (piece === null) {
+                        piece = board.getPiece(action[0][0]);
+                        if (piece === null) {
+                            move.failed = true;
+                        }
+                    }
+                    maxpn = action[3];
+                    var target = null;
+                    if (last !== null) {
+                        var p = board.getPiece(last);
+                        if (p !== null) {
+                            var dst = piece.getValue(0);
+                            if (dst === null) {
+                                dst = 0;
+                            }
+                            dst *= 4;
+                            dst += p.type * 2;
+                            dst += p.player - 1;
+                            var src = p.getValue(0);
+                            if ((src === null) || (src == 0)) {
+                                captured.push(last);
+                                last = null;
+                            } else {
+                                var acc = 0;
+                                var num = 0;
+                                while ((src / 4) | 0 != 0) {
+                                    acc += num * (src % 4);
+                                    num *= 4;
+                                    src = (src / 4) | 0;
+                                }
+                                target = Dagaz.Model.createPiece((src / 2) | 0, (src % 2) + 1);
+                                if (acc != 0) {
+                                    target = target.setValue(acc);
+                                }
+                            }
+                            piece = piece.setValue(0, dst);
+                        }
+                    }
+                    actions.push([ action[0], action[1], piece, maxpn ]);
+                    if (target !== null) {
+                        actions.push([ [last], [last], [target], maxpn ]);
+                        last = null;
+                    }
+                } else {
+                    last = action[0][0];
                 }
-                if ((pc !== null) && _.isObject(pc[0])) {
-                    piece.pop();
-                    piece.push(pc[0]);
-                }
-                while (captured.length > 0) {
-                    piece.unshift(captured.pop());
-                }
-                m.actions[j][2] = [ piece ];
+            } else {
+                nove.failed = true;
             }
-            if ((fp !== null) && (tp === null)) {
-                var p = board.getPiece(fp[0]);
-                captured.push(p.pop());
-                if (p.length > 0) {
-                    m.actions[j][1] = fp;
-                    m.actions[j][2] = [ p ];
-                }
-            }
-       }
-  }
+        });
+        _.each(captured, function(pos) {
+            actions.push([ [pos], null, null, maxpn ]);
+        });
+        move.actions = actions;
+    });
+  CheckInvariants(board);
 }
 
 })();

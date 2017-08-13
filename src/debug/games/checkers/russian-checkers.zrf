@@ -165,7 +165,7 @@
 
 (variant
   (title "Northern Kings")
-  (default)
+
   (option "animate captures"   false)
   (option "smart moves"        true)
   (option "northern-extension" true)
