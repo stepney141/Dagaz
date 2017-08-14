@@ -1416,7 +1416,7 @@ ZrfBoard.prototype.setup = function(view) {
   _.each(_.keys(this.pieces), function(pos) {
      var piece = this.pieces[pos];
      if (piece !== null) {
-         view.addPiece(piece.toString(), pos);
+         view.addPiece(piece.toString(), pos, piece);
      }
   }, this);
 }

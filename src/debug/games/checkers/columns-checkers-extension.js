@@ -10,6 +10,21 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+Dagaz.View.showPiece = function(self, ctx, pos, piece, model, x, y) {
+  var val = null;
+  if (model) {
+      val = model.getValue(0);
+  }
+  if (!val) {
+      val = null;
+  }
+  if (val !== null) {
+      x -= 3;
+      // TODO:
+  }
+  ctx.drawImage(piece.h, x, y, piece.dx, piece.dy);
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
@@ -39,32 +54,28 @@ Dagaz.Model.CheckInvariants = function(board) {
                         if (p !== null) {
                             var dst = piece.getValue(0);
                             if (dst === null) {
-                                dst = 0;
+                                dst = "";
                             }
-                            dst *= 4;
-                            dst += p.type * 2;
-                            dst += p.player - 1;
+                            dst = dst + ((p.type * 2) + p.player - 1);
                             var src = p.getValue(0);
-                            if ((src === null) || (src == 0)) {
+                            if ((src === null) || (src == "")) {
                                 captured.push(last);
                                 last = null;
                             } else {
-                                var acc = 0;
-                                var num = 0;
-                                while ((src / 4) | 0 != 0) {
-                                    acc += num * (src % 4);
-                                    num *= 4;
-                                    src = (src / 4) | 0;
+                                var acc = "";
+                                while (src.length > 1) {
+                                    acc = src.slice(-1) + acc;
+                                    src = src.substr(0, src.length - 1);
                                 }
                                 target = Dagaz.Model.createPiece((src / 2) | 0, (src % 2) + 1);
-                                if (acc != 0) {
-                                    target = target.setValue(acc);
+                                if (acc.length > 0) {
+                                    target = target.setValue(0, acc);
                                 }
                             }
                             piece = piece.setValue(0, dst);
                         }
                     }
-                    actions.push([ action[0], action[1], piece, maxpn ]);
+                    actions.push([ action[0], action[1], [piece], maxpn ]);
                     if (target !== null) {
                         actions.push([ [last], [last], [target], maxpn ]);
                         last = null;

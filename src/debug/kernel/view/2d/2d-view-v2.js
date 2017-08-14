@@ -141,12 +141,13 @@ View2D.prototype.clear = function() {
   this.setup = [];
 }
 
-View2D.prototype.addPiece = function(piece, pos) {
+View2D.prototype.addPiece = function(piece, pos, model) {
   this.setup.push({
-       pos:  +pos,
-       name: piece,
-       x:    this.pos[pos].x,
-       y:    this.pos[pos].y
+       pos:   +pos,
+       name:  piece,
+       model: model, 
+       x:     this.pos[pos].x,
+       y:     this.pos[pos].y
   });
 }
 
@@ -193,6 +194,7 @@ View2D.prototype.dropPiece = function(pos, piece, phase) {
       steps: 1,
       ix:    ix,
       to:    pos,
+      model: piece,
       np:    piece.toString()
   });
 }
@@ -212,6 +214,7 @@ View2D.prototype.addPhase = function(ix, from, to, piece, phase, steps) {
       from:  from,
       to:    to,
       ix:    ix,
+      model: piece,
       np:    (piece === null) ? null : piece.toString(),
       dx:    ((this.pos[to].x - this.pos[from].x) / steps) | 0,
       dy:    ((this.pos[to].y - this.pos[from].y) / steps) | 0
@@ -413,6 +416,9 @@ View2D.prototype.animate = function() {
                 if (frame.np) {
                     piece.name = frame.np;
                 }
+                if (frame.model) {
+                    piece.model = frame.model;
+                }
                 piece.pos = +frame.to;
                 piece.x = this.pos[frame.to].x;
                 piece.y = this.pos[frame.to].y;
@@ -421,10 +427,11 @@ View2D.prototype.animate = function() {
         }
         if (_.isUndefined(frame.op) && !_.isUndefined(frame.to)) {
             this.setup.push({
-                pos:  frame.to,
-                name: frame.np,
-                x:    this.pos[frame.to].x,
-                y:    this.pos[frame.to].y
+                pos:   frame.to,
+                name:  frame.np,
+                model: frame.model,
+                x:     this.pos[frame.to].x,
+                y:     this.pos[frame.to].y
             });
         }
         frame.done = true;
@@ -464,6 +471,19 @@ Dagaz.View.showMarks = function(view, ctx) {
   drawMarks(ctx, view, view.goal,   "#FFFF00");
 }
 
+Dagaz.View.showPiece = function(self, ctx, pos, piece, model, x, y) {
+  var isSaved = false;
+  if (_.indexOf(self.strike, pos) >= 0) {
+      ctx.save();
+      ctx.globalAlpha = 0.4;
+      isSaved = true;
+  }
+  ctx.drawImage(piece.h, x, y, piece.dx, piece.dy);
+  if (isSaved) {
+      ctx.restore();
+  }
+}
+
 View2D.prototype.draw = function(canvas) {
   if (!isConfigured) {
       Dagaz.View.configure(this);
@@ -498,16 +518,7 @@ View2D.prototype.draw = function(canvas) {
            var piece = this.piece[p.name];
            x += (pos.dx - piece.dx) / 2 | 0;
            y += (pos.dy - piece.dy) / 2 | 0;
-           var isSaved = false;
-           if (_.indexOf(this.strike, p.pos) >= 0) {
-               ctx.save();
-               ctx.globalAlpha = 0.4;
-               isSaved = true;
-           }
-           ctx.drawImage(piece.h, x, y, piece.dx, piece.dy);
-           if (isSaved) {
-               ctx.restore();
-           }
+           Dagaz.View.showPiece(this, ctx, p.pos, piece, p.model, x, y);
         }, this);
       Dagaz.View.showMarks(this, ctx);
       this.animate();

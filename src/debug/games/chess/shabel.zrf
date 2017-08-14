@@ -115,6 +115,7 @@
 
   (option "animate captures"  false)
   (option "smart moves"       true)
+  (option "shabel-invariant"  true)
 
   (players White Black)
   (turn-order White Black)
@@ -256,7 +257,7 @@
 
 (variant
   (title "Belarusian Chess")
-  (default)
+
   (board-setup
     (White 
          (Man a1 a3 b2 c1 c3 d2 e3 f2 g1 g3 h2)
