@@ -19,8 +19,8 @@ var findPiece = function(design, board, player, type) {
   return null;
 }
 
-var notSafe = function(design, board, king) {
-  var pos = findPiece(design, board, board.player, king);
+var notSafe = function(design, board, player, king) {
+  var pos = findPiece(design, board, player, king);
   if (pos === null) return true;
   board.generateInternal(board, false);
   var r = false;
@@ -53,7 +53,7 @@ Dagaz.Model.CheckInvariants = function(board) {
     })
    .each(function(move) {
        var b = board.apply(move);
-       if (notSafe(design, b, king)) {
+       if (notSafe(design, b, board.player, king)) {
            move.failed = true;
        }
     });
