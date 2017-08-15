@@ -471,9 +471,9 @@ Dagaz.View.showMarks = function(view, ctx) {
   drawMarks(ctx, view, view.goal,   "#FFFF00");
 }
 
-Dagaz.View.showPiece = function(self, ctx, pos, piece, model, x, y) {
+Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
   var isSaved = false;
-  if (_.indexOf(self.strike, pos) >= 0) {
+  if (_.indexOf(view.strike, pos) >= 0) {
       ctx.save();
       ctx.globalAlpha = 0.4;
       isSaved = true;
@@ -518,7 +518,7 @@ View2D.prototype.draw = function(canvas) {
            var piece = this.piece[p.name];
            x += (pos.dx - piece.dx) / 2 | 0;
            y += (pos.dy - piece.dy) / 2 | 0;
-           Dagaz.View.showPiece(this, ctx, p.pos, piece, p.model, x, y);
+           Dagaz.View.showPiece(this, ctx, pos, p.pos, piece, p.model, x, y);
         }, this);
       Dagaz.View.showMarks(this, ctx);
       this.animate();
