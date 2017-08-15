@@ -56,6 +56,25 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 Dagaz.Model.CheckInvariants = function(board) {
   _.chain(board.moves)
    .filter(function(move) {
+        return move.actions.length == 1;
+    })
+   .each(function(move) {
+        var pos = move.actions[0][0][0];
+        var piece = board.getPiece(pos);
+        if (piece === null) {
+            move.failed = true;
+            return;
+        }
+        var val = piece.getValue(0);
+        if ((val !== null) && (piece.type == 0)) {
+            piece = move.actions[0][2][0];
+            if ((piece !== null) && (piece.type == 1)) {
+                move.actions[0][2][0] = piece.setValue(0, val);
+            }
+        }
+    });
+  _.chain(board.moves)
+   .filter(function(move) {
         return move.actions.length > 1;
     })
    .each(function(move) {

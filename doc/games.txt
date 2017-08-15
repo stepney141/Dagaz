@@ -95,7 +95,7 @@
   - Philosophers Chess
   - Caissa
   - Chad
-  > Шабел
+  * Шабел
   - Shogi Family
     - Shogi
     > Goro goro shogi
