@@ -26,7 +26,7 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
       val = null;
   }
   if ((val !== null) && (val.length > 0)) {
-      var t = val.slice(-1);
+      var t = val.substr(0, 1);
       var back = null;
       var f = ((t % 2) == 0);
       if (inversed) {
