@@ -178,9 +178,9 @@
 )
 
 (variant
-  (title "Debug")
-  (board-setup
-    (White (King d4) (Man a1 a3 b2 d2 e1 e3 g1 h2))
-    (Black (Man a7 b8 d6 f8 g5 g7 h8 c5 c7 e7 e5))
-  )
+  (title "Column Checkers")
+
+  (option "animate captures"           false)
+  (option "smart moves"                true)
+  (option "columns-checkers-extension" deferred)
 )

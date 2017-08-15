@@ -1,16 +1,23 @@
 (function() {
 
-Dagaz.Model.deferredStrike = true;
+var inversed = false;
 
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "columns-checkers-extension") {
-     checkVersion(design, name, value);
+  if (name == "columns-checkers-extension") {
+      if (value == "deferred") {
+          Dagaz.Model.deferredStrike = true;
+      }
+      if (value == "inversed") {
+          inversed = true;
+      }
+  } else {
+      checkVersion(design, name, value);
   }
 }
 
-Dagaz.View.showPiece = function(self, ctx, pos, piece, model, x, y) {
+Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
   var val = null;
   if (model) {
       val = model.getValue(0);
@@ -18,9 +25,28 @@ Dagaz.View.showPiece = function(self, ctx, pos, piece, model, x, y) {
   if (!val) {
       val = null;
   }
-  if (val !== null) {
-      x -= 3;
-      // TODO:
+  if ((val !== null) && (val.length > 0)) {
+      var t = val.slice(-1);
+      var back = null;
+      var f = ((t % 2) == 0);
+      if (inversed) {
+          f = !f;
+      }
+      if (f) {
+          back = view.piece["White Man"];
+      } else {
+          back = view.piece["Black Man"];
+      }
+      if (back !== null) {
+          ctx.save();
+          ctx.translate(x + frame.dx / 2, y + frame.dy / 2); 
+          ctx.scale(0.95, 0.95);
+          ctx.translate(-x - frame.dx /2, -y - frame.dy /2);
+          ctx.drawImage(back.h, x - 2, y + 2, piece.dx, piece.dy);
+          ctx.restore();
+          x += 5;
+          y -= 5;
+      }
   }
   ctx.drawImage(piece.h, x, y, piece.dx, piece.dy);
 }
@@ -47,6 +73,13 @@ Dagaz.Model.CheckInvariants = function(board) {
                             move.failed = true;
                         }
                     }
+                    if (action[2] !== null) {
+                        var v = piece.getValue(0);
+                        piece = action[2][0];
+                        if (v !== null) {
+                            piece = piece.setValue(0, v);
+                        }
+                    }
                     maxpn = action[3];
                     var target = null;
                     if (last !== null) {
@@ -59,7 +92,11 @@ Dagaz.Model.CheckInvariants = function(board) {
                             dst = dst + ((p.type * 2) + p.player - 1);
                             var src = p.getValue(0);
                             if ((src === null) || (src == "")) {
-                                captured.push(last);
+                                if (Dagaz.Model.deferredStrike) {
+                                    captured.push(last);
+                                } else {
+                                    actions.push([ [last], null, null, maxpn ]);
+                                }
                                 last = null;
                             } else {
                                 var acc = "";
