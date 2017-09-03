@@ -38,7 +38,10 @@ var cache = function(ctx, board) {
   if (!_.isUndefined(ctx.cache[ix])) {
       return ctx.cache[ix];
   }
-  ctx.cache[ix] = _.sortBy(Dagaz.AI.generate(ctx, board), function(m) {
+  Dagaz.KPI.open("model");
+  var moves = Dagaz.AI.generate(ctx, ctx.board);
+  Dagaz.KPI.close("model");
+  ctx.cache[ix] = _.sortBy(moves, function(m) {
       var b = board.apply(m);
       var k = getKey(b);
       if ((board.parent !== null) && (b.zSign == board.parent.zSign)) {

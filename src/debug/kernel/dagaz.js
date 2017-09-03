@@ -8,8 +8,8 @@ var Dagaz  = {
 
 Dagaz.KPI.open  = function(scope, stage) {}
 Dagaz.KPI.stage = function(stage, scope) {}
-Dagaz.KPI.close = function(scope) {}
-Dagaz.KPI.set   = function(scope, name, value) {}
+Dagaz.KPI.close = function(scope, stage) {}
+Dagaz.KPI.set   = function(name, value, scope, stage) {}
 Dagaz.KPI.dump  = function() {}
 
 Dagaz.AI.findBot = function(type, params, parent) {
@@ -24,12 +24,15 @@ Dagaz.AI.createContext = function(design) {
 
 Dagaz.AI.generate = function(ctx, board) {
   board.generate(ctx.design);
-  return _.chain(board.moves)
+  Dagaz.KPI.stage("determinate");
+  var r = _.chain(board.moves)
    .map(function(move) {
        return move.determinate();
     })
    .flatten()
    .value();
+  Dagaz.KPI.set("moves", r.length);
+  return r;
 }
 
 Dagaz.AI.reject = function(ctx, move) {

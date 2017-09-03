@@ -232,6 +232,7 @@ App.prototype.exec = function() {
       }
   }
   if (this.state == STATE.EXEC) {
+      Dagaz.KPI.dump();
       if (!_.isUndefined(this.list)) {
           this.list.done();
           this.view.markPositions(Dagaz.View.markType.ATTACKING, []);

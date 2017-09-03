@@ -22,7 +22,9 @@ RandomAi.prototype.setContext = function(ctx, board) {
 }
 
 RandomAi.prototype.getMove = function(ctx) {
+  Dagaz.KPI.open("model");
   var moves = Dagaz.AI.generate(ctx, ctx.board);
+  Dagaz.KPI.close("model");
   if (moves.length == 0) {      
       return { done: true, ai: "nothing" };
   }

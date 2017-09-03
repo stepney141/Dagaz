@@ -295,6 +295,7 @@ App.prototype.exec = function() {
   if (this.state == STATE.EXEC) {
       this.state = STATE.IDLE;
       isDrag = false;
+      Dagaz.KPI.dump();
       if (!this.move.isPass()) {
           lastPosition = null;
           if (Dagaz.Model.showMoves) {

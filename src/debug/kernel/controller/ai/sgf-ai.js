@@ -87,7 +87,10 @@ SgfAi.prototype.getMove = function(ctx) {
       }
       console.log(notes);
       if (notes) {
-          var moves = _.filter(Dagaz.AI.generate(ctx, ctx.board), function(move) {
+          Dagaz.KPI.open("model");
+          var moves = Dagaz.AI.generate(ctx, ctx.board);
+          Dagaz.KPI.close("model");
+          var moves = _.filter(moves, function(move) {
               return _.indexOf(notes, getNote(move)) >= 0;
           });
           if (moves.length > 0) {

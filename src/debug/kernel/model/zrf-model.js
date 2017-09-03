@@ -1227,14 +1227,28 @@ ZrfMoveGenerator.prototype.setAttr = function(name, pos, value) {
 }
 
 ZrfMoveGenerator.prototype.generate = function() {
+  Dagaz.KPI.open("generate", "succeed");
+  var succeed = true;
   while (this.cmd < this.template.commands.length) {
      var r = (this.template.commands[this.cmd++])(this);
-     if (r === null) return;
+     if (r === null) {
+         succeed = false;
+         break;
+     }
      this.cmd += r;
-     if (this.cmd < 0) return;
+     if (this.cmd < 0) {
+         succeed = false;
+         break;
+     }
   }
   this.cmd = 0;
-  this.completed = true;
+  if (succeed) {
+     Dagaz.KPI.set("actions", this.move.actions.length);
+     Dagaz.KPI.close("generate");
+     this.completed = true;
+  } else {
+     Dagaz.KPI.close("generate", "failed");
+  }
 }
 
 function ZrfPiece(type, player) {
@@ -1546,6 +1560,7 @@ var CompleteMove = function(board, gen) {
 
 ZrfBoard.prototype.generateInternal = function(callback, cont) {
   var design = this.game.design;
+  Dagaz.KPI.stage("init");
   if ((this.moves.length == 0) && !design.failed && (this.player > 0)) {
       var priors = [];
       _.chain(_.keys(this.pieces))
@@ -1577,6 +1592,18 @@ ZrfBoard.prototype.generateInternal = function(callback, cont) {
                 }, this);
            }, this);
       }, this);
+      Dagaz.KPI.set("modes", priors.length);
+      if (priors.length > 0) {
+          var high = priors[0].length;
+          var low  = 0;
+          for (var i = 1; i < priors.length; i++) {
+              low += priors[i].length;
+          }
+          Dagaz.KPI.set("moves", high + low);
+          Dagaz.KPI.set("high", high);
+          Dagaz.KPI.set("low", low);
+      }
+      Dagaz.KPI.stage("generate");
       this.forks = [];
       if (callback.checkContinue()) {
           for (var i = 0; i <= design.modes.length; i++) {
@@ -1606,8 +1633,12 @@ ZrfBoard.prototype.generateInternal = function(callback, cont) {
                }
           }
       }
+      Dagaz.KPI.set("moves", this.moves.length);
+      Dagaz.KPI.stage("extension");
       Dagaz.Model.Extension(this);
+      Dagaz.KPI.set("moves", this.moves.length);
       if (cont) {
+          Dagaz.KPI.stage("invariant");
           Dagaz.Model.CheckInvariants(this);
           Dagaz.Model.PostActions(this);
           if (Dagaz.Model.passTurn == 1) {
@@ -1618,6 +1649,7 @@ ZrfBoard.prototype.generateInternal = function(callback, cont) {
                   this.moves.push(new ZrfMove());
               }
           }
+          Dagaz.KPI.set("moves", this.moves.length);
       }
   }
 }

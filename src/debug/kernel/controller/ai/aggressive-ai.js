@@ -59,7 +59,10 @@ AggressiveAi.prototype.getMove = function(ctx) {
   var captured = 0;
   var safe = [];
   var strike = [];
-  _.chain(Dagaz.AI.generate(ctx, ctx.board))
+  Dagaz.KPI.open("model");
+  var moves = Dagaz.AI.generate(ctx, ctx.board);
+  Dagaz.KPI.close("model");
+  _.chain(moves)
    .filter(function(move) {
        return move.actions.length > 0;
     })

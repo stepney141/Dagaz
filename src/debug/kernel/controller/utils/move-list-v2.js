@@ -8,7 +8,9 @@ function MoveList(board) {
 }
 
 Dagaz.Model.getMoveList = function(board) {
+  Dagaz.KPI.open("model");
   board.generate();
+  Dagaz.KPI.close("model");
   return new MoveList(board);
 }
 

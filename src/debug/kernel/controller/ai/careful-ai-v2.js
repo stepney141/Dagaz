@@ -59,7 +59,10 @@ CarefulAi.prototype.setContext = function(ctx, board) {
 CarefulAi.prototype.getMove = function(ctx) {
   var design = Dagaz.Model.getDesign();
   var result = [];
-  _.chain(Dagaz.AI.generate(ctx, ctx.board))
+  Dagaz.KPI.open("model");
+  var moves = Dagaz.AI.generate(ctx, ctx.board);
+  Dagaz.KPI.close("model");
+  _.chain(moves)
    .filter(function(move) {
        return move.actions.length > 0;
     })

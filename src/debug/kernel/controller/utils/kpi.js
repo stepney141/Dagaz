@@ -12,6 +12,7 @@ Dagaz.KPI.open = function(scope, stage) {
   var timestamp = new Date();
   if (!stage) {
       Dagaz.KPI.scope[scope] = [];
+      last = scope;
   } else {
       if (Dagaz.KPI.scope[scope]) {
           var time = timestamp.getTime() - Dagaz.KPI.scope[scope].start.getTime();
@@ -20,7 +21,6 @@ Dagaz.KPI.open = function(scope, stage) {
       Dagaz.KPI.scope[scope].stage = stage;
   }
   Dagaz.KPI.scope[scope].start = timestamp;
-  last = scope;
 }
 
 Dagaz.KPI.stage = function(stage, scope) {
@@ -30,18 +30,24 @@ Dagaz.KPI.stage = function(stage, scope) {
   Dagaz.KPI.open(scope, stage);
 }
 
-Dagaz.KPI.close = function(scope) {
+Dagaz.KPI.close = function(scope, stage) {
   if (Dagaz.KPI.scope[scope]) {
       var timestamp = new Date();
       var time = timestamp.getTime() - Dagaz.KPI.scope[scope].start.getTime();
-      Dagaz.KPI.set(scope, "time", time);
+      Dagaz.KPI.set(scope, "time", time, stage);
       delete Dagaz.KPI.scope[scope];
   }
 }
 
-Dagaz.KPI.set = function(scope, name, value) {
+Dagaz.KPI.set = function(name, value, scope, stage) {
+  if (!scope) {
+      scope = last;
+  }
   if (Dagaz.KPI.scope[scope] && Dagaz.KPI.scope[scope].stage) {
-      var key = scope + "." + Dagaz.KPI.scope[scope].stage + "." + name;
+      if (!stage) {
+          stage = Dagaz.KPI.scope[scope].stage;
+      }
+      var key = scope + "." + stage + "." + name;
       if (!Dagaz.KPI.slots[key]) {
           Dagaz.KPI.slots[key] = [];
           Dagaz.KPI.slots[key].cnt = 1;
