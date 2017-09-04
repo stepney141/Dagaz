@@ -36,9 +36,6 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPlayer("White", [1, 0, 4, 6, 2, 7, 3, 5]);
     design.addPlayer("Black", [0, 1, 4, 5, 2, 3, 7, 6]);
-    design.addTurn(1);
-    design.addTurn(2);
-
 
     design.addPosition("a8", [0, 1, 8, 0, 0, 9, 0, 0]);
     design.addPosition("b8", [-1, 1, 8, 0, 0, 9, 7, 0]);
@@ -474,7 +471,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "Bishop", 2);
     design.setup("Black", "Queen", 3);
     design.setup("Black", "King", 4);
-
 }
 
 Dagaz.View.configure = function(view) {

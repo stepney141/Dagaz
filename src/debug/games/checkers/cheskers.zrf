@@ -467,7 +467,6 @@
 (variant
   (title "Grand Cheskers (10x10 variant)")
   (history "Invented by Peter Aronson.")
-  (default)
 
   (board
      (image "images/10x10.bmp")
