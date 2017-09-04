@@ -1593,12 +1593,18 @@ ZrfBoard.prototype.generateInternal = function(callback, cont) {
            }, this);
       }, this);
       Dagaz.KPI.set("modes", priors.length);
-      if (priors.length > 0) {
-          var high = priors[0].length;
-          var low  = 0;
-          for (var i = 1; i < priors.length; i++) {
-              low += priors[i].length;
+      var high = null;
+      var low  = 0;
+      for (var i = 0; i <= design.modes.length; i++) {
+          if (!_.isUndefined(priors[i])) {
+              if (high === null) {
+                  high = priors[i].length;
+              } else {
+                  low += priors[i].length;
+             }
           }
+      }
+      if (high !== null) {
           Dagaz.KPI.set("moves", high + low);
           Dagaz.KPI.set("high", high);
           Dagaz.KPI.set("low", low);
