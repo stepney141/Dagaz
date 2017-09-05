@@ -1,0 +1,206 @@
+(define checker-shift (
+   $1 (verify empty?)
+   (if (in-zone? promotion)
+      (add King)
+    else
+      add
+   )
+))
+
+(define checker-jump (
+   $1 (verify enemy?) 
+   capture 
+   $1 (verify empty?)
+   (if (in-zone? promotion)
+       (add-partial King continue-type)
+    else
+       (add-partial jump-type)
+   )
+))
+
+(define king-shift (
+   $1 (while empty?
+       add $1
+   )
+))
+
+(define king-jump (
+   $1 (while empty?  $1)
+   (verify enemy?)
+   $1 (while empty?
+       mark
+       (while empty? 
+          (opposite $1)
+       ) 
+       capture
+       back
+       (add-partial continue-type) $1
+   )
+))
+
+(define king-continue (
+   $1 (while empty? 
+       $1 (verify not-last-from?)
+   )
+   (verify enemy?) 
+   $1 (while empty?
+       mark
+       (while empty? 
+          (opposite $1)
+       ) 
+       capture
+       back
+       (add-partial continue-type) $1
+   )
+))
+
+(game
+  (title "Altai Shatra")
+
+  (move-sound "Audio\Pickup.wav")
+  (release-sound "Audio\Pickup.wav")
+  (capture-sound "")
+  (drop-sound "")
+
+  (option "animate captures"  false)
+  (option "smart moves"       true)
+; (option "deferred captures" true)
+
+  (players White Black)
+  (turn-order White Black)
+  (move-priorities jump-type normal-type)
+
+  (board
+     (image "images/shatra.bmp")
+     (grid
+         (start-rectangle 2 2 52 52)
+         (dimensions
+           ("a/b/c/d/e/f/g" (50 0)) ; files
+           ("14/13/12/11/10/9/8/7/6/5/4/3/2/1" (0 50)) ; ranks
+         )
+         (directions (ne 1 -1) (nw -1 -1) (se 1 1) (sw -1 1))
+     )
+     (kill-positions 
+           a1 a2 a3 a4 a11 a12 a13 a14
+           b1 b2 b3 b4 b11 b12 b13 b14
+           f1 f2 f3 f4 f11 f12 f13 f14
+           g1 g2 g3 g4 g11 g12 g13 g14
+           c4 e4 c11 e11
+     )
+     (symmetry Black (nw se) (se nw) (ne sw) (sw ne))
+     (zone (name promotion) (players White)
+           (positions a10 b10 c10 d10 e10 f10 g10)
+     )
+     (zone (name promotion) (players Black)
+           (positions a5 b5 c5 d5 e5 f5 g5)
+     )
+  )
+
+  (piece
+     (name Man)
+     (image White "images/cheskers/wpawn.bmp"
+            Black "images/cheskers/bpawn.bmp")
+     (moves
+         (move-type jump-type)
+         (checker-jump nw) (checker-jump ne) (checker-jump sw) (checker-jump se)
+         (move-type normal-type)
+         (checker-shift nw) (checker-shift ne)
+     )
+  )
+  (piece
+     (name King)
+     (image White "images/cheskers/wking.bmp"
+            Black "images/cheskers/bking.bmp")
+     (moves
+         (move-type jump-type)
+         (king-jump nw) (king-jump ne) (king-jump sw) (king-jump se)
+         (move-type continue-type)
+         (king-continue nw) (king-continue ne) (king-continue sw) (king-continue se)
+         (move-type normal-type)
+         (king-shift nw) (king-shift ne) (king-shift sw) (king-shift se)
+     )
+  )
+  (piece
+     (name Bishop)
+     (image White "images/cheskers/wbishop.bmp"
+            Black "images/cheskers/bbishop.bmp")
+     (moves
+         (move-type jump-type)
+         (king-jump nw) (king-jump ne) (king-jump sw) (king-jump se)
+         (move-type continue-type)
+         (king-continue nw) (king-continue ne) (king-continue sw) (king-continue se)
+         (move-type normal-type)
+         (king-shift nw) (king-shift ne) (king-shift sw) (king-shift se)
+     )
+  )
+  (piece
+     (name Rook)
+     (image White "images/cheskers/wrook.bmp"
+            Black "images/cheskers/brook.bmp")
+     (moves
+         (move-type jump-type)
+         (king-jump nw) (king-jump ne) (king-jump sw) (king-jump se)
+         (move-type continue-type)
+         (king-continue nw) (king-continue ne) (king-continue sw) (king-continue se)
+         (move-type normal-type)
+         (king-shift nw) (king-shift ne) (king-shift sw) (king-shift se)
+     )
+  )
+  (piece
+     (name Queen)
+     (image White "images/cheskers/wqueen.bmp"
+            Black "images/cheskers/bqueen.bmp")
+     (moves
+         (move-type jump-type)
+         (king-jump nw) (king-jump ne) (king-jump sw) (king-jump se)
+         (move-type continue-type)
+         (king-continue nw) (king-continue ne) (king-continue sw) (king-continue se)
+         (move-type normal-type)
+         (king-shift nw) (king-shift ne) (king-shift sw) (king-shift se)
+     )
+  )
+
+  (board-setup
+     (White (Man a5 b5 c5 d5 e5 f5 g5 c1 c2 e1 e2)
+            (Bishop c3 e3)
+            (Rook d2 d3)
+            (Queen d1)
+            (King d4)
+     )
+     (Black (Man a10 b10 c10 d10 e10 f10 g10 c14 c13 e14 e13)
+            (Bishop c12 e12)
+            (Rook d12 d13)
+            (Queen d14)
+            (King d11)
+     )
+  )
+
+  (loss-condition (White Black) (pieces-remaining 0 King))
+  (loss-condition (White Black) stalemated)
+  (loss-condition (White Black) repetition)
+)
+
+(variant
+  (title "Altai Shatra (variant)")
+
+  (piece
+     (name Man)
+     (image White "images/wman.bmp"
+            Black "images/bman.bmp")
+     (moves
+         (move-type jump-type)
+         (checker-jump nw) (checker-jump ne) (checker-jump sw) (checker-jump se)
+         (move-type normal-type)
+         (checker-shift nw) (checker-shift ne)
+     )
+  )
+
+  (board-setup
+     (White (Man a5 b5 c5 d5 e5 f5 g5 a6 b6 c6 d6 e6 f6 g6 c1 c2 e1 e2 c3 e3 d2 d3 d1)
+            (King d4)
+     )
+     (Black (Man a10 b10 c10 d10 e10 f10 g10 a9 b9 c9 d9 e9 f9 g9 c14 c13 e14 e13 c12 e12 d12 d13 d14)
+            (King d11)
+     )
+  )
+)
