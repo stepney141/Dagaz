@@ -5,6 +5,7 @@ function MoveList(board) {
   this.moves    = board.moves;
   this.level    = 0;
   this.position = null;
+  this.stops    = null;
 }
 
 Dagaz.Model.getMoveList = function(board) {
@@ -30,19 +31,28 @@ var getMaxPart = function(move) {
 }
 
 MoveList.prototype.getMoves = function() {
-  return _.filter(this.moves, function(move) {
+  Dagaz.KPI.open("get-moves", "all");
+  var result = _.filter(this.moves, function(move) {
      return getMaxPart(move) < this.level + 1;
   }, this);
+  Dagaz.KPI.close("get-moves");
+  return result;
 }
 
 MoveList.prototype.isDone = function() {
-  return _.filter(this.moves, function(move) {
+  Dagaz.KPI.open("is-done", "all");
+  var result = _.filter(this.moves, function(move) {
      return getMaxPart(move) >= this.level + 1;
   }, this).length == 0;
+  Dagaz.KPI.close("is-done");
+  return result;
 }
 
 MoveList.prototype.canPass = function() {
-  return _.chain(this.moves).map(getMaxPart).min().value() <= this.level;
+  Dagaz.KPI.open("can-pass", "all");
+  var result = _.chain(this.moves).map(getMaxPart).min().value() <= this.level;
+  Dagaz.KPI.close("can-pass");
+  return result;
 }
 
 MoveList.prototype.getActions = function(move) {
@@ -69,6 +79,7 @@ var isCapturing = function(action) {
 
 MoveList.prototype.getTargets = function() {
   var result = [];
+  Dagaz.KPI.open("get-targets", "init");
   if (this.position !== null) {
       _.each(this.moves, function(move) {
           var actions = _.filter(this.getActions(move), isMove);
@@ -79,11 +90,18 @@ MoveList.prototype.getTargets = function() {
           }
       }, this);
   }
-  return _.uniq(result);
+  Dagaz.KPI.set("count", result.length, "get-targets");
+  Dagaz.KPI.close("get-targets");
+  Dagaz.KPI.open("get-targets", "uniq");
+  result = _.uniq(result);
+  Dagaz.KPI.set("count", result.length, "get-targets");
+  Dagaz.KPI.close("get-targets");
+  return result;
 }
 
 MoveList.prototype.getStarts = function() {
   var result = [];
+  Dagaz.KPI.open("get-starts", "init");
   _.each(this.moves, function(move) {
       var actions = _.filter(this.getActions(move), isMove);
       if (actions.length > 0) {
@@ -92,45 +110,25 @@ MoveList.prototype.getStarts = function() {
           });
       }
   }, this);
-  return _.uniq(_.union(result, this.getCaptures()));
-}
-
-MoveList.prototype.isUniqueFrom = function(pos) {
-  var c = 0;
-  _.each(this.moves, function(move) {
-      _.each(this.getActions(move), function(action) {
-          if ((action[0] !== null) && (_.indexOf(action[0], pos) >= 0)) c++;
-      });
-  }, this);
-  return c == 1;
-}
-
-MoveList.prototype.isUniqueTo = function(pos) {
-  var c = 0;
-  _.each(this.moves, function(move) {
-      _.each(this.getActions(move), function(action) {
-          if ((action[1] !== null) && (_.indexOf(action[1], pos) >= 0)) c++;
-      });
-  }, this);
-  return c == 1;
+  Dagaz.KPI.set("count", result.length, "get-starts");
+  Dagaz.KPI.close("get-starts");
+  Dagaz.KPI.open("get-starts", "uniq");
+  result = _.uniq(_.union(result, this.getCaptures()));
+  Dagaz.KPI.set("count", result.length, "get-starts");
+  Dagaz.KPI.close("get-starts");
+  return result;
 }
 
 MoveList.prototype.getStops = function() {
+  if (this.stops !== null) {
+      return this.stops;
+  }
   var result = this.getTargets();
+  Dagaz.KPI.open("get-stops", "init");
+  Dagaz.KPI.set("moves", this.moves.length, "get-stops");
   _.each(this.moves, function(move) {
       var actions = _.filter(this.getActions(move), isMove);
-      if ((actions.length > 0) && (actions[0][0].length == 1) && (actions[0][1].length == 1)) {
-          if (Dagaz.Model.smartFrom) {
-              if (this.isUniqueFrom(actions[0][0][0]) && !this.canPass()) {
-                  result.push(actions[0][0][0]);
-              }
-          }
-          if (Dagaz.Model.smartTo) {
-              if (this.isUniqueTo(actions[0][1][0])) {
-                  result.push(actions[0][1][0]);
-              }
-          }
-      } else {
+      if ((actions.length == 0) || (actions[0][0].length > 1) || (actions[0][1].length > 1)) {
           _.chain(this.getActions(move))
            .filter(isNoMove)
            .each(function(action) {
@@ -147,11 +145,38 @@ MoveList.prototype.getStops = function() {
             });
       }
   }, this);
-  return _.uniq(result);
+  if (Dagaz.Model.smartFrom || Dagaz.Model.smartTo) {
+      var positions = [];
+      var canPass   = this.canPass();
+      _.each(this.moves, function(move) {
+            var actions = _.filter(this.getActions(move), isMove);
+            if (!canPass && (actions.length > 0) && (actions[0][0].length == 1)) {
+                positions.push(actions[0][0][0]);
+            }
+            if ((actions.length > 0) && (actions[0][1].length == 1)) {
+                positions.push(actions[0][1][0]);
+            }
+      }, this);
+      positions = _.countBy(positions, _.identity);
+      _.each(_.keys(positions), function(pos) {
+            if (positions[pos] == 1) {
+                result.push(+pos);
+            }
+      });
+  }
+  Dagaz.KPI.set("count", result.length, "get-stops");
+  Dagaz.KPI.close("get-stops");
+  Dagaz.KPI.open("get-stops", "uniq");
+  result = _.uniq(result);
+  Dagaz.KPI.set("count", result.length, "get-stops");
+  Dagaz.KPI.close("get-stops");
+  this.stops = result;
+  return result;
 }
 
 MoveList.prototype.getCaptures = function() {
   var result = [];
+  Dagaz.KPI.open("get-captures", "init");
   _.each(this.moves, function(move) {
       var actions = _.filter(this.getActions(move), isMove);
       if (((actions.length > 0) && (_.indexOf(actions[0][0], this.position) >= 0)) ||
@@ -165,7 +190,13 @@ MoveList.prototype.getCaptures = function() {
             });
       }
   }, this);
-  return _.uniq(result);
+  Dagaz.KPI.set("count", result.length, "get-captures");
+  Dagaz.KPI.close("get-captures");
+  Dagaz.KPI.open("get-captures", "uniq");
+  result = _.uniq(result);
+  Dagaz.KPI.set("count", result.length, "get-captures");
+  Dagaz.KPI.close("get-captures");
+  return result;
 }
 
 MoveList.prototype.getDrops = function() {
@@ -227,6 +258,7 @@ MoveList.prototype.copyActions = function(move, actions) {
 
 MoveList.prototype.setPosition = function(pos) {
   var result = Dagaz.Model.createMove();
+  Dagaz.KPI.open("set-position", "all");
   if (_.indexOf(this.getStops(), pos) >= 0) {
       var moves = _.filter(this.moves, function(move) {
           var actions = this.getActions(move);
@@ -284,6 +316,8 @@ MoveList.prototype.setPosition = function(pos) {
           this.position = pos;
       }
   }
+  Dagaz.KPI.close("set-position");
+  this.stops = null;
   return result;
 }
 

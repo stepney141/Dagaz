@@ -177,7 +177,7 @@ App.prototype.mouseUp = function(view, pos) {
           this.setPosition(positions[0]);
       }
   }
-  this.view.markPositions(Dagaz.View.markType.TARGET, []);
+//this.view.markPositions(Dagaz.View.markType.TARGET, []);
   Canvas.style.cursor = "default";
   isDrag = false;
 }
@@ -297,6 +297,7 @@ App.prototype.exec = function() {
       isDrag = false;
       Dagaz.KPI.dump();
       if (!this.move.isPass()) {
+          this.view.markPositions(Dagaz.View.markType.TARGET, []);
           lastPosition = null;
           if (Dagaz.Model.showMoves) {
               console.log(this.move.toString());

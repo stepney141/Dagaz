@@ -1,6 +1,7 @@
 (function() {
 
-var last = "default";
+var last  = "default";
+var limit = 500;
 
 Dagaz.KPI.open = function(scope, stage) {
   if (_.isUndefined(Dagaz.KPI.slots)) {
@@ -9,14 +10,16 @@ Dagaz.KPI.open = function(scope, stage) {
   if (_.isUndefined(Dagaz.KPI.scope)) {
       Dagaz.KPI.scope = [];
   }
+  if (!Dagaz.KPI.scope[scope]) {
+      Dagaz.KPI.scope[scope] = [];
+  }
   var timestamp = new Date();
   if (!stage) {
-      Dagaz.KPI.scope[scope] = [];
       last = scope;
   } else {
-      if (Dagaz.KPI.scope[scope]) {
+      if (Dagaz.KPI.scope[scope].start) {
           var time = timestamp.getTime() - Dagaz.KPI.scope[scope].start.getTime();
-          Dagaz.KPI.set(scope, "time", time);
+          Dagaz.KPI.set("time", time, scope);
       }
       Dagaz.KPI.scope[scope].stage = stage;
   }
@@ -34,7 +37,7 @@ Dagaz.KPI.close = function(scope, stage) {
   if (Dagaz.KPI.scope[scope]) {
       var timestamp = new Date();
       var time = timestamp.getTime() - Dagaz.KPI.scope[scope].start.getTime();
-      Dagaz.KPI.set(scope, "time", time, stage);
+      Dagaz.KPI.set("time", time, scope, stage);
       delete Dagaz.KPI.scope[scope];
   }
 }
@@ -71,7 +74,9 @@ Dagaz.KPI.dump  = function() {
   if (Dagaz.KPI.slots) {
       _.each(_.keys(Dagaz.KPI.slots), function(key) {
           var s = Dagaz.KPI.slots[key];
-          console.log("KPI [" + key + "] = " + s.cnt + ", " + s.sum + ", " + s.min + ", " + s.max);
+          if (s.sum > limit) {
+              console.log("KPI [" + key + "] = " + s.cnt + ", " + s.sum + ", " + s.min + ", " + s.max);
+          }
       });
   }
   Dagaz.KPI.slots = [];

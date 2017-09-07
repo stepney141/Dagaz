@@ -1227,7 +1227,7 @@ ZrfMoveGenerator.prototype.setAttr = function(name, pos, value) {
 }
 
 ZrfMoveGenerator.prototype.generate = function() {
-  Dagaz.KPI.open("generate", "succeed");
+//Dagaz.KPI.open("generate", "succeed");
   var succeed = true;
   while (this.cmd < this.template.commands.length) {
      var r = (this.template.commands[this.cmd++])(this);
@@ -1243,11 +1243,11 @@ ZrfMoveGenerator.prototype.generate = function() {
   }
   this.cmd = 0;
   if (succeed) {
-     Dagaz.KPI.set("actions", this.move.actions.length);
-     Dagaz.KPI.close("generate");
+// ? Dagaz.KPI.set("actions", this.move.actions.length, "generate", "succeed");
+//   Dagaz.KPI.close("generate");
      this.completed = true;
-  } else {
-     Dagaz.KPI.close("generate", "failed");
+/*} else {
+     Dagaz.KPI.close("generate", "failed"); */
   }
 }
 

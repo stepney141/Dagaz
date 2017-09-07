@@ -1422,7 +1422,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(60, 2, [6, 6], 0);
     design.addMove(60, 2, [5, 5], 0);
 
-    design.setup("White", "Dog", 91);
+/*  design.setup("White", "Dog", 91);
     design.setup("White", "Dog", 84);
     design.setup("White", "Pawn", 79);
     design.setup("White", "Pawn", 78);
@@ -1453,9 +1453,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("White", "Silver-General", 5);
     design.setup("White", "Silver-General", 10);
     design.setup("White", "Gold-General", 6);
-    design.setup("White", "Gold-General", 9);
+    design.setup("White", "Gold-General", 9); */
     design.setup("White", "King", 8);
-    design.setup("White", "Drunk-Elephant", 7);
+/*  design.setup("White", "Drunk-Elephant", 7);
     design.setup("White", "Reverse-Chariot", 16);
     design.setup("White", "Reverse-Chariot", 31);
     design.setup("White", "Chariot-Soldier", 29);
@@ -1531,9 +1531,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "Silver-General", 245);
     design.setup("Black", "Silver-General", 250);
     design.setup("Black", "Gold-General", 246);
-    design.setup("Black", "Gold-General", 249);
+    design.setup("Black", "Gold-General", 249); */
     design.setup("Black", "King", 247);
-    design.setup("Black", "Drunk-Elephant", 248);
+/*  design.setup("Black", "Drunk-Elephant", 248);
     design.setup("Black", "Reverse-Chariot", 224);
     design.setup("Black", "Reverse-Chariot", 239);
     design.setup("Black", "Chariot-Soldier", 237);
@@ -1573,11 +1573,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "Dragon-King", 212);
     design.setup("Black", "Dragon-King", 219);
     design.setup("Black", "Water-Buffalo", 213);
-    design.setup("Black", "Water-Buffalo", 218);
+    design.setup("Black", "Water-Buffalo", 218); */
     design.setup("Black", "Fire-Demon", 214);
-    design.setup("Black", "Fire-Demon", 217);
+/*  design.setup("Black", "Fire-Demon", 217);
     design.setup("Black", "Free-Eagle", 216);
-    design.setup("Black", "Lion-Hawk", 215);
+    design.setup("Black", "Lion-Hawk", 215); */
 }
 
 Dagaz.View.configure = function(view) {
