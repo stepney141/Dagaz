@@ -36,6 +36,9 @@ MoveList.prototype.getMoves = function() {
      return getMaxPart(move) < this.level + 1;
   }, this);
   Dagaz.KPI.close("get-moves");
+  result = _.uniq(result, false, function(move) {
+     return move.toString();
+  });
   return result;
 }
 

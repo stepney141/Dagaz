@@ -159,7 +159,7 @@
 	The rules of Tenjiku Shogi were first given in a book called 'Shogi Zushiki', published in 1634.\\
 	(Tenjiku was the Japanese name for India which was considered an 'exotic' land in the 16th century)")
 
-   (option "pass partial" true)
+   (option "pass partial"            true)
    (option "tenjiku-shogi-extension" true)
 
    (players Black White)
@@ -196,28 +196,6 @@
  			1c 2c 3c 4c 5c 6c 7c 8c 9c 10c 11c 12c 13c 14c 15c 16c
  			1d 2d 3d 4d 5d 6d 7d 8d 9d 10d 11d 12d 13d 14d 15d 16d
  			1e 2e 3e 4e 5e 6e 7e 8e 9e 10e 11e 12e 13e 14e 15e 16e)
- 	  )
- 	  (zone 
- 	     (name last-two-ranks)    ; for knights' forced promotion!
- 	     (players White)
- 	     (positions 1o 2o 3o 4o 5o 6o 7o 8o 9o 10o 11o 12o 13o 14o 15o 16o
- 			1p 2p 3p 4p 5p 6p 7p 8p 9p 10p 11p 12p 13p 14p 15p 16p)
- 	  )
- 	  (zone 
- 	     (name last-two-ranks)
- 	     (players Black)
- 	     (positions 1a 2a 3a 4a 5a 6a 7a 8a 9a 10a 11a 12a 13a 14a 15a 16a
- 			1b 2b 3b 4b 5b 6b 7b 8b 9b 10b 11b 12b 13b 14b 15b 16b)
- 	  )														
- 	  (zone								
- 	     (name last-rank)		  ; for pawns' forced promotion! 
- 	     (players White)
- 	     (positions 1p 2p 3p 4p 5p 6p 7p 8p 9p 10p 11p 12p 13p 14p 15p 16p)
- 	  )
- 	  (zone
- 	     (name last-rank)
- 	     (players Black)
- 	     (positions 1a 2a 3a 4a 5a 6a 7a 8a 9a 10a 11a 12a 13a 14a 15a 16a)
  	  )
    )
 
