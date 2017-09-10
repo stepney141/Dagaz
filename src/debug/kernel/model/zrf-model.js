@@ -38,8 +38,12 @@ Dagaz.Model.checkVersion = function(design, name, value) {
          (name != "show-hints")         &&
          (name != "stalemate-draw")     &&
          (name != "recycle-captures")   &&
+         (name != "shared-pieces")      &&
          (name != "silent-?-moves")) {
          design.failed = true;
+     }
+     if (name == "shared-pieces") {
+         Dagaz.Model.sharedPieces = (value == "true");
      }
      if (name == "show-moves-list") {
          Dagaz.Model.showMoves = (value == "true");
