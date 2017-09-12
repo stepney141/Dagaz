@@ -12,6 +12,7 @@ Dagaz.Model.recycleCaptures = false;
 Dagaz.Model.smartFrom       = false;
 Dagaz.Model.smartTo         = false;
 Dagaz.Model.showGoals       = true;
+Dagaz.Model.showCaptures    = true;
 Dagaz.Model.showMoves       = true;
 Dagaz.Model.showHints       = true;
 Dagaz.Model.stalemateDraw   = false;
@@ -34,6 +35,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
          (name != "progressive-levels") &&
          (name != "selection-screen")   &&
          (name != "show-moves-list")    &&
+         (name != "show-captures")      &&
          (name != "smart-moves")        &&
          (name != "show-hints")         &&
          (name != "stalemate-draw")     &&
@@ -41,6 +43,9 @@ Dagaz.Model.checkVersion = function(design, name, value) {
          (name != "shared-pieces")      &&
          (name != "silent-?-moves")) {
          design.failed = true;
+     }
+     if (name == "show-captures") {
+         Dagaz.Model.showCaptures = (value == "true");
      }
      if (name == "shared-pieces") {
          Dagaz.Model.sharedPieces = (value == "true");

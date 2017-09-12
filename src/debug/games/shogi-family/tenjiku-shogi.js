@@ -22,7 +22,8 @@ ZRF = {
 Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("pass-partial", "true");
-    design.checkVersion("smart-moves", "true");
+    design.checkVersion("smart-moves", "false");
+    design.checkVersion("show-captures", "false");
     design.checkVersion("tenjiku-shogi-extension", "true");
     design.checkVersion("tenjiku-shogi-promotion", "true");
 
@@ -1438,9 +1439,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("White", "Pawn", 65);
     design.setup("White", "Pawn", 64);
     design.setup("White", "Lance", 0);
-    design.setup("White", "Lance", 15);
+    design.setup("White", "Lance", 15); */
     design.setup("White", "Knight", 1);
-    design.setup("White", "Knight", 14);
+/*  design.setup("White", "Knight", 14);
     design.setup("White", "Ferocious-Leopard", 2);
     design.setup("White", "Ferocious-Leopard", 13);
     design.setup("White", "Iron-General", 3);
@@ -1514,9 +1515,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "Pawn", 179);
     design.setup("Black", "Pawn", 178);
     design.setup("Black", "Pawn", 177);
-    design.setup("Black", "Pawn", 176);
+    design.setup("Black", "Pawn", 176);*/
     design.setup("Black", "Lance", 240);
-    design.setup("Black", "Lance", 255);
+/*  design.setup("Black", "Lance", 255);
     design.setup("Black", "Knight", 241);
     design.setup("Black", "Knight", 254);
     design.setup("Black", "Ferocious-Leopard", 242);
@@ -1570,11 +1571,14 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "Dragon-King", 212);
     design.setup("Black", "Dragon-King", 219);
     design.setup("Black", "Water-Buffalo", 213);
-    design.setup("Black", "Water-Buffalo", 218); */
+    design.setup("Black", "Water-Buffalo", 218);*/
     design.setup("Black", "Fire-Demon", 214);
 /*  design.setup("Black", "Fire-Demon", 217);
     design.setup("Black", "Free-Eagle", 216);
     design.setup("Black", "Lion-Hawk", 215); */
+
+    design.setup("Black", "Heavenly-Tetrarch", 194);
+    design.setup("Black", "Lion", 84);
 }
 
 Dagaz.View.configure = function(view) {

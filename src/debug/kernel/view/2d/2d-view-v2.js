@@ -473,7 +473,7 @@ Dagaz.View.showMarks = function(view, ctx) {
 
 Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
   var isSaved = false;
-  if (_.indexOf(view.strike, pos) >= 0) {
+  if (Dagaz.Model.showCaptures && (_.indexOf(view.strike, pos) >= 0)) {
       ctx.save();
       ctx.globalAlpha = 0.4;
       isSaved = true;

@@ -159,6 +159,8 @@
 	The rules of Tenjiku Shogi were first given in a book called 'Shogi Zushiki', published in 1634.\\
 	(Tenjiku was the Japanese name for India which was considered an 'exotic' land in the 16th century)")
 
+   (option "smart moves"             false)
+   (option "show captures"           false)
    (option "pass partial"            true)
    (option "tenjiku-shogi-extension" true)
 
