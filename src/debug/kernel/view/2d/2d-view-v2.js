@@ -516,9 +516,11 @@ View2D.prototype.draw = function(canvas) {
            var x = p.x; var y = p.y;
            var pos = this.pos[p.pos];
            var piece = this.piece[p.name];
-           x += (pos.dx - piece.dx) / 2 | 0;
-           y += (pos.dy - piece.dy) / 2 | 0;
-           Dagaz.View.showPiece(this, ctx, pos, p.pos, piece, p.model, x, y);
+           if (piece) {
+               x += (pos.dx - piece.dx) / 2 | 0;
+               y += (pos.dy - piece.dy) / 2 | 0;
+               Dagaz.View.showPiece(this, ctx, pos, p.pos, piece, p.model, x, y);
+           }
         }, this);
       Dagaz.View.showMarks(this, ctx);
       this.animate();

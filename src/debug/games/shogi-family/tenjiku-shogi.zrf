@@ -125,6 +125,32 @@
   add
 ))
 
+(define leap-2 (
+  $1 (verify empty?)
+  $2 (verify not-friend?)
+  add
+))
+
+(define leap-3 (
+  $1 (verify empty?)
+  $2 (verify empty?)
+  $3 (verify not-friend?)
+  add
+))
+
+(define leap-3-empty (
+  $1 (verify empty?)
+  $1 (verify empty?)
+  $1 (verify empty?)
+  add
+))
+
+(define leap-2-mode (
+  $1 (verify empty?)
+  $2 (verify not-friend?)
+  (add-partial $3)
+))
+
 (define slide (
   $1 
   (while empty?
@@ -146,6 +172,28 @@
   (verify not-friend?)
   add
 ))
+
+(define tetrarch-slide (
+  $1 $1 
+  (while empty?
+     add
+     $1
+  )
+  (verify not-friend?)
+  add
+))
+
+(define tetrarch-shift (
+  $1 $1 (verify not-friend?) add
+  (verify empty?) $1 (verify not-friend?) 
+  add
+))
+
+(define tetrarch-igui (
+  (create Heavenly-Tetrarch)
+  $1 (verify enemy?) 
+  capture (add None)
+)) 
 
 (game
    (title "Tenjiku Shogi")
@@ -360,7 +408,7 @@
            (move-type normal-type)
            (slide s) (slide w) (slide e)
            (slide nw) (slide sw) (slide ne) (slide se)
-           (lion-step n left-1-type)
+           (lion-step n left-1-type) (leap-2 n n)
            (move-type left-1-type)
            (step n) (step s)
       )
@@ -377,7 +425,7 @@
            (move-type normal-type)
            (slide s) (slide w) (slide e)
            (slide nw) (slide sw) (slide ne) (slide se)
-           (lion-step n left-1-type)
+           (lion-step n left-1-type) (leap-2 n n)
            (move-type left-1-type)
            (step n) (step s)
       )
@@ -394,8 +442,8 @@
            (move-type normal-type)
            (slide n) (slide s) (slide w) (slide e)
            (slide sw) (slide se)
-           (lion-step nw left-nw-type)
-           (lion-step ne left-ne-type)
+           (lion-step nw left-nw-type) (leap-2 nw nw)
+           (lion-step ne left-ne-type) (leap-2 ne ne)
            (move-type left-nw-type)
            (step nw) (step se)
            (move-type left-ne-type)
@@ -414,8 +462,8 @@
            (move-type normal-type)
            (slide n) (slide s) (slide w) (slide e)
            (slide sw) (slide se)
-           (lion-step nw left-nw-type)
-           (lion-step ne left-ne-type)
+           (lion-step nw left-nw-type) (leap-2 nw nw)
+           (lion-step ne left-ne-type) (leap-2 ne ne)
            (move-type left-nw-type)
            (step nw) (step se)
            (move-type left-ne-type)
@@ -464,6 +512,14 @@
            (move-type normal-type)
            (lion-step n left-1-type) (lion-step s left-1-type) (lion-step w left-1-type) (lion-step e left-1-type)
            (lion-step nw left-1-type) (lion-step se left-1-type) (lion-step sw left-1-type) (lion-step ne left-1-type)
+           (leap-2 n n) (leap-2 nw nw)
+           (leap-2 s s) (leap-2 sw sw)
+           (leap-2 e e) (leap-2 se se)
+           (leap-2 w w) (leap-2 ne ne)
+           (leap-2 n ne) (leap-2 n nw)
+           (leap-2 s se) (leap-2 s sw)
+           (leap-2 e ne) (leap-2 e se)
+           (leap-2 w nw) (leap-2 w sw)
            (move-type left-1-type)
            (step n) (step s) (step w) (step e)
            (step nw) (step se) (step sw) (step ne)
@@ -481,6 +537,14 @@
            (move-type normal-type)
            (lion-step n left-1-type) (lion-step s left-1-type) (lion-step w left-1-type) (lion-step e left-1-type)
            (lion-step nw left-1-type) (lion-step se left-1-type) (lion-step sw left-1-type) (lion-step ne left-1-type)
+           (leap-2 n n) (leap-2 nw nw)
+           (leap-2 s s) (leap-2 sw sw)
+           (leap-2 e e) (leap-2 se se)
+           (leap-2 w w) (leap-2 ne ne)
+           (leap-2 n ne) (leap-2 n nw)
+           (leap-2 s se) (leap-2 s sw)
+           (leap-2 e ne) (leap-2 e se)
+           (leap-2 w nw) (leap-2 w sw)
            (move-type left-1-type)
            (step n) (step s) (step w) (step e)
            (step nw) (step se) (step sw) (step ne)
@@ -905,6 +969,19 @@
            (vice-general-slide nw) (vice-general-slide se) (vice-general-slide sw) (vice-general-slide ne)
            (lion-step n left-2-type) (lion-step s left-2-type) (lion-step w left-2-type) (lion-step e left-2-type)
            (lion-step nw left-2-type) (lion-step se left-2-type) (lion-step sw left-2-type) (lion-step ne left-2-type)
+           (leap-2-mode n n left-1-type) (leap-2-mode nw nw left-1-type)
+           (leap-2-mode s s left-1-type) (leap-2-mode sw sw left-1-type)
+           (leap-2-mode e e left-1-type) (leap-2-mode se se left-1-type)
+           (leap-2-mode w w left-1-type) (leap-2-mode ne ne left-1-type)
+           (leap-2-mode n ne left-1-type) (leap-2-mode n nw left-1-type)
+           (leap-2-mode s se left-1-type) (leap-2-mode s sw left-1-type)
+           (leap-2-mode e ne left-1-type) (leap-2-mode e se left-1-type)
+           (leap-2-mode w nw left-1-type) (leap-2-mode w sw left-1-type)
+           (leap-3 n n n) (leap-3 n n nw) (leap-3 n n ne) (leap-3 n nw nw) (leap-3 n ne ne)
+           (leap-3 s s s) (leap-3 s s sw) (leap-3 s s se) (leap-3 s sw sw) (leap-3 s se se)
+           (leap-3 w w w) (leap-3 w w nw) (leap-3 w w sw) (leap-3 w nw nw) (leap-3 w sw sw)
+           (leap-3 e e e) (leap-3 e e ne) (leap-3 e e se) (leap-3 e ne ne) (leap-3 e se se)
+           (leap-3-empty nw) (leap-3-empty ne) (leap-3-empty sw) (leap-3-empty se)
            (move-type left-2-type)
            (lion-step n left-1-type) (lion-step s left-1-type) (lion-step w left-1-type) (lion-step e left-1-type)
            (lion-step nw left-1-type) (lion-step se left-1-type) (lion-step sw left-1-type) (lion-step ne left-1-type)
@@ -1030,6 +1107,16 @@
            (slide nw) (slide sw) (slide ne) (slide se)
            (lion-step n left-2-type) (lion-step s left-2-type) (lion-step w left-2-type) (lion-step e left-2-type)
            (lion-step nw left-2-type) (lion-step se left-2-type) (lion-step sw left-2-type) (lion-step ne left-2-type)
+           (leap-2-mode n n left-1-type)  (leap-2-mode s s left-1-type) 
+           (leap-2-mode e e left-1-type)  (leap-2-mode w w left-1-type) 
+           (leap-2-mode n ne left-1-type) (leap-2-mode n nw left-1-type)
+           (leap-2-mode s se left-1-type) (leap-2-mode s sw left-1-type)
+           (leap-2-mode e ne left-1-type) (leap-2-mode e se left-1-type)
+           (leap-2-mode w nw left-1-type) (leap-2-mode w sw left-1-type)
+           (leap-3 n n n) (leap-3 n n nw) (leap-3 n n ne) (leap-3 n nw nw) (leap-3 n ne ne)
+           (leap-3 s s s) (leap-3 s s sw) (leap-3 s s se) (leap-3 s sw sw) (leap-3 s se se)
+           (leap-3 w w w) (leap-3 w w nw) (leap-3 w w sw) (leap-3 w nw nw) (leap-3 w sw sw)
+           (leap-3 e e e) (leap-3 e e ne) (leap-3 e e se) (leap-3 e ne ne) (leap-3 e se se)
            (move-type left-2-type)
            (lion-step n left-1-type) (lion-step s left-1-type) (lion-step w left-1-type) (lion-step e left-1-type)
            (lion-step nw left-1-type) (lion-step se left-1-type) (lion-step sw left-1-type) (lion-step ne left-1-type)
@@ -1052,7 +1139,10 @@
            (slide-2 n) (slide-2 s) (slide-2 w) (slide-2 e)
            (slide-2 nw) (slide-2 sw) (slide-2 ne) (slide-2 se)
            (step n) (step s) (step w) (step e)
-           (lion-step nw left-1-type) (lion-step se left-1-type) (lion-step sw left-1-type) (lion-step ne left-1-type)
+           (lion-step nw left-1-type) (leap-2 nw nw)
+           (lion-step se left-1-type) (leap-2 se se)
+           (lion-step sw left-1-type) (leap-2 sw sw)
+           (lion-step ne left-1-type) (leap-2 ne ne)
            (move-type left-1-type)
            (step nw) (step sw) (step ne) (step se)
       )
@@ -1071,6 +1161,14 @@
            (slide-2 nw) (slide-2 sw) (slide-2 ne) (slide-2 se)
            (lion-step n left-1-type) (lion-step s left-1-type) (lion-step w left-1-type) (lion-step e left-1-type)
            (lion-step nw left-1-type) (lion-step se left-1-type) (lion-step sw left-1-type) (lion-step ne left-1-type)
+           (leap-2 n n) (leap-2 nw nw)
+           (leap-2 s s) (leap-2 sw sw)
+           (leap-2 e e) (leap-2 se se)
+           (leap-2 w w) (leap-2 ne ne)
+           (leap-2 n ne) (leap-2 n nw)
+           (leap-2 s se) (leap-2 s sw)
+           (leap-2 e ne) (leap-2 e se)
+           (leap-2 w nw) (leap-2 w sw)
            (move-type left-1-type)
            (step n) (step s) (step w) (step e)
            (step nw) (step se) (step sw) (step ne)
@@ -1088,18 +1186,10 @@
 	 Black "images/tenjiku/Heaven_B.bmp" )
       (moves
            (move-type normal-type)
-           (slide-2 n) (slide-2 s) 
-           (slide-2 nw) (slide-2 sw) (slide-2 ne) (slide-2 se)
-           (step-3 w) (step-3 e)
-           (lion-step nw left-d-type) (lion-step se left-d-type) (lion-step sw left-d-type) (lion-step ne left-d-type)
-           (lion-step n left-v-type) (lion-step s left-v-type)
-           (lion-step w left-h-type) (lion-step e left-h-type)
-           (move-type left-d-type)
-           (step nw) (step sw) (step ne) (step se)
-           (move-type left-v-type)
-           (step n) (step s)
-           (move-type left-h-type)
-           (step w) (step e)
+           (tetrarch-slide n)  (tetrarch-slide s) (tetrarch-shift e) (tetrarch-shift w)
+           (tetrarch-slide nw) (tetrarch-slide ne) (tetrarch-slide se) (tetrarch-slide sw)
+           (tetrarch-igui n) (tetrarch-igui s) (tetrarch-igui nw) (tetrarch-igui ne)
+           (tetrarch-igui w) (tetrarch-igui e) (tetrarch-igui sw) (tetrarch-igui se)
       )
    )  
 
@@ -1115,6 +1205,12 @@
            (slide n)
            (slide sw) (slide se)
       )
+   )
+
+   (piece 
+      (name None)
+      (image White "images/tenjiku/none.bmp" 
+    	     Black "images/tenjiku/none.bmp" )
    )
 
    (board-setup
