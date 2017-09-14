@@ -42,12 +42,16 @@ Dagaz.Controller.createApp = function(canvas) {
   return Dagaz.Controller.app;
 }
 
+var gameOver = function(text) {
+  _.delay(alert, 500, [text]);
+}
+
 App.prototype.done = function() {
   if (this.state != STATE.DONE) {
       this.state = STATE.STOP;
   } else {
       if (this.doneMessage) {
-          alert(this.doneMessage);
+          gameOver(this.doneMessage);
       }
   }
 }
@@ -177,7 +181,7 @@ App.prototype.exec = function() {
                   if (passForced) {
                       this.state = STATE.DONE;
                       Canvas.style.cursor = "default";
-                      alert("Draw");
+                      gameOver("Draw");
                   } else {
                       this.board = this.board.apply(this.list.getMoves()[0]);                 
                       this.state = STATE.IDLE;
@@ -190,7 +194,7 @@ App.prototype.exec = function() {
              if (this.list.getMoves().length == 0) {
                  this.state = STATE.DONE;
                  Canvas.style.cursor = "default";
-                 alert(player + " loss");
+                 gameOver(player + " loss");
                  return;
              }
          }
@@ -208,7 +212,7 @@ App.prototype.exec = function() {
           if (_.isUndefined(result.move)) {
               this.state = STATE.DONE;
               Canvas.style.cursor = "default";
-              alert(player + " loss");
+              gameOver(player + " loss");
               return;
           }
           if (result.done || (Date.now() - this.timestamp >= this.params.AI_WAIT)) {
@@ -216,7 +220,7 @@ App.prototype.exec = function() {
                   if (passForced) {
                       this.state = STATE.DONE;
                       Canvas.style.cursor = "default";
-                      alert("Draw");
+                      gameOver("Draw");
                   } else {
                       this.board = this.board.apply(result.move);                 
                       this.state = STATE.IDLE;

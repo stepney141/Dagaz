@@ -1,63 +1,32 @@
 (function() {
 
+var strictMode = false;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "bahrain-dama-extension") {
+  if (name == "bahrain-dama-extension") {
+     strictMode (value == "strict");
+  } else {
      checkVersion(design, name, value);
   }
 }
 
-var checkDir = function(board, player, pos, name, except) {
-  var design = Dagaz.Model.design;
-  var dir = design.getDirection(name);
-  if (dir !== null) {
-      var piece = board.getPiece(pos);
-      var p = design.navigate(player, pos, dir);
-      if ((p === null) || (piece === null)) {
-          return false;
-      }
-      if (piece.type > 0) {
-          var isEmpty = true;
-          while (board.getPiece(p) === null) {
-              p = design.navigate(player, p, dir);
-              if ((p === null) || (piece === null)) {
-                  return false;
-              }
-          }
-      }
-      if (p == except) return false;
+var isAttacking = function(design, board, player, pos, dir, opposite) {
+  var p = design.navigate(player, pos, opposite);
+  if (p === null) return false;
+  if (board.getPiece(p) !== null) return false;
+  p = design.navigate(player, pos, dir);
+  if (p === null) return false;
+  var piece = board.getPiece(p);
+  if ((piece !== null) && (piece.player != player)) return true;
+  while (p !== null) {
       piece = board.getPiece(p);
-      if ((piece !== null) && (piece.player != player)) {
-          p = design.navigate(player, p, dir);
-          if ((p === null) || (piece === null)) {
-              return false;
-          }
-          if (board.getPiece(p) === null) {
-              return true;
-          }
+      if (piece !== null) {
+          if (piece.player == player) return false;
+          return piece.type == 1;
       }
-  }
-  return false;
-}
-
-var kish = function(board, pos) {
-  var design = Dagaz.Model.design;
-  var len = design.positions.length;
-  for (var p = 0; p < len; p++) {
-       var piece = board.getPiece(p);
-       if ((piece !== null) && (piece.player != board.player)) {
-           if (checkDir(board, piece.player, p, "n", pos) ||
-               checkDir(board, piece.player, p, "w", pos) ||
-               checkDir(board, piece.player, p, "e", pos)) {
-               return true;
-           }
-           if (piece.type > 0) {
-               if (checkDir(board, piece.player, p, "s", pos)) {
-                   return true;
-               }
-           }
-       }
+      p = design.navigate(player, p, dir);
   }
   return false;
 }
@@ -65,38 +34,55 @@ var kish = function(board, pos) {
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
-  for (var i in board.moves) {
-       var m = board.moves[i];
-       if (kish(board, m.actions[0][0][0])) {
-           var pos = null;
-           for (var j in m.actions) {
-               tp = m.actions[j][1];
-               if (tp === null) {
-                   pos = null;
-                   break;
-               } else {
-                   pos = tp[0];
-               }
-           }
-           if (pos !== null) {
-               var b = board.apply(m);
-               var piece = b.getPiece(pos);
-               if (piece !== null) {
-                  if (checkDir(b, board.player, pos, "n") ||
-                      checkDir(b, board.player, pos, "w") ||
-                      checkDir(b, board.player, pos, "e")) {
-                      m.failed = true;
+  var kish = [];
+  var design = Dagaz.Model.design;
+  var n = design.getDirection("n"); var w = design.getDirection("w");
+  var s = design.getDirection("s"); var e = design.getDirection("e");
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if ((piece !== null) && (piece.player == board.player)) {
+          if (isAttacking(design, board, board.player, pos, n, s) || 
+              isAttacking(design, board, board.player, pos, w, e) || 
+              isAttacking(design, board, board.player, pos, e, w)) {
+              kish.push(pos);
+          }
+      }
+  });
+  if (kish.length > 0) {
+      _.each(board.moves, function(move) {
+          if (strictMode) {
+              var pos = null;
+              for (var i = 0; i < move.actions.length; i++) {
+                  var a = move.actions[i];
+                  if ((a[0] !== null) && (a[1] !== null) && (pos === null)) {
+                      pos = a[0][0];
+                  }
+                  if ((a[0] !== null) && (a[1] === null)) {
+                      pos = null;
                       break;
                   }
-                  if (piece.type > 0) {
-                      if (checkDir(b, board.player, pos, "s")) {
-                          m.failed = true;
-                          break;
+              }
+              if ((pos !== null) && (_.indexOf(kish, pos) < 0)) {
+                  move.failed = true;
+              }
+          } else {
+              var b = board.apply(move);
+              var k = [];
+              _.each(design.allPositions(), function(pos) {
+                  var piece = b.getPiece(pos);
+                  if ((piece !== null) && (piece.player == board.player)) {
+                      if (isAttacking(design, b, board.player, pos, n, s) || 
+                          isAttacking(design, b, board.player, pos, w, e) || 
+                          isAttacking(design, b, board.player, pos, e, w)) {
+                          k.push(pos);
                       }
                   }
+              });
+              if (_.intersection(kish, k).length > 0) {
+                  move.failed = true;
               }
-           }
-       }
+          }
+      });
   }
   CheckInvariants(board);
 }

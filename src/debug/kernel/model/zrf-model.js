@@ -16,6 +16,7 @@ Dagaz.Model.showCaptures    = true;
 Dagaz.Model.showMoves       = true;
 Dagaz.Model.showHints       = true;
 Dagaz.Model.stalemateDraw   = false;
+Dagaz.Model.showBlink       = true;
 
 Dagaz.Model.checkVersion = function(design, name, value) {  
   if (name == "z2j") {
@@ -41,8 +42,12 @@ Dagaz.Model.checkVersion = function(design, name, value) {
          (name != "stalemate-draw")     &&
          (name != "recycle-captures")   &&
          (name != "shared-pieces")      &&
+         (name != "show-blink")         &&
          (name != "silent-?-moves")) {
          design.failed = true;
+     }
+     if (name == "show-blink") {
+         Dagaz.Model.showBlink = (value == "true");
      }
      if (name == "show-captures") {
          Dagaz.Model.showCaptures = (value == "true");
@@ -2038,6 +2043,16 @@ ZrfMove.prototype.dropPiece = function(pos, piece, part) {
 ZrfMove.prototype.capturePiece = function(pos, part) {
   if (!part) part = 1;
   this.actions.push([ [pos], null, null, part]);
+}
+
+ZrfMove.prototype.getTarget = function() {
+  for (var i = 0; i < this.actions.length; i++) {
+       var a = this.actions[i];
+       if ((a[0] !== null) && (a[1] !== null)) {
+           return a[1][0];
+       }
+  }
+  return null;
 }
 
 ZrfMove.prototype.setValue = function(name, value, part) {

@@ -3,7 +3,8 @@
 Dagaz.View.markType = {
    TARGET:    0,
    ATTACKING: 1,
-   GOAL:      2
+   GOAL:      2,
+   CURRENT:   3
 };
 
 var STEP_CNT     = 3;
@@ -17,6 +18,7 @@ var mousePressed = false;
 var hintedPiece  = null;
 var fromPos      = null;
 var deferred     = [];
+var blink        = 1;
 
 Dagaz.View.configure = function(view) {}
 
@@ -31,6 +33,7 @@ function View2D() {
   this.goal    = [];
   this.changes = [];
   this.vectors = [];
+  this.current = [];
 }
 
 Dagaz.View.getView = function() {
@@ -153,13 +156,16 @@ View2D.prototype.addPiece = function(piece, pos, model) {
 
 View2D.prototype.markPositions = function(type, positions) {
   if (type == Dagaz.View.markType.TARGET) {
-      this.target = positions;
+      this.target  = positions;
   } 
   if (type == Dagaz.View.markType.ATTACKING) {
-      this.strike = positions;
+      this.strike  = positions;
   }
   if (type == Dagaz.View.markType.GOAL) {
-      this.goal   = positions;
+      this.goal    = positions;
+  }
+  if (type == Dagaz.View.markType.CURRENT) {
+      this.current = positions;
   }
   this.invalidate();
 }
@@ -473,12 +479,18 @@ Dagaz.View.showMarks = function(view, ctx) {
 
 Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
   var isSaved = false;
-  if (Dagaz.Model.showCaptures && (_.indexOf(view.strike, pos) >= 0)) {
+  var dx = 0;
+  var dy = 0;
+  if (_.indexOf(view.strike, pos) >= 0) {
       ctx.save();
-      ctx.globalAlpha = 0.4;
+      ctx.globalAlpha = 0.5;
       isSaved = true;
   }
-  ctx.drawImage(piece.h, x, y, piece.dx, piece.dy);
+  if (Dagaz.Model.showBlink && (_.indexOf(view.current, pos) >= 0)) {
+      blink = -blink;
+      dx = blink;
+  }
+  ctx.drawImage(piece.h, x + dx, y + dy, piece.dx, piece.dy);
   if (isSaved) {
       ctx.restore();
   }
