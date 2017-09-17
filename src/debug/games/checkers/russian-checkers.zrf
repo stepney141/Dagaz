@@ -88,6 +88,12 @@
      (zone (name promotion) (players Black)
            (positions a1 c1 e1 g1)
      )
+     (zone (name best) (players White)
+           (positions c5 f6)
+     )
+     (zone (name best) (players Black)
+           (positions f4 c3)
+     )
   )
 
   (piece
