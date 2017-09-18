@@ -214,6 +214,26 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addZone("promotion", 2, [141, 143, 145, 147]);
     design.addZone("promotion", 1, [2, 4, 6, 8]);
     design.addZone("promotion", 3, [12, 14, 16, 18]);
+    design.addZone("reserve", 4, [140, 120, 100, 80, 60, 40, 20, 0, 149, 129, 109, 89, 69, 49, 29, 9, 150, 130, 110, 90, 70, 50, 30, 10, 159, 139, 119, 99, 79, 59, 39, 19]);
+    design.addZone("reserve", 2, [140, 120, 100, 80, 60, 40, 20, 0, 149, 129, 109, 89, 69, 49, 29, 9, 150, 130, 110, 90, 70, 50, 30, 10, 159, 139, 119, 99, 79, 59, 39, 19]);
+    design.addZone("reserve", 1, [140, 120, 100, 80, 60, 40, 20, 0, 149, 129, 109, 89, 69, 49, 29, 9, 150, 130, 110, 90, 70, 50, 30, 10, 159, 139, 119, 99, 79, 59, 39, 19]);
+    design.addZone("reserve", 3, [140, 120, 100, 80, 60, 40, 20, 0, 149, 129, 109, 89, 69, 49, 29, 9, 150, 130, 110, 90, 70, 50, 30, 10, 159, 139, 119, 99, 79, 59, 39, 19]);
+    design.addZone("a-zone", 4, [86, 103, 96, 113]);
+    design.addZone("a-zone", 2, [86, 103, 96, 113]);
+    design.addZone("a-zone", 1, [63, 46, 73, 56]);
+    design.addZone("a-zone", 3, [63, 46, 73, 56]);
+    design.addZone("b-zone", 4, [48, 61, 58, 71]);
+    design.addZone("b-zone", 2, [48, 61, 58, 71]);
+    design.addZone("b-zone", 1, [101, 88, 111, 98]);
+    design.addZone("b-zone", 3, [101, 88, 111, 98]);
+    design.addZone("c-zone", 4, [8, 21, 18, 31]);
+    design.addZone("c-zone", 2, [8, 21, 18, 31]);
+    design.addZone("c-zone", 1, [141, 128, 151, 138]);
+    design.addZone("c-zone", 3, [141, 128, 151, 138]);
+    design.addZone("d-zone", 4, [2, 12, 42, 52]);
+    design.addZone("d-zone", 2, [2, 12, 42, 52]);
+    design.addZone("d-zone", 1, [147, 157, 107, 117]);
+    design.addZone("d-zone", 3, [147, 157, 107, 117]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1

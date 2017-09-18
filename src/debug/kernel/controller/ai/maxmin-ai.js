@@ -5,6 +5,12 @@ var MAXVALUE  = 1000000;
 function MaxMinAi(params, parent) {
   this.params = params;
   this.parent = parent;
+  if (_.isUndefined(this.params.NOISE_FACTOR)) {
+      this.params.NOISE_FACTOR = 8;
+  }
+  if (_.isUndefined(this.params.MAX_DEEP)) {
+      this.params.MAX_DEEP = 10;
+  }
 }
 
 var findBot = Dagaz.AI.findBot;
@@ -43,7 +49,12 @@ Dagaz.AI.apply = function(board, move) {
 MaxMinAi.prototype.eval = function(ctx, board, move, player) {
   var b = Dagaz.AI.apply(board, move);
   var t = move.getTarget();
-  while (t !== null) {
+  var deep = 0;
+  while (deep++ < this.params.MAX_DEEP) {
+      var goal = Dagaz.Model.checkGoals(ctx.design, b, player);
+      if (goal != 0) {
+          return MAXVALUE * goal;
+      }
       b.moves = Dagaz.AI.generate(ctx, b);
       if (b.moves.length == 0) {
           if (Dagaz.AI.isFriend(player, b.player)) {
@@ -79,7 +90,7 @@ MaxMinAi.prototype.eval = function(ctx, board, move, player) {
           });
       }
       if (moves.length == 0) {
-          t = null;
+          break;
       } else {
           var ix = 0;
           if (moves.length > 1) {
@@ -105,8 +116,11 @@ MaxMinAi.prototype.getMove = function(ctx) {
   var mx = 0;
   _.each(ctx.board.moves, function(m) {
       var eval = this.eval(ctx, ctx.board, m, ctx.board.player);
-      if ((result === null) || (eval > mx)) {
-          result = m;
+      console.log("AI: " + m.toString() + " [" + eval + "]");
+      if ((result === null) || (eval >= mx)) {
+          if ((eval > mx) || (_.random(0, 10) > this.params.NOISE_FACTOR)) {
+              result = m;
+          }
           mx = eval;
       }
   }, this);
