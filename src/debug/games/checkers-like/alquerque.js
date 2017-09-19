@@ -35,9 +35,6 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPlayer("White", [1, 0, 3, 2, 5, 4, 7, 6]);
     design.addPlayer("Black", [0, 1, 2, 3, 4, 5, 6, 7]);
-    design.addTurn(1);
-    design.addTurn(2);
-
 
     design.addPosition("a5", [0, 1, 5, 0, 0, 0, 0, 6]);
     design.addPosition("b5", [-1, 1, 5, 0, 0, 0, 0, 0]);
@@ -64,7 +61,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("c1", [-1, 1, 0, -5, -4, 0, -6, 0]);
     design.addPosition("d1", [-1, 1, 0, -5, 0, 0, 0, 0]);
     design.addPosition("e1", [-1, 0, 0, -5, 0, 0, -6, 0]);
-
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
@@ -133,7 +129,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "Man", 9);
     design.setup("Black", "Man", 10);
     design.setup("Black", "Man", 11);
-
 }
 
 Dagaz.View.configure = function(view) {

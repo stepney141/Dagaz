@@ -16,6 +16,10 @@ Dagaz.AI.findBot = function(type, params, parent) {
   return parent;
 }
 
+Dagaz.AI.isFriend = function(player, opponent) {
+  return player == opponent;
+}
+
 Dagaz.AI.createContext = function(design) {
   return {
      design: design

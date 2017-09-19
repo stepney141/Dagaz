@@ -116,6 +116,8 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addZone("promotion", 1, [1, 3, 5, 7, 9]);
     design.addZone("promotion", 2, [70, 72, 74, 76, 78]);
+    design.addZone("best", 1, [32, 27]);
+    design.addZone("best", 2, [52, 47]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
@@ -131,7 +133,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.FUNCTION,	0);	// not
     design.addCommand(0, ZRF.IF,	5);
     design.addCommand(0, ZRF.PROMOTE,	1);	// King
-    design.addCommand(0, ZRF.MODE,	0);	// jump-type
+    design.addCommand(0, ZRF.MODE,	2);	// continue-type
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.JUMP,	3);
     design.addCommand(0, ZRF.MODE,	0);	// jump-type
@@ -157,13 +159,10 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(2, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(2, ZRF.FUNCTION,	0);	// not
-    design.addCommand(2, ZRF.IF,	7);
+    design.addCommand(2, ZRF.IF,	4);
     design.addCommand(2, ZRF.PARAM,	1);	// $2
     design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(2, ZRF.FUNCTION,	4);	// last-from?
-    design.addCommand(2, ZRF.FUNCTION,	0);	// not
-    design.addCommand(2, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(2, ZRF.JUMP,	-8);
+    design.addCommand(2, ZRF.JUMP,	-5);
     design.addCommand(2, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(2, ZRF.FUNCTION,	20);	// verify
     design.addCommand(2, ZRF.PARAM,	2);	// $3
@@ -182,7 +181,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(2, ZRF.FUNCTION,	26);	// capture
     design.addCommand(2, ZRF.FUNCTION,	7);	// back
     design.addCommand(2, ZRF.FORK,	4);
-    design.addCommand(2, ZRF.MODE,	0);	// jump-type
+    design.addCommand(2, ZRF.MODE,	2);	// continue-type
     design.addCommand(2, ZRF.FUNCTION,	25);	// to
     design.addCommand(2, ZRF.FUNCTION,	28);	// end
     design.addCommand(2, ZRF.PARAM,	4);	// $5
@@ -196,13 +195,51 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(3, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(3, ZRF.FUNCTION,	0);	// not
     design.addCommand(3, ZRF.IF,	7);
-    design.addCommand(3, ZRF.FORK,	3);
-    design.addCommand(3, ZRF.FUNCTION,	25);	// to
-    design.addCommand(3, ZRF.FUNCTION,	28);	// end
     design.addCommand(3, ZRF.PARAM,	1);	// $2
     design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(3, ZRF.FUNCTION,	4);	// last-from?
+    design.addCommand(3, ZRF.FUNCTION,	0);	// not
+    design.addCommand(3, ZRF.FUNCTION,	20);	// verify
     design.addCommand(3, ZRF.JUMP,	-8);
+    design.addCommand(3, ZRF.FUNCTION,	2);	// enemy?
+    design.addCommand(3, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(3, ZRF.PARAM,	2);	// $3
+    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(3, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(3, ZRF.FUNCTION,	0);	// not
+    design.addCommand(3, ZRF.IF,	18);
+    design.addCommand(3, ZRF.FUNCTION,	6);	// mark
+    design.addCommand(3, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(3, ZRF.FUNCTION,	0);	// not
+    design.addCommand(3, ZRF.IF,	5);
+    design.addCommand(3, ZRF.PARAM,	3);	// $4
+    design.addCommand(3, ZRF.FUNCTION,	23);	// opposite
+    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(3, ZRF.JUMP,	-6);
+    design.addCommand(3, ZRF.FUNCTION,	26);	// capture
+    design.addCommand(3, ZRF.FUNCTION,	7);	// back
+    design.addCommand(3, ZRF.FORK,	4);
+    design.addCommand(3, ZRF.MODE,	2);	// continue-type
+    design.addCommand(3, ZRF.FUNCTION,	25);	// to
     design.addCommand(3, ZRF.FUNCTION,	28);	// end
+    design.addCommand(3, ZRF.PARAM,	4);	// $5
+    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(3, ZRF.JUMP,	-19);
+    design.addCommand(3, ZRF.FUNCTION,	28);	// end
+
+    design.addCommand(4, ZRF.FUNCTION,	24);	// from
+    design.addCommand(4, ZRF.PARAM,	0);	// $1
+    design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(4, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(4, ZRF.FUNCTION,	0);	// not
+    design.addCommand(4, ZRF.IF,	7);
+    design.addCommand(4, ZRF.FORK,	3);
+    design.addCommand(4, ZRF.FUNCTION,	25);	// to
+    design.addCommand(4, ZRF.FUNCTION,	28);	// end
+    design.addCommand(4, ZRF.PARAM,	1);	// $2
+    design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(4, ZRF.JUMP,	-8);
+    design.addCommand(4, ZRF.FUNCTION,	28);	// end
 
     design.addPriority(0);			// jump-type
     design.addPriority(1);			// normal-type
@@ -220,10 +257,14 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(1, 2, [0, 0, 0, 0, 0], 0);
     design.addMove(1, 2, [2, 2, 2, 2, 2], 0);
     design.addMove(1, 2, [1, 1, 1, 1, 1], 0);
-    design.addMove(1, 3, [3, 3], 1);
-    design.addMove(1, 3, [0, 0], 1);
-    design.addMove(1, 3, [2, 2], 1);
-    design.addMove(1, 3, [1, 1], 1);
+    design.addMove(1, 3, [3, 3, 3, 3, 3], 2);
+    design.addMove(1, 3, [0, 0, 0, 0, 0], 2);
+    design.addMove(1, 3, [2, 2, 2, 2, 2], 2);
+    design.addMove(1, 3, [1, 1, 1, 1, 1], 2);
+    design.addMove(1, 4, [3, 3], 1);
+    design.addMove(1, 4, [0, 0], 1);
+    design.addMove(1, 4, [2, 2], 1);
+    design.addMove(1, 4, [1, 1], 1);
 
     design.setup("White", "Man", 70);
     design.setup("White", "Man", 72);

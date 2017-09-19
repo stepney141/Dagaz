@@ -38,10 +38,6 @@ Dagaz.AI.eval = function(design, params, board, player) {
   return r;
 }
 
-Dagaz.AI.isFriend = function(player, opponent) {
-  return player == opponent;
-}
-
 Dagaz.AI.apply = function(board, move) {
   return board.apply(move);
 }

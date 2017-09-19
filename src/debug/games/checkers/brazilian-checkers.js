@@ -35,7 +35,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPlayer("White", [2, 3, 0, 1]);
     design.addPlayer("Black", [2, 3, 0, 1]);
 
-
     design.addPosition("a8", [0, 9, 0, 0]);
     design.addPosition("b8", [0, 9, 7, 0]);
     design.addPosition("c8", [0, 9, 7, 0]);
@@ -103,6 +102,8 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addZone("promotion", 1, [1, 3, 5, 7]);
     design.addZone("promotion", 2, [56, 58, 60, 62]);
+    design.addZone("best", 1, [26, 21]);
+    design.addZone("best", 2, [37, 42]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
