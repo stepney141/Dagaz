@@ -8,6 +8,32 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+Dagaz.AI.eval = function(design, params, board, player) {
+  var r = 0;
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if (piece !== null) {
+          var v = design.price[piece.type];
+          var bonus = 8;
+          if (design.inZone(0, player, pos)) {
+              bonus -= 3;
+          }
+          if (design.inZone(1, player, pos)) {
+              bonus -= 4;
+          }
+          if (design.inZone(2, player, pos)) {
+              bonus -= 5;
+          }
+          v += bonus;
+          if (!Dagaz.AI.isFriend(player, piece.player)) {
+              v = -v;
+          }
+          r += v;
+      }
+  });
+  return r;
+}
+
 Dagaz.Model.checkGoals = function(design, board, player) {
   var kings = 0;
   _.each(design.allPositions(), function(pos) {
@@ -30,16 +56,22 @@ Dagaz.Model.checkGoals = function(design, board, player) {
   }
 }
 
-var saveMove = function(moves, move, pn) {
+var saveMove = function(moves, move, pn, board, piece) {
   var m = Dagaz.Model.createMove();
+  var notFound = true;
   _.chain(move.actions)
    .filter(function(action) {
         return action[3] < pn;
     })
    .each(function(action) {
+        if ((action[0] !== null) && (action[1] === null)) {
+            var p = board.getPiece(action[0][0]);
+            if ((p !== null) && (p.type < piece.type)) {
+                notFound = false;
+            }
+        }
         m.actions.push([ action[0], action[1], action[2], action[3] ]);
     });
-  var notFound = true;
   _.each(moves, function(n) {
       if (n.toString() == m.toString()) {
           notFound = false;
@@ -79,7 +111,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                  var p = board.getPiece(action[0][0]);
                  if ((p === null) || (p.type < piece.type)) {
                      if (action[3] > 1) {
-                         saveMove(moves, move, action[3]);
+                         saveMove(moves, move, action[3], board, piece);
                      }
                      move.failed = true;
                  }

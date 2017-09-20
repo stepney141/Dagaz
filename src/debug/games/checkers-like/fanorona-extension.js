@@ -8,6 +8,35 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+Dagaz.AI.MAX_DEEP  = 2;
+Dagaz.AI.heuristic = Dagaz.AI.simpleHeuristic;
+
+Dagaz.AI.eval = function(design, params, board, player) {
+  var r = 0;
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if (piece !== null) {
+          var v = design.price[piece.type];
+          var bonus = 8;
+          if (_.indexOf([19, 29, 11, 21, 31, 13, 23, 33, 15, 25], +pos) >= 0) {
+              bonus -= 4;
+          }
+          if (_.indexOf([27, 9, 37, 39, 41, 43, 1, 3, 5, 7, 35, 17], +pos) >= 0) {
+              bonus -= 3;
+          }
+          if (_.indexOf([36, 0, 44, 8], +pos) >= 0) {
+              bonus -= 5;
+          }
+          v += bonus;
+          if (!Dagaz.AI.isFriend(player, piece.player)) {
+              v = -v;
+          }
+          r += v;
+      }
+  });
+  return r;
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {

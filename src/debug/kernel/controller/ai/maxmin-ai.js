@@ -8,8 +8,8 @@ function MaxMinAi(params, parent) {
   if (_.isUndefined(this.params.NOISE_FACTOR)) {
       this.params.NOISE_FACTOR = 8;
   }
-  if (_.isUndefined(this.params.MAX_DEEP)) {
-      this.params.MAX_DEEP = 10;
+  if (_.isUndefined(this.params.AI_FRAME)) {
+      this.params.AI_FRAME = 2000;
   }
 }
 
@@ -22,6 +22,8 @@ Dagaz.AI.findBot = function(type, params, parent) {
       return findBot(type, params, parent);
   }
 }
+
+Dagaz.AI.MAX_DEEP = 10;
 
 Dagaz.AI.eval = function(design, params, board, player) {
   var r = 0;
@@ -38,6 +40,15 @@ Dagaz.AI.eval = function(design, params, board, player) {
   return r;
 }
 
+Dagaz.AI.simpleHeuristic = function(design, params, board, move) {
+  return move.actions.length;
+}
+
+Dagaz.AI.defaultHeuristic = function(design, params, board, move) {
+  move.result = board.apply(move);
+  return Dagaz.AI.eval(design, params, move.result, board.player);
+}
+
 Dagaz.AI.apply = function(board, move) {
   return board.apply(move);
 }
@@ -46,10 +57,10 @@ MaxMinAi.prototype.eval = function(ctx, board, move, player) {
   var b = Dagaz.AI.apply(board, move);
   var t = move.getTarget();
   var deep = 0;
-  while (deep++ < this.params.MAX_DEEP) {
+  while (deep++ < Dagaz.AI.MAX_DEEP) {
       var goal = Dagaz.Model.checkGoals(ctx.design, b, player);
       if (goal != 0) {
-          return MAXVALUE * goal;
+          return (MAXVALUE * goal) - deep;
       }
       b.moves = Dagaz.AI.generate(ctx, b);
       if (b.moves.length == 0) {
@@ -68,7 +79,7 @@ MaxMinAi.prototype.eval = function(ctx, board, move, player) {
           var mn = _.chain(moves).map(function(m) {
               var pos = m.actions[0][0][0];
               var piece = b.getPiece(pos);
-              if (piece === null) return MAXVALUE;
+              if (piece === null) return 0;
               return ctx.design.price[piece.type];
           }).min().value();
           moves = _.filter(moves, function(m) {
@@ -110,14 +121,21 @@ MaxMinAi.prototype.getMove = function(ctx) {
   ctx.board.moves = Dagaz.AI.generate(ctx, ctx.board);
   var result = null;
   var mx = 0;
+  if (!_.isUndefined(Dagaz.AI.heuristic)) {
+      ctx.board.moves = _.sortBy(ctx.board.moves, function(move) {
+          return Dagaz.AI.heuristic(ctx.design, this.params, ctx.board, move);
+      }, this);
+  }
   _.each(ctx.board.moves, function(m) {
-      var eval = this.eval(ctx, ctx.board, m, ctx.board.player);
-      console.log("AI: " + m.toString() + " [" + eval + "]");
-      if ((result === null) || (eval >= mx)) {
-          if ((eval > mx) || (_.random(0, 10) > this.params.NOISE_FACTOR)) {
-              result = m;
+      if ((result === null) || (Date.now() - ctx.timestamp < this.params.AI_FRAME)) {
+          var eval = this.eval(ctx, ctx.board, m, ctx.board.player);
+          console.log("AI: " + m.toString() + " [" + eval + "]");
+          if ((result === null) || (eval >= mx)) {
+              if ((eval > mx) || (_.random(0, 10) > this.params.NOISE_FACTOR)) {
+                  result = m;
+              }
+              mx = eval;
           }
-          mx = eval;
       }
   }, this);
   if (result !== null) {

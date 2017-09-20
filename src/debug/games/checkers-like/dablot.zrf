@@ -92,6 +92,15 @@
         (d2 e1) (d4 e3) (d6 e5) (d8 e7) (d10 e9) (d12 e11)
         (e2 f1) (e4 f3) (e6 f5) (e8 f7) (e10 f9) (e12 f11)
      )
+     (zone (name minus-3) (players White Black)
+           (positions a3 a5 a7 a9 a11 f3 f5 f7 f9 f11 b1 c1 d1 e1 b13 c13 d13 e13)
+     )
+     (zone (name minus-4) (players White Black)
+           (positions a2 b2 c2 d2 e2 a4 b4 c4 d4 e4 a6 b6 c6 d6 e6 a8 b8 c8 d8 e8 a10 b10 c10 d10 e10 a12 b12 c12 d12 e12)
+     )
+     (zone (name minus-5) (players White Black)
+           (positions a1 a13 f1 f13)
+     )
   )
 
   (piece
@@ -203,6 +212,15 @@
         (b2 c1) (b4 c3) (b6 c5) (b8 c7)
         (c2 d1) (c4 d3) (c6 d5) (c8 d7)
      )
+     (zone (name minus-3) (players White Black)
+           (positions a3 a5 a7 d3 d5 d7 b1 c1 b9 c9)
+     )                
+     (zone (name minus-4) (players White Black)
+           (positions a2 b2 c2 a4 b4 c4 a6 b6 c6 a8 b8 c8)
+     )
+     (zone (name minus-5) (players White Black)
+           (positions a1 a9 d1 d9)
+     )
   )
 
   (board-setup
@@ -271,6 +289,15 @@
         (c2 d1) (c4 d3) (c6 d5) (c8 d7)
         (d2 e1) (d4 e3) (d6 e5) (d8 e7)
      )
+     (zone (name minus-3) (players White Black)
+           (positions a3 a5 a7 e3 e5 e7 b1 c1 d1 b9 c9 d9)
+     )                
+     (zone (name minus-4) (players White Black)
+           (positions a2 b2 c2 d2 a4 b4 c4 d4 a6 b6 c6 d6 a8 b8 c8 d8)
+     )
+     (zone (name minus-5) (players White Black)
+           (positions a1 a9 e1 e9)
+     )
   )
 
   (board-setup
@@ -281,7 +308,7 @@
 
 (variant
   (title "Dablot Asele")
-  (default)
+
   (board
      (image "images/dablot/5x5.bmp")
      (grid
@@ -338,6 +365,15 @@
         (b2 c1) (b4 c3) (b6 c5) (b8 c7)
         (c2 d1) (c4 d3) (c6 d5) (c8 d7)
         (d2 e1) (d4 e3) (d6 e5) (d8 e7)
+     )
+     (zone (name minus-3) (players White Black)
+           (positions a3 a5 a7 e3 e5 e7 b1 c1 d1 b9 c9 d9)
+     )                
+     (zone (name minus-4) (players White Black)
+           (positions a2 b2 c2 d2 a4 b4 c4 d4 a6 b6 c6 d6 a8 b8 c8 d8)
+     )
+     (zone (name minus-5) (players White Black)
+           (positions a1 a9 e1 e9)
      )
   )
 
@@ -423,6 +459,15 @@
         (e2 f1) (e4 f3) (e6 f5) (e8 f7) (e10 f9) (e12 f11)
         (f2 g1) (f4 g3) (f6 g5) (f8 g7) (f10 g9) (f12 g11)
      )
+     (zone (name minus-3) (players White Black)
+           (positions a3 a5 a7 a9 a11 g3 g5 g7 g9 g11 b1 c1 d1 e1 f1 b13 c13 d13 e13 f13)
+     )                
+     (zone (name minus-4) (players White Black)
+           (positions a2 b2 c2 d2 e2 f2 a4 b4 c4 d4 e4 f4 a6 b6 c6 d6 e6 f6 a8 b8 c8 d8 e8 f8 a10 b10 c10 d10 e10 f10 a12 b12 c12 d12 e12 f12)
+     )
+     (zone (name minus-5) (players White Black)
+           (positions a1 a13 g1 g13)
+     )
   )
   (board-setup
     (Black (King g5) (Man a1 b1 c1 d1 e1 f1 g1 a2 b2 c2 d2 e2 f2 a3 b3 c3 d3 e3 f3 g3 a4 b4 c4 d4 e4 f4))
@@ -505,6 +550,15 @@
         (d2 e1) (d4 e3) (d6 e5) (d8 e7) (d10 e9) (d12 e11)
         (e2 f1) (e4 f3) (e6 f5) (e8 f7) (e10 f9) (e12 f11)
         (f2 g1) (f4 g3) (f6 g5) (f8 g7) (f10 g9) (f12 g11)
+     )
+     (zone (name minus-3) (players White Black)
+           (positions a3 a5 a7 a9 a11 g3 g5 g7 g9 g11 b1 c1 d1 e1 f1 b13 c13 d13 e13 f13)
+     )                
+     (zone (name minus-4) (players White Black)
+           (positions a2 b2 c2 d2 e2 f2 a4 b4 c4 d4 e4 f4 a6 b6 c6 d6 e6 f6 a8 b8 c8 d8 e8 f8 a10 b10 c10 d10 e10 f10 a12 b12 c12 d12 e12 f12)
+     )
+     (zone (name minus-5) (players White Black)
+           (positions a1 a13 g1 g13)
      )
   )
   (board-setup

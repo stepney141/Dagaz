@@ -267,7 +267,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(2, 2, [1], 0);
     design.addMove(2, 2, [0], 0);
 
-    design.addPiece("ValkyrieA", 3, 5);
+    design.addPiece("ValkyrieA", 3, 10);
     design.addMove(3, 3, [7, 7], 0);
     design.addMove(3, 3, [3, 3], 0);
     design.addMove(3, 3, [6, 6], 0);
@@ -277,7 +277,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(3, 4, [6, 6, 6, 6, 6], 1);
     design.addMove(3, 4, [5, 5, 5, 5, 5], 1);
 
-    design.addPiece("ValkyrieR", 4, 5);
+    design.addPiece("ValkyrieR", 4, 10);
     design.addMove(4, 5, [4, 4], 0);
     design.addMove(4, 5, [1, 1], 0);
     design.addMove(4, 5, [2, 2], 0);

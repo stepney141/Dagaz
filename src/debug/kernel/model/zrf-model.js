@@ -1748,6 +1748,7 @@ ZrfBoard.prototype.commit = function() {
 }
 
 ZrfBoard.prototype.apply = function(move) {
+  if (!_.isUndefined(move.result)) return move.result;
   var design = Dagaz.Model.design;
   var r = this.copy();
   move.applyAll(r);

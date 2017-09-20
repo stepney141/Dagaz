@@ -71,6 +71,12 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("b2", [0, 0, 0, 0, -16, -13, -17, -12]);
     design.addPosition("c2", [0, 0, 0, 0, -16, -13, -17, -12]);
 
+    design.addZone("minus-3", 2, [12, 8, 4, 17, 18, 1, 2, 15, 11, 7]);
+    design.addZone("minus-3", 1, [12, 8, 4, 17, 18, 1, 2, 15, 11, 7]);
+    design.addZone("minus-4", 2, [29, 30, 31, 26, 27, 28, 23, 24, 25, 20, 21, 22]);
+    design.addZone("minus-4", 1, [29, 30, 31, 26, 27, 28, 23, 24, 25, 20, 21, 22]);
+    design.addZone("minus-5", 2, [16, 0, 19, 3]);
+    design.addZone("minus-5", 1, [16, 0, 19, 3]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
