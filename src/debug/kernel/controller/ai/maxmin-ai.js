@@ -60,14 +60,14 @@ MaxMinAi.prototype.eval = function(ctx, board, move, player) {
   while (deep++ < Dagaz.AI.MAX_DEEP) {
       var goal = Dagaz.Model.checkGoals(ctx.design, b, player);
       if (goal != 0) {
-          return (MAXVALUE * goal) - deep;
+          return (MAXVALUE - deep) * goal;
       }
       b.moves = Dagaz.AI.generate(ctx, b);
       if (b.moves.length == 0) {
           if (Dagaz.AI.isFriend(player, b.player)) {
-              return -MAXVALUE;
+              return -MAXVALUE + deep;
           } else {
-              return MAXVALUE;
+              return MAXVALUE - deep;
           }
       }
       var moves = _.filter(b.moves, function(m) {
@@ -91,9 +91,19 @@ MaxMinAi.prototype.eval = function(ctx, board, move, player) {
       }
       if (moves.length == 0) {
           moves = _.filter(b.moves, function(m) {
-              return _.chain(m.actions).filter(function(a) {
-                  return (a[0] !== null) && (a[1] === null);
-              }).size().value() > 0;
+              if (_.chain(m.actions).filter(function(a) {
+                      return (a[0] !== null) && (a[1] === null);
+                  }).size().value() > 0) return true;
+              if (move.actions.length != 1) return false;
+              if (move.actions[0][2] === null) return false;
+              var piece = b.getPiece(move.actions[0][0][0]);
+              if (piece === null) return false;
+              for (var i = 0; i < move.actions[0][2].length; i++) {
+                  if (move.actions[0][2][i].type != piece.type) {
+                      return true;
+                  }
+              }
+              return false;
           });
       }
       if (moves.length == 0) {

@@ -1,0 +1,49 @@
+(game
+  (title "Toguz Kumalak")
+
+  (move-sound "Audio\Pickup.wav")
+  (release-sound "Audio\Pickup.wav")
+  (capture-sound "")
+  (drop-sound "")
+
+  (option "animate captures"  false)
+  (option "smart moves"       true)
+  (option "pass turn"         true)
+
+  (players South North)
+  (turn-order South North)
+
+  (board
+     (image "images/toguz-kumalak.bmp")
+     (grid
+         (start-rectangle 4 9 74 279)
+         (dimensions
+           ("a/b/c/d/e/f/g/h/i" (70 0)) ; files
+           ("2/1" (0 534)) ; ranks
+         )
+     )
+     (grid
+         (start-rectangle 8 288 628 408)
+         (dimensions
+           ("X" (620 0)) ; files
+           ("2/1" (0 128)) ; ranks
+         )
+     )
+  )
+
+  (piece
+     (name Seed)
+     (image South "images/piece.bmp"
+            North "images/piece.bmp")
+  )
+  (piece
+     (name Kazan)
+     (image South "images/kazan.bmp"
+            North "images/kazan.bmp")
+  )
+
+  (board-setup
+    (South (Seed a1 b1 c1 d1 e1 f1 g1 h1 i1) (Kazan X1))
+    (North (Seed a2 b2 c2 d2 e2 f2 g2 h2 i2) (Kazan X2))
+  )
+)
