@@ -97,6 +97,15 @@
   )
 ))
 
+(define vg-step (
+  $1 (verify not-friend?)
+  (if empty?
+     (add-partial $2)
+   else
+     add
+  )
+))
+
 (define lion-step (
   $1 (verify not-friend?)
   (add-partial $2)
@@ -126,8 +135,7 @@
 ))
 
 (define leap-2 (
-  $1 (verify empty?)
-  $2 (verify not-friend?)
+  $1 $2 (verify not-friend?)
   add
 ))
 
@@ -967,8 +975,8 @@
       (moves
            (move-type normal-type)
            (vice-general-slide nw) (vice-general-slide se) (vice-general-slide sw) (vice-general-slide ne)
-           (lion-step n left-2-type) (lion-step s left-2-type) (lion-step w left-2-type) (lion-step e left-2-type)
-           (lion-step nw left-2-type) (lion-step se left-2-type) (lion-step sw left-2-type) (lion-step ne left-2-type)
+           (vg-step n left-2-type) (vg-step s left-2-type) (vg-step w left-2-type) (vg-step e left-2-type)
+           (vg-step nw left-2-type) (vg-step se left-2-type) (vg-step sw left-2-type) (vg-step ne left-2-type)
            (leap-2-mode n n left-1-type) (leap-2-mode nw nw left-1-type)
            (leap-2-mode s s left-1-type) (leap-2-mode sw sw left-1-type)
            (leap-2-mode e e left-1-type) (leap-2-mode se se left-1-type)
@@ -983,8 +991,8 @@
            (leap-3 e e e) (leap-3 e e ne) (leap-3 e e se) (leap-3 e ne ne) (leap-3 e se se)
            (leap-3-empty nw) (leap-3-empty ne) (leap-3-empty sw) (leap-3-empty se)
            (move-type left-2-type)
-           (lion-step n left-1-type) (lion-step s left-1-type) (lion-step w left-1-type) (lion-step e left-1-type)
-           (lion-step nw left-1-type) (lion-step se left-1-type) (lion-step sw left-1-type) (lion-step ne left-1-type)
+           (vg-step n left-1-type) (vg-step s left-1-type) (vg-step w left-1-type) (vg-step e left-1-type)
+           (vg-step nw left-1-type) (vg-step se left-1-type) (vg-step sw left-1-type) (vg-step ne left-1-type)
            (move-type left-1-type)
            (step n) (step s) (step w) (step e)
            (step nw) (step se) (step sw) (step ne)
@@ -1103,10 +1111,10 @@
 	 Black "images/tenjiku/FireDemon_B.bmp" )
       (moves
            (move-type normal-type)
-           (slide w) (slide e)
-           (slide nw) (slide sw) (slide ne) (slide se)
-           (lion-step n left-2-type) (lion-step s left-2-type) (lion-step w left-2-type) (lion-step e left-2-type)
-           (lion-step nw left-2-type) (lion-step se left-2-type) (lion-step sw left-2-type) (lion-step ne left-2-type)
+           (slide-2 w) (slide-2 e)
+           (slide-2 nw) (slide-2 sw) (slide-2 ne) (slide-2 se)
+           (vg-step n left-2-type) (vg-step s left-2-type) (vg-step w left-2-type) (vg-step e left-2-type)
+           (vg-step nw left-2-type) (vg-step se left-2-type) (vg-step sw left-2-type) (vg-step ne left-2-type)
            (leap-2-mode n n left-1-type)  (leap-2-mode s s left-1-type) 
            (leap-2-mode e e left-1-type)  (leap-2-mode w w left-1-type) 
            (leap-2-mode n ne left-1-type) (leap-2-mode n nw left-1-type)
@@ -1118,8 +1126,8 @@
            (leap-3 w w w) (leap-3 w w nw) (leap-3 w w sw) (leap-3 w nw nw) (leap-3 w sw sw)
            (leap-3 e e e) (leap-3 e e ne) (leap-3 e e se) (leap-3 e ne ne) (leap-3 e se se)
            (move-type left-2-type)
-           (lion-step n left-1-type) (lion-step s left-1-type) (lion-step w left-1-type) (lion-step e left-1-type)
-           (lion-step nw left-1-type) (lion-step se left-1-type) (lion-step sw left-1-type) (lion-step ne left-1-type)
+           (vg-step n left-1-type) (vg-step s left-1-type) (vg-step w left-1-type) (vg-step e left-1-type)
+           (vg-step nw left-1-type) (vg-step se left-1-type) (vg-step sw left-1-type) (vg-step ne left-1-type)
            (move-type left-1-type)
            (step n) (step s) (step w) (step e)
            (step nw) (step se) (step sw) (step ne)
