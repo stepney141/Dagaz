@@ -44,14 +44,7 @@
            ("8/7/6/5/4/3/2/1" (0 50)) ; ranks
          )
          (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0)
-           (ne 1 -1) (nw -1 -1) (se 1 1) (sw -1 1))
-     )
-     (symmetry White (nw se) (se nw) (ne sw) (sw ne))
-     (zone (name promotion) (players Black)
-           (positions b8 d8 f8 h8)
-     )
-     (zone (name promotion) (players White)
-           (positions a1 c1 e1 g1)
+            (ne 1 -1) (nw -1 -1) (se 1 1) (sw -1 1))
      )
   )
 
