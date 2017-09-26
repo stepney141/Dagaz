@@ -119,10 +119,10 @@ Dagaz.Model.CheckInvariants = function(board) {
           (checkDirection(design, b, board.player, pos, s,  [king, jang, hu]) > 0) ||
           (checkDirection(design, b, board.player, pos, w,  [king, jang, hu]) > 0) ||
           (checkDirection(design, b, board.player, pos, e,  [king, jang, hu]) > 0) ||
-          (checkDirection(design, b, board.player, pos, nw, [king, sang, hu]) > 0) ||
-          (checkDirection(design, b, board.player, pos, ne, [king, sang, hu]) > 0) ||
-          (checkDirection(design, b, board.player, pos, sw, [king, sang]) > 0) ||
-          (checkDirection(design, b, board.player, pos, se, [king, sang]) > 0)) {
+          (checkDirection(design, b, board.player, pos, nw, [king, sang]) > 0) ||
+          (checkDirection(design, b, board.player, pos, ne, [king, sang]) > 0) ||
+          (checkDirection(design, b, board.player, pos, sw, [king, sang, hu]) > 0) ||
+          (checkDirection(design, b, board.player, pos, se, [king, sang, hu]) > 0)) {
           move.failed = true;
           return;
       }
