@@ -1,12 +1,14 @@
 (function() {
 
-var MAXVALUE  = 1000000;
+var MAXVALUE      = 1000000;
+
+Dagaz.AI.AI_FRAME = 3000;
 
 function UctAi(params, parent) {
   this.params = params;
   this.parent = parent;
   if (_.isUndefined(this.params.AI_FRAME)) {
-      this.params.AI_FRAME = 3000;
+      this.params.AI_FRAME = Dagaz.AI.AI_FRAME;
   }
   if (_.isUndefined(this.params.UCT_COEFF)) {
       this.params.UCT_COEFF = Math.sqrt(2);
@@ -68,15 +70,13 @@ UctAi.prototype.heuristic = function(design, board, move) {
 }
 
 UctAi.prototype.generate = function(ctx, board) {
-  if (board.moves.length == 0) {
-      board.moves = Dagaz.AI.generate(ctx, board);
-      if ((board.moves.length == 1) && board.moves[0].isPass()) {
-           var moves = Dagaz.AI.generate(ctx, board.apply(board.moves[0]));
-           if ((moves.length == 0) || ((moves.length == 1) && moves[0].isPass())) {
-               board.moves = [];
-           }
-      }
-  }
+   board.moves = Dagaz.AI.generate(ctx, board);
+   if ((board.moves.length == 1) && board.moves[0].isPass()) {
+       var moves = Dagaz.AI.generate(ctx, board.apply(board.moves[0]));
+       if ((moves.length == 0) || ((moves.length == 1) && moves[0].isPass())) {
+           board.moves = [];
+       }
+   }
 }
 
 Dagaz.AI.isForced = function(ai, design, board, move) {

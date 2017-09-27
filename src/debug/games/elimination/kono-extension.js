@@ -1,11 +1,45 @@
 (function() {
 
+Dagaz.AI.AI_FRAME = 1000;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
   if (name != "kono-extension") {
      checkVersion(design, name, value);
   }
+}
+
+Dagaz.AI.eval = function(design, params, board, player) {
+  var r = 0;
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if (piece !== null) {
+          var v = 0;
+          _.each(design.allDirections(), function(dir) {
+              var p = design.navigate(player, pos, dir);
+              if (p === null) {
+                  v -= 5;
+              } else {
+                  var x = board.getPiece(p);
+                  if ((x !== null) && (x.player == piece.player)) {
+                      p = design.navigate(player, p, dir);
+                      if (p !== null) {
+                          x = board.getPiece(p);
+                          if ((x !== null) && (x.player != piece.player)) {
+                              v += 5;
+                          }
+                      }
+                  }
+              }
+          });
+          if (piece.player != player) {
+              v = -v;
+          }
+          r += v;
+      }
+  });
+  return r;
 }
 
 Dagaz.Model.checkGoals = function(design, board, player) {
