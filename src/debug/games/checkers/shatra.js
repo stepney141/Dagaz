@@ -23,7 +23,10 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "true");
-    design.checkVersion("pass-partial", "true");
+    design.checkVersion("deferred-captures", "true");
+    design.checkVersion("shatra-extension", "true");
+    design.checkVersion("shatra-promotion", "true");
+    design.checkVersion("shatra-invariant", "true");
 
     design.addDirection("w");
     design.addDirection("e");

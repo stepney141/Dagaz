@@ -8,38 +8,6 @@
   (add-partial continue-type)
 ))
 
-(define man-second (
-   (verify (in-zone? second-rank))
-   $1 (verify empty?)
-   (if (in-zone? promotion)
-       (add Queen)
-    else
-       add
-   )
-))
-
-
-(define man-shift (
-   $1 (verify empty?)
-   (if (in-zone? promotion)
-       (add Queen)
-    else
-       add
-   )
-))
-
-(define man-jump (
-   $1 (verify enemy?) 
-   capture 
-   $1 (verify empty?)
-   (if (in-zone? promotion)
-       (add-partial Queen continue-type)
-    else
-       (add-partial continue-type)
-   )
-))
-
-
 (define first-step (
    (verify (in-zone? first-rank))
    $1 (verify empty?)
@@ -53,10 +21,30 @@
    add
 ))
 
+(define second-stepp (
+   (verify (in-zone? second-rank))
+   $1 (verify empty?)
+   (if (in-zone? promotion)
+       (add Queen)
+    else
+       add
+   )
+))
+
 (define third-step (
    (verify (in-zone? third-rank))
    $1 (verify empty?)
    add
+))
+
+(define third-stepp (
+   (verify (in-zone? third-rank))
+   $1 (verify empty?)
+   (if (in-zone? promotion)
+       (add Queen)
+    else
+       add
+   )
 ))
 
 (define drop-piece (
@@ -70,9 +58,19 @@
 ))
 
 (define short-shift (
-;  (verify (not-in-zone? fortress))
+;  (verify (not-in-zone? home))
    $1 (verify empty?)
    add
+))
+
+(define short-shiftp (
+;  (verify (not-in-zone? home))
+   $1 (verify empty?)
+   (if (in-zone? promotion)
+       (add Queen)
+    else
+       add
+   )
 ))
 
 (define short-jump (
@@ -82,8 +80,19 @@
    (add-partial continue-type)
 ))
 
+(define short-jumpp (
+   $1 (verify enemy?) 
+   capture 
+   $1 (verify empty?)
+   (if (in-zone? promotion)
+       (add-partial Queen continue-type)
+    else
+       (add-partial continue-type)
+   )
+))
+
 (define long-shift (
-;  (verify (not-in-zone? fortress))
+;  (verify (not-in-zone? home))
    $1 (while empty?
        add $1
    )
@@ -129,11 +138,11 @@
 
   (option "animate captures"  false)
   (option "smart moves"       true)
-  (option "pass partial"      true)
+  (option "deferred captures" true)
 
   (players White Black)
   (turn-order White Black)
-  (move-priorities priority-type jump-type normal-type)
+  (move-priorities normal-type)
 
   (board
      (image "images/shatra.bmp")
@@ -157,15 +166,24 @@
      )
      (links nx
            (c1 a5) (c2 a5) (c3 a5) (d1 a5) (d2 a5) (d3 a5) (e1 a5) (e2 a5) (e3 a5)
-           (a5 a6) (a6 a7) (a7 b5) (b5 b6) (b6 b7) (b7 c5) (c5 c6) (c6 c7) (c7 d5)
-           (d5 d6) (d6 d7) (d7 e5) (e5 e6) (e6 e7) (e7 f5) (f5 f6) (f6 f7) (f7 g5)
+           (a5 a6) (a6 a7) (a7 b5) (b5 b6) (b6 b7) (b7 c5) (c5 c6) (c6 c7) (c7 e5)
+           (e5 e6) (e6 e7) (e7 f5) (f5 f6) (f6 f7) (f7 g5)
            (g5 g6) (g6 g7) (c12 g10) (c13 g10) (c14 g10) (d12 g10) (d13 g10) 
            (d14 g10) (e12 g10) (e13 g10) (e14 g10) (g10 g9) (g9 g8) (g8 f10)
-           (f10 f9) (f9 f8) (f8 e10) (e10 e9) (e9 e8) (e8 d10) (d10 d9) (d9 d8)
-           (d8 c10) (c10 c9) (c9 c8) (c8 b10) (b10 b9) (b9 b8) (b8 a10) (a10 a9) 
+           (f10 f9) (f9 f8) (f8 e10) (e10 e9) (e9 e8) (e8 c10) 
+           (c10 c9) (c9 c8) (c8 b10) (b10 b9) (b9 b8) (b8 a10) (a10 a9) 
            (a9 a8)
      )
      (symmetry Black (nw se) (se nw) (ne sw) (sw ne) (n s) (s n) (w e) (e w) (nx nx))
+     (zone (name fortress) (players White Black)
+           (positions c1 c2 c3 d1 d2 d3 e1 e2 e3 c12 c13 c14 d12 d13 d14 e12 e13 e14)
+     )
+     (zone (name home) (players White)
+           (positions c1 c2 c3 d1 d2 d3 e1 e2 e3 d4)
+     )
+     (zone (name home) (players Black)
+           (positions c12 c13 c14 d12 d13 d14 e12 e13 e14 d11)
+     )
      (zone (name promotion) (players White)
            (positions c14 d14 e14)
      )
@@ -179,25 +197,16 @@
            (positions a10 b10 c10 d10 e10 f10 g10)
      )
      (zone (name second-rank) (players White)
-           (positions a7 b7 c7 d7 e7 f7 g7 a8 b8 c8 d8 e8 f8 g8 a9 b9 c9 d9 e9 f9 g9 c10 e10)
+           (positions a7 b7 c7 d7 e7 f7 g7 a8 b8 c8 d8 e8 f8 g8 a9 b9 c9 d9 e9 f9 g9 c10 e10 d11 c12 d12 e12 c13 d13 e13)
      )
      (zone (name second-rank) (players Black)
-           (positions a8 b8 c8 d8 e8 f8 g8 a7 b7 c7 d7 e7 f7 g7 a6 b6 c6 d6 e6 f6 g6 c5 e5)
+           (positions a8 b8 c8 d8 e8 f8 g8 a7 b7 c7 d7 e7 f7 g7 a6 b6 c6 d6 e6 f6 g6 c5 e5 d4 c3 d3 e3 c2 d2 e2)
      )
      (zone (name third-rank) (players White)
-           (positions a8 b8 c8 d8 e8 f8 g8 a9 b9 c9 d9 e9 f9 g9)
+           (positions a8 b8 c8 d8 e8 f8 g8 a9 b9 c9 d9 e9 f9 g9 a10 b10 c10 d10 e10 f10 g10 d11 c12 d12 e12 c13 d13 e13 c14 d14 e14)
      )
      (zone (name third-rank) (players Black)
-           (positions a7 b7 c7 d7 e7 f7 g7 a6 b6 c6 d6 e6 f6 g6)
-     )
-     (zone (name fortress) (players White)
-           (positions c1 c2 c3 d1 d2 d3 e1 e2 e3)
-     )
-     (zone (name fortress) (players Black)
-           (positions c12 c13 c14 d12 d13 d14 e12 e13 e14)
-     )
-     (zone (name road) (players White Black)
-           (positions d1 d2 d3 d4 d5 d6 d7 d8 d9 d10 d11 d12 d13 d14)
+           (positions a7 b7 c7 d7 e7 f7 g7 a6 b6 c6 d6 e6 f6 g6 a5 b5 c5 d5 e5 f5 g5 d4 c3 d3 e3 c2 d2 e2 c1 d1 e1)
      )
   )
 
@@ -206,14 +215,13 @@
      (image White "images/cheskers/wpawn.bmp"
             Black "images/cheskers/bpawn.bmp")
      (moves
-         (move-type jump-type)
-         (man-jump n) (man-jump e) (man-jump w) (man-jump s)
-         (man-jump nw) (man-jump ne) (man-jump sw) (man-jump se)
-         (en-passant w) (en-passant e)
          (move-type continue-type)
-         (man-jump n) (man-jump e) (man-jump w) (man-jump s)
-         (man-jump nw) (man-jump ne) (man-jump sw) (man-jump se)
+         (short-jump n) (short-jump e) (short-jump w) (short-jump s)
+         (short-jump nw) (short-jump ne) (short-jump sw) (short-jump se)
          (move-type normal-type)
+         (short-jump n) (short-jump e) (short-jump w) (short-jump s)
+         (short-jump nw) (short-jump ne) (short-jump sw) (short-jump se)
+         (en-passant w) (en-passant e)
          (short-shift n) (first-step n) (second-step nw) (second-step ne)
          (third-step w) (third-step e) (drop-piece nx)
      )
@@ -223,13 +231,12 @@
      (image White "images/cheskers/wking.bmp"
             Black "images/cheskers/bking.bmp")
      (moves
-         (move-type priority-type)
-         (short-jump n) (short-jump e) (short-jump w) (short-jump s)
-         (short-jump nw) (short-jump ne) (short-jump sw) (short-jump se)
          (move-type continue-type)
          (short-jump n) (short-jump e) (short-jump w) (short-jump s)
          (short-jump nw) (short-jump ne) (short-jump sw) (short-jump se)
          (move-type normal-type)
+         (short-jump n) (short-jump e) (short-jump w) (short-jump s)
+         (short-jump nw) (short-jump ne) (short-jump sw) (short-jump se)
          (short-shift n) (short-shift e) (short-shift w) (short-shift s)
          (short-shift nw) (short-shift ne) (short-shift sw) (short-shift se)
      )
@@ -239,11 +246,10 @@
      (image White "images/cheskers/wbishop.bmp"
             Black "images/cheskers/bbishop.bmp")
      (moves
-         (move-type jump-type)
-         (long-jump nw) (long-jump ne) (long-jump sw) (long-jump se)
          (move-type continue-type)
          (long-continue nw) (long-continue ne) (long-continue sw) (long-continue se)
          (move-type normal-type)
+         (long-jump nw) (long-jump ne) (long-jump sw) (long-jump se)
          (long-shift nw) (long-shift ne) (long-shift sw) (long-shift se)
          (drop-piece nx)
      )
@@ -253,11 +259,10 @@
      (image White "images/cheskers/wrook.bmp"
             Black "images/cheskers/brook.bmp")
      (moves
-         (move-type jump-type)
-         (long-jump n) (long-jump e) (long-jump w) (long-jump s)
          (move-type continue-type)
          (long-continue n) (long-continue e) (long-continue w) (long-continue s)
          (move-type normal-type)
+         (long-jump n) (long-jump e) (long-jump w) (long-jump s)
          (long-shift n) (long-shift e) (long-shift w) (long-shift s)
          (drop-piece nx)
      )
@@ -267,13 +272,12 @@
      (image White "images/cheskers/wqueen.bmp"
             Black "images/cheskers/bqueen.bmp")
      (moves
-         (move-type jump-type)
-         (long-jump n) (long-jump e) (long-jump w) (long-jump s)
-         (long-jump nw) (long-jump ne) (long-jump sw) (long-jump se)
          (move-type continue-type)
          (long-continue n) (long-continue e) (long-continue w) (long-continue s)
          (long-continue nw) (long-continue ne) (long-continue sw) (long-continue se)
          (move-type normal-type)
+         (long-jump n) (long-jump e) (long-jump w) (long-jump s)
+         (long-jump nw) (long-jump ne) (long-jump sw) (long-jump se)
          (long-shift n) (long-shift e) (long-shift w) (long-shift s)
          (long-shift nw) (long-shift ne) (long-shift sw) (long-shift se)
          (drop-piece nx)
@@ -302,7 +306,22 @@
 
 (variant
   (title "Altai Shatra (variant)")
-
+  (piece
+     (name Man)
+     (image White "images/cheskers/wpawn.bmp"
+            Black "images/cheskers/bpawn.bmp")
+     (moves
+         (move-type continue-type)
+         (short-jumpp n) (short-jumpp e) (short-jumpp w) (short-jumpp s)
+         (short-jumpp nw) (short-jumpp ne) (short-jumpp sw) (short-jumpp se)
+         (move-type normal-type)
+         (short-jumpp n) (short-jumpp e) (short-jumpp w) (short-jumpp s)
+         (short-jumpp nw) (short-jumpp ne) (short-jumpp sw) (short-jumpp se)
+         (en-passant w) (en-passant e)
+         (short-shiftp n) (first-step n) (second-stepp nw) (second-stepp ne)
+         (third-stepp w) (third-stepp e) (drop-piece nx)
+     )
+  )
   (board-setup
      (White (Man a5 b5 c5 d5 e5 f5 g5 a6 b6 c6 d6 e6 f6 g6 c1 c2 e1 e2 c3 e3 d2 d3 d1)
             (King d4)
