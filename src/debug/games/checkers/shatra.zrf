@@ -37,16 +37,6 @@
    add
 ))
 
-(define third-stepp (
-   (verify (in-zone? third-rank))
-   $1 (verify empty?)
-   (if (in-zone? promotion)
-       (add Queen)
-    else
-       add
-   )
-))
-
 (define drop-piece (
    (verify (in-zone? fortress)) $1
    (while (on-board? nx)
@@ -216,13 +206,13 @@
             Black "images/cheskers/bpawn.bmp")
      (moves
          (move-type continue-type)
-         (short-jump n) (short-jump e) (short-jump w) (short-jump s)
-         (short-jump nw) (short-jump ne) (short-jump sw) (short-jump se)
+         (short-jumpp n) (short-jumpp e) (short-jumpp w) (short-jumpp s)
+         (short-jumpp nw) (short-jumpp ne) (short-jumpp sw) (short-jumpp se)
          (move-type normal-type)
-         (short-jump n) (short-jump e) (short-jump w) (short-jump s)
-         (short-jump nw) (short-jump ne) (short-jump sw) (short-jump se)
+         (short-jumpp n) (short-jumpp e) (short-jumpp w) (short-jumpp s)
+         (short-jumpp nw) (short-jumpp ne) (short-jumpp sw) (short-jumpp se)
          (en-passant w) (en-passant e)
-         (short-shift n) (first-step n) (second-step nw) (second-step ne)
+         (short-shiftp n) (first-step n) (second-stepp nw) (second-stepp ne)
          (third-step w) (third-step e) (drop-piece nx)
      )
   )
@@ -306,6 +296,7 @@
 
 (variant
   (title "Altai Shatra (variant)")
+
   (piece
      (name Man)
      (image White "images/cheskers/wpawn.bmp"
@@ -317,9 +308,8 @@
          (move-type normal-type)
          (short-jumpp n) (short-jumpp e) (short-jumpp w) (short-jumpp s)
          (short-jumpp nw) (short-jumpp ne) (short-jumpp sw) (short-jumpp se)
-         (en-passant w) (en-passant e)
-         (short-shiftp n) (first-step n) (second-stepp nw) (second-stepp ne)
-         (third-stepp w) (third-stepp e) (drop-piece nx)
+         (short-shiftp n) (second-stepp nw) (second-stepp ne)
+         (third-step w) (third-step e) (drop-piece nx)
      )
   )
   (board-setup
