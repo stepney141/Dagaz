@@ -36,19 +36,28 @@ Dagaz.Model.CheckInvariants = function(board) {
   _.each(board.moves, function(m) {
       if (m.actions.length > 1) {
           moves.push(m);
-          var pos = m.actions[0][0][0];
-          var piece = board.getPiece(pos);
-          if ((piece !== null) && (piece.type == 1)) {
-              isKing = true;
-          }
+          var pos = null;
+          _.each(m.actions, function(a) {
+               if ((a[0] !== null) && (a[1] !== null) && (pos === null)) {
+                   pos = a[0][0];
+                   var piece = board.getPiece(pos);
+                   if ((piece !== null) && (piece.type == 1)) {
+                       isKing = true;
+                   }
+               }
+          });
       }
   });
   if (isKing) {
       moves = [];
       _.each(board.moves, function(m) {
           if (m.actions.length > 0) {
-              var pos = m.actions[0][0][0];
-              var piece = board.getPiece(pos);
+              var piece = null;
+              _.each(m.actions, function(a) {
+                   if ((a[0] !== null) && (a[1] !== null) && (piece === null)) {
+                       piece = board.getPiece(a[0][0]);
+                   }
+              });
               if ((piece !== null) && (piece.type == 1)) {
                   moves.push(m);
                   var n = _.chain(m.actions).map(function(a) { return a[3]; }).max().value();

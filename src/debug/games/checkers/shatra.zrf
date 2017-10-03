@@ -18,12 +18,6 @@
 (define second-step (
    (verify (in-zone? second-rank))
    $1 (verify empty?)
-   add
-))
-
-(define second-stepp (
-   (verify (in-zone? second-rank))
-   $1 (verify empty?)
    (if (in-zone? promotion)
        (add Queen)
     else
@@ -34,7 +28,11 @@
 (define third-step (
    (verify (in-zone? third-rank))
    $1 (verify empty?)
-   add
+   (if (in-zone? promotion)
+       (add Queen)
+    else
+       add
+   )
 ))
 
 (define drop-piece (
@@ -212,7 +210,7 @@
          (short-jumpp n) (short-jumpp e) (short-jumpp w) (short-jumpp s)
          (short-jumpp nw) (short-jumpp ne) (short-jumpp sw) (short-jumpp se)
          (en-passant w) (en-passant e)
-         (short-shiftp n) (first-step n) (second-stepp nw) (second-stepp ne)
+         (short-shiftp n) (first-step n) (second-step nw) (second-step ne)
          (third-step w) (third-step e) (drop-piece nx)
      )
   )
@@ -308,7 +306,7 @@
          (move-type normal-type)
          (short-jumpp n) (short-jumpp e) (short-jumpp w) (short-jumpp s)
          (short-jumpp nw) (short-jumpp ne) (short-jumpp sw) (short-jumpp se)
-         (short-shiftp n) (second-stepp nw) (second-stepp ne)
+         (short-shiftp n) (second-step nw) (second-step ne)
          (third-step w) (third-step e) (drop-piece nx)
      )
   )
@@ -317,6 +315,53 @@
             (King d4)
      )
      (Black (Man a10 b10 c10 d10 e10 f10 g10 a9 b9 c9 d9 e9 f9 g9 c14 c13 e14 e13 c12 e12 d12 d13 d14)
+            (King d11)
+     )
+  )
+)
+
+(variant
+  (title "-")
+)
+
+(variant
+  (title "Altai Shatra (test 1)")
+  (board-setup
+     (White (Man c1 e1)
+            (Bishop a7)
+            (King a5)
+     )
+     (Black (Queen d14)
+            (King g10)
+     )
+  )
+)
+
+(variant
+  (title "Altai Shatra (test 2)")
+  (board-setup
+     (White (Man c1 e1)
+            (Rook d3)
+            (King d4)
+     )
+     (Black (Queen d14)
+            (Rook c7)
+            (King g10)
+     )
+  )
+)
+
+(variant
+  (title "Altai Shatra (test 3)")
+  (board-setup
+     (White (Man a5 b5 c5 d5 e5 f5 g5 c1 c2 e1 e2 c13 e12)
+            (Bishop c3 e3)
+            (Rook d2 d3)
+            (Queen a9)
+            (King d4)
+     )
+     (Black (Man a10 b10 c10 d10 e10 f10 g10 e13)
+            (Queen d14)
             (King d11)
      )
   )
