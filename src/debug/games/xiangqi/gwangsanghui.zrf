@@ -80,10 +80,14 @@
 
 (define shoot (
   $1 (while empty? $1)
-  (verify (not-piece? Cannon)) $1
-  (while empty? add $1)
+  (verify (not-piece? Cannon)) 
+  (verify (not-piece? EastCannon)) 
+  (verify (not-piece? WestCannon)) 
+  $1 (while empty? add $1)
   (verify not-friend?)
   (verify (not-piece? Cannon))
+  (verify (not-piece? EastCannon)) 
+  (verify (not-piece? WestCannon)) 
   (verify (not-piece? Knight))
   add
 ))
@@ -92,9 +96,13 @@
   (verify (in-zone? fortress))
   $1 (verify not-empty?) 
   (verify (not-piece? Cannon)) 
+  (verify (not-piece? EastCannon)) 
+  (verify (not-piece? WestCannon)) 
   $1 (verify (in-zone? fortress))
   (verify not-friend?)
   (verify (not-piece? Cannon))
+  (verify (not-piece? EastCannon)) 
+  (verify (not-piece? WestCannon)) 
   (verify (not-piece? Knight))
   add
 ))
