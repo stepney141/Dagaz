@@ -96,6 +96,7 @@
   (drop-sound "")
 
   (option "animate captures"   false)
+  (option "smart moves"        false)
 
   (players White Black)
   (turn-order White Black)
