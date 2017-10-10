@@ -48,39 +48,30 @@
   add
 ))
 
-(define slide (
-  (set-flag long-horsa $5)
-  (set-flag long-common false)
+(define shift (
   (verify (in-zone? $1))
   $2
   (while (and empty? (in-zone? $1))
      (if (not-in-zone? center) add)
      $2
-     (set-flag long-horsa true)
-     (set-flag long-common true)
   )
-  (if (flag? long-horsa)
-     (verify (and not-friend? (in-zone? $3)))
-     (if (not-in-zone? center) add)
-     (verify empty?)
-   else
-     (verify (and empty? (in-zone? $3)))
-     (if (not-in-zone? center) add)
+))
+
+(define slide (
+  (verify (in-zone? $1)) $2
+  (set-flag long-slide true)
+  (while (and empty? (in-zone? $1)) 
+      $2 (set-flag long-slide false)
   )
-  (set-flag long-flag false)
-  $4
-  (while (and empty? (in-zone? $3))
-     (if (flag? long-common)
-         (verify (not-flag? long-flag))
-         (set-flag long-flag true)
-     )
-     (if (not-in-zone? center) add)
-     $4
+  (verify not-friend?)  
+  (verify (not-in-zone? $1)) 
+  (verify not-friend?) add
+  (verify empty?) $3
+  (while (not-in-zone? $1)
+      (verify not-friend?) add
+      (verify empty?) $3
+      (verify (flag? long-slide))
   )
-  (verify (not-flag? long-flag))
-  (verify (and not-friend? (in-zone? $3)))
-  (verify (not-in-zone? center))
-  add
 ))
 
 (game
@@ -91,8 +82,9 @@
   (capture-sound "")
   (drop-sound "")
 
-  (option "animate captures"        false)
-  (option "smart moves"             false)
+  (option "animate captures" false)
+  (option "smart moves"      false)
+  (option "gala extension"   true)
 
   (players White Black)
   (turn-order White Black)
@@ -174,6 +166,7 @@
      (image White "images/gala/wking.bmp"
             Black "images/gala/bking.bmp")
      (moves
+        (move-type normal-type)
         (gala-step n) (gala-step nw)
         (gala-step s) (gala-step sw)
         (gala-step e) (gala-step ne)
@@ -183,6 +176,36 @@
         (gala-in e) (gala-in ne) (gala-out e) (gala-out ne)
         (gala-in w) (gala-in se) (gala-out w) (gala-out se)
         (gala-jump next)
+     )
+  )
+  (piece
+     (name Korna)
+     (help "Korna: moves as a rook in chess when in a corner of the board, and as a bishop in the middle of the board.")
+     (description "A Korna moves as a rook in chess when in a corner of the board, and as a bishop in the middle /
+                   of the board. It is also possible to combine these moves in one turn. If the Korna has moved /
+                   one or more squares before crossing the deflection line, it may then only move one square./
+                   Kornas can only take in moves where they move over a deflection line.")
+     (image White "images/gala/wrook.bmp"
+            Black "images/gala/brook.bmp")
+     (moves
+        (move-type korna-type)
+        (slide outer n nw) (slide outer n ne) (slide outer n sw) (slide outer n se)
+        (slide outer s nw) (slide outer s ne) (slide outer s sw) (slide outer s se)
+        (slide outer e nw) (slide outer e ne) (slide outer e sw) (slide outer e se)
+        (slide outer w nw) (slide outer w ne) (slide outer w sw) (slide outer w se)
+        (slide cross nw n) (slide cross nw s) (slide cross nw w) (slide cross nw e)
+        (slide cross sw n) (slide cross sw s) (slide cross sw w) (slide cross sw e)
+        (slide cross se n) (slide cross se s) (slide cross se w) (slide cross se e)
+        (slide cross ne n) (slide cross ne s) (slide cross ne w) (slide cross ne e)
+        (move-type normal-type)
+        (shift outer n)  (shift outer n)  (shift outer n)  (shift outer n)
+        (shift outer s)  (shift outer s)  (shift outer s)  (shift outer s)
+        (shift outer e)  (shift outer e)  (shift outer e)  (shift outer e)
+        (shift outer w)  (shift outer w)  (shift outer w)  (shift outer w)
+        (shift cross nw) (shift cross nw) (shift cross nw) (shift cross nw)
+        (shift cross sw) (shift cross sw) (shift cross sw) (shift cross sw)
+        (shift cross se) (shift cross se) (shift cross se) (shift cross se)
+        (shift cross ne) (shift cross ne) (shift cross ne) (shift cross ne)
      )
   )
   (piece
@@ -196,34 +219,24 @@
      (image White "images/gala/wbishop.bmp"
             Black "images/gala/bbishop.bmp")
      (moves
-         (slide outer nw cross n true)  (slide outer nw cross s true)  (slide outer nw cross w true)  (slide outer nw cross e true)
-         (slide outer sw cross n true)  (slide outer sw cross s true)  (slide outer sw cross w true)  (slide outer sw cross e true)
-         (slide outer se cross n true)  (slide outer se cross s true)  (slide outer se cross w true)  (slide outer se cross e true)
-         (slide outer ne cross n true)  (slide outer ne cross s true)  (slide outer ne cross w true)  (slide outer ne cross e true)
-         (slide cross n outer nw false) (slide cross n outer ne false) (slide cross n outer sw false) (slide cross n outer se false)
-         (slide cross s outer nw false) (slide cross s outer ne false) (slide cross s outer sw false) (slide cross s outer se false)
-         (slide cross e outer nw false) (slide cross e outer ne false) (slide cross e outer sw false) (slide cross e outer se false)
-         (slide cross w outer nw false) (slide cross w outer ne false) (slide cross w outer sw false) (slide cross w outer se false)
-     )
-  )
-  (piece
-     (name Korna)
-     (help "Korna: moves as a rook in chess when in a corner of the board, and as a bishop in the middle of the board.")
-     (description "A Korna moves as a rook in chess when in a corner of the board, and as a bishop in the middle /
-                   of the board. It is also possible to combine these moves in one turn. If the Korna has moved /
-                   one or more squares before crossing the deflection line, it may then only move one square./
-                   Kornas can only take in moves where they move over a deflection line.")
-     (image White "images/gala/wrook.bmp"
-            Black "images/gala/brook.bmp")
-     (moves
-        (slide outer n cross nw true) (slide outer n cross ne true) (slide outer n cross sw true) (slide outer n cross se true)
-        (slide outer s cross nw true) (slide outer s cross ne true) (slide outer s cross sw true) (slide outer s cross se true)
-        (slide outer e cross nw true) (slide outer e cross ne true) (slide outer e cross sw true) (slide outer e cross se true)
-        (slide outer w cross nw true) (slide outer w cross ne true) (slide outer w cross sw true) (slide outer w cross se true)
-        (slide cross nw outer n true) (slide cross nw outer s true) (slide cross nw outer w true) (slide cross nw outer e true)
-        (slide cross sw outer n true) (slide cross sw outer s true) (slide cross sw outer w true) (slide cross sw outer e true)
-        (slide cross se outer n true) (slide cross se outer s true) (slide cross se outer w true) (slide cross se outer e true)
-        (slide cross ne outer n true) (slide cross ne outer s true) (slide cross ne outer w true) (slide cross ne outer e true)
+        (move-type horsa-type)
+        (slide outer nw n) (slide outer nw s) (slide outer nw w) (slide outer nw e)
+        (slide outer sw n) (slide outer sw s) (slide outer sw w) (slide outer sw e)
+        (slide outer se n) (slide outer se s) (slide outer se w) (slide outer se e)
+        (slide outer ne n) (slide outer ne s) (slide outer ne w) (slide outer ne e)
+        (slide cross n nw) (slide cross n ne) (slide cross n sw) (slide cross n se)
+        (slide cross s nw) (slide cross s ne) (slide cross s sw) (slide cross s se)
+        (slide cross e nw) (slide cross e ne) (slide cross e sw) (slide cross e se)
+        (slide cross w nw) (slide cross w ne) (slide cross w sw) (slide cross w se)
+        (move-type normal-type)
+        (shift outer nw) (shift outer nw) (shift outer nw) (shift outer nw)
+        (shift outer sw) (shift outer sw) (shift outer sw) (shift outer sw)
+        (shift outer se) (shift outer se) (shift outer se) (shift outer se)
+        (shift outer ne) (shift outer ne) (shift outer ne) (shift outer ne)
+        (shift cross n)  (shift cross n)  (shift cross n)  (shift cross n)
+        (shift cross s)  (shift cross s)  (shift cross s)  (shift cross s)
+        (shift cross e)  (shift cross e)  (shift cross e)  (shift cross e)
+        (shift cross w)  (shift cross w)  (shift cross w)  (shift cross w)
      )
   )
   (piece
@@ -238,6 +251,7 @@
      (image White "images/gala/wpawn.bmp"
             Black "images/gala/bpawn.bmp")
      (moves
+        (move-type normal-type)
         (kampa-shift left ne)
         (kampa-shift right nw)
         (kampa-leap n) (kampa-leap nw)

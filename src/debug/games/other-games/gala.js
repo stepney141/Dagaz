@@ -23,6 +23,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "false");
+    design.checkVersion("gala-extension", "true");
 
     design.addDirection("w");
     design.addDirection("e");
@@ -210,302 +211,191 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(3, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(4, ZRF.FUNCTION,	24);	// from
-    design.addCommand(4, ZRF.PARAM,	0);	// true
-    design.addCommand(4, ZRF.SET_FLAG,	0);	// long-horsa
-    design.addCommand(4, ZRF.PARAM,	1);	// false
-    design.addCommand(4, ZRF.SET_FLAG,	1);	// long-common
     design.addCommand(4, ZRF.IN_ZONE,	2);	// outer
     design.addCommand(4, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(4, ZRF.PARAM,	0);	// $1
+    design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(4, ZRF.PARAM,	1);	// true
+    design.addCommand(4, ZRF.SET_FLAG,	0);	// long-slide
+    design.addCommand(4, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(4, ZRF.FUNCTION,	0);	// not
+    design.addCommand(4, ZRF.IF,	6);
+    design.addCommand(4, ZRF.IN_ZONE,	2);	// outer
+    design.addCommand(4, ZRF.FUNCTION,	0);	// not
+    design.addCommand(4, ZRF.IF,	3);
+    design.addCommand(4, ZRF.LITERAL,	1);	// true
+    design.addCommand(4, ZRF.JUMP,	2);
+    design.addCommand(4, ZRF.LITERAL,	0);	// false
+    design.addCommand(4, ZRF.FUNCTION,	0);	// not
+    design.addCommand(4, ZRF.IF,	6);
     design.addCommand(4, ZRF.PARAM,	2);	// $3
     design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(4, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(4, ZRF.PARAM,	3);	// false
+    design.addCommand(4, ZRF.SET_FLAG,	0);	// long-slide
+    design.addCommand(4, ZRF.JUMP,	-15);
+    design.addCommand(4, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(4, ZRF.FUNCTION,	0);	// not
-    design.addCommand(4, ZRF.IF,	6);
+    design.addCommand(4, ZRF.FUNCTION,	20);	// verify
     design.addCommand(4, ZRF.IN_ZONE,	2);	// outer
     design.addCommand(4, ZRF.FUNCTION,	0);	// not
-    design.addCommand(4, ZRF.IF,	3);
-    design.addCommand(4, ZRF.LITERAL,	1);	// true
-    design.addCommand(4, ZRF.JUMP,	2);
-    design.addCommand(4, ZRF.LITERAL,	0);	// false
+    design.addCommand(4, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(4, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(4, ZRF.FUNCTION,	0);	// not
-    design.addCommand(4, ZRF.IF,	13);
-    design.addCommand(4, ZRF.IN_ZONE,	0);	// center
-    design.addCommand(4, ZRF.IF,	4);
+    design.addCommand(4, ZRF.FUNCTION,	20);	// verify
     design.addCommand(4, ZRF.FORK,	3);
     design.addCommand(4, ZRF.FUNCTION,	25);	// to
     design.addCommand(4, ZRF.FUNCTION,	28);	// end
-    design.addCommand(4, ZRF.PARAM,	3);	// $4
+    design.addCommand(4, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(4, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(4, ZRF.PARAM,	4);	// $5
     design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(4, ZRF.PARAM,	4);	// true
-    design.addCommand(4, ZRF.SET_FLAG,	0);	// long-horsa
-    design.addCommand(4, ZRF.PARAM,	5);	// true
-    design.addCommand(4, ZRF.SET_FLAG,	1);	// long-common
-    design.addCommand(4, ZRF.JUMP,	-22);
-    design.addCommand(4, ZRF.FLAG,	0);	// long-horsa
-    design.addCommand(4, ZRF.FUNCTION,	0);	// not
-    design.addCommand(4, ZRF.IF,	16);
+    design.addCommand(4, ZRF.IN_ZONE,	2);	// outer
+    design.addCommand(4, ZRF.IF,	14);
     design.addCommand(4, ZRF.FUNCTION,	3);	// friend?
-    design.addCommand(4, ZRF.IF,	6);
-    design.addCommand(4, ZRF.IN_ZONE,	1);	// cross
-    design.addCommand(4, ZRF.FUNCTION,	0);	// not
-    design.addCommand(4, ZRF.IF,	3);
-    design.addCommand(4, ZRF.LITERAL,	1);	// true
-    design.addCommand(4, ZRF.JUMP,	2);
-    design.addCommand(4, ZRF.LITERAL,	0);	// false
-    design.addCommand(4, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(4, ZRF.IN_ZONE,	0);	// center
-    design.addCommand(4, ZRF.IF,	2);
-    design.addCommand(4, ZRF.FUNCTION,	25);	// to
-    design.addCommand(4, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(4, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(4, ZRF.JUMP,	14);
-    design.addCommand(4, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(4, ZRF.FUNCTION,	0);	// not
-    design.addCommand(4, ZRF.IF,	6);
-    design.addCommand(4, ZRF.IN_ZONE,	1);	// cross
-    design.addCommand(4, ZRF.FUNCTION,	0);	// not
-    design.addCommand(4, ZRF.IF,	3);
-    design.addCommand(4, ZRF.LITERAL,	1);	// true
-    design.addCommand(4, ZRF.JUMP,	2);
-    design.addCommand(4, ZRF.LITERAL,	0);	// false
-    design.addCommand(4, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(4, ZRF.IN_ZONE,	0);	// center
-    design.addCommand(4, ZRF.IF,	2);
-    design.addCommand(4, ZRF.FUNCTION,	25);	// to
-    design.addCommand(4, ZRF.PARAM,	6);	// false
-    design.addCommand(4, ZRF.SET_FLAG,	2);	// long-flag
-    design.addCommand(4, ZRF.PARAM,	7);	// $8
-    design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(4, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(4, ZRF.FUNCTION,	0);	// not
-    design.addCommand(4, ZRF.IF,	6);
-    design.addCommand(4, ZRF.IN_ZONE,	1);	// cross
-    design.addCommand(4, ZRF.FUNCTION,	0);	// not
-    design.addCommand(4, ZRF.IF,	3);
-    design.addCommand(4, ZRF.LITERAL,	1);	// true
-    design.addCommand(4, ZRF.JUMP,	2);
-    design.addCommand(4, ZRF.LITERAL,	0);	// false
-    design.addCommand(4, ZRF.FUNCTION,	0);	// not
-    design.addCommand(4, ZRF.IF,	17);
-    design.addCommand(4, ZRF.FLAG,	1);	// long-common
-    design.addCommand(4, ZRF.FUNCTION,	0);	// not
-    design.addCommand(4, ZRF.IF,	6);
-    design.addCommand(4, ZRF.FLAG,	2);	// long-flag
     design.addCommand(4, ZRF.FUNCTION,	0);	// not
     design.addCommand(4, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(4, ZRF.PARAM,	8);	// true
-    design.addCommand(4, ZRF.SET_FLAG,	2);	// long-flag
-    design.addCommand(4, ZRF.IN_ZONE,	0);	// center
-    design.addCommand(4, ZRF.IF,	4);
     design.addCommand(4, ZRF.FORK,	3);
     design.addCommand(4, ZRF.FUNCTION,	25);	// to
     design.addCommand(4, ZRF.FUNCTION,	28);	// end
-    design.addCommand(4, ZRF.PARAM,	9);	// $10
+    design.addCommand(4, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(4, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(4, ZRF.PARAM,	5);	// $6
     design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(4, ZRF.JUMP,	-26);
-    design.addCommand(4, ZRF.FLAG,	2);	// long-flag
-    design.addCommand(4, ZRF.FUNCTION,	0);	// not
+    design.addCommand(4, ZRF.FLAG,	0);	// long-slide
     design.addCommand(4, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(4, ZRF.FUNCTION,	3);	// friend?
-    design.addCommand(4, ZRF.IF,	6);
-    design.addCommand(4, ZRF.IN_ZONE,	1);	// cross
-    design.addCommand(4, ZRF.FUNCTION,	0);	// not
-    design.addCommand(4, ZRF.IF,	3);
-    design.addCommand(4, ZRF.LITERAL,	1);	// true
-    design.addCommand(4, ZRF.JUMP,	2);
-    design.addCommand(4, ZRF.LITERAL,	0);	// false
-    design.addCommand(4, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(4, ZRF.IN_ZONE,	0);	// center
-    design.addCommand(4, ZRF.FUNCTION,	0);	// not
-    design.addCommand(4, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(4, ZRF.FUNCTION,	25);	// to
+    design.addCommand(4, ZRF.JUMP,	-14);
     design.addCommand(4, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(5, ZRF.FUNCTION,	24);	// from
-    design.addCommand(5, ZRF.PARAM,	0);	// false
-    design.addCommand(5, ZRF.SET_FLAG,	0);	// long-horsa
-    design.addCommand(5, ZRF.PARAM,	1);	// false
-    design.addCommand(5, ZRF.SET_FLAG,	1);	// long-common
     design.addCommand(5, ZRF.IN_ZONE,	1);	// cross
     design.addCommand(5, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(5, ZRF.PARAM,	0);	// $1
+    design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(5, ZRF.PARAM,	1);	// true
+    design.addCommand(5, ZRF.SET_FLAG,	0);	// long-slide
+    design.addCommand(5, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(5, ZRF.FUNCTION,	0);	// not
+    design.addCommand(5, ZRF.IF,	6);
+    design.addCommand(5, ZRF.IN_ZONE,	1);	// cross
+    design.addCommand(5, ZRF.FUNCTION,	0);	// not
+    design.addCommand(5, ZRF.IF,	3);
+    design.addCommand(5, ZRF.LITERAL,	1);	// true
+    design.addCommand(5, ZRF.JUMP,	2);
+    design.addCommand(5, ZRF.LITERAL,	0);	// false
+    design.addCommand(5, ZRF.FUNCTION,	0);	// not
+    design.addCommand(5, ZRF.IF,	6);
     design.addCommand(5, ZRF.PARAM,	2);	// $3
     design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(5, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(5, ZRF.PARAM,	3);	// false
+    design.addCommand(5, ZRF.SET_FLAG,	0);	// long-slide
+    design.addCommand(5, ZRF.JUMP,	-15);
+    design.addCommand(5, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(5, ZRF.FUNCTION,	0);	// not
-    design.addCommand(5, ZRF.IF,	6);
+    design.addCommand(5, ZRF.FUNCTION,	20);	// verify
     design.addCommand(5, ZRF.IN_ZONE,	1);	// cross
     design.addCommand(5, ZRF.FUNCTION,	0);	// not
-    design.addCommand(5, ZRF.IF,	3);
-    design.addCommand(5, ZRF.LITERAL,	1);	// true
-    design.addCommand(5, ZRF.JUMP,	2);
-    design.addCommand(5, ZRF.LITERAL,	0);	// false
+    design.addCommand(5, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(5, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(5, ZRF.FUNCTION,	0);	// not
-    design.addCommand(5, ZRF.IF,	13);
-    design.addCommand(5, ZRF.IN_ZONE,	0);	// center
-    design.addCommand(5, ZRF.IF,	4);
+    design.addCommand(5, ZRF.FUNCTION,	20);	// verify
     design.addCommand(5, ZRF.FORK,	3);
     design.addCommand(5, ZRF.FUNCTION,	25);	// to
     design.addCommand(5, ZRF.FUNCTION,	28);	// end
-    design.addCommand(5, ZRF.PARAM,	3);	// $4
+    design.addCommand(5, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(5, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(5, ZRF.PARAM,	4);	// $5
     design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(5, ZRF.PARAM,	4);	// true
-    design.addCommand(5, ZRF.SET_FLAG,	0);	// long-horsa
-    design.addCommand(5, ZRF.PARAM,	5);	// true
-    design.addCommand(5, ZRF.SET_FLAG,	1);	// long-common
-    design.addCommand(5, ZRF.JUMP,	-22);
-    design.addCommand(5, ZRF.FLAG,	0);	// long-horsa
-    design.addCommand(5, ZRF.FUNCTION,	0);	// not
-    design.addCommand(5, ZRF.IF,	16);
+    design.addCommand(5, ZRF.IN_ZONE,	1);	// cross
+    design.addCommand(5, ZRF.IF,	14);
     design.addCommand(5, ZRF.FUNCTION,	3);	// friend?
-    design.addCommand(5, ZRF.IF,	6);
-    design.addCommand(5, ZRF.IN_ZONE,	2);	// outer
-    design.addCommand(5, ZRF.FUNCTION,	0);	// not
-    design.addCommand(5, ZRF.IF,	3);
-    design.addCommand(5, ZRF.LITERAL,	1);	// true
-    design.addCommand(5, ZRF.JUMP,	2);
-    design.addCommand(5, ZRF.LITERAL,	0);	// false
-    design.addCommand(5, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(5, ZRF.IN_ZONE,	0);	// center
-    design.addCommand(5, ZRF.IF,	2);
-    design.addCommand(5, ZRF.FUNCTION,	25);	// to
-    design.addCommand(5, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(5, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(5, ZRF.JUMP,	14);
-    design.addCommand(5, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(5, ZRF.FUNCTION,	0);	// not
-    design.addCommand(5, ZRF.IF,	6);
-    design.addCommand(5, ZRF.IN_ZONE,	2);	// outer
-    design.addCommand(5, ZRF.FUNCTION,	0);	// not
-    design.addCommand(5, ZRF.IF,	3);
-    design.addCommand(5, ZRF.LITERAL,	1);	// true
-    design.addCommand(5, ZRF.JUMP,	2);
-    design.addCommand(5, ZRF.LITERAL,	0);	// false
-    design.addCommand(5, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(5, ZRF.IN_ZONE,	0);	// center
-    design.addCommand(5, ZRF.IF,	2);
-    design.addCommand(5, ZRF.FUNCTION,	25);	// to
-    design.addCommand(5, ZRF.PARAM,	6);	// false
-    design.addCommand(5, ZRF.SET_FLAG,	2);	// long-flag
-    design.addCommand(5, ZRF.PARAM,	7);	// $8
-    design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(5, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(5, ZRF.FUNCTION,	0);	// not
-    design.addCommand(5, ZRF.IF,	6);
-    design.addCommand(5, ZRF.IN_ZONE,	2);	// outer
-    design.addCommand(5, ZRF.FUNCTION,	0);	// not
-    design.addCommand(5, ZRF.IF,	3);
-    design.addCommand(5, ZRF.LITERAL,	1);	// true
-    design.addCommand(5, ZRF.JUMP,	2);
-    design.addCommand(5, ZRF.LITERAL,	0);	// false
-    design.addCommand(5, ZRF.FUNCTION,	0);	// not
-    design.addCommand(5, ZRF.IF,	17);
-    design.addCommand(5, ZRF.FLAG,	1);	// long-common
-    design.addCommand(5, ZRF.FUNCTION,	0);	// not
-    design.addCommand(5, ZRF.IF,	6);
-    design.addCommand(5, ZRF.FLAG,	2);	// long-flag
     design.addCommand(5, ZRF.FUNCTION,	0);	// not
     design.addCommand(5, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(5, ZRF.PARAM,	8);	// true
-    design.addCommand(5, ZRF.SET_FLAG,	2);	// long-flag
-    design.addCommand(5, ZRF.IN_ZONE,	0);	// center
-    design.addCommand(5, ZRF.IF,	4);
     design.addCommand(5, ZRF.FORK,	3);
     design.addCommand(5, ZRF.FUNCTION,	25);	// to
     design.addCommand(5, ZRF.FUNCTION,	28);	// end
-    design.addCommand(5, ZRF.PARAM,	9);	// $10
+    design.addCommand(5, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(5, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(5, ZRF.PARAM,	5);	// $6
     design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(5, ZRF.JUMP,	-26);
-    design.addCommand(5, ZRF.FLAG,	2);	// long-flag
-    design.addCommand(5, ZRF.FUNCTION,	0);	// not
+    design.addCommand(5, ZRF.FLAG,	0);	// long-slide
     design.addCommand(5, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(5, ZRF.FUNCTION,	3);	// friend?
-    design.addCommand(5, ZRF.IF,	6);
-    design.addCommand(5, ZRF.IN_ZONE,	2);	// outer
-    design.addCommand(5, ZRF.FUNCTION,	0);	// not
-    design.addCommand(5, ZRF.IF,	3);
-    design.addCommand(5, ZRF.LITERAL,	1);	// true
-    design.addCommand(5, ZRF.JUMP,	2);
-    design.addCommand(5, ZRF.LITERAL,	0);	// false
-    design.addCommand(5, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(5, ZRF.IN_ZONE,	0);	// center
-    design.addCommand(5, ZRF.FUNCTION,	0);	// not
-    design.addCommand(5, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(5, ZRF.FUNCTION,	25);	// to
+    design.addCommand(5, ZRF.JUMP,	-14);
     design.addCommand(5, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(6, ZRF.FUNCTION,	24);	// from
-    design.addCommand(6, ZRF.IN_ZONE,	4);	// home
-    design.addCommand(6, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(6, ZRF.IN_ZONE,	5);	// left
+    design.addCommand(6, ZRF.IN_ZONE,	2);	// outer
     design.addCommand(6, ZRF.FUNCTION,	20);	// verify
     design.addCommand(6, ZRF.PARAM,	0);	// $1
     design.addCommand(6, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(6, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(6, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(6, ZRF.IN_ZONE,	0);	// center
+    design.addCommand(6, ZRF.FUNCTION,	0);	// not
+    design.addCommand(6, ZRF.IF,	6);
+    design.addCommand(6, ZRF.IN_ZONE,	2);	// outer
     design.addCommand(6, ZRF.FUNCTION,	0);	// not
     design.addCommand(6, ZRF.IF,	3);
-    design.addCommand(6, ZRF.FUNCTION,	2);	// enemy?
-    design.addCommand(6, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(6, ZRF.LITERAL,	1);	// true
+    design.addCommand(6, ZRF.JUMP,	2);
+    design.addCommand(6, ZRF.LITERAL,	0);	// false
+    design.addCommand(6, ZRF.FUNCTION,	0);	// not
+    design.addCommand(6, ZRF.IF,	9);
+    design.addCommand(6, ZRF.IN_ZONE,	0);	// center
+    design.addCommand(6, ZRF.IF,	4);
     design.addCommand(6, ZRF.FORK,	3);
     design.addCommand(6, ZRF.FUNCTION,	25);	// to
     design.addCommand(6, ZRF.FUNCTION,	28);	// end
-    design.addCommand(6, ZRF.IN_ZONE,	5);	// left
-    design.addCommand(6, ZRF.FUNCTION,	20);	// verify
     design.addCommand(6, ZRF.PARAM,	1);	// $2
     design.addCommand(6, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(6, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(6, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(6, ZRF.IN_ZONE,	0);	// center
-    design.addCommand(6, ZRF.FUNCTION,	0);	// not
-    design.addCommand(6, ZRF.IF,	3);
-    design.addCommand(6, ZRF.FUNCTION,	2);	// enemy?
-    design.addCommand(6, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(6, ZRF.FUNCTION,	25);	// to
+    design.addCommand(6, ZRF.JUMP,	-18);
     design.addCommand(6, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(7, ZRF.FUNCTION,	24);	// from
-    design.addCommand(7, ZRF.IN_ZONE,	4);	// home
-    design.addCommand(7, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(7, ZRF.IN_ZONE,	6);	// right
+    design.addCommand(7, ZRF.IN_ZONE,	1);	// cross
     design.addCommand(7, ZRF.FUNCTION,	20);	// verify
     design.addCommand(7, ZRF.PARAM,	0);	// $1
     design.addCommand(7, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(7, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(7, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(7, ZRF.IN_ZONE,	0);	// center
+    design.addCommand(7, ZRF.FUNCTION,	0);	// not
+    design.addCommand(7, ZRF.IF,	6);
+    design.addCommand(7, ZRF.IN_ZONE,	1);	// cross
     design.addCommand(7, ZRF.FUNCTION,	0);	// not
     design.addCommand(7, ZRF.IF,	3);
-    design.addCommand(7, ZRF.FUNCTION,	2);	// enemy?
-    design.addCommand(7, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(7, ZRF.LITERAL,	1);	// true
+    design.addCommand(7, ZRF.JUMP,	2);
+    design.addCommand(7, ZRF.LITERAL,	0);	// false
+    design.addCommand(7, ZRF.FUNCTION,	0);	// not
+    design.addCommand(7, ZRF.IF,	9);
+    design.addCommand(7, ZRF.IN_ZONE,	0);	// center
+    design.addCommand(7, ZRF.IF,	4);
     design.addCommand(7, ZRF.FORK,	3);
     design.addCommand(7, ZRF.FUNCTION,	25);	// to
     design.addCommand(7, ZRF.FUNCTION,	28);	// end
-    design.addCommand(7, ZRF.IN_ZONE,	6);	// right
-    design.addCommand(7, ZRF.FUNCTION,	20);	// verify
     design.addCommand(7, ZRF.PARAM,	1);	// $2
     design.addCommand(7, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(7, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(7, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(7, ZRF.IN_ZONE,	0);	// center
-    design.addCommand(7, ZRF.FUNCTION,	0);	// not
-    design.addCommand(7, ZRF.IF,	3);
-    design.addCommand(7, ZRF.FUNCTION,	2);	// enemy?
-    design.addCommand(7, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(7, ZRF.FUNCTION,	25);	// to
+    design.addCommand(7, ZRF.JUMP,	-18);
     design.addCommand(7, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(8, ZRF.FUNCTION,	24);	// from
     design.addCommand(8, ZRF.IN_ZONE,	4);	// home
-    design.addCommand(8, ZRF.FUNCTION,	0);	// not
+    design.addCommand(8, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(8, ZRF.IN_ZONE,	5);	// left
     design.addCommand(8, ZRF.FUNCTION,	20);	// verify
     design.addCommand(8, ZRF.PARAM,	0);	// $1
     design.addCommand(8, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(8, ZRF.IN_ZONE,	3);	// restricted
-    design.addCommand(8, ZRF.FUNCTION,	0);	// not
+    design.addCommand(8, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(8, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(8, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(8, ZRF.IN_ZONE,	0);	// center
     design.addCommand(8, ZRF.FUNCTION,	0);	// not
+    design.addCommand(8, ZRF.IF,	3);
+    design.addCommand(8, ZRF.FUNCTION,	2);	// enemy?
+    design.addCommand(8, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(8, ZRF.FORK,	3);
+    design.addCommand(8, ZRF.FUNCTION,	25);	// to
+    design.addCommand(8, ZRF.FUNCTION,	28);	// end
+    design.addCommand(8, ZRF.IN_ZONE,	5);	// left
+    design.addCommand(8, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(8, ZRF.PARAM,	1);	// $2
+    design.addCommand(8, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(8, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(8, ZRF.FUNCTION,	20);	// verify
     design.addCommand(8, ZRF.IN_ZONE,	0);	// center
     design.addCommand(8, ZRF.FUNCTION,	0);	// not
@@ -514,6 +404,57 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(8, ZRF.FUNCTION,	20);	// verify
     design.addCommand(8, ZRF.FUNCTION,	25);	// to
     design.addCommand(8, ZRF.FUNCTION,	28);	// end
+
+    design.addCommand(9, ZRF.FUNCTION,	24);	// from
+    design.addCommand(9, ZRF.IN_ZONE,	4);	// home
+    design.addCommand(9, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(9, ZRF.IN_ZONE,	6);	// right
+    design.addCommand(9, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(9, ZRF.PARAM,	0);	// $1
+    design.addCommand(9, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(9, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(9, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(9, ZRF.IN_ZONE,	0);	// center
+    design.addCommand(9, ZRF.FUNCTION,	0);	// not
+    design.addCommand(9, ZRF.IF,	3);
+    design.addCommand(9, ZRF.FUNCTION,	2);	// enemy?
+    design.addCommand(9, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(9, ZRF.FORK,	3);
+    design.addCommand(9, ZRF.FUNCTION,	25);	// to
+    design.addCommand(9, ZRF.FUNCTION,	28);	// end
+    design.addCommand(9, ZRF.IN_ZONE,	6);	// right
+    design.addCommand(9, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(9, ZRF.PARAM,	1);	// $2
+    design.addCommand(9, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(9, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(9, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(9, ZRF.IN_ZONE,	0);	// center
+    design.addCommand(9, ZRF.FUNCTION,	0);	// not
+    design.addCommand(9, ZRF.IF,	3);
+    design.addCommand(9, ZRF.FUNCTION,	2);	// enemy?
+    design.addCommand(9, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(9, ZRF.FUNCTION,	25);	// to
+    design.addCommand(9, ZRF.FUNCTION,	28);	// end
+
+    design.addCommand(10, ZRF.FUNCTION,	24);	// from
+    design.addCommand(10, ZRF.IN_ZONE,	4);	// home
+    design.addCommand(10, ZRF.FUNCTION,	0);	// not
+    design.addCommand(10, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(10, ZRF.PARAM,	0);	// $1
+    design.addCommand(10, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(10, ZRF.IN_ZONE,	3);	// restricted
+    design.addCommand(10, ZRF.FUNCTION,	0);	// not
+    design.addCommand(10, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(10, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(10, ZRF.FUNCTION,	0);	// not
+    design.addCommand(10, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(10, ZRF.IN_ZONE,	0);	// center
+    design.addCommand(10, ZRF.FUNCTION,	0);	// not
+    design.addCommand(10, ZRF.IF,	3);
+    design.addCommand(10, ZRF.FUNCTION,	2);	// enemy?
+    design.addCommand(10, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(10, ZRF.FUNCTION,	25);	// to
+    design.addCommand(10, ZRF.FUNCTION,	28);	// end
 
 
     design.addPiece("Gala", 0);
@@ -543,85 +484,149 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 2, [5], 0);
     design.addMove(0, 3, [50, 8], 0);
 
-    design.addPiece("Horsa", 1);
-    design.addMove(1, 4, [1, 0, 7, 7, 1, 1, 0, 4, 1, 4], 0);
-    design.addMove(1, 4, [1, 0, 7, 7, 1, 1, 0, 2, 1, 2], 0);
-    design.addMove(1, 4, [1, 0, 7, 7, 1, 1, 0, 0, 1, 0], 0);
-    design.addMove(1, 4, [1, 0, 7, 7, 1, 1, 0, 1, 1, 1], 0);
-    design.addMove(1, 4, [1, 0, 6, 6, 1, 1, 0, 4, 1, 4], 0);
-    design.addMove(1, 4, [1, 0, 6, 6, 1, 1, 0, 2, 1, 2], 0);
-    design.addMove(1, 4, [1, 0, 6, 6, 1, 1, 0, 0, 1, 0], 0);
-    design.addMove(1, 4, [1, 0, 6, 6, 1, 1, 0, 1, 1, 1], 0);
-    design.addMove(1, 4, [1, 0, 5, 5, 1, 1, 0, 4, 1, 4], 0);
-    design.addMove(1, 4, [1, 0, 5, 5, 1, 1, 0, 2, 1, 2], 0);
-    design.addMove(1, 4, [1, 0, 5, 5, 1, 1, 0, 0, 1, 0], 0);
-    design.addMove(1, 4, [1, 0, 5, 5, 1, 1, 0, 1, 1, 1], 0);
-    design.addMove(1, 4, [1, 0, 3, 3, 1, 1, 0, 4, 1, 4], 0);
-    design.addMove(1, 4, [1, 0, 3, 3, 1, 1, 0, 2, 1, 2], 0);
-    design.addMove(1, 4, [1, 0, 3, 3, 1, 1, 0, 0, 1, 0], 0);
-    design.addMove(1, 4, [1, 0, 3, 3, 1, 1, 0, 1, 1, 1], 0);
-    design.addMove(1, 5, [0, 0, 4, 4, 1, 1, 0, 7, 1, 7], 0);
-    design.addMove(1, 5, [0, 0, 4, 4, 1, 1, 0, 3, 1, 3], 0);
-    design.addMove(1, 5, [0, 0, 4, 4, 1, 1, 0, 6, 1, 6], 0);
-    design.addMove(1, 5, [0, 0, 4, 4, 1, 1, 0, 5, 1, 5], 0);
-    design.addMove(1, 5, [0, 0, 2, 2, 1, 1, 0, 7, 1, 7], 0);
-    design.addMove(1, 5, [0, 0, 2, 2, 1, 1, 0, 3, 1, 3], 0);
-    design.addMove(1, 5, [0, 0, 2, 2, 1, 1, 0, 6, 1, 6], 0);
-    design.addMove(1, 5, [0, 0, 2, 2, 1, 1, 0, 5, 1, 5], 0);
-    design.addMove(1, 5, [0, 0, 1, 1, 1, 1, 0, 7, 1, 7], 0);
-    design.addMove(1, 5, [0, 0, 1, 1, 1, 1, 0, 3, 1, 3], 0);
-    design.addMove(1, 5, [0, 0, 1, 1, 1, 1, 0, 6, 1, 6], 0);
-    design.addMove(1, 5, [0, 0, 1, 1, 1, 1, 0, 5, 1, 5], 0);
-    design.addMove(1, 5, [0, 0, 0, 0, 1, 1, 0, 7, 1, 7], 0);
-    design.addMove(1, 5, [0, 0, 0, 0, 1, 1, 0, 3, 1, 3], 0);
-    design.addMove(1, 5, [0, 0, 0, 0, 1, 1, 0, 6, 1, 6], 0);
-    design.addMove(1, 5, [0, 0, 0, 0, 1, 1, 0, 5, 1, 5], 0);
+    design.addPiece("Korna", 1);
+    design.addMove(1, 4, [4, 1, 4, 0, 7, 7], 1);
+    design.addMove(1, 4, [4, 1, 4, 0, 3, 3], 1);
+    design.addMove(1, 4, [4, 1, 4, 0, 6, 6], 1);
+    design.addMove(1, 4, [4, 1, 4, 0, 5, 5], 1);
+    design.addMove(1, 4, [2, 1, 2, 0, 7, 7], 1);
+    design.addMove(1, 4, [2, 1, 2, 0, 3, 3], 1);
+    design.addMove(1, 4, [2, 1, 2, 0, 6, 6], 1);
+    design.addMove(1, 4, [2, 1, 2, 0, 5, 5], 1);
+    design.addMove(1, 4, [1, 1, 1, 0, 7, 7], 1);
+    design.addMove(1, 4, [1, 1, 1, 0, 3, 3], 1);
+    design.addMove(1, 4, [1, 1, 1, 0, 6, 6], 1);
+    design.addMove(1, 4, [1, 1, 1, 0, 5, 5], 1);
+    design.addMove(1, 4, [0, 1, 0, 0, 7, 7], 1);
+    design.addMove(1, 4, [0, 1, 0, 0, 3, 3], 1);
+    design.addMove(1, 4, [0, 1, 0, 0, 6, 6], 1);
+    design.addMove(1, 4, [0, 1, 0, 0, 5, 5], 1);
+    design.addMove(1, 5, [7, 1, 7, 0, 4, 4], 1);
+    design.addMove(1, 5, [7, 1, 7, 0, 2, 2], 1);
+    design.addMove(1, 5, [7, 1, 7, 0, 0, 0], 1);
+    design.addMove(1, 5, [7, 1, 7, 0, 1, 1], 1);
+    design.addMove(1, 5, [6, 1, 6, 0, 4, 4], 1);
+    design.addMove(1, 5, [6, 1, 6, 0, 2, 2], 1);
+    design.addMove(1, 5, [6, 1, 6, 0, 0, 0], 1);
+    design.addMove(1, 5, [6, 1, 6, 0, 1, 1], 1);
+    design.addMove(1, 5, [5, 1, 5, 0, 4, 4], 1);
+    design.addMove(1, 5, [5, 1, 5, 0, 2, 2], 1);
+    design.addMove(1, 5, [5, 1, 5, 0, 0, 0], 1);
+    design.addMove(1, 5, [5, 1, 5, 0, 1, 1], 1);
+    design.addMove(1, 5, [3, 1, 3, 0, 4, 4], 1);
+    design.addMove(1, 5, [3, 1, 3, 0, 2, 2], 1);
+    design.addMove(1, 5, [3, 1, 3, 0, 0, 0], 1);
+    design.addMove(1, 5, [3, 1, 3, 0, 1, 1], 1);
+    design.addMove(1, 6, [4, 4], 0);
+    design.addMove(1, 6, [4, 4], 0);
+    design.addMove(1, 6, [4, 4], 0);
+    design.addMove(1, 6, [4, 4], 0);
+    design.addMove(1, 6, [2, 2], 0);
+    design.addMove(1, 6, [2, 2], 0);
+    design.addMove(1, 6, [2, 2], 0);
+    design.addMove(1, 6, [2, 2], 0);
+    design.addMove(1, 6, [1, 1], 0);
+    design.addMove(1, 6, [1, 1], 0);
+    design.addMove(1, 6, [1, 1], 0);
+    design.addMove(1, 6, [1, 1], 0);
+    design.addMove(1, 6, [0, 0], 0);
+    design.addMove(1, 6, [0, 0], 0);
+    design.addMove(1, 6, [0, 0], 0);
+    design.addMove(1, 6, [0, 0], 0);
+    design.addMove(1, 7, [7, 7], 0);
+    design.addMove(1, 7, [7, 7], 0);
+    design.addMove(1, 7, [7, 7], 0);
+    design.addMove(1, 7, [7, 7], 0);
+    design.addMove(1, 7, [6, 6], 0);
+    design.addMove(1, 7, [6, 6], 0);
+    design.addMove(1, 7, [6, 6], 0);
+    design.addMove(1, 7, [6, 6], 0);
+    design.addMove(1, 7, [5, 5], 0);
+    design.addMove(1, 7, [5, 5], 0);
+    design.addMove(1, 7, [5, 5], 0);
+    design.addMove(1, 7, [5, 5], 0);
+    design.addMove(1, 7, [3, 3], 0);
+    design.addMove(1, 7, [3, 3], 0);
+    design.addMove(1, 7, [3, 3], 0);
+    design.addMove(1, 7, [3, 3], 0);
 
-    design.addPiece("Korna", 2);
-    design.addMove(2, 4, [1, 0, 4, 4, 1, 1, 0, 7, 1, 7], 0);
-    design.addMove(2, 4, [1, 0, 4, 4, 1, 1, 0, 3, 1, 3], 0);
-    design.addMove(2, 4, [1, 0, 4, 4, 1, 1, 0, 6, 1, 6], 0);
-    design.addMove(2, 4, [1, 0, 4, 4, 1, 1, 0, 5, 1, 5], 0);
-    design.addMove(2, 4, [1, 0, 2, 2, 1, 1, 0, 7, 1, 7], 0);
-    design.addMove(2, 4, [1, 0, 2, 2, 1, 1, 0, 3, 1, 3], 0);
-    design.addMove(2, 4, [1, 0, 2, 2, 1, 1, 0, 6, 1, 6], 0);
-    design.addMove(2, 4, [1, 0, 2, 2, 1, 1, 0, 5, 1, 5], 0);
-    design.addMove(2, 4, [1, 0, 1, 1, 1, 1, 0, 7, 1, 7], 0);
-    design.addMove(2, 4, [1, 0, 1, 1, 1, 1, 0, 3, 1, 3], 0);
-    design.addMove(2, 4, [1, 0, 1, 1, 1, 1, 0, 6, 1, 6], 0);
-    design.addMove(2, 4, [1, 0, 1, 1, 1, 1, 0, 5, 1, 5], 0);
-    design.addMove(2, 4, [1, 0, 0, 0, 1, 1, 0, 7, 1, 7], 0);
-    design.addMove(2, 4, [1, 0, 0, 0, 1, 1, 0, 3, 1, 3], 0);
-    design.addMove(2, 4, [1, 0, 0, 0, 1, 1, 0, 6, 1, 6], 0);
-    design.addMove(2, 4, [1, 0, 0, 0, 1, 1, 0, 5, 1, 5], 0);
-    design.addMove(2, 5, [1, 0, 7, 7, 1, 1, 0, 4, 1, 4], 0);
-    design.addMove(2, 5, [1, 0, 7, 7, 1, 1, 0, 2, 1, 2], 0);
-    design.addMove(2, 5, [1, 0, 7, 7, 1, 1, 0, 0, 1, 0], 0);
-    design.addMove(2, 5, [1, 0, 7, 7, 1, 1, 0, 1, 1, 1], 0);
-    design.addMove(2, 5, [1, 0, 6, 6, 1, 1, 0, 4, 1, 4], 0);
-    design.addMove(2, 5, [1, 0, 6, 6, 1, 1, 0, 2, 1, 2], 0);
-    design.addMove(2, 5, [1, 0, 6, 6, 1, 1, 0, 0, 1, 0], 0);
-    design.addMove(2, 5, [1, 0, 6, 6, 1, 1, 0, 1, 1, 1], 0);
-    design.addMove(2, 5, [1, 0, 5, 5, 1, 1, 0, 4, 1, 4], 0);
-    design.addMove(2, 5, [1, 0, 5, 5, 1, 1, 0, 2, 1, 2], 0);
-    design.addMove(2, 5, [1, 0, 5, 5, 1, 1, 0, 0, 1, 0], 0);
-    design.addMove(2, 5, [1, 0, 5, 5, 1, 1, 0, 1, 1, 1], 0);
-    design.addMove(2, 5, [1, 0, 3, 3, 1, 1, 0, 4, 1, 4], 0);
-    design.addMove(2, 5, [1, 0, 3, 3, 1, 1, 0, 2, 1, 2], 0);
-    design.addMove(2, 5, [1, 0, 3, 3, 1, 1, 0, 0, 1, 0], 0);
-    design.addMove(2, 5, [1, 0, 3, 3, 1, 1, 0, 1, 1, 1], 0);
+    design.addPiece("Horsa", 2);
+    design.addMove(2, 4, [7, 1, 7, 0, 4, 4], 2);
+    design.addMove(2, 4, [7, 1, 7, 0, 2, 2], 2);
+    design.addMove(2, 4, [7, 1, 7, 0, 0, 0], 2);
+    design.addMove(2, 4, [7, 1, 7, 0, 1, 1], 2);
+    design.addMove(2, 4, [6, 1, 6, 0, 4, 4], 2);
+    design.addMove(2, 4, [6, 1, 6, 0, 2, 2], 2);
+    design.addMove(2, 4, [6, 1, 6, 0, 0, 0], 2);
+    design.addMove(2, 4, [6, 1, 6, 0, 1, 1], 2);
+    design.addMove(2, 4, [5, 1, 5, 0, 4, 4], 2);
+    design.addMove(2, 4, [5, 1, 5, 0, 2, 2], 2);
+    design.addMove(2, 4, [5, 1, 5, 0, 0, 0], 2);
+    design.addMove(2, 4, [5, 1, 5, 0, 1, 1], 2);
+    design.addMove(2, 4, [3, 1, 3, 0, 4, 4], 2);
+    design.addMove(2, 4, [3, 1, 3, 0, 2, 2], 2);
+    design.addMove(2, 4, [3, 1, 3, 0, 0, 0], 2);
+    design.addMove(2, 4, [3, 1, 3, 0, 1, 1], 2);
+    design.addMove(2, 5, [4, 1, 4, 0, 7, 7], 2);
+    design.addMove(2, 5, [4, 1, 4, 0, 3, 3], 2);
+    design.addMove(2, 5, [4, 1, 4, 0, 6, 6], 2);
+    design.addMove(2, 5, [4, 1, 4, 0, 5, 5], 2);
+    design.addMove(2, 5, [2, 1, 2, 0, 7, 7], 2);
+    design.addMove(2, 5, [2, 1, 2, 0, 3, 3], 2);
+    design.addMove(2, 5, [2, 1, 2, 0, 6, 6], 2);
+    design.addMove(2, 5, [2, 1, 2, 0, 5, 5], 2);
+    design.addMove(2, 5, [1, 1, 1, 0, 7, 7], 2);
+    design.addMove(2, 5, [1, 1, 1, 0, 3, 3], 2);
+    design.addMove(2, 5, [1, 1, 1, 0, 6, 6], 2);
+    design.addMove(2, 5, [1, 1, 1, 0, 5, 5], 2);
+    design.addMove(2, 5, [0, 1, 0, 0, 7, 7], 2);
+    design.addMove(2, 5, [0, 1, 0, 0, 3, 3], 2);
+    design.addMove(2, 5, [0, 1, 0, 0, 6, 6], 2);
+    design.addMove(2, 5, [0, 1, 0, 0, 5, 5], 2);
+    design.addMove(2, 6, [7, 7], 0);
+    design.addMove(2, 6, [7, 7], 0);
+    design.addMove(2, 6, [7, 7], 0);
+    design.addMove(2, 6, [7, 7], 0);
+    design.addMove(2, 6, [6, 6], 0);
+    design.addMove(2, 6, [6, 6], 0);
+    design.addMove(2, 6, [6, 6], 0);
+    design.addMove(2, 6, [6, 6], 0);
+    design.addMove(2, 6, [5, 5], 0);
+    design.addMove(2, 6, [5, 5], 0);
+    design.addMove(2, 6, [5, 5], 0);
+    design.addMove(2, 6, [5, 5], 0);
+    design.addMove(2, 6, [3, 3], 0);
+    design.addMove(2, 6, [3, 3], 0);
+    design.addMove(2, 6, [3, 3], 0);
+    design.addMove(2, 6, [3, 3], 0);
+    design.addMove(2, 7, [4, 4], 0);
+    design.addMove(2, 7, [4, 4], 0);
+    design.addMove(2, 7, [4, 4], 0);
+    design.addMove(2, 7, [4, 4], 0);
+    design.addMove(2, 7, [2, 2], 0);
+    design.addMove(2, 7, [2, 2], 0);
+    design.addMove(2, 7, [2, 2], 0);
+    design.addMove(2, 7, [2, 2], 0);
+    design.addMove(2, 7, [1, 1], 0);
+    design.addMove(2, 7, [1, 1], 0);
+    design.addMove(2, 7, [1, 1], 0);
+    design.addMove(2, 7, [1, 1], 0);
+    design.addMove(2, 7, [0, 0], 0);
+    design.addMove(2, 7, [0, 0], 0);
+    design.addMove(2, 7, [0, 0], 0);
+    design.addMove(2, 7, [0, 0], 0);
 
     design.addPiece("Kampa", 3);
-    design.addMove(3, 6, [3, 3], 0);
-    design.addMove(3, 7, [7, 7], 0);
-    design.addMove(3, 8, [4], 0);
-    design.addMove(3, 8, [7], 0);
-    design.addMove(3, 8, [0], 0);
-    design.addMove(3, 8, [6], 0);
-    design.addMove(3, 8, [2], 0);
-    design.addMove(3, 8, [5], 0);
-    design.addMove(3, 8, [1], 0);
-    design.addMove(3, 8, [3], 0);
+    design.addMove(3, 8, [3, 3], 0);
+    design.addMove(3, 9, [7, 7], 0);
+    design.addMove(3, 10, [4], 0);
+    design.addMove(3, 10, [7], 0);
+    design.addMove(3, 10, [0], 0);
+    design.addMove(3, 10, [6], 0);
+    design.addMove(3, 10, [2], 0);
+    design.addMove(3, 10, [5], 0);
+    design.addMove(3, 10, [1], 0);
+    design.addMove(3, 10, [3], 0);
 
     design.setup("White", "Gala", 90);
     design.setup("White", "Gala", 99);
@@ -669,10 +674,10 @@ Dagaz.View.configure = function(view) {
     view.defBoard("Board");
     view.defPiece("WhiteGala", "White Gala");
     view.defPiece("BlackGala", "Black Gala");
-    view.defPiece("WhiteHorsa", "White Horsa");
-    view.defPiece("BlackHorsa", "Black Horsa");
     view.defPiece("WhiteKorna", "White Korna");
     view.defPiece("BlackKorna", "Black Korna");
+    view.defPiece("WhiteHorsa", "White Horsa");
+    view.defPiece("BlackHorsa", "Black Horsa");
     view.defPiece("WhiteKampa", "White Kampa");
     view.defPiece("BlackKampa", "Black Kampa");
  
@@ -777,1086 +782,1088 @@ Dagaz.View.configure = function(view) {
     view.defPosition("i1", 401, 451, 50, 50);
     view.defPosition("j1", 451, 451, 50, 50);
 
-    view.addVector(Dagaz.Model.stringToPos("a1"), Dagaz.Model.stringToPos("a5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a1"), Dagaz.Model.stringToPos("e1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a1"), Dagaz.Model.stringToPos("e5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a2"), Dagaz.Model.stringToPos("a5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a2"), Dagaz.Model.stringToPos("e2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a2"), Dagaz.Model.stringToPos("d5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a3"), Dagaz.Model.stringToPos("a5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a3"), Dagaz.Model.stringToPos("e3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a3"), Dagaz.Model.stringToPos("c5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a4"), Dagaz.Model.stringToPos("a5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a4"), Dagaz.Model.stringToPos("e4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a4"), Dagaz.Model.stringToPos("b5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a5"), Dagaz.Model.stringToPos("a7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a5"), Dagaz.Model.stringToPos("a4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a5"), Dagaz.Model.stringToPos("c7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a5"), Dagaz.Model.stringToPos("b4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("a7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("a4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("b7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("c4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a7"), Dagaz.Model.stringToPos("a6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a7"), Dagaz.Model.stringToPos("e7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a7"), Dagaz.Model.stringToPos("b6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a8"), Dagaz.Model.stringToPos("a6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a8"), Dagaz.Model.stringToPos("e8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a8"), Dagaz.Model.stringToPos("c6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a9"), Dagaz.Model.stringToPos("a6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a9"), Dagaz.Model.stringToPos("e9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a9"), Dagaz.Model.stringToPos("d6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a10"), Dagaz.Model.stringToPos("a6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a10"), Dagaz.Model.stringToPos("e10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a10"), Dagaz.Model.stringToPos("e6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b1"), Dagaz.Model.stringToPos("b5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b1"), Dagaz.Model.stringToPos("e1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b1"), Dagaz.Model.stringToPos("e4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b2"), Dagaz.Model.stringToPos("b5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b2"), Dagaz.Model.stringToPos("e2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b2"), Dagaz.Model.stringToPos("e5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b3"), Dagaz.Model.stringToPos("b5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b3"), Dagaz.Model.stringToPos("e3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b3"), Dagaz.Model.stringToPos("d5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("b5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("e4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("c5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("a5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("e1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("b7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("b4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("a4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("c4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("d7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("b7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("b4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("d4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("a7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("c7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("b6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("e7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("a6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("c6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("e10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b8"), Dagaz.Model.stringToPos("b6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b8"), Dagaz.Model.stringToPos("e8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b8"), Dagaz.Model.stringToPos("d6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b9"), Dagaz.Model.stringToPos("b6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b9"), Dagaz.Model.stringToPos("e9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b9"), Dagaz.Model.stringToPos("e6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b10"), Dagaz.Model.stringToPos("b6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b10"), Dagaz.Model.stringToPos("e10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b10"), Dagaz.Model.stringToPos("e7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c1"), Dagaz.Model.stringToPos("c5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c1"), Dagaz.Model.stringToPos("e1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c1"), Dagaz.Model.stringToPos("e3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c2"), Dagaz.Model.stringToPos("c5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c2"), Dagaz.Model.stringToPos("e2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c2"), Dagaz.Model.stringToPos("e4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c3"), Dagaz.Model.stringToPos("c5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c3"), Dagaz.Model.stringToPos("e3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c3"), Dagaz.Model.stringToPos("a5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c3"), Dagaz.Model.stringToPos("e5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c3"), Dagaz.Model.stringToPos("e1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("c5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("e4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("b5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("d5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("e2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("c7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("c4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("b4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("d4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("a7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("g9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("c7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("c4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("a4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("g2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("b7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("d7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("c6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("e7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("b6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("d6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("e9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c8"), Dagaz.Model.stringToPos("c6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c8"), Dagaz.Model.stringToPos("e8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c8"), Dagaz.Model.stringToPos("a6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c8"), Dagaz.Model.stringToPos("e6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c8"), Dagaz.Model.stringToPos("e10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c9"), Dagaz.Model.stringToPos("c6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c9"), Dagaz.Model.stringToPos("e9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c9"), Dagaz.Model.stringToPos("e7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c10"), Dagaz.Model.stringToPos("c6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c10"), Dagaz.Model.stringToPos("e10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c10"), Dagaz.Model.stringToPos("e8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d1"), Dagaz.Model.stringToPos("d5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d1"), Dagaz.Model.stringToPos("e1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d1"), Dagaz.Model.stringToPos("e2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("d5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("e2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("a5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("e1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("e3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("d5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("e3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("b5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("e4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("e2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("d5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("e4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("c5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("e5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("e3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("d7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("d4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("c4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("g2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("b7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("g8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("d7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("d4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("b4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("g3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("c7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("g9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("d6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("e7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("c6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("e6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("e8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("d6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("e8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("b6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("e7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("e9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("d6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("e9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("a6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("e8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("e10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d10"), Dagaz.Model.stringToPos("d6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d10"), Dagaz.Model.stringToPos("e10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d10"), Dagaz.Model.stringToPos("e9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e1"), Dagaz.Model.stringToPos("d1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e1"), Dagaz.Model.stringToPos("g1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e1"), Dagaz.Model.stringToPos("d2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e1"), Dagaz.Model.stringToPos("g3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("d2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("g2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("d1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("d3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("g4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("d3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("g3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("d2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("g1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("d4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("i7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("d4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("g4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("d3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("g2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("b7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("h7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("d4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("g3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("c7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("g7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("c4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("g4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("d7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("g8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("d7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("g7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("b4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("h4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("d8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("g9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("d8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("g8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("d7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("i4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("d9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("g10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("d9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("g9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("d8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("g7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("d10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e10"), Dagaz.Model.stringToPos("d10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e10"), Dagaz.Model.stringToPos("g10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e10"), Dagaz.Model.stringToPos("d9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e10"), Dagaz.Model.stringToPos("g8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f1"), Dagaz.Model.stringToPos("d1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f1"), Dagaz.Model.stringToPos("g1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f1"), Dagaz.Model.stringToPos("d3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f1"), Dagaz.Model.stringToPos("g2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("d2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("g2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("d4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("g3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("g1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("d3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("g3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("b7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("g4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("d1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("g2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("d4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("g4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("c7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("i7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("d2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("g3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("d7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("h7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("d3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("g4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("d8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("g7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("d4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("h4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("d7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("g7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("d9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("g8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("c4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("i4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("d8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("g8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("d10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("g9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("b4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("g7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("d9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("g9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("g10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("d7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("g8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f10"), Dagaz.Model.stringToPos("d10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f10"), Dagaz.Model.stringToPos("g10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f10"), Dagaz.Model.stringToPos("d8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f10"), Dagaz.Model.stringToPos("g9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g1"), Dagaz.Model.stringToPos("f1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g1"), Dagaz.Model.stringToPos("g5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g1"), Dagaz.Model.stringToPos("f2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("f2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("g5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("f3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("j5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("f1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("f3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("g5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("f4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("i5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("f2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("f4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("g5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("f5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("h5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("f3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("g7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("g4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("d8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("i7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("d2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("h4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("g7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("g4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("d9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("h7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("d3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("i4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("f7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("g6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("f8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("f6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("h6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("f8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("g6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("f9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("f7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("i6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("f9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("g6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("f10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("f8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("j6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g10"), Dagaz.Model.stringToPos("f10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g10"), Dagaz.Model.stringToPos("g6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g10"), Dagaz.Model.stringToPos("f9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h1"), Dagaz.Model.stringToPos("f1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h1"), Dagaz.Model.stringToPos("h5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h1"), Dagaz.Model.stringToPos("f3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h2"), Dagaz.Model.stringToPos("f2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h2"), Dagaz.Model.stringToPos("h5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h2"), Dagaz.Model.stringToPos("f4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h3"), Dagaz.Model.stringToPos("f3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h3"), Dagaz.Model.stringToPos("h5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h3"), Dagaz.Model.stringToPos("f5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h3"), Dagaz.Model.stringToPos("j5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h3"), Dagaz.Model.stringToPos("f1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("f4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("h5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("g5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("i5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("f2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("h7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("h4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("d9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("j7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("g4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("i4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("h7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("h4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("g7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("i7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("d2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("j4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("f7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("h6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("f9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("g6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("i6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h8"), Dagaz.Model.stringToPos("f8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h8"), Dagaz.Model.stringToPos("h6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h8"), Dagaz.Model.stringToPos("f10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h8"), Dagaz.Model.stringToPos("f6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h8"), Dagaz.Model.stringToPos("j6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h9"), Dagaz.Model.stringToPos("f9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h9"), Dagaz.Model.stringToPos("h6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h9"), Dagaz.Model.stringToPos("f7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h10"), Dagaz.Model.stringToPos("f10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h10"), Dagaz.Model.stringToPos("h6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h10"), Dagaz.Model.stringToPos("f8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i1"), Dagaz.Model.stringToPos("f1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i1"), Dagaz.Model.stringToPos("i5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i1"), Dagaz.Model.stringToPos("f4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i2"), Dagaz.Model.stringToPos("f2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i2"), Dagaz.Model.stringToPos("i5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i2"), Dagaz.Model.stringToPos("f5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i3"), Dagaz.Model.stringToPos("f3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i3"), Dagaz.Model.stringToPos("i5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i3"), Dagaz.Model.stringToPos("g5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("f4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("i5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("h5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("j5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("f1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("i7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("i4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("g7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("h4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("j4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("i7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("i4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("h7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("j7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("g4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("f7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("i6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("f10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("h6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("j6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i8"), Dagaz.Model.stringToPos("f8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i8"), Dagaz.Model.stringToPos("i6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i8"), Dagaz.Model.stringToPos("g6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i9"), Dagaz.Model.stringToPos("f9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i9"), Dagaz.Model.stringToPos("i6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i9"), Dagaz.Model.stringToPos("f6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i10"), Dagaz.Model.stringToPos("f10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i10"), Dagaz.Model.stringToPos("i6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i10"), Dagaz.Model.stringToPos("f7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j1"), Dagaz.Model.stringToPos("f1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j1"), Dagaz.Model.stringToPos("j5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j1"), Dagaz.Model.stringToPos("f5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j2"), Dagaz.Model.stringToPos("f2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j2"), Dagaz.Model.stringToPos("j5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j2"), Dagaz.Model.stringToPos("g5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j3"), Dagaz.Model.stringToPos("f3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j3"), Dagaz.Model.stringToPos("j5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j3"), Dagaz.Model.stringToPos("h5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j4"), Dagaz.Model.stringToPos("f4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j4"), Dagaz.Model.stringToPos("j5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j4"), Dagaz.Model.stringToPos("i5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j5"), Dagaz.Model.stringToPos("j7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j5"), Dagaz.Model.stringToPos("j4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j5"), Dagaz.Model.stringToPos("h7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j5"), Dagaz.Model.stringToPos("i4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j6"), Dagaz.Model.stringToPos("j7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j6"), Dagaz.Model.stringToPos("j4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j6"), Dagaz.Model.stringToPos("i7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j6"), Dagaz.Model.stringToPos("h4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j7"), Dagaz.Model.stringToPos("f7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j7"), Dagaz.Model.stringToPos("j6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j7"), Dagaz.Model.stringToPos("i6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j8"), Dagaz.Model.stringToPos("f8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j8"), Dagaz.Model.stringToPos("j6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j8"), Dagaz.Model.stringToPos("h8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j9"), Dagaz.Model.stringToPos("f9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j9"), Dagaz.Model.stringToPos("j6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j9"), Dagaz.Model.stringToPos("g6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j10"), Dagaz.Model.stringToPos("f10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j10"), Dagaz.Model.stringToPos("j6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j10"), Dagaz.Model.stringToPos("f6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a4"), Dagaz.Model.stringToPos("a3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a4"), Dagaz.Model.stringToPos("a2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a4"), Dagaz.Model.stringToPos("a1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a4"), Dagaz.Model.stringToPos("b4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a4"), Dagaz.Model.stringToPos("c4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a4"), Dagaz.Model.stringToPos("d4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a4"), Dagaz.Model.stringToPos("b3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a4"), Dagaz.Model.stringToPos("c2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a4"), Dagaz.Model.stringToPos("d1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("a4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("b3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("b2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("b1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("c4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("d4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("a3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("c3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("d2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("c3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("c2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("c1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("a4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("b4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("d4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("b3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("a2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("d3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("d3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("d2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("d1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("a4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("b4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("c4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("c3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("b2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("a1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("d4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("d2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("d1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("a3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("b3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("c3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("c4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("c2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("b1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("d4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("d3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("d1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("a2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("b2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("c2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("c3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("b4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("c1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d1"), Dagaz.Model.stringToPos("d4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d1"), Dagaz.Model.stringToPos("d3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d1"), Dagaz.Model.stringToPos("d2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d1"), Dagaz.Model.stringToPos("a1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d1"), Dagaz.Model.stringToPos("b1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d1"), Dagaz.Model.stringToPos("c1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d1"), Dagaz.Model.stringToPos("c2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d1"), Dagaz.Model.stringToPos("b3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d1"), Dagaz.Model.stringToPos("a4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a7"), Dagaz.Model.stringToPos("a10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a7"), Dagaz.Model.stringToPos("a9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a7"), Dagaz.Model.stringToPos("a8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a7"), Dagaz.Model.stringToPos("b7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a7"), Dagaz.Model.stringToPos("c7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a7"), Dagaz.Model.stringToPos("d7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a7"), Dagaz.Model.stringToPos("b8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a7"), Dagaz.Model.stringToPos("c9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a7"), Dagaz.Model.stringToPos("d10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("b10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("b9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("b8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("a7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("c7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("d7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("a8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("c8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("d9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("c10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("c9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("c8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("a7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("b7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("d7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("b8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("a9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("d8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("d10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("d9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("d8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("a7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("b7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("c7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("c8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("b9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("a10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("d10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("d9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("d7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("a8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("b8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("c8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("c7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("c9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("b10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("d10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("d8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("d7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("a9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("b9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("c9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("c8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("b7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("c10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d10"), Dagaz.Model.stringToPos("d9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d10"), Dagaz.Model.stringToPos("d8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d10"), Dagaz.Model.stringToPos("d7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d10"), Dagaz.Model.stringToPos("a10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d10"), Dagaz.Model.stringToPos("b10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d10"), Dagaz.Model.stringToPos("c10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d10"), Dagaz.Model.stringToPos("c9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d10"), Dagaz.Model.stringToPos("b8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d10"), Dagaz.Model.stringToPos("a7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g1"), Dagaz.Model.stringToPos("g4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g1"), Dagaz.Model.stringToPos("g3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g1"), Dagaz.Model.stringToPos("g2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g1"), Dagaz.Model.stringToPos("h1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g1"), Dagaz.Model.stringToPos("i1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g1"), Dagaz.Model.stringToPos("j1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g1"), Dagaz.Model.stringToPos("h2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g1"), Dagaz.Model.stringToPos("i3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g1"), Dagaz.Model.stringToPos("j4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("g4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("g3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("g1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("h2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("i2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("j2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("h1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("h3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("i4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("g4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("g2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("g1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("h3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("i3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("j3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("h4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("h2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("i1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("g3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("g2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("g1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("h4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("i4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("j4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("h3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("i2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("j1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("h3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("h2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("h1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("g4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("i4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("j4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("g3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("i3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("j2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("i3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("i2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("i1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("g4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("h4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("j4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("h3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("g2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("j3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j4"), Dagaz.Model.stringToPos("j3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j4"), Dagaz.Model.stringToPos("j2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j4"), Dagaz.Model.stringToPos("j1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j4"), Dagaz.Model.stringToPos("g4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j4"), Dagaz.Model.stringToPos("h4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j4"), Dagaz.Model.stringToPos("i4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j4"), Dagaz.Model.stringToPos("i3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j4"), Dagaz.Model.stringToPos("h2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j4"), Dagaz.Model.stringToPos("g1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g10"), Dagaz.Model.stringToPos("g9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g10"), Dagaz.Model.stringToPos("g8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g10"), Dagaz.Model.stringToPos("g7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g10"), Dagaz.Model.stringToPos("h10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g10"), Dagaz.Model.stringToPos("i10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g10"), Dagaz.Model.stringToPos("j10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g10"), Dagaz.Model.stringToPos("h9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g10"), Dagaz.Model.stringToPos("i8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g10"), Dagaz.Model.stringToPos("j7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("g10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("g8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("g7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("h9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("i9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("j9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("h10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("h8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("i7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("g10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("g9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("g7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("h8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("i8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("j8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("h9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("i10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("h7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("g10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("g9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("g8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("h7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("i7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("j7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("h8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("i9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("j10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("h10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("h9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("h8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("g7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("i7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("j7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("g8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("i8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("j9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("i10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("i9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("i8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("g7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("h7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("j7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("h8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("g9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("j8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j7"), Dagaz.Model.stringToPos("j10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j7"), Dagaz.Model.stringToPos("j9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j7"), Dagaz.Model.stringToPos("j8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j7"), Dagaz.Model.stringToPos("g7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j7"), Dagaz.Model.stringToPos("h7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j7"), Dagaz.Model.stringToPos("i7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j7"), Dagaz.Model.stringToPos("i8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j7"), Dagaz.Model.stringToPos("h9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j7"), Dagaz.Model.stringToPos("g10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a5"), Dagaz.Model.stringToPos("a6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a5"), Dagaz.Model.stringToPos("b5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a5"), Dagaz.Model.stringToPos("c5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a5"), Dagaz.Model.stringToPos("d5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a5"), Dagaz.Model.stringToPos("g5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a5"), Dagaz.Model.stringToPos("h5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a5"), Dagaz.Model.stringToPos("i5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a5"), Dagaz.Model.stringToPos("j5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a5"), Dagaz.Model.stringToPos("b6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("b6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("a6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("c6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("a5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("c5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("d5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("g5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("h5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("i5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("j5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("b6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("c6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("d6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("e7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("f8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("a5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("b5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("d5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("g5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("h5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("i5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("j5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("c6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("d6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("f7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("a5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("b5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("c5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("g5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("h5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("i5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("j5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("a5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("b5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("b6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("c6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("d6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("g6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("h6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("i6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("i7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("a5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("b5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("c5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("a6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("c6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("d6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("g6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("h6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("i6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("j6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("b5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("c5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("d5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("e4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("f3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("a6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("b6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("d6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("g6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("h6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("i6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("j6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("c5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("d5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("f4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("e7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("f8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("a6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("b6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("c6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("g6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("h6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("i6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("j6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("f4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("e3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("e7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("h6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("g6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("a5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("b5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("c5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("d5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("h5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("i5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("j5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("g6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("f7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("e8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("i6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("h6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("a5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("b5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("c5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("d5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("g5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("i5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("j5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("h6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("j6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("i6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("a5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("b5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("c5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("d5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("g5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("h5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("j5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j5"), Dagaz.Model.stringToPos("i6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j5"), Dagaz.Model.stringToPos("j6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j5"), Dagaz.Model.stringToPos("a5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j5"), Dagaz.Model.stringToPos("b5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j5"), Dagaz.Model.stringToPos("c5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j5"), Dagaz.Model.stringToPos("d5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j5"), Dagaz.Model.stringToPos("g5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j5"), Dagaz.Model.stringToPos("h5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j5"), Dagaz.Model.stringToPos("i5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("f7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("e8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("e4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("h5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("g5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("a6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("b6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("c6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("d6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("h6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("i6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("j6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("g5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("f4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("e3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("i5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("h5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("a6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("b6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("c6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("d6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("g6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("i6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("j6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("h5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("j5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("i5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("a6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("b6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("c6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("d6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("g6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("h6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("j6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j6"), Dagaz.Model.stringToPos("i5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j6"), Dagaz.Model.stringToPos("j5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j6"), Dagaz.Model.stringToPos("a6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j6"), Dagaz.Model.stringToPos("b6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j6"), Dagaz.Model.stringToPos("c6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j6"), Dagaz.Model.stringToPos("d6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j6"), Dagaz.Model.stringToPos("g6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j6"), Dagaz.Model.stringToPos("h6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("j6"), Dagaz.Model.stringToPos("i6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e10"), Dagaz.Model.stringToPos("f9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e10"), Dagaz.Model.stringToPos("f10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e10"), Dagaz.Model.stringToPos("e9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e10"), Dagaz.Model.stringToPos("e8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e10"), Dagaz.Model.stringToPos("e7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e10"), Dagaz.Model.stringToPos("e4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e10"), Dagaz.Model.stringToPos("e3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e10"), Dagaz.Model.stringToPos("e2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e10"), Dagaz.Model.stringToPos("e1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f10"), Dagaz.Model.stringToPos("e10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f10"), Dagaz.Model.stringToPos("e9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f10"), Dagaz.Model.stringToPos("f9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f10"), Dagaz.Model.stringToPos("f8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f10"), Dagaz.Model.stringToPos("f7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f10"), Dagaz.Model.stringToPos("f4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f10"), Dagaz.Model.stringToPos("f3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f10"), Dagaz.Model.stringToPos("f2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f10"), Dagaz.Model.stringToPos("f1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("f10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("f8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("f9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("e10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("e8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("e7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("e4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("e3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("e2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("e1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("e10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("e8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("e9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("f10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("f8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("f7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("f4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("f3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("f2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("f1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("f9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("f7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("g6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("h5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("f8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("e10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("e9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("e7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("e4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("e3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("e2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("e1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("e9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("e7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("d6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("c5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("e8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("f10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("f9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("f7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("f4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("f3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("f2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("f1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("f7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("f8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("g5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("d6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("c5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("e10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("e9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("e8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("e4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("e3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("e2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("e1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("e7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("e8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("d5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("g6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("h5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("f10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("f9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("f8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("f4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("f3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("f2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("f1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("f4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("d5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("c6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("g6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("f8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("e10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("e9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("e8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("e7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("e3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("e2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("e1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("e4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("d6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("g5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("h6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("e3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("f10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("f9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("f8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("f7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("f3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("f2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("f1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("f3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("f4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("g5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("h6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("f2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("e10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("e9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("e8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("e7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("e4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("e2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("e1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("e3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("e4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("d5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("c6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("e2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("f10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("f9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("f8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("f7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("f4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("f2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("f1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("f2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("f3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("f1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("e10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("e9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("e8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("e7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("e4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("e3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("e1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("e2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("e4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("e1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("f10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("f9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("f8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("f7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("f4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("f3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("f1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e1"), Dagaz.Model.stringToPos("f1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e1"), Dagaz.Model.stringToPos("f2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e1"), Dagaz.Model.stringToPos("e10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e1"), Dagaz.Model.stringToPos("e9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e1"), Dagaz.Model.stringToPos("e8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e1"), Dagaz.Model.stringToPos("e7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e1"), Dagaz.Model.stringToPos("e4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e1"), Dagaz.Model.stringToPos("e3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e1"), Dagaz.Model.stringToPos("e2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f1"), Dagaz.Model.stringToPos("e1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f1"), Dagaz.Model.stringToPos("e2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f1"), Dagaz.Model.stringToPos("f10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f1"), Dagaz.Model.stringToPos("f9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f1"), Dagaz.Model.stringToPos("f8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f1"), Dagaz.Model.stringToPos("f7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f1"), Dagaz.Model.stringToPos("f4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f1"), Dagaz.Model.stringToPos("f3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f1"), Dagaz.Model.stringToPos("f2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("a6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("b6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("c6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("d6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("g6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("h6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("i6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("j6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("e10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("e9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("e8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("e7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("e4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("e3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("e2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("e1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("a6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("b6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("c6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("d6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("g6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("h6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("i6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("j6"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("f10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("f9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("f8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("f7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("f4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("f3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("f2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("f1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("a5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("b5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("c5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("d5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("g5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("h5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("i5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("j5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("e10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("e9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("e8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("e7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("e4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("e3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("e2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("e1"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("a5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("b5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("c5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("d5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("g5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("h5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("i5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("j5"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("f10"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("f9"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("f8"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("f7"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("f4"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("f3"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("f2"), 3);
-    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("f1"), 3);
+    view.addVector(Dagaz.Model.stringToPos("a1"), Dagaz.Model.stringToPos("a5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a1"), Dagaz.Model.stringToPos("e1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a1"), Dagaz.Model.stringToPos("e5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a2"), Dagaz.Model.stringToPos("a5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a2"), Dagaz.Model.stringToPos("e2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a2"), Dagaz.Model.stringToPos("d5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a3"), Dagaz.Model.stringToPos("a5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a3"), Dagaz.Model.stringToPos("e3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a3"), Dagaz.Model.stringToPos("c5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a4"), Dagaz.Model.stringToPos("a5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a4"), Dagaz.Model.stringToPos("e4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a4"), Dagaz.Model.stringToPos("b5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a5"), Dagaz.Model.stringToPos("a7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a5"), Dagaz.Model.stringToPos("a4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a5"), Dagaz.Model.stringToPos("c7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a5"), Dagaz.Model.stringToPos("b4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("a7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("a4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("b7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("c4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a7"), Dagaz.Model.stringToPos("a6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a7"), Dagaz.Model.stringToPos("e7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a7"), Dagaz.Model.stringToPos("b6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a8"), Dagaz.Model.stringToPos("a6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a8"), Dagaz.Model.stringToPos("e8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a8"), Dagaz.Model.stringToPos("c6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a9"), Dagaz.Model.stringToPos("a6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a9"), Dagaz.Model.stringToPos("e9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a9"), Dagaz.Model.stringToPos("d6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a10"), Dagaz.Model.stringToPos("a6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a10"), Dagaz.Model.stringToPos("e10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a10"), Dagaz.Model.stringToPos("e6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b1"), Dagaz.Model.stringToPos("b5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b1"), Dagaz.Model.stringToPos("e1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b1"), Dagaz.Model.stringToPos("e4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b2"), Dagaz.Model.stringToPos("b5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b2"), Dagaz.Model.stringToPos("e2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b2"), Dagaz.Model.stringToPos("e5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b3"), Dagaz.Model.stringToPos("b5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b3"), Dagaz.Model.stringToPos("e3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b3"), Dagaz.Model.stringToPos("d5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("b5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("e4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("c5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("a5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("e1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("b7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("b4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("a4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("c4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("d7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("b7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("b4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("d4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("a7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("c7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("b6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("e7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("a6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("c6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("e10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b8"), Dagaz.Model.stringToPos("b6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b8"), Dagaz.Model.stringToPos("e8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b8"), Dagaz.Model.stringToPos("d6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b9"), Dagaz.Model.stringToPos("b6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b9"), Dagaz.Model.stringToPos("e9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b9"), Dagaz.Model.stringToPos("e6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b10"), Dagaz.Model.stringToPos("b6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b10"), Dagaz.Model.stringToPos("e10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b10"), Dagaz.Model.stringToPos("e7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c1"), Dagaz.Model.stringToPos("c5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c1"), Dagaz.Model.stringToPos("e1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c1"), Dagaz.Model.stringToPos("e3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c2"), Dagaz.Model.stringToPos("c5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c2"), Dagaz.Model.stringToPos("e2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c2"), Dagaz.Model.stringToPos("e4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c3"), Dagaz.Model.stringToPos("c5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c3"), Dagaz.Model.stringToPos("e3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c3"), Dagaz.Model.stringToPos("a5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c3"), Dagaz.Model.stringToPos("e5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c3"), Dagaz.Model.stringToPos("e1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("c5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("e4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("b5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("d5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("e2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("c7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("c4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("b4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("d4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("a7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("g9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("c7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("c4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("a4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("g2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("b7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("d7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("c6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("e7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("b6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("d6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("e9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c8"), Dagaz.Model.stringToPos("c6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c8"), Dagaz.Model.stringToPos("e8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c8"), Dagaz.Model.stringToPos("a6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c8"), Dagaz.Model.stringToPos("e6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c8"), Dagaz.Model.stringToPos("e10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c9"), Dagaz.Model.stringToPos("c6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c9"), Dagaz.Model.stringToPos("e9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c9"), Dagaz.Model.stringToPos("e7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c10"), Dagaz.Model.stringToPos("c6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c10"), Dagaz.Model.stringToPos("e10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c10"), Dagaz.Model.stringToPos("e8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d1"), Dagaz.Model.stringToPos("d5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d1"), Dagaz.Model.stringToPos("e1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d1"), Dagaz.Model.stringToPos("e2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("d5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("e2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("a5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("e1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("e3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("d5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("e3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("b5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("e4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("e2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("d5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("e4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("c5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("e5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("e3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("d7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("d4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("c4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("g2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("b7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("g8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("d7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("d4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("b4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("g3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("c7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("g9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("d6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("e7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("c6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("e6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("e8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("d6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("e8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("b6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("e7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("e9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("d6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("e9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("a6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("e8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("e10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d10"), Dagaz.Model.stringToPos("d6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d10"), Dagaz.Model.stringToPos("e10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d10"), Dagaz.Model.stringToPos("e9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e1"), Dagaz.Model.stringToPos("d1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e1"), Dagaz.Model.stringToPos("g1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e1"), Dagaz.Model.stringToPos("d2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e1"), Dagaz.Model.stringToPos("g3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("d2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("g2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("d1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("d3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("g4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("d3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("g3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("d2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("g1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("d4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("i7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("d4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("g4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("d3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("g2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("b7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("h7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("d4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("g3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("c7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("g7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("c4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("g4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("d7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("g8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("d7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("g7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("b4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("h4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("d8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("g9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("d8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("g8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("d7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("i4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("d9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("g10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("d9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("g9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("d8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("g7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("d10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e10"), Dagaz.Model.stringToPos("d10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e10"), Dagaz.Model.stringToPos("g10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e10"), Dagaz.Model.stringToPos("d9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e10"), Dagaz.Model.stringToPos("g8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f1"), Dagaz.Model.stringToPos("d1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f1"), Dagaz.Model.stringToPos("g1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f1"), Dagaz.Model.stringToPos("d3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f1"), Dagaz.Model.stringToPos("g2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("d2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("g2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("d4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("g3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("g1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("d3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("g3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("b7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("g4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("d1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("g2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("d4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("g4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("c7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("i7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("d2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("g3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("d7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("h7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("d3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("g4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("d8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("g7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("d4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("h4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("d7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("g7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("d9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("g8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("c4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("i4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("d8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("g8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("d10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("g9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("b4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("g7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("d9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("g9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("g10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("d7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("g8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f10"), Dagaz.Model.stringToPos("d10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f10"), Dagaz.Model.stringToPos("g10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f10"), Dagaz.Model.stringToPos("d8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f10"), Dagaz.Model.stringToPos("g9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g1"), Dagaz.Model.stringToPos("f1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g1"), Dagaz.Model.stringToPos("g5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g1"), Dagaz.Model.stringToPos("f2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("f2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("g5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("f3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("j5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("f1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("f3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("g5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("f4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("i5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("f2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("f4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("g5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("f5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("h5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("f3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("g7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("g4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("d8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("i7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("d2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("h4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("g7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("g4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("d9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("h7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("d3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("i4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("f7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("g6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("f8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("f6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("h6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("f8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("g6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("f9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("f7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("i6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("f9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("g6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("f10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("f8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("j6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g10"), Dagaz.Model.stringToPos("f10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g10"), Dagaz.Model.stringToPos("g6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g10"), Dagaz.Model.stringToPos("f9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h1"), Dagaz.Model.stringToPos("f1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h1"), Dagaz.Model.stringToPos("h5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h1"), Dagaz.Model.stringToPos("f3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h2"), Dagaz.Model.stringToPos("f2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h2"), Dagaz.Model.stringToPos("h5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h2"), Dagaz.Model.stringToPos("f4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h3"), Dagaz.Model.stringToPos("f3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h3"), Dagaz.Model.stringToPos("h5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h3"), Dagaz.Model.stringToPos("f5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h3"), Dagaz.Model.stringToPos("j5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h3"), Dagaz.Model.stringToPos("f1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("f4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("h5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("g5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("i5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("f2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("h7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("h4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("d9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("j7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("g4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("i4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("h7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("h4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("g7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("i7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("d2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("j4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("f7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("h6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("f9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("g6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("i6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h8"), Dagaz.Model.stringToPos("f8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h8"), Dagaz.Model.stringToPos("h6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h8"), Dagaz.Model.stringToPos("f10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h8"), Dagaz.Model.stringToPos("f6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h8"), Dagaz.Model.stringToPos("j6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h9"), Dagaz.Model.stringToPos("f9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h9"), Dagaz.Model.stringToPos("h6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h9"), Dagaz.Model.stringToPos("f7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h10"), Dagaz.Model.stringToPos("f10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h10"), Dagaz.Model.stringToPos("h6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h10"), Dagaz.Model.stringToPos("f8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i1"), Dagaz.Model.stringToPos("f1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i1"), Dagaz.Model.stringToPos("i5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i1"), Dagaz.Model.stringToPos("f4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i2"), Dagaz.Model.stringToPos("f2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i2"), Dagaz.Model.stringToPos("i5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i2"), Dagaz.Model.stringToPos("f5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i3"), Dagaz.Model.stringToPos("f3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i3"), Dagaz.Model.stringToPos("i5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i3"), Dagaz.Model.stringToPos("g5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("f4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("i5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("h5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("j5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("f1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("i7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("i4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("g7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("h4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("j4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("i7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("i4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("h7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("j7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("g4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("f7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("i6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("f10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("h6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("j6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i8"), Dagaz.Model.stringToPos("f8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i8"), Dagaz.Model.stringToPos("i6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i8"), Dagaz.Model.stringToPos("g6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i9"), Dagaz.Model.stringToPos("f9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i9"), Dagaz.Model.stringToPos("i6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i9"), Dagaz.Model.stringToPos("f6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i10"), Dagaz.Model.stringToPos("f10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i10"), Dagaz.Model.stringToPos("i6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i10"), Dagaz.Model.stringToPos("f7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j1"), Dagaz.Model.stringToPos("f1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j1"), Dagaz.Model.stringToPos("j5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j1"), Dagaz.Model.stringToPos("f5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j2"), Dagaz.Model.stringToPos("f2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j2"), Dagaz.Model.stringToPos("j5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j2"), Dagaz.Model.stringToPos("g5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j3"), Dagaz.Model.stringToPos("f3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j3"), Dagaz.Model.stringToPos("j5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j3"), Dagaz.Model.stringToPos("h5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j4"), Dagaz.Model.stringToPos("f4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j4"), Dagaz.Model.stringToPos("j5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j4"), Dagaz.Model.stringToPos("i5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j5"), Dagaz.Model.stringToPos("j7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j5"), Dagaz.Model.stringToPos("j4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j5"), Dagaz.Model.stringToPos("h7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j5"), Dagaz.Model.stringToPos("i4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j6"), Dagaz.Model.stringToPos("j7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j6"), Dagaz.Model.stringToPos("j4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j6"), Dagaz.Model.stringToPos("i7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j6"), Dagaz.Model.stringToPos("h4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j7"), Dagaz.Model.stringToPos("f7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j7"), Dagaz.Model.stringToPos("j6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j7"), Dagaz.Model.stringToPos("i6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j8"), Dagaz.Model.stringToPos("f8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j8"), Dagaz.Model.stringToPos("j6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j8"), Dagaz.Model.stringToPos("h8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j9"), Dagaz.Model.stringToPos("f9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j9"), Dagaz.Model.stringToPos("j6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j9"), Dagaz.Model.stringToPos("g6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j10"), Dagaz.Model.stringToPos("f10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j10"), Dagaz.Model.stringToPos("j6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j10"), Dagaz.Model.stringToPos("f6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a4"), Dagaz.Model.stringToPos("a3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a4"), Dagaz.Model.stringToPos("a2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a4"), Dagaz.Model.stringToPos("a1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a4"), Dagaz.Model.stringToPos("b4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a4"), Dagaz.Model.stringToPos("c4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a4"), Dagaz.Model.stringToPos("d4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a4"), Dagaz.Model.stringToPos("b3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a4"), Dagaz.Model.stringToPos("c2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a4"), Dagaz.Model.stringToPos("d1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("a4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("b3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("b2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("b1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("c4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("d4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("a3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("c3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("d2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("c3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("c2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("c1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("a4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("b4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("d4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("b3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("a2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("d3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("d3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("d2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("d1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("a4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("b4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("c4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("c3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("b2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d4"), Dagaz.Model.stringToPos("a1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("d4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("d2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("d1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("a3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("b3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("c3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("c4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("c2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d3"), Dagaz.Model.stringToPos("b1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("d4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("d3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("d1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("a2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("b2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("c2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("c3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("b4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d2"), Dagaz.Model.stringToPos("c1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d1"), Dagaz.Model.stringToPos("d4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d1"), Dagaz.Model.stringToPos("d3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d1"), Dagaz.Model.stringToPos("d2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d1"), Dagaz.Model.stringToPos("a1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d1"), Dagaz.Model.stringToPos("b1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d1"), Dagaz.Model.stringToPos("c1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d1"), Dagaz.Model.stringToPos("c2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d1"), Dagaz.Model.stringToPos("b3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d1"), Dagaz.Model.stringToPos("a4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a7"), Dagaz.Model.stringToPos("a10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a7"), Dagaz.Model.stringToPos("a9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a7"), Dagaz.Model.stringToPos("a8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a7"), Dagaz.Model.stringToPos("b7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a7"), Dagaz.Model.stringToPos("c7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a7"), Dagaz.Model.stringToPos("d7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a7"), Dagaz.Model.stringToPos("b8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a7"), Dagaz.Model.stringToPos("c9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a7"), Dagaz.Model.stringToPos("d10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("b10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("b9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("b8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("a7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("c7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("d7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("a8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("c8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b7"), Dagaz.Model.stringToPos("d9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("c10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("c9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("c8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("a7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("b7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("d7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("b8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("a9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c7"), Dagaz.Model.stringToPos("d8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("d10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("d9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("d8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("a7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("b7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("c7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("c8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("b9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d7"), Dagaz.Model.stringToPos("a10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("d10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("d9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("d7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("a8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("b8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("c8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("c7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("c9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d8"), Dagaz.Model.stringToPos("b10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("d10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("d8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("d7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("a9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("b9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("c9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("c8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("b7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d9"), Dagaz.Model.stringToPos("c10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d10"), Dagaz.Model.stringToPos("d9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d10"), Dagaz.Model.stringToPos("d8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d10"), Dagaz.Model.stringToPos("d7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d10"), Dagaz.Model.stringToPos("a10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d10"), Dagaz.Model.stringToPos("b10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d10"), Dagaz.Model.stringToPos("c10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d10"), Dagaz.Model.stringToPos("c9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d10"), Dagaz.Model.stringToPos("b8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d10"), Dagaz.Model.stringToPos("a7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g1"), Dagaz.Model.stringToPos("g4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g1"), Dagaz.Model.stringToPos("g3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g1"), Dagaz.Model.stringToPos("g2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g1"), Dagaz.Model.stringToPos("h1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g1"), Dagaz.Model.stringToPos("i1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g1"), Dagaz.Model.stringToPos("j1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g1"), Dagaz.Model.stringToPos("h2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g1"), Dagaz.Model.stringToPos("i3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g1"), Dagaz.Model.stringToPos("j4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("g4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("g3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("g1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("h2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("i2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("j2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("h1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("h3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g2"), Dagaz.Model.stringToPos("i4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("g4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("g2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("g1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("h3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("i3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("j3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("h4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("h2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g3"), Dagaz.Model.stringToPos("i1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("g3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("g2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("g1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("h4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("i4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("j4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("h3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("i2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g4"), Dagaz.Model.stringToPos("j1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("h3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("h2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("h1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("g4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("i4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("j4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("g3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("i3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h4"), Dagaz.Model.stringToPos("j2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("i3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("i2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("i1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("g4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("h4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("j4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("h3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("g2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i4"), Dagaz.Model.stringToPos("j3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j4"), Dagaz.Model.stringToPos("j3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j4"), Dagaz.Model.stringToPos("j2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j4"), Dagaz.Model.stringToPos("j1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j4"), Dagaz.Model.stringToPos("g4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j4"), Dagaz.Model.stringToPos("h4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j4"), Dagaz.Model.stringToPos("i4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j4"), Dagaz.Model.stringToPos("i3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j4"), Dagaz.Model.stringToPos("h2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j4"), Dagaz.Model.stringToPos("g1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g10"), Dagaz.Model.stringToPos("g9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g10"), Dagaz.Model.stringToPos("g8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g10"), Dagaz.Model.stringToPos("g7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g10"), Dagaz.Model.stringToPos("h10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g10"), Dagaz.Model.stringToPos("i10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g10"), Dagaz.Model.stringToPos("j10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g10"), Dagaz.Model.stringToPos("h9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g10"), Dagaz.Model.stringToPos("i8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g10"), Dagaz.Model.stringToPos("j7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("g10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("g8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("g7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("h9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("i9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("j9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("h10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("h8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g9"), Dagaz.Model.stringToPos("i7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("g10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("g9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("g7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("h8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("i8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("j8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("h9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("i10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g8"), Dagaz.Model.stringToPos("h7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("g10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("g9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("g8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("h7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("i7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("j7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("h8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("i9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g7"), Dagaz.Model.stringToPos("j10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("h10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("h9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("h8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("g7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("i7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("j7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("g8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("i8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h7"), Dagaz.Model.stringToPos("j9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("i10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("i9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("i8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("g7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("h7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("j7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("h8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("g9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i7"), Dagaz.Model.stringToPos("j8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j7"), Dagaz.Model.stringToPos("j10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j7"), Dagaz.Model.stringToPos("j9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j7"), Dagaz.Model.stringToPos("j8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j7"), Dagaz.Model.stringToPos("g7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j7"), Dagaz.Model.stringToPos("h7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j7"), Dagaz.Model.stringToPos("i7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j7"), Dagaz.Model.stringToPos("i8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j7"), Dagaz.Model.stringToPos("h9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j7"), Dagaz.Model.stringToPos("g10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a5"), Dagaz.Model.stringToPos("a6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a5"), Dagaz.Model.stringToPos("b5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a5"), Dagaz.Model.stringToPos("c5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a5"), Dagaz.Model.stringToPos("d5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a5"), Dagaz.Model.stringToPos("g5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a5"), Dagaz.Model.stringToPos("h5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a5"), Dagaz.Model.stringToPos("i5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a5"), Dagaz.Model.stringToPos("j5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a5"), Dagaz.Model.stringToPos("b6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("b6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("a6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("c6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("a5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("c5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("d5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("g5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("h5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("i5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("j5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("b6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("c6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("d6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("e7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("f8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("a5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("b5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("d5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("g5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("h5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("i5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("j5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("c6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("d6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("f7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("e4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("f3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("a5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("b5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("c5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("g5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("h5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("i5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d5"), Dagaz.Model.stringToPos("j5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("a5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("b5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("b6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("c6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("d6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("g6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("h6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("i6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("i7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("a5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("b5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("c5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("a6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("c6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("d6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("g6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("h6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("i6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("j6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("b5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("c5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("d5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("e4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("f3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("a6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("b6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("d6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("g6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("h6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("i6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("j6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("c5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("d5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("f4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("e7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("f8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("a6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("b6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("c6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("g6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("h6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("i6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("d6"), Dagaz.Model.stringToPos("j6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("f4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("e3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("e7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("h6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("g6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("a5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("b5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("c5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("d5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("h5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("i5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g5"), Dagaz.Model.stringToPos("j5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("g6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("f7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("e8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("i6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("h6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("a5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("b5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("c5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("d5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("g5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("i5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h5"), Dagaz.Model.stringToPos("j5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("h6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("j6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("i6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("a5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("b5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("c5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("d5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("g5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("h5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i5"), Dagaz.Model.stringToPos("j5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j5"), Dagaz.Model.stringToPos("i6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j5"), Dagaz.Model.stringToPos("j6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j5"), Dagaz.Model.stringToPos("a5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j5"), Dagaz.Model.stringToPos("b5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j5"), Dagaz.Model.stringToPos("c5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j5"), Dagaz.Model.stringToPos("d5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j5"), Dagaz.Model.stringToPos("g5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j5"), Dagaz.Model.stringToPos("h5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j5"), Dagaz.Model.stringToPos("i5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("f7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("e8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("e4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("h5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("g5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("a6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("b6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("c6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("d6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("h6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("i6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("g6"), Dagaz.Model.stringToPos("j6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("g5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("f4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("e3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("i5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("h5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("a6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("b6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("c6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("d6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("g6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("i6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("h6"), Dagaz.Model.stringToPos("j6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("h5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("j5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("i5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("a6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("b6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("c6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("d6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("g6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("h6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("i6"), Dagaz.Model.stringToPos("j6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j6"), Dagaz.Model.stringToPos("i5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("j6"), Dagaz.Model.stringToPos("j5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j6"), Dagaz.Model.stringToPos("a6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j6"), Dagaz.Model.stringToPos("b6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j6"), Dagaz.Model.stringToPos("c6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j6"), Dagaz.Model.stringToPos("d6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j6"), Dagaz.Model.stringToPos("g6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j6"), Dagaz.Model.stringToPos("h6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("j6"), Dagaz.Model.stringToPos("i6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e10"), Dagaz.Model.stringToPos("f9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e10"), Dagaz.Model.stringToPos("f10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e10"), Dagaz.Model.stringToPos("e9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e10"), Dagaz.Model.stringToPos("e8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e10"), Dagaz.Model.stringToPos("e7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e10"), Dagaz.Model.stringToPos("e4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e10"), Dagaz.Model.stringToPos("e3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e10"), Dagaz.Model.stringToPos("e2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e10"), Dagaz.Model.stringToPos("e1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f10"), Dagaz.Model.stringToPos("e10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f10"), Dagaz.Model.stringToPos("e9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f10"), Dagaz.Model.stringToPos("f9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f10"), Dagaz.Model.stringToPos("f8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f10"), Dagaz.Model.stringToPos("f7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f10"), Dagaz.Model.stringToPos("f4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f10"), Dagaz.Model.stringToPos("f3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f10"), Dagaz.Model.stringToPos("f2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f10"), Dagaz.Model.stringToPos("f1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("f10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("f8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("f9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("e10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("e8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("e7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("e4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("e3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("e2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e9"), Dagaz.Model.stringToPos("e1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("e10"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("e8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("e9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("f10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("f8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("f7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("f4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("f3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("f2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f9"), Dagaz.Model.stringToPos("f1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("f9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("f7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("g6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("h5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("f8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("e10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("e9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("e7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("e4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("e3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("e2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e8"), Dagaz.Model.stringToPos("e1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("e9"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("e7"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("d6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("c5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("e8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("f10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("f9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("f7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("f4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("f3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("f2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f8"), Dagaz.Model.stringToPos("f1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("f7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("f8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("g5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("d6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("c5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("e10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("e9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("e8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("e4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("e3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("e2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e7"), Dagaz.Model.stringToPos("e1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("e7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("e8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("d5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("g6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("h5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("f10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("f9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("f8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("f4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("f3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("f2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f7"), Dagaz.Model.stringToPos("f1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("f4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("d5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("c6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("g6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("f8"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("e10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("e9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("e8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("e7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("e3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("e2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e4"), Dagaz.Model.stringToPos("e1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("e4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("d6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("g5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("h6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("e3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("f10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("f9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("f8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("f7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("f3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("f2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f4"), Dagaz.Model.stringToPos("f1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("f3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("f4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("g5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("h6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("f2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("e10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("e9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("e8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("e7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("e4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("e2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e3"), Dagaz.Model.stringToPos("e1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("e3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("e4"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("d5"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("c6"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("e2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("f10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("f9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("f8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("f7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("f4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("f2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f3"), Dagaz.Model.stringToPos("f1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("f2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("f3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("f1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("e10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("e9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("e8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("e7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("e4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("e3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e2"), Dagaz.Model.stringToPos("e1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("e2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("e3"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("e1"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("f10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("f9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("f8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("f7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("f4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("f3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f2"), Dagaz.Model.stringToPos("f1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e1"), Dagaz.Model.stringToPos("f1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e1"), Dagaz.Model.stringToPos("f2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("e1"), Dagaz.Model.stringToPos("e10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e1"), Dagaz.Model.stringToPos("e9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e1"), Dagaz.Model.stringToPos("e8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e1"), Dagaz.Model.stringToPos("e7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e1"), Dagaz.Model.stringToPos("e4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e1"), Dagaz.Model.stringToPos("e3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e1"), Dagaz.Model.stringToPos("e2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f1"), Dagaz.Model.stringToPos("e1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f1"), Dagaz.Model.stringToPos("e2"), 3, 1);
+    view.addVector(Dagaz.Model.stringToPos("f1"), Dagaz.Model.stringToPos("f10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f1"), Dagaz.Model.stringToPos("f9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f1"), Dagaz.Model.stringToPos("f8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f1"), Dagaz.Model.stringToPos("f7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f1"), Dagaz.Model.stringToPos("f4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f1"), Dagaz.Model.stringToPos("f3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f1"), Dagaz.Model.stringToPos("f2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("a6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("b6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("c6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("d6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("g6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("h6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("i6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("j6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("e10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("e9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("e8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("e7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("e4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("e3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("e2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e6"), Dagaz.Model.stringToPos("e1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("a6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("b6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("c6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("d6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("g6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("h6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("i6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("j6"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("f10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("f9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("f8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("f7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("f4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("f3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("f2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f6"), Dagaz.Model.stringToPos("f1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("a5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("b5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("c5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("d5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("g5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("h5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("i5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("j5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("e10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("e9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("e8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("e7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("e4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("e3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("e2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("e5"), Dagaz.Model.stringToPos("e1"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("a5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("b5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("c5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("d5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("g5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("h5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("i5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("j5"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("f10"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("f9"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("f8"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("f7"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("f4"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("f3"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("f2"), 3, 2);
+    view.addVector(Dagaz.Model.stringToPos("f5"), Dagaz.Model.stringToPos("f1"), 3, 2);
 }
