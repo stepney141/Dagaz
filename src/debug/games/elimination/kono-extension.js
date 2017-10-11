@@ -42,6 +42,8 @@ Dagaz.AI.eval = function(design, params, board, player) {
   return r;
 }
 
+var checkGoals = Dagaz.Model.checkGoals;
+
 Dagaz.Model.checkGoals = function(design, board, player) {
   var enemies = 0;
   _.each(design.allPositions(), function(pos) {
@@ -53,7 +55,7 @@ Dagaz.Model.checkGoals = function(design, board, player) {
   if (enemies < 2) {
       return 1;
   } else {
-      return 0;
+      return checkGoals(design, board, player);
   }
 }
 

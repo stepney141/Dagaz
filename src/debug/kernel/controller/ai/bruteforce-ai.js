@@ -86,7 +86,7 @@ BruteforceAi.prototype.getMove = function(ctx) {
   while ((Date.now() - timestamp < this.params.AI_FRAME) && queue.length > 0) {
       var board = queue.shift();
       var moves = cache(x, board);
-      if (board.checkGoals(Dagaz.Model.getDesign(), board.player) != 0) {
+      if (board.checkGoals(Dagaz.Model.getDesign(), board.player) !== null) {
           return {
               done:  true,
               move:  traceMove(ctx, board),

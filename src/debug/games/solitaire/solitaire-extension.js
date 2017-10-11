@@ -8,6 +8,8 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+var checkGoals = Dagaz.Model.checkGoals;
+
 Dagaz.Model.checkGoals = function(design, board, player) {
   var positions = _.filter(design.allPositions(), function(pos) {
       return board.getPiece(pos) !== null;
@@ -15,7 +17,7 @@ Dagaz.Model.checkGoals = function(design, board, player) {
   if ((positions.length == 1) && design.inZone(0, board.player, positions[0])) {
       return 1;
   } else {
-      return 0; 
+      return checkGoals(design, board, player); 
   }
 }
 

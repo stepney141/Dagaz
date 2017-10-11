@@ -8,6 +8,8 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+var checkGoals = Dagaz.Model.checkGoals;
+
 Dagaz.Model.checkGoals = function(design, board, player) {
   if (player == 1) {
       var f = true;
@@ -27,7 +29,7 @@ Dagaz.Model.checkGoals = function(design, board, player) {
           return 1;
       }
   }
-  return 0;
+  return checkGoals(design, board, player);
 }
 
 })();

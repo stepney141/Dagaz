@@ -1400,7 +1400,7 @@ ZrfBoard.prototype.traceMoves = function() {
 }
 
 Dagaz.Model.checkGoals = function(design, board, player) {
-  var r = 0;
+  var r = null;
   _.each(_.keys(design.goals), function(p) {
       var groups = _.groupBy(design.goals[p], function(goal) {
           return goal.num;

@@ -50,11 +50,13 @@ var isLine = function(design, board, player, pos, type) {
          isLineDir(design, board, player, pos, type, design.getDirection("se"));
 }
 
+var checkGoals = Dagaz.Model.checkGoals;
+
 Dagaz.Model.checkGoals = function(design, board, player) {
   if (isLine(design, board, player, board.lastt, 1)) {
       return 1;
   } else {
-      return 0;
+      return checkGoals(design, board, player);
   }
 }
 

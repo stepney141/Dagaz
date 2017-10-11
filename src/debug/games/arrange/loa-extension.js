@@ -58,7 +58,7 @@ Dagaz.Model.checkGoals = function(design, board, player) {
   if (coherence(design, board, enemies)) {
       return -1;
   } else {
-      return 0;
+      return checkGoals(design, board, player);
   }
 }
 

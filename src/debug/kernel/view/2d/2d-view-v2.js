@@ -205,7 +205,7 @@ View2D.prototype.dropPiece = function(move, pos, piece, phase) {
   });
 }
 
-View2D.prototype.addVector = function(from, to, steps, mode) {
+View2D.prototype.addVector = function(from, to, steps, mode, level) {
   if (!mode) mode = 0;
   if (!steps) { steps = STEP_CNT; }
   if (_.isUndefined(this.vectors[mode])) {
@@ -214,7 +214,10 @@ View2D.prototype.addVector = function(from, to, steps, mode) {
   if (_.isUndefined(this.vectors[mode][from])) {
       this.vectors[mode][from] = [];
   }
-  this.vectors[mode][from][to] = steps;
+  this.vectors[mode][from][to] = {
+      steps: steps,
+      level: level
+  };
 }
 
 View2D.prototype.addPhase = function(ix, from, to, piece, phase, steps) {
@@ -237,18 +240,20 @@ View2D.prototype.vectorFound = function(ix, from, to, piece, mode, phase) {
   if (!phase) { phase = 1; }
   if (phase > Dagaz.View.maxSteps) return false;
   if (this.vectors[mode] && this.vectors[mode][from]) {
-      if (this.vectors[mode][from][to]) {
-          this.addPhase(ix, from, to, piece, phase, this.vectors[mode][from][to]);
+      if (this.vectors[mode][from][to] && (this.vectors[mode][from][to].level == phase)) {
+          this.addPhase(ix, from, to, piece, phase, this.vectors[mode][from][to].steps);
           return true;
       }
       var list = _.keys(this.vectors[mode][from]);
       for (var i = 0; i < list.length; i++) {
           var pos = list[i];
-          this.addPhase(ix, from, pos, piece, phase, this.vectors[mode][from][pos]);
-          if (this.vectorFound(ix, pos, to, piece, mode, phase + 1)) {
-              return true;
+          if (this.vectors[mode][from][pos].level == phase) {
+              this.addPhase(ix, from, pos, piece, phase, this.vectors[mode][from][pos].steps);
+              if (this.vectorFound(ix, pos, to, piece, mode, phase + 1)) {
+                  return true;
+              }
+              this.changes.pop();
           }
-          this.changes.pop();
       }
   }
   return false;

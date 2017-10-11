@@ -252,14 +252,16 @@ App.prototype.exec = function() {
           delete this.positions;
       }
       var g = this.board.checkGoals(this.design, this.board.parent.player);
-      if (g != 0) {
+      if (g !== null) {
           var player = this.design.playerNames[this.board.parent.player];
           this.state = STATE.DONE;
           Canvas.style.cursor = "default";
           if (g > 0) {
-              this.doneMessage = player + " win"
+              this.doneMessage = player + " win";
+          } else if (g < 0) {
+              this.doneMessage = player + " loss";
           } else {
-              this.doneMessage = player + " loss"
+              this.doneMessage = "Draw";
           }
       } else {
           this.state = STATE.WAIT;

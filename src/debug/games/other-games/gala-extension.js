@@ -8,6 +8,44 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+var checkGoals = Dagaz.Model.checkGoals;
+
+Dagaz.Model.checkGoals = function(design, board, player) {
+  var design = Dagaz.Model.design;
+  var king   = design.getPieceType("Gala");
+  var fa     = 0;
+  var ea     = 0;
+  var fc     = 0;
+  var ec     = 0;
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if ((piece !== null) && (piece.type == king)) {
+          if (design.inZone(0, player, pos)) {
+              if (piece.player == player) {
+                  fc++;
+              } else {
+                  ec++;
+              }
+          }
+          if (piece.player == player) {
+              fa++;
+          } else {
+              ea++;
+          }
+      }
+  });
+  if ((fc == 2) || (ea == 0)) {
+      return 1;
+  }
+  if ((ec == 2) || (fa == 0)) {
+      return -1;
+  }
+  if ((fa == 1) && (ea == 1)) {
+      return 0;
+  }
+  return checkGoals(design, board, player);
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {

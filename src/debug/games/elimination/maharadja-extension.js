@@ -8,6 +8,8 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+var checkGoals = Dagaz.Model.checkGoals;
+
 Dagaz.Model.checkGoals = function(design, board, player) {
   var design = Dagaz.Model.design;
   var king = design.getPieceType("King");
@@ -20,7 +22,7 @@ Dagaz.Model.checkGoals = function(design, board, player) {
             })
            .size().value() == 0) return 1;
   }
-  return 0;
+  return checkGoals(design, board, player);
 }
 
 var findPiece = function(design, board, player, type) {

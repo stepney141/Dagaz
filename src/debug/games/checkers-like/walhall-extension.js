@@ -23,6 +23,8 @@ Dagaz.AI.eval = function(design, params, board, player) {
   return r;
 }
 
+var checkGoals = Dagaz.Model.checkGoals;
+
 Dagaz.Model.checkGoals = function(design, board, player) {
   var all = 0;
   var goal = 0;
@@ -49,7 +51,7 @@ Dagaz.Model.checkGoals = function(design, board, player) {
           return -1;
       }
   }
-  return 0;
+  return checkGoals(design, board, player);
 }
 
 var isDefendedDir = function(design, board, pos, dir, type) {

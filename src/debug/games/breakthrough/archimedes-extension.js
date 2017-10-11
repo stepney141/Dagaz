@@ -53,7 +53,7 @@ Dagaz.Model.CheckInvariants = function(board) {
        if (_.indexOf(c, t) >= 0) {
            move.failed = true;
        } else {
-           if (b.checkGoals(design, board.player) != 0 ) {
+           if (b.checkGoals(design, board.player) !== null ) {
                b.generateInternal(b, false);
                _.chain(b.moves)
                 .filter(function(m) {

@@ -59,7 +59,7 @@ MaxMinAi.prototype.eval = function(ctx, board, move, player) {
   var deep = 0;
   while (deep++ < Dagaz.AI.MAX_DEEP) {
       var goal = Dagaz.Model.checkGoals(ctx.design, b, player);
-      if (goal != 0) {
+      if (goal !== null) {
           return (MAXVALUE - deep) * goal;
       }
       b.moves = Dagaz.AI.generate(ctx, b);

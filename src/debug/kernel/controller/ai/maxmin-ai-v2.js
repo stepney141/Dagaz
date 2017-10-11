@@ -139,7 +139,7 @@ MaxMinAi.prototype.expandMoves = function(ctx, board, player, cache, noEval) {
       var e = 0;
       var b = board.apply(move);
       var g = b.checkGoals(ctx.design, player);
-      if (g != 0) {
+      if (g !== null) {
           e = MAXVALUE * g;
       } else {
           if (!noEval) {
