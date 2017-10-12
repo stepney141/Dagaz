@@ -51,24 +51,23 @@ Dagaz.Model.CheckInvariants = function(board) {
     })
    .each(function(move) {
         var pos = null;
-        var action = null;
-        _.chain(move.actions)
-         .filter(function(a) {
-              return (a[0] !== null) && (a[1] !== null);
-          })
-         .each(function(a) {
-              if (pos === null) {
-                  pos = a[0][0];
-              }
-              action = a;
-          });
-        if ((pos !== null) && (action !== null)) {
+        var ix  = null;
+        for (var i = 0; i < move.actions.length; i++) {
+             if ((move.actions[i][0] !== null) && (move.actions[i][1] !== null)) {
+                 if (pos === null) {
+                     pos = move.actions[i][0][0];
+                 }
+                 ix = i;
+             }
+        }
+        if ((pos !== null) && (ix !== null)) {
             var isForced = false;
-            var piece = board.getPiece(pos);
-            var enemy = board.getPiece(action[1][0]);
+            var target   = move.actions[ix][1][0];
+            var piece    = board.getPiece(pos);
+            var enemy    = board.getPiece(target);
             if ((piece !== null) && promote[piece.type]) {
                 if (piece.type == 0) {
-                    var p = design.navigate(board.player, action[1][0], 4);
+                    var p = design.navigate(board.player, target, 4);
                     if (p !== null) {
                         p = design.navigate(board.player, p, 4);
                         if (p === null) {
@@ -77,18 +76,72 @@ Dagaz.Model.CheckInvariants = function(board) {
                     }
                 }
                 if ((piece.type == 2) || (piece.type == 31) || (piece.type == 1)) {
-                    var p = design.navigate(board.player, action[1][0], 4);
+                    var p = design.navigate(board.player, target, 4);
                     if (p === null) {
                         isForced = true;
                     }
                 }
-                if ((design.inZone(0, board.player, action[1][0]) && !design.inZone(0, board.player, pos)) ||
+                if ((design.inZone(0, board.player, target) && !design.inZone(0, board.player, pos)) ||
                     (design.inZone(0, board.player, pos) && (enemy !== null)) || isForced) {
-                     action[2] = isForced ? [ piece.promote(promote[piece.type]) ] : [ piece, piece.promote(promote[piece.type]) ];
+                    var promoted = piece.promote(promote[piece.type]);
+                    if (piece.type == 54) {
+                        promoted = promoted.setValue(0, 1);
+                    }
+                    var action   = [];
+                    action[0]    = move.actions[ix][0];
+                    action[1]    = move.actions[ix][1];
+                    action[2]    = isForced ? [ promoted ] : [ piece, promoted ];
+                    action[3]    = move.actions[ix][3];
+                    move.actions[ix] = action;
                 }
             }
         }
     });
+  var demon = null;
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if ((piece !== null) && (piece.player != board.player) && (piece.type == 56) && (piece.getValue(0) == 1)) {
+          demon = pos;
+      }
+  });
+  if (demon !== null) {
+      _.each(board.moves, function(move) {
+          var start  = null;
+          var target = null;
+          var pn = 1;
+          _.each(move.actions, function(a) {
+              if ((a[0] !== null) && (a[1] !== null)) {
+                  if (start === null) {
+                      start = a[0][0];
+                  }
+                  target = a[1][0];
+                  pn = a[3];
+              }
+              if ((a[0] !== null) && (a[1] === null) && (_.indexOf(a[0], demon) >= 0)) {
+                  demon = null;
+              }
+          });
+          if ((demon !== null) && (target !== null) && (target != demon)) {
+              var piece = board.getPiece(demon);
+              if (piece !== null) {
+                  piece = piece.setValue(0, 0);
+                  move.movePiece(demon, demon, piece, pn);
+                  _.each(design.allDirections(), function(dir) {
+                      var pos = design.navigate(board.player, demon, dir);
+                      if ((pos !== null) && (pos != start)) {
+                          var p = board.getPiece(pos);
+                          if ((p !== null) && (p.player == board.player)) {
+                              move.capturePiece(pos, pn);
+                          }
+                          if (pos == target) {
+                              move.capturePiece(pos, pn);
+                          }
+                      }
+                  });
+              }
+          }
+      });
+  }
   CheckInvariants(board);
 }
 
