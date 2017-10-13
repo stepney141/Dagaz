@@ -46,19 +46,40 @@ Dagaz.Model.checkGoals = function(design, board, player) {
   return checkGoals(design, board, player);
 }
 
+var noEnemy = function(design, board) {
+  var r = true;
+  _.chain(design.allPositions())
+   .filter(function(pos) {
+        return design.inZone(0, board.player, pos);
+    })
+   .each(function(pos) {
+        var piece = board.getPiece(pos);
+        if ((piece !== null) && (piece.player != board.player)) {
+            r = false;
+        }
+    });
+  return r;
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
   var horsa  = design.getPieceType("Horsa");
   var korna  = design.getPieceType("Korna");
+  var kampa  = design.getPieceType("Kampa");
   _.each(board.moves, function(m) {
       if ((m.actions.length == 1) && (m.actions[0][0] !== null) && (m.actions[0][1] !== null)) {
-          var piece = board.getPiece(m.actions[0][0][0]);
-          if ((piece !== null) && ((piece.type == horsa) || (piece.type == korna))){
-                if (design.inZone(0, board.player, m.actions[0][1][0])) {
+          var pos    = m.actions[0][0][0];
+          var target = m.actions[0][1][0];
+          var piece  = board.getPiece(pos);
+          if ((piece !== null) && design.inZone(0, board.player, target)) {
+              if ((piece.type == horsa) || (piece.type == korna)) {
                   m.failed = true;
-                }
+              }
+              if ((piece.type == kampa) && noEnemy(design, board)) {
+                  m.failed = true;
+              }
           }
       }
   });

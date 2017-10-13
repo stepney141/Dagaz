@@ -1,12 +1,11 @@
 (define kampa-shift (
   (verify (in-zone? home))
-  (verify (in-zone? $1))
-  $2 (verify empty?)
-  (if (in-zone? center) (verify enemy?))
-  add
-  (verify (in-zone? $1))
-  $2 (verify empty?)
-  (if (in-zone? center) (verify enemy?))
+  (verify (in-zone? $1)) $2 
+  (if (in-zone? home)
+      (verify empty?)
+      add $2
+  )
+  (verify not-friend?)
   add
 ))
 
@@ -15,7 +14,6 @@
   $1
   (verify (not-in-zone? restricted))
   (verify not-friend?)
-  (if (in-zone? center) (verify enemy?))
   add
 ))
 
@@ -64,6 +62,23 @@
       $2 (set-flag long-slide false)
   )
   (verify not-friend?)  
+  (verify (not-in-zone? $1)) 
+  (verify not-friend?) add
+  (verify empty?) $3
+  (while (not-in-zone? $1)
+      (verify not-friend?) add
+      (verify empty?) $3
+      (verify (flag? long-slide))
+  )
+))
+
+(define slide-horsa (
+  (verify (in-zone? $1)) $2
+  (set-flag long-slide true)
+  (while (and empty? (in-zone? $1)) 
+      $2 (set-flag long-slide false)
+  )
+  (verify empty?)  
   (verify (not-in-zone? $1)) 
   (verify not-friend?) add
   (verify empty?) $3
@@ -132,11 +147,11 @@
      )
      (zone
         (name home) (players White)
-        (positions a4 b3 c2 d1 g1 h2 i3 j4)
+        (positions a4 b3 c2 d1 c4 d3 b4 c3 d2 d4 g1 h2 i3 j4 g3 h4 g2 h3 i4 g4)
      )
      (zone
         (name home) (players Black)
-        (positions g10 h9 i8 j7 a7 b8 c9 d10)
+        (positions g10 h9 i8 j7 g8 h7 g9 h8 i7 g7 a7 b8 c9 d10 c7 d8 b7 c8 d9 d7)
      )
      (zone
         (name left) (players White)
@@ -224,10 +239,10 @@
         (slide outer sw n) (slide outer sw s) (slide outer sw w) (slide outer sw e)
         (slide outer se n) (slide outer se s) (slide outer se w) (slide outer se e)
         (slide outer ne n) (slide outer ne s) (slide outer ne w) (slide outer ne e)
-        (slide cross n nw) (slide cross n ne) (slide cross n sw) (slide cross n se)
-        (slide cross s nw) (slide cross s ne) (slide cross s sw) (slide cross s se)
-        (slide cross e nw) (slide cross e ne) (slide cross e sw) (slide cross e se)
-        (slide cross w nw) (slide cross w ne) (slide cross w sw) (slide cross w se)
+        (slide-horsa cross n nw) (slide-horsa cross n ne) (slide-horsa cross n sw) (slide-horsa cross n se)
+        (slide-horsa cross s nw) (slide-horsa cross s ne) (slide-horsa cross s sw) (slide-horsa cross s se)
+        (slide-horsa cross e nw) (slide-horsa cross e ne) (slide-horsa cross e sw) (slide-horsa cross e se)
+        (slide-horsa cross w nw) (slide-horsa cross w ne) (slide-horsa cross w sw) (slide-horsa cross w se)
         (move-type normal-type)
         (shift outer nw) (shift outer nw) (shift outer nw) (shift outer nw)
         (shift outer sw) (shift outer sw) (shift outer sw) (shift outer sw)

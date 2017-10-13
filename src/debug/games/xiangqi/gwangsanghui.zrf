@@ -120,6 +120,7 @@
    (option "animate captures"       false)
 ;  (option "ko"                     situation)
    (option "gwangsanghui-extension" true)
+   (option "gwangsanghui-invariant" true)
 
    (players Red Black)
    (turn-order Red Black)

@@ -8,6 +8,24 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+var checkGoals = Dagaz.Model.checkGoals;
+
+Dagaz.Model.checkGoals = function(design, board, player) {
+  var design = Dagaz.Model.design;
+  var king   = design.getPieceType("King");
+  var cnt    = 0;
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if ((piece !== null) && (piece.type == king) && (piece.player != player)) {
+          cnt++;
+      }
+  });
+  if (cnt == 0) {
+      return 1;
+  }
+  return checkGoals(design, board, player);
+}
+
 var changePiecesByType = function(move, board, player, types) {
   var design = Dagaz.Model.design;
   _.each(design.allPositions(), function(p) {
