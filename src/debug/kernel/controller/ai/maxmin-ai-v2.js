@@ -217,7 +217,7 @@ MaxMinAi.prototype.proceed = function(ctx, cache, n, deep) {
           }
           var olde = node.cache[ix].eval;
           var eval = this.proceed(ctx, node.cache, ix, deep + 1);
-          if (node.eval == olde) {
+          if ((node.eval == olde) && (eval != node.eval)) {
               if (ctx.board.player == node.board.player) {
                   node.eval = _.max(node.cache, function(n) {
                       return n.eval;
