@@ -1,5 +1,9 @@
 (function() {
 
+Dagaz.AI.AI_FRAME      = 1000;
+Dagaz.Model.showBlink  = false;
+Dagaz.AI.getForcedMove = Dagaz.AI.getChessForcedMove;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
@@ -67,7 +71,7 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
       s += checkDirection(design, board, board.player, pos, se, [sang], from);
       if (s > 0) return 0;
   }
-  return heuristic(ai, design, board, move);
+  return 1;
 }
 
 var checkGoals = Dagaz.Model.checkGoals;

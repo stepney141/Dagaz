@@ -1,5 +1,8 @@
 (function() {
 
+Dagaz.AI.AI_FRAME     = 1000;
+Dagaz.Model.showBlink = false;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
@@ -10,29 +13,47 @@ Dagaz.Model.checkVersion = function(design, name, value) {
 
 var checkGoals = Dagaz.Model.checkGoals;
 
-Dagaz.Model.checkGoals = function(design, board, player) {
-  var enemies = 0;
+Dagaz.AI.eval = function(design, params, board, player) {
+  var r = 0;
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
-      if ((piece !== null) && (piece.player != player)) {
-          enemies++;
+      if (piece !== null) {
+          var v = 1;
+          if (piece.player != player) {
+              v = -v;
+          }
+          r += v;
+      }
+  });
+  return r;
+}
+
+var checkGoals = Dagaz.Model.checkGoals;
+
+Dagaz.Model.checkGoals = function(design, board, player) {
+  var enemies = 0;
+  var friends = 0;
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if (piece !== null) {
+          if (piece.player != player) {
+              enemies++;
+          } else {
+              friends++;
+          }
       }
   });
   if (enemies < 2) {
       return 1;
-  } else {
-      return checkGoals(design, board, player);
   }
+  if (friends < 2) {
+      return -1;
+  }
+  return checkGoals(design, board, player);
 }
 
 Dagaz.AI.heuristic = function(ai, design, board, move) {
-  var r = 1;
-  for (var i = 0; i < move.actions.length; i++) {
-      if ((move.actions[i][0] !== null) && (move.actions[i][1] === null)) {
-           r += 10;
-      }
-  }
-  return r;
+  return move.actions.length;
 }
 
 var CheckInvariants = Dagaz.Model.CheckInvariants;

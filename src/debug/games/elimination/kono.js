@@ -25,6 +25,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("smart-moves", "true");
     design.checkVersion("animate-captures", "false");
     design.checkVersion("show-hints", "false");
+    design.checkVersion("kono-extension", "true");
 
     design.addDirection("w");
     design.addDirection("ww");
@@ -55,6 +56,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("c1", [-1, -2, 0, 1, 0, -8, -4, 0]);
     design.addPosition("d1", [-1, -2, 0, 0, 0, -8, -4, 0]);
 
+    design.addZone("center", 2, [9, 5, 10, 6]);
+    design.addZone("center", 1, [9, 5, 10, 6]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
@@ -95,7 +98,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("White", "Ball", 1);
     design.setup("White", "Ball", 2);
     design.setup("White", "Ball", 3);
-    design.reserve("White", "Ball", 99);
     design.setup("Black", "Ball", 12);
     design.setup("Black", "Ball", 13);
     design.setup("Black", "Ball", 14);
@@ -104,8 +106,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "Ball", 9);
     design.setup("Black", "Ball", 10);
     design.setup("Black", "Ball", 11);
-    design.reserve("Black", "Ball", 99);
-
 }
 
 Dagaz.View.configure = function(view) {

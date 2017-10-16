@@ -1,6 +1,7 @@
 (function() {
 
-Dagaz.AI.AI_FRAME = 1000;
+Dagaz.AI.AI_FRAME     = 1000;
+Dagaz.Model.showBlink = false;
 
 var checkVersion = Dagaz.Model.checkVersion;
 
@@ -15,24 +16,10 @@ Dagaz.AI.eval = function(design, params, board, player) {
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
       if (piece !== null) {
-          var v = 0;
-          _.each(design.allDirections(), function(dir) {
-              var p = design.navigate(player, pos, dir);
-              if (p === null) {
-                  v -= 5;
-              } else {
-                  var x = board.getPiece(p);
-                  if ((x !== null) && (x.player == piece.player)) {
-                      p = design.navigate(player, p, dir);
-                      if (p !== null) {
-                          x = board.getPiece(p);
-                          if ((x !== null) && (x.player != piece.player)) {
-                              v += 5;
-                          }
-                      }
-                  }
-              }
-          });
+          var v = 10;
+          if (design.inZone(0, player, pos)) {
+              v += 3;
+          }
           if (piece.player != player) {
               v = -v;
           }
@@ -46,17 +33,24 @@ var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {
   var enemies = 0;
+  var friends = 0;
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
-      if ((piece !== null) && (piece.player != player)) {
-          enemies++;
+      if (piece !== null) {
+          if (piece.player != player) {
+              enemies++;
+          } else {
+              friends++;
+          }
       }
   });
   if (enemies < 2) {
       return 1;
-  } else {
-      return checkGoals(design, board, player);
   }
+  if (friends < 2) {
+      return -1;
+  }
+  return checkGoals(design, board, player);
 }
 
 Dagaz.AI.heuristic = function(ai, design, board, move) {

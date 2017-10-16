@@ -45,6 +45,10 @@
                 (nn 0 -2) (ee 2 0) (ss 0 2) (ww -2 0)
           )
       )
+      (zone
+          (name center) (players White Black)
+          (positions b2 b3 c2 c3)
+      )
    )
 
    (piece
@@ -61,8 +65,8 @@
    )
 
    (board-setup
-        (White (Ball off 99 a3 b3 c3 d3 a4 b4 c4 d4))
-        (Black (Ball off 99 a1 b1 c1 d1 a2 b2 c2 d2))
+        (White (Ball a3 b3 c3 d3 a4 b4 c4 d4))
+        (Black (Ball a1 b1 c1 d1 a2 b2 c2 d2))
    )
 
    (loss-condition (Black White) stalemated)

@@ -129,6 +129,9 @@ MaxMinAi.prototype.setContext = function(ctx, board) {
 
 MaxMinAi.prototype.getMove = function(ctx) {
   ctx.board.moves = Dagaz.AI.generate(ctx, ctx.board);
+  if (ctx.board.moves.length == 0) {
+      return { done: true, ai: "nothing" };
+  }
   var result = null;
   var mx = 0;
   if (!_.isUndefined(Dagaz.AI.heuristic)) {

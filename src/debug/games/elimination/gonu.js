@@ -53,7 +53,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("c1", [-1, 1, 0, -4]);
     design.addPosition("d1", [-1, 0, 0, -4]);
 
-
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
     design.addCommand(0, ZRF.FUNCTION,	22);	// navigate
@@ -61,7 +60,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.FUNCTION,	20);	// verify
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
-
 
     design.addPiece("Stone", 0);
     design.addMove(0, 0, [3], 0);
@@ -81,7 +79,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "Stone", 15);
     design.setup("Black", "Stone", 8);
     design.setup("Black", "Stone", 11);
-
 }
 
 Dagaz.View.configure = function(view) {
