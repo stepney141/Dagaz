@@ -321,6 +321,7 @@ MaxMinAi.prototype.dumpAll = function(ctx, player, cache, deep) {
 
 MaxMinAi.prototype.getMove = function(ctx) {
   var result = null;
+  ctx.board.moves = Dagaz.AI.generate(ctx, ctx.board);
   if (ctx.board.moves.length == 0) {
       return { done: true, ai: "nothing" };
   }
