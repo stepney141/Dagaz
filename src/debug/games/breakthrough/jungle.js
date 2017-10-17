@@ -152,7 +152,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(2, ZRF.FUNCTION,	25);	// to
     design.addCommand(2, ZRF.FUNCTION,	28);	// end
 
-
     design.addPiece("Rat", 0, 1);
     design.addAttribute(0, 0, 1);
     design.addMove(0, 0, [3], 0);

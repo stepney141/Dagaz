@@ -1,5 +1,8 @@
 (function() {
 
+Dagaz.AI.AI_FRAME      = 1000;
+Dagaz.AI.getForcedMove = Dagaz.AI.getCheckersForcedMove;
+
 var inversed = false;
 
 var checkVersion = Dagaz.Model.checkVersion;

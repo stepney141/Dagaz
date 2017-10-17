@@ -1,5 +1,8 @@
 (function() {
 
+Dagaz.AI.AI_FRAME      = 3000;
+Dagaz.AI.getForcedMove = Dagaz.AI.getChessForcedMove;
+
 var checkVersion = Dagaz.Model.checkVersion;
 var strictMode = false;
 

@@ -674,7 +674,7 @@ Dagaz.Model.getPieceTypes = function(piece) {
 }
 
 ZrfDesign.prototype.getGoalPositions = function(player, pieces) {
-  if (Dagaz.Model.showGoals && !_.isUndefined(this.goals[player])) {
+  if (!_.isUndefined(this.goals[player])) {
       return _.chain(this.goals[player])
        .filter(function(goal) {
             return goal.num == 0;

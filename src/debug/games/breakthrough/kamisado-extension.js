@@ -10,6 +10,33 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+Dagaz.AI.eval = function(design, params, board, player) {
+  var r = 0;
+  var design = Dagaz.Model.design;
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if (piece !== null) {
+          var goals = design.getGoalPositions(piece.player, [ piece.type ]);
+          _.each(design.allDirections(), function(dir) {
+              var p = design.navigate(piece.player, pos, dir);
+              while (p !== null) {
+                  if (board.getPiece(p) !== null) break;
+                  if (_.indexOf(goals, p) >= 0) {
+                      if (piece.player == player) {
+                          r++;
+                      } else {
+                          r--;
+                      }
+                      break;
+                  }
+                  p = design.navigate(piece.player, p, dir);
+              }
+          });
+      }
+  });
+  return r;
+}
+
 var getColor = function(player, pos) {
   var design = Dagaz.Model.design;
   return _.chain(_.keys(design.zones))

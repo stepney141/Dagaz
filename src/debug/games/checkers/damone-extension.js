@@ -12,19 +12,24 @@ var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {
   var enemies = 0;
+  var friends = 0;
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
-      if ((piece !== null) && (piece.player != player)) {
-          if (piece.type >= 3) {
+      if ((piece !== null) && (piece.type >= 3)) {
+          if (piece.player != player) {
               enemies++;
+          } else {
+              friends++;
           }
       }
   });
   if (enemies == 0) {
       return 1;
-  } else {
-      return checkGoals(design, board, player);
   }
+  if (friends == 0) {
+      return -1;
+  }
+  return checkGoals(design, board, player);
 }
 
 })();

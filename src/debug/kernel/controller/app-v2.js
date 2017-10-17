@@ -160,8 +160,10 @@ App.prototype.mouseLocate = function(view, pos) {
           var piece = this.board.getPiece(pos);
           if (piece !== null) {
               var types = Dagaz.Model.getPieceTypes(piece, this.board);
-              var positions = this.design.getGoalPositions(this.board.player, types);
-              this.view.markPositions(Dagaz.View.markType.GOAL, positions);
+              if (Dagaz.Model.showGoals) {
+                  var positions = this.design.getGoalPositions(this.board.player, types);
+                  this.view.markPositions(Dagaz.View.markType.GOAL, positions);
+              }
           }
       }
   }

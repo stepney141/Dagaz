@@ -102,8 +102,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addZone("promotion", 2, [56, 58, 60, 62]);
     design.addZone("best", 1, [26, 21]);
     design.addZone("best", 2, [37, 42]);
-    design.addZone("road", 1, [56, 49, 42, 35, 28, 21, 14, 7]);
-    design.addZone("road", 2, [56, 49, 42, 35, 28, 21, 14, 7]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1

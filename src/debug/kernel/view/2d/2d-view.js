@@ -225,7 +225,7 @@ View2D.prototype.vectorFound = function(ix, from, to, piece, phase) {
       for (var i = 0; i < list.length; i++) {
           var pos = list[i];
           this.addPhase(ix, from, pos, piece, phase, this.vectors[from][pos]);
-          if (this.vectorFound(pos, to, piece, phase + 1)) {
+          if (this.vectorFound(ix, pos, to, piece, phase + 1)) {
               return true;
           }
           this.changes.pop();
