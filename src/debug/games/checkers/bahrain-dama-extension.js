@@ -78,7 +78,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                       }
                   }
               });
-              if (_.intersection(kish, k).length > 0) {
+              if (_.intersection(kish, k).length == kish.length) {
                   move.failed = true;
               }
           }

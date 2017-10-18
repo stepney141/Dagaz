@@ -245,19 +245,19 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(6, ZRF.JUMP,	-20);
     design.addCommand(6, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("JotunnA", 0, 1);
+    design.addPiece("JotunnA", 0, 100);
     design.addMove(0, 0, [7], 0);
     design.addMove(0, 0, [6], 0);
     design.addMove(0, 0, [3], 0);
     design.addMove(0, 0, [5], 0);
 
-    design.addPiece("JotunnR", 1, 1);
+    design.addPiece("JotunnR", 1, 100);
     design.addMove(1, 1, [4], 0);
     design.addMove(1, 1, [2], 0);
     design.addMove(1, 1, [1], 0);
     design.addMove(1, 1, [0], 0);
 
-    design.addPiece("Jotunn", 2, 10);
+    design.addPiece("Jotunn", 2, 5000);
     design.addMove(2, 2, [7], 0);
     design.addMove(2, 2, [6], 0);
     design.addMove(2, 2, [3], 0);
@@ -267,7 +267,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(2, 2, [1], 0);
     design.addMove(2, 2, [0], 0);
 
-    design.addPiece("ValkyrieA", 3, 10);
+    design.addPiece("ValkyrieA", 3, 10000);
     design.addMove(3, 3, [7, 7], 0);
     design.addMove(3, 3, [3, 3], 0);
     design.addMove(3, 3, [6, 6], 0);
@@ -277,7 +277,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(3, 4, [6, 6, 6, 6, 6], 1);
     design.addMove(3, 4, [5, 5, 5, 5, 5], 1);
 
-    design.addPiece("ValkyrieR", 4, 10);
+    design.addPiece("ValkyrieR", 4, 10000);
     design.addMove(4, 5, [4, 4], 0);
     design.addMove(4, 5, [1, 1], 0);
     design.addMove(4, 5, [2, 2], 0);

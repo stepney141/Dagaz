@@ -210,19 +210,13 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(1, 2, [0, 6], 0);
     design.addMove(1, 2, [1, 5], 0);
 
-    design.addPiece("Elephant", 2, 2);
-    design.addMove(2, 3, [7, 7], 0);
-    design.addMove(2, 3, [6, 6], 0);
-    design.addMove(2, 3, [3, 3], 0);
-    design.addMove(2, 3, [5, 5], 0);
-
     design.addPiece("Chariot", 3, 10);
     design.addMove(3, 4, [4, 4], 0);
     design.addMove(3, 4, [2, 2], 0);
     design.addMove(3, 4, [0, 0], 0);
     design.addMove(3, 4, [1, 1], 0);
 
-    design.addPiece("Cannon", 4, 4);
+    design.addPiece("Cannon", 4, 7);
     design.addMove(4, 5, [4, 4, 4, 4], 0);
     design.addMove(4, 5, [2, 2, 2, 2], 0);
     design.addMove(4, 5, [0, 0, 0, 0], 0);
@@ -272,8 +266,6 @@ Dagaz.View.configure = function(view) {
     view.defPiece("BlackSoldier", "Black Soldier");
     view.defPiece("RedHorse", "Red Horse");
     view.defPiece("BlackHorse", "Black Horse");
-    view.defPiece("RedElephant", "Red Elephant");
-    view.defPiece("BlackElephant", "Black Elephant");
     view.defPiece("RedChariot", "Red Chariot");
     view.defPiece("BlackChariot", "Black Chariot");
     view.defPiece("RedCannon", "Red Cannon");
