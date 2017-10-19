@@ -8,6 +8,51 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+var isOpposite = function(design, board, general) {
+  var pos = null;
+  var player = null;
+  _.each(design.allPositions(), function(p) {
+      var piece = board.getPiece(p);
+      if ((piece !== null) && (piece.player != board.player) && (piece.type == general)) {
+          pos = p;
+          player = piece.player;
+      }
+  });
+  if (pos !== null) {
+      var n = design.getDirection("n");
+      var p = design.navigate(player, pos, n);
+      while (p !== null) {
+          var piece = board.getPiece(p);
+          if (piece !== null) {
+              if (piece.type == general) {
+                  return true;
+              }
+              break;
+          }
+          p = design.navigate(player, p, n);
+      }
+  }
+  return false;
+}
+
+var isDraw = function(design, board, general) {
+  if (board.parent === null) return false;
+  if (isOpposite(design, board, general)) {
+      return isOpposite(design, board.parent, general);
+  }
+  return false;
+}
+
+var checkGoals = Dagaz.Model.checkGoals;
+
+Dagaz.Model.checkGoals = function(design, board, player) {
+  var general = design.getPieceType("General");
+  if (isDraw(design, board, general)) {
+      return 0;
+  }
+  return checkGoals(design, board, player);
+}
+
 Dagaz.AI.eval = function(design, params, board, player) {
   var r = 0;
   var cannon  = design.getPieceType("Cannon");
@@ -66,7 +111,7 @@ var checkFortress = function(design, board, player, pos, dir, fortress, soldier,
   return false;
 }
 
-var checkDirection = function(design, board, player, pos, dir, soldier, chariot, general, cannon) {
+var checkDirection = function(design, board, player, pos, dir, soldier, chariot, cannon) {
   var p = design.navigate(player, pos, dir);
   if (p === null) return false;
   var piece = board.getPiece(p);
@@ -76,7 +121,7 @@ var checkDirection = function(design, board, player, pos, dir, soldier, chariot,
       if (p === null) return false;
       piece = board.getPiece(p);
   }
-  if ((piece.player != player) && ((piece.type == chariot) || (piece.type == general))) return true;
+  if ((piece.player != player) && (piece.type == chariot)) return true;
   if (piece.type == cannon) return false;
   p = design.navigate(player, p, dir);
   if (p === null) return false;
@@ -121,7 +166,6 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design   = board.game.design;
-  var general  = design.getPieceType("General");
   var soldier  = design.getPieceType("Soldier");
   var horse    = design.getPieceType("Horse");
   var elephant = design.getPieceType("Elephant");
@@ -136,10 +180,10 @@ Dagaz.Model.CheckInvariants = function(board) {
       var b = board.apply(move);
       var pos = findGeneral(design, b, board.player);
       if ((pos === null) ||
-          checkDirection(design, b, board.player, pos, n, soldier, chariot, general, cannon) ||
-          checkDirection(design, b, board.player, pos, w, soldier, chariot, general, cannon) ||
-          checkDirection(design, b, board.player, pos, e, soldier, chariot, general, cannon) ||
-          checkDirection(design, b, board.player, pos, s, null, chariot, general, cannon) ||
+          checkDirection(design, b, board.player, pos, n, soldier, chariot, cannon) ||
+          checkDirection(design, b, board.player, pos, w, soldier, chariot, cannon) ||
+          checkDirection(design, b, board.player, pos, e, soldier, chariot, cannon) ||
+          checkDirection(design, b, board.player, pos, s, null, chariot, cannon) ||
           checkFortress(design, b, board.player, pos, nw, fortress, soldier, chariot, cannon) ||
           checkFortress(design, b, board.player, pos, ne, fortress, soldier, chariot, cannon) ||
           checkFortress(design, b, board.player, pos, sw, fortress, null, chariot, cannon) ||

@@ -798,6 +798,10 @@ ZrfDesign.prototype.addPlayer = function(player, symmetries) {
   this.playerNames.push(player);
 }
 
+ZrfDesign.prototype.getPlayersCount = function() {
+  return this.playerNames.length - 1;
+}
+
 ZrfDesign.prototype.addTurn = function(player, mode) {
   if (!mode) {
       mode = null;

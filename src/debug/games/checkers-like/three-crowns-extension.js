@@ -53,11 +53,16 @@ var isLine = function(design, board, player, pos, type) {
 var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {
-  if (isLine(design, board, player, board.lastt, 1)) {
-      return 1;
-  } else {
-      return checkGoals(design, board, player);
+  var pos = board.lastt;
+  var piece = board.getPiece(pos);
+  if ((piece !== null) && (piece.type == 1) && isLine(design, board, piece.player, pos, piece.type)) {
+      if (piece.player == player) {
+          return 1;
+      } else {
+          return -1;
+      }
   }
+  return checkGoals(design, board, player);
 }
 
 var Extension = Dagaz.Model.Extension;

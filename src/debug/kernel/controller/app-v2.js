@@ -11,7 +11,7 @@ var STATE = {
 };
 
 var isDrag = false;
-var passForced = false;
+var passForced = 0;
 var once = false;
 var lastPosition = null;
 var determinated = null;
@@ -284,7 +284,7 @@ App.prototype.exec = function() {
              console.log("Player: " + player);
              this.list = Dagaz.Model.getMoveList(this.board);
              if (this.list.isPassForced()) {
-                  if (passForced) {
+                  if (passForced >= this.design.getPlayersCount()) {
                       this.state = STATE.DONE;
                       Canvas.style.cursor = "default";
                       this.gameOver("Draw", 0);
@@ -292,11 +292,11 @@ App.prototype.exec = function() {
                       this.board = this.board.apply(Dagaz.Model.createMove());
                       this.state = STATE.IDLE;
                       delete this.list;
-                      passForced = true;
+                      passForced++;
                   }
                   return;
              }
-             passForced = false;
+             passForced = 0;
              if (this.list.isEmpty()) {
                  this.state = STATE.DONE;
                  Canvas.style.cursor = "default";
@@ -324,17 +324,17 @@ App.prototype.exec = function() {
           if (result.done || (Date.now() - this.timestamp >= this.params.AI_WAIT)) {
               this.board = this.board.apply(result.move);
               if (result.move.isPass()) {
-                  if (passForced) {
+                  if (passForced >= this.design.getPlayersCount()) {
                       this.state = STATE.DONE;
                       Canvas.style.cursor = "default";
                       this.gameOver("Draw", 0);
                   } else {
                       this.state = STATE.IDLE;
                       delete this.list;
-                      passForced = true;
+                      passForced++;
                   }
               } else {
-                  passForced = false;
+                  passForced = 0;
               }
               this.move = result.move;
               this.state = STATE.EXEC;

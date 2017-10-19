@@ -11,7 +11,7 @@ var STATE = {
 };
 
 var isDrag = false;
-var passForced = false;
+var passForced = 0;
 var once = false;
 
 function App(canvas, params) {
@@ -180,7 +180,7 @@ App.prototype.exec = function() {
                  this.list.setLastMove(this.move);
              }
              if ((this.list.getMoves().length == 1) && this.list.getMoves()[0].isPass()) {
-                  if (passForced) {
+                  if (passForced >= this.design.getPlayersCount()) {
                       this.state = STATE.DONE;
                       Canvas.style.cursor = "default";
                       gameOver("Draw");
@@ -188,11 +188,11 @@ App.prototype.exec = function() {
                       this.board = this.board.apply(this.list.getMoves()[0]);                 
                       this.state = STATE.IDLE;
                       delete this.list;
-                      passForced = true;
+                      passForced++;
                   }
                   return;
              }
-             passForced = false;
+             passForced = 0;
              if (this.list.getMoves().length == 0) {
                  this.state = STATE.DONE;
                  Canvas.style.cursor = "default";
@@ -219,7 +219,7 @@ App.prototype.exec = function() {
           }
           if (result.done || (Date.now() - this.timestamp >= this.params.AI_WAIT)) {
               if (result.move.isPass()) {
-                  if (passForced) {
+                  if (passForced >= this.design.getPlayersCount()) {
                       this.state = STATE.DONE;
                       Canvas.style.cursor = "default";
                       gameOver("Draw");
@@ -227,10 +227,10 @@ App.prototype.exec = function() {
                       this.board = this.board.apply(result.move);                 
                       this.state = STATE.IDLE;
                       delete this.list;
-                      passForced = true;
+                      passForced++;
                   }
               } else {
-                  passForced = false;
+                  passForced = 0;
               }
               this.move  = result.move;
               this.state = STATE.EXEC;
