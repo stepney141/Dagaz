@@ -2099,4 +2099,14 @@ ZrfMove.prototype.isPass = function() {
   return this.actions.length == 0;
 }
 
+ZrfMove.prototype.clarify = function(move) {
+  if ((move.actions.length == 1) && (move.actions[0][0] !== null) && (move.actions[0][1] !== null)) {
+      _.each(this.actions, function(a) {
+          if ((a[0] !== null) && (a[1] !== null) && (a[0][0] == move.actions[0][0][0]) && (a[1][0] == move.actions[0][1][0])) {
+              a[2] = move.actions[0][2];
+          }
+      });
+  }
+}
+
 })();

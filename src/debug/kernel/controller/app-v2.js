@@ -367,7 +367,7 @@ App.prototype.exec = function() {
               if ((moves.length > 0) || (determinated !== null)) {
                   var m = moves[0];
                   if (determinated !== null) {
-                      m = determinated;
+                      m.clarify(determinated);
                       determinated = null;
                   }
                   this.board = this.board.apply(m);
