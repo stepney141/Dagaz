@@ -78,7 +78,11 @@
   (while (and empty? (in-zone? $1)) 
       $2 (set-flag long-slide false)
   )
-  (verify empty?)  
+  (if (flag? long-slide)
+      (verify empty?)  
+   else
+      (verify not-friend?)
+  )
   (verify (not-in-zone? $1)) 
   (verify not-friend?) add
   (verify empty?) $3
@@ -292,4 +296,23 @@
   )
 
   (loss-condition (White Black) (pieces-remaining 0 Gala))
+)
+
+(variant
+  (title "Debug")
+  (default)
+  (board-setup
+     (White
+        (Gala  a1 j1)
+        (Horsa a2 b1 h1 i2 j3 e7)
+        (Korna i1 j2 a3 b2 c1)
+        (Kampa a4 b3 c2 d1 g1 h2 i3 j4)
+     )
+     (Black
+        (Gala  a10 j10) 
+        (Horsa i10 j9 a8 b9 c10) 
+        (Korna a9 b10 h10 i9 j8)
+        (Kampa a7 b8 c9 d10 g10 h9 i8 j7 d7 g7)
+     )
+  )
 )

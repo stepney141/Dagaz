@@ -222,3 +222,30 @@
    (option "kamisado-extension" true)
    (option "kamisado-setup"     30)
 )
+
+(variant
+   (title "Debug")
+   (default)
+   (board-setup
+      (White 
+         (OrangeDragon h1)
+         (BlueDragon   g7) 
+         (PurpleDragon f7) 
+         (PinkDragon   e7) 
+         (YellowDragon d7) 
+         (RedDragon    c7) 
+         (GreenDragon  b7) 
+         (BrownDragon  a7) 
+      )
+      (Black 
+         (OrangeDragon a8) 
+         (BlueDragon   b8) 
+         (PurpleDragon c8) 
+         (PinkDragon   d8) 
+         (YellowDragon e8) 
+         (RedDragon    f8) 
+         (GreenDragon  g8) 
+         (BrownDragon  h8) 
+      )
+   )
+)

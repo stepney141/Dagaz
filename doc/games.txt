@@ -10,7 +10,6 @@
     - Choko
     * Konane
     * Фанорона
-    ? Bushka
   - Checkers family
     * Turkish Dama
     * Greek Checkers
@@ -20,13 +19,13 @@
     * International Checkers
     * Russian Checkers
     * 80 Cells Checkers
-    ? Czech Checkers
     * Canadian Checkers
     * Frisian Checkers
     * Thai Checkers
-    > Северные шашки
-    - Ставропольские шашки
-    > Столбовые шашки
+    * Северные шашки
+    * Ставропольские шашки
+    * Самоеды
+    * Столбовые шашки
     * Harzdame
   - Pasang
   - Watermelon
@@ -38,7 +37,7 @@
   > Prairie or Trespass
   > Neutron
   * Gauntlet
-  > Tafl family
+  * Tafl family
   * Italian Damone
   * Archimedes
   * Doubutsu Shogi
@@ -46,7 +45,7 @@
   > Ордо
 - Control games
   * Asalto
-  - Gala
+  > Gala
   - Elementals
 - Elimination games
   * Maharaja
@@ -55,15 +54,15 @@
   - Atari Go
   - Seega
   > High Jump
-  > Makyek
+  * Makyek
   - Йотай
   * Nam Dinh
   * Евклид
   > Abalone
   * Walhall
   * NotChess
-  - Cheskers
-  - Shatra
+  * Cheskers
+  * Shatra
   > Yonin Shogi
   > Ультима
   - Игры с неполной информацией
@@ -77,7 +76,7 @@
     * Xiangqi
     * Xiangqi-42 (Mini Xiangqi)
     * Janggi
-    > Gwangsanghui
+    * Gwangsanghui
     ? Xiang Hex
   - Chess Family
     - Чатуранга
@@ -99,15 +98,15 @@
   - Shogi Family
     - Shogi
     > Goro goro shogi
-    - Mini Shogi
-    - Micro Shogi
-    - Kyoto Shogi
+    > Mini Shogi
+    > Micro Shogi
+    > Kyoto Shogi
     - Wa Shogi
     - Whale Shogi, Great Whale Shogi
     - Tori Shogi
     - Chu Shogi
     > Tenjiku Shogi
-    - Annan Shogi
+    > Annan Shogi
   - Escalation
   > Шакти
   - Cubic Chess
@@ -124,18 +123,18 @@
   - Halma family
     - Halma
     - Pyon Pyon Shogi (2 variants)
-  > Hasami Shogi
+  * Hasami Shogi
   - Morris family
   - Болотуду
-  > Lines of action
-  > Three Crowns
+  * Lines of action
+  * Three Crowns
   - Quantum tic-tac-toe
   - Rithmomachy
 - Connect Games
   - Hex
   - Gonnect
 - Territory games
-  - Reversi
+  > Reversi
   - Отелло
   - Desdemona
   > Минг-манг
@@ -169,7 +168,7 @@
   - Ohojitxi
   - Габата
   - Селус
-  - Тогыз Кумалак
+  > Тогыз Кумалак
   - Tschuba
   - Redu
 - Other games
@@ -187,6 +186,6 @@
   * LightOff puzzles
   - Ханойские башни (перемешивание выполнением серии случайных ходов)
   - Sokoban
-  - Mancala puzzles (Tchuka Ruma)
+  > Mancala puzzles (Tchuka Ruma)
   > Chameleon Chess puzzles
   - Быки и коровы
