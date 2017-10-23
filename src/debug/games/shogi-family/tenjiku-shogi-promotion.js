@@ -41,6 +41,28 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+var isPrefix = function(board, move) {
+  for (var i = 0; i < board.moves.length; i++) {
+       var m = board.moves[i];
+       if (move.actions.length >= m.actions.length) continue;
+       var r = true;
+       for (var j = 0; j < move.actions.length; j++) {
+            if ((move.actions[j][3] != m.actions[j][3]) ||
+               ((move.actions[j][0] !== null) && (m.actions[j][0] === null)) ||
+               ((move.actions[j][0] === null) && (m.actions[j][0] !== null)) ||
+               ((move.actions[j][1] !== null) && (m.actions[j][1] === null)) ||
+               ((move.actions[j][1] === null) && (m.actions[j][1] !== null)) ||
+               (_.intersection(move.actions[j][0], m.actions[j][0]).length == 0) ||
+               (_.intersection(move.actions[j][1], m.actions[j][1]).length == 0)) {
+                r = false;
+                break;
+            }
+       }
+       if (r) return true;
+  }
+  return false;
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
@@ -87,12 +109,18 @@ Dagaz.Model.CheckInvariants = function(board) {
                     if (piece.type == 54) {
                         promoted = promoted.setValue(0, 1);
                     }
-                    var action   = [];
-                    action[0]    = move.actions[ix][0];
-                    action[1]    = move.actions[ix][1];
-                    action[2]    = isForced ? [ promoted ] : [ piece, promoted ];
-                    action[3]    = move.actions[ix][3];
-                    move.actions[ix] = action;
+                    var action    = [];
+                    action[0]     = move.actions[ix][0];
+                    action[1]     = move.actions[ix][1];
+                    action[2]     = isForced ? [ promoted ] : [ piece, promoted ];
+                    if (isPrefix(board, move)) {
+                        action[0] = move.actions[ix][1];
+                        action[3] = move.actions[ix][3] + 1;
+                        move.actions.push(action);
+                    } else {
+                        action[3] = move.actions[ix][3];
+                        move.actions[ix] = action;
+                    }
                 }
             }
         }

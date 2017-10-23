@@ -162,7 +162,11 @@
 (define leap-2-mode (
   $1 (verify empty?)
   $2 (verify not-friend?)
-  (add-partial $3)
+  (if empty?
+      (add-partial $3)
+   else
+      add
+  )
 ))
 
 (define slide (

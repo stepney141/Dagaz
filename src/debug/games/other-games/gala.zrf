@@ -300,7 +300,7 @@
 
 (variant
   (title "Debug")
-  (default)
+
   (board-setup
      (White
         (Gala  a1 j1)

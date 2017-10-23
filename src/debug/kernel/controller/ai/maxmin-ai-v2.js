@@ -99,8 +99,15 @@ Dagaz.AI.getForcedMove = function(ctx, board, player) {
 }
 
 MaxMinAi.prototype.simulate = function(ctx, board, player, deep, noEval) {
-  var g = board.checkGoals(ctx.design, player);
+  var p = player;
+  if (board.parent) {
+      p = board.parent.player;
+  }
+  var g = board.checkGoals(ctx.design, p);
   if (g !== null) {
+      if (p !== player) {
+          g = -g;
+      }
       return {
           deep: deep,
           eval: MAXVALUE * g
@@ -115,8 +122,11 @@ MaxMinAi.prototype.simulate = function(ctx, board, player, deep, noEval) {
   var move = Dagaz.AI.getForcedMove(ctx, board, player);
   while (move !== null) {
       board = board.apply(move);
-      g = board.checkGoals(ctx.design, player);
+      g = board.checkGoals(ctx.design, p);
       if (g !== null) {
+          if (p !== player) {
+              g = -g;
+          }
           return {
               deep: deep,
               eval: MAXVALUE * g

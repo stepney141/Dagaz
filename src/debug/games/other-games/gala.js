@@ -397,7 +397,14 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(8, ZRF.PARAM,	3);	// false
     design.addCommand(8, ZRF.SET_FLAG,	0);	// long-slide
     design.addCommand(8, ZRF.JUMP,	-15);
+    design.addCommand(8, ZRF.FLAG,	0);	// long-slide
+    design.addCommand(8, ZRF.FUNCTION,	0);	// not
+    design.addCommand(8, ZRF.IF,	4);
     design.addCommand(8, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(8, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(8, ZRF.JUMP,	4);
+    design.addCommand(8, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(8, ZRF.FUNCTION,	0);	// not
     design.addCommand(8, ZRF.FUNCTION,	20);	// verify
     design.addCommand(8, ZRF.IN_ZONE,	1);	// cross
     design.addCommand(8, ZRF.FUNCTION,	0);	// not
