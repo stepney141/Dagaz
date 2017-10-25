@@ -192,7 +192,8 @@
                Red   "images/gorogoro/pawn-red.bmp"
         )
         (moves
-               (step-p n ChickP) (drop-piece nx)
+;              (step-p n ChickP) (drop-piece nx)
+               (step n) (drop-piece nx)
         )
   )
   (piece
@@ -213,9 +214,12 @@
                Red   "images/gorogoro/silver-red.bmp"
         )
         (moves
-               (step-p n CatP) 
-               (step-p nw CatP) (step-p ne CatP) 
-               (step-p sw CatP) (step-p se CatP) 
+;              (step-p n CatP) 
+;              (step-p nw CatP) (step-p ne CatP) 
+;              (step-p sw CatP) (step-p se CatP) 
+               (step n) 
+               (step nw) (step ne) 
+               (step sw) (step se) 
                (drop-piece nx)
         )
   )
@@ -257,4 +261,18 @@
 
   (loss-condition (Green Red) (pieces-remaining 0 Lion))
   (loss-condition (Green Red) repetition)
+)
+
+(variant
+  (title "Debug")
+  (board-setup
+        ( Green (Lion  c1)
+                (Chick b4 c4 Z1)
+                (Dog   b1 d1 d4)
+                (Cat   a1 e1)
+        )
+        ( Red   (Lion  c6)
+                (Chick b6 d6 a6 e6)
+        )
+  )
 )

@@ -24,6 +24,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("highlight-goals", "false");
     design.checkVersion("show-hints", "false");
+    design.checkVersion("show-blink", "false");
     design.checkVersion("gorogoro-shogi-extension", "true");
 
     design.addDirection("nx");
