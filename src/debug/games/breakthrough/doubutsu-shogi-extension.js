@@ -12,7 +12,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-Dagaz.AI.eval = function(design, params, board, player) {
+/*Dagaz.AI.eval = function(design, params, board, player) {
   var r = 0;
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
@@ -28,7 +28,7 @@ Dagaz.AI.eval = function(design, params, board, player) {
       }
   });
   return r;
-}
+}*/
 
 var checkDirection = function(design, board, player, pos, dir, types, from) {
   var p = design.navigate(player, pos, dir);
@@ -46,7 +46,7 @@ var checkDirection = function(design, board, player, pos, dir, types, from) {
   }
 }
 
-var heuristic = Dagaz.AI.heuristic;
+/*var heuristic = Dagaz.AI.heuristic;
 
 Dagaz.AI.heuristic = function(ai, design, board, move) {
   var za   = design.getPieceType("Za");
@@ -72,7 +72,7 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
       if (s > 0) return 0;
   }
   return 1;
-}
+}*/
 
 var checkGoals = Dagaz.Model.checkGoals;
 

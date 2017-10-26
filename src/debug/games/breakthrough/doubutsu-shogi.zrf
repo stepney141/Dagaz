@@ -1,5 +1,3 @@
-(version "3.0")
-
 (define check-piece
   (set-flag is-za? (or (piece? Za) (piece? Hu)))
   (set-flag is-sang? (piece? Sang))
@@ -56,8 +54,8 @@
 
   (option "animate captures" false)
   (option "highlight goals"  false)
-  (option "ko" situation)
-  (option "doubutsu-shogi-extension" true)
+; (option "ko" situation)
+; (option "doubutsu-shogi-extension" true)
 
   (players Green Red)
   (turn-order Green Red)
@@ -185,4 +183,19 @@
 
   (win-condition  (Green) (absolute-config King (a4 b4 c4)))
   (win-condition  (Red)   (absolute-config King (a1 b1 c1)))
+)
+
+(variant
+  (title "Debug 1")
+  (default)
+  (board-setup
+        ( Green (Sang a3 b2)
+                (King a2)
+                (Jang b3)
+        )
+        ( Red   (King a4)
+                (Jang r4)
+                (Za   a1 r3)
+        )
+  )
 )
