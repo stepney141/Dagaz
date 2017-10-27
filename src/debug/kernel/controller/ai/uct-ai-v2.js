@@ -2,6 +2,7 @@
 
 Dagaz.AI.AI_FRAME     = 5000;
 Dagaz.AI.MIN_DEEP     = 5;
+Dagaz.AI.MAX_DEEP     = 10;
 Dagaz.AI.NOISE_FACTOR = 5;
 Dagaz.AI.NO_MOVE_GOAL = 1;
 Dagaz.AI.WIN_FACTOR   = 100;
@@ -15,6 +16,9 @@ function UctAi(params, parent) {
   if (_.isUndefined(this.params.MIN_DEEP)) {
       this.params.MIN_DEEP = Dagaz.AI.MIN_DEEP;
   }
+  if (_.isUndefined(this.params.MAX_DEEP)) {
+      this.params.MAX_DEEP = Dagaz.AI.MAX_DEEP;
+  }
   if (_.isUndefined(this.params.NOISE_FACTOR)) {
       this.params.NOISE_FACTOR = Dagaz.AI.NOISE_FACTOR;
   }
@@ -25,10 +29,10 @@ function UctAi(params, parent) {
       this.params.UCT_COEFF = Math.sqrt(2);
   }
   if (_.isUndefined(this.params.WIN_WEIGHT)) {
-      this.params.WIN_WEIGHT = 0.8;
+      this.params.WIN_WEIGHT = 0.7;
   }
   if (_.isUndefined(this.params.LOSS_WEIGHT)) {
-      this.params.LOSS_WEIGHT = -0.2;
+      this.params.LOSS_WEIGHT = -0.3;
   }
 }
 
@@ -57,29 +61,72 @@ Dagaz.AI.eval = function(design, params, board, player) {
   return r;
 }
 
-Dagaz.AI.heuristic = function(ai, design, board, move) {
-  var pos = null;
-  _.each(move.actions, function(a) {
-      if (a[0] !== null) {
-          if (a[1] === null) {
-              pos = a[0][0];
-          } else {
-              var piece = board.getPiece(a[1][0]);
-              if ((piece !== null) && (piece.player !== board.player)) {
-                  pos = a[1][0];
-              }
-          }
-      }
-  });
-  if (pos !== null) {
-      return 1;
+var price = function(design, piece, player) {
+  if (piece === null) return 0;
+  if (piece.player == player) {
+      return -design.price[piece.type];
   } else {
-      return 0;
+      return design.price[piece.type];
   }
 }
 
-UctAi.prototype.setCache = function(ctx, ix) {
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  var r = 0;
+  _.each(move.actions, function(a) {
+      var piece = null;
+      if (a[0] !== null) {
+          var pos = a[0][0];
+          if (a[1] === null) {
+              piece = board.getPiece(pos);
+              r += price(design, piece, board.player);
+          } else {
+              var target = a[1][0];
+              piece = board.getPiece(target);
+              r += price(design, piece, board.player);
+/*            if (!_.isUndefined(Dagaz.AI.defendStatus) && (Dagaz.AI.defendStatus(design, board, board.player, target, pos) < 0)) {
+                  piece = board.getPiece(pos);
+                  r += price(design, piece, board.player);
+              } */
+          }
+      }
+  });
+  return r;
+}
+
+Dagaz.AI.getChessForcedMove = function(ctx, board, player) {
+  var pos = board.lastt;
+  board.moves = Dagaz.AI.generate(ctx, board);
+  var moves = _.filter(function(m) {
+      if ((m.actions.length != 1) || (m.actions[0][0] === null) || (m.actions[0][1] === null)) return false;
+      return m.actions[0][1][0] == pos;
+  });
+  if (moves.length == 0) return null;
+  return _.min(moves, function(m) {
+       var piece = board.getPiece(m.actions[0][0][0]);
+       if (piece === null) return MAXVALUE;
+       return ctx.design.price[piece.type];
+  });
+}
+
+Dagaz.AI.getCheckersForcedMove = function(ctx, board, player) {
+  board.moves = Dagaz.AI.generate(ctx, board);
+  var moves = _.filter(board.moves, function(m) {
+      return m.actions.length > 1;
+  });
+  if (moves.length == 0) return null;
+  if (moves.length == 1) return moves[0];
+  var ix = _.random(0, moves.length - 1);
+  return moves[ix];
+}
+
+UctAi.prototype.changeCache = function(ctx, board) {
   // TODO:
+}
+
+UctAi.prototype.setCache = function(ctx, ix) {
+  ctx.all   = ctx.cache[ix].all;
+  ctx.board = ctx.cache[ix].board;
+  ctx.cache = ctx.cache[ix].cache;
 }
 
 var setup = function(design, board, player) {
@@ -201,7 +248,7 @@ UctAi.prototype.proceed = function(ctx, node) {
       stack.push(node);
       this.expand(ctx, node);
       var ix = null;
-      if (stack.length == 1) {
+      if (stack.length < 2) {
           ix = this.shedule(ctx, node);
       } else {
           ix = this.random(ctx, node);
@@ -216,12 +263,40 @@ UctAi.prototype.proceed = function(ctx, node) {
       }
       node = node.cache[ix];
   }
+  if (!_.isUndefined(Dagaz.AI.getForcedMove)) {
+      while ((goal === null) && (stack.length < this.params.MAX_DEEP)) {
+          var move = Dagaz.AI.getForcedMove(ctx, node.board, ctx.board.player);
+          if (move === null) break;
+          console.log("Forced Move: " + move.toString());
+          stack.push(node);
+          this.expand(ctx, node);
+          var child = null;
+          for (var ix = 0; ix < node.cache.length; ix++) {
+               if (node.cache[ix].move.toString() == move.toString()) {
+                   child = node.cache[ix];
+                   break;
+               }
+          }
+          if (child === null) break;
+          if (!_.isUndefined(child.goal)) {
+              goal = child.goal;
+              if (node.board.player != ctx.board.player) {
+                  goal = -goal;
+              }
+              break;
+          }
+          node = child;
+      }
+  }
   if (goal !== null) {
       goal *= this.params.WIN_FACTOR;
   }
   if (!_.isUndefined(Dagaz.AI.eval) && (goal === null)) {
       goal = Dagaz.AI.eval(ctx.design, this.params, node.board, ctx.board.player) -
              Dagaz.AI.eval(ctx.design, this.params, ctx.board, ctx.board.player);
+/*    if (goal > 0) {
+          console.log("Goal: " + goal + ", setup: " + setup(ctx.design, node.board, ctx.board.player) + ", moves: " + moves(node.board));
+      }*/
   }
   _.each(stack, function(n) {
       var c = 1;
@@ -245,7 +320,7 @@ UctAi.prototype.proceed = function(ctx, node) {
 }
 
 UctAi.prototype.dump = function(node) {
-  console.log("UCT: " + node.move.toString() + ", win/loss/all = " + node.win + "/" + node.loss + "/" + node.all);
+  console.log("UCT: " + node.move.toString() + ", win/loss/all/cnt = " + node.win + "/" + node.loss + "/" + node.all + "/" + node.cnt);
 }
 
 UctAi.prototype.setContext = function(ctx, board) {
@@ -263,11 +338,9 @@ UctAi.prototype.getMove = function(ctx) {
       return { done: true, ai: "nothing" };
   }
   var result = this.expand(ctx, ctx);
-
 /*_.each(ctx.cache, function(node) {
       this.dump(node);
-  }, this); */
-
+  }, this);*/
   if (result === null) {
       _.each(ctx.cache, function(node) {
          this.expand(ctx, node);
@@ -294,7 +367,6 @@ UctAi.prototype.getMove = function(ctx) {
            }
       }
   }
-
   if (result !== null) {
       var r = {
            done: true,
