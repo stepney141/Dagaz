@@ -1719,6 +1719,7 @@ Dagaz.Model.noReserve = function(board, piece) {
 ZrfBoard.prototype.movePiece = function(move, from, to, piece) {
   this.lastf = from;
   this.lastt = to;
+  this.lastc = to;
   if ((piece === null) && this.parent) {
       piece = this.parent.getPiece(from);
   }
@@ -2034,7 +2035,7 @@ ZrfMove.prototype.applyAll = function(obj) {
    .max()
    .value();
   if (mx > 0) {
-      _.chain(_.range(1, mx + 1))
+      _.chain(_.range(1, mx /* + 1 */))
        .each(function (part) {
           this.applyTo(obj, part);
        }, this);
