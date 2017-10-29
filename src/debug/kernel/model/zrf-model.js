@@ -2035,7 +2035,7 @@ ZrfMove.prototype.applyAll = function(obj) {
    .max()
    .value();
   if (mx > 0) {
-      _.chain(_.range(1, mx /* + 1 */))
+      _.chain(_.range(1, mx + 1))
        .each(function (part) {
           this.applyTo(obj, part);
        }, this);
