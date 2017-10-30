@@ -223,7 +223,6 @@
 
 (variant
   (title "Debug 4")
-  (default)
   (board-setup
         ( Green (Sang a1)
                 (King b1)
@@ -232,6 +231,37 @@
         )
         ( Red   (Sang b3)
                 (King b4)
+                (Jang a4)
+                (Za   r4)
+        )
+  )
+)
+
+(variant
+  (title "Debug 5")
+  (board-setup
+        ( Green (King b1)
+                (Sang b2 g4)
+                (Jang c3)
+        )
+        ( Red   (King b4)
+                (Jang a4)
+                (Za   r4 r3)
+        )
+  )
+)
+
+(variant
+  (title "Debug 6")
+  (default)
+  (board-setup
+        ( Green (King c2)
+                (Sang b2)
+                (Jang c3)
+                (Za   g4)
+        )
+        ( Red   (King b4)
+                (Sang b3)
                 (Jang a4)
                 (Za   r4)
         )
