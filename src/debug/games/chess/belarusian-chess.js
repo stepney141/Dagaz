@@ -352,7 +352,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPriority(0);			// jump-type
     design.addPriority(1);			// normal-type
 
-    design.addPiece("Man", 0, 1);
+    design.addPiece("Man", 0, 1, 50);
     design.addMove(0, 0, [7, 7], 0);
     design.addMove(0, 0, [3, 3], 0);
     design.addMove(0, 0, [6, 6], 0);
@@ -360,7 +360,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 1, [7], 1);
     design.addMove(0, 1, [3], 1);
 
-    design.addPiece("Dama", 1, 5);
+    design.addPiece("Dama", 1, 5, 250);
     design.addMove(1, 2, [7, 7, 7, 7, 7], 0);
     design.addMove(1, 2, [3, 3, 3, 3, 3], 0);
     design.addMove(1, 2, [6, 6, 6, 6, 6], 0);
@@ -374,18 +374,18 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(1, 4, [6, 6], 1);
     design.addMove(1, 4, [5, 5], 1);
 
-    design.addPiece("Pawn", 2, 1);
+    design.addPiece("Pawn", 2, 100);
     design.addMove(2, 5, [4], 1);
     design.addMove(2, 6, [7], 1);
     design.addMove(2, 6, [3], 1);
 
-    design.addPiece("Rook", 3, 5);
+    design.addPiece("Rook", 3, 500);
     design.addMove(3, 7, [4, 4], 1);
     design.addMove(3, 7, [2, 2], 1);
     design.addMove(3, 7, [0, 0], 1);
     design.addMove(3, 7, [1, 1], 1);
 
-    design.addPiece("Knight", 4, 3);
+    design.addPiece("Knight", 4, 320);
     design.addMove(4, 8, [4, 7], 1);
     design.addMove(4, 8, [4, 3], 1);
     design.addMove(4, 8, [2, 6], 1);
@@ -395,13 +395,13 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(4, 8, [1, 3], 1);
     design.addMove(4, 8, [1, 5], 1);
 
-    design.addPiece("Bishop", 5, 3);
+    design.addPiece("Bishop", 5, 330);
     design.addMove(5, 7, [7, 7], 1);
     design.addMove(5, 7, [6, 6], 1);
     design.addMove(5, 7, [3, 3], 1);
     design.addMove(5, 7, [5, 5], 1);
 
-    design.addPiece("Queen", 6, 9);
+    design.addPiece("Queen", 6, 900);
     design.addMove(6, 7, [4, 4], 1);
     design.addMove(6, 7, [2, 2], 1);
     design.addMove(6, 7, [0, 0], 1);
@@ -411,7 +411,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(6, 7, [3, 3], 1);
     design.addMove(6, 7, [5, 5], 1);
 
-    design.addPiece("King", 7, 100);
+    design.addPiece("King", 7, 20000);
     design.addMove(7, 9, [4], 1);
     design.addMove(7, 9, [2], 1);
     design.addMove(7, 9, [0], 1);

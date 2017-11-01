@@ -237,6 +237,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(5, 0, [4, 9, 9], 0);
     design.addMove(5, 0, [7, 9, 9], 0);
     design.addMove(5, 0, [5, 9, 9], 0);
+    design.addMove(5, 1, [47, 0], 0);
 
     design.setup("Green", "Lion", 49);
     design.setup("Green", "Chick", 30);

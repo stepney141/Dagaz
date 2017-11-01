@@ -2,6 +2,7 @@
 
 Dagaz.AI.AI_FRAME      = 2000;
 Dagaz.AI.getForcedMove = Dagaz.AI.getCheckersForcedMove;
+Dagaz.AI.isForced      = Dagaz.AI.isCheckersForced;
 
 var strictMode = false;
 

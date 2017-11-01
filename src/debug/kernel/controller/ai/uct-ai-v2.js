@@ -39,7 +39,7 @@ function UctAi(params, parent) {
 var findBot = Dagaz.AI.findBot;
 
 Dagaz.AI.findBot = function(type, params, parent) {
-  if ((type == "uct") || (type == "common") || (type == "1")) {
+  if ((type == "uct") || (type == "common") || (type == "1") || (type == "2")) {
       return new UctAi(params, parent);
   } else {
       return findBot(type, params, parent);
@@ -303,12 +303,35 @@ UctAi.prototype.dump = function(node, eval, offset) {
   }
 //if (node.all == 0) return;
   console.log(pad(offset) + "Move: " + node.move.toString() + ", win/loss/all/cnt = " + node.win + "/" + node.loss + "/" + node.all + "/" + node.cnt + ", eval = " + eval);
-//console.log(node);
 /*if (!_.isUndefined(node.cache)) {
       for (var i = 0; i < node.cache.length - 1; i++) {
            this.dump(node.cache[i], 0, offset + 1);
       }
   }*/
+}
+
+UctAi.prototype.stat = function(ctx) {
+  var mn = 0; var mx = 0;
+  var cn = 0; var sm = 0;
+  var bs = 0; var cv = 0;
+  _.each(ctx.cache, function(node) {
+      if (!_.isUndefined(node.best)) {
+          bs++;
+      }
+      if (!_.isUndefined(node.cache)) {
+          if (cn == 0) {
+              mn = node.cache.length;
+              mx = node.cache.length;
+          } else {
+              if (mn > node.cache.length) mn = node.cache.length;
+              if (mx < node.cache.length) mx = node.cache.length;
+          }
+          sm += node.cache.length;
+          cv += node.cnt;
+          cn++;     
+      }
+  });
+  console.log("min/max/sum/count/best/cover = " + mn + "/" + mx + "/" + sm + "/" + cn + "/" + bs + "/" + cv);
 }
 
 UctAi.prototype.setContext = function(ctx, board) {
@@ -334,12 +357,9 @@ UctAi.prototype.getMove = function(ctx) {
          this.expand(ctx, node);
       }, this);
       ctx.timestamp = Date.now();
-//    var cnt = 0;
       while (Date.now() - ctx.timestamp < this.params.AI_FRAME) {
          this.proceed(ctx, ctx);
-//       cnt++;
       }
-//    console.log("cnt = " + cnt);
       var mx = 0;
       for (var i = 0; i < ctx.cache.length; i++) {
            var node = ctx.cache[i];
@@ -357,6 +377,7 @@ UctAi.prototype.getMove = function(ctx) {
            }
       }
   }
+  this.stat(ctx);
   if (ix !== null) {
       var r = {
            done: true,
