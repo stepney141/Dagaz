@@ -783,10 +783,10 @@
            (positions a1 b1 c1 d1 e1 f1)
      )
      (zone (name third-rank) (players White)
-           (positions a3 b3 c3 d3)
+           (positions a3 b3 c3 d3 e3 f3)
      )
      (zone (name third-rank) (players Black)
-           (positions a6 b6 c6 d6)
+           (positions a4 b4 c4 d4 e4 f4)
      )
   )
   (piece
