@@ -12,11 +12,7 @@
   (verify empty?)
   (verify (in-zone? third-rank))
   $1 (verify empty?)
-  (if (in-zone? last-rank)
-      (add Queen)
-   else
-      add
-  )
+  add
 ))
 
 (define pawn-step (

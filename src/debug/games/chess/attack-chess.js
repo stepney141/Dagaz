@@ -36,7 +36,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addDirection("nw");
 
     design.addPlayer("White", [1, 0, 4, 6, 2, 7, 3, 5]);
-    design.addPlayer("Black", [1, 0, 4, 6, 2, 7, 3, 5]);
+    design.addPlayer("Black", [0, 1, 4, 6, 2, 7, 3, 5]);
 
     design.addPosition("a6", [0, 1, 5, 0, 0, 6, 0, 0]);
     design.addPosition("b6", [-1, 1, 5, 0, 0, 6, 4, 0]);
@@ -93,15 +93,21 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(1, ZRF.FUNCTION,	25);	// to
     design.addCommand(1, ZRF.PARAM,	2);	// $3
     design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(1, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(1, ZRF.PARAM,	3);	// $4
+    design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(1, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(1, ZRF.FUNCTION,	20);	// verify
     design.addCommand(1, ZRF.LITERAL,	2);	// Rook
     design.addCommand(1, ZRF.FUNCTION,	10);	// piece?
     design.addCommand(1, ZRF.FUNCTION,	20);	// verify
     design.addCommand(1, ZRF.FUNCTION,	24);	// from
-    design.addCommand(1, ZRF.PARAM,	3);	// $4
-    design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(1, ZRF.PARAM,	4);	// $5
+    design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(1, ZRF.PARAM,	5);	// $6
+    design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(1, ZRF.PARAM,	6);	// $7
     design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(1, ZRF.FUNCTION,	25);	// to
     design.addCommand(1, ZRF.FUNCTION,	28);	// end
@@ -173,7 +179,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 0, [6], 0);
     design.addMove(0, 0, [3], 0);
     design.addMove(0, 0, [5], 0);
-    design.addMove(0, 1, [0, 0, 0, 1, 1], 0);
+    design.addMove(0, 1, [0, 0, 0, 0, 1, 1, 1], 0);
 
     design.addPiece("Pawn", 1, 100);
     design.addMove(1, 2, [4], 0);
@@ -220,18 +226,18 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("White", "Rook", 25);
     design.setup("White", "Knight", 26);
     design.setup("White", "Bishop", 27);
-    design.setup("White", "Queen", 29);
-    design.setup("White", "King", 28);
+    design.setup("White", "Queen", 28);
+    design.setup("White", "King", 29);
     design.setup("Black", "Pawn", 5);
     design.setup("Black", "Pawn", 6);
     design.setup("Black", "Pawn", 7);
     design.setup("Black", "Pawn", 8);
     design.setup("Black", "Pawn", 9);
-    design.setup("Black", "Rook", 4);
-    design.setup("Black", "Knight", 3);
+    design.setup("Black", "Rook", 0);
+    design.setup("Black", "Knight", 1);
     design.setup("Black", "Bishop", 2);
-    design.setup("Black", "Queen", 0);
-    design.setup("Black", "King", 1);
+    design.setup("Black", "Queen", 3);
+    design.setup("Black", "King", 4);
 }
 
 Dagaz.View.configure = function(view) {

@@ -193,8 +193,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("White", "Rook", 25);
     design.setup("White", "Knight", 29);
     design.setup("White", "Bishop", 26);
-    design.setup("White", "Queen", 28);
-    design.setup("White", "King", 27);
+    design.setup("White", "Queen", 27);
+    design.setup("White", "King", 28);
     design.setup("Black", "Pawn", 5);
     design.setup("Black", "Pawn", 6);
     design.setup("Black", "Pawn", 7);
@@ -203,8 +203,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "Rook", 0);
     design.setup("Black", "Knight", 4);
     design.setup("Black", "Bishop", 1);
-    design.setup("Black", "Queen", 3);
-    design.setup("Black", "King", 2);
+    design.setup("Black", "Queen", 2);
+    design.setup("Black", "King", 3);
 }
 
 Dagaz.View.configure = function(view) {

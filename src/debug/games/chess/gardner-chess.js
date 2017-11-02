@@ -38,16 +38,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPlayer("White", [1, 0, 4, 6, 2, 7, 3, 5]);
     design.addPlayer("Black", [1, 0, 4, 6, 2, 7, 3, 5]);
 
-    design.addPosition("a6", [0, 1, 5, 0, 0, 6, 0, 0]);
-    design.addPosition("b6", [-1, 1, 5, 0, 0, 6, 4, 0]);
-    design.addPosition("c6", [-1, 1, 5, 0, 0, 6, 4, 0]);
-    design.addPosition("d6", [-1, 1, 5, 0, 0, 6, 4, 0]);
-    design.addPosition("e6", [-1, 0, 5, 0, 0, 0, 4, 0]);
-    design.addPosition("a5", [0, 1, 5, -4, -5, 6, 0, 0]);
-    design.addPosition("b5", [-1, 1, 5, -4, -5, 6, 4, -6]);
-    design.addPosition("c5", [-1, 1, 5, -4, -5, 6, 4, -6]);
-    design.addPosition("d5", [-1, 1, 5, -4, -5, 6, 4, -6]);
-    design.addPosition("e5", [-1, 0, 5, 0, -5, 0, 4, -6]);
+    design.addPosition("a5", [0, 1, 5, 0, 0, 6, 0, 0]);
+    design.addPosition("b5", [-1, 1, 5, 0, 0, 6, 4, 0]);
+    design.addPosition("c5", [-1, 1, 5, 0, 0, 6, 4, 0]);
+    design.addPosition("d5", [-1, 1, 5, 0, 0, 6, 4, 0]);
+    design.addPosition("e5", [-1, 0, 5, 0, 0, 0, 4, 0]);
     design.addPosition("a4", [0, 1, 5, -4, -5, 6, 0, 0]);
     design.addPosition("b4", [-1, 1, 5, -4, -5, 6, 4, -6]);
     design.addPosition("c4", [-1, 1, 5, -4, -5, 6, 4, -6]);
@@ -70,7 +65,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("e1", [-1, 0, 0, 0, -5, 0, 0, -6]);
 
     design.addZone("last-rank", 1, [0, 1, 2, 3, 4]);
-    design.addZone("last-rank", 2, [25, 26, 27, 28, 29]);
+    design.addZone("last-rank", 2, [20, 21, 22, 23, 24]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
@@ -185,26 +180,26 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(5, 4, [3], 0);
     design.addMove(5, 4, [5], 0);
 
-    design.setup("White", "Pawn", 20);
-    design.setup("White", "Pawn", 21);
-    design.setup("White", "Pawn", 22);
-    design.setup("White", "Pawn", 23);
-    design.setup("White", "Pawn", 24);
-    design.setup("White", "Rook", 25);
-    design.setup("White", "Knight", 26);
-    design.setup("White", "Bishop", 27);
-    design.setup("White", "Queen", 28);
-    design.setup("White", "King", 29);
+    design.setup("White", "Pawn", 15);
+    design.setup("White", "Pawn", 16);
+    design.setup("White", "Pawn", 17);
+    design.setup("White", "Pawn", 18);
+    design.setup("White", "Pawn", 19);
+    design.setup("White", "Rook", 20);
+    design.setup("White", "Knight", 21);
+    design.setup("White", "Bishop", 22);
+    design.setup("White", "Queen", 23);
+    design.setup("White", "King", 24);
     design.setup("Black", "Pawn", 5);
     design.setup("Black", "Pawn", 6);
     design.setup("Black", "Pawn", 7);
     design.setup("Black", "Pawn", 8);
     design.setup("Black", "Pawn", 9);
-    design.setup("Black", "Rook", 4);
-    design.setup("Black", "Knight", 3);
+    design.setup("Black", "Rook", 0);
+    design.setup("Black", "Knight", 1);
     design.setup("Black", "Bishop", 2);
-    design.setup("Black", "Queen", 1);
-    design.setup("Black", "King", 0);
+    design.setup("Black", "Queen", 3);
+    design.setup("Black", "King", 4);
 }
 
 Dagaz.View.configure = function(view) {
@@ -222,34 +217,29 @@ Dagaz.View.configure = function(view) {
     view.defPiece("WhiteKing", "White King");
     view.defPiece("BlackKing", "Black King");
  
-    view.defPosition("a6", 2, 2, 68, 68);
-    view.defPosition("b6", 70, 2, 68, 68);
-    view.defPosition("c6", 138, 2, 68, 68);
-    view.defPosition("d6", 206, 2, 68, 68);
-    view.defPosition("e6", 274, 2, 68, 68);
-    view.defPosition("a5", 2, 70, 68, 68);
-    view.defPosition("b5", 70, 70, 68, 68);
-    view.defPosition("c5", 138, 70, 68, 68);
-    view.defPosition("d5", 206, 70, 68, 68);
-    view.defPosition("e5", 274, 70, 68, 68);
-    view.defPosition("a4", 2, 138, 68, 68);
-    view.defPosition("b4", 70, 138, 68, 68);
-    view.defPosition("c4", 138, 138, 68, 68);
-    view.defPosition("d4", 206, 138, 68, 68);
-    view.defPosition("e4", 274, 138, 68, 68);
-    view.defPosition("a3", 2, 206, 68, 68);
-    view.defPosition("b3", 70, 206, 68, 68);
-    view.defPosition("c3", 138, 206, 68, 68);
-    view.defPosition("d3", 206, 206, 68, 68);
-    view.defPosition("e3", 274, 206, 68, 68);
-    view.defPosition("a2", 2, 274, 68, 68);
-    view.defPosition("b2", 70, 274, 68, 68);
-    view.defPosition("c2", 138, 274, 68, 68);
-    view.defPosition("d2", 206, 274, 68, 68);
-    view.defPosition("e2", 274, 274, 68, 68);
-    view.defPosition("a1", 2, 342, 68, 68);
-    view.defPosition("b1", 70, 342, 68, 68);
-    view.defPosition("c1", 138, 342, 68, 68);
-    view.defPosition("d1", 206, 342, 68, 68);
-    view.defPosition("e1", 274, 342, 68, 68);
+    view.defPosition("a5", 2, 2, 68, 68);
+    view.defPosition("b5", 70, 2, 68, 68);
+    view.defPosition("c5", 138, 2, 68, 68);
+    view.defPosition("d5", 206, 2, 68, 68);
+    view.defPosition("e5", 274, 2, 68, 68);
+    view.defPosition("a4", 2, 70, 68, 68);
+    view.defPosition("b4", 70, 70, 68, 68);
+    view.defPosition("c4", 138, 70, 68, 68);
+    view.defPosition("d4", 206, 70, 68, 68);
+    view.defPosition("e4", 274, 70, 68, 68);
+    view.defPosition("a3", 2, 138, 68, 68);
+    view.defPosition("b3", 70, 138, 68, 68);
+    view.defPosition("c3", 138, 138, 68, 68);
+    view.defPosition("d3", 206, 138, 68, 68);
+    view.defPosition("e3", 274, 138, 68, 68);
+    view.defPosition("a2", 2, 206, 68, 68);
+    view.defPosition("b2", 70, 206, 68, 68);
+    view.defPosition("c2", 138, 206, 68, 68);
+    view.defPosition("d2", 206, 206, 68, 68);
+    view.defPosition("e2", 274, 206, 68, 68);
+    view.defPosition("a1", 2, 274, 68, 68);
+    view.defPosition("b1", 70, 274, 68, 68);
+    view.defPosition("c1", 138, 274, 68, 68);
+    view.defPosition("d1", 206, 274, 68, 68);
+    view.defPosition("e1", 274, 274, 68, 68);
 }

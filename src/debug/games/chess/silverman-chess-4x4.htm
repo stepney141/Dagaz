@@ -1,28 +1,24 @@
 <html>
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Mini Chess</title>
+<title>Silverman's Chess</title>
 </head>
 <body>
 
-<img id="Board" style="display:none" src="images/5x6.png">
+<img id="Board" style="display:none" src="images/4x4.png">
 <img id="WhitePawn" style="display:none" src="images/wpawn.png">
 <img id="BlackPawn" style="display:none" src="images/bpawn.png">
 <img id="WhiteRook" style="display:none" src="images/wrook.png">
 <img id="BlackRook" style="display:none" src="images/brook.png">
-<img id="WhiteKnight" style="display:none" src="images/wknight.png">
-<img id="BlackKnight" style="display:none" src="images/bknight.png">
-<img id="WhiteBishop" style="display:none" src="images/wbishop.png">
-<img id="BlackBishop" style="display:none" src="images/bbishop.png">
 <img id="WhiteQueen" style="display:none" src="images/wqueen.png">
 <img id="BlackQueen" style="display:none" src="images/bqueen.png">
 <img id="WhiteKing" style="display:none" src="images/wking.png">
 <img id="BlackKing" style="display:none" src="images/bking.png">
 
 <table style="margin:auto; font-family:sans-serif; font-size:14px" id="Table">
-<tr style="height:412px; vertical-align:top">
-<td id="CanvasCell" style="width:344px">
-<canvas id="Canvas" width="344" height="412" style="cursor:default">Broken canvas...</canvas>
+<tr style="height:276px; vertical-align:top">
+<td id="CanvasCell" style="width:276px">
+<canvas id="Canvas" width="276" height="276" style="cursor:default">Broken canvas...</canvas>
 </td><td style="width:300px;">
 <div style="height:510px; overflow:auto" id="ScrollDiv">
 <img id="GlyphImage"><p id="HelpText"></p>
@@ -49,9 +45,11 @@
 <script src="../../kernel/model/zobrist.js"></script>
 <script src="../../kernel/view/2d/2d-view-v2.js"></script>
 <script src="../../kernel/controller/utils/move-list-v2.js"></script>
+<script src="../../kernel/controller/ai/random-ai.js"></script>
+<script src="../../kernel/controller/ai/maxmin-ai-v2.js"></script>
 <script src="chess-invariant.js"></script>
-<script src="mini-chess.js"></script>
-<script src="../../kernel/controller/app-v2.js"></script>
+<script src="silverman-chess-4x4.js"></script>
+<script src="../../kernel/controller/app-auto.js"></script>
 
 </body>
 </html>
