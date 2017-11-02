@@ -10,6 +10,7 @@
     - Choko
     * Konane
     * Фанорона
+    > Nubia
   - Checkers family
     * Turkish Dama
     * Greek Checkers
@@ -59,6 +60,7 @@
   * Nam Dinh
   * Евклид
   > Abalone
+  > Epaminondas
   * Walhall
   * NotChess
   * Cheskers
@@ -79,14 +81,14 @@
     * Gwangsanghui
     ? Xiang Hex
   - Chess Family
-    - Чатуранга
-    - Чатурандж
-    - Шатрандж
-    - Макрук
-    - Sittuyin
-    - Courier Chess
-    - Шахматы
-    - Hiashatar
+    > Чатуранга
+    > Чатурандж
+    > Шатрандж
+    > Макрук
+    > Sittuyin
+    > Courier Chess
+    > Шахматы
+    > Hiashatar
     - Advanced Omega Chess
     ? Таврели
   > Platform Chess
@@ -134,7 +136,7 @@
   - Hex
   - Gonnect
 - Territory games
-  > Reversi
+  - Reversi
   - Отелло
   - Desdemona
   > Минг-манг
@@ -176,7 +178,7 @@
   - Ninny Chess
   - Ki Shogi
   - Viruses (варианты)
-  > GESS
+  - GESS
   - Тамск
   - The Way of Go, BeSiege
 - Puzzles
