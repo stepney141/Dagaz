@@ -794,9 +794,9 @@
      (image White "images/wpawn.bmp"
             Black "images/bpawn.bmp")
      (moves
-         (pawn-shift n Queen) (pawn-jump n) 
+         (pawn-shift n Queen) ; (pawn-jump n) 
          (pawn-step nw Queen) (pawn-step ne Queen)
-         (en-passant e) (en-passant w)
+;        (en-passant e) (en-passant w)
      )
   )
   (piece
@@ -806,7 +806,7 @@
      (moves
          (step n) (step s) (step w) (step e)
          (step nw) (step sw) (step ne) (step se)
-         (O-O w e)
+;        (O-O w e)
      )
   )
   (board-setup

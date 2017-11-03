@@ -253,12 +253,7 @@ App.prototype.determinate = function(move) {
   var moves = move.determinate();
   determinated = null;
   if (moves.length > 1) {
-      var promote = confirm("Promote piece?");
-      if (promote) {
-          move = moves[1];
-      } else {
-          move = moves[0];
-      }
+      move = moves[1];
       determinated = move;
   }
   return move;
