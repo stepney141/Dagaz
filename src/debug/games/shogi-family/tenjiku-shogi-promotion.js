@@ -104,7 +104,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                     }
                 }
                 if ((design.inZone(0, board.player, target) && !design.inZone(0, board.player, pos)) ||
-                    (design.inZone(0, board.player, pos) && (enemy !== null)) || isForced) {
+                    (design.inZone(0, board.player, pos) && (enemy !== null) && (enemy.player != board.player)) || isForced) {
                     var promoted = piece.promote(promote[piece.type]);
                     if (piece.type == 54) {
                         promoted = promoted.setValue(0, 1);
