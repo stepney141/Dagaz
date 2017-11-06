@@ -1,3 +1,29 @@
+(define init
+  (set-flag is-rock (piece? Rock))
+  (set-flag is-scis (piece? Scissors))
+  (set-flag is-lizr (piece? Lizard))
+  (set-flag is-papr (piece? Paper))
+  (set-flag is-spck (piece? Spock))
+)
+
+(define add-piece
+  (if (flag? is-rock)
+      (create Scissors)
+  )
+  (if (flag? is-scis)
+      (create Lizard)
+  )
+  (if (flag? is-lizr)
+      (create Paper)
+  )
+  (if (flag? is-papr)
+      (create Spock)
+  )
+  (if (flag? is-spck)
+      (create Rock)
+  )
+)
+
 (define step (
   $1 (while friend? $1)
   (verify not-friend?)
@@ -8,11 +34,23 @@
 ))
 
 (define slide (
-  $1 (while (or friend? empty?) $1)
+  $1 (while 
+     (or friend? empty?) 
+     (if empty? add)
+     $1
+  )
   (verify not-friend?)
   (if not-empty?
       (verify (or (piece? $2) (piece? $3)))
   )
+  add
+))
+
+(define leap-bak (
+  mark $1 $2 
+  (verify not-empty?)
+  (init) back (add-piece)
+  $1 $2 
   add
 ))
 
@@ -51,7 +89,7 @@
   )
 
   (piece
-     (name Spock)
+     (name Spock) ; 1000
      (image Blue "images/spock/kb.bmp"
             Red "images/spock/kr.bmp")
      (moves
@@ -60,7 +98,18 @@
      )
   )
   (piece
-     (name Scissors)
+     (name Rock) ; 4
+     (image Blue "images/spock/rb.bmp"
+            Red "images/spock/rr.bmp")
+     (moves
+         (step n) (step nw)
+         (step s) (step se)
+         (step w) (step sw)
+         (step e) (step ne)
+     )
+  )
+  (piece
+     (name Scissors) ; 8
      (image Blue "images/spock/sb.bmp"
             Red "images/spock/sr.bmp")
      (moves
@@ -71,16 +120,7 @@
      )
   )
   (piece
-     (name Paper)
-     (image Blue "images/spock/pb.bmp"
-            Red "images/spock/pr.bmp")
-     (moves
-         (slide n Spock Rock) (slide s Spock Rock)
-         (slide w Spock Rock) (slide e Spock Rock)
-     )
-  )
-  (piece
-     (name Lizard)
+     (name Lizard) ; 16
      (image Blue "images/spock/lb.bmp"
             Red "images/spock/lr.bmp")
      (moves
@@ -91,14 +131,12 @@
      )
   )
   (piece
-     (name Rock)
-     (image Blue "images/spock/rb.bmp"
-            Red "images/spock/rr.bmp")
+     (name Paper) ; 14
+     (image Blue "images/spock/pb.bmp"
+            Red "images/spock/pr.bmp")
      (moves
-         (step n) (step nw)
-         (step s) (step se)
-         (step w) (step sw)
-         (step e) (step ne)
+         (slide n Spock Rock) (slide s Spock Rock)
+         (slide w Spock Rock) (slide e Spock Rock)
      )
   )
 
@@ -119,4 +157,18 @@
 
   (loss-condition (Blue Red) (pieces-remaining 0 Spock))
   (loss-condition (Blue Red) stalemated)
+)
+
+(variant
+  (title "Spock (puzzle)")
+  (turn-order Blue)
+  (board-setup
+    (Blue
+       (Rock a2 b2 c2 d2 e2)
+       (Spock c1)
+       (Scissors b1 d1)
+       (Paper a1 e1)
+    )
+  )
+  (win-condition (Blue Red) (pieces-remaining 10 Spock))
 )
