@@ -323,9 +323,13 @@ var drawMarks = function(ctx, view, list, color) {
         if (pos.dy > 0) {
             y += pos.dy / 2 | 0;
         }
+        var r = pos.dx / 4;
+        if (Math.abs(pos.dy - pos.dx) > 10) {
+            r = Math.min(pos.dy, pos.dx) / 2;
+        }
         ctx.beginPath();
         ctx.fillStyle = color;
-        ctx.arc(x, y, pos.dx / 4, 0, 2 * Math.PI);
+        ctx.arc(x, y, r, 0, 2 * Math.PI);
         ctx.fill();
         ctx.stroke();
    }, view);

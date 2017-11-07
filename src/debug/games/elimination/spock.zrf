@@ -46,16 +46,11 @@
   add
 ))
 
-(define leap-bak (
+(define leap (
   mark $1 $2 
   (verify not-empty?)
   (init) back (add-piece)
   $1 $2 
-  add
-))
-
-(define leap (
-  $1 $2 (verify not-empty?)
   add
 ))
 

@@ -39,7 +39,7 @@ function UctAi(params, parent) {
 var findBot = Dagaz.AI.findBot;
 
 Dagaz.AI.findBot = function(type, params, parent) {
-  if ((type == "uct") || (type == "common") || (type == "1") || (type == "2")) {
+  if ((type == "uct") || (type == "common") || (type == "1")) {
       return new UctAi(params, parent);
   } else {
       return findBot(type, params, parent);

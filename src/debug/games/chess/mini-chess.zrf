@@ -674,7 +674,7 @@
               (nw -1 -1) (sw -1 1) (ne 1 -1) (se 1 1)
          )
      )
-     (symmetry Black (n s) (s n) (nw se) (se nw) (ne sw) (sw ne) (w w) (e e))
+     (symmetry Black (n s) (s n) (nw se) (se nw) (ne sw) (sw ne) (w e) (e w))
      (zone (name last-rank) (players White)
            (positions a6 b6 c6 d6 e6)
      )
@@ -689,7 +689,7 @@
      (moves
          (step n) (step s) (step w) (step e)
          (step nw) (step sw) (step ne) (step se)
-         (O-O-O w e)
+         (O-O-O w e) (O-O-O e w)
      )
   )
   (board-setup
@@ -775,7 +775,7 @@
               (nw -1 -1) (sw -1 1) (ne 1 -1) (se 1 1)
          )
      )
-     (symmetry Black (n s) (s n) (nw se) (se nw) (ne sw) (sw ne) (w w) (e e))
+     (symmetry Black (n s) (s n) (nw se) (se nw) (ne sw) (sw ne) (w e) (e w))
      (zone (name last-rank) (players White)
            (positions a6 b6 c6 d6 e6 f6)
      )
