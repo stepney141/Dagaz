@@ -127,16 +127,16 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(9, 0, [4, 0], 0);
     design.addMove(9, 0, [5, 0], 0);
 
-    design.setup("You", "R5", 16);
-    design.setup("You", "B5", 19);
-    design.setup("You", "B4", 12);
-    design.setup("You", "R4", 15);
-    design.setup("You", "R3", 8);
-    design.setup("You", "B3", 11);
-    design.setup("You", "B2", 4);
-    design.setup("You", "R2", 7);
-    design.setup("You", "R1", 0);
-    design.setup("You", "B1", 3);
+    design.setup("You", "B5", 16);
+    design.setup("You", "R5", 19);
+    design.setup("You", "R4", 12);
+    design.setup("You", "B4", 15);
+    design.setup("You", "B3", 8);
+    design.setup("You", "R3", 11);
+    design.setup("You", "R2", 4);
+    design.setup("You", "B2", 7);
+    design.setup("You", "B1", 0);
+    design.setup("You", "R1", 3);
 }
 
 Dagaz.View.configure = function(view) {

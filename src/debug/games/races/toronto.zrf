@@ -133,11 +133,11 @@
 
   (board-setup
     (You
-       (R5 a1) (B5 d1)
-       (B4 a2) (R4 d2)
-       (R3 a3) (B3 d3)
-       (B2 a4) (R2 d4)
-       (R1 a5) (B1 d5)
+       (R5 d1) (B5 a1)
+       (B4 d2) (R4 a2)
+       (R3 d3) (B3 a3)
+       (B2 d4) (R2 a4)
+       (R1 d5) (B1 a5)
     )
   )
 )
