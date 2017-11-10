@@ -1,5 +1,8 @@
 (function() {
 
+Dagaz.AI.AI_FRAME = 3000;
+Dagaz.AI.isForced = Dagaz.AI.isChessForced;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
