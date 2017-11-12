@@ -116,4 +116,47 @@ Dagaz.View.configure = function(view) {
     view.defPosition("a1", 9, 95, 150, 20);
     view.defPosition("b1", 181, 95, 150, 20);
     view.defPosition("c1", 353, 95, 150, 20);
+
+    view.addVector(Dagaz.Model.stringToPos("a1"), Dagaz.Model.stringToPos("a6"), 3, 0, 1);
+    view.addVector(Dagaz.Model.stringToPos("a2"), Dagaz.Model.stringToPos("a6"), 3, 0, 1);
+    view.addVector(Dagaz.Model.stringToPos("a3"), Dagaz.Model.stringToPos("a6"), 3, 0, 1);
+    view.addVector(Dagaz.Model.stringToPos("a4"), Dagaz.Model.stringToPos("a6"), 3, 0, 1);
+    view.addVector(Dagaz.Model.stringToPos("a5"), Dagaz.Model.stringToPos("a6"), 3, 0, 1);
+
+    view.addVector(Dagaz.Model.stringToPos("b1"), Dagaz.Model.stringToPos("b6"), 3, 0, 1);
+    view.addVector(Dagaz.Model.stringToPos("b2"), Dagaz.Model.stringToPos("b6"), 3, 0, 1);
+    view.addVector(Dagaz.Model.stringToPos("b3"), Dagaz.Model.stringToPos("b6"), 3, 0, 1);
+    view.addVector(Dagaz.Model.stringToPos("b4"), Dagaz.Model.stringToPos("b6"), 3, 0, 1);
+    view.addVector(Dagaz.Model.stringToPos("b5"), Dagaz.Model.stringToPos("b6"), 3, 0, 1);
+
+    view.addVector(Dagaz.Model.stringToPos("c1"), Dagaz.Model.stringToPos("c6"), 3, 0, 1);
+    view.addVector(Dagaz.Model.stringToPos("c2"), Dagaz.Model.stringToPos("c6"), 3, 0, 1);
+    view.addVector(Dagaz.Model.stringToPos("c3"), Dagaz.Model.stringToPos("c6"), 3, 0, 1);
+    view.addVector(Dagaz.Model.stringToPos("c4"), Dagaz.Model.stringToPos("c6"), 3, 0, 1);
+    view.addVector(Dagaz.Model.stringToPos("c5"), Dagaz.Model.stringToPos("c6"), 3, 0, 1);
+
+    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("b6"), 3, 0, 2);
+    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("c6"), 3, 0, 2);
+    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("a6"), 3, 0, 2);
+    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("c6"), 3, 0, 2);
+    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("a6"), 3, 0, 2);
+    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("b6"), 3, 0, 2);
+
+    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("a1"), 3, 0, 3);
+    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("a2"), 3, 0, 3);
+    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("a3"), 3, 0, 3);
+    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("a4"), 3, 0, 3);
+    view.addVector(Dagaz.Model.stringToPos("a6"), Dagaz.Model.stringToPos("a5"), 3, 0, 3);
+
+    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("b1"), 3, 0, 3);
+    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("b2"), 3, 0, 3);
+    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("b3"), 3, 0, 3);
+    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("b4"), 3, 0, 3);
+    view.addVector(Dagaz.Model.stringToPos("b6"), Dagaz.Model.stringToPos("b5"), 3, 0, 3);
+
+    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("c1"), 3, 0, 3);
+    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("c2"), 3, 0, 3);
+    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("c3"), 3, 0, 3);
+    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("c4"), 3, 0, 3);
+    view.addVector(Dagaz.Model.stringToPos("c6"), Dagaz.Model.stringToPos("c5"), 3, 0, 3);
 }
