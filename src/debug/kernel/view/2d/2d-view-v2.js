@@ -7,18 +7,19 @@ Dagaz.View.markType = {
    CURRENT:   3
 };
 
-var STEP_CNT     = 3;
+Dagaz.View.maxSteps = 3;
+var STEP_CNT        = 3;
 
-var self         = null;
-var isConfigured = false;
-var isValid      = false;
-var mouseX       = 0;
-var mouseY       = 0;
-var mousePressed = false;
-var hintedPiece  = null;
-var fromPos      = null;
-var deferred     = [];
-var blink        = 1;
+var self            = null;
+var isConfigured    = false;
+var isValid         = false;
+var mouseX          = 0;
+var mouseY          = 0;
+var mousePressed    = false;
+var hintedPiece     = null;
+var fromPos         = null;
+var deferred        = [];
+var blink           = 1;
 
 Dagaz.View.configure = function(view) {}
 
@@ -233,8 +234,6 @@ View2D.prototype.addPhase = function(ix, from, to, piece, phase, steps) {
       dy:    ((this.pos[to].y - this.pos[from].y) / steps) | 0
   });
 }
-
-Dagaz.View.maxSteps = 2;
 
 View2D.prototype.vectorFound = function(ix, from, to, piece, mode, phase) {
   if (!phase) { phase = 1; }

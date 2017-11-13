@@ -3,7 +3,7 @@
 var MAXVALUE          = 1000000;
 
 Dagaz.AI.AI_FRAME     = 3000;
-Dagaz.AI.MIN_DEEP     = 4;
+Dagaz.AI.MIN_DEEP     = 2;
 Dagaz.AI.MAX_DEEP     = 8;
 Dagaz.AI.NOISE_FACTOR = 3;
 Dagaz.AI.NO_MOVE_GOAL = -1;
@@ -98,6 +98,7 @@ AbAi.prototype.expand = function(ctx, node) {
       node.cache = _.chain(node.board.moves)
        .map(function(move) {
            return {
+               loss:  0,
                goal:  null,
                move:  move,
                board: node.board.apply(move),
@@ -174,20 +175,22 @@ AbAi.prototype.ab = function(ctx, node, a, b, deep) {
   if (deep <= 0) {
       return this.eval(ctx, node);
   }
-  var m  = a;
-  var ix = 0;
-  while ((ix < node.cache.length) && (m <= b) && (Date.now() - ctx.timestamp < this.params.AI_FRAME)) { // m < b
-      var n = node.cache[ix];
-      if (_.isUndefined(n.win)) {
-          var t = -this.ab(ctx, n, -b, -m, deep - 1);
-          if ((t !== null) && (t > m)) {
-              m = t;
-              node.best = ix;
+  node.ix = 0;
+  node.m  = a;
+  while ((node.ix < node.cache.length) && (node.m <= b) && (Date.now() - ctx.timestamp < this.params.AI_FRAME)) { // m < b
+      var n = node.cache[node.ix];
+      if (_.isUndefined(n.win)) { // ???
+          var t = -this.ab(ctx, n, -b, -node.m, deep - 1);
+          if ((t !== null) && (t > node.m)) {
+              node.m = t;
+              node.best = node.ix;
           }
+      } else {
+          node.loss++;
       }
-      ix++;
+      node.ix++;
   }
-  return m;
+  return node.m;
 }
 
 AbAi.prototype.changeCache = function(ctx, board) {
@@ -216,11 +219,41 @@ AbAi.prototype.setCache = function(ctx, ix) {
   ctx.cache = ctx.cache[ix].cache;
 }
 
+var offset = function(deep) {
+  var r = "";
+  if (deep % 2 != 0) {
+      r = "MAX: ";
+  } else {
+      r = "MIN: ";
+  }
+  while (deep > 0) {
+      r = "  " + r;
+      deep--;
+  }
+  return r;
+}
+
+AbAi.prototype.dump = function(ctx, player, cache, deep) {
+  if (!deep) {
+       deep = 0;
+  }
+  if (deep > 0) return;
+  for (var i = 0; i < cache.length; i++) {
+       var node = cache[i];
+       console.log("Dump: " + offset(deep) + node.move.toString() + ", eval = " + node.m);
+       if (node.cache) {
+           this.dump(ctx, player, node.cache, deep + 1);
+       }
+  }
+}
+
 AbAi.prototype.setContext = function(ctx, board) {
   if (this.parent) {
       this.parent.setContext(ctx, board);
   }
-  ctx.board = board;
+  ctx.loss      = 0;
+  ctx.goal      = null;
+  ctx.board     = board;
   ctx.timestamp = Date.now();
   this.changeCache(ctx, board);
 }
@@ -240,9 +273,11 @@ AbAi.prototype.getMove = function(ctx) {
       var deep = this.params.MIN_DEEP;
       while ((deep <= this.params.MAX_DEEP) && (Date.now() - ctx.timestamp < this.params.AI_FRAME)) {
           this.ab(ctx, ctx, -MAXVALUE, MAXVALUE, deep);
-          deep++;
+          console.log("Deep/All/Done/Loss = " + deep + "/" + ctx.cache.length + "/" + ctx.ix + "/" + ctx.loss);
+          deep += 2;
       }
   }
+  this.dump(ctx, ctx.board.player, ctx.cache);
   if (ctx.best !== null) {
       var r = {
            done: true,

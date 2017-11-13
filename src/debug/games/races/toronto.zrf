@@ -21,7 +21,7 @@
   (board
      (image "images/toronto/board.bmp")
      (grid
-         (start-rectangle 9 0 159 20)
+         (start-rectangle 8 0 158 20)
          (dimensions
            ("a/b/c/d" (172 0)) ; files
            ("6/5/4/3/2/1" (0 21)) ; ranks
@@ -148,7 +148,7 @@
   (board
      (image "images/toronto/hanoi.bmp")
      (grid
-         (start-rectangle 9 0 159 20)
+         (start-rectangle 8 0 158 20)
          (dimensions
            ("a/b/c" (172 0)) ; files
            ("6/5/4/3/2/1" (0 21)) ; ranks
