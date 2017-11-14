@@ -169,7 +169,10 @@ MaxMinAi.prototype.eval = function(ctx, node) {
   if (!_.isUndefined(node.forced)) {
       return null;
   }
-  return Dagaz.AI.eval(ctx.design, this.params, node.board, node.board.player);
+  if (_.isUndefined(node.eval)) {
+      node.eval = Dagaz.AI.eval(ctx.design, this.params, node.board, node.board.player);
+  }
+  return node.eval;
 }
 
 MaxMinAi.prototype.shedule = function(ctx, node) {
@@ -194,19 +197,19 @@ MaxMinAi.prototype.shedule = function(ctx, node) {
   return 0;
 }
 
-MaxMinAi.prototype.update = function(ctx, node, deep, val, ix) {
-  if (_.isUndefined(node.eval) || (node.deep != deep)) {
-      node.eval = val;
-      node.best = ix;
-      node.deep = deep;
+MaxMinAi.prototype.update = function(ctx, node, deep, value, ix) {
+  if (_.isUndefined(node.value) || (node.deep != deep)) {
+      node.value = value;
+      node.best  = ix;
+      node.deep  = deep;
       return val;
   }
-  if (node.eval < val) {
-      node.eval = val;
-      node.best = ix;
-      node.deep = deep;
+  if (node.value < value) {
+      node.value = value;
+      node.best  = ix;
+      node.deep  = deep;
   }
-  return node.eval;
+  return node.value;
 }
 
 MaxMinAi.prototype.proceed = function(ctx, node, deep) {
@@ -221,9 +224,9 @@ MaxMinAi.prototype.proceed = function(ctx, node, deep) {
   if (ix === null) {
       return -MAXVALUE;
   }
-  var val = -this.proceed(ctx, node.cache[ix], deep - 1);
-  if (val !== null) {
-      return this.update(ctx, node, deep, val, ix);
+  var value = -this.proceed(ctx, node.cache[ix], deep - 1);
+  if (value !== null) {
+      return this.update(ctx, node, deep, value, ix);
   } else {
       return this.eval(ctx, node);
   }
@@ -245,7 +248,7 @@ MaxMinAi.prototype.dump = function(ctx, player, cache, deep) {
   if (deep > 0) return;
   for (var i = 0; i < cache.length; i++) {
        var node = cache[i];
-       console.log("Dump: " + offset(deep) + node.move.toString() + ", goal = " + node.goal + ", win = " + node.win + ", eval = " + node.eval);
+       console.log("Dump: " + offset(deep) + node.move.toString() + ", goal = " + node.goal + ", win = " + node.win + ", eval = " + node.value);
        if (node.cache) {
            this.dump(ctx, player, node.cache, deep + 1);
        }
