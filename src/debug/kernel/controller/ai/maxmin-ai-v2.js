@@ -23,7 +23,7 @@ function MaxMinAi(params, parent) {
 var findBot = Dagaz.AI.findBot;
 
 Dagaz.AI.findBot = function(type, params, parent) {
-  if ((type == "maxmin") || (type == "common") || (type == "1") || (type == "2")) {
+  if ((type == "maxmin") || (type == "common") || (type == "2")) {
       return new MaxMinAi(params, parent);
   } else {
       return findBot(type, params, parent);
@@ -349,9 +349,9 @@ MaxMinAi.prototype.getMove = function(ctx) {
        var ix = this.shedule(ctx, ctx.cache);
        if (ix === null) break;
        var eval = this.proceed(ctx, ctx.cache, ix).eval;
-       if (eval == MAXVALUE) {
+/*     if (eval == MAXVALUE) {
            result = ix;
-       }
+       } */
   }
   this.dumpAll(ctx, ctx.board.player, ctx.cache);
   var eval = 0;
