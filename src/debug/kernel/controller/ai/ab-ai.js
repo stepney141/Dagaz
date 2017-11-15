@@ -113,7 +113,7 @@ AbAi.prototype.expand = function(ctx, node) {
               n.h += _.random(0, this.params.NOISE_FACTOR - 1);
            }, this);
       }
-      _.sortBy(node.cache, function(n) {
+      node.cache = _.sortBy(node.cache, function(n) {
            return -n.h;
       });
       for (var ix = 0; ix < node.cache.length; ix++) {
@@ -251,13 +251,19 @@ AbAi.prototype.getMove = function(ctx) {
   }
   this.expand(ctx, ctx);
   if (ctx.best === null) {
-      _.each(ctx.cache, function(node) {
-         this.expand(ctx, node);
-      }, this);
+      for (var i = 0; i < ctx.cache.length; i++) {
+           this.expand(ctx, ctx.cache[i]);
+           if ((Date.now() - ctx.timestamp >= this.params.AI_FRAME) && this.parent) {
+                return this.parent.getMove(ctx);
+           }
+      }
       ctx.timestamp = Date.now();
       var deep = this.params.MIN_DEEP;
       while ((deep <= this.params.MAX_DEEP) && (Date.now() - ctx.timestamp < this.params.AI_FRAME)) {
           this.ab(ctx, ctx, -MAXVALUE, MAXVALUE, deep);
+          ctx.cache = _.sortBy(ctx.cache, function(n) {
+               return -n.m;
+          });
           console.log("Deep/All/Done/Loss = " + deep + "/" + ctx.cache.length + "/" + ctx.ix + "/" + ctx.loss);
           deep++;
       }

@@ -8,6 +8,21 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  return move.actions.length;
+}
+
+Dagaz.AI.isForced = function(design, board, move) {
+  if (_.isUndefined(board.lastt)) return false;
+  for (var i = 0; i < move.actions.length; i++) {
+       var a = move.actions[i];
+       if ((a[0] !== null) && (a[1] === null) && (a[0][0] == board.lastt)) {
+           return true;
+       }
+  }
+  return false;
+}
+
 var checkLineDir = function(design, board, pos, dir) {
   var r = 0;
   var piece = board.getPiece(pos);

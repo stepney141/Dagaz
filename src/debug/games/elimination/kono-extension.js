@@ -1,7 +1,7 @@
 (function() {
 
 Dagaz.AI.AI_FRAME     = 1000;
-Dagaz.Model.showBlink = false;
+Dagaz.AI.MAX_DEEP     = 6;
 
 var checkVersion = Dagaz.Model.checkVersion;
 
