@@ -99,6 +99,7 @@ MaxMinAi.prototype.expand = function(ctx, node) {
        .map(function(move) {
            return {
                goal:   null,
+               player: node.board.player,
                move:   move,
                board:  node.board.apply(move),
                weight: Dagaz.AI.heuristic(this, ctx.design, node.board, move)
@@ -119,28 +120,25 @@ MaxMinAi.prototype.expand = function(ctx, node) {
                n.weight += this.params.FORCED_WEIGHT;
                node.forced = ix;
            }
-           n.goal = n.board.checkGoals(ctx.design, node.board.player);
+           n.goal = n.board.checkGoals(ctx.design, n.player);
            if (n.goal !== null) {
                if (n.goal > 0) {
                    node.win = ix;
                }
-               if (n.board.player != node.board.player) {
-                   n.goal = -n.goal;
-               }
            } else {
                n.board.moves = Dagaz.AI.generate(ctx, n.board);
                if (n.board.moves.length == 0) {
-                   n.goal = Dagaz.AI.NO_MOVE_GOAL;
-                   if (n.goal < 0) {
+                   n.goal = -Dagaz.AI.NO_MOVE_GOAL;
+                   if (n.goal > 0) {
                        node.win  = ix;
                    }
                }
            }
       }
       node.best = null;
-      if (!_.isUndefined(node.win)) {
-          node.best = node.win;
-      }
+  }
+  if (!_.isUndefined(node.win)) {
+      node.best = node.win;
   }
 }
 
@@ -175,13 +173,14 @@ MaxMinAi.prototype.eval = function(ctx, node) {
       return null;
   }
   if (_.isUndefined(node.eval)) {
-      node.eval = Dagaz.AI.eval(ctx.design, this.params, node.board, node.board.player);
+      node.eval = -Dagaz.AI.eval(ctx.design, this.params, node.board, node.player);
   }
   return node.eval;
 }
 
 MaxMinAi.prototype.shedule = function(ctx, node) {
   if (_.isUndefined(node.cache)) return null;
+  if (!_.isUndefined(node.win)) return node.win;
   if ((node.cache.length == 1) && _.isUndefined(node.cache[0].win)) return 0;
   var s = 0;
   _.each(node.cache, function(n) {
@@ -204,11 +203,26 @@ MaxMinAi.prototype.shedule = function(ctx, node) {
 
 MaxMinAi.prototype.proceed = function(ctx, node, deep) {
   this.expand(ctx, node);
+  if (!_.isUndefined(node.win)) {
+      node.val = -MAXVALUE;
+      return node.val;
+  }
   if (node.goal !== null) {
       node.val = node.goal * MAXVALUE;
       return node.val;
   }
   if (deep <= 0) {
+      if (!_.isUndefined(node.forced)) {
+          var n = node.cache[node.forced];
+          if (n.goal !== null) {
+              if (node.player != n.player) {
+                  node.val = -n.goal * MAXVALUE;
+              } else {
+                  node.val = n.goal * MAXVALUE;
+              }
+              return node.val;
+          }
+      }
       node.val = this.eval(ctx, node);
       return node.val;
   }
@@ -222,8 +236,8 @@ MaxMinAi.prototype.proceed = function(ctx, node, deep) {
       node.val = -MAXVALUE;
       for (var i = 0; i < node.cache.length; i++) {
            var n = node.cache[i];
-           if (!_.isUndefined(n.val) && (node.val < n.val)) {
-               node.val  = n.val;
+           if (!_.isUndefined(n.val) && (node.val < -n.val)) {
+               node.val  = -n.val;
                node.best = i;
            }
       }
@@ -246,12 +260,12 @@ MaxMinAi.prototype.dump = function(ctx, node, deep) {
   if (!deep) {
        deep = 0;
   }
-  if (deep > 0) return;
+  if (deep > 3) return;
   if (_.isUndefined(node.cache)) return;
   for (var i = 0; i < node.cache.length; i++) {
        var n = node.cache[i];
        if (!_.isUndefined(n.val)) {
-           console.log("Dump: " + offset(deep) + n.move.toString() + ", goal = " + n.goal + ", win = " + n.win + ", eval = " + n.val);
+           console.log("Dump: " + offset(deep) + n.move.toString() + ", player = " + n.player + ", goal = " + n.goal + ", win = " + n.win + ", weight = " + n.weight + ", eval = " + n.eval + ", val = " + n.val);
        }
        if (node.cache) {
            this.dump(ctx, n, deep + 1);
@@ -285,7 +299,7 @@ MaxMinAi.prototype.getMove = function(ctx) {
           this.proceed(ctx, ctx, this.params.MAX_DEEP);
           cnt++;
       }
-      console.log("Cnt = " + cnt + ", Eval = " + ctx.val);
+      console.log("Cnt = " + cnt + ", Val = " + ctx.val);
   }
   this.dump(ctx, ctx);
   if (ctx.best !== null) {

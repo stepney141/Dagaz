@@ -98,10 +98,11 @@ AbAi.prototype.expand = function(ctx, node) {
       node.cache = _.chain(node.board.moves)
        .map(function(move) {
            return {
-               goal:  null,
-               move:  move,
-               board: node.board.apply(move),
-               h:     Dagaz.AI.heuristic(this, ctx.design, node.board, move)
+               goal:   null,
+               player: node.board.player,
+               move:   move,
+               board:  node.board.apply(move),
+               h:      Dagaz.AI.heuristic(this, ctx.design, node.board, move)
            };
         }, this)
        .filter(function(n) {
@@ -121,19 +122,16 @@ AbAi.prototype.expand = function(ctx, node) {
            if (!_.isUndefined(Dagaz.AI.isForced) && _.isUndefined(node.forced) && Dagaz.AI.isForced(ctx.design, node.board, n.move)) {
                node.forced = ix;
            }
-           n.goal = n.board.checkGoals(ctx.design, node.board.player);
+           n.goal = n.board.checkGoals(ctx.design, n.player);
            if (n.goal !== null) {
                if (n.goal > 0) {
                    node.win = ix;
                }
-               if (n.board.player != node.board.player) {
-                   n.goal = -n.goal;
-               }
            } else {
                n.board.moves = Dagaz.AI.generate(ctx, n.board);
                if (n.board.moves.length == 0) {
-                   n.goal = Dagaz.AI.NO_MOVE_GOAL;
-                   if (n.goal < 0) {
+                   n.goal = -Dagaz.AI.NO_MOVE_GOAL;
+                   if (n.goal > 0) {
                        node.win  = ix;
                    }
                }
@@ -150,7 +148,10 @@ AbAi.prototype.eval = function(ctx, node) {
   if (!_.isUndefined(node.forced)) {
       return null;
   }
-  return Dagaz.AI.eval(ctx.design, this.params, node.board, node.board.player);
+  if (_.isUndefined(node.eval)) {
+      node.eval = Dagaz.AI.eval(ctx.design, this.params, node.board, node.player);
+  }
+  return node.eval;
 }
 
 AbAi.prototype.ab = function(ctx, node, a, b, deep) {
@@ -220,16 +221,17 @@ var offset = function(deep) {
   return r;
 }
 
-AbAi.prototype.dump = function(ctx, player, cache, deep) {
+AbAi.prototype.dump = function(ctx, node, deep) {
   if (!deep) {
        deep = 0;
   }
   if (deep > 0) return;
-  for (var i = 0; i < cache.length; i++) {
-       var node = cache[i];
-       console.log("Dump: " + offset(deep) + node.move.toString() + ", goal = " + node.goal + ", win = " + node.win + ", eval = " + node.m);
+  if (_.isUndefined(node.cache)) return;
+  for (var i = 0; i < node.cache.length; i++) {
+       var n = node.cache[i];
+       console.log("Dump: " + offset(deep) + n.move.toString() + ", goal = " + n.goal + ", win = " + n.win + ", eval = " + n.m);
        if (node.cache) {
-           this.dump(ctx, player, node.cache, deep + 1);
+           this.dump(ctx, n, deep + 1);
        }
   }
 }
@@ -268,7 +270,7 @@ AbAi.prototype.getMove = function(ctx) {
           deep++;
       }
   }
-  this.dump(ctx, ctx.board.player, ctx.cache);
+  this.dump(ctx, ctx);
   if (ctx.best !== null) {
       var r = {
            done: true,
