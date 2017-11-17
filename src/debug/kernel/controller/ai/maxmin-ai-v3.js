@@ -180,7 +180,7 @@ MaxMinAi.prototype.eval = function(ctx, node) {
 
 MaxMinAi.prototype.shedule = function(ctx, node) {
   if (_.isUndefined(node.cache)) return null;
-  if (!_.isUndefined(node.win)) return node.win;
+  if (!_.isUndefined(node.win))  return node.win;
   if ((node.cache.length == 1) && _.isUndefined(node.cache[0].win)) return 0;
   var s = 0;
   _.each(node.cache, function(n) {
@@ -195,18 +195,16 @@ MaxMinAi.prototype.shedule = function(ctx, node) {
       var n = node.cache[ix];
       if (_.isUndefined(n.win)) {
           s += n.weight + 1;
-          if (v < s) return ix;
+          if (v < s) {
+              return ix;
+          }
       }
   }
-  return 0;
+  return null;
 }
 
 MaxMinAi.prototype.proceed = function(ctx, node, deep) {
   this.expand(ctx, node);
-  if (!_.isUndefined(node.win)) {
-      node.val = -MAXVALUE;
-      return node.val;
-  }
   if (node.goal !== null) {
       node.val = node.goal * MAXVALUE;
       return node.val;
@@ -233,13 +231,22 @@ MaxMinAi.prototype.proceed = function(ctx, node, deep) {
   }
   var val = -this.proceed(ctx, node.cache[ix], deep - 1);
   if (val !== null) {
-      node.val = -MAXVALUE;
+      var wins = 0;
+      node.val = null;
       for (var i = 0; i < node.cache.length; i++) {
            var n = node.cache[i];
-           if (!_.isUndefined(n.val) && (node.val < -n.val)) {
+           if (!_.isUndefined(n.win)) {
+               wins++;
+               continue;
+           }
+           if (_.isUndefined(n.val) || (n.val === null)) continue;
+           if ((node.val === null) || (node.val > -n.val)) {
                node.val  = -n.val;
                node.best = i;
            }
+      }
+      if (wins == node.cache.length) {
+           node.val = MAXVALUE;
       }
   } else {
       node.val = this.eval(ctx, node);
@@ -265,7 +272,7 @@ MaxMinAi.prototype.dump = function(ctx, node, deep) {
   for (var i = 0; i < node.cache.length; i++) {
        var n = node.cache[i];
        if (!_.isUndefined(n.val)) {
-           console.log("Dump: " + offset(deep) + n.move.toString() + ", player = " + n.player + ", goal = " + n.goal + ", win = " + n.win + ", weight = " + n.weight + ", eval = " + n.eval + ", val = " + n.val);
+           console.log("Dump: " + offset(deep) + n.move.toString() + ", player = " + n.player + ", goal = " + n.goal + ", win = " + n.win + ", forced = " + n.forced + ", weight = " + n.weight + ", eval = " + n.eval + ", val = " + n.val);
        }
        if (node.cache) {
            this.dump(ctx, n, deep + 1);

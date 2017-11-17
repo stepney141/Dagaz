@@ -92,7 +92,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("f1", [-1, 1, 0, -6, -7, 0, 0, -8]);
     design.addPosition("g1", [-1, 0, 0, 0, -7, 0, 0, -8]);
 
-
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
     design.addCommand(0, ZRF.FUNCTION,	22);	// navigate
@@ -110,7 +109,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(1, ZRF.FUNCTION,	25);	// to
     design.addCommand(1, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("Pawn", 0);
+    design.addPiece("Pawn", 0, 3);
     design.addMove(0, 0, [4], 0);
     design.addMove(0, 1, [7], 0);
     design.addMove(0, 1, [3], 0);

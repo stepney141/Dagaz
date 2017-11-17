@@ -85,7 +85,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(1, ZRF.FUNCTION,	25);	// to
     design.addCommand(1, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("Pawn", 0);
+    design.addPiece("Pawn", 0, 3);
     design.addMove(0, 0, [4], 0);
     design.addMove(0, 1, [7], 0);
     design.addMove(0, 1, [3], 0);

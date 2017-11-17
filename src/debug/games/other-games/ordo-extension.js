@@ -4,70 +4,51 @@ var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
   if (name != "ordo-extension") {
-     checkVersion(design, name, value);
+      checkVersion(design, name, value);
   }
 }
 
-var getPos = function(move) {
-  for (var i in move.actions) {
-       var fp = move.actions[i][0];
-       var tp = move.actions[i][1];
-       if ((fp !== null) && (tp !== null)) {
-           return tp[0];
-       }
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  if ((move.actions.length == 1) && (move.actions[0][0] !== null) && (move.actions[0][1] !== null)) {
+      if (board.getPiece(move.actions[0][1][0]) !== null) return 5;
   }
-  return null;
+  return 1;
 }
 
-var buildGroup = function(group, player) {
-  var design = Dagaz.Model.design;
-  for (var i = 0; i < group.length; i++) {
-       var pos = group[i];
-       for (var j = 0; j < design.dirs.length; j++) {
-            var p = design.navigate(player, pos, design.dirs[j]);
-            if (p !== null) {
-                var piece = board.getPiece(p);
-                if ((piece !== null) && (piece.player == player)) {
-                    ix = Model.find(group, p);
-                    if (ix < 0) {
-                        group.push(p);
-                    }
-                }
-            }
-       }
-  }
-}
+var checkGoals = Dagaz.Model.checkGoals;
 
-var checkCoherence = function(board, player, group) {
-  var design = Dagaz.Model.design;
-  var len = design.positions.length;
-  for (var p = 0; p < len; p++) {
-       var piece = board.getPiece(p);
-       if ((piece !== null) && (piece.player == player)) {
-           ix = Model.find(group, p);
-           if (ix < 0) {
-               return false;
+Dagaz.Model.checkGoals = function(design, board, player) {
+  for (var pos = 0; pos < design.positions.length; pos++) {
+       var piece = board.getPiece(pos);
+       if ((piece !== null) && design.inZone(0, piece.player, pos)) {
+           if (piece.player == player) {
+               return 1;
+           } else {
+               return -1;
            }
        }
   }
-  return true;
+  return checkGoals(design, board, player);
 }
 
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
-  for (var i in board.moves) {
-       var m = board.moves[i];
-       var b = board.apply(m);
-       var p = getPos(m);
-       if (p !== null) {
-           var group = [ p ];
-           buildGroup(group, board.player);
-           if (!checkCoherence(b, board.player, group)) {
-               m.failed = true;
-           }
-       }
-  }
+  var design = Dagaz.Model.design;
+  _.each(board.moves, function(m) {
+      if ((m.actions.length > 0) && (m.actions[0][0] !== null) && (m.actions[0][1] !== null)) {
+          var b = board.apply(m);
+          var g = [ m.actions[0][1][0] ];
+          expand(design, board, g);
+          for (var pos = 0; pos < design.positions.length; pos++) {
+               var piece = b.getPiece(pos);
+               if ((piece !== null) && (piece.player == board.player) && (_.indexOf(g, pos) < 0)) {
+                   m.failed = false;
+                   break;
+               }
+          }
+      }
+  });
   CheckInvariants(board);
 }
 

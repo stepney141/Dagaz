@@ -8,7 +8,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var expand= function(design, board, group) {
+var expand = function(design, board, group) {
   if (group.length > 0) {
       var owner = board.getPiece(group[0]).player;
       for (var i = 0; i < group.length; i++) {
@@ -24,6 +24,36 @@ var expand= function(design, board, group) {
            });
       }
   }
+}
+
+var notUsed = function(pos, groups) {
+  for (var i = 0; i < groups.length; i++) {
+       if (_.indexOf(groups[i], pos) >= 0) return false;
+  }
+  return true;
+}
+
+Dagaz.AI.eval = function(design, params, board, player) {
+  var f = []; var e = [];
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if (piece !== null) {
+          if (piece.player == board.player) {
+              if (notUsed(pos, f)) {
+                  var g = [ pos ];
+                  expand(design, board, g);
+                  f.push(g);
+              }
+          } else {
+              if (notUsed(pos, e)) {
+                  var g = [ pos ];
+                  expand(design, board, g);
+                  e.push(g);
+              }
+          }
+      }
+  });
+  return e.length - f.length;
 }
 
 var coherence = function(design, board, positions) {
