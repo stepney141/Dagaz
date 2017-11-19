@@ -51,7 +51,7 @@ Dagaz.AI.eval = function(design, params, board, player) {
 }
 
 Dagaz.AI.heuristic = function(ai, design, board, move) {
-  var r = 0;
+  var r = 1;
   _.each(move.actions, function(a) {
       if (a[0] !== null) {
           var piece = board.getPiece(a[0][0]);
