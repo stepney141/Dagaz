@@ -173,7 +173,7 @@ MaxMinAi.prototype.eval = function(ctx, node) {
       return null;
   }
   if (_.isUndefined(node.eval)) {
-      node.eval = -Dagaz.AI.eval(ctx.design, this.params, node.board, node.player);
+      node.eval = Dagaz.AI.eval(ctx.design, this.params, node.board, node.player);
   }
   return node.eval;
 }
@@ -181,7 +181,7 @@ MaxMinAi.prototype.eval = function(ctx, node) {
 MaxMinAi.prototype.shedule = function(ctx, node) {
   if (_.isUndefined(node.cache)) return null;
   if (!_.isUndefined(node.win))  return node.win;
-  if ((node.cache.length == 1) && _.isUndefined(node.cache[0].win)) return 0;
+  if (node.cache.length == 1) return 0;
   var s = 0;
   _.each(node.cache, function(n) {
       if (_.isUndefined(n.win)) {
@@ -207,51 +207,43 @@ MaxMinAi.prototype.proceed = function(ctx, node, deep) {
   this.expand(ctx, node);
   if (node.goal !== null) {
       node.val = node.goal * MAXVALUE;
-      return node.val;
+      return;
+  }
+  if (_.isUndefined(node.forced)) {
+      node.val = this.eval(ctx, node);
+      return;
   }
   if (deep <= 0) {
       if (!_.isUndefined(node.forced)) {
-          var n = node.cache[node.forced];
-          if (n.goal !== null) {
-              if (node.player != n.player) {
-                  node.val = -n.goal * MAXVALUE;
-              } else {
-                  node.val = n.goal * MAXVALUE;
-              }
-              return node.val;
-          }
+          node.val = 0;
+      } else {
+          node.val = this.eval(ctx, node);
       }
-      node.val = this.eval(ctx, node);
-      return node.val;
+      return;
   }
   var ix = this.shedule(ctx, node);
   if (ix === null) {
       node.val = -MAXVALUE;
-      return node.val;
+      return;
   }
-  var val = -this.proceed(ctx, node.cache[ix], deep - 1);
-  if (val !== null) {
-      var wins = 0;
-      node.val = null;
-      for (var i = 0; i < node.cache.length; i++) {
-           var n = node.cache[i];
-           if (!_.isUndefined(n.win)) {
-               wins++;
-               continue;
-           }
-           if (_.isUndefined(n.val) || (n.val === null)) continue;
-           if ((node.val === null) || (node.val > -n.val)) {
-               node.val  = -n.val;
-               node.best = i;
-           }
-      }
-      if (wins == node.cache.length) {
-           node.val = MAXVALUE;
-      }
-  } else {
-      node.val = this.eval(ctx, node);
+  this.proceed(ctx, node.cache[ix], deep - 1);
+  var wins = 0;
+  node.val = null;
+  for (var i = 0; i < node.cache.length; i++) {
+       var n = node.cache[i];
+       if (!_.isUndefined(n.win)) {
+           wins++;
+           continue;
+       }
+       if (_.isUndefined(n.val) || (n.val === null)) continue;
+       if ((node.val === null) || (node.val > -n.val)) {
+           node.val  = -n.val;
+           node.best = i;
+       }
   }
-  return node.val;
+  if (wins == node.cache.length) {
+       node.val = MAXVALUE;
+  }
 }
 
 var offset = function(deep) {
@@ -307,6 +299,17 @@ MaxMinAi.prototype.getMove = function(ctx) {
           cnt++;
       }
       console.log("Cnt = " + cnt + ", Val = " + ctx.val);
+  }
+  if ((ctx.best === null) && (ctx.cache.length > 0)) {
+      ctx.cache = _.filter(ctx.cache, function(n) {
+          return _.isUndefined(n.win);
+      });
+      if (ctx.cache.length == 1) {
+          ctx.best = 0;
+      }
+      if (ctx.cache.length > 1) {
+          ctx.best = _.random(0, ctx.cache.length - 1);
+      }
   }
   this.dump(ctx, ctx);
   if (ctx.best !== null) {

@@ -2110,4 +2110,8 @@ ZrfMove.prototype.clarify = function(move) {
   }
 }
 
+ZrfMove.prototype.isSimpleMove = function() {
+  return (this.actions.length == 1) && (this.actions[0][0] !== null) && (this.actions[0][1] !== null);
+}
+
 })();
