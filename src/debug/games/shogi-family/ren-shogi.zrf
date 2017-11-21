@@ -110,6 +110,38 @@
        )
   )
   (piece 
+       (name Gold)
+       (image South "images/sgold.bmp" 
+              North "images/ngold.bmp")
+       (moves
+           (step n) (step nw)
+           (step s) (step ne)
+           (step w) (step e) 
+           (drop-piece nx)
+       )
+  )
+  (piece 
+       (name Silver)
+       (image South "images/ssilver.bmp" 
+              North "images/nsilver.bmp")
+       (moves
+           (step nw) (step sw)
+           (step se) (step ne)
+           (step n)
+           (drop-piece nx)
+       )
+  )
+  (piece 
+       (name SilverP)
+       (image South "images/ssilverp.bmp" 
+              North "images/nsilverp.bmp")
+       (moves
+           (step n) (step nw)
+           (step s) (step ne)
+           (step w) (step e) 
+       )
+  )
+  (piece 
        (name Bishop)
        (image South "images/sbishop.bmp" 
               North "images/nbishop.bmp")
@@ -133,17 +165,6 @@
        )
   )
   (piece 
-       (name Gold)
-       (image South "images/sgold.bmp" 
-              North "images/ngold.bmp")
-       (moves
-           (step n) (step nw)
-           (step s) (step ne)
-           (step w) (step e) 
-           (drop-piece nx)
-       )
-  )
-  (piece 
        (name Rook)
        (image South "images/srook.bmp" 
               North "images/nrook.bmp")
@@ -164,27 +185,6 @@
            (slide e) (step ne)
            (slide w) (step sw)
            (slide s) (step se)
-       )
-  )
-  (piece 
-       (name Silver)
-       (image South "images/ssilver.bmp" 
-              North "images/nsilver.bmp")
-       (moves
-           (step nw) (step sw)
-           (step se) (step ne)
-           (step n)
-           (drop-piece nx)
-       )
-  )
-  (piece 
-       (name SilverP)
-       (image South "images/ssilverp.bmp" 
-              North "images/nsilverp.bmp")
-       (moves
-           (step n) (step nw)
-           (step s) (step ne)
-           (step w) (step e) 
        )
   )
   (piece 

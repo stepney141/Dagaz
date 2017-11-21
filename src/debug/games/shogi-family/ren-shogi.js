@@ -24,6 +24,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "false");
     design.checkVersion("show-blink", "false");
+    design.checkVersion("mini-shogi-promotion", "true");
+    design.checkVersion("mini-shogi-extension", "true");
 
     design.addDirection("w");
     design.addDirection("e");
@@ -122,41 +124,41 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addCommand(1, ZRF.FUNCTION,	24);	// from
     design.addCommand(1, ZRF.IN_ZONE,	0);	// board-zone
+    design.addCommand(1, ZRF.FUNCTION,	0);	// not
     design.addCommand(1, ZRF.FUNCTION,	20);	// verify
     design.addCommand(1, ZRF.PARAM,	0);	// $1
-    design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(1, ZRF.FUNCTION,	21);	// position
+    design.addCommand(1, ZRF.ON_BOARD_DIR,	10);	// name
+    design.addCommand(1, ZRF.FUNCTION,	0);	// not
+    design.addCommand(1, ZRF.IF,	10);
     design.addCommand(1, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(1, ZRF.FUNCTION,	0);	// not
-    design.addCommand(1, ZRF.IF,	7);
+    design.addCommand(1, ZRF.IF,	4);
     design.addCommand(1, ZRF.FORK,	3);
     design.addCommand(1, ZRF.FUNCTION,	25);	// to
     design.addCommand(1, ZRF.FUNCTION,	28);	// end
     design.addCommand(1, ZRF.PARAM,	1);	// $2
     design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(1, ZRF.JUMP,	-8);
-    design.addCommand(1, ZRF.FUNCTION,	2);	// enemy?
-    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(1, ZRF.FUNCTION,	25);	// to
+    design.addCommand(1, ZRF.JUMP,	-11);
     design.addCommand(1, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(2, ZRF.FUNCTION,	24);	// from
     design.addCommand(2, ZRF.IN_ZONE,	0);	// board-zone
-    design.addCommand(2, ZRF.FUNCTION,	0);	// not
     design.addCommand(2, ZRF.FUNCTION,	20);	// verify
     design.addCommand(2, ZRF.PARAM,	0);	// $1
-    design.addCommand(2, ZRF.FUNCTION,	21);	// position
-    design.addCommand(2, ZRF.ON_BOARD_DIR,	10);	// name
-    design.addCommand(2, ZRF.FUNCTION,	0);	// not
-    design.addCommand(2, ZRF.IF,	10);
+    design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(2, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(2, ZRF.FUNCTION,	0);	// not
-    design.addCommand(2, ZRF.IF,	4);
+    design.addCommand(2, ZRF.IF,	7);
     design.addCommand(2, ZRF.FORK,	3);
     design.addCommand(2, ZRF.FUNCTION,	25);	// to
     design.addCommand(2, ZRF.FUNCTION,	28);	// end
     design.addCommand(2, ZRF.PARAM,	1);	// $2
     design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(2, ZRF.JUMP,	-11);
+    design.addCommand(2, ZRF.JUMP,	-8);
+    design.addCommand(2, ZRF.FUNCTION,	2);	// enemy?
+    design.addCommand(2, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(2, ZRF.FUNCTION,	25);	// to
     design.addCommand(2, ZRF.FUNCTION,	28);	// end
 
     design.addPiece("King", 0, 100);
@@ -169,68 +171,68 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 0, [1], 0);
     design.addMove(0, 0, [3], 0);
 
-    design.addPiece("Bishop", 1, 10);
-    design.addMove(1, 1, [7, 7], 0);
-    design.addMove(1, 1, [5, 5], 0);
-    design.addMove(1, 1, [6, 6], 0);
-    design.addMove(1, 1, [3, 3], 0);
-    design.addMove(1, 2, [57, 10], 0);
+    design.addPiece("Gold", 1, 6);
+    design.addMove(1, 0, [4], 0);
+    design.addMove(1, 0, [7], 0);
+    design.addMove(1, 0, [2], 0);
+    design.addMove(1, 0, [3], 0);
+    design.addMove(1, 0, [0], 0);
+    design.addMove(1, 0, [1], 0);
+    design.addMove(1, 1, [57, 10], 0);
 
-    design.addPiece("BishopP", 2, 11);
-    design.addMove(2, 1, [7, 7], 0);
+    design.addPiece("Silver", 2, 5);
+    design.addMove(2, 0, [7], 0);
+    design.addMove(2, 0, [6], 0);
+    design.addMove(2, 0, [5], 0);
+    design.addMove(2, 0, [3], 0);
     design.addMove(2, 0, [4], 0);
-    design.addMove(2, 1, [5, 5], 0);
-    design.addMove(2, 0, [2], 0);
-    design.addMove(2, 1, [6, 6], 0);
-    design.addMove(2, 0, [0], 0);
-    design.addMove(2, 1, [3, 3], 0);
-    design.addMove(2, 0, [1], 0);
+    design.addMove(2, 1, [57, 10], 0);
 
-    design.addPiece("Gold", 3, 6);
+    design.addPiece("SilverP", 3, 6);
     design.addMove(3, 0, [4], 0);
     design.addMove(3, 0, [7], 0);
     design.addMove(3, 0, [2], 0);
     design.addMove(3, 0, [3], 0);
     design.addMove(3, 0, [0], 0);
     design.addMove(3, 0, [1], 0);
-    design.addMove(3, 2, [57, 10], 0);
 
-    design.addPiece("Rook", 4, 15);
-    design.addMove(4, 1, [4, 4], 0);
-    design.addMove(4, 1, [1, 1], 0);
-    design.addMove(4, 1, [0, 0], 0);
-    design.addMove(4, 1, [2, 2], 0);
-    design.addMove(4, 2, [57, 10], 0);
+    design.addPiece("Bishop", 4, 10);
+    design.addMove(4, 2, [7, 7], 0);
+    design.addMove(4, 2, [5, 5], 0);
+    design.addMove(4, 2, [6, 6], 0);
+    design.addMove(4, 2, [3, 3], 0);
+    design.addMove(4, 1, [57, 10], 0);
 
-    design.addPiece("RookP", 5, 16);
-    design.addMove(5, 1, [4, 4], 0);
-    design.addMove(5, 0, [7], 0);
-    design.addMove(5, 1, [1, 1], 0);
-    design.addMove(5, 0, [3], 0);
-    design.addMove(5, 1, [0, 0], 0);
-    design.addMove(5, 0, [6], 0);
-    design.addMove(5, 1, [2, 2], 0);
-    design.addMove(5, 0, [5], 0);
+    design.addPiece("BishopP", 5, 11);
+    design.addMove(5, 2, [7, 7], 0);
+    design.addMove(5, 0, [4], 0);
+    design.addMove(5, 2, [5, 5], 0);
+    design.addMove(5, 0, [2], 0);
+    design.addMove(5, 2, [6, 6], 0);
+    design.addMove(5, 0, [0], 0);
+    design.addMove(5, 2, [3, 3], 0);
+    design.addMove(5, 0, [1], 0);
 
-    design.addPiece("Silver", 6, 5);
-    design.addMove(6, 0, [7], 0);
-    design.addMove(6, 0, [6], 0);
-    design.addMove(6, 0, [5], 0);
-    design.addMove(6, 0, [3], 0);
-    design.addMove(6, 0, [4], 0);
-    design.addMove(6, 2, [57, 10], 0);
+    design.addPiece("Rook", 6, 15);
+    design.addMove(6, 2, [4, 4], 0);
+    design.addMove(6, 2, [1, 1], 0);
+    design.addMove(6, 2, [0, 0], 0);
+    design.addMove(6, 2, [2, 2], 0);
+    design.addMove(6, 1, [57, 10], 0);
 
-    design.addPiece("SilverP", 7, 6);
-    design.addMove(7, 0, [4], 0);
+    design.addPiece("RookP", 7, 16);
+    design.addMove(7, 2, [4, 4], 0);
     design.addMove(7, 0, [7], 0);
-    design.addMove(7, 0, [2], 0);
+    design.addMove(7, 2, [1, 1], 0);
     design.addMove(7, 0, [3], 0);
-    design.addMove(7, 0, [0], 0);
-    design.addMove(7, 0, [1], 0);
+    design.addMove(7, 2, [0, 0], 0);
+    design.addMove(7, 0, [6], 0);
+    design.addMove(7, 2, [2, 2], 0);
+    design.addMove(7, 0, [5], 0);
 
     design.addPiece("Pawn", 8, 1);
     design.addMove(8, 0, [4], 0);
-    design.addMove(8, 2, [57, 10], 0);
+    design.addMove(8, 1, [57, 10], 0);
 
     design.addPiece("PawnP", 9, 2);
     design.addMove(9, 0, [4], 0);
@@ -239,7 +241,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(9, 0, [3], 0);
     design.addMove(9, 0, [0], 0);
     design.addMove(9, 0, [1], 0);
-    design.addMove(9, 2, [57, 10], 0);
+    design.addMove(9, 1, [57, 10], 0);
 
     design.setup("South", "King", 58);
     design.setup("South", "Gold", 57);
@@ -263,20 +265,20 @@ Dagaz.View.configure = function(view) {
     view.defBoard("Board");
     view.defPiece("SouthKing", "South King");
     view.defPiece("NorthKing", "North King");
-    view.defPiece("SouthBishop", "South Bishop");
-    view.defPiece("NorthBishop", "North Bishop");
-    view.defPiece("SouthBishopP", "South BishopP");
-    view.defPiece("NorthBishopP", "North BishopP");
     view.defPiece("SouthGold", "South Gold");
     view.defPiece("NorthGold", "North Gold");
-    view.defPiece("SouthRook", "South Rook");
-    view.defPiece("NorthRook", "North Rook");
-    view.defPiece("SouthRookP", "South RookP");
-    view.defPiece("NorthRookP", "North RookP");
     view.defPiece("SouthSilver", "South Silver");
     view.defPiece("NorthSilver", "North Silver");
     view.defPiece("SouthSilverP", "South SilverP");
     view.defPiece("NorthSilverP", "North SilverP");
+    view.defPiece("SouthBishop", "South Bishop");
+    view.defPiece("NorthBishop", "North Bishop");
+    view.defPiece("SouthBishopP", "South BishopP");
+    view.defPiece("NorthBishopP", "North BishopP");
+    view.defPiece("SouthRook", "South Rook");
+    view.defPiece("NorthRook", "North Rook");
+    view.defPiece("SouthRookP", "South RookP");
+    view.defPiece("NorthRookP", "North RookP");
     view.defPiece("SouthPawn", "South Pawn");
     view.defPiece("NorthPawn", "North Pawn");
     view.defPiece("SouthPawnP", "South PawnP");

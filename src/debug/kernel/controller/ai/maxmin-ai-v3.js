@@ -140,6 +140,9 @@ MaxMinAi.prototype.expand = function(ctx, node) {
   if (!_.isUndefined(node.win)) {
       node.best = node.win;
   }
+  if (node.best >= node.cache.length) {
+      node.best = null;
+  }
 }
 
 MaxMinAi.prototype.changeCache = function(ctx, board) {
@@ -209,7 +212,7 @@ MaxMinAi.prototype.proceed = function(ctx, node, deep) {
       node.val = node.goal * MAXVALUE;
       return;
   }
-  if (_.isUndefined(node.forced)) {
+  if ((deep < this.params.MAX_DEEP) && _.isUndefined(node.forced)) {
       node.val = this.eval(ctx, node);
       return;
   }

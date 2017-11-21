@@ -2101,13 +2101,15 @@ ZrfMove.prototype.isPass = function() {
 }
 
 ZrfMove.prototype.clarify = function(move) {
-  if ((move.actions.length == 1) && (move.actions[0][0] !== null) && (move.actions[0][1] !== null)) {
-      _.each(this.actions, function(a) {
-          if ((a[0] !== null) && (a[1] !== null) && (a[0][0] == move.actions[0][0][0]) && (a[1][0] == move.actions[0][1][0])) {
-              a[2] = move.actions[0][2];
-          }
-      });
-  }
+  _.each(move.actions, function(s) {
+      if ((s[0] !== null) && (s[1] !== null)) {
+          _.each(this.actions, function(d) {
+               if ((d[0] !== null) && (d[1] !== null) && (d[0][0] == s[0][0]) && (d[1][0] == s[1][0])) {
+                    d[2] = s[2];
+               }
+          });
+      }
+  }, this);
 }
 
 ZrfMove.prototype.isSimpleMove = function() {

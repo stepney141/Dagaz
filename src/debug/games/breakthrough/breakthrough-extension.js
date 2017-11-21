@@ -8,6 +8,10 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  return 1;
+}
+
 var checkDir = function(design, board, player, pos, dir, v, owner) {
   var p = design.navigate(player, pos, dir);
   if (p === null) return 0;
