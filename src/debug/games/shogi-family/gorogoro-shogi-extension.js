@@ -26,13 +26,11 @@ Dagaz.Model.checkGoals = function(design, board, player) {
   return checkGoals(design, board, player);
 }
 
-var findKing = function(design, board, player) {
-  var king = design.getPieceType("Lion");
-  var positions = design.allPositions();
-  for (var i = 0; i < positions.length; i++) {
-       var piece = board.getPiece(positions[i]);
-       if ((piece !== null) && (piece.type == king) && (piece.player == player)) {
-           return positions[i];
+var findPiece = function(design, board, player, type) {
+  for (var p = 0; p < design.positions.length; p++) {
+       var piece = board.getPiece(p);
+       if ((piece !== null) && (piece.type == type) && (piece.player == player)) {
+           return p;
        }
   }
   return null;
@@ -121,13 +119,14 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
   var pawn   = design.getPieceType("Chick");
+  var king   = design.getPieceType("Lion");
   var n  = design.getDirection("n");  var w  = design.getDirection("w");
   var s  = design.getDirection("s");  var e  = design.getDirection("e");
   var nw = design.getDirection("nw"); var sw = design.getDirection("sw");
   var ne = design.getDirection("ne"); var se = design.getDirection("se");
   _.each(board.moves, function(move) {
       var b = board.apply(move);
-      var pos = findKing(design, b, board.player);
+      var pos = findPiece(design, b, board.player, king);
       if (pos === null) {
           move.failed = true;
           return;

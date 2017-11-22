@@ -26,6 +26,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-blink", "false");
     design.checkVersion("mini-shogi-promotion", "true");
     design.checkVersion("mini-shogi-extension", "true");
+    design.checkVersion("mini-shogi-invariant", "true");
 
     design.addDirection("w");
     design.addDirection("e");
