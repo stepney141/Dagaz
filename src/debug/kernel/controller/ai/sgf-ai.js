@@ -11,7 +11,7 @@ function SgfAi(params, parent) {
 var findBot = Dagaz.AI.findBot;
 
 Dagaz.AI.findBot = function(type, params, parent) {
-  if ((type == "sgf") || (type == "opening")) {
+  if ((type == "sgf") || (type == "opening") || (type == "solver")) {
       return new SgfAi(params, parent);
   } else {
       return findBot(type, params, parent);
@@ -72,7 +72,13 @@ SgfAi.prototype.setContext = function(ctx, board) {
       ctx.cursor = [];
       ctx.position = 0;
   }
-  ctx.sgf = find(ctx, ctx.position, locate(ctx.cursor), getNote(board.move));
+  if (!_.isUndefined(board.move)) {
+      if (!ctx.design.isPuzzle()) {
+          ctx.sgf = find(ctx, ctx.position, locate(ctx.cursor), getNote(board.move));
+      }
+  } else {
+      ctx.sgf = locate(ctx.cursor);
+  }
 }
 
 SgfAi.prototype.getMove = function(ctx) {

@@ -67,7 +67,7 @@
 )
 
 (variant
-  (title "Swappers")
+  (title "Fore and Aft")
 
   (board
      (image "images/swappers/board.bmp")
