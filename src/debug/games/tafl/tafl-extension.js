@@ -43,8 +43,7 @@ Dagaz.AI.eval = function(design, params, board, player) {
       for (var i = 0; i < group.length; i++) {
            var p = group[i];
            var d = delta[p];
-           for (var j = 0; j < design.dirs.length; j++) {
-                var d = design.dirs[j];
+           for (var d = 0; d < design.dirs.length; d++) {
                 var pos = design.navigate(player, p, d);
                 if (pos !== null) {
                     if (_.indexOf(goals, pos) >= 0) {

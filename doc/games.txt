@@ -11,7 +11,7 @@
     * Konane
     * Фанорона
     > Nubia
-  - Checkers family
+  * Checkers family
     * Turkish Dama
     * Greek Checkers
     * Armenian Tama
@@ -35,10 +35,10 @@
   * Shafran's game
   * Джунгли
   * Kamisado
-  > Prairie or Trespass
+  * Prairie
   > Neutron
   * Gauntlet
-  * Tafl family
+  > Tafl family
   * Italian Damone
   * Archimedes
   * Doubutsu Shogi
@@ -93,16 +93,17 @@
     ? Таврели
   > Platform Chess
   - Morph Chess
-  - Philosophers Chess
+  ? Philosophers Chess
   - Caissa
   - Chad
   * Шабел
   - Shogi Family
     - Shogi
-    > Goro goro shogi
-    > Mini Shogi
-    > Micro Shogi
-    > Kyoto Shogi
+    * Goro goro shogi
+    * REN Shogi
+    * Mini Shogi
+    * Micro Shogi
+    * Kyoto Shogi
     - Wa Shogi
     - Whale Shogi, Great Whale Shogi
     - Tori Shogi
@@ -123,8 +124,8 @@
   - Cavalier au Cordeau
   * Три мушкетёра
   - Halma family
-    - Halma
-    - Pyon Pyon Shogi (2 variants)
+    > Halma
+    > Pyon Pyon Shogi (2 variants)
   * Hasami Shogi
   - Morris family
   - Болотуду
@@ -184,9 +185,9 @@
 - Puzzles
   * Sliding puzzles
   * Solitair puzzles
-  > Halma puzzles
+  * Halma puzzles
   * LightOff puzzles
-  - Ханойские башни (перемешивание выполнением серии случайных ходов)
+  * Ханойские башни (перемешивание выполнением серии случайных ходов)
   - Sokoban
   > Mancala puzzles (Tchuka Ruma)
   > Chameleon Chess puzzles

@@ -22,6 +22,7 @@ ZRF = {
 Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("tafl-extension", "goals");
+    design.checkVersion("show-blink", "false");
 
     design.addDirection("w");
     design.addDirection("e");
