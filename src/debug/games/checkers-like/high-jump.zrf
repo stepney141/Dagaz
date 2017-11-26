@@ -21,7 +21,7 @@
 
   (option "animate captures"       false)
   (option "smart moves"            true)
-; (option "hasami shogi extension" true)
+  (option "pass turn"              forced)
 
   (players Black White)
   (turn-order Black White)
