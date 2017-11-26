@@ -27,7 +27,7 @@
 
   (option "animate captures"       false)
   (option "smart moves"            true)
-; (option "hasami shogi extension" true)
+  (option "hasami shogi extension" true)
 
   (players Black White)
   (turn-order Black White)
@@ -35,7 +35,7 @@
   (board
      (image "images/hasami-shogi/board.bmp")
      (grid
-         (start-rectangle 8 8 49 54)
+         (start-rectangle 8 9 49 55)
          (dimensions
            ("a/b/c/d/e/f/g/h/i" (41 0)) ; files
            ("9/8/7/6/5/4/3/2/1" (0 46)) ; ranks
