@@ -155,15 +155,20 @@
 )
 
 (variant
-  (title "Spock (puzzle)")
-  (turn-order Blue)
+  (title "Spock (Debug)")
+  (default)
   (board-setup
+    (Red
+       (Rock a4 c4 d4 e4)
+       (Scissors b5 d5)
+       (Paper a5 e5)
+       (Spock c5)
+    )
     (Blue
-       (Rock a2 b2 c2 d2 e2)
-       (Spock c1)
-       (Scissors b1 d1)
-       (Paper a1 e1)
+       (Rock b3 c2 d2 e2)
+       (Scissors a2 b1 c1 d1)
+       (Spock b4)
+       (Paper a3 e1)
     )
   )
-  (win-condition (Blue Red) (pieces-remaining 10 Spock))
 )

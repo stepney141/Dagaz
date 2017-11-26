@@ -6,6 +6,11 @@
   )
 ))
 
+(define step (
+  $1 (verify empty?)
+  add
+))
+
 (define jump (
   $1 (verify not-empty?)
   $1 (verify empty?)
@@ -22,18 +27,18 @@
 
   (option "animate captures"       false)
   (option "smart moves"            true)
-  (option "hasami shogi extension" true)
+; (option "hasami shogi extension" true)
 
   (players Black White)
   (turn-order Black White)
 
   (board
-     (image "images/hasami-shogi/9x9.bmp")
+     (image "images/hasami-shogi/board.bmp")
      (grid
-         (start-rectangle 2 2 52 52)
+         (start-rectangle 8 8 49 54)
          (dimensions
-           ("a/b/c/d/e/f/g/h/i" (50 0)) ; files
-           ("9/8/7/6/5/4/3/2/1" (0 50)) ; ranks
+           ("a/b/c/d/e/f/g/h/i" (41 0)) ; files
+           ("9/8/7/6/5/4/3/2/1" (0 46)) ; ranks
          )
          (directions 
              (n 0 -1) (s 0 1) (e 1 0) (w -1 0)
@@ -50,10 +55,10 @@
 
   (piece
      (name  Stone)
-     (image White "images/hasami-shogi/white.bmp"
-            Black "images/hasami-shogi/black.bmp")
+     (image White "images/hasami-shogi/ntokin.bmp"
+            Black "images/hasami-shogi/spawn.bmp")
      (moves
-        (slide n) (slide s) (slide w) (slide e)
+        (step n) (step s) (step w) (step e)
         (jump n) (jump s) (jump w) (jump e)
      )
   )
@@ -71,8 +76,16 @@
 (variant
   (title "Debug")
   (default)
+  (piece
+     (name  Stone)
+     (image White "images/hasami-shogi/ntokin.bmp"
+            Black "images/hasami-shogi/spawn.bmp")
+     (moves
+        (slide n) (slide s) (slide w) (slide e)
+     )
+  )
   (board-setup
-    (Black (Stone a1 b1 c1 d1 e1 f1 g1 h1 i1  a2 b2 c2 d2 e2 f2 g2 h2 i2))
-    (White (Stone a9 f9 h9 i9 i8))
+    (Black (Stone a1 b1 c1 d1 e1 f1 g1 h1 i1))
+    (White (Stone a9 b9 c9 d9 e9 f9 g9 h9 i9))
   )
 )
