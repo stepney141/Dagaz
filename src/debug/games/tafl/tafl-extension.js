@@ -23,6 +23,23 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  var r = move.actions.length;
+  var pos = null;
+  _.each(move.actions, function(a) {
+      if ((a[0] !== null) && (a[1] !== null)) {
+           pos = a[0][0];
+      }
+  });
+  if (pos !== null) {
+      var piece = board.getPiece(pos);
+      if ((piece !== null) && (piece.type == 1)) {
+          r++;
+      }
+  }
+  return r;
+}
+
 Dagaz.AI.eval = function(design, params, board, player) {
   var r = -MAXVALUE;
   var group = [];

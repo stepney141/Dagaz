@@ -127,32 +127,21 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.PARAM,	0);	// $1
     design.addCommand(0, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(0, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(0, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(0, ZRF.FUNCTION,	0);	// not
+    design.addCommand(0, ZRF.IF,	7);
+    design.addCommand(0, ZRF.FORK,	3);
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
-
-    design.addCommand(1, ZRF.FUNCTION,	24);	// from
-    design.addCommand(1, ZRF.PARAM,	0);	// $1
-    design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(1, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(1, ZRF.FUNCTION,	0);	// not
-    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(1, ZRF.PARAM,	1);	// $2
-    design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(1, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(1, ZRF.FUNCTION,	25);	// to
-    design.addCommand(1, ZRF.FUNCTION,	28);	// end
+    design.addCommand(0, ZRF.PARAM,	1);	// $2
+    design.addCommand(0, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(0, ZRF.JUMP,	-8);
+    design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
     design.addPiece("Stone", 0);
-    design.addMove(0, 0, [4], 0);
-    design.addMove(0, 0, [2], 0);
-    design.addMove(0, 0, [0], 0);
-    design.addMove(0, 0, [1], 0);
-    design.addMove(0, 1, [4, 4], 0);
-    design.addMove(0, 1, [2, 2], 0);
-    design.addMove(0, 1, [0, 0], 0);
-    design.addMove(0, 1, [1, 1], 0);
+    design.addMove(0, 0, [4, 4], 0);
+    design.addMove(0, 0, [2, 2], 0);
+    design.addMove(0, 0, [0, 0], 0);
+    design.addMove(0, 0, [1, 1], 0);
 
     design.setup("Black", "Stone", 72);
     design.setup("Black", "Stone", 73);
@@ -163,24 +152,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "Stone", 78);
     design.setup("Black", "Stone", 79);
     design.setup("Black", "Stone", 80);
-    design.setup("Black", "Stone", 63);
-    design.setup("Black", "Stone", 64);
-    design.setup("Black", "Stone", 65);
-    design.setup("Black", "Stone", 66);
-    design.setup("Black", "Stone", 67);
-    design.setup("Black", "Stone", 68);
-    design.setup("Black", "Stone", 69);
-    design.setup("Black", "Stone", 70);
-    design.setup("Black", "Stone", 71);
-    design.setup("White", "Stone", 9);
-    design.setup("White", "Stone", 10);
-    design.setup("White", "Stone", 11);
-    design.setup("White", "Stone", 12);
-    design.setup("White", "Stone", 13);
-    design.setup("White", "Stone", 14);
-    design.setup("White", "Stone", 15);
-    design.setup("White", "Stone", 16);
-    design.setup("White", "Stone", 17);
     design.setup("White", "Stone", 0);
     design.setup("White", "Stone", 1);
     design.setup("White", "Stone", 2);

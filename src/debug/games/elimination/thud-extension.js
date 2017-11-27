@@ -18,6 +18,12 @@ var getY = function(pos) {
   return (pos / SIZE) | 0;
 }
 
+var sign = function(x) {
+  if (x > 0) return 1;
+  if (x < 0) return -1;
+  return 0;
+}
+
 var badDistance = function(design, board, player, pos, dir, distance) {
   while (distance > 0) {
       pos = design.navigate(player, pos, dir);
@@ -38,10 +44,10 @@ Dagaz.Model.CheckInvariants = function(board) {
       if (m.isSimpleMove()) {
           var pos      = m.actions[0][0][0];
           var target   = m.actions[0][1][0];
-          var x        = getX(target - pos);
-          var y        = getY(target - pos);
-          var distance = Math.max(Math.abs(x), Math.abs(y));
-          var dir      = design.findDirection(pos + Math.sign(y) * SIZE + Math.sign(x), pos);
+          var dx       = getX(target) - getX(pos);
+          var dy       = getY(target) - getY(pos);
+          var distance = Math.max(Math.abs(dx), Math.abs(dy));
+          var dir      = design.findDirection(pos + sign(dy) * SIZE + sign(dx), pos);
           var piece    = board.getPiece(pos);
           if ((piece !== null) && (dir !== null)) {
               if (piece.type == 0) {
@@ -51,20 +57,22 @@ Dagaz.Model.CheckInvariants = function(board) {
                       }
                   }
               } else {
-                  if (distance > 1) {
-                      if (badDistance(design, board, board.player, pos, dir, distance - 1)) {
-                          m.failed = true;
-                      }
-                  }
+                  var f = true;
                   _.each(design.allDirections(), function(d) {
                       var p = design.navigate(board.player, target, d);
                       if (p !== null) {
                           var piece = board.getPiece(p);
                           if ((piece !== null) && (piece.type == 0)) {
+                              f = false;
                               m.capturePiece(p);
                           }
                       }
                   });
+                  if (distance > 1) {
+                      if (f || badDistance(design, board, board.player, pos, dir, distance - 1)) {
+                          m.failed = true;
+                      }
+                  }
               }
           }
       }

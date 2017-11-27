@@ -314,9 +314,11 @@ MoveList.prototype.setPosition = function(pos) {
           this.level++;
       }
       this.position = null;
-  } else {
-      if (_.indexOf(this.getStarts(), pos) >= 0) {
-          // Initial move
+  }
+  if (_.indexOf(this.getStarts(), pos) >= 0) {
+      if (this.position == pos) {
+          this.position = null;
+      } else {
           this.position = pos;
       }
   }

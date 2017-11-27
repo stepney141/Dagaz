@@ -1364,6 +1364,12 @@ function ZrfBoard(game) {
   this.values   = [];
 }
 
+ZrfBoard.prototype.assign = function(board) {
+  this.zSign    = board.zSign;
+  this.pieces   = board.pieces;
+  delete this.moves;
+}
+
 ZrfBoard.prototype.getValue = function(name) {
   if (_.isUndefined(this.values[name])) {
       return null;
