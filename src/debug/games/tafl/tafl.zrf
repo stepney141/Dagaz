@@ -27,7 +27,7 @@
   (title "Tablut")
   (option "tafl-extension" true)
 
-  (players White Black)
+  (players Black White)
   (turn-order Black White)
 
   (move-sound "Audio\Pickup.wav")

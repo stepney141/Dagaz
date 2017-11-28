@@ -15,7 +15,7 @@
   (title "Fidchell")
   (option "tafl-extension" true)
 
-  (players White Black)
+  (players Black White)
   (turn-order Black White)
 
   (move-sound "Audio\Pickup.wav")
@@ -163,5 +163,41 @@
   (board-setup
     (Black (Man a4 b4 f4 g4 d1 d2 d6 d7 a3 a5 g3 g5 c1 e1 c7 e7))
     (White (King d4) (Man c4 e4 d3 d5 c3 c5 e3 e5))
+  )
+)
+
+(variant
+  (title "-")
+)
+
+(variant
+  (title "Debug")
+  (default)
+  (board
+     (image "images/gwyddbwyll.bmp")
+     (grid
+         (start-rectangle 21 23 90 92)
+         (dimensions
+           ("a/b/c/d/e/f/g" (69 0)) ; files
+           ("7/6/5/4/3/2/1" (0 69)) ; ranks
+         )
+         (directions 
+              (n 0 -1) (s 0 1) (e 1 0) (w -1 0)
+         )
+     )
+     (zone (name throne) (players Black White)
+         (positions d4)
+     )
+     (zone (name goal) (players Black White)
+         (positions a1 a7 g1 g7)
+     )
+     (zone (name enemies) (players Black White)
+         (positions a3 a5 c1 c7 e1 e7 g3 g5)
+     )
+  )
+
+  (board-setup
+    (Black (Man a5 b3 c1 c5 e3 e5 e7 g3))
+    (White (King c4) (Man c2 d3))
   )
 )

@@ -273,19 +273,19 @@ MoveList.prototype.setPosition = function(pos) {
                   m[0][0] = [ this.position ];
                   m[0][1] = [ pos ];
                   this.copyActions(result, actions, move.mode);
-                  return true;
+                  return result;
               }
               if (Dagaz.Model.smartFrom && (this.position == null) && (_.indexOf(m[0][0], pos) >= 0)) {
                   // Smart from move
                   m[0][0] = [ pos ];
                   this.copyActions(result, actions, move.mode);
-                  return true;
+                  return result;
               }
               if (Dagaz.Model.smartTo && (this.position == null) && (_.indexOf(m[0][1], pos) >= 0)) {
                   // Smart from move
                   m[0][1] = [ pos ];
                   this.copyActions(result, actions, move.mode);
-                  return true;
+                  return result;
               }
           } else {
               var n = _.chain(actions)
@@ -294,18 +294,18 @@ MoveList.prototype.setPosition = function(pos) {
                    if (_.indexOf(action[0], pos) >= 0) {
                        // Capture move
                        action[0] = [ pos ];
-                       return true;
+                       return result;
                    }
                    if (_.indexOf(action[1], pos) >= 0) {
                        // Drop move
                        action[1] = [ pos ];
-                       return true;
+                       return result;
                    }
-                   return false;
+                   return result;
                 }).value();
               if (n.length > 0) {
                   this.copyActions(result, actions, move.mode);
-                  return true;
+                  return result;
               }
           }
       }, this);

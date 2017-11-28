@@ -18,7 +18,6 @@ Dagaz.Model.checkGoals = function(design, board, player) {
           enemies++;
       }
   });
-  console.log("*** " + enemies);
   if (enemies == 1) {
       return 1;
   }

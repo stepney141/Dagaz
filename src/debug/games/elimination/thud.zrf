@@ -10,7 +10,7 @@
 
 (game
   (title "Thud!")
-  (history "")
+  (history "https://en.wikipedia.org/wiki/Games_of_the_Discworld#Thud")
 
   (option "animate captures"  false)
   (option "smart moves"       true)
