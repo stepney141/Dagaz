@@ -1,6 +1,7 @@
 (function() {
 
-var SIZE = 15;
+var SIZE         = 15;
+var MAXVALUE     = 1000000;
 
 var checkVersion = Dagaz.Model.checkVersion;
 
@@ -16,6 +17,49 @@ var getX = function(pos) {
 
 var getY = function(pos) {
   return (pos / SIZE) | 0;
+}
+
+Dagaz.AI.eval = function(design, params, board, player) {
+  var dwarfs = [];
+  var trolls = [];
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if (piece !== null) {
+          if (piece.type == 0) {
+              dwarfs.push(pos);
+          } else {
+              trolls.push(pos);
+          }
+      }
+  });
+  var r = null;
+  if (dwarfs.length == 0) {
+      r = MAXVALUE;
+  }
+  if (trolls.length == 0) {
+      r = -MAXVALUE;
+  }
+  if (r === null) {
+      r = trolls.length * design.price[1] - dwarfs.length * design.price[0];
+      _.each(trolls, function(a) {
+          var mn = null;
+          _.each(dwarfs, function(b) {
+               var dx = getX(b) - getX(a);
+               var dy = getY(b) - getY(a);
+               var s  = dx * dx + dy * dy;
+               if ((mn === null) || (mn > s)) {
+                   mn = s;
+               }
+          });
+          if (mn <= 2) {
+               r -= MAXVALUE;
+          }
+      });
+  }
+  if (player == 1) {
+      r = -r;
+  }
+  return r;
 }
 
 var sign = function(x) {
