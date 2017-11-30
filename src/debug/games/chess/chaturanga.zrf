@@ -147,3 +147,29 @@
   (loss-condition (White Black) repetition)
   (win-condition (White Black) stalemated)
 )
+
+(variant
+  (title "Chaturanga (variant)")
+  (default)
+  (piece
+     (name Gaja)
+     (image White "images/wbishop.bmp"
+            Black "images/bbishop.bmp")
+     (moves
+         (step nw) (step sw) (step ne) (step se)
+         (step n)
+     )
+  )
+)
+
+(variant
+  (title "Chaturanga (variant)")
+  (piece
+     (name Gaja)
+     (image White "images/wbishop.bmp"
+            Black "images/bbishop.bmp")
+     (moves
+         (leap n n) (leap e e) (leap w w) (leap s s)
+     )
+  )
+)

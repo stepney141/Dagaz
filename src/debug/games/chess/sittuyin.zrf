@@ -128,3 +128,185 @@
   (win-condition (White Black) stalemated)
   (loss-condition (White Black) repetition)
 )
+
+(variant
+  (title "-")
+)
+
+(variant
+  (title "Sittuyin 1")
+  (board-setup
+    (White 
+         (Ne a3 b3 c3 d3 e4 f4 g4 h4)
+         (Min-gyi g2)
+         (Sit-ke e3)
+         (Yahhta c1 e1)
+         (Myin f2 f3)
+         (Sin d2 g3)
+    )
+    (Black 
+         (Ne a5 b5 c5 d5 e6 f6 g6 h6)
+         (Min-gyi c7)
+         (Sit-ke d6)
+         (Yahhta e8 g8)
+         (Myin d7 f7)
+         (Sin c6 e7)
+    )
+  )
+)
+
+
+(variant
+  (title "Sittuyin 2")
+  (board-setup
+    (White 
+         (Ne a3 b3 c3 d3 e4 f4 g4 h4)
+         (Min-gyi c2)
+         (Sit-ke e3)
+         (Yahhta f1 g1)
+         (Myin e2 f3)
+         (Sin b2 d2)
+    )
+    (Black 
+         (Ne a5 b5 c5 d5 e6 f6 g6 h6)
+         (Min-gyi c7)
+         (Sit-ke d6)
+         (Yahhta f8 g8)
+         (Myin b6 d7)
+         (Sin c6 e7)
+    )
+  )
+)
+
+(variant
+  (title "Sittuyin 3")
+  (board-setup
+    (White 
+         (Ne a3 b3 c3 d3 e4 f4 g4 h4)
+         (Min-gyi f2)
+         (Sit-ke e3)
+         (Yahhta b1 c1)
+         (Myin e2 g3)
+         (Sin d2 f3)
+    )
+    (Black 
+         (Ne a5 b5 c5 d5 e6 f6 g6 h6)
+         (Min-gyi c7)
+         (Sit-ke d6)
+         (Yahhta e8 g8)
+         (Myin d7 e7)
+         (Sin c6 f7)
+    )
+  )
+)
+
+(variant
+  (title "Sittuyin 4")
+  (board-setup
+    (White 
+         (Ne a3 b3 c3 d3 e4 f4 g4 h4)
+         (Min-gyi f2)
+         (Sit-ke e3)
+         (Yahhta b1 d1)
+         (Myin d2 e2)
+         (Sin c2 f3)
+    )
+    (Black 
+         (Ne a5 b5 c5 d5 e6 f6 g6 h6)
+         (Min-gyi b7)
+         (Sit-ke d6)
+         (Yahhta c8 f8)
+         (Myin c6 d7)
+         (Sin b6 e7)
+    )
+  )
+)
+
+(variant
+  (title "Sittuyin 5")
+  (board-setup
+    (White 
+         (Ne a3 b3 c3 d3 e4 f4 g4 h4)
+         (Min-gyi g2)
+         (Sit-ke e3)
+         (Yahhta c1 f1)
+         (Myin e2 f3)
+         (Sin d2 g3)
+    )
+    (Black 
+         (Ne a5 b5 c5 d5 e6 f6 g6 h6)
+         (Min-gyi b7)
+         (Sit-ke d6)
+         (Yahhta d8 f8)
+         (Myin c7 c6)
+         (Sin b6 e7)
+    )
+  )
+)
+
+(variant
+  (title "Sittuyin 6")
+  (board-setup
+    (White 
+         (Ne a3 b3 c3 d3 e4 f4 g4 h4)
+         (Min-gyi f2)
+         (Sit-ke e3)
+         (Yahhta b1 d1)
+         (Myin c2 e2)
+         (Sin b2 f3)
+    )
+    (Black 
+         (Ne a5 b5 c5 d5 e6 f6 g6 h6)
+         (Min-gyi c8)
+         (Sit-ke c6)
+         (Yahhta e8 f8)
+         (Myin d7 d6)
+         (Sin c7 g7)
+    )
+  )
+)
+
+(variant
+  (title "Sittuyin 7")
+  (board-setup
+    (White 
+         (Ne a3 b3 c3 d3 e4 f4 g4 h4)
+         (Min-gyi f1)
+         (Sit-ke f3)
+         (Yahhta c1 d1)
+         (Myin e2 e3)
+         (Sin b2 f2)
+    )
+    (Black 
+         (Ne a5 b5 c5 d5 e6 f6 g6 h6)
+         (Min-gyi b7)
+         (Sit-ke d6)
+         (Yahhta d8 f8)
+         (Myin c7 e7)
+         (Sin b6 c6)
+    )
+  )
+)
+
+(variant
+  (title "Sittuyin 8")
+  (default)
+  (board-setup
+    (White 
+         (Ne a3 b3 c3 d3 e4 f4 g4 h4)
+         (Min-gyi g2)
+         (Sit-ke e3)
+         (Yahhta c1 e1)
+         (Myin d2 f2)
+         (Sin f3 g3)
+    )
+    (Black 
+         (Ne a5 b5 c5 d5 e6 f6 g6 h6)
+         (Min-gyi b7)
+         (Sit-ke d6)
+         (Yahhta d8 f8)
+         (Myin c7 c6)
+         (Sin b6 e7)
+    )
+  )
+)

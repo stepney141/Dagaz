@@ -24,7 +24,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "true");
     design.checkVersion("show-blink", "false");
-    design.checkVersion("makruk-invariant", "true");
 
     design.addDirection("w");
     design.addDirection("e");
@@ -103,11 +102,13 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("g1", [-1, 1, 0, -7, -8, 0, 0, -9]);
     design.addPosition("h1", [-1, 0, 0, 0, -8, 0, 0, -9]);
 
-    design.addZone("promotion", 1, [16, 17, 18, 19, 20, 21, 22, 23]);
-    design.addZone("promotion", 2, [40, 41, 42, 43, 44, 45, 46, 47]);
+    design.addZone("promotion", 1, [0, 1, 2, 3, 4, 5, 6, 7]);
+    design.addZone("promotion", 2, [56, 57, 58, 59, 60, 61, 62, 63]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
+    design.addCommand(0, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(0, ZRF.PARAM,	1);	// $2
     design.addCommand(0, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(0, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(0, ZRF.FUNCTION,	0);	// not
@@ -118,15 +119,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(1, ZRF.FUNCTION,	24);	// from
     design.addCommand(1, ZRF.PARAM,	0);	// $1
     design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(1, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(1, ZRF.FUNCTION,	0);	// not
-    design.addCommand(1, ZRF.IF,	7);
-    design.addCommand(1, ZRF.FORK,	3);
-    design.addCommand(1, ZRF.FUNCTION,	25);	// to
-    design.addCommand(1, ZRF.FUNCTION,	28);	// end
-    design.addCommand(1, ZRF.PARAM,	1);	// $2
-    design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(1, ZRF.JUMP,	-8);
     design.addCommand(1, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(1, ZRF.FUNCTION,	0);	// not
     design.addCommand(1, ZRF.FUNCTION,	20);	// verify
@@ -136,8 +128,15 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(2, ZRF.FUNCTION,	24);	// from
     design.addCommand(2, ZRF.PARAM,	0);	// $1
     design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(2, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(2, ZRF.FUNCTION,	0);	// not
+    design.addCommand(2, ZRF.IF,	7);
+    design.addCommand(2, ZRF.FORK,	3);
+    design.addCommand(2, ZRF.FUNCTION,	25);	// to
+    design.addCommand(2, ZRF.FUNCTION,	28);	// end
     design.addCommand(2, ZRF.PARAM,	1);	// $2
     design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(2, ZRF.JUMP,	-8);
     design.addCommand(2, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(2, ZRF.FUNCTION,	0);	// not
     design.addCommand(2, ZRF.FUNCTION,	20);	// verify
@@ -152,7 +151,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(3, ZRF.IN_ZONE,	0);	// promotion
     design.addCommand(3, ZRF.FUNCTION,	0);	// not
     design.addCommand(3, ZRF.IF,	4);
-    design.addCommand(3, ZRF.PROMOTE,	1);	// Met
+    design.addCommand(3, ZRF.PROMOTE,	2);	// Mantri
     design.addCommand(3, ZRF.FUNCTION,	25);	// to
     design.addCommand(3, ZRF.JUMP,	2);
     design.addCommand(3, ZRF.FUNCTION,	25);	// to
@@ -166,104 +165,104 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(4, ZRF.IN_ZONE,	0);	// promotion
     design.addCommand(4, ZRF.FUNCTION,	0);	// not
     design.addCommand(4, ZRF.IF,	4);
-    design.addCommand(4, ZRF.PROMOTE,	1);	// Met
+    design.addCommand(4, ZRF.PROMOTE,	2);	// Mantri
     design.addCommand(4, ZRF.FUNCTION,	25);	// to
     design.addCommand(4, ZRF.JUMP,	2);
     design.addCommand(4, ZRF.FUNCTION,	25);	// to
     design.addCommand(4, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("Khun", 0);
-    design.addMove(0, 0, [4], 0);
-    design.addMove(0, 0, [2], 0);
-    design.addMove(0, 0, [0], 0);
-    design.addMove(0, 0, [1], 0);
-    design.addMove(0, 0, [7], 0);
-    design.addMove(0, 0, [6], 0);
-    design.addMove(0, 0, [3], 0);
-    design.addMove(0, 0, [5], 0);
 
-    design.addPiece("Met", 1);
-    design.addMove(1, 0, [7], 0);
-    design.addMove(1, 0, [6], 0);
-    design.addMove(1, 0, [3], 0);
-    design.addMove(1, 0, [5], 0);
+    design.addPiece("Gaja", 0);
+    design.addMove(0, 0, [4, 4], 0);
+    design.addMove(0, 0, [1, 1], 0);
+    design.addMove(0, 0, [0, 0], 0);
+    design.addMove(0, 0, [2, 2], 0);
 
-    design.addPiece("Ruea", 2);
-    design.addMove(2, 1, [4, 4], 0);
-    design.addMove(2, 1, [2, 2], 0);
-    design.addMove(2, 1, [0, 0], 0);
-    design.addMove(2, 1, [1, 1], 0);
+    design.addPiece("Raja", 1);
+    design.addMove(1, 1, [4], 0);
+    design.addMove(1, 1, [2], 0);
+    design.addMove(1, 1, [0], 0);
+    design.addMove(1, 1, [1], 0);
+    design.addMove(1, 1, [7], 0);
+    design.addMove(1, 1, [6], 0);
+    design.addMove(1, 1, [3], 0);
+    design.addMove(1, 1, [5], 0);
 
-    design.addPiece("Khon", 3);
-    design.addMove(3, 0, [7], 0);
-    design.addMove(3, 0, [6], 0);
-    design.addMove(3, 0, [3], 0);
-    design.addMove(3, 0, [5], 0);
-    design.addMove(3, 0, [4], 0);
+    design.addPiece("Mantri", 2);
+    design.addMove(2, 1, [7], 0);
+    design.addMove(2, 1, [6], 0);
+    design.addMove(2, 1, [3], 0);
+    design.addMove(2, 1, [5], 0);
 
-    design.addPiece("Ma", 4);
-    design.addMove(4, 2, [4, 7], 0);
-    design.addMove(4, 2, [4, 3], 0);
-    design.addMove(4, 2, [2, 6], 0);
-    design.addMove(4, 2, [2, 5], 0);
-    design.addMove(4, 2, [0, 7], 0);
-    design.addMove(4, 2, [0, 6], 0);
-    design.addMove(4, 2, [1, 3], 0);
-    design.addMove(4, 2, [1, 5], 0);
+    design.addPiece("Ratha", 3);
+    design.addMove(3, 2, [4, 4], 0);
+    design.addMove(3, 2, [2, 2], 0);
+    design.addMove(3, 2, [0, 0], 0);
+    design.addMove(3, 2, [1, 1], 0);
 
-    design.addPiece("Bia", 5);
+    design.addPiece("Ashva", 4);
+    design.addMove(4, 0, [4, 7], 0);
+    design.addMove(4, 0, [4, 3], 0);
+    design.addMove(4, 0, [2, 6], 0);
+    design.addMove(4, 0, [2, 5], 0);
+    design.addMove(4, 0, [0, 7], 0);
+    design.addMove(4, 0, [0, 6], 0);
+    design.addMove(4, 0, [1, 3], 0);
+    design.addMove(4, 0, [1, 5], 0);
+
+    design.addPiece("Bhata", 5);
     design.addMove(5, 3, [4], 0);
     design.addMove(5, 4, [7], 0);
     design.addMove(5, 4, [3], 0);
 
-    design.setup("White", "Bia", 40);
-    design.setup("White", "Bia", 41);
-    design.setup("White", "Bia", 42);
-    design.setup("White", "Bia", 43);
-    design.setup("White", "Bia", 44);
-    design.setup("White", "Bia", 45);
-    design.setup("White", "Bia", 46);
-    design.setup("White", "Bia", 47);
-    design.setup("White", "Ruea", 56);
-    design.setup("White", "Ruea", 63);
-    design.setup("White", "Ma", 57);
-    design.setup("White", "Ma", 62);
-    design.setup("White", "Khon", 58);
-    design.setup("White", "Khon", 61);
-    design.setup("White", "Met", 60);
-    design.setup("White", "Khun", 59);
-    design.setup("Black", "Bia", 16);
-    design.setup("Black", "Bia", 17);
-    design.setup("Black", "Bia", 18);
-    design.setup("Black", "Bia", 19);
-    design.setup("Black", "Bia", 20);
-    design.setup("Black", "Bia", 21);
-    design.setup("Black", "Bia", 22);
-    design.setup("Black", "Bia", 23);
-    design.setup("Black", "Ruea", 0);
-    design.setup("Black", "Ruea", 7);
-    design.setup("Black", "Ma", 1);
-    design.setup("Black", "Ma", 6);
-    design.setup("Black", "Khon", 2);
-    design.setup("Black", "Khon", 5);
-    design.setup("Black", "Met", 3);
-    design.setup("Black", "Khun", 4);
+    design.setup("White", "Bhata", 48);
+    design.setup("White", "Bhata", 49);
+    design.setup("White", "Bhata", 50);
+    design.setup("White", "Bhata", 51);
+    design.setup("White", "Bhata", 52);
+    design.setup("White", "Bhata", 53);
+    design.setup("White", "Bhata", 54);
+    design.setup("White", "Bhata", 55);
+    design.setup("White", "Ratha", 56);
+    design.setup("White", "Ratha", 63);
+    design.setup("White", "Ashva", 57);
+    design.setup("White", "Ashva", 62);
+    design.setup("White", "Gaja", 58);
+    design.setup("White", "Gaja", 61);
+    design.setup("White", "Mantri", 59);
+    design.setup("White", "Raja", 60);
+    design.setup("Black", "Bhata", 8);
+    design.setup("Black", "Bhata", 9);
+    design.setup("Black", "Bhata", 10);
+    design.setup("Black", "Bhata", 11);
+    design.setup("Black", "Bhata", 12);
+    design.setup("Black", "Bhata", 13);
+    design.setup("Black", "Bhata", 14);
+    design.setup("Black", "Bhata", 15);
+    design.setup("Black", "Ratha", 0);
+    design.setup("Black", "Ratha", 7);
+    design.setup("Black", "Ashva", 1);
+    design.setup("Black", "Ashva", 6);
+    design.setup("Black", "Gaja", 2);
+    design.setup("Black", "Gaja", 5);
+    design.setup("Black", "Mantri", 4);
+    design.setup("Black", "Raja", 3);
 }
 
 Dagaz.View.configure = function(view) {
     view.defBoard("Board");
-    view.defPiece("WhiteKhun", "White Khun");
-    view.defPiece("BlackKhun", "Black Khun");
-    view.defPiece("WhiteMet", "White Met");
-    view.defPiece("BlackMet", "Black Met");
-    view.defPiece("WhiteRuea", "White Ruea");
-    view.defPiece("BlackRuea", "Black Ruea");
-    view.defPiece("WhiteKhon", "White Khon");
-    view.defPiece("BlackKhon", "Black Khon");
-    view.defPiece("WhiteMa", "White Ma");
-    view.defPiece("BlackMa", "Black Ma");
-    view.defPiece("WhiteBia", "White Bia");
-    view.defPiece("BlackBia", "Black Bia");
+    view.defPiece("WhiteGaja", "White Gaja");
+    view.defPiece("BlackGaja", "Black Gaja");
+    view.defPiece("WhiteRaja", "White Raja");
+    view.defPiece("BlackRaja", "Black Raja");
+    view.defPiece("WhiteMantri", "White Mantri");
+    view.defPiece("BlackMantri", "Black Mantri");
+    view.defPiece("WhiteRatha", "White Ratha");
+    view.defPiece("BlackRatha", "Black Ratha");
+    view.defPiece("WhiteAshva", "White Ashva");
+    view.defPiece("BlackAshva", "Black Ashva");
+    view.defPiece("WhiteBhata", "White Bhata");
+    view.defPiece("BlackBhata", "Black Bhata");
  
     view.defPosition("a8", 2, 2, 50, 50);
     view.defPosition("b8", 52, 2, 50, 50);

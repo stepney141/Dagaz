@@ -76,24 +76,40 @@ Dagaz.AI.eval = function(design, params, board, player) {
 
 Dagaz.AI.heuristic = function(ai, design, board, move) {
   var r = 1;
+  var captured = [];
   _.each(move.actions, function(a) {
-      if (a[0] !== null) {
-          var piece = board.getPiece(a[0][0]);
+      if ((a[0] !== null) && (a[1] === null)) {
+          var pos = a[0][0];
+          var piece = board.getPiece(pos);
           if (piece !== null) {
-              if (a[1] === null) {
-                  r += design.price[piece.type];
+              r += design.price[piece.type];
+          }
+          captured.push(pos);
+      }
+  });
+  _.each(move.actions, function(a) {
+      if ((a[0] !== null) && (a[1] !== null)) {
+          var pos    = a[0][0];
+          var target = a[1][0];
+          var piece  = board.getPiece(pos);
+          if (piece !== null) {
+              var f = false;
+              if (_.indexOf(captured, target) >= 0) {
+                  r -= design.price[piece.type];
               } else {
-                  var target = board.getPiece(a[1][0]);
-                  if (target !== null) {
-                      r += design.price[target.type] * 2;
-                  }
                   if (a[2] !== null) {
                       var promoted = a[2][0];
                       r += design.price[promoted.type];
+                      f = true;
                   }
-                  if ((target !== null) || (a[2] !== null)) {
-                      r -= design.price[piece.type];
-                  }
+              }
+              var enemy = board.getPiece(target);
+              if (enemy !== null) {
+                  r += design.price[enemy.type] * 2;
+                  f = true;
+              }
+              if (f) {
+                  r -= design.price[piece.type];
               }
           }
       }

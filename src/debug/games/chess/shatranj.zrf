@@ -148,8 +148,7 @@
 )
 
 (variant
-  (title "Shatranj (Mujanah)")
-; (default)
+  (title "Shatranj (Mujannah)")
   (board-setup
     (White 
          (Sarbaz a2 b3 c4 d3 e3 f4 g3 h2)
@@ -166,6 +165,183 @@
          (Alfil c8 f8)
          (Fers e8)
          (Shah d8)
+    )
+  )
+)
+
+(variant
+  (title "Shatranj (Mushaihi)")
+  (board-setup
+    (White 
+         (Sarbaz a3 b2 c3 d4 e4 f3 g3 h2)
+         (Rokh a1 h1)
+         (Asb d2 e2)
+         (Alfil c1 f1)
+         (Fers e3)
+         (Shah d1)
+    )
+    (Black 
+         (Sarbaz a7 b6 c6 d5 e5 f6 g7 h6)
+         (Rokh a8 h8)
+         (Asb d7 e7)
+         (Alfil c8 f8)
+         (Fers d6)
+         (Shah e8)
+    )
+  )
+)
+
+(variant
+  (title "Shatranj (Mujannah-Mushaihi)")
+  (board-setup
+    (White 
+         (Sarbaz a2 b3 c4 d3 e3 f4 g3 h2)
+         (Rokh b1 g1)
+         (Asb c3 f3)
+         (Alfil c1 f1)
+         (Fers e1)
+         (Shah d1)
+    )
+    (Black 
+         (Sarbaz a7 b6 c6 d5 e5 f6 g7 h6)
+         (Rokh a8 h8)
+         (Asb d7 e7)
+         (Alfil c8 f8)
+         (Fers d6)
+         (Shah e8)
+    )
+  )
+)
+
+(variant
+  (title "Shatranj (Mushaihi-Mujannah)")
+  (board-setup
+    (White 
+         (Sarbaz a3 b2 c3 d4 e4 f3 g3 h2)
+         (Rokh a1 h1)
+         (Asb d2 e2)
+         (Alfil c1 f1)
+         (Fers e3)
+         (Shah d1)
+    )
+    (Black 
+         (Sarbaz a7 b6 c5 d6 e6 f5 g6 h7)
+         (Rokh b8 g8)
+         (Asb c6 f6)
+         (Alfil c8 f8)
+         (Fers e8)
+         (Shah d8)
+    )
+  )
+)
+
+(variant
+  (title "Shatranj (sayyal)")
+  (board-setup
+    (White 
+         (Sarbaz a3 b3 c3 d3 e3 f3 g4 h2)
+         (Rokh f2 g1)
+         (Asb b1 e2)
+         (Alfil c1 f1)
+         (Fers d1)
+         (Shah e1)
+    )
+    (Black 
+         (Sarbaz a7 b5 c6 d6 e6 f6 g6 h6)
+         (Rokh b8 c7)
+         (Asb d7 g8)
+         (Alfil c8 f8)
+         (Fers e8)
+         (Shah d8)
+    )
+  )
+)
+
+(variant
+  (title "Shatranj (Muwashshah)")
+  (default)
+  (board-setup
+    (White 
+         (Sarbaz a3 b3 c3 d4 e3 f5 g4 h2)
+         (Rokh b1 g1)
+         (Asb d2 f3)
+         (Alfil c1 f1)
+         (Fers d3)
+         (Shah e1)
+    )
+    (Black 
+         (Sarbaz a7 b5 c4 d6 e5 f6 g6 h6)
+         (Rokh b8 g8)
+         (Asb c6 e7)
+         (Alfil c8 f8)
+         (Fers e6)
+         (Shah d8)
+    )
+  )
+)
+
+(variant
+  (title "Shatranj (variant)")
+  (board-setup
+    (White 
+         (Sarbaz a4 b3 c3 d4 e4 f3 g3 h4)
+         (Rokh b1 g1)
+         (Asb d2 e2)
+         (Alfil d3 e3)
+         (Fers f2)
+         (Shah c2)
+    )
+    (Black 
+         (Sarbaz a5 b6 c6 d5 e5 f6 g6 h5)
+         (Rokh b8 g8)
+         (Asb d7 e7)
+         (Alfil d6 e6)
+         (Fers c7)
+         (Shah f7)
+    )
+  )
+)
+
+(variant
+  (title "Shatranj (variant)")
+  (board-setup
+    (White 
+         (Sarbaz a4 b3 c3 d3 e4 f3 g2 h4)
+         (Rokh b1 c1)
+         (Asb d2 e2)
+         (Alfil a3 h3)
+         (Fers f1)
+         (Shah g1)
+    )
+    (Black 
+         (Sarbaz a5 b6 c6 d6 e5 f4 g7 h5)
+         (Rokh b8 c8)
+         (Asb d7 f6)
+         (Alfil e6 h6)
+         (Fers f8)
+         (Shah g8)
+    )
+  )
+)
+
+(variant
+  (title "Shatranj (variant)")
+  (board-setup
+    (White 
+         (Sarbaz a2 b4 c3 c5 e4 f3 g3 h2)
+         (Rokh b1 b2)
+         (Asb b3)
+         (Alfil a3 h3)
+         (Fers d3)
+         (Shah f2)
+    )
+    (Black 
+         (Sarbaz a5 b6 c6 d6 e5 f4 g5)
+         (Rokh g7 h8)
+         (Asb d7 g6)
+         (Alfil e6 h6)
+         (Fers f6)
+         (Shah f7)
     )
   )
 )

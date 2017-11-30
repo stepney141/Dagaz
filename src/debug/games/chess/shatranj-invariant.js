@@ -3,7 +3,7 @@
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "chess-invariant") {
+  if (name != "shatranj-invariant") {
       checkVersion(design, name, value);
   }
 }
@@ -12,7 +12,7 @@ var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {
   var design = Dagaz.Model.design;
-  var king   = design.getPieceType("King");
+  var king   = design.getPieceType("Shah");
   var kings  = _.chain(design.allPositions())
    .filter(function(pos) {
       var piece = board.getPiece(pos);
@@ -68,26 +68,26 @@ var checkLeap = function(design, board, player, pos, o, d, knight) {
 }
 
 var checkPositions = function(design, board, player, positions) {
-  var king   = design.getPieceType("King");
-  var pawn   = design.getPieceType("Pawn");
-  var rook   = design.getPieceType("Rook");
-  var knight = design.getPieceType("Knight");
-  var bishop = design.getPieceType("Bishop");
-  var queen  = design.getPieceType("Queen");
+  var king   = design.getPieceType("Shah");
+  var pawn   = design.getPieceType("Sarbaz");
+  var rook   = design.getPieceType("Rokh");
+  var knight = design.getPieceType("Asb");
+  var bishop = design.getPieceType("Alfil");
+  var queen  = design.getPieceType("Fers");
   var n  = design.getDirection("n");  var w  = design.getDirection("w");
   var s  = design.getDirection("s");  var e  = design.getDirection("e");
   var nw = design.getDirection("nw"); var sw = design.getDirection("sw");
   var ne = design.getDirection("ne"); var se = design.getDirection("se");
   for (var i = 0; i < positions.length; i++) {
        var pos = positions[i];
-       if (checkDirection(design, board, player, pos, n,  [king], [rook, queen])) return true;
-       if (checkDirection(design, board, player, pos, s,  [king], [rook, queen])) return true;
-       if (checkDirection(design, board, player, pos, w,  [king], [rook, queen])) return true;
-       if (checkDirection(design, board, player, pos, e,  [king], [rook, queen])) return true;
-       if (checkDirection(design, board, player, pos, nw, [king, pawn], [bishop, queen])) return true;
-       if (checkDirection(design, board, player, pos, ne, [king, pawn], [bishop, queen])) return true;
-       if (checkDirection(design, board, player, pos, sw, [king], [bishop, queen])) return true;
-       if (checkDirection(design, board, player, pos, se, [king], [bishop, queen])) return true;
+       if (checkDirection(design, board, player, pos, n,  [king], [rook])) return true;
+       if (checkDirection(design, board, player, pos, s,  [king], [rook])) return true;
+       if (checkDirection(design, board, player, pos, w,  [king], [rook])) return true;
+       if (checkDirection(design, board, player, pos, e,  [king], [rook])) return true;
+       if (checkDirection(design, board, player, pos, nw, [king, pawn, queen], [])) return true;
+       if (checkDirection(design, board, player, pos, ne, [king, pawn, queen], [])) return true;
+       if (checkDirection(design, board, player, pos, sw, [king, queen], [])) return true;
+       if (checkDirection(design, board, player, pos, se, [king, queen], [])) return true;
        if (checkLeap(design, board, player, pos, n, nw, knight)) return true;
        if (checkLeap(design, board, player, pos, n, ne, knight)) return true;
        if (checkLeap(design, board, player, pos, s, sw, knight)) return true;
@@ -96,33 +96,19 @@ var checkPositions = function(design, board, player, positions) {
        if (checkLeap(design, board, player, pos, w, sw, knight)) return true;
        if (checkLeap(design, board, player, pos, e, ne, knight)) return true;
        if (checkLeap(design, board, player, pos, e, se, knight)) return true;
+       if (checkLeap(design, board, player, pos, nw, nw, bishop)) return true;
+       if (checkLeap(design, board, player, pos, ne, ne, bishop)) return true;
+       if (checkLeap(design, board, player, pos, sw, sw, bishop)) return true;
+       if (checkLeap(design, board, player, pos, se, se, bishop)) return true;
   }
   return false;
-}
-
-var changePieces = function(design, board, move) {
-  _.each(move.actions, function(action) {
-      if (action[0] == null) return;
-      if (action[1] == null) return;
-      var piece = board.getPiece(action[0][0]);
-      if (piece !== null) {
-          piece = piece.setValue(0, true);
-      }
-  });
-}
-
-var getPiece = function(board, action) {
-  if (action[0] === null) return null;
-  if (action[1] === null) return null;
-  return board.getPiece(action[0][0]);
 }
 
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
-  var king   = design.getPieceType("King");
-  var rook   = design.getPieceType("Rook");
+  var king   = design.getPieceType("Shah");
   _.each(board.moves, function(move) {
       var b = board.apply(move);
       var list = [];
@@ -130,23 +116,10 @@ Dagaz.Model.CheckInvariants = function(board) {
       if (pos) {
           list.push(+pos);
       }
-      if (move.actions.length == 2) {
-          var k = getPiece(board, move.actions[0]);
-          var r = getPiece(board, move.actions[1]);
-          if ((k !== null) && (k.type == king) &&
-              (r !== null) && (r.type == rook)) {
-              if (k.getValue(0) || r.getValue(0)) {
-                  move.failed = true;
-              }
-              list.push(move.actions[0][0][0]);
-              list.push(move.actions[1][1][0]);
-          }
-      }
       if (checkPositions(design, b, board.player, list)) {
           move.failed = true;
           return;
       }
-      changePieces(design, board, move);
   });
   CheckInvariants(board);
 }
