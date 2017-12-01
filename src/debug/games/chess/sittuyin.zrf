@@ -118,9 +118,19 @@
   (board-setup
     (White 
          (Ne a3 b3 c3 d3 e4 f4 g4 h4)
+         (Min-gyi off 1)
+         (Sit-ke off 1)
+         (Yahhta off 2)
+         (Myin off 2)
+         (Sin off 2)
     )
     (Black 
          (Ne a5 b5 c5 d5 e6 f6 g6 h6)
+         (Min-gyi off 1)
+         (Sit-ke off 1)
+         (Yahhta off 2)
+         (Myin off 2)
+         (Sin off 2)
     )
   )
 
@@ -290,7 +300,6 @@
 
 (variant
   (title "Sittuyin 8")
-  (default)
   (board-setup
     (White 
          (Ne a3 b3 c3 d3 e4 f4 g4 h4)
