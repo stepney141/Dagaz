@@ -497,7 +497,6 @@
 
 (variant
   (title "Sokoban (Level 15)")
-  (default)
   (board
      (image "images/l-15.bmp")
      (grid

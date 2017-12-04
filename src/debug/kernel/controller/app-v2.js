@@ -397,18 +397,18 @@ App.prototype.exec = function() {
 }
 
 Dagaz.Model.InitGame();
-var app = Dagaz.Controller.createApp(Canvas);
+Dagaz.Controller.app = Dagaz.Controller.createApp(Canvas);
 
 App.prototype.run = function() {
   var timestamp = Date.now();
   this.exec();
   var delta = Date.now() - timestamp;
   _.delay(function() {
-     app.run();
+     Dagaz.Controller.app.run();
   }, (delta > this.params.WAIT_FRAME) ? 0 : this.params.WAIT_FRAME - delta);
 }
 
-app.view.init(app.canvas, app);
-app.run();
+Dagaz.Controller.app.view.init(Dagaz.Controller.app.canvas, Dagaz.Controller.app);
+Dagaz.Controller.app.run();
 
 })();
