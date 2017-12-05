@@ -24,6 +24,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "true");
     design.checkVersion("show-blink", "false");
+    design.checkVersion("sittuyin-invariant", "true");
+    design.checkVersion("sittuyin-setup", "true");
 
     design.addDirection("w");
     design.addDirection("e");
@@ -104,6 +106,10 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addZone("promotion", 1, [0, 9, 18, 27, 28, 21, 14, 7]);
     design.addZone("promotion", 2, [56, 49, 42, 35, 36, 45, 54, 63]);
+    design.addZone("first-rank", 1, [56, 57, 58, 59, 60, 61, 62, 63]);
+    design.addZone("first-rank", 2, [0, 1, 2, 3, 4, 5, 6, 7]);
+    design.addZone("second-rank", 1, [48, 49, 50, 51, 52, 53, 54, 55, 44, 45, 46, 47]);
+    design.addZone("second-rank", 2, [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
@@ -159,7 +165,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(4, ZRF.FUNCTION,	25);	// to
     design.addCommand(4, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("Min-gyi", 0);
+    design.addPiece("Min-gyi", 0, 1000);
     design.addMove(0, 0, [4], 0);
     design.addMove(0, 0, [2], 0);
     design.addMove(0, 0, [0], 0);
@@ -169,26 +175,26 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 0, [3], 0);
     design.addMove(0, 0, [5], 0);
 
-    design.addPiece("Sit-ke", 1);
+    design.addPiece("Sit-ke", 1, 4);
     design.addMove(1, 0, [7], 0);
     design.addMove(1, 0, [6], 0);
     design.addMove(1, 0, [3], 0);
     design.addMove(1, 0, [5], 0);
 
-    design.addPiece("Yahhta", 2);
+    design.addPiece("Yahhta", 2, 20);
     design.addMove(2, 1, [4, 4], 0);
     design.addMove(2, 1, [2, 2], 0);
     design.addMove(2, 1, [0, 0], 0);
     design.addMove(2, 1, [1, 1], 0);
 
-    design.addPiece("Sin", 3);
+    design.addPiece("Sin", 3, 5);
     design.addMove(3, 0, [7], 0);
     design.addMove(3, 0, [6], 0);
     design.addMove(3, 0, [3], 0);
     design.addMove(3, 0, [5], 0);
     design.addMove(3, 0, [4], 0);
 
-    design.addPiece("Myin", 4);
+    design.addPiece("Myin", 4, 8);
     design.addMove(4, 2, [4, 7], 0);
     design.addMove(4, 2, [4, 3], 0);
     design.addMove(4, 2, [2, 6], 0);
@@ -198,7 +204,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(4, 2, [1, 3], 0);
     design.addMove(4, 2, [1, 5], 0);
 
-    design.addPiece("Ne", 5);
+    design.addPiece("Ne", 5, 2);
     design.addMove(5, 3, [4], 0);
     design.addMove(5, 4, [7], 0);
     design.addMove(5, 4, [3], 0);
@@ -211,6 +217,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("White", "Ne", 37);
     design.setup("White", "Ne", 38);
     design.setup("White", "Ne", 39);
+    design.reserve("White", "Min-gyi", 1);
+    design.reserve("White", "Sit-ke", 1);
+    design.reserve("White", "Yahhta", 2);
+    design.reserve("White", "Myin", 2);
+    design.reserve("White", "Sin", 2);
     design.setup("Black", "Ne", 24);
     design.setup("Black", "Ne", 25);
     design.setup("Black", "Ne", 26);
@@ -219,6 +230,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "Ne", 21);
     design.setup("Black", "Ne", 22);
     design.setup("Black", "Ne", 23);
+    design.reserve("Black", "Min-gyi", 1);
+    design.reserve("Black", "Sit-ke", 1);
+    design.reserve("Black", "Yahhta", 2);
+    design.reserve("Black", "Myin", 2);
+    design.reserve("Black", "Sin", 2);
 }
 
 Dagaz.View.configure = function(view) {

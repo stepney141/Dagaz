@@ -13,17 +13,25 @@ var checkGoals = Dagaz.Model.checkGoals;
 Dagaz.Model.checkGoals = function(design, board, player) {
   var design = Dagaz.Model.design;
   var king   = design.getPieceType("Raja");
-  var kings  = _.chain(design.allPositions())
-   .filter(function(pos) {
+  var nf     = true;
+  var ne     = true;
+  var kings  = [];
+  _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
-      if (piece === null) return false;
-      return piece.type == king;
-    })
-   .map(function(pos) {
-      var piece = board.getPiece(pos);
-      return piece.player;
-    })
-   .value();
+      if (piece !== null) {
+          if (piece.type == king) {
+              kings.push(piece.player);
+          } else {
+              if (piece.player == player) {
+                  nf = false;
+              } else {
+                  ne = false;
+              }
+          }
+      }
+  });
+  if (nf) return -1;
+  if (ne) return 1;
   if (_.indexOf(kings, player) < 0) return -1;
   if (kings.length < 2) return 1;
   return checkGoals(design, board, player);

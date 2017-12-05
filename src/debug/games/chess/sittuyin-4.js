@@ -24,6 +24,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "true");
     design.checkVersion("show-blink", "false");
+    design.checkVersion("sittuyin-invariant", "true");
 
     design.addDirection("w");
     design.addDirection("e");
@@ -159,7 +160,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(4, ZRF.FUNCTION,	25);	// to
     design.addCommand(4, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("Min-gyi", 0);
+    design.addPiece("Min-gyi", 0, 1000);
     design.addMove(0, 0, [4], 0);
     design.addMove(0, 0, [2], 0);
     design.addMove(0, 0, [0], 0);
@@ -169,26 +170,26 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 0, [3], 0);
     design.addMove(0, 0, [5], 0);
 
-    design.addPiece("Sit-ke", 1);
+    design.addPiece("Sit-ke", 1, 4);
     design.addMove(1, 0, [7], 0);
     design.addMove(1, 0, [6], 0);
     design.addMove(1, 0, [3], 0);
     design.addMove(1, 0, [5], 0);
 
-    design.addPiece("Yahhta", 2);
+    design.addPiece("Yahhta", 2, 20);
     design.addMove(2, 1, [4, 4], 0);
     design.addMove(2, 1, [2, 2], 0);
     design.addMove(2, 1, [0, 0], 0);
     design.addMove(2, 1, [1, 1], 0);
 
-    design.addPiece("Sin", 3);
+    design.addPiece("Sin", 3, 5);
     design.addMove(3, 0, [7], 0);
     design.addMove(3, 0, [6], 0);
     design.addMove(3, 0, [3], 0);
     design.addMove(3, 0, [5], 0);
     design.addMove(3, 0, [4], 0);
 
-    design.addPiece("Myin", 4);
+    design.addPiece("Myin", 4, 8);
     design.addMove(4, 2, [4, 7], 0);
     design.addMove(4, 2, [4, 3], 0);
     design.addMove(4, 2, [2, 6], 0);
@@ -198,7 +199,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(4, 2, [1, 3], 0);
     design.addMove(4, 2, [1, 5], 0);
 
-    design.addPiece("Ne", 5);
+    design.addPiece("Ne", 5, 2);
     design.addMove(5, 3, [4], 0);
     design.addMove(5, 4, [7], 0);
     design.addMove(5, 4, [3], 0);

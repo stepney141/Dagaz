@@ -3,7 +3,7 @@
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "shatranj-invariant") {
+  if (name != "sittuyin-invariant") {
       checkVersion(design, name, value);
   }
 }
@@ -12,22 +12,20 @@ var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {
   var design = Dagaz.Model.design;
-  var king   = design.getPieceType("Shah");
-  var nf     = true;
-  var ne     = true;
-  _.each(design.allPositions(), function(pos) {
+  var king   = design.getPieceType("Min-gyi");
+  var kings  = _.chain(design.allPositions())
+   .filter(function(pos) {
       var piece = board.getPiece(pos);
-      if ((piece !== null) && (piece.type != king)) {
-          if (piece.player == player) {
-              nf = false;
-          } else {
-              ne = false;
-          }
-      }
-  });
-  if (nf || ne) {
-      return 0;
-  }
+      if (piece === null) return false;
+      return piece.type == king;
+    })
+   .map(function(pos) {
+      var piece = board.getPiece(pos);
+      return piece.player;
+    })
+   .value();
+  if (_.indexOf(kings, player) < 0) return -1;
+  if (kings.length < 2) return 1;
   return checkGoals(design, board, player);
 }
 
@@ -70,26 +68,26 @@ var checkLeap = function(design, board, player, pos, o, d, knight) {
 }
 
 var checkPositions = function(design, board, player, positions) {
-  var king   = design.getPieceType("Shah");
-  var pawn   = design.getPieceType("Sarbaz");
-  var rook   = design.getPieceType("Rokh");
-  var knight = design.getPieceType("Asb");
-  var bishop = design.getPieceType("Alfil");
-  var queen  = design.getPieceType("Fers");
+  var king   = design.getPieceType("Min-gyi");
+  var pawn   = design.getPieceType("Ne");
+  var rook   = design.getPieceType("Yahhta");
+  var knight = design.getPieceType("Myin");
+  var bishop = design.getPieceType("Sin");
+  var queen  = design.getPieceType("Sit-ke");
   var n  = design.getDirection("n");  var w  = design.getDirection("w");
   var s  = design.getDirection("s");  var e  = design.getDirection("e");
   var nw = design.getDirection("nw"); var sw = design.getDirection("sw");
   var ne = design.getDirection("ne"); var se = design.getDirection("se");
   for (var i = 0; i < positions.length; i++) {
        var pos = positions[i];
-       if (checkDirection(design, board, player, pos, n,  [king], [rook])) return true;
+       if (checkDirection(design, board, player, pos, n,  [king, bishop], [rook])) return true;
        if (checkDirection(design, board, player, pos, s,  [king], [rook])) return true;
        if (checkDirection(design, board, player, pos, w,  [king], [rook])) return true;
        if (checkDirection(design, board, player, pos, e,  [king], [rook])) return true;
-       if (checkDirection(design, board, player, pos, nw, [king, pawn, queen], [])) return true;
-       if (checkDirection(design, board, player, pos, ne, [king, pawn, queen], [])) return true;
-       if (checkDirection(design, board, player, pos, sw, [king, queen], [])) return true;
-       if (checkDirection(design, board, player, pos, se, [king, queen], [])) return true;
+       if (checkDirection(design, board, player, pos, nw, [king, pawn, bishop, queen], [])) return true;
+       if (checkDirection(design, board, player, pos, ne, [king, pawn, bishop, queen], [])) return true;
+       if (checkDirection(design, board, player, pos, sw, [king, bishop, queen], [])) return true;
+       if (checkDirection(design, board, player, pos, se, [king, bishop, queen], [])) return true;
        if (checkLeap(design, board, player, pos, n, nw, knight)) return true;
        if (checkLeap(design, board, player, pos, n, ne, knight)) return true;
        if (checkLeap(design, board, player, pos, s, sw, knight)) return true;
@@ -98,10 +96,6 @@ var checkPositions = function(design, board, player, positions) {
        if (checkLeap(design, board, player, pos, w, sw, knight)) return true;
        if (checkLeap(design, board, player, pos, e, ne, knight)) return true;
        if (checkLeap(design, board, player, pos, e, se, knight)) return true;
-       if (checkLeap(design, board, player, pos, nw, nw, bishop)) return true;
-       if (checkLeap(design, board, player, pos, ne, ne, bishop)) return true;
-       if (checkLeap(design, board, player, pos, sw, sw, bishop)) return true;
-       if (checkLeap(design, board, player, pos, se, se, bishop)) return true;
   }
   return false;
 }
@@ -110,7 +104,7 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
-  var king   = design.getPieceType("Shah");
+  var king   = design.getPieceType("Min-gyi");
   _.each(board.moves, function(move) {
       var b = board.apply(move);
       var list = [];
