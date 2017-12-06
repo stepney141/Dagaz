@@ -28,7 +28,7 @@ function MaxMinAi(params, parent) {
 var findBot = Dagaz.AI.findBot;
 
 Dagaz.AI.findBot = function(type, params, parent) {
-  if ((type == "maxmin") || (type == "common") || (type == "2")) {
+  if ((type == "maxmin") || (type == "common") || (type == "1") || (type == "2")) {
       return new MaxMinAi(params, parent);
   } else {
       return findBot(type, params, parent);
@@ -275,6 +275,26 @@ MaxMinAi.prototype.dump = function(ctx, node, deep) {
   }
 }
 
+MaxMinAi.prototype.stat = function(ctx) {
+  var mn = 0; var mx = 0;
+  var cn = 0; var sm = 0;
+  _.each(ctx.cache, function(node) {
+      if (_.isUndefined(node.board.moves)) {
+          node.board.moves = Dagaz.AI.generate(ctx, node.board);
+      }
+      if (cn == 0) {
+          mn = node.board.moves.length;
+          mx = node.board.moves.length;
+      } else {
+          if (mn > node.board.moves.length) mn = node.board.moves.length;
+          if (mx < node.board.moves.length) mx = node.board.moves.length;
+      }
+      sm += node.board.moves.length;
+      cn++;     
+  });
+  console.log("min/max/sum/count = " + mn + "/" + mx + "/" + sm + "/" + cn);
+}
+
 MaxMinAi.prototype.setContext = function(ctx, board) {
   if (this.parent) {
       this.parent.setContext(ctx, board);
@@ -315,6 +335,7 @@ MaxMinAi.prototype.getMove = function(ctx) {
       }
   }
   this.dump(ctx, ctx);
+  this.stat(ctx);
   if (ctx.best !== null) {
       var r = {
            done: true,

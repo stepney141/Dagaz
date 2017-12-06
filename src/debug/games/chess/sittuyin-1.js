@@ -25,6 +25,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("smart-moves", "true");
     design.checkVersion("show-blink", "false");
     design.checkVersion("sittuyin-invariant", "true");
+    design.checkVersion("sittuyin-promotion", "true");
 
     design.addDirection("w");
     design.addDirection("e");
@@ -160,6 +161,13 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(4, ZRF.FUNCTION,	25);	// to
     design.addCommand(4, ZRF.FUNCTION,	28);	// end
 
+    design.addCommand(5, ZRF.FUNCTION,	24);	// from
+    design.addCommand(5, ZRF.IN_ZONE,	0);	// promotion
+    design.addCommand(5, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(5, ZRF.PROMOTE,	1);	// Sit-ke
+    design.addCommand(5, ZRF.FUNCTION,	25);	// to
+    design.addCommand(5, ZRF.FUNCTION,	28);	// end
+
     design.addPiece("Min-gyi", 0, 1000);
     design.addMove(0, 0, [4], 0);
     design.addMove(0, 0, [2], 0);
@@ -203,6 +211,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(5, 3, [4], 0);
     design.addMove(5, 4, [7], 0);
     design.addMove(5, 4, [3], 0);
+    design.addMove(5, 5, [], 0);
 
     design.setup("White", "Ne", 40);
     design.setup("White", "Ne", 41);

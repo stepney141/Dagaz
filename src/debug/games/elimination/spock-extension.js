@@ -11,6 +11,62 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+var findSpock = function(design, board, player, pos, o, d) {
+  var p = design.navigate(player, pos, o);
+  if (p === null) return 0;
+  p = design.navigate(player, p, d);
+  if (p === null) return 0;
+  var piece = board.getPiece(p);
+  if (piece === null) return 0;
+  if (piece.type != 0) return 0;
+  if (piece.player == player) {
+      return 1;
+  } else {
+      return -1;
+  }
+}
+
+var spockBalance = function(design, board, player, pos) {
+  var r = 0;
+  var n  = design.getDirection("n");  var w  = design.getDirection("w");
+  var s  = design.getDirection("s");  var e  = design.getDirection("e");
+  var nw = design.getDirection("nw"); var sw = design.getDirection("sw");
+  var ne = design.getDirection("ne"); var se = design.getDirection("se");
+  r += findSpock(design, board, player, pos, n, nw);
+  r += findSpock(design, board, player, pos, n, ne);
+  r += findSpock(design, board, player, pos, s, sw);
+  r += findSpock(design, board, player, pos, s, se);
+  r += findSpock(design, board, player, pos, w, nw);
+  r += findSpock(design, board, player, pos, w, sw);
+  r += findSpock(design, board, player, pos, e, ne);
+  r += findSpock(design, board, player, pos, e, se);
+  return r;
+}
+
+var heuristic = Dagaz.AI.heuristic;
+
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  if (move.isSimpleMove()) {
+      var pos    = move.actions[0][0][0];
+      var target = move.actions[0][1][0];
+      var enemy  = board.getPiece(target);
+      if ((enemy !== null) && (enemy.player == board.player) && (enemy.type == 0)) {
+          return -1;
+      }
+      var piece  = board.getPiece(pos);
+      if ((piece !== null) && ((piece.type == 4) || (piece.type == 0))) {
+          var l = 0;
+          if (piece.type == 0) {
+              l = 1;
+          }
+          if (spockBalance(design, board, board.player, target) < l) {
+              return -1;
+          }
+      }
+  }
+  return heuristic(ai, design, board, move);
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {

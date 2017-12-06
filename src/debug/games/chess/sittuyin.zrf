@@ -1,11 +1,24 @@
+(define promote (
+  (verify (in-zone? promotion))
+  (add $1)
+))
+
 (define pawn-shift (
   $1 (verify empty?)
-  add
+  (if (in-zone? promotion)
+      (add Sit-ke)
+   else
+      add
+  )
 ))
 
 (define pawn-step (
   $1 (verify enemy?)
-  add
+  (if (in-zone? promotion)
+      (add Sit-ke)
+   else
+      add
+  )
 ))
 
 (define step (
@@ -122,8 +135,9 @@
      (image White "images/wpawn.bmp"
             Black "images/bpawn.bmp")
      (moves
-         (pawn-shift n)
+         (pawn-shift n) 
          (pawn-step nw) (pawn-step ne)
+         (promote Sit-ke)
      )
   )
 
