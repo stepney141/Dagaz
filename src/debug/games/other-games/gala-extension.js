@@ -1,11 +1,84 @@
 (function() {
 
+var MAXVALUE            = 1000000;
+var IN_ZONE_BONUS       = 1000;
+var SINGLE_GALA_PENALTY = 1000;
+var NO_WAY_PENALTY      = 100;
+var PATH_WEIGHT         = 10;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
   if (name != "gala-extension") {
      checkVersion(design, name, value);
   }
+}
+
+var findPath = function(design, board, player, pos) {
+  var level = [];
+  var positions = [ pos ];
+  level[pos] = 0;
+  for (var i = 0; i < positions.length; i++) {
+       var p = positions[i];
+       var l = level[p];
+       if (design.inZone(0, player, p)) {
+           if (l > 0) {
+               return l;
+           } else {
+               return -IN_ZONE_BONUS;
+           }
+       }
+       _.each(design.allDirections(), function(dir) {
+            var pos = design.navigate(player, p, dir);
+            if ((pos !== null) && (board.getPiece(pos) === null) && (_.indexOf(positions, pos) < 0)) {
+                 level[pos] = l + 1;
+                 positions.push(pos);
+            }
+       });
+  }
+  return NO_WAY_PENALTY;
+}
+
+var galaEval = function(design, board, player) {
+  var r = 0;
+  var galas = [];
+  for (var pos = 0; pos < design.positions.length; pos++) {
+       var piece = board.getPiece(pos);
+       if ((piece !== null) && (piece.player == player)) {
+           if (piece.type == 0) {
+               galas.push(pos);
+           }
+           r -= design.price[piece.type];
+       }
+  }
+  if (galas.length == 0) return MAXVALUE;
+  if (galas.length == 1) return SINGLE_GALA_PENALTY;
+  _.each(galas, function(pos) {
+      r += findPath(design, board, player, pos) * PATH_WEIGHT;
+  });
+  return r;
+}
+
+Dagaz.AI.eval = function(design, params, board, player) {
+  return galaEval(design, board, design.nextPlayer(player)) -
+         galaEval(design, board, player);
+}
+
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  var r = 1;
+  if (move.isSimpleMove()) {
+      var pos = move.actions[0][0][0];
+      var piece = board.getPiece(pos);
+      if (piece !== null) {
+         if (piece.type == 0) r++;
+      }
+      pos = move.actions[0][1][0];
+      piece = board.getPiece(pos);
+      if ((piece !== null) && (piece.player != board.player)) {
+          r += design.price[piece.type];
+      }
+  }
+  return r;
 }
 
 var checkGoals = Dagaz.Model.checkGoals;
