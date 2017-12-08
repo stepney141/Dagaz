@@ -202,17 +202,18 @@ AggressiveAi.prototype.getMove = function(ctx) {
       var node = ctx.cache[ix];
       if (node.weight < this.params.MIN_WEIGHT) break;
       if (node.board.checkGoals(ctx.design, ctx.board.player) > 0) {
-          this.dump(ctx, node);
           mx = MAXVALUE;
           ctx.best = ix;
+          node.eval = mx;
+          this.dump(ctx, node);
           break;
       }
-      if (_.isUndefined(ctx.best) && isSafe(ctx, node.board)) {
-          this.dump(ctx, node);
+      if (isSafe(ctx, node.board)) {
           node.eval = Dagaz.AI.eval(ctx.design, this.params, node.board, ctx.board.player);
           if (_.isUndefined(ctx.best) || (mx < node.eval)) {
               ctx.best = ix;
               mx = node.eval;
+              this.dump(ctx, node);
           }
       }
       ix++;

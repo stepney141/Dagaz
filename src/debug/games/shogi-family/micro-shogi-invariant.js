@@ -8,6 +8,35 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+var heuristic = Dagaz.AI.heuristic;
+
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  var n      = design.getDirection("n");
+  var pawn   = design.getPieceType("Pawn");
+  var lance  = design.getPieceType("Lance");
+  var knight = design.getPieceType("Knight");
+  if (move.isSimpleMove()) {
+      var piece = board.getPiece(move.actions[0][0][0]);
+      if (move.actions[0][2] !== null) {
+          piece = move.actions[0][2][0];
+      }
+      if ((piece !== null) && ((piece.type == pawn) || (piece.type == lance) || (piece.type == knight))) {
+          var pos = move.actions[0][1][0];
+          pos = design.navigate(board.player, pos, n);
+          if (pos === null) return -1;
+          if (piece.type == knight) {
+              pos = design.navigate(board.player, pos, n);
+              if (pos === null) return -1;
+          }
+      }
+  }
+  if (!_.isUndefined(heuristic)) {
+      return heuristic(ai, design, board, move);
+  } else {
+      return 1;
+  }
+}
+
 var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {

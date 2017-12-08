@@ -4,7 +4,11 @@ var MAXVALUE            = 1000000;
 var IN_ZONE_BONUS       = 1000;
 var SINGLE_GALA_PENALTY = 1000;
 var NO_WAY_PENALTY      = 100;
-var PATH_WEIGHT         = 10;
+var PATH_WEIGHT         = 200;
+var MOBILITY_WEIGHT     = 10;
+
+Dagaz.AI.NOISE_FACTOR   = 20;
+Dagaz.AI.MIN_WEIGHT     = -MAXVALUE;
 
 var checkVersion = Dagaz.Model.checkVersion;
 
@@ -39,8 +43,53 @@ var findPath = function(design, board, player, pos) {
   return NO_WAY_PENALTY;
 }
 
-var galaEval = function(design, board, player) {
+var material = function(design, board, player) {
   var r = 0;
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if (piece !== null) {
+          var v = design.price[piece.type];
+          if (piece.player != player) {
+              v = -v;
+          }
+          r += v;
+      }
+  });
+  return r;
+}
+
+var moveEval = function(design, board, move) {
+  if (_.isUndefined(move.material)) {
+      var b = board.apply(move);
+      b.generate(design);
+      var x = null;
+      _.each(b.moves, function(m) {
+           var board = b.apply(m);
+           var eval  = material(design, board, board.player);
+           if (_.isUndefined(move.material) || (move.material > eval)) {
+               move.material = eval;
+               x = board;
+           }
+      });
+      if (x !== null) {
+          x.generate(design);
+          move.mobility = x.moves.length;
+      }
+  }
+  var r = move.material;
+  if (!_.isUndefined(move.mobility)) {
+      r += move.mobility * MOBILITY_WEIGHT;
+  }
+  return r;
+}
+
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  return moveEval(design, board, move) -
+         material(design, board, move);
+}
+
+Dagaz.AI.eval = function(design, params, board, player) {
+  var r = moveEval(design, board, board.move);
   var galas = [];
   for (var pos = 0; pos < design.positions.length; pos++) {
        var piece = board.getPiece(pos);
@@ -48,36 +97,16 @@ var galaEval = function(design, board, player) {
            if (piece.type == 0) {
                galas.push(pos);
            }
-           r -= design.price[piece.type];
+           if (galas.length > 1) break;
        }
   }
-  if (galas.length == 0) return MAXVALUE;
-  if (galas.length == 1) return SINGLE_GALA_PENALTY;
-  _.each(galas, function(pos) {
-      r += findPath(design, board, player, pos) * PATH_WEIGHT;
-  });
-  return r;
-}
-
-Dagaz.AI.eval = function(design, params, board, player) {
-  return galaEval(design, board, design.nextPlayer(player)) -
-         galaEval(design, board, player);
-}
-
-Dagaz.AI.heuristic = function(ai, design, board, move) {
-  var r = 1;
-  if (move.isSimpleMove()) {
-      var pos = move.actions[0][0][0];
-      var piece = board.getPiece(pos);
-      if (piece !== null) {
-         if (piece.type == 0) r++;
-      }
-      pos = move.actions[0][1][0];
-      piece = board.getPiece(pos);
-      if ((piece !== null) && (piece.player != board.player)) {
-          r += design.price[piece.type];
-      }
+  if (galas.length == 0) return -MAXVALUE;
+  if (galas.length == 1) {
+      r -= SINGLE_GALA_PENALTY;
   }
+  _.each(galas, function(pos) {
+      r -= findPath(design, board, player, pos) * PATH_WEIGHT;
+  });
   return r;
 }
 
