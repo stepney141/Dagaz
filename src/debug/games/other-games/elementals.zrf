@@ -56,8 +56,7 @@
 
   (option "animate captures" false)
   (option "smart moves"      false)
-  (option "pass turn"        forced)
-  (option "pass partial"       true)
+  (option "pass partial"     true)
 
   (players Light Dark)
   (turn-order Light Dark)
@@ -682,6 +681,7 @@
 
 (variant
   (title "Elementals (variant)")
+  (default)
   (board-setup
      (Light
         (GA c2 d2 e2 f2 g2 h2)

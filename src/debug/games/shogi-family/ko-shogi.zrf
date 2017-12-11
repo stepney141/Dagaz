@@ -1,3 +1,33 @@
+(define step (
+  $1 (verify not-friend?)
+  add
+))
+
+(define leap (
+  $1 $2 (verify not-friend?)
+  add
+))
+
+(define slide (
+  $1 (while empty? add $1)
+  (verify not-friend?)
+  add
+))
+
+(define slide-5 (
+  $1 (if empty?
+    add $1 (if empty?
+      add $1 (if empty?
+        add $1 (if empty?
+           add $1
+        )
+      )
+    )
+  )
+  (verify not-friend?)
+  add
+))
+
 (game
   (title "Ko Shogi")
 
@@ -6,8 +36,7 @@
   (capture-sound "")
 
   (option "animate captures" false)
-  (option "pass partial" true)
-  (option "pass turn" forced)
+  (option "pass partial"     true)
 
   (players Black White)
   (turn-order Black White)
@@ -17,34 +46,33 @@
     (grid
       (start-rectangle 5 5 36 36)
       (dimensions
-        ("19/18/17/16/15/14/13/12/11/10/9/8/7/6/5/4/3/2/1" (32 0)) ; files
-        ("A/B/C/D/E/F/G/H/I/J/K/L/M/N/O/P/Q/R/S" (0 32)) ; ranks
+        ("A/B/C/D/E/F/G/H/I/J/K/L/M/N/O/P/Q/R/S" (32 0)) ; files
+        ("1/2/3/4/5/6/7/8/9/10/11/12/13/14/15/16/17/18/19" (0 32)) ; ranks
       )
       (directions 
         (n     0 -1) (s     0  1) (e     1  0) (w    -1 0) 
-        (nn    0 -2) (ss    0  2) (ee    2  0) (ww   -2 0) 
         (nw   -1 -1) (sw   -1  1) (ne    1 -1) (se    1 1) 
       ) 
     )
-    (symmetry White (n s) (s n) (nw sw) (sw nw) (ne se) (se ne) (nn ss) (ss nn) )
+    (symmetry White (n s) (s n) (w e) (e w) (nw se) (se nw) (ne sw) (sw ne))
     (zone (name promotion) (players Black)
         (positions 
-           1A 2A 3A 4A 5A 6A 7A 8A 9A 10A 11A 12A 13A 14A 15A 16A 17A 18A 19A
-           1B 2B 3B 4B 5B 6B 7B 8B 9B 10B 11B 12B 13B 14B 15B 16B 17B 18B 19B
-           1C 2C 3C 4C 5C 6C 7C 8C 9C 10C 11C 12C 13C 14C 15C 16C 17C 18C 19C
-           1D 2D 3D 4D 5D 6D 7D 8D 9D 10D 11D 12D 13D 14D 15D 16D 17D 18D 19D
-           1E 2E 3E 4E 5E 6E 7E 8E 9E 10E 11E 12E 13E 14E 15E 16E 17E 18E 19E
-           1F 2F 3F 4F 5F 6F 7F 8F 9F 10F 11F 12F 13F 14F 15F 16F 17F 18F 19F
+           A1 B1 C1 D1 E1 F1 G1 H1 I1 J1 K1 L1 M1 N1 O1 P1 Q1 R1 S1
+           A2 B2 C2 D2 E2 F2 G2 H2 I2 J2 K2 L2 M2 N2 O2 P2 Q2 R2 S2
+           A3 B3 C3 D3 E3 F3 G3 H3 I3 J3 K3 L3 M3 N3 O3 P3 Q3 R3 S3
+           A4 B4 C4 D4 E4 F4 G4 H4 I4 J4 K4 L4 M4 N4 O4 P4 Q4 R4 S4
+           A5 B5 C5 D5 E5 F5 G5 H5 I5 J5 K5 L5 M5 N5 O5 P5 Q5 R5 S5
+           A6 B6 C6 D6 E6 F6 G6 H6 I6 J6 K6 L6 M6 N6 O6 P6 Q6 R6 S6
         )
     )
     (zone (name promotion) (players White)
         (positions 
-           1S 2S 3S 4S 5S 6S 7S 8S 9S 10S 11S 12S 13S 14S 15S 16S 17S 18S 19S
-           1R 2R 3R 4R 5R 6R 7R 8R 9R 10R 11R 12R 13R 14R 15R 16R 17R 18R 19R
-           1Q 2Q 3Q 4Q 5Q 6Q 7Q 8Q 9Q 10Q 11Q 12Q 13Q 14Q 15Q 16Q 17Q 18Q 19Q
-           1P 2P 3P 4P 5P 6P 7P 8P 9P 10P 11P 12P 13P 14P 15P 16P 17P 18P 19P
-           1O 2O 3O 4O 5O 6O 7O 8O 9O 10O 11O 12O 13O 14O 15O 16O 17O 18O 19O
-           1N 2N 3N 4N 5N 6N 7N 8N 9N 10N 11N 12N 13N 14N 15N 16N 17N 18N 19N
+           A19 B19 C19 D19 E19 F19 G19 H19 I19 J19 K19 L19 M19 N19 O19 P19 Q19 R19 S19
+           A18 B18 C18 D18 E18 F18 G18 H18 I18 J18 K18 L18 M18 N18 O18 P18 Q18 R18 S18
+           A17 B17 C17 D17 E17 F17 G17 H17 I17 J17 K17 L17 M17 N17 O17 P17 Q17 R17 S17
+           A16 B16 C16 D16 E16 F16 G16 H16 I16 J16 K16 L16 M16 N16 O16 P16 Q16 R16 S16
+           A15 B15 C15 D15 E15 F15 G15 H15 I15 J15 K15 L15 M15 N15 O15 P15 Q15 R15 S15
+           A14 B14 C14 D14 E14 F14 G14 H14 I14 J14 K14 L14 M14 N14 O14 P14 Q14 R14 S14
         )
     )
   )
@@ -55,6 +83,13 @@
      (description "General (sho): can step one intersection in any direction, orthogonal or diagonal. (K)")
      (image White "images/ko/kwg.bmp"
             Black "images/ko/kbg.bmp")
+     (moves
+        (move-type normal-type)
+        (step n) (step nw)
+        (step s) (step se)
+        (step w) (step sw)
+        (step e) (step ne)
+     )
   )
   (piece
      (name GO)
@@ -62,6 +97,13 @@
      (description "Governor (sochi): can step one intersection in any direction, orthogonal or diagonal. (K)")
      (image White "images/ko/kwgo.bmp"
             Black "images/ko/kbgo.bmp")
+     (moves
+        (move-type normal-type)
+        (step n) (step nw)
+        (step s) (step se)
+        (step w) (step sw)
+        (step e) (step ne)
+     )
   )
   (piece
      (name PP)
@@ -70,6 +112,11 @@
                    This is the move of the vertical mover in other shogi variants.")
      (image White "images/ko/kwpp.bmp"
             Black "images/ko/kbpp.bmp")
+     (moves
+        (move-type normal-type)
+        (slide n) (slide s)
+        (step w) (step e)
+     )
   )
   (piece
      (name P)
@@ -78,6 +125,11 @@
                    If the drum is killed, the pawns may no longer move forward.")
      (image White "images/ko/kwp.bmp"
             Black "images/ko/kbp.bmp")
+     (moves
+        (move-type normal-type)
+        (step n) (step s)
+        (step w) (step e)
+     )
   )
   (piece
      (name HV)
@@ -85,6 +137,11 @@
      (description "Heaven's vengeance (temmo): can move any number of free intersections along either of the forward diagonals, or directly to either side or step one intersection directly backward. (rlRfBbW)")
      (image White "images/ko/kwhv.bmp"
             Black "images/ko/kbhv.bmp")
+     (moves
+        (move-type normal-type)
+        (step s) 
+        (slide w) (slide e) (slide nw) (slide ne)
+     )
   )
   (piece
      (name AG)
@@ -93,6 +150,10 @@
                    This piece promotes if its clerk promotes.")
      (image White "images/ko/kwag.bmp"
             Black "images/ko/kbag.bmp")
+     (moves
+        (move-type normal-type)
+        (slide n) (step s)
+     )
   )
   (piece
      (name IL)
@@ -142,6 +203,11 @@
                    his is the move of the copper general in other shogi variants.")
      (image White "images/ko/kwen.bmp"
             Black "images/ko/kben.bmp")
+     (moves
+        (move-type normal-type)
+        (step n) (step s) 
+        (step nw) (step ne)
+     )
   )
   (piece
      (name VC)
@@ -150,6 +216,11 @@
                    This is the move of the free silver in other shogi variants.")
      (image White "images/ko/kwvc.bmp"
             Black "images/ko/kbvc.bmp")
+     (moves
+        (move-type normal-type)
+        (slide n) 
+        (slide nw) (slide se) (slide sw) (slide ne)
+     )
   )
   (piece
      (name CS)
@@ -158,6 +229,11 @@
                    This is the move of the ferocious leopard in other shogi variants.")
      (image White "images/ko/kwcs.bmp"
             Black "images/ko/kbcs.bmp")
+     (moves
+        (move-type normal-type)
+        (step n) (step s) 
+        (step nw) (step se) (step sw) (step ne)
+     )
   )
   (piece
      (name VB)
@@ -165,6 +241,13 @@
      (description "Village brigade (hyakko): can move any number of free intersections directly to either side or step one intersection in any direction. (rlRK)")
      (image White "images/ko/kwvb.bmp"
             Black "images/ko/kbvb.bmp")
+     (moves
+        (move-type normal-type)
+        (step  n) (step nw)
+        (step  s) (step se)
+        (slide w) (step sw)
+        (slide e) (step ne)
+     )
   )
   (piece
      (name S)
@@ -173,6 +256,11 @@
                    This is the move of the silver general in other shogi variants.")
      (image White "images/ko/kws.bmp"
             Black "images/ko/kbs.bmp")
+     (moves
+        (move-type normal-type)
+        (step n) 
+        (step nw) (step se) (step sw) (step ne)
+     )
   )
   (piece
      (name TB)
@@ -181,6 +269,13 @@
                    This is the move of the flying stag in chu shogi.")
      (image White "images/ko/kwtb.bmp"
             Black "images/ko/kbtb.bmp")
+     (moves
+        (move-type normal-type)
+        (slide n) (step nw)
+        (slide s) (step se)
+        (step  w) (step sw)
+        (step  e) (step ne)
+     )
   )
   (piece
      (name A)
@@ -189,6 +284,11 @@
                    This is the move of the gold general in other shogi variants.")
      (image White "images/ko/kwa.bmp"
             Black "images/ko/kba.bmp")
+     (moves
+        (move-type normal-type)
+        (step n) (step s) (step w) (step e) 
+        (step nw) (step ne)
+     )
   )
   (piece
      (name WR)
@@ -205,6 +305,13 @@
                    This is the move of the dragon king in other shogi variants.")
      (image White "images/ko/kwaa.bmp"
             Black "images/ko/kbaa.bmp")
+     (moves
+        (move-type normal-type)
+        (slide n) (step nw)
+        (slide s) (step se)
+        (slide w) (step sw)
+        (slide e) (step ne)
+     )
   )
   (piece
      (name AC)
@@ -214,6 +321,11 @@
                    However, it does not promote to a prince.")
      (image White "images/ko/kwac.bmp"
             Black "images/ko/kbac.bmp")
+     (moves
+        (move-type normal-type)
+        (step n) (step w) (step e) 
+        (step nw) (step se) (step sw) (step ne)
+     )
   )
   (piece
      (name MA)
@@ -230,6 +342,13 @@
                    This is the move of the kirin in other shogi variants.")
      (image White "images/ko/kwcl.bmp"
             Black "images/ko/kbcl.bmp")
+     (moves
+        (move-type normal-type)
+        (step nw) (leap n n)
+        (step se) (leap s s)
+        (step sw) (leap w w)
+        (step ne) (leap e e)
+     )
   )
   (piece
      (name BD)
@@ -246,6 +365,13 @@
                    This is the move of the phoenix in other shogi variants.")
      (image White "images/ko/kwso.bmp"
             Black "images/ko/kbso.bmp")
+     (moves
+        (move-type normal-type)
+        (step n) (leap nw nw)
+        (step s) (leap se se)
+        (step w) (leap sw sw)
+        (step e) (leap ne ne)
+     )
   )
   (piece
      (name EV)
@@ -253,6 +379,11 @@
      (description "Earth's vengeance (chimo): can move any number of free intersections along either of the rear diagonals, or directly to either side or step one intersection directly forward. (rlRbBfW)")
      (image White "images/ko/kwev.bmp"
             Black "images/ko/kbev.bmp")
+     (moves
+        (move-type normal-type)
+        (step n) 
+        (slide w) (slide e) (slide sw) (slide se)
+     )
   )
   (piece
      (name RG)
@@ -261,6 +392,10 @@
                    This piece promotes if its clerk promotes.")
      (image White "images/ko/kwrg.bmp"
             Black "images/ko/kbrg.bmp")
+     (moves
+        (move-type normal-type)
+        (step n) (slide s)
+     )
   )
   (piece
      (name WH)
@@ -276,6 +411,13 @@
                    This is the move of the dragon horse in other shogi variants.")
      (image White "images/ko/kwcr.bmp"
             Black "images/ko/kbcr.bmp")
+     (moves
+        (move-type normal-type)
+        (step n) (slide nw)
+        (step s) (slide se)
+        (step w) (slide sw)
+        (step e) (slide ne)
+     )
   )
   (piece
      (name TW)
@@ -291,6 +433,13 @@
                    This is the move of the dragon king in other shogi variants.")
      (image White "images/ko/kwq.bmp"
             Black "images/ko/kbq.bmp")
+     (moves
+        (move-type normal-type)
+        (slide n) (step nw)
+        (slide s) (step se)
+        (slide w) (step sw)
+        (slide e) (step ne)
+     )
   )
   (piece
      (name DA)
@@ -306,6 +455,13 @@
                    This is the move of the free king in other shogi variants.")
      (image White "images/ko/kwm.bmp"
             Black "images/ko/kbm.bmp")
+     (moves
+        (move-type normal-type)
+        (slide n) (slide nw)
+        (slide s) (slide se)
+        (slide w) (slide sw)
+        (slide e) (slide ne)
+     )
   )
   (piece
      (name SS)
@@ -314,6 +470,13 @@
                    This is the move of the dragon horse in other shogi variants.")
      (image White "images/ko/kwss.bmp"
             Black "images/ko/kbss.bmp")
+     (moves
+        (move-type normal-type)
+        (step n) (slide nw)
+        (step s) (slide se)
+        (step w) (slide sw)
+        (step e) (slide ne)
+     )
   )
   (piece
      (name SN)
@@ -322,6 +485,11 @@
                    This is the move of the blind tiger in other shogi variants.")
      (image White "images/ko/kwsn.bmp"
             Black "images/ko/kbsn.bmp")
+     (moves
+        (move-type normal-type)
+        (step s) (step w) (step e) 
+        (step nw) (step se) (step sw) (step ne)
+     )
   )
   (piece
      (name TC)
@@ -338,6 +506,11 @@
                    If the drum is killed, the pawns may no longer move forward.")
      (image White "images/ko/kwd.bmp"
             Black "images/ko/kbd.bmp")
+     (moves
+        (move-type normal-type)
+        (step w) (step e)
+        (step nw) (step se) (step sw) (step ne)
+     )
   )
   (piece
      (name RA)
@@ -353,6 +526,11 @@
      (description "Banner (hata): can step one intersection in one of the four diagonal directions or either orthogonal sideways. (FrlW)")
      (image White "images/ko/kwb.bmp"
             Black "images/ko/kbb.bmp")
+     (moves
+        (move-type normal-type)
+        (step w) (step e)
+        (step nw) (step se) (step sw) (step ne)
+     )
   )
   (piece
      (name MT)
@@ -360,6 +538,13 @@
      (description "Middle Troop (chogun): can step one intersection in any direction, orthogonal or diagonal. (K)")
      (image White "images/ko/kwmt.bmp"
             Black "images/ko/kbmt.bmp")
+     (moves
+        (move-type normal-type)
+        (step n) (step nw)
+        (step s) (step se)
+        (step w) (step sw)
+        (step e) (step ne)
+     )
   )
   (piece
      (name E)
@@ -368,6 +553,11 @@
                    This is the move of the bishop in other shogi variants.")
      (image White "images/ko/kwe.bmp"
             Black "images/ko/kbe.bmp")
+     (moves
+        (move-type normal-type)
+        (slide nw) (slide se)
+        (slide sw) (slide ne)
+     )
   )
   (piece
      (name GC)
@@ -465,6 +655,13 @@
                    The cavalryman promotes if it captures a European cannon.")
      (image White "images/ko/kwhs.bmp"
             Black "images/ko/kbhs.bmp")
+     (moves
+        (move-type normal-type)
+        (leap n nw) (leap n ne)
+        (leap s sw) (leap s se)
+        (leap w sw) (leap w nw)
+        (leap e se) (leap e ne)
+     )
   )
   (piece
      (name CO)
@@ -473,6 +670,11 @@
                    This is the move of the flying ox in chu shogi.")
      (image White "images/ko/kwco.bmp"
             Black "images/ko/kbco.bmp")
+     (moves
+        (move-type normal-type)
+        (slide n) (slide s) 
+        (slide nw) (slide se) (slide sw) (slide ne)
+     )
   )
   (piece
      (name PU)
@@ -481,6 +683,11 @@
                    This is the move of the vertical mover in other shogi variants.")
      (image White "images/ko/kwpu.bmp"
             Black "images/ko/kbpu.bmp")
+     (moves
+        (move-type normal-type)
+        (slide n) (slide s)
+        (step w) (step e)
+     )
   )
   (piece
      (name MM)
@@ -489,6 +696,13 @@
                    This is the move of the free king in other shogi variants.")
      (image White "images/ko/kwmm.bmp"
             Black "images/ko/kbmm.bmp")
+     (moves
+        (move-type normal-type)
+        (slide n) (slide nw)
+        (slide s) (slide se)
+        (slide w) (slide sw)
+        (slide e) (slide ne)
+     )
   )
   (piece
      (name CU)
@@ -499,6 +713,11 @@
                    The chariot unit is unaffected by the bows.")
      (image White "images/ko/kwcu.bmp"
             Black "images/ko/kbcu.bmp")
+     (moves
+        (move-type normal-type)
+        (slide n) (slide s)
+        (slide w) (slide e)
+     )
   )
   (piece
      (name IB)
@@ -508,6 +727,11 @@
                    The imperial base cannot be shot by the long bow, crossbow, cannon, gun carriage, European cannon or Chariot of the gods and can be killed by the chariot or chariot unit.")
      (image White "images/ko/kwib.bmp"
             Black "images/ko/kbib.bmp")
+     (moves
+        (move-type normal-type)
+        (slide w) (slide e) 
+        (slide nw) (slide se) (slide sw) (slide ne)
+     )
   )
   (piece
      (name SU)
@@ -516,6 +740,12 @@
                    The shield unit is unaffected by the bows or the guns.")
      (image White "images/ko/kwsu.bmp"
             Black "images/ko/kbsu.bmp")
+     (moves
+        (move-type normal-type)
+        (step nw) (step se)
+        (step sw) (step ne)
+        (slide w) (slide e)
+     )
   )
   (piece
      (name CC)
@@ -526,6 +756,11 @@
                    The chariot unit is unaffected by the bows.")
      (image White "images/ko/kwcc.bmp"
             Black "images/ko/kbcc.bmp")
+     (moves
+        (move-type normal-type)
+        (slide n) (slide s)
+        (slide w) (slide e)
+     )
   )
   (piece
      (name CH)
@@ -535,6 +770,11 @@
                    The chariot unit is unaffected by the bows.")
      (image White "images/ko/kwch.bmp"
             Black "images/ko/kbch.bmp")
+     (moves
+        (move-type normal-type)
+        (slide-5 n) (slide-5 s)
+        (slide-5 w) (slide-5 e)
+     )
   )
   (piece
      (name UU)
@@ -543,6 +783,12 @@
                    The shield unit is unaffected by the bows or the guns.")
      (image White "images/ko/kwuu.bmp"
             Black "images/ko/kbuu.bmp")
+     (moves
+        (move-type normal-type)
+        (step nw) (step se)
+        (step sw) (step ne)
+        (slide w) (slide e)
+     )
   )
   (piece
      (name SH)
@@ -552,6 +798,11 @@
                    This is the move of the cat sword in dai shogi.")
      (image White "images/ko/kwsh.bmp"
             Black "images/ko/kbsh.bmp")
+     (moves
+        (move-type normal-type)
+        (step nw) (step se)
+        (step sw) (step ne)
+     )
   )
   (piece
      (name V)
@@ -559,80 +810,84 @@
      (description "Vanguard (sempo): can move one to five free intersections directly forward. (fR5)")
      (image White "images/ko/kwv.bmp"
             Black "images/ko/kbv.bmp")
+     (moves
+        (move-type normal-type)
+        (slide-5 n)
+     )
   )
 
   (board-setup
      (Black
-        (AG 19S 1S)
-        (SM 18S)
-        (TP 2S)
-        (EN 17S 3S)
-        (CS 16S 4S)
-        (S  15S 5S)
-        (A  14S 6S)
-        (WR 13S 7S)
-        (AC 12S 8S)
-        (CL 11S)
-        (SO 9S)
-        (G  10S)
-        (RG 19R 1R)
-        (CR 18R 2R)
-        (Q  16R 4R)
-        (M  14R 6R)
-        (SN 12R 8R)
-        (D  11R)
-        (B  9R)
-        (MT 10R)
-        (E  19Q 1Q 15Q 5Q 11Q 9Q)
-        (C  18Q 2Q 14Q 6Q)
-        (SB 17Q 3Q 13Q 7Q)
-        (LB 16Q 4Q 12Q 8Q)
-        (EC 10Q)
-        (CA 19P 1P)
-        (HS 17P 3P 15P 5P 13P 7P 11P 9P)
-        (P  18O 2O 16O 4O 14O 6O 12O 8O)
-        (PU 10O)
-        (CU 19N 1N)
-        (SU 18N 2N 10N)
-        (CH 17N 3N 15N 5N 13N 7N 11N 9N)
-        (SH 16N 4N 14N 6N 12N 8N)
-        (V  10M)
+        (AG S19 A19)
+        (SM R19)
+        (TP B19)
+        (EN Q19 C19)
+        (CS P19 D19)
+        (S  O19 E19)
+        (A  N19 F19)
+        (WR M19 G19)
+        (AC L19 H19)
+        (CL K19)
+        (SO I19)
+        (G  J19)
+        (RG S18 A18)
+        (CR R18 B18)
+        (Q  P18 D18)
+        (M  N18 F18)
+        (SN L18 H18)
+        (D  K18)
+        (B  I18)
+        (MT J18)
+        (E  S17 A17 O17 E17 K17 I17)
+        (C  R17 B17 N17 F17)
+        (SB Q17 C17 M17 G17)
+        (LB P17 D17 L17 H17)
+        (EC J17)
+        (CA S16 A16)
+        (HS Q16 C16 O16 E16 M16 G16 K16 I16)
+        (P  R15 B15 P15 D15 N15 F15 L15 H15)
+        (PU J15)
+        (CU S14 A14)
+        (SU R14 B14 J14)
+        (CH Q14 C14 O14 E14 M14 G14 K14 I14)
+        (SH P14 D14 N14 F14 L14 H14)
+        (V  J13)
      )
      (White
-        (AG 19A 1A)
-        (TP 18A)
-        (SM 2A)
-        (EN 17A 3A)
-        (CS 16A 4A)
-        (S  15A 5A)
-        (A  14A 6A)
-        (WR 13A 7A)
-        (AC 12A 8A)
-        (SO 11A)
-        (CL 9A)
-        (G  10A)
-        (RG 19B 1B)
-        (CR 18B 2B)
-        (Q  16B 4B)
-        (M  14B 6B)
-        (SN 12B 8B)
-        (B  11B)
-        (D  9B)
-        (MT 10B)
-        (E  19C 1C 15C 5C 11C 9C)
-        (C  18C 2C 14C 6C)
-        (SB 17C 3C 13C 7C)
-        (LB 16C 4C 12C 8C)
-        (EC 10C)
-        (CA 19D 1D)
-        (HS 17D 3D 15D 5D 13D 7D 11D 9D)
-        (P  18E 2E 16E 4E 14E 6E 12E 8E)
-        (PU 10E)
-        (CU 19F 1F)
-        (SU 18F 2F 10F)
-        (CH 17F 3F 15F 5F 13F 7F 11F 9F)
-        (SH 16F 4F 14F 6F 12F 8F)
-        (V  10G)
+        (AG S1 A1)
+        (TP R1)
+        (SM B1)
+        (EN Q1 C1)
+        (CS P1 D1)
+        (S  O1 E1)
+        (A  N1 F1)
+        (WR M1 G1)
+        (AC L1 H1)
+        (SO K1)
+        (CL I1)
+        (G  J1)
+        (RG S2 A2)
+        (CR R2 B2)
+        (Q  P2 D2)
+        (M  N2 F2)
+        (SN L2 H2)
+        (B  K2)
+        (D  I2)
+        (MT J2)
+        (E  S3 A3 O3 E3 K3 I3)
+        (C  R3 B3 N3 F3)
+        (SB Q3 C3 M3 G3)
+        (LB P3 D3 L3 H3)
+        (EC J3)
+        (CA S4 A4)
+        (HS Q4 C4 O4 E4 M4 G4 K4 I4)
+        (P  R5 B5 P5 D5 N5 F5 L5 H5)
+        (PU J5)
+        (CU S6 A6)
+        (SU R6 B6 J6)
+        (CH Q6 C6 O6 E6 M6 G6 K6 I6)
+        (SH P6 D6 N6 F6 L6 H6)
+        (V  J7)
      )
   )
   (loss-condition  (Black White) (and (pieces-remaining 0 MT) (pieces-remaining 0 GO) (pieces-remaining 0 G) ) )
@@ -641,74 +896,75 @@
 
 (variant
   (title "Ko Shogi (variant)")
+  (default)
   (board-setup
      (Black
-        (AG 19S 1S)
-        (SM 18S)
-        (TP 2S)
-        (EN 17S 3S)
-        (A  17Q 3Q)
-        (S  15S 5S)
-        (CS 14S 6S)
-        (WR 13Q 7Q)
-        (AC 12S 8S)
-        (CL 11S)
-        (SO 9S)
-        (G  10S)
-        (RG 19R 1R)
-        (CR 18R 2R)
-        (Q  16R 4R)
-        (M  14R 6R)
-        (SN 12R 8R)
-        (D  11R)
-        (B  9R)
-        (MT 10R)
-        (E  19Q 1Q 15Q 5Q 11Q 9Q)
-        (C  18Q 2Q)
-        (LB 12Q 8Q)
-        (EC 10Q)
-        (CA 19P 1P)
-        (HS 17P 3P 15P 5P 13P 7P 11P 9P)
-        (P  18O 2O 16O 4O 14O 6O 12O 8O)
-        (PU 10O)
-        (SU 18N 2N 10N)
-        (CH 19N 1N 17N 3N 15N 5N 13N 7N 11N 9N)
-        (SH 16N 4N 14N 6N 12N 8N)
-        (V  10M)
+        (AG S19 A19)
+        (SM R19)
+        (TP B19)
+        (EN Q19 C19)
+        (A  Q17 C17)
+        (S  O19 E19)
+        (CS N19 F19)
+        (WR M17 G17)
+        (AC L19 H19)
+        (CL K19)
+        (SO I19)
+        (G  J19)
+        (RG S18 A18)
+        (CR R18 B18)
+        (Q  P18 D18)
+        (M  N18 F18)
+        (SN L18 H18)
+        (D  K18)
+        (B  I18)
+        (MT J18)
+        (E  S17 A17 O17 E17 K17 I17)
+        (C  R17 B17)
+        (LB L17 H17)
+        (EC J17)
+        (CA S16 A16)
+        (HS Q16 C16 O16 E16 M16 G16 K16 I16)
+        (P  R15 B15 P15 D15 N15 F15 L15 H15)
+        (PU J15)
+        (SU R14 B14 J14)
+        (CH S14 A14 Q14 C14 O14 E14 M14 G14 K14 I14)
+        (SH P14 D14 N14 F14 L14 H14)
+        (V  J13)
      )
      (White
-        (AG 19A 1A)
-        (TP 18A)
-        (SM 2A)
-        (EN 17A 3A)
-        (A  17C 3C)
-        (S  15A 5A)
-        (CS 14A 6A)
-        (WR 13C 7C)
-        (AC 12A 8A)
-        (SO 11A)
-        (CL 9A)
-        (G  10A)
-        (RG 19B 1B)
-        (CR 18B 2B)
-        (Q  16B 4B)
-        (M  14B 6B)
-        (SN 12B 8B)
-        (B  11B)
-        (D  9B)
-        (MT 10B)
-        (E  19C 1C 15C 5C 11C 9C)
-        (C  18C 2C)
-        (LB 12C 8C)
-        (EC 10C)
-        (CA 19D 1D)
-        (HS 17D 3D 15D 5D 13D 7D 11D 9D)
-        (P  18E 2E 16E 4E 14E 6E 12E 8E)
-        (PU 10E)
-        (SU 18F 2F 10F)
-        (CH 19F 1F 17F 3F 15F 5F 13F 7F 11F 9F)
-        (SH 16F 4F 14F 6F 12F 8F)
-        (V  10G)
+        (AG S1 A1)
+        (TP R1)
+        (SM B1)
+        (EN Q1 C1)
+        (A  Q3 C3)
+        (S  O1 E1)
+        (CS N1 F1)
+        (WR M3 G3)
+        (AC L1 H1)
+        (SO K1)
+        (CL I1)
+        (G  J1)
+        (RG S2 A2)
+        (CR R2 B2)
+        (Q  P2 D2)
+        (M  N2 F2)
+        (SN L2 H2)
+        (B  K2)
+        (D  I2)
+        (MT J2)
+        (E  S3 A3 O3 E3 K3 I3)
+        (C  R3 B3)
+        (LB L3 H3)
+        (EC J3)
+        (CA S4 A4)
+        (HS Q4 C4 O4 E4 M4 G4 K4 I4)
+        (P  R5 B5 P5 D5 N5 F5 L5 H5)
+        (PU J5)
+        (SU R6 B6 J6)
+        (CH S6 A6 Q6 C6 O6 E6 M6 G6 K6 I6)
+        (SH P6 D6 N6 F6 L6 H6)
+        (V  J7)
      )
   )
 )
