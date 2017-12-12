@@ -1,5 +1,7 @@
 (function() {
 
+Dagaz.AI.CHECK_PROMOTION  = false;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {

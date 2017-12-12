@@ -3,12 +3,67 @@
   add
 ))
 
+(define step-1 (
+  $1 (verify empty?)
+  $1 (verify not-friend?)
+  add
+))
+
+(define step-2 (
+  $1 (verify empty?)
+  $1 (verify empty?)
+  $1 (verify not-friend?)
+  add
+))
+
+(define step-3 (
+  $1 (verify empty?)
+  $1 (verify empty?)
+  $1 (verify empty?)
+  $1 (verify not-friend?)
+  add
+))
+
+(define step-4 (
+  $1 (verify empty?)
+  $1 (verify empty?)
+  $1 (verify empty?)
+  $1 (verify empty?)
+  $1 (verify not-friend?)
+  add
+))
+
+(define stepc (
+  $1 (verify not-friend?)
+  (add-partial $2)
+))
+
 (define leap (
   $1 $2 (verify not-friend?)
   add
 ))
 
+(define leapc (
+  $1 $2 (verify not-friend?)
+  (add-partial $3)
+))
+
 (define slide (
+  $1 (while empty? add $1)
+  (verify not-friend?)
+  add
+))
+
+(define slide-1 (
+  $1 (verify empty?)
+  $1 (while empty? add $1)
+  (verify not-friend?)
+  add
+))
+
+(define slide-2 (
+  $1 (verify empty?)
+  $1 (verify empty?)
   $1 (while empty? add $1)
   (verify not-friend?)
   add
@@ -195,6 +250,11 @@
                    Wherever it lands, all adjacent enemy pieces are 'burned' and removed from the board.")
      (image White "images/ko/kwpf.bmp"
             Black "images/ko/kbpf.bmp")
+     (moves
+        (move-type normal-type)
+        (step n) (step s) 
+        (step nw) (step ne)
+     )
   )
   (piece
      (name EN)
@@ -297,6 +357,18 @@
                    The sumo wrestler cannot jump over an intervening friendly piece as a ''lion'' can in other shogi variants.")
      (image White "images/ko/kwwr.bmp"
             Black "images/ko/kbwr.bmp")
+     (moves
+        (move-type normal-type)
+        (stepc n continue-type) (stepc nw continue-type)
+        (stepc s continue-type) (stepc se continue-type)
+        (stepc w continue-type) (stepc sw continue-type)
+        (stepc e continue-type) (stepc ne continue-type)
+        (move-type continue-type)
+        (step n) (step nw)
+        (step s) (step se)
+        (step w) (step sw)
+        (step e) (step ne)
+     )
   )
   (piece
      (name AA)
@@ -334,6 +406,18 @@
                    This is like a double kirin move in chu shogi and other shogi variants.")
      (image White "images/ko/kwma.bmp"
             Black "images/ko/kbma.bmp")
+     (moves
+        (move-type normal-type)
+        (stepc nw continue-type) (leapc n n continue-type)
+        (stepc se continue-type) (leapc s s continue-type)
+        (stepc sw continue-type) (leapc w w continue-type)
+        (stepc ne continue-type) (leapc e e continue-type)
+        (move-type continue-type)
+        (step nw) (leap n n)
+        (step se) (leap s s)
+        (step sw) (leap w w)
+        (step ne) (leap e e)
+     )
   )
   (piece
      (name CL)
@@ -357,6 +441,18 @@
                    This is like a double phoenix move in other shogi variants.")
      (image White "images/ko/kwbd.bmp"
             Black "images/ko/kbbd.bmp")
+     (moves
+        (move-type normal-type)
+        (stepc n continue-type) (leapc nw nw continue-type)
+        (stepc s continue-type) (leapc se se continue-type)
+        (stepc w continue-type) (leapc sw sw continue-type)
+        (stepc e continue-type) (leapc ne ne continue-type)
+        (move-type continue-type)
+        (step n) (leap nw nw)
+        (step s) (leap se se)
+        (step w) (leap sw sw)
+        (step e) (leap ne ne)
+     )
   )
   (piece
      (name SO)
@@ -403,6 +499,20 @@
      (description "War hawk (yoyo): can step one or two intersections in any orthogonal direction, potentially capturing a piece with each step or move any number of free intersections along any of the four diagonal directions. (BdW)")
      (image White "images/ko/kwwh.bmp"
             Black "images/ko/kbwh.bmp")
+     (moves
+        (move-type normal-type)
+        (slide-1 nw)
+        (slide-1 se)
+        (slide-1 sw)
+        (slide-1 ne)
+        (stepc n continue-type)
+        (stepc s continue-type)
+        (stepc w continue-type)
+        (stepc e continue-type)
+        (move-type continue-type)
+        (step n) (step s)
+        (step w) (step e)
+     )
   )
   (piece
      (name CR)
@@ -425,6 +535,20 @@
      (description "Tiger wing (koyoku): moves like a shield (one step diagonally) once or twice per turn. (FdF)")
      (image White "images/ko/kwtw.bmp"
             Black "images/ko/kbtw.bmp")
+     (moves
+        (move-type normal-type)
+        (slide-2 n) (step n)
+        (slide-2 s) (step s)
+        (slide-2 w) (step w)
+        (slide-2 e) (step e)
+        (stepc nw continue-type)
+        (stepc se continue-type)
+        (stepc sw continue-type)
+        (stepc ne continue-type)
+        (move-type continue-type)
+        (step nw) (step se)
+        (step sw) (step ne)
+     )
   )
   (piece
      (name Q)
@@ -447,6 +571,22 @@
      (description "Dragon ascending (ryujo): adds the moves of the sumo wrestler to those of the millenary. (QdK)")
      (image White "images/ko/kwda.bmp"
             Black "images/ko/kbda.bmp")
+     (moves
+        (move-type normal-type)
+        (slide-2 n) (slide-2 nw)
+        (slide-2 s) (slide-2 se)
+        (slide-2 w) (slide-2 sw)
+        (slide-2 e) (slide-2 ne)
+        (stepc n continue-type) (stepc nw continue-type)
+        (stepc s continue-type) (stepc se continue-type)
+        (stepc w continue-type) (stepc sw continue-type)
+        (stepc e continue-type) (stepc ne continue-type)
+        (move-type continue-type)
+        (step n) (step nw)
+        (step s) (step se)
+        (step w) (step sw)
+        (step e) (step ne)
+     )
   )
   (piece
      (name M)
@@ -498,6 +638,33 @@
                    If the allied priest is killed, the thunderclap reverts to a drum.")
      (image White "images/ko/kwtc.bmp"
             Black "images/ko/kbtc.bmp")
+     (moves
+        (move-type normal-type)
+        (stepc n left-4-type)
+        (stepc s left-4-type)
+        (stepc w left-4-type)
+        (stepc e left-4-type)
+        (move-type left-4-type)
+        (stepc n left-3-type)
+        (stepc s left-3-type)
+        (stepc w left-3-type)
+        (stepc e left-3-type)
+        (move-type left-3-type)
+        (stepc n left-2-type)
+        (stepc s left-2-type)
+        (stepc w left-2-type)
+        (stepc e left-2-type)
+        (move-type left-2-type)
+        (stepc n left-1-type)
+        (stepc s left-1-type)
+        (stepc w left-1-type)
+        (stepc e left-1-type)
+        (move-type left-1-type)
+        (step n)
+        (step s)
+        (step w)
+        (step e)
+     )
   )
   (piece
      (name D)
@@ -519,6 +686,45 @@
                    If the allied priest is killed, the roaming assault reverts to a banner.")
      (image White "images/ko/kwra.bmp"
             Black "images/ko/kbra.bmp")
+     (moves
+        (move-type normal-type)
+        (stepc n left-4-n)
+        (stepc s left-4-s)
+        (stepc w left-4-w)
+        (stepc e left-4-e)
+        (move-type left-4-n)
+        (stepc n left-3-n)
+        (move-type left-3-n)
+        (stepc n left-2-n)
+        (move-type left-2-n)
+        (stepc n left-1-n)
+        (move-type left-1-n)
+        (step n)
+        (move-type left-4-s)
+        (stepc s left-3-s)
+        (move-type left-3-s)
+        (stepc s left-2-s)
+        (move-type left-2-s)
+        (stepc s left-1-s)
+        (move-type left-1-s)
+        (step s)
+        (move-type left-4-w)
+        (stepc w left-3-w)
+        (move-type left-3-w)
+        (stepc w left-2-w)
+        (move-type left-2-w)
+        (stepc w left-1-w)
+        (move-type left-1-w)
+        (step w)
+        (move-type left-4-e)
+        (stepc e left-3-e)
+        (move-type left-3-e)
+        (stepc e left-2-e)
+        (move-type left-2-e)
+        (stepc e left-1-e)
+        (move-type left-1-e)
+        (step e)
+     )
   )
   (piece
      (name B)
@@ -626,6 +832,18 @@
      (description "Winged horse (temba): moves as a cavalry, but without any restriction on the direction of the second jump. That is, it moves twice like a knight in Western chess. (NdN)")
      (image White "images/ko/kwwg.bmp"
             Black "images/ko/kbwg.bmp")
+     (moves
+        (move-type normal-type)
+        (leapc n nw continue-type) (leapc n ne continue-type)
+        (leapc s sw continue-type) (leapc s se continue-type)
+        (leapc w sw continue-type) (leapc w nw continue-type)
+        (leapc e se continue-type) (leapc e ne continue-type)
+        (move-type continue-type)
+        (leap n nw) (leap n ne)
+        (leap s sw) (leap s se)
+        (leap w sw) (leap w nw)
+        (leap e se) (leap e ne)
+     )
   )
   (piece
      (name CA)
@@ -636,6 +854,21 @@
                    For its second jump, it may return to its starting point. This gives the cavalry a power of igui and passing a turn similar to that of the sumo wrestler.")
      (image White "images/ko/kwca.bmp"
             Black "images/ko/kbca.bmp")
+     (moves
+        (move-type normal-type)
+        (leapc n nw left-1-n) (leapc n ne left-1-n)
+        (leapc s sw left-1-s) (leapc s se left-1-s)
+        (leapc w sw left-1-w) (leapc w nw left-1-w)
+        (leapc e se left-1-e) (leapc e ne left-1-e)
+        (move-type left-1-n)
+        (leap n nw) (leap n ne)
+        (move-type left-1-s)
+        (leap s sw) (leap s se)
+        (move-type left-1-w)
+        (leap w sw) (leap w nw)
+        (move-type left-1-w)
+        (leap e se) (leap e ne)
+     )
   )
   (piece
      (name HH)
@@ -646,6 +879,21 @@
                    For its second jump, it may return to its starting point. This gives the cavalry a power of igui and passing a turn similar to that of the sumo wrestler.")
      (image White "images/ko/kwhh.bmp"
             Black "images/ko/kbhh.bmp")
+     (moves
+        (move-type normal-type)
+        (leapc n nw left-1-n) (leapc n ne left-1-n)
+        (leapc s sw left-1-s) (leapc s se left-1-s)
+        (leapc w sw left-1-w) (leapc w nw left-1-w)
+        (leapc e se left-1-e) (leapc e ne left-1-e)
+        (move-type left-1-n)
+        (leap n nw) (leap n ne)
+        (move-type left-1-s)
+        (leap s sw) (leap s se)
+        (move-type left-1-w)
+        (leap w sw) (leap w nw)
+        (move-type left-1-w)
+        (leap e se) (leap e ne)
+     )
   )
   (piece
      (name HS)
@@ -772,8 +1020,10 @@
             Black "images/ko/kbch.bmp")
      (moves
         (move-type normal-type)
-        (slide-5 n) (slide-5 s)
-        (slide-5 w) (slide-5 e)
+        (step n) (step-1 n) (step-2 n) (step-3 n) (step-4 n)
+        (step s) (step-1 s) (step-2 s) (step-3 s) (step-4 s)
+        (step w) (step-1 w) (step-2 w) (step-3 w) (step-4 w)
+        (step e) (step-1 e) (step-2 e) (step-3 e) (step-4 e)
      )
   )
   (piece
@@ -812,7 +1062,7 @@
             Black "images/ko/kbv.bmp")
      (moves
         (move-type normal-type)
-        (slide-5 n)
+        (step n) (step-1 n) (step-2 n) (step-3 n) (step-4 n)
      )
   )
 
@@ -896,7 +1146,6 @@
 
 (variant
   (title "Ko Shogi (variant)")
-  (default)
   (board-setup
      (Black
         (AG S19 A19)
