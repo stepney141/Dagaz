@@ -1,7 +1,5 @@
 (function() {
 
-Dagaz.AI.CHECK_PROMOTION  = false;
-
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
@@ -39,6 +37,7 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
   var daemon = design.getPieceType("Fire-Demon");
+  var none   = design.getPieceType("None");
   var dirs   = design.allDirections();
   for (var i = 0; i < board.moves.length; i++) {
        var move = board.moves[i];
@@ -63,6 +62,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                  }
             }
             if (isFired) {
+                action[2] = [ Dagaz.Model.createPiece(none, board.player) ];
                 move.capturePiece(pos, action[3]);
             } else {
                 if ((action[2] !== null) && (action[2][0].type == daemon)) {

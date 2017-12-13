@@ -67,6 +67,7 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
+  var none   = design.getPieceType("None");
   _.chain(board.moves)
    .filter(function(move) {
         return move.actions.length > 0;
@@ -83,6 +84,7 @@ Dagaz.Model.CheckInvariants = function(board) {
              }
         }
         if ((pos !== null) && (ix !== null)) {
+            if ((move.actions[ix][2] !== null) && (move.actions[ix][2][0].type == none)) return;
             var isForced = false;
             var target   = move.actions[ix][1][0];
             var piece    = board.getPiece(pos);

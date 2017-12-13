@@ -11,7 +11,7 @@ Dagaz.AI.SUICIDE_FACTOR   = 2;
 Dagaz.AI.ENEMY_FACTOR     = 1.3;
 Dagaz.AI.COST_FACTOR      = 0.1;
 Dagaz.AI.ENEMY_BONUS      = 20;
-Dagaz.AI.CHECK_PROMOTION  = true;
+Dagaz.AI.CHECK_PROMOTION  = false;
 
 function AggressiveAi(params, parent) {
   this.params = params;
@@ -38,6 +38,25 @@ Dagaz.AI.findBot = function(type, params, parent) {
   } else {
       return findBot(type, params, parent);
   }
+}
+
+Dagaz.AI.eval = function(design, params, board, player) {
+  var g = board.checkGoals(design, player);
+  if (g !== null) {
+      return g * MAXVALUE;
+  }
+  var r = 0;
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if (piece !== null) {
+          var v = design.price[piece.type];
+          if (piece.player != player) {
+              v = -v;
+          }
+          r += v;
+      }
+  });
+  return r;
 }
 
 Dagaz.AI.heuristic = function(ai, design, board, move) {
@@ -93,42 +112,6 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
   return r;
 }
 
-Dagaz.AI.eval = function(design, params, board, player) {
-  board.generate(design);
-  if (board.moves.length == 0) return MAXVALUE;
-  var move = _.chain(board.moves)
-   .map(function(m) {
-        return {
-           move:   m,
-           weight: Dagaz.AI.heuristic(this, design, board, m)
-        };
-    }, this)
-   .sortBy(function(n) {
-        return -n.weight;
-    })
-   .map(function(n) {
-        return n.move;
-    }).first().value();
-  var b = board.apply(move);
-  var r = 0;
-  _.each(design.allPositions(), function(pos) {
-      var piece = b.getPiece(pos);
-      if (piece !== null) {
-          var v = design.price[piece.type];
-          if (piece.player != player) {
-              v = -v;
-          }
-          r += v;
-      }
-  });
-  if (params.MOBILITY_FACTOR != 0) {
-      b.generate(design);
-      r *= params.MATERIAL_FACTOR;
-      r += b.moves.length * params.MOBILITY_FACTOR;
-  }
-  return r;
-}
-
 AggressiveAi.prototype.expand = function(ctx) {
   if (_.isUndefined(ctx.cache)) {
       ctx.board.moves = Dagaz.AI.generate(ctx, ctx.board);
@@ -152,7 +135,7 @@ AggressiveAi.prototype.expand = function(ctx) {
 }
 
 AggressiveAi.prototype.dump = function(ctx, node) {
-  console.log("Dump: " + node.move.toString() + ", weight = " + node.weight + ", eval = " + node.eval);
+  console.log("Dump: " + node.move.toString() + ", a = " + node.a + ", b = " + node.b + ", h = " + node.weight);
 }
 
 AggressiveAi.prototype.setContext = function(ctx, board) {
@@ -172,15 +155,42 @@ AggressiveAi.prototype.getMove = function(ctx) {
   }
   this.expand(ctx);
   ctx.timestamp = Date.now();
-  var ix = 0;
-  var mx = -MAXVALUE;
-  while ((ix < ctx.cache.length) && (Date.now() - ctx.timestamp < this.params.AI_FRAME)) {
+  var ix  = 0;
+  var mxa = -MAXVALUE;
+  var mxb = -MAXVALUE;
+  while ((ix < ctx.cache.length) && ((Date.now() - ctx.timestamp < this.params.AI_FRAME) || _.isUndefined(ctx.best))) {
       var node = ctx.cache[ix];
-      node.eval = Dagaz.AI.eval(ctx.design, this.params, node.board, ctx.board.player);
-      if (_.isUndefined(ctx.best) || (mx < node.eval)) {
-          this.dump(ctx, node);
-          ctx.best = ix;
-          mx = node.eval;
+      node.a   = Dagaz.AI.eval(ctx.design, this.params, node.board, ctx.board.player);
+      if (mxa <= node.a) {
+          mxa = node.a;
+          node.board.moves = Dagaz.AI.generate(ctx, node.board);
+          var m = _.chain(node.board.moves)
+           .map(function(m) {
+                return {
+                   move:   m,
+                   weight: Dagaz.AI.heuristic(this, ctx.design, node.board, m)
+                };
+            }, this)
+           .max(function(n) {
+                return n.weight;
+            }).value();
+          var b = node.board.apply(m.move);
+          if (b.checkGoals(ctx.design, ctx.board.player) === null) {
+              node.b = Dagaz.AI.eval(ctx.design, this.params, b, ctx.board.player);
+              if (this.params.MOBILITY_FACTOR != 0) {
+                  b.moves = Dagaz.AI.generate(ctx, b);
+                  node.b *= this.params.MATERIAL_FACTOR;
+                  node.b += b.moves.length * this.params.MOBILITY_FACTOR;
+              }
+              if (this.params.NOISE_FACTOR > 0) {
+                  node.b += _.random(0, this.params.NOISE_FACTOR);
+              }
+              if (mxb < node.b) {
+                  mxb = node.b;
+                  this.dump(ctx, node);
+                  ctx.best = ix;
+              }
+          }
       }
       ix++;
   }
