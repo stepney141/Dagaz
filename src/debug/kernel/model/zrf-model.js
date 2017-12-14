@@ -365,6 +365,7 @@ Dagaz.Model.functions[Dagaz.Model.ZRF_FROM] = function(gen) {
    }
    gen.from  = gen.pos;
    gen.piece = gen.getPiece(gen.pos);
+   delete gen.initial;
    return 0;
 }
 
@@ -470,6 +471,9 @@ Dagaz.Model.functions[Dagaz.Model.ZRF_CREATE] = function(gen) {
    }
    if (gen.stack.length == 0) {
        return null;
+   }
+   if (_.isUndefined(gen.initial) && (gen.from == gen.pos)) {
+       gen.initial = gen.pos;
    }
    var type = gen.stack.pop();
    var piece = new ZrfPiece(type, gen.board.player);
@@ -1028,6 +1032,9 @@ ZrfMoveGenerator.prototype.clone = function() {
   r.mode     = this.mode;
   r.board    = this.board;
   r.pos      = this.pos;
+  if (!_.isUndefined(this.initial)) {
+      r.initial = this.initial;
+  }
   _.each(this.marks, function(it) { r.marks.push(it); });
   _.each(this.stack, function(it) { r.stack.push(it); });
   _.each(_.keys(this.pieces), function(pos) {
@@ -1062,6 +1069,9 @@ ZrfMoveGenerator.prototype.copy = function(template, params) {
   r.board    = this.board;
   r.pos      = this.pos;
   r.move     = this.move.copy();
+  if (!_.isUndefined(this.initial)) {
+      r.initial = this.initial;
+  }
   return r;
 }
 
@@ -1567,13 +1577,23 @@ var addPrior = function(priors, mode, gen) {
 }
 
 var CompleteMove = function(board, gen, cover) {
+  var f = false;
+  if (!_.isUndefined(gen.initial)) {
+      f = true;
+      gen.pos   = gen.initial;
+      gen.lastt = gen.initial;
+  }
   var positions = Dagaz.Model.getPartList(board, gen);
   if (!Dagaz.Model.passPartial) { var t = 2; } 
       else { var t = 1; }
   while (positions.length > 0) {
        pos = positions.pop();
        var piece = gen.getPieceInternal(pos);
-       if ((piece !== null) && (Dagaz.Model.isFriend(piece, board.player) || Dagaz.Model.sharedPieces)) {
+       if (f && (piece === null) && (gen.parent !== null)) {
+           piece = gen.parent.getPieceInternal(pos);
+           gen.setPiece(pos, piece);
+       }
+       if ((piece !== null) && (Dagaz.Model.sharedPieces || Dagaz.Model.isFriend(piece, board.player))) {
            _.each(board.game.design.pieces[piece.type], function(move) {
                 if ((move.type == 0) && (move.mode == gen.mode)) {
                     var g = gen.copy(move.template, move.params);

@@ -328,7 +328,7 @@ var drawMarks = function(ctx, view, list, color) {
         }
         ctx.beginPath();
         ctx.fillStyle = color;
-        ctx.arc(x, y, r, 0, 2 * Math.PI);
+        ctx.arc(x + 1, y + 1, r, 0, 2 * Math.PI);
         ctx.fill();
         ctx.stroke();
    }, view);
