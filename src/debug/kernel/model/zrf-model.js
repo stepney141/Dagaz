@@ -1032,6 +1032,9 @@ ZrfMoveGenerator.prototype.clone = function() {
   r.mode     = this.mode;
   r.board    = this.board;
   r.pos      = this.pos;
+  if (!_.isUndefined(this.cover)) {
+      r.cover   = this.cover;
+  }
   if (!_.isUndefined(this.initial)) {
       r.initial = this.initial;
   }
@@ -1069,6 +1072,9 @@ ZrfMoveGenerator.prototype.copy = function(template, params) {
   r.board    = this.board;
   r.pos      = this.pos;
   r.move     = this.move.copy();
+  if (!_.isUndefined(this.cover)) {
+      r.cover   = this.cover;
+  }
   if (!_.isUndefined(this.initial)) {
       r.initial = this.initial;
   }

@@ -33,8 +33,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addDirection("sw");
     design.addDirection("nw");
 
-    design.addPlayer("White", [1, 0, 4, 6, 2, 7, 3, 5]);
-    design.addPlayer("Black", [0, 1, 2, 3, 4, 5, 6, 7]);
+    design.addPlayer("Black", [1, 0, 4, 6, 2, 7, 3, 5]);
+    design.addPlayer("White", [0, 1, 2, 3, 4, 5, 6, 7]);
+    design.addTurn(2);
+    design.addTurn(1);
+
 
     design.addPosition("a8", [0, 1, 8, 0, 0, 9, 0, 0]);
     design.addPosition("b8", [-1, 1, 8, 0, 0, 9, 7, 0]);
@@ -101,8 +104,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("g1", [-1, 1, 0, -7, -8, 0, 0, -9]);
     design.addPosition("h1", [-1, 0, 0, 0, -8, 0, 0, -9]);
 
-    design.addZone("third-rank", 1, [40, 41, 42, 43, 44, 45, 46, 47]);
     design.addZone("third-rank", 2, [16, 17, 18, 19, 20, 21, 22, 23]);
+    design.addZone("third-rank", 1, [40, 41, 42, 43, 44, 45, 46, 47]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
@@ -226,9 +229,9 @@ Dagaz.Model.BuildDesign = function(design) {
 
 
     design.addPiece("Pawn", 0);
-    design.addMove(0, 0, [4, 4], 0);
-    design.addMove(0, 1, [7], 0);
-    design.addMove(0, 1, [3], 0);
+    design.addMove(0, 0, [2, 2], 0);
+    design.addMove(0, 1, [6], 0);
+    design.addMove(0, 1, [5], 0);
 
     design.addPiece("Rook", 1);
     design.addMove(1, 2, [4, 4], 0);
@@ -292,23 +295,23 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(6, 3, [1, 3], 0);
     design.addMove(6, 3, [1, 5], 0);
 
-    design.setup("White", "Pawn", 48);
-    design.setup("White", "Pawn", 49);
-    design.setup("White", "Pawn", 50);
-    design.setup("White", "Pawn", 51);
-    design.setup("White", "Pawn", 52);
-    design.setup("White", "Pawn", 53);
-    design.setup("White", "Pawn", 54);
-    design.setup("White", "Pawn", 55);
-    design.setup("White", "Rook", 56);
-    design.setup("White", "Rook", 63);
-    design.setup("White", "Knight", 57);
-    design.setup("White", "Knight", 62);
-    design.setup("White", "Bishop", 58);
-    design.setup("White", "Bishop", 61);
-    design.setup("White", "Queen", 59);
-    design.setup("White", "King", 60);
-    design.setup("Black", "Maharadja", 28);
+    design.setup("White", "Pawn", 8);
+    design.setup("White", "Pawn", 9);
+    design.setup("White", "Pawn", 10);
+    design.setup("White", "Pawn", 11);
+    design.setup("White", "Pawn", 12);
+    design.setup("White", "Pawn", 13);
+    design.setup("White", "Pawn", 14);
+    design.setup("White", "Pawn", 15);
+    design.setup("White", "Rook", 0);
+    design.setup("White", "Rook", 7);
+    design.setup("White", "Knight", 1);
+    design.setup("White", "Knight", 6);
+    design.setup("White", "Bishop", 2);
+    design.setup("White", "Bishop", 5);
+    design.setup("White", "Queen", 4);
+    design.setup("White", "King", 3);
+    design.setup("Black", "Maharadja", 35);
 }
 
 Dagaz.View.configure = function(view) {
