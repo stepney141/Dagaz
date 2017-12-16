@@ -38,7 +38,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addTurn(2);
     design.addTurn(1);
 
-
     design.addPosition("a8", [0, 1, 8, 0, 0, 9, 0, 0]);
     design.addPosition("b8", [-1, 1, 8, 0, 0, 9, 7, 0]);
     design.addPosition("c8", [-1, 1, 8, 0, 0, 9, 7, 0]);
@@ -227,7 +226,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(6, ZRF.FUNCTION,	25);	// to
     design.addCommand(6, ZRF.FUNCTION,	28);	// end
 
-
     design.addPiece("Pawn", 0);
     design.addMove(0, 0, [2, 2], 0);
     design.addMove(0, 1, [6], 0);
@@ -311,7 +309,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("White", "Bishop", 5);
     design.setup("White", "Queen", 4);
     design.setup("White", "King", 3);
-    design.setup("Black", "Maharadja", 35);
+    design.setup("Black", "Maharadja", 49);
+    design.setup("Black", "Maharadja", 54);
 }
 
 Dagaz.View.configure = function(view) {

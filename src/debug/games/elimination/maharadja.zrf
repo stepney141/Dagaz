@@ -202,54 +202,6 @@
            (Queen e8)
            (King d8)
     )
-    (Black (Maharadja d4))
-  )
-)
-
-(variant
-  (title "Maharadja (debug)")
-  (default)
-
-  (players Black White)
-  (turn-order White Black)
-
-  (board
-     (image "images/maharadja/board.bmp")
-     (grid
-         (start-rectangle 2 2 70 70)
-         (dimensions
-           ("a/b/c/d/e/f/g/h" (68 0)) ; files
-           ("8/7/6/5/4/3/2/1" (0 68)) ; ranks
-         )
-         (directions 
-              (n 0 -1) (s 0 1) (e 1 0) (w -1 0)
-              (nw -1 -1) (sw -1 1) (ne 1 -1) (se 1 1)
-         )
-     )
-     (zone (name third-rank) (players Black)
-           (positions a3 b3 c3 d3 e3 f3 g3 h3)
-     )
-     (zone (name third-rank) (players White)
-           (positions a6 b6 c6 d6 e6 f6 g6 h6)
-     )
-  )
-
-  (piece
-     (name Pawn)
-     (image White "images/maharadja/wpawn.bmp")
-     (moves
-         (pawn-shift s) (pawn-step sw) (pawn-step se)
-     )
-  )
-
-  (board-setup
-    (White (Pawn a7 b6 c7 d7 e7 f7 g7 h7)
-           (Rook a8 h8)
-           (Knight c5 e3)
-           (Bishop c8 f8)
-           (Queen e8)
-           (King d8)
-    )
-    (Black (Maharadja c3))
+    (Black (Maharadja b2 g2))
   )
 )
