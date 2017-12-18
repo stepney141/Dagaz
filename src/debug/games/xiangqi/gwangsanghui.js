@@ -544,7 +544,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(2, 1, [3], 0);
     design.addMove(2, 1, [5], 0);
 
-    design.addPiece("WestGeneral", 3, 100);
+    design.addPiece("WestGeneral", 3, 1000);
     design.addMove(3, 2, [4], 0);
     design.addMove(3, 2, [2], 0);
     design.addMove(3, 2, [0], 0);
@@ -554,7 +554,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(3, 1, [3], 0);
     design.addMove(3, 1, [5], 0);
 
-    design.addPiece("EastGeneral", 4, 100);
+    design.addPiece("EastGeneral", 4, 1000);
     design.addMove(4, 2, [4], 0);
     design.addMove(4, 2, [2], 0);
     design.addMove(4, 2, [0], 0);

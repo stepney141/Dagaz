@@ -282,7 +282,6 @@
 (variant
   (title "Horde Chess")
   (description "https://en.wikipedia.org/wiki/Dunsany%27s_Chess")
-  (default)
   (board-setup
     (White 
          (Pawn a2 b2 c2 d2 e2 f2 g2 h2)
