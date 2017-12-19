@@ -1,5 +1,8 @@
 (function() {
 
+Dagaz.View.SHIFT_X = 0;
+Dagaz.View.SHIFT_Y = 0;
+
 Dagaz.View.markType = {
    TARGET:    0,
    ATTACKING: 1,
@@ -328,7 +331,7 @@ var drawMarks = function(ctx, view, list, color) {
         }
         ctx.beginPath();
         ctx.fillStyle = color;
-        ctx.arc(x + 1, y + 1, r, 0, 2 * Math.PI);
+        ctx.arc(x + Dagaz.View.SHIFT_X, y + Dagaz.View.SHIFT_Y, r, 0, 2 * Math.PI);
         ctx.fill();
         ctx.stroke();
    }, view);

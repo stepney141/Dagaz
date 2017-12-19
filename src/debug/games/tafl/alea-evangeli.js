@@ -19,6 +19,9 @@ ZRF = {
     VERIFY:        20
 };
 
+Dagaz.View.SHIFT_X = 1;
+Dagaz.View.SHIFT_Y = 1;
+
 Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("tafl-extension", "true");

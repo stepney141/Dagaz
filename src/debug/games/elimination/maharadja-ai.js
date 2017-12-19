@@ -69,6 +69,16 @@ var isSafe = function(design, board, move, player) {
   return r;
 }
 
+var isLoss = function(ctx, board, player) {
+  board.moves = Dagaz.AI.generate(ctx, board);
+  for (var i = 0; i < board.moves.length; i++) {
+       var b = board.apply(board.moves[i]);
+       b.moves = Dagaz.AI.generate(ctx, b);
+       if (b.moves.length == 0) return true;
+  }
+  return false;
+}
+
 var isGoal = function(board, move) {
   if (move.isSimpleMove()) {
       var pos = move.actions[0][1][0];
@@ -102,7 +112,7 @@ Ai.prototype.getMove = function(ctx) {
        var b = ctx.board.apply(move);
        if (!isSafe(ctx.design, b, move, ctx.board.player)) continue;
        var eval = Dagaz.AI.eval(ctx.design, this.params, b, ctx.board.player);
-       if (mx < eval) {
+       if ((mx < eval) && !isLoss(ctx, b, ctx.board.player)) {
            console.log("Move: " + move.toString() + ", eval = " + eval);
            mx = eval;
            ctx.best = move;

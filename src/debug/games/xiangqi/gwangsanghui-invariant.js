@@ -2,9 +2,15 @@
 
 var checkVersion = Dagaz.Model.checkVersion;
 
+var checkDraw = false;
+
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "gwangsanghui-invariant") {
-     checkVersion(design, name, value);
+  if (name == "gwangsanghui-invariant") {
+      if (value == "draw") {
+          checkDraw = true;
+      }
+  } else {
+      checkVersion(design, name, value);
   }
 }
 
@@ -49,7 +55,7 @@ var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {
   var king = design.getPieceType("King");
-  if (isDraw(design, board, king)) {
+  if (checkDraw && isDraw(design, board, king)) {
       return 0;
   }
   var friends = 0;
