@@ -378,6 +378,7 @@ Dagaz.Model.functions[Dagaz.Model.ZRF_TO] = function(gen) {
    }
    if (Dagaz.Model.chessCapturing && !_.isUndefined(gen.cover) && !_.isUndefined(gen.from)) {
         gen.cover[gen.pos].push(gen.from);
+        gen.serial[gen.pos].push(gen.serial);
    }
    gen.movePiece(gen.from, gen.pos, gen.piece);
    delete gen.from;
@@ -398,6 +399,7 @@ Dagaz.Model.functions[Dagaz.Model.ZRF_CAPTURE] = function(gen) {
    }
    if (!_.isUndefined(gen.cover) && !_.isUndefined(gen.from)) {
        gen.cover[gen.pos].push(gen.from);
+       gen.serial[gen.pos].push(gen.serial);
    }
    gen.generated = true;
    return 0;
@@ -987,8 +989,8 @@ ZrfMoveTemplate.prototype.addCommand = function(name, param) {
   }
 }
 
-function ZrfMoveGenerator(design, mode) {
-  this.move     = new ZrfMove(mode);
+function ZrfMoveGenerator(design, mode, serial) {
+  this.move     = new ZrfMove(mode, serial);
   this.start    = mode;
   this.moveType = 1;
   this.template = null;
@@ -1004,14 +1006,15 @@ function ZrfMoveGenerator(design, mode) {
   this.marks	= [];
   this.cmd      = 0;
   this.level    = 1;
+  this.serial   = serial;
   this.design   = design;
 }
 
-Dagaz.Model.createGen = function(template, params, design, mode) {
+Dagaz.Model.createGen = function(template, params, design, mode, serial) {
   if (_.isUndefined(design)) {
       design = Dagaz.Model.getDesign();
   }
-  var r = new ZrfMoveGenerator(design, mode);
+  var r = new ZrfMoveGenerator(design, mode, serial);
   r.template = template;
   r.params   = Dagaz.int32Array(params);
   return r;
@@ -1023,7 +1026,7 @@ ZrfMoveGenerator.prototype.init = function(board, pos) {
 }
 
 ZrfMoveGenerator.prototype.clone = function() {
-  var r = new ZrfMoveGenerator(this.design, this.start);
+  var r = new ZrfMoveGenerator(this.design, this.start, this.serial);
   r.template = this.template;
   r.params   = this.params;  
   r.level    = this.level;
@@ -1034,6 +1037,7 @@ ZrfMoveGenerator.prototype.clone = function() {
   r.pos      = this.pos;
   if (!_.isUndefined(this.cover)) {
       r.cover   = this.cover;
+      r.serial  = this.serial;
   }
   if (!_.isUndefined(this.initial)) {
       r.initial = this.initial;
@@ -1066,7 +1070,7 @@ ZrfMoveGenerator.prototype.clone = function() {
 }
 
 ZrfMoveGenerator.prototype.copy = function(template, params) {
-  var r = Dagaz.Model.createGen(template, params, this.design, this.move.mode);
+  var r = Dagaz.Model.createGen(template, params, this.design, this.move.mode, this.serial);
   r.level    = this.level + 1;
   r.parent   = this;
   r.board    = this.board;
@@ -1074,6 +1078,7 @@ ZrfMoveGenerator.prototype.copy = function(template, params) {
   r.move     = this.move.copy();
   if (!_.isUndefined(this.cover)) {
       r.cover   = this.cover;
+      r.serial  = this.serial;
   }
   if (!_.isUndefined(this.initial)) {
       r.initial = this.initial;
@@ -1582,7 +1587,7 @@ var addPrior = function(priors, mode, gen) {
   }
 }
 
-var CompleteMove = function(board, gen, cover) {
+var CompleteMove = function(board, gen, cover, serial) {
   var f = false;
   if (!_.isUndefined(gen.initial)) {
       f = true;
@@ -1604,12 +1609,13 @@ var CompleteMove = function(board, gen, cover) {
                 if ((move.type == 0) && (move.mode == gen.mode)) {
                     var g = gen.copy(move.template, move.params);
                     if (!_.isUndefined(cover)) {
-                        g.cover = cover;
+                        g.cover  = cover;
+                        g.serial = serial;
                     }
                     g.moveType = t;
                     g.generate();
                     if (g.completed && (g.moveType == 0)) {
-                        CompleteMove(board, g, cover);
+                        CompleteMove(board, g, cover, serial);
                         t = 1;
                     }
                 }
@@ -1618,13 +1624,14 @@ var CompleteMove = function(board, gen, cover) {
   }
 }
 
-ZrfBoard.prototype.generateInternal = function(callback, cont, cover) {
+ZrfBoard.prototype.generateInternal = function(callback, cont, cover, serial) {
   var design = this.game.design;
   if (_.isUndefined(this.moves)) {
       this.moves = [];
   } else {
       return;
   }
+  var sn = 0;
   Dagaz.KPI.stage("init");
   if ((this.moves.length == 0) && !design.failed && (this.player > 0)) {
       var priors = [];
@@ -1639,9 +1646,10 @@ ZrfBoard.prototype.generateInternal = function(callback, cont, cover) {
            _.chain(design.pieces[piece.type])
             .filter(function(move) { return (move.type == 0); })
             .each(function(move) {
-                var g = Dagaz.Model.createGen(move.template, move.params, this.game.design, move.mode);
+                var g = Dagaz.Model.createGen(move.template, move.params, this.game.design, move.mode, sn++);
                 if (!_.isUndefined(cover)) {
-                    g.cover = cover;
+                    g.cover  = cover;
+                    g.serial = serial;
                 }
                 g.init(this, pos);
                 addPrior(priors, move.mode, g);
@@ -1655,9 +1663,10 @@ ZrfBoard.prototype.generateInternal = function(callback, cont, cover) {
                    _.chain(design.pieces[tp])
                     .filter(function(move) { return (move.type == 1); })
                     .each(function(move) {
-                        var g = Dagaz.Model.createGen(move.template, move.params, this.game.design, move.mode);
+                        var g = Dagaz.Model.createGen(move.template, move.params, this.game.design, move.mode, sn++);
                         if (!_.isUndefined(cover)) {
-                            g.cover = cover;
+                            g.cover  = cover;
+                            g.serial = serial;
                         }
                         g.init(this, pos);
                         g.piece = new ZrfPiece(tp, this.player);
@@ -1694,7 +1703,7 @@ ZrfBoard.prototype.generateInternal = function(callback, cont, cover) {
                       g.generate();
                       if (g.completed && !g.move.isPass()) {
                           if (cont && (g.moveType == 0)) {
-                              CompleteMove(this, g, cover);
+                              CompleteMove(this, g, cover, serial);
                           }
                           f = true;
                       }
@@ -1708,7 +1717,7 @@ ZrfBoard.prototype.generateInternal = function(callback, cont, cover) {
                g.generate();
                if (g.completed) {
                      if (cont && (g.moveType == 0)) {
-                        CompleteMove(this, g, cover);
+                        CompleteMove(this, g, cover, serial);
                      }
                }
           }
@@ -1741,16 +1750,18 @@ ZrfBoard.prototype.generate = function(design) {
 Dagaz.Model.GetCover = function(design, board) {
   if (_.isUndefined(board.cover)) {
       var b = board.copy();
-      board.cover = [];
+      board.cover  = [];
+      board.serial = [];
       for (var pos = 0; pos < design.positions.length; pos++) {
-           board.cover[pos] = [];
+           board.cover[pos]  = [];
+           board.serial[pos] = [];
            var piece = b.getPiece(pos);
            if (piece !== null) {
                piece = piece.changeOwner(0);
                b.setPiece(pos, piece);
            }
       }
-      b.generateInternal(b, true, board.cover);
+      b.generateInternal(b, true, board.cover, board.serial);
   }
   return board.cover;
 }
@@ -1840,8 +1851,9 @@ ZrfBoard.prototype.apply = function(move) {
   return r;
 }
 
-function ZrfMove(mode) {
+function ZrfMove(mode, serial) {
   this.actions  = [];
+  this.serial   = serial;
   if (_.isUndefined(mode)) {
       this.mode = 0;
   } else {
@@ -1935,6 +1947,7 @@ ZrfMove.prototype.determinate = function() {
       return _.chain(c)
        .map(function (l) {
            var r = new ZrfMove(this.mode);
+           r.serial = this.serial;
            var pos = 0;
            _.each(this.actions, function (action) {
               var x = [];
@@ -1958,11 +1971,13 @@ ZrfMove.prototype.determinate = function() {
 ZrfMove.prototype.copy = function() {
   var r = new ZrfMove(this.mode);
   r.actions = _.filter(this.actions);
+  r.serial  = this.serial;
   return r;
 }
 
 ZrfMove.prototype.clone = function(level) {
   var r = new ZrfMove(this.mode);
+  r.serial = this.serial;
   var o = true;
   r.actions = _.chain(this.actions)
    .filter(function(action) {
