@@ -23,7 +23,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var cover = function(design, board, player, cover) {
+var cover = function(design, board, player, cover, serial) {
   board.player = player;
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
@@ -43,11 +43,13 @@ var cover = function(design, board, player, cover) {
                   if ((p !== null) && (p != src)) {
                       if (design.inZone(0, player, p) || design.inZone(1, player, p)) {
                           cover[pos].push(pos);
+                          serial[pos].push(move.serial);
                           return;
                       }
                       var piece = board.getPiece(p);
                       if ((piece !== null) && (piece.player == player)) {
                           cover[pos].push(pos);
+                          serial[pos].push(move.serial);
                       }
                   }
               }
@@ -59,11 +61,13 @@ var cover = function(design, board, player, cover) {
 Dagaz.Model.GetCover = function(design, board) {
   if (_.isUndefined(board.cover)) {
       board.cover  = [];
+      board.serial = [];
       for (var pos = 0; pos < design.positions.length; pos++) {
-           board.cover[pos] = [];
+           board.cover[pos]  = [];
+           board.serial[pos] = [];
       }
-      cover(design, board.copy(), board.player, board.cover);
-      cover(design, board.copy(), design.nextPlayer(board.player), board.cover);
+      cover(design, board.copy(), board.player, board.cover, board.serial);
+      cover(design, board.copy(), design.nextPlayer(board.player), board.cover, board.serial);
   }
   return board.cover;
 }

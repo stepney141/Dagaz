@@ -3,7 +3,7 @@
 var MAXVALUE              = 1000000;
 
 Dagaz.AI.AI_FRAME         = 5000;
-Dagaz.AI.NOISE_FACTOR     = 5;
+Dagaz.AI.NOISE_FACTOR     = 15;
 Dagaz.AI.MATERIAL_FACTOR  = 1;
 Dagaz.AI.MOBILITY_FACTOR  = 1;
 
@@ -58,14 +58,14 @@ function AggressiveAi(params, parent) {
 var findBot = Dagaz.AI.findBot;
 
 Dagaz.AI.findBot = function(type, params, parent) {
-  if ((type == "aggressive") || (type == "common") || (type == "1") || (type == "2")) {
+  if ((type == "aggressive") || (type == "common") || (type == "1")) {
       return new AggressiveAi(params, parent);
   } else {
       return findBot(type, params, parent);
   }
 }
 
-Dagaz.AI.eval = function(design, params, board, player) {
+Dagaz.AI.eval_v4 = function(design, params, board, player) {
   var r = 0;
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
@@ -90,7 +90,7 @@ var getCover = function(design, board, player, pos, ignore, compare) {
         return design.price[piece.type];
     }).compact()
    .sortBy(function(price) {
-        return price;
+        return -price;
     }).value();
 }
 
@@ -104,21 +104,21 @@ var ne = function(a, b) {
 
 var isAttacked = function(design, board, player, stop, start, price) {
   var e = getCover(design, board, board.player, stop, start, ne);
+  var s = 0;
+  if (e.length > 0) {
+      s = -price;
+  }
   if (price < Dagaz.AI.KING_PRICE) {
       var f = getCover(design, board, board.player, stop, start, eq);
-      var s = -price;
-      while (e.length > 0) {
-          if (f.length == 0) break;
+      while ((e.length > 0) && (f.length > e.length)) {
           s += e.pop();
-          if (s > 0) break;
           s -= f.pop();
-          if (s < 0) break;
       }
   }
-  return e.length > 0;
+  return s < 0;
 }
 
-Dagaz.AI.heuristic = function(ai, design, board, move) {
+Dagaz.AI.heuristic_v4 = function(ai, design, board, move) {
   var r        = 0;
   var player   = board.player;
   var start    = null;
@@ -206,7 +206,7 @@ AggressiveAi.prototype.expand = function(ctx) {
              move:   m,
              board:  b,
              goal:   b.checkGoals(ctx.design, ctx.board.player),
-             weight: Dagaz.AI.heuristic(this, ctx.design, ctx.board, m)
+             weight: Dagaz.AI.heuristic_v4(this, ctx.design, ctx.board, m)
           };
       }, this);
       if (this.params.NOISE_FACTOR > 0) {
@@ -273,7 +273,7 @@ AggressiveAi.prototype.getMove = function(ctx) {
   if (ctx.board.moves.length == 0) {
       return { done: true, ai: "nothing" };
   }
-  var eval = Dagaz.AI.eval(ctx.design, this.params, ctx.board, ctx.board.player);
+  var eval = Dagaz.AI.eval_v4(ctx.design, this.params, ctx.board, ctx.board.player);
   ctx.board.getCover(ctx.design);
   calculate(ctx.design, ctx.board, ctx.board.player);
   this.expand(ctx);
@@ -282,7 +282,7 @@ AggressiveAi.prototype.getMove = function(ctx) {
   var mx = 1 - MAXVALUE;
   while ((ix < ctx.cache.length) && ((Date.now() - ctx.timestamp < this.params.AI_FRAME) || _.isUndefined(ctx.best))) {
       var node = ctx.cache[ix];
-      node.a = Dagaz.AI.eval(ctx.design, this.params, node.board, ctx.board.player);
+      node.a = Dagaz.AI.eval_v4(ctx.design, this.params, node.board, ctx.board.player);
       if (node.goal !== null) {
           if (node.goal > 0) {
               ctx.best = ix;
@@ -304,7 +304,7 @@ AggressiveAi.prototype.getMove = function(ctx) {
                    move:   m,
                    board:  b,
                    goal:   b.checkGoals(ctx.design, node.board.player),
-                   weight: Dagaz.AI.heuristic(this, ctx.design, node.board, m)
+                   weight: Dagaz.AI.heuristic_v4(this, ctx.design, node.board, m)
                 };
             }, this)
            .max(function(n) {
@@ -316,16 +316,15 @@ AggressiveAi.prototype.getMove = function(ctx) {
           if (m.goal !== null) {
               node.b = -m.goal * MAXVALUE;
           } else {
-              node.b = Dagaz.AI.eval(ctx.design, this.params, m.board, ctx.board.player);
+              node.b = Dagaz.AI.eval_v4(ctx.design, this.params, m.board, ctx.board.player);
               node.m = m.move;
           }
           if (mx < node.b) {
               mx = node.b;
-//            this.dump(ctx, node);
+              this.dump(ctx, node);
               ctx.best = ix;
           }
       }
-      this.dump(ctx, node);
       ix++;
   }
   console.log(ix + "/" + ctx.cache.length);
