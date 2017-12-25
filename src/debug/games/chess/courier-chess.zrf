@@ -178,7 +178,6 @@
 
 (variant
   (title "Courier Chess")
-  (default)
   (board-setup
     (White
          (Pawn a4 b2 c2 d2 e2 f2 g4 h2 i2 j2 k2 l4)
