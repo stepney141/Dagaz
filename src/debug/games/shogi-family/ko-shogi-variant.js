@@ -24,6 +24,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("pass-partial", "true");
     design.checkVersion("smart-moves", "false");
+    design.checkVersion("ko-shogi-extension", "false");
 
     design.addDirection("w");
     design.addDirection("e");
@@ -2246,7 +2247,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPriority(0);			// normal-type
 
-    design.addPiece("G", 0);
+    design.addPiece("G", 0, 10000);
     design.addMove(0, 0, [4], 0);
     design.addMove(0, 0, [7], 0);
     design.addMove(0, 0, [2], 0);
@@ -2256,7 +2257,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 0, [1], 0);
     design.addMove(0, 0, [3], 0);
 
-    design.addPiece("GO", 1);
+    design.addPiece("GO", 1, 10000);
     design.addMove(1, 0, [4], 0);
     design.addMove(1, 0, [7], 0);
     design.addMove(1, 0, [2], 0);
@@ -2734,7 +2735,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(37, 34, [1], 20);
     design.addMove(37, 0, [1], 21);
 
-    design.addPiece("B", 38);
+    design.addPiece("B", 38, 10000);
     design.addMove(38, 0, [0], 0);
     design.addMove(38, 0, [1], 0);
     design.addMove(38, 0, [7], 0);
@@ -2742,7 +2743,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(38, 0, [6], 0);
     design.addMove(38, 0, [3], 0);
 
-    design.addPiece("MT", 39);
+    design.addPiece("MT", 39, 10000);
     design.addMove(39, 0, [4], 0);
     design.addMove(39, 0, [7], 0);
     design.addMove(39, 0, [2], 0);
