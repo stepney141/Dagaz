@@ -40,9 +40,18 @@ var findPiece = function(design, board, player, type) {
   return null;
 }
 
+var noDown = function(design, board, player, pos) {
+  if (pos === null) return true;
+  var down = design.getDirection("down");
+  var p = design.navigate(player, pos, down);
+  if (p === null) return true;
+  var piece = board.getPiece(p);
+  return piece === null;
+}
+
 var checkDirection = function(design, board, player, pos, dir, leapers, riders) {
   var p = design.navigate(player, pos, dir);
-  if (p === null) return false;
+  if (noDown(design, board, player, p)) return false;
   var piece = board.getPiece(p);
   if (piece !== null) {
       if (piece.player == player) return false;
@@ -50,7 +59,7 @@ var checkDirection = function(design, board, player, pos, dir, leapers, riders) 
   }
   while (piece === null) {
       p = design.navigate(player, p, dir);
-      if (p === null) return false;
+      if (noDown(design, board, player, p)) return false;
       piece = board.getPiece(p);
   }
   if (piece.player == player) return false;

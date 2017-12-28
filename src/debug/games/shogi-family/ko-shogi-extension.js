@@ -106,6 +106,22 @@ Dagaz.Model.CheckInvariants = function(board) {
       });
       if ((src !== null) && (dst !== null)) {
           var piece = board.getPiece(src);
+          if ((piece !== null) && (piece.type == 35)) {
+              if (move.actions.length == 5) {
+                  var positions = [ src ];
+                  _.each(move.actions, function(a) {
+                      if ((a[0] !== null) && (a[1] !== null)) {
+                          if (_.indexOf(positions, a[1][0]) < 0) {
+                              positions.push(a[1][0]);
+                          } else {
+                              move.failed = true;
+                          }
+                      }
+                  });
+              } else {
+                  move.failed = true;
+              }
+          }
           var isFired = false;
           _.each(design.allDirections(), function(dir) {
               var pos = design.navigate(board.player, dst, dir);

@@ -25,6 +25,9 @@ Dagaz.Model.CheckInvariants = function(board) {
                        t = design.navigate(1, t, dir);
                    }
                    if (t !== null) {
+                       if ((piece.type == 1) && design.inZone(1, board.player, t)) {
+                            piece = piece.promote(6);
+                       }
                        move.movePiece(p, t, piece);
                    }
                }
