@@ -3,6 +3,7 @@
 var checkVersion = Dagaz.Model.checkVersion;
 var superKo = null;
 var numKo = 1;
+var asymmetric = false;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
   if (name == "ko") {
@@ -14,6 +15,10 @@ Dagaz.Model.checkVersion = function(design, name, value) {
      }
      if (value == "situation") {
          superKo = 2;
+     }
+     if (value == "asymmetric") {
+         superKo = 2;
+         asymmetric = true;
      }
      if (value == "3") {
          superKo = 2;
@@ -27,7 +32,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
-  if (superKo !== null) {
+  if ((superKo !== null) && (!asymmetric || (board.player > 1))) {
       for (var i = 0; i < board.moves.length; i++) {
            var r = 0;
            var m = board.moves[i];
