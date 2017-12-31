@@ -1,5 +1,7 @@
 (function() {
 
+Dagaz.View.STEP_CNT = 1;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {

@@ -10,7 +10,11 @@ var DIR_NAMES   = {
     "Up":         "n",
     "Right":      "e",
     "Down":       "s",
-    "Left":       "w"
+    "Left":       "w",
+    "a":          "w",
+    "w":          "n",
+    "s":          "s",
+    "d":          "e"
 };
 
 var queue = [];

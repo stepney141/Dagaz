@@ -11,7 +11,7 @@ Dagaz.View.markType = {
 };
 
 Dagaz.View.maxSteps = 3;
-var STEP_CNT        = 3;
+Dagaz.View.STEP_CNT = 3;
 
 var self            = null;
 var isConfigured    = false;
@@ -211,7 +211,7 @@ View2D.prototype.dropPiece = function(move, pos, piece, phase) {
 
 View2D.prototype.addVector = function(from, to, steps, mode, level) {
   if (!mode) mode = 0;
-  if (!steps) { steps = STEP_CNT; }
+  if (!steps) { steps = Dagaz.View.STEP_CNT; }
   if (_.isUndefined(this.vectors[mode])) {
       this.vectors[mode] = [];
   }
@@ -263,7 +263,7 @@ View2D.prototype.vectorFound = function(ix, from, to, piece, mode, phase) {
 
 View2D.prototype.movePiece = function(move, from, to, piece, phase, steps) {
   if (!phase) { phase = 1; }
-  if (!steps) { steps = STEP_CNT; }
+  if (!steps) { steps = Dagaz.View.STEP_CNT; }
   var ix = posToIx(this, from);
   if (!this.vectorFound(ix, from, to, piece, move.mode)) {
       this.addPhase(ix, from, to, piece, phase, steps);
