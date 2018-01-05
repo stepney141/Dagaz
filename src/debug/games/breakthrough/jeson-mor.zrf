@@ -19,8 +19,8 @@
   (option "animate captures"  false)
   (option "smart moves"       true)
 
-  (players White Black)
-  (turn-order White Black)
+  (players Black White)
+  (turn-order Black White)
 
   (move-sound "Audio\Pickup.wav")
   (release-sound "Audio\Pickup.wav")
@@ -56,8 +56,8 @@
   )
   (piece
      (name RoyalKnight)
-     (image White "images/jeson-mor/wknight.bmp"
-            Black "images/jeson-mor/bknight.bmp")
+     (image White "images/jeson-mor/wknightr.bmp"
+            Black "images/jeson-mor/bknightr.bmp")
      (moves
          (leap n nw) (leap n ne) (leap s sw) (leap s se)
          (leap w nw) (leap w sw) (leap e ne) (leap e se)
@@ -65,8 +65,8 @@
   )
 
   (board-setup
-    (White (Knight a1 b1 c1 d1 e1 f1 g1 h1 i1))
-    (Black (Knight a9 b9 c9 d9 e9 f9 g9 h9 i9))
+    (Black (Knight a1 b1 c1 d1 e1 f1 g1 h1 i1))
+    (White (Knight a9 b9 c9 d9 e9 f9 g9 h9 i9))
   )
 
   (win-condition  (White) (absolute-config RoyalKnight (a1 b1 c1 d1 e1 f1 g1 h1 i1)))
