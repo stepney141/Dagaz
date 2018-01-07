@@ -40,8 +40,25 @@ function App(canvas, params) {
   }
 }
 
+var gameOver = function(text) {
+  alert(text);
+  if (Dagaz.Model.progressive) {
+      var str = window.location.toString();
+      var re  = /^(\D*)(\d+)(.*)$/;
+      var num = str.replace(re, "$2");
+      if (num) {
+          var len = num.length;
+          num = +num + 1;
+          while (num.toString().length < len) {
+              num = "0" + num;
+          }
+          window.location = str.replace(re, "$1" + num + "$3");
+      }
+  }
+}
+
 App.prototype.gameOver = function(text, player) {
-  _.delay(alert, 500, [text]);
+  _.delay(gameOver, 500, [text]);
   if (this.board) {
      var captured = [];
      _.each(this.design.allPositions(), function(pos) {

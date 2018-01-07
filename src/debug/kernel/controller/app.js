@@ -43,7 +43,24 @@ Dagaz.Controller.createApp = function(canvas) {
 }
 
 var gameOver = function(text) {
-  _.delay(alert, 500, [text]);
+  alert(text);
+  if (Dagaz.Model.progressive) {
+      var str = window.location.toString();
+      var re  = /^(\D*)(\d+)(.*)$/;
+      var num = str.replace(re, "$2");
+      if (num) {
+          var len = num.length;
+          num = +num + 1;
+          while (num.toString().length < len) {
+              num = "0" + num;
+          }
+          window.location = str.replace(re, "$1" + num + "$3");
+      }
+  }
+}
+
+App.prototype.gameOver = function(text) {
+  _.delay(gameOver, 500, [text]);
 }
 
 App.prototype.done = function() {
@@ -51,7 +68,7 @@ App.prototype.done = function() {
       this.state = STATE.STOP;
   } else {
       if (this.doneMessage) {
-          gameOver(this.doneMessage);
+          this.gameOver(this.doneMessage);
       }
   }
 }
@@ -183,7 +200,7 @@ App.prototype.exec = function() {
                   if (passForced >= this.design.getPlayersCount()) {
                       this.state = STATE.DONE;
                       Canvas.style.cursor = "default";
-                      gameOver("Draw");
+                      this.gameOver("Draw");
                   } else {
                       this.board = this.board.apply(this.list.getMoves()[0]);                 
                       this.state = STATE.IDLE;
@@ -196,7 +213,7 @@ App.prototype.exec = function() {
              if (this.list.getMoves().length == 0) {
                  this.state = STATE.DONE;
                  Canvas.style.cursor = "default";
-                 gameOver(player + " loss");
+                 this.gameOver(player + " loss");
                  return;
              }
          }
@@ -214,7 +231,7 @@ App.prototype.exec = function() {
           if (_.isUndefined(result.move)) {
               this.state = STATE.DONE;
               Canvas.style.cursor = "default";
-              gameOver(player + " loss");
+              this.gameOver(player + " loss");
               return;
           }
           if (result.done || (Date.now() - this.timestamp >= this.params.AI_WAIT)) {
@@ -222,7 +239,7 @@ App.prototype.exec = function() {
                   if (passForced >= this.design.getPlayersCount()) {
                       this.state = STATE.DONE;
                       Canvas.style.cursor = "default";
-                      gameOver("Draw");
+                      this.gameOver("Draw");
                   } else {
                       this.board = this.board.apply(result.move);                 
                       this.state = STATE.IDLE;

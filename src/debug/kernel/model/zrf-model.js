@@ -18,6 +18,7 @@ Dagaz.Model.showHints       = true;
 Dagaz.Model.stalemateDraw   = false;
 Dagaz.Model.showBlink       = true;
 Dagaz.Model.chessCapturing  = true;
+Dagaz.Model.progressive     = false;
 
 Dagaz.Model.checkVersion = function(design, name, value) {  
   if (name == "z2j") {
@@ -46,6 +47,9 @@ Dagaz.Model.checkVersion = function(design, name, value) {
          (name != "show-blink")         &&
          (name != "silent-?-moves")) {
          design.failed = true;
+     }
+     if (name == "progressive-levels") {
+         Dagaz.Model.progressive = (value == "true");
      }
      if (name == "show-blink") {
          Dagaz.Model.showBlink = (value == "true");
