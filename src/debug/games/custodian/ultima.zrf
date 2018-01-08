@@ -13,12 +13,9 @@
   (while not-friend? (if empty? add) $1)
 ))
 
-(define jump (
-  $1 
-  (while not-friend? (if (or (piece? King) empty?) add) $1)
-  (verify not-friend?)
-  (verify (piece? King))
-  add
+(define leap-2 (
+  $1 (verify empty?)
+  $1 (while not-friend? (if empty? add) $1)
 ))
 
 (game
@@ -74,8 +71,10 @@
      (image White "images/ultima/wchameleon.bmp"
             Black "images/ultima/bchameleon.bmp")
      (moves
-         (jump n) (jump s) (jump w) (jump e)
-         (jump nw) (jump sw) (jump ne) (jump se)
+         (leap-2 n) (leap-2 s) (leap-2 w) (leap-2 e)
+         (leap-2 nw) (leap-2 sw) (leap-2 ne) (leap-2 se)
+         (step n) (step s) (step w) (step e)
+         (step nw) (step sw) (step ne) (step se)
      )
   )
   (piece
