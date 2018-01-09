@@ -45,7 +45,7 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
-  var queen  = function(design, board, board.player);
+  var queen  = findQueen(design, board, board.player);
   _.each(board.moves, function(move) {
       if (queen !== null) {
           if (move.isSimpleMove()) {

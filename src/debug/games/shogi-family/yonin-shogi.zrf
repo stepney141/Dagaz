@@ -57,7 +57,7 @@
         )
         (links sr
                (a1 a13)  (b1 a13)  (c1 a13)  (d1 a13)  (e1 a13)  (f1 a13)  (g1 a13)  (h1 a13)  (i1 a13)
-               (d2 a13)  (b2 a13)  (c2 a13)  (d2 a13)  (e2 a13)  (f2 a13)  (g2 a13)  (h2 a13)  (i2 a13)
+               (a2 a13)  (b2 a13)  (c2 a13)  (d2 a13)  (e2 a13)  (f2 a13)  (g2 a13)  (h2 a13)  (i2 a13)
                (a3 a13)  (b3 a13)  (c3 a13)  (d3 a13)  (e3 a13)  (f3 a13)  (g3 a13)  (h3 a13)  (i3 a13)
                (a4 a13)  (b4 a13)  (c4 a13)  (d4 a13)  (e4 a13)  (f4 a13)  (g4 a13)  (h4 a13)  (i4 a13)
                (a5 a13)  (b5 a13)  (c5 a13)  (d5 a13)  (e5 a13)  (f5 a13)  (g5 a13)  (h5 a13)  (i5 a13)
@@ -74,7 +74,7 @@
         )
         (links wr
                (a1  y9)  (b1  y9)  (c1  y9)  (d1  y9)  (e1  y9)  (f1  y9)  (g1  y9)  (h1  y9)  (i1  y9)
-               (d2  y9)  (b2  y9)  (c2  y9)  (d2  y9)  (e2  y9)  (f2  y9)  (g2  y9)  (h2  y9)  (i2  y9)
+               (a2  y9)  (b2  y9)  (c2  y9)  (d2  y9)  (e2  y9)  (f2  y9)  (g2  y9)  (h2  y9)  (i2  y9)
                (a3  y9)  (b3  y9)  (c3  y9)  (d3  y9)  (e3  y9)  (f3  y9)  (g3  y9)  (h3  y9)  (i3  y9)
                (a4  y9)  (b4  y9)  (c4  y9)  (d4  y9)  (e4  y9)  (f4  y9)  (g4  y9)  (h4  y9)  (i4  y9)
                (a5  y9)  (b5  y9)  (c5  y9)  (d5  y9)  (e5  y9)  (f5  y9)  (g5  y9)  (h5  y9)  (i5  y9)
@@ -91,7 +91,7 @@
         )
         (links nr
                (a1 i11)  (b1 i11)  (c1 i11)  (d1 i11)  (e1 i11)  (f1 i11)  (g1 i11)  (h1 i11)  (i1 i11)
-               (d2 i11)  (b2 i11)  (c2 i11)  (d2 i11)  (e2 i11)  (f2 i11)  (g2 i11)  (h2 i11)  (i2 i11)
+               (a2 i11)  (b2 i11)  (c2 i11)  (d2 i11)  (e2 i11)  (f2 i11)  (g2 i11)  (h2 i11)  (i2 i11)
                (a3 i11)  (b3 i11)  (c3 i11)  (d3 i11)  (e3 i11)  (f3 i11)  (g3 i11)  (h3 i11)  (i3 i11)
                (a4 i11)  (b4 i11)  (c4 i11)  (d4 i11)  (e4 i11)  (f4 i11)  (g4 i11)  (h4 i11)  (i4 i11)
                (a5 i11)  (b5 i11)  (c5 i11)  (d5 i11)  (e5 i11)  (f5 i11)  (g5 i11)  (h5 i11)  (i5 i11)
@@ -108,7 +108,7 @@
         )
         (links er
                (a1  z1)  (b1  z1)  (c1  z1)  (d1  z1)  (e1  z1)  (f1  z1)  (g1  z1)  (h1  z1)  (i1  z1)
-               (d2  z1)  (b2  z1)  (c2  z1)  (d2  z1)  (e2  z1)  (f2  z1)  (g2  z1)  (h2  z1)  (i2  z1)
+               (a2  z1)  (b2  z1)  (c2  z1)  (d2  z1)  (e2  z1)  (f2  z1)  (g2  z1)  (h2  z1)  (i2  z1)
                (a3  z1)  (b3  z1)  (c3  z1)  (d3  z1)  (e3  z1)  (f3  z1)  (g3  z1)  (h3  z1)  (i3  z1)
                (a4  z1)  (b4  z1)  (c4  z1)  (d4  z1)  (e4  z1)  (f4  z1)  (g4  z1)  (h4  z1)  (i4  z1)
                (a5  z1)  (b5  z1)  (c5  z1)  (d5  z1)  (e5  z1)  (f5  z1)  (g5  z1)  (h5  z1)  (i5  z1)
@@ -390,7 +390,6 @@
 
 (variant
   (title "Yonin Shogi (variant)")
-  (default)
   (board-setup
         (South (King e1)
                (Gold d1 f1)

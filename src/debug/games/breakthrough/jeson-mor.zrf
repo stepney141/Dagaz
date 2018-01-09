@@ -69,8 +69,8 @@
     (White (Knight a9 b9 c9 d9 e9 f9 g9 h9 i9))
   )
 
-  (win-condition  (White) (absolute-config RoyalKnight (a1 b1 c1 d1 e1 f1 g1 h1 i1)))
-  (win-condition  (Black) (absolute-config RoyalKnight (a9 b9 c9 d9 e9 f9 g9 h9 i9)))
+  (win-condition  (Black) (absolute-config RoyalKnight (a1 b1 c1 d1 e1 f1 g1 h1 i1)))
+  (win-condition  (White) (absolute-config RoyalKnight (a9 b9 c9 d9 e9 f9 g9 h9 i9)))
 
   (loss-condition (White Black) stalemated)
   (loss-condition (White Black) repetition)

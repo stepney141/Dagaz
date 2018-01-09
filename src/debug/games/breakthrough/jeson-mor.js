@@ -23,6 +23,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "true");
+    design.checkVersion("highlight-goals", "false");
+    design.checkVersion("show-blink", "false");
 
     design.addDirection("w");
     design.addDirection("e");
@@ -33,8 +35,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addDirection("sw");
     design.addDirection("nw");
 
-    design.addPlayer("White", [1, 0, 4, 6, 2, 7, 3, 5]);
-    design.addPlayer("Black", [0, 1, 2, 3, 4, 5, 6, 7]);
+    design.addPlayer("Black", [1, 0, 4, 6, 2, 7, 3, 5]);
+    design.addPlayer("White", [0, 1, 2, 3, 4, 5, 6, 7]);
 
     design.addPosition("a9", [0, 1, 9, 0, 0, 10, 0, 0]);
     design.addPosition("b9", [-1, 1, 9, 0, 0, 10, 8, 0]);
@@ -118,8 +120,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("h1", [-1, 1, 0, -8, -9, 0, 0, -10]);
     design.addPosition("i1", [-1, 0, 0, 0, -9, 0, 0, -10]);
 
-    design.addZone("center", 1, [40]);
     design.addZone("center", 2, [40]);
+    design.addZone("center", 1, [40]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
@@ -169,27 +171,27 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(1, 1, [1, 3], 0);
     design.addMove(1, 1, [1, 5], 0);
 
-    design.setup("White", "Knight", 72);
-    design.setup("White", "Knight", 73);
-    design.setup("White", "Knight", 74);
-    design.setup("White", "Knight", 75);
-    design.setup("White", "Knight", 76);
-    design.setup("White", "Knight", 77);
-    design.setup("White", "Knight", 78);
-    design.setup("White", "Knight", 79);
-    design.setup("White", "Knight", 80);
-    design.setup("Black", "Knight", 0);
-    design.setup("Black", "Knight", 1);
-    design.setup("Black", "Knight", 2);
-    design.setup("Black", "Knight", 3);
-    design.setup("Black", "Knight", 4);
-    design.setup("Black", "Knight", 5);
-    design.setup("Black", "Knight", 6);
-    design.setup("Black", "Knight", 7);
-    design.setup("Black", "Knight", 8);
+    design.setup("Black", "Knight", 72);
+    design.setup("Black", "Knight", 73);
+    design.setup("Black", "Knight", 74);
+    design.setup("Black", "Knight", 75);
+    design.setup("Black", "Knight", 76);
+    design.setup("Black", "Knight", 77);
+    design.setup("Black", "Knight", 78);
+    design.setup("Black", "Knight", 79);
+    design.setup("Black", "Knight", 80);
+    design.setup("White", "Knight", 0);
+    design.setup("White", "Knight", 1);
+    design.setup("White", "Knight", 2);
+    design.setup("White", "Knight", 3);
+    design.setup("White", "Knight", 4);
+    design.setup("White", "Knight", 5);
+    design.setup("White", "Knight", 6);
+    design.setup("White", "Knight", 7);
+    design.setup("White", "Knight", 8);
 
-    design.goal(0, "White", "RoyalKnight", [72, 73, 74, 75, 76, 77, 78, 79, 80]);
-    design.goal(1, "Black", "RoyalKnight", [0, 1, 2, 3, 4, 5, 6, 7, 8]);
+    design.goal(0, "Black", "RoyalKnight", [72, 73, 74, 75, 76, 77, 78, 79, 80]);
+    design.goal(1, "White", "RoyalKnight", [0, 1, 2, 3, 4, 5, 6, 7, 8]);
 }
 
 Dagaz.View.configure = function(view) {

@@ -1,3 +1,7 @@
+(define boom (
+  capture add
+))
+
 (define step (
   $1 (verify not-friend?)
   add
@@ -64,6 +68,7 @@
      (moves
          (slide n) (slide s) (slide w) (slide e)
          (slide nw) (slide sw) (slide ne) (slide se)
+         (boom)
      )
   )
   (piece
@@ -75,6 +80,7 @@
          (leap-2 nw) (leap-2 sw) (leap-2 ne) (leap-2 se)
          (step n) (step s) (step w) (step e)
          (step nw) (step sw) (step ne) (step se)
+         (boom)
      )
   )
   (piece
@@ -84,6 +90,7 @@
      (moves
          (leap n) (leap s) (leap w) (leap e)
          (leap nw) (leap sw) (leap ne) (leap se)
+         (boom)
      )
   )
   (piece
@@ -93,6 +100,7 @@
      (moves
          (slide n) (slide s) (slide w) (slide e)
          (slide nw) (slide sw) (slide ne) (slide se)
+         (boom)
      )
   )
   (piece
@@ -110,6 +118,7 @@
             Black "images/ultima/bpawn.bmp")
      (moves
          (slide n) (slide s) (slide w) (slide e)
+         (boom)
      )
   )
 

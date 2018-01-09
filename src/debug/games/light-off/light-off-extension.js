@@ -7,6 +7,7 @@ var fersMode   = false;
 var knightMode = false;
 var rookMode   = false;
 var bishopMode = false;
+var hexMode    = false;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
   if (name == "light-off-extension") {
@@ -32,6 +33,9 @@ Dagaz.Model.checkVersion = function(design, name, value) {
       if (value == "queen") {
           rookMode = true;
           bishopMode = true;
+      }
+      if (value == "hex") {
+          hexMode = true;
       }
   } else {
      checkVersion(design, name, value);
@@ -103,6 +107,11 @@ Dagaz.Model.CheckInvariants = function(board) {
       step.push(design.getDirection("see"));
       step.push(design.getDirection("ssw"));
       step.push(design.getDirection("sww"));
+  }
+  if (hexMode) {
+      step.push(design.getDirection("nw"));
+      step.push(design.getDirection("ne"));
+      step.push(design.getDirection("s"));
   }
   _.each(board.moves, function(move) {
       var pos = move.actions[0][0][0];

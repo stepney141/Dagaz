@@ -8,7 +8,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var findPiece = function(design, board, player, type) {
+Dagaz.Model.findPiece = function(design, board, player, type) {
   var positions = design.allPositions();
   for (var i = 0; i < positions.length; i++) {
        var piece = board.getPiece(positions[i]);
@@ -46,7 +46,7 @@ var checkLeap = function(design, board, player, pos, o, d, knight) {
   return (piece.player != player) && (piece.type == knight);
 }
 
-var checkPositions = function(design, board, player, positions) {
+Dagaz.Model.checkPositions = function(design, board, player, positions) {
   var king   = design.getPieceType("King");
   var pawn   = design.getPieceType("Pawn");
   var rook   = design.getPieceType("Rook");
@@ -105,7 +105,7 @@ Dagaz.Model.CheckInvariants = function(board) {
   _.each(board.moves, function(move) {
       var b = board.apply(move);
       var list = [];
-      var pos  = findPiece(design, b, board.player, king);
+      var pos  = Dagaz.Model.findPiece(design, b, board.player, king);
       if (pos !== null) {
           list.push(pos);
       }
@@ -121,7 +121,7 @@ Dagaz.Model.CheckInvariants = function(board) {
               list.push(move.actions[1][1][0]);
           }
       }
-      if (checkPositions(design, b, board.player, list)) {
+      if (Dagaz.Model.checkPositions(design, b, board.player, list)) {
           move.failed = true;
           return;
       }
