@@ -147,3 +147,90 @@
   (loss-condition (White Black) stalemated)
   (loss-condition (White Black) repetition)
 )
+
+(variant
+  (title "-")
+)
+
+(variant
+  (title "Ultima Problem 01")
+  (description "Mate in 1 (http://www.logicmazes.com/games/puz1to4.html)")
+  (board-setup
+    (White 
+         (Pawn a6 f6)
+         (Coordinator c6)
+         (LongLeaper d8 h6)
+         (Withdrawer f3)
+         (King f8)
+    )
+    (Black 
+         (Pawn a5 g5)
+         (LongLeaper c7 g6)
+         (Coordinator e2)
+         (Chameleon a4 e5)
+         (Withdrawer f7)
+         (King e6)
+    )
+  )
+)
+
+(variant
+  (title "Ultima Problem 02")
+  (description "Mate in 2 (http://www.logicmazes.com/games/puz1to4.html)")
+  (board-setup
+    (White 
+         (Pawn b7 e6)
+         (Immobilizer f6)
+         (LongLeaper a1 b5)
+         (Withdrawer e3)
+         (King h1)
+    )
+    (Black 
+         (Pawn c3 d8 f5)
+         (LongLeaper b2)
+         (King e5)
+    )
+  )
+)
+
+(variant
+  (title "Ultima Problem 03")
+  (description "Mate in 2 (http://www.logicmazes.com/games/puz1to4.html)")
+  (board-setup
+    (White 
+         (Pawn e4 e8 g2)
+         (Coordinator h4)
+         (LongLeaper f1 h2)
+         (Chameleon f3 h5)
+         (King c6)
+    )
+    (Black 
+         (Pawn b2)
+         (Immobilizer g3)
+         (King e6)
+    )
+  )
+)
+
+(variant
+  (title "Ultima Problem 04")
+  (description "Mate in 2 (http://www.logicmazes.com/games/puz1to4.html)")
+  (default)
+  (board-setup
+    (White 
+         (Pawn h5)
+         (Immobilizer d6)
+         (LongLeaper h7)
+         (Chameleon g4)
+         (Withdrawer f5)
+         (King a2)
+    )
+    (Black 
+         (Pawn c8 g5)
+         (LongLeaper e7)
+         (Chameleon f7)
+         (Withdrawer c4)
+         (King c6)
+    )
+  )
+)
