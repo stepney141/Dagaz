@@ -68,7 +68,31 @@ var isAttacked = function(design, board, pos, player) {
   if (checkLeap(design, board, player, pos, w, nw, knight)) return true;
   if (checkLeap(design, board, player, pos, w, sw, knight)) return true;
   if (checkLeap(design, board, player, pos, e, ne, knight)) return true;
-   if (checkLeap(design, board, player, pos, e, se, knight)) return true;
+  if (checkLeap(design, board, player, pos, e, se, knight)) return true;
+  return false;
+}
+
+var noCoherence = function(design, board) {
+  var hole  = design.getPieceType("Hole");
+  var group = [];
+  for (var pos = 0; pos < design.positions.length; pos++) {
+       var piece = board.getPiece(pos);
+       if ((piece === null) || (piece.type != hole)) {
+           if ((group.length > 0) && (_.indexOf(group, pos) < 0)) return true;
+           group.push(pos);
+           for (var i = 0; i < group.length; i++) {
+                _.each(design.allDirections(), function(dir) {
+                     var pos = design.navigate(board.player, group[i], dir);
+                     if ((pos !== null) && (_.indexOf(group, pos) < 0)) {
+                          var piece = board.getPiece(pos);
+                          if ((piece === null) || (piece.type != hole)) {
+                              group.push(pos);
+                          }
+                     }
+                });
+           }
+       }
+  }
   return false;
 }
 
@@ -93,8 +117,9 @@ Dagaz.Model.CheckInvariants = function(board) {
               move.failed = true;
               return;
           }
-          // TODO: Check Coherence
-
+          if (noCoherence(design, b)) {
+              move.failed = true;
+          }
       }
   });
   CheckInvariants(board);
