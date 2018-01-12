@@ -12,14 +12,19 @@
 ))
 
 (define leap (
-  $1 $2 (verify not-friend?)
+  $1 $2
+  (if (piece? Queen)
+      (verify not-friend?)
+  )
   add
 ))
 
 (define slide (
   $1 
   (while (or empty? (piece? Hole)) add $1)
-  (verify not-friend?)
+  (if (piece? Queen)
+      (verify not-friend?)
+  )
   add
 ))
 
