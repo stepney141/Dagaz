@@ -149,6 +149,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(1, 3, [1, 3], 1);
     design.addMove(1, 3, [1, 5], 1);
 
+    design.addPiece("None", 2, 0);
+
     design.setup("White", "Pawn", 15);
     design.setup("White", "Pawn", 21);
     design.setup("White", "Pawn", 22);
@@ -171,6 +173,8 @@ Dagaz.View.configure = function(view) {
     view.defPiece("BlackPawn", "Black Pawn");
     view.defPiece("WhiteKnight", "White Knight");
     view.defPiece("BlackKnight", "Black Knight");
+    view.defPiece("WhiteNone", "White None");
+    view.defPiece("BlackNone", "Black None");
  
     view.defPosition("a5", 2, 2, 68, 68);
     view.defPosition("b5", 70, 2, 68, 68);

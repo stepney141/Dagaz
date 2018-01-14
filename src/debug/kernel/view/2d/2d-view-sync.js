@@ -469,23 +469,21 @@ View2D.prototype.animate = function() {
      }, this)
     .value();
     if ((len > 0) && (this.changes.length == 0)) {
-        isValid = true;
-        if (this.controller) {
-            this.controller.done();
-        }
-        if (deferred.length > 0) {
-            deferred = _.map(deferred, function(pos) {
-               return posToIx(this, pos);
-            }, this);
+        while (deferred.length > 0) {
+            var pos = deferred.pop();
+            var x   = posToIx(this, pos);
             this.setup = _.chain(_.range(this.setup.length))
            .filter(function(ix) {
-               return _.indexOf(deferred, ix) < 0;
+               return x != ix;
             })
            .map(function(ix) {
                return this.setup[ix];
             }, this)
            .value();
-            deferred = [];
+        }
+        isValid = true;
+        if (this.controller) {
+            this.controller.done();
         }
     }
 }

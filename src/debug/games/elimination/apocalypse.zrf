@@ -96,6 +96,11 @@
          (leap w nw) (leap w sw) (leap e ne) (leap e se)
      )
   )
+  (piece
+     (name None)
+     (image White "images/apocalypse/none.bmp"
+            Black "images/apocalypse/none.bmp")
+  )
 
   (board-setup
     (White 

@@ -75,7 +75,9 @@ Dagaz.Model.join = function(design, board, a, b) {
       }
       a.actions.push(b.actions[0]);
       if ((x == y) && (a.actions[0][1][0] == b.actions[0][1][0])) {
-          a.capturePiece(a.actions[0][1][0])
+          a.actions[0][2] = [ Dagaz.Model.createPiece(2, 1) ];
+          a.actions[1][2] = [ Dagaz.Model.createPiece(2, 1) ];
+          a.capturePiece(a.actions[0][1][0]);
       }
   }
   return a;
