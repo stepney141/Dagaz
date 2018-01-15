@@ -74,7 +74,7 @@ Dagaz.Model.join = function(design, board, a, b) {
           }
       }
       a.actions.push(b.actions[0]);
-      if ((x == y) && (a.actions[0][1][0] == b.actions[0][1][0])) {
+      if (/*(x == y) && */ (a.actions[0][1][0] == b.actions[0][1][0])) {
           a.actions[0][2] = [ Dagaz.Model.createPiece(2, 1) ];
           a.actions[1][2] = [ Dagaz.Model.createPiece(2, 1) ];
           a.capturePiece(a.actions[0][1][0]);
@@ -106,6 +106,22 @@ Dagaz.Model.checkGoals = function(design, board, player) {
       return -1;
   }
   return checkGoals(design, board, player);
+}
+
+var CheckInvariants = Dagaz.Model.CheckInvariants;
+
+Dagaz.Model.CheckInvariants = function(board) {
+  var design = Dagaz.Model.design;
+  var n = design.getDirection("n");
+  _.each(board.moves, function(move) {
+      if (move.isSimpleMove() && (move.mode == 0)) {
+          var pos = design.navigate(board.player, move.actions[0][1][0], n);
+          if (pos === null) {
+              move.failed = true;
+          }
+      }
+  });
+  CheckInvariants(board);
 }
 
 })();

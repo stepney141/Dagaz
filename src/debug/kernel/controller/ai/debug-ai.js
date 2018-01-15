@@ -1,6 +1,6 @@
 (function() {
 
-var DEBUG_MOVE = "e4 - e3";
+var DEBUG_MOVE = "c4 - a3";
 
 function DebugAi(params, parent) {
   this.params = params;

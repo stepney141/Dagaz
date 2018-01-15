@@ -222,6 +222,7 @@ App.prototype.exec = function() {
   }
   if (this.state == STATE.IDLE) {
       var board    = this.getBoard().copy();
+      board.move   = this.board.move;
       board.player = this.design.nextPlayer(board.player);
       var ctx      = this.getContext(board.player);
       var ai       = this.getAI();
