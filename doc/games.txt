@@ -38,7 +38,7 @@
   * Prairie
   > Neutron
   * Gauntlet
-  > Tafl family
+  * Tafl family
   * Italian Damone
   * Archimedes
   * Doubutsu Shogi
@@ -46,7 +46,7 @@
   > Ордо
 - Control games
   * Asalto
-  > Gala
+  * Gala
   - Elementals
 - Elimination games
   * Maharaja
@@ -54,7 +54,7 @@
   * EleHunt
   - Atari Go
   - Seega
-  > High Jump
+  * High Jump
   * Makyek
   - Йотай
   * Nam Dinh
@@ -68,6 +68,7 @@
   > Yonin Shogi
   > Ультима
   - Игры с неполной информацией
+    * Apocalypse
     - Luzhanqi
     - Banqi
 - Checkmate games
@@ -81,24 +82,24 @@
     * Gwangsanghui
     ? Xiang Hex
   - Chess Family
-    > Чатуранга
+    * Чатуранга
     > Чатурандж
-    > Шатрандж
-    > Макрук
-    > Sittuyin
-    > Courier Chess
-    > Шахматы
+    * Шатрандж
+    * Макрук
+    * Sittuyin
+    * Courier Chess
+    * Шахматы
     > Hiashatar
     - Advanced Omega Chess
     ? Таврели
-  > Platform Chess
+  * Platform Chess
   - Morph Chess
   ? Philosophers Chess
-  - Caissa
+  * Caissa
   - Chad
   * Шабел
   - Shogi Family
-    - Shogi
+    > Shogi
     * Goro goro shogi
     * REN Shogi
     * Mini Shogi
@@ -108,7 +109,8 @@
     - Whale Shogi, Great Whale Shogi
     - Tori Shogi
     - Chu Shogi
-    > Tenjiku Shogi
+    * Tenjiku Shogi
+    > Hishigata Shogi
     > Annan Shogi
   - Escalation
   > Шакти
@@ -166,7 +168,7 @@
     - Длинные Нарды (варианты)
     - Короткие Нарды (варианты)
 - Mancala
-  - Оваре
+  > Оваре
   - Дакон
   - Ohojitxi
   - Габата
@@ -190,5 +192,5 @@
   * Ханойские башни (перемешивание выполнением серии случайных ходов)
   - Sokoban
   > Mancala puzzles (Tchuka Ruma)
-  > Chameleon Chess puzzles
+  - Chameleon Chess puzzles
   - Быки и коровы
