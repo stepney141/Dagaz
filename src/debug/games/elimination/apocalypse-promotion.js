@@ -8,79 +8,71 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var countPieces = function(design, board, type) {
+var getPiece = function(design, board, move) {
+  if (move.isSimpleMove()) {
+      return board.getPiece(move.actions[0][0][0]);
+  } else {
+      return null;
+  }
+}
+
+var countPieces = function(design, board, type, player) {
   var r = 0;
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
-      if ((piece !== null) && (piece.type == type)) {
+      if ((piece !== null) && (piece.type == type) && (piece.player == player)) {
           r++;
       }
   });
   return r;
 }
 
-var getPrice = function(design, board, move) {
-  if (move.isSimpleMove()) {
-      var pos = move.actions[0][0][0];
-      var piece = board.getPiece(pos);
-      if (piece !== null) {
-          return piece.type;
-      }
+var checkPromotion = function(design, board, move, piece) {
+  var knight = design.getPieceType("Knight");
+  var limit  = 2 - countPieces(design, board, knight, piece.player);
+  if ((move.actions[0][2] !== null) && (move.actions[0][2][0].type != piece.type) && (limit <= 0)) {
+       move.actions[0][2] = [ piece ];
   }
-  return 0;
 }
 
 Dagaz.Model.join = function(design, board, a, b) {
-  var x = getPrice(design, board, a);
-  var y = getPrice(design, board, b);
-  if (x > y) {
-      return Dagaz.Model.join(design, board, b, a);
-  }
-  if (a.isSimpleMove() && b.isSimpleMove()) {
-      var knight  = design.getPieceType("Knight");
-      var limit   = 4 - countPieces(design, board, knight);
-      var pos     = a.actions[0][0][0];
-      var piece   = board.getPiece(pos);
-      if (piece !== null) {
-          if ((a.actions[0][2] !== null) && (a.actions[0][2][0].type != piece.type)) {
-              var target = a.actions[0][1][0];
-              var enemy  = board.getPiece(target);
-              if ((enemy !== null) && (enemy.type == knight) && (target != b.actions[0][0][0])) {
-                  limit++;
-              }
-              if (limit > 0) {
-                  x = 1;
-                  limit--;
+  var x = getPiece(design, board, a);
+  var y = getPiece(design, board, b);
+  if ((x !== null) && (y !== null)) {
+      var r = Dagaz.Model.createMove();
+      r.protected = [];
+      checkPromotion(design, board, a, x);
+      checkPromotion(design, board, b, y);
+      var p = a.actions[0][1][0];
+      var q = b.actions[0][1][0];
+      if ((p == q) && (x.type > y.type)) {
+          r.actions.push(b.actions[0]);
+          r.actions.push(a.actions[0]);
+      } else {
+          r.actions.push(a.actions[0]);
+          r.actions.push(b.actions[0]);
+      }
+      if (p == q) {
+          if (x.type > y.type) {
+              r.actions[1][2] = [ Dagaz.Model.createPiece(2, 1) ];
+              r.protected.push(x.player);
+              r.captured = p;
+          } else {
+              if (x.type == y.type) {
+                  r.actions[0][2] = [ Dagaz.Model.createPiece(2, 1) ];
+                  r.actions[1][2] = [ Dagaz.Model.createPiece(2, 1) ];
+                  r.capturePiece(p);
               } else {
-                  a.actions[0][2] = [ piece ];
+                  r.actions[0][2] = [ Dagaz.Model.createPiece(2, 1) ];
+                  r.protected.push(y.player);
+                  r.captured = p;
               }
           }
       }
-      pos   = b.actions[0][0][0];
-      piece = board.getPiece(pos);
-      if (piece !== null) {
-          if ((b.actions[0][2] !== null) && (b.actions[0][2][0].type != piece.type)) {
-              var target = b.actions[0][1][0];
-              var enemy  = board.getPiece(target);
-              if ((enemy !== null) && (enemy.type == knight)) {
-                  limit++;
-              }
-              if (limit > 0) {
-                  y = 1;
-                  limit--;
-              } else {
-                  b.actions[0][2] = [ piece ];
-              }
-          }
-      }
-      a.actions.push(b.actions[0]);
-      if (/*(x == y) && */ (a.actions[0][1][0] == b.actions[0][1][0])) {
-          a.actions[0][2] = [ Dagaz.Model.createPiece(2, 1) ];
-          a.actions[1][2] = [ Dagaz.Model.createPiece(2, 1) ];
-          a.capturePiece(a.actions[0][1][0]);
-      }
+      return r;
+  } else {
+      return x;
   }
-  return a;
 }
 
 var checkGoals = Dagaz.Model.checkGoals;
@@ -100,7 +92,11 @@ Dagaz.Model.checkGoals = function(design, board, player) {
       }
   });
   if (enemies < 1) {
-      return 1;
+      if (enemies == friends) {
+          return 0;
+      } else {
+          return 1;
+      }
   }
   if (friends < 1) {
       return -1;

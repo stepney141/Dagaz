@@ -264,6 +264,10 @@ App.prototype.exec = function() {
               console.log(this.move.toString());
           }
           this.board = this.board.apply(this.move);
+          if (!_.isUndefined(this.move.captured)) {
+              this.view.protected = this.move.protected;
+              this.move.capturePiece(this.move.captured);
+          }
           this.move.applyAll(this.view);
           this.state = STATE.WAIT;
       }

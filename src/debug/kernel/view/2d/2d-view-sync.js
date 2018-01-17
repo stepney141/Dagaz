@@ -84,10 +84,12 @@ View2D.prototype.pointToPositions = function(x, y) {
   return Dagaz.View.pointToPositions(this, x, y);
 }
 
-var posToIx = function(view, pos) {
+var posToIx = function(view, pos, protected) {
   for (var i = 0; i < view.setup.length; i++) {
        if (view.setup[i].pos == pos) {
-           return i;
+           if (_.isUndefined(protected) || (_.indexOf(protected, view.setup[i].model.player) < 0)) {
+               return i;
+           }
        }
   }
   return null;
@@ -471,16 +473,19 @@ View2D.prototype.animate = function() {
     if ((len > 0) && (this.changes.length == 0)) {
         while (deferred.length > 0) {
             var pos = deferred.pop();
-            var x   = posToIx(this, pos);
-            this.setup = _.chain(_.range(this.setup.length))
-           .filter(function(ix) {
-               return x != ix;
-            })
-           .map(function(ix) {
-               return this.setup[ix];
-            }, this)
-           .value();
+            var x   = posToIx(this, pos, this.protected);
+            if (x !== null) {
+                this.setup = _.chain(_.range(this.setup.length))
+               .filter(function(ix) {
+                   return x != ix;
+                })
+               .map(function(ix) {
+                   return this.setup[ix];
+                }, this)
+               .value();
+            }
         }
+        delete this.protected;
         isValid = true;
         if (this.controller) {
             this.controller.done();
