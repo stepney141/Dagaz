@@ -24,6 +24,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "true");
     design.checkVersion("show-blink", "false");
+    design.checkVersion("alapo-extension", "true");
 
     design.addDirection("w");
     design.addDirection("e");
@@ -74,8 +75,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("e1", [-1, 1, 0, -5, -6, 0, 0, -7]);
     design.addPosition("f1", [-1, 0, 0, 0, -6, 0, 0, -7]);
 
-    design.addZone("last-rank", 1, [0, 1, 2, 3, 4, 5]);
-    design.addZone("last-rank", 2, [30, 31, 32, 33, 34, 35]);
+    design.addZone("first-rank", 1, [30, 31, 32, 33, 34, 35]);
+    design.addZone("first-rank", 2, [0, 1, 2, 3, 4, 5]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
@@ -104,31 +105,31 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(1, ZRF.FUNCTION,	25);	// to
     design.addCommand(1, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("SmallSquare", 0);
+    design.addPiece("SmallSquare", 0, 4);
     design.addMove(0, 0, [4], 0);
     design.addMove(0, 0, [2], 0);
     design.addMove(0, 0, [0], 0);
     design.addMove(0, 0, [1], 0);
 
-    design.addPiece("Square", 1);
+    design.addPiece("Square", 1, 16);
     design.addMove(1, 1, [4, 4], 0);
     design.addMove(1, 1, [2, 2], 0);
     design.addMove(1, 1, [0, 0], 0);
     design.addMove(1, 1, [1, 1], 0);
 
-    design.addPiece("SmallTriangle", 2);
+    design.addPiece("SmallTriangle", 2, 3);
     design.addMove(2, 0, [7], 0);
     design.addMove(2, 0, [5], 0);
     design.addMove(2, 0, [6], 0);
     design.addMove(2, 0, [3], 0);
 
-    design.addPiece("Triangle", 3);
+    design.addPiece("Triangle", 3, 12);
     design.addMove(3, 1, [7, 7], 0);
     design.addMove(3, 1, [5, 5], 0);
     design.addMove(3, 1, [6, 6], 0);
     design.addMove(3, 1, [3, 3], 0);
 
-    design.addPiece("SmallCircle", 4);
+    design.addPiece("SmallCircle", 4, 8);
     design.addMove(4, 0, [4], 0);
     design.addMove(4, 0, [2], 0);
     design.addMove(4, 0, [0], 0);
@@ -138,7 +139,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(4, 0, [6], 0);
     design.addMove(4, 0, [3], 0);
 
-    design.addPiece("Circle", 5);
+    design.addPiece("Circle", 5, 32);
     design.addMove(5, 1, [4, 4], 0);
     design.addMove(5, 1, [2, 2], 0);
     design.addMove(5, 1, [0, 0], 0);

@@ -54,7 +54,7 @@ Dagaz.Model.join = function(design, board, a, b) {
       }
       if (p == q) {
           if (x.type > y.type) {
-              r.actions[1][2] = [ Dagaz.Model.createPiece(2, 1) ];
+              r.actions[0][2] = [ Dagaz.Model.createPiece(2, 2) ];
               r.protected.push(x.player);
               r.captured = p;
           } else {
@@ -71,7 +71,7 @@ Dagaz.Model.join = function(design, board, a, b) {
       }
       return r;
   } else {
-      return x;
+      return a;
   }
 }
 
