@@ -26,6 +26,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-blink", "false");
     design.checkVersion("highlight-goals", "false");
     design.checkVersion("pass-partial", "true");
+    design.checkVersion("hanga-roa-extension", "true");
 
     design.addDirection("w");
     design.addDirection("e");
@@ -42,7 +43,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPlayer("White", [1, 0, 3, 3, 7, 2, 8, 4, 6, 9, 10]);
     design.addPlayer("Black", [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 9]);
 
-    design.addPosition("a9", [0, 1, 9, 73, 0, 0, 10, 0, 0, 0, 0]);
+    design.addPosition("a9", [0, 1, 9, 73, 0, 0, 10, 0, 0, 81, 89]);
     design.addPosition("b9", [-1, 1, 9, 73, 0, 0, 10, 8, 0, 0, 0]);
     design.addPosition("c9", [-1, 1, 9, 73, 0, 0, 10, 8, 0, 0, 0]);
     design.addPosition("d9", [-1, 1, 9, 73, 0, 0, 10, 8, 0, 0, 0]);
@@ -114,7 +115,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("g2", [-1, 1, 9, -9, -8, -9, 10, 8, -10, 0, 0]);
     design.addPosition("h2", [-1, 1, 9, -9, -8, -9, 10, 8, -10, 0, 0]);
     design.addPosition("i2", [-1, 0, 9, -9, 0, -9, 0, 8, -10, 0, 0]);
-    design.addPosition("a1", [0, 1, 0, -9, -8, -9, 0, 0, 0, 9, 17]);
+    design.addPosition("a1", [0, 1, 0, -9, -8, -9, 0, 0, 0, 0, 0]);
     design.addPosition("b1", [-1, 1, 0, -9, -8, -9, 0, 0, -10, 0, 0]);
     design.addPosition("c1", [-1, 1, 0, -9, -8, -9, 0, 0, -10, 0, 0]);
     design.addPosition("d1", [-1, 1, 0, -9, -8, -9, 0, 0, -10, 0, 0]);

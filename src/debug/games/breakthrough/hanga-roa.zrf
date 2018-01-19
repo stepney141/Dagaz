@@ -142,10 +142,10 @@
          (a9 b1) (b9 c1) (c9 d1) (d9 e1) (e9 f1) (f9 g1) (g9 h1) (h9 i1)
     )
     (links br
-         (a1 X9) (X9 X8) (X8 X7) (X7 X6)
+         (a9 X9) (X9 X8) (X8 X7) (X7 X6)
     )
     (links wr
-         (a1 X1) (X1 X2) (X2 X3) (X3 X4)
+         (a9 X1) (X1 X2) (X2 X3) (X3 X4)
     )
     (symmetry Black (br wr) (wr br) (n n) (s s) (w w) (e e) (nw nw) (ne ne) (sw sw) (se se) (next next))
     (zone (name reserve) (players White Black)
