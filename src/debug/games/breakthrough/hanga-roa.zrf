@@ -262,6 +262,11 @@
          (step w) (step sw)
      )
   )
+  (piece
+     (name MoaiCaptured)
+     (image White "images/hanga-roa/wking.bmp"
+            Black "images/hanga-roa/bking.bmp")
+  )
 
   (board-setup
     (White 

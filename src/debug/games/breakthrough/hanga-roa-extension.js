@@ -66,32 +66,56 @@ Dagaz.Model.CheckInvariants = function(board) {
   var nw = design.getDirection("nw"); var sw = design.getDirection("sw");
   var ne = design.getDirection("ne"); var se = design.getDirection("se");
   var dirs = [n, e, w, s, nw, ne, sw, se];
+  var positions = _.filter(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if (piece === null) return false;
+      if (piece.player == board.player) return false;
+      return (piece.type == moai) || (piece.type == ariki);
+  });
+  var env = [];
+  _.each(positions, function(pos) {
+      _.each(dirs, function(dir) {
+          var p = design.navigate(board.player, pos, dir);
+          if ((p !== null) && (_.indexOf(env, p) < 0) && (board.getPiece(p) === null)) {
+              env.push(p);
+          }
+      });
+  });
   _.each(board.moves, function(move) {
-      var b  = board.apply(move);
-      var pn = _.chain(move.actions).map(function(a) { return a[3];}).max().value();
-      _.each(design.allPositions(), function(pos) {
-          var piece = b.getPiece(pos);
-          if (piece !== null) {
-              if ((piece.type == moai) && (piece.player != board.player)) {
-                  if (isCaptured(design, b, piece.player, pos, dirs, moaiCheck)) {
-                      move.capturePiece(pos, pn);
+      var f = false;
+      _.each(move.actions, function(a) {
+          if ((a[1] !== null) && (_.indexOf(env, a[1][0]) >= 0)) {
+              f = true;
+          }
+      });
+      if (f) {
+          var b  = board.apply(move);
+          var pn = _.chain(move.actions).map(function(a) { return a[3];}).max().value();
+          _.each(positions, function(pos) {
+              var piece = b.getPiece(pos);
+              if (piece !== null) {
+                  if ((piece.type == moai) && (piece.player != board.player)) {
+                      if (isCaptured(design, b, piece.player, pos, dirs, moaiCheck)) {
+                          var captured = design.getPieceType("MoaiCaptured");
+                          move.movePiece(pos, pos, piece.promote(captured), pn);
+                      }
                   }
-              }
-              if (piece.type == ariki) {
-                  if (isCaptured(design, b, piece.player, pos, dirs, arikiCheck)) {
-                      var br = design.getDirection("br");
-                      var p = design.navigate(board.player, 0, br);
-                      while (p !== null) {
-                          if (b.getPiece(p) === null) {
-                              move.movePiece(pos, p, piece, pn);
-                              break;
+                  if (piece.type == ariki) {
+                      if (isCaptured(design, b, piece.player, pos, dirs, arikiCheck)) {
+                          var br = design.getDirection("br");
+                          var p = design.navigate(board.player, 0, br);
+                          while (p !== null) {
+                              if (b.getPiece(p) === null) {
+                                  move.movePiece(pos, p, piece, pn);
+                                  break;
+                              }
+                              p = design.navigate(board.player, p, br);
                           }
-                          p = design.navigate(board.player, p, br);
                       }
                   }
               }
-          }
-      });
+          });
+      }
   });
   CheckInvariants(board);
 }

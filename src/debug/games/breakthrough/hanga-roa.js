@@ -780,6 +780,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(3, 19, [0], 0);
     design.addMove(3, 19, [7], 0);
 
+    design.addPiece("MoaiCaptured", 4);
+
     design.setup("White", "Moai", 76);
     design.setup("White", "Ariki", 73);
     design.setup("White", "Ariki", 67);
@@ -809,6 +811,8 @@ Dagaz.View.configure = function(view) {
     view.defPiece("BlackAriki", "Black Ariki");
     view.defPiece("WhiteMatoToa", "White MatoToa");
     view.defPiece("BlackMatoToa", "Black MatoToa");
+    view.defPiece("WhiteMoai", "White MoaiCaptured");
+    view.defPiece("BlackMoai", "Black MoaiCaptured");
  
     view.defPosition("a9", 2, 2, 50, 50);
     view.defPosition("b9", 52, 2, 50, 50);
