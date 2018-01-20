@@ -1,0 +1,52 @@
+(define slide (
+  $1 (while empty? add $1)
+))
+
+(game
+  (title "Ming-Mang")
+  (description "http://homepages.di.fc.ul.pt/~jpn/gv/mingmang.htm")
+
+  (move-sound "Audio\Pickup.wav")
+  (release-sound "Audio\Pickup.wav")
+  (capture-sound "")
+  (drop-sound "")
+
+  (option "animate captures"  false)
+  (option "smart moves"       false)
+
+  (players White Black)
+  (turn-order White Black)
+
+  (board
+     (image "images/ming-mang/9x9.bmp")
+     (grid
+         (start-rectangle 12 12 73 73)
+         (dimensions
+           ("a/b/c/d/e/f/g/h/i" (61 0)) ; files
+           ("9/8/7/6/5/4/3/2/1" (0 61)) ; ranks
+         )
+         (directions 
+           (n 0 -1) (s 0 1) (e 1 0) (w -1 0)
+         )
+     )
+  )
+
+  (piece
+     (name Stone)
+     (image White "images/ming-mang/white.bmp"
+            Black "images/ming-mang/black.bmp")
+     (moves
+         (slide n) (slide s)
+         (slide e) (slide w)
+     )
+  )
+
+  (board-setup
+     (White (Stone a2 a3 a4 a5 a6 a7 a8 a9 b9 c9 d9 e9 f9 g9 h9 i9)) 
+     (Black (Stone a1 b1 c1 d1 e1 f1 g1 h1 i1 i2 i3 i4 i5 i6 i7 i8))
+  )
+
+  (loss-condition (White Black) repetition)
+  (loss-condition (White Black) (pieces-remaining 0))
+  (loss-condition (White Black) stalemated)
+)
