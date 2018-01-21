@@ -1,0 +1,62 @@
+(define slide (
+  $1 (while empty? add $1)
+  (verify not-friend?)
+  add
+))
+
+(game
+  (title "Ordo")
+
+  (move-sound "Audio\Pickup.wav")
+  (release-sound "Audio\Pickup.wav")
+  (capture-sound "")
+  (drop-sound "")
+
+  (option "animate captures"    false)
+  (option "smart moves"         false)
+
+  (players White Black)
+  (turn-order White Black)
+
+  (board
+     (image "images/ordo/10x8.bmp")
+     (grid
+         (start-rectangle 2 2 37 37)
+         (dimensions
+           ("a/b/c/d/e/f/g/h/i/j" (35 0)) ; files
+           ("8/7/6/5/4/3/2/1" (0 35)) ; ranks
+         )
+         (directions 
+           (n 0 -1) (s 0 1) (e 1 0) (w -1 0)
+           (ne 1 -1) (nw -1 -1) (se 1 1) (sw -1 1)
+         )
+     )
+     (zone (name last-rank) (players White)
+           (positions a8 b8 c8 d8 e8 f8 g8 h8 i8 j8)
+     )
+     (zone (name last-rank) (players Black)
+           (positions a1 b1 c1 d1 e1 f1 g1 h1 i1 j1)
+     )
+  )
+
+  (piece
+     (name Man)
+     (image White "images/ordo/white.bmp"
+            Black "images/ordo/black.bmp")
+     (moves
+           (slide n) (slide nw)
+           (slide s) (slide se)
+           (slide w) (slide sw)
+           (slide e) (slide ne)
+     )
+  )
+
+  (board-setup
+    (White (Man a2 a3 b2 b3 c1 c2 d1 d2 e2 e3 f2 f3 g1 g2 h1 h2 i2 i3 j2 j3))
+    (Black (Man a6 a7 b6 b7 c7 c8 d7 d8 e6 e7 f6 f7 g7 g8 h7 h8 i6 i7 j6 j7))
+  )
+
+  (loss-condition (White Black) (pieces-remaining 1))
+  (loss-condition (White Black) stalemated)
+  (loss-condition (White Black) repetition)
+)

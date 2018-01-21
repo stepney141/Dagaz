@@ -11,8 +11,9 @@
   (capture-sound "")
   (drop-sound "")
 
-  (option "animate captures"  false)
-  (option "smart moves"       false)
+  (option "animate captures"    false)
+  (option "smart moves"         false)
+  (option "ming-mang-extension" true)
 
   (players White Black)
   (turn-order White Black)
