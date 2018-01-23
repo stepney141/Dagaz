@@ -25,6 +25,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("pass-partial", "true");
     design.checkVersion("smart-moves", "false");
     design.checkVersion("ko-shogi-extension", "true");
+    design.checkVersion("ko-shogi-invariant", "true");
 
     design.addDirection("w");
     design.addDirection("e");
@@ -1970,7 +1971,15 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(93, ZRF.FUNCTION,	11);	// create
     design.addCommand(93, ZRF.PARAM,	0);	// $1
     design.addCommand(93, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(93, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(93, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(93, ZRF.FUNCTION,	0);	// not
+    design.addCommand(93, ZRF.IF,	6);
+    design.addCommand(93, ZRF.LITERAL,	64);	// N
+    design.addCommand(93, ZRF.FUNCTION,	10);	// piece?
+    design.addCommand(93, ZRF.IF,	3);
+    design.addCommand(93, ZRF.LITERAL,	0);	// false
+    design.addCommand(93, ZRF.JUMP,	2);
+    design.addCommand(93, ZRF.LITERAL,	1);	// true
     design.addCommand(93, ZRF.FUNCTION,	20);	// verify
     design.addCommand(93, ZRF.PARAM,	1);	// $2
     design.addCommand(93, ZRF.FUNCTION,	22);	// navigate
@@ -1986,11 +1995,27 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(94, ZRF.FUNCTION,	11);	// create
     design.addCommand(94, ZRF.PARAM,	0);	// $1
     design.addCommand(94, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(94, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(94, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(94, ZRF.FUNCTION,	0);	// not
+    design.addCommand(94, ZRF.IF,	6);
+    design.addCommand(94, ZRF.LITERAL,	64);	// N
+    design.addCommand(94, ZRF.FUNCTION,	10);	// piece?
+    design.addCommand(94, ZRF.IF,	3);
+    design.addCommand(94, ZRF.LITERAL,	0);	// false
+    design.addCommand(94, ZRF.JUMP,	2);
+    design.addCommand(94, ZRF.LITERAL,	1);	// true
     design.addCommand(94, ZRF.FUNCTION,	20);	// verify
     design.addCommand(94, ZRF.PARAM,	1);	// $2
     design.addCommand(94, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(94, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(94, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(94, ZRF.FUNCTION,	0);	// not
+    design.addCommand(94, ZRF.IF,	6);
+    design.addCommand(94, ZRF.LITERAL,	64);	// N
+    design.addCommand(94, ZRF.FUNCTION,	10);	// piece?
+    design.addCommand(94, ZRF.IF,	3);
+    design.addCommand(94, ZRF.LITERAL,	0);	// false
+    design.addCommand(94, ZRF.JUMP,	2);
+    design.addCommand(94, ZRF.LITERAL,	1);	// true
     design.addCommand(94, ZRF.FUNCTION,	20);	// verify
     design.addCommand(94, ZRF.PARAM,	2);	// $3
     design.addCommand(94, ZRF.FUNCTION,	22);	// navigate
@@ -2006,15 +2031,39 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(95, ZRF.FUNCTION,	11);	// create
     design.addCommand(95, ZRF.PARAM,	0);	// $1
     design.addCommand(95, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(95, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(95, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(95, ZRF.FUNCTION,	0);	// not
+    design.addCommand(95, ZRF.IF,	6);
+    design.addCommand(95, ZRF.LITERAL,	64);	// N
+    design.addCommand(95, ZRF.FUNCTION,	10);	// piece?
+    design.addCommand(95, ZRF.IF,	3);
+    design.addCommand(95, ZRF.LITERAL,	0);	// false
+    design.addCommand(95, ZRF.JUMP,	2);
+    design.addCommand(95, ZRF.LITERAL,	1);	// true
     design.addCommand(95, ZRF.FUNCTION,	20);	// verify
     design.addCommand(95, ZRF.PARAM,	1);	// $2
     design.addCommand(95, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(95, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(95, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(95, ZRF.FUNCTION,	0);	// not
+    design.addCommand(95, ZRF.IF,	6);
+    design.addCommand(95, ZRF.LITERAL,	64);	// N
+    design.addCommand(95, ZRF.FUNCTION,	10);	// piece?
+    design.addCommand(95, ZRF.IF,	3);
+    design.addCommand(95, ZRF.LITERAL,	0);	// false
+    design.addCommand(95, ZRF.JUMP,	2);
+    design.addCommand(95, ZRF.LITERAL,	1);	// true
     design.addCommand(95, ZRF.FUNCTION,	20);	// verify
     design.addCommand(95, ZRF.PARAM,	2);	// $3
     design.addCommand(95, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(95, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(95, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(95, ZRF.FUNCTION,	0);	// not
+    design.addCommand(95, ZRF.IF,	6);
+    design.addCommand(95, ZRF.LITERAL,	64);	// N
+    design.addCommand(95, ZRF.FUNCTION,	10);	// piece?
+    design.addCommand(95, ZRF.IF,	3);
+    design.addCommand(95, ZRF.LITERAL,	0);	// false
+    design.addCommand(95, ZRF.JUMP,	2);
+    design.addCommand(95, ZRF.LITERAL,	1);	// true
     design.addCommand(95, ZRF.FUNCTION,	20);	// verify
     design.addCommand(95, ZRF.PARAM,	3);	// $4
     design.addCommand(95, ZRF.FUNCTION,	22);	// navigate
@@ -2030,19 +2079,51 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(96, ZRF.FUNCTION,	11);	// create
     design.addCommand(96, ZRF.PARAM,	0);	// $1
     design.addCommand(96, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(96, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(96, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(96, ZRF.FUNCTION,	0);	// not
+    design.addCommand(96, ZRF.IF,	6);
+    design.addCommand(96, ZRF.LITERAL,	64);	// N
+    design.addCommand(96, ZRF.FUNCTION,	10);	// piece?
+    design.addCommand(96, ZRF.IF,	3);
+    design.addCommand(96, ZRF.LITERAL,	0);	// false
+    design.addCommand(96, ZRF.JUMP,	2);
+    design.addCommand(96, ZRF.LITERAL,	1);	// true
     design.addCommand(96, ZRF.FUNCTION,	20);	// verify
     design.addCommand(96, ZRF.PARAM,	1);	// $2
     design.addCommand(96, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(96, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(96, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(96, ZRF.FUNCTION,	0);	// not
+    design.addCommand(96, ZRF.IF,	6);
+    design.addCommand(96, ZRF.LITERAL,	64);	// N
+    design.addCommand(96, ZRF.FUNCTION,	10);	// piece?
+    design.addCommand(96, ZRF.IF,	3);
+    design.addCommand(96, ZRF.LITERAL,	0);	// false
+    design.addCommand(96, ZRF.JUMP,	2);
+    design.addCommand(96, ZRF.LITERAL,	1);	// true
     design.addCommand(96, ZRF.FUNCTION,	20);	// verify
     design.addCommand(96, ZRF.PARAM,	2);	// $3
     design.addCommand(96, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(96, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(96, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(96, ZRF.FUNCTION,	0);	// not
+    design.addCommand(96, ZRF.IF,	6);
+    design.addCommand(96, ZRF.LITERAL,	64);	// N
+    design.addCommand(96, ZRF.FUNCTION,	10);	// piece?
+    design.addCommand(96, ZRF.IF,	3);
+    design.addCommand(96, ZRF.LITERAL,	0);	// false
+    design.addCommand(96, ZRF.JUMP,	2);
+    design.addCommand(96, ZRF.LITERAL,	1);	// true
     design.addCommand(96, ZRF.FUNCTION,	20);	// verify
     design.addCommand(96, ZRF.PARAM,	3);	// $4
     design.addCommand(96, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(96, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(96, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(96, ZRF.FUNCTION,	0);	// not
+    design.addCommand(96, ZRF.IF,	6);
+    design.addCommand(96, ZRF.LITERAL,	64);	// N
+    design.addCommand(96, ZRF.FUNCTION,	10);	// piece?
+    design.addCommand(96, ZRF.IF,	3);
+    design.addCommand(96, ZRF.LITERAL,	0);	// false
+    design.addCommand(96, ZRF.JUMP,	2);
+    design.addCommand(96, ZRF.LITERAL,	1);	// true
     design.addCommand(96, ZRF.FUNCTION,	20);	// verify
     design.addCommand(96, ZRF.PARAM,	4);	// $5
     design.addCommand(96, ZRF.FUNCTION,	22);	// navigate
@@ -2058,23 +2139,63 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(97, ZRF.FUNCTION,	11);	// create
     design.addCommand(97, ZRF.PARAM,	0);	// $1
     design.addCommand(97, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(97, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(97, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(97, ZRF.FUNCTION,	0);	// not
+    design.addCommand(97, ZRF.IF,	6);
+    design.addCommand(97, ZRF.LITERAL,	64);	// N
+    design.addCommand(97, ZRF.FUNCTION,	10);	// piece?
+    design.addCommand(97, ZRF.IF,	3);
+    design.addCommand(97, ZRF.LITERAL,	0);	// false
+    design.addCommand(97, ZRF.JUMP,	2);
+    design.addCommand(97, ZRF.LITERAL,	1);	// true
     design.addCommand(97, ZRF.FUNCTION,	20);	// verify
     design.addCommand(97, ZRF.PARAM,	1);	// $2
     design.addCommand(97, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(97, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(97, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(97, ZRF.FUNCTION,	0);	// not
+    design.addCommand(97, ZRF.IF,	6);
+    design.addCommand(97, ZRF.LITERAL,	64);	// N
+    design.addCommand(97, ZRF.FUNCTION,	10);	// piece?
+    design.addCommand(97, ZRF.IF,	3);
+    design.addCommand(97, ZRF.LITERAL,	0);	// false
+    design.addCommand(97, ZRF.JUMP,	2);
+    design.addCommand(97, ZRF.LITERAL,	1);	// true
     design.addCommand(97, ZRF.FUNCTION,	20);	// verify
     design.addCommand(97, ZRF.PARAM,	2);	// $3
     design.addCommand(97, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(97, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(97, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(97, ZRF.FUNCTION,	0);	// not
+    design.addCommand(97, ZRF.IF,	6);
+    design.addCommand(97, ZRF.LITERAL,	64);	// N
+    design.addCommand(97, ZRF.FUNCTION,	10);	// piece?
+    design.addCommand(97, ZRF.IF,	3);
+    design.addCommand(97, ZRF.LITERAL,	0);	// false
+    design.addCommand(97, ZRF.JUMP,	2);
+    design.addCommand(97, ZRF.LITERAL,	1);	// true
     design.addCommand(97, ZRF.FUNCTION,	20);	// verify
     design.addCommand(97, ZRF.PARAM,	3);	// $4
     design.addCommand(97, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(97, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(97, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(97, ZRF.FUNCTION,	0);	// not
+    design.addCommand(97, ZRF.IF,	6);
+    design.addCommand(97, ZRF.LITERAL,	64);	// N
+    design.addCommand(97, ZRF.FUNCTION,	10);	// piece?
+    design.addCommand(97, ZRF.IF,	3);
+    design.addCommand(97, ZRF.LITERAL,	0);	// false
+    design.addCommand(97, ZRF.JUMP,	2);
+    design.addCommand(97, ZRF.LITERAL,	1);	// true
     design.addCommand(97, ZRF.FUNCTION,	20);	// verify
     design.addCommand(97, ZRF.PARAM,	4);	// $5
     design.addCommand(97, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(97, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(97, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(97, ZRF.FUNCTION,	0);	// not
+    design.addCommand(97, ZRF.IF,	6);
+    design.addCommand(97, ZRF.LITERAL,	64);	// N
+    design.addCommand(97, ZRF.FUNCTION,	10);	// piece?
+    design.addCommand(97, ZRF.IF,	3);
+    design.addCommand(97, ZRF.LITERAL,	0);	// false
+    design.addCommand(97, ZRF.JUMP,	2);
+    design.addCommand(97, ZRF.LITERAL,	1);	// true
     design.addCommand(97, ZRF.FUNCTION,	20);	// verify
     design.addCommand(97, ZRF.PARAM,	5);	// $6
     design.addCommand(97, ZRF.FUNCTION,	22);	// navigate
@@ -2090,27 +2211,75 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(98, ZRF.FUNCTION,	11);	// create
     design.addCommand(98, ZRF.PARAM,	0);	// $1
     design.addCommand(98, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(98, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(98, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(98, ZRF.FUNCTION,	0);	// not
+    design.addCommand(98, ZRF.IF,	6);
+    design.addCommand(98, ZRF.LITERAL,	64);	// N
+    design.addCommand(98, ZRF.FUNCTION,	10);	// piece?
+    design.addCommand(98, ZRF.IF,	3);
+    design.addCommand(98, ZRF.LITERAL,	0);	// false
+    design.addCommand(98, ZRF.JUMP,	2);
+    design.addCommand(98, ZRF.LITERAL,	1);	// true
     design.addCommand(98, ZRF.FUNCTION,	20);	// verify
     design.addCommand(98, ZRF.PARAM,	1);	// $2
     design.addCommand(98, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(98, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(98, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(98, ZRF.FUNCTION,	0);	// not
+    design.addCommand(98, ZRF.IF,	6);
+    design.addCommand(98, ZRF.LITERAL,	64);	// N
+    design.addCommand(98, ZRF.FUNCTION,	10);	// piece?
+    design.addCommand(98, ZRF.IF,	3);
+    design.addCommand(98, ZRF.LITERAL,	0);	// false
+    design.addCommand(98, ZRF.JUMP,	2);
+    design.addCommand(98, ZRF.LITERAL,	1);	// true
     design.addCommand(98, ZRF.FUNCTION,	20);	// verify
     design.addCommand(98, ZRF.PARAM,	2);	// $3
     design.addCommand(98, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(98, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(98, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(98, ZRF.FUNCTION,	0);	// not
+    design.addCommand(98, ZRF.IF,	6);
+    design.addCommand(98, ZRF.LITERAL,	64);	// N
+    design.addCommand(98, ZRF.FUNCTION,	10);	// piece?
+    design.addCommand(98, ZRF.IF,	3);
+    design.addCommand(98, ZRF.LITERAL,	0);	// false
+    design.addCommand(98, ZRF.JUMP,	2);
+    design.addCommand(98, ZRF.LITERAL,	1);	// true
     design.addCommand(98, ZRF.FUNCTION,	20);	// verify
     design.addCommand(98, ZRF.PARAM,	3);	// $4
     design.addCommand(98, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(98, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(98, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(98, ZRF.FUNCTION,	0);	// not
+    design.addCommand(98, ZRF.IF,	6);
+    design.addCommand(98, ZRF.LITERAL,	64);	// N
+    design.addCommand(98, ZRF.FUNCTION,	10);	// piece?
+    design.addCommand(98, ZRF.IF,	3);
+    design.addCommand(98, ZRF.LITERAL,	0);	// false
+    design.addCommand(98, ZRF.JUMP,	2);
+    design.addCommand(98, ZRF.LITERAL,	1);	// true
     design.addCommand(98, ZRF.FUNCTION,	20);	// verify
     design.addCommand(98, ZRF.PARAM,	4);	// $5
     design.addCommand(98, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(98, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(98, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(98, ZRF.FUNCTION,	0);	// not
+    design.addCommand(98, ZRF.IF,	6);
+    design.addCommand(98, ZRF.LITERAL,	64);	// N
+    design.addCommand(98, ZRF.FUNCTION,	10);	// piece?
+    design.addCommand(98, ZRF.IF,	3);
+    design.addCommand(98, ZRF.LITERAL,	0);	// false
+    design.addCommand(98, ZRF.JUMP,	2);
+    design.addCommand(98, ZRF.LITERAL,	1);	// true
     design.addCommand(98, ZRF.FUNCTION,	20);	// verify
     design.addCommand(98, ZRF.PARAM,	5);	// $6
     design.addCommand(98, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(98, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(98, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(98, ZRF.FUNCTION,	0);	// not
+    design.addCommand(98, ZRF.IF,	6);
+    design.addCommand(98, ZRF.LITERAL,	64);	// N
+    design.addCommand(98, ZRF.FUNCTION,	10);	// piece?
+    design.addCommand(98, ZRF.IF,	3);
+    design.addCommand(98, ZRF.LITERAL,	0);	// false
+    design.addCommand(98, ZRF.JUMP,	2);
+    design.addCommand(98, ZRF.LITERAL,	1);	// true
     design.addCommand(98, ZRF.FUNCTION,	20);	// verify
     design.addCommand(98, ZRF.PARAM,	6);	// $7
     design.addCommand(98, ZRF.FUNCTION,	22);	// navigate
