@@ -15,13 +15,13 @@
   (option "smart moves"         false)
   (option "ming-mang-extension" true)
 
-  (players White Black)
-  (turn-order White Black)
+  (players Black White)
+  (turn-order Black White)
 
   (board
      (image "images/ming-mang/9x9.bmp")
      (grid
-         (start-rectangle 12 12 73 73)
+         (start-rectangle 13 13 74 74)
          (dimensions
            ("a/b/c/d/e/f/g/h/i" (61 0)) ; files
            ("9/8/7/6/5/4/3/2/1" (0 61)) ; ranks
