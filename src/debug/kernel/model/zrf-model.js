@@ -2207,4 +2207,12 @@ ZrfMove.prototype.isSimpleMove = function() {
   return (this.actions.length == 1) && (this.actions[0][0] !== null) && (this.actions[0][1] !== null);
 }
 
+Dagaz.Model.getX = function(pos) {
+  return pos % Dagaz.Model.WIDTH;
+}
+
+Dagaz.Model.getY = function(pos) {
+  return (pos / Dagaz.Model.WIDTH) | 0;
+}
+
 })();

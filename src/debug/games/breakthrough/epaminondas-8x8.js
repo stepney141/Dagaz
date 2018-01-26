@@ -1,3 +1,5 @@
+Dagaz.Model.WIDTH = 8;
+
 ZRF = {
     JUMP:          0,
     IF:            1,
@@ -24,6 +26,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "false");
     design.checkVersion("show-blink", "false");
+    design.checkVersion("epaminondas-invariant", "true");
 
     design.addDirection("w");
     design.addDirection("e");
