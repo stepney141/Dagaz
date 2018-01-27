@@ -290,8 +290,68 @@
 )
 
 (variant
-  (title "Hanga Roa (mini)")
+  (title "Hanga Roa (small)")
   (default)
+  (board
+     (image "images/hanga-roa/board-small.bmp")
+     (grid
+         (start-rectangle 2 2 52 52)
+         (dimensions
+           ("a/b/c/d/e/f/g" (50 0)) ; files
+           ("7/6/5/4/3/2/1" (0 50)) ; ranks
+         )
+         (directions 
+           (n 0 -1) (s 0 1) (e 1 0) (w -1 0)
+           (ne 1 -1) (nw -1 -1) (se 1 1) (sw -1 1)
+         )
+     )
+     (positions
+             (X7 352   2 402  52)
+             (X6 352  52 402 102)
+             (X5 352 102 402 152)
+             (X4 352 152 402 202)
+             (X3 352 202 402 252)
+             (X2 352 252 402 302)
+             (X1 352 302 402 352)
+     )
+     (links next
+          (a2 a1) (a1 b1) (b1 c1) (c1 d1) (d1 e1) (e1 f1) (f1 g1)
+     )
+     (links nb
+          (a2 a7) (a7 b7) (b7 c7) (c7 d7) (d7 e7) (e7 f7) (f7 g7)
+     )
+     (links br
+          (a7 X7) (X7 X6) (X6 X5) (X5 X4)
+     )
+     (links wr
+          (a7 X1) (X1 X2) (X2 X3) (X3 X4)
+     )
+     (symmetry Black (br wr) (wr br) (n n) (s s) (w w) (e e) (nw nw) (ne ne) (sw sw) (se se) (next nb) (nb next))
+     (zone (name reserve) (players White Black)
+           (positions X1 X2 X3 X4 X5 X6 X7)
+     )
+  )
+
+  (board-setup
+    (White 
+         (Moai d1)
+         (Ariki b1 f1)
+         (MatoToa b2 d3 f2)
+    )
+    (Black 
+         (Moai d7)
+         (Ariki b7 f7)
+         (MatoToa b6 d5 f6)
+    )
+  )
+
+  (win-condition  (Black) (absolute-config Moai (a1 b1 c1 d1 e1 f1 g1)))
+  (win-condition  (White) (absolute-config Moai (a7 b7 c7 d7 e7 f7 g7)))
+  (loss-condition (White Black) (pieces-remaining 0 Moai))
+)
+
+(variant
+  (title "Hanga Roa (mini)")
   (board
      (image "images/hanga-roa/board-mini.bmp")
      (grid
