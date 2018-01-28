@@ -10,7 +10,7 @@ function RandomAi(params) {
 var findBot = Dagaz.AI.findBot;
 
 Dagaz.AI.findBot = function(type, params, parent) {
-  if (type == "random") {
+  if ((type == "random") || (type == "solver")) {
       return new RandomAi(params);
   } else {
       return findBot(type, params, parent);
