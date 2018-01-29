@@ -1,10 +1,21 @@
 (function() {
 
-var DEBUG_MOVE = "e4 - e3";
+var moves = [];
 
 function DebugAi(params, parent) {
   this.params = params;
   this.parent = parent;
+  moves.push("a5 - b3");
+  moves.push("b3 - c1");
+  moves.push("c1 - a2");
+  moves.push("e5 - d3");
+  moves.push("a2 - c3");
+  moves.push("c3 - d1");
+  moves.push("e4 - d3");
+  moves.push("d1 - e3");
+  moves.push("e3 - c4");
+  moves.push("c4 - b2");
+  moves.push("d5 - c4");
 }
 
 var findBot = Dagaz.AI.findBot;
@@ -31,11 +42,14 @@ DebugAi.prototype.getMove = function(ctx) {
       return { done: true, ai: "nothing" };
   }
   ctx.best = null;
-  _.each(ctx.board.moves, function(move) {
-      if (move.toString() == DEBUG_MOVE) {
-          ctx.best = move;
-      }
-  });
+  if (moves.length > 0) {
+      var m = moves.shift();
+      _.each(ctx.board.moves, function(move) {
+          if (move.toString() == m) {
+              ctx.best = move;
+          }
+      });
+  }
   if (ctx.best !== null) {
       return {
            done: true,

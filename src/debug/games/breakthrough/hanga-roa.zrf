@@ -291,7 +291,6 @@
 
 (variant
   (title "Hanga Roa (small)")
-  (default)
   (board
      (image "images/hanga-roa/board-small.bmp")
      (grid
@@ -418,23 +417,66 @@
          (shoot-4 s no-type) (shoot-4 se no-type)
          (shoot-4 e no-type) (shoot-4 ne no-type)
          (shoot-4 w no-type) (shoot-4 sw no-type)
-         (shoot-5 n no-type) (shoot-5 nw no-type)
-         (shoot-5 s no-type) (shoot-5 se no-type)
-         (shoot-5 e no-type) (shoot-5 ne no-type)
-         (shoot-5 w no-type) (shoot-5 sw no-type)
-         (shoot-6 n no-type) (shoot-6 nw no-type)
-         (shoot-6 s no-type) (shoot-6 se no-type)
-         (shoot-6 e no-type) (shoot-6 ne no-type)
-         (shoot-6 w no-type) (shoot-6 sw no-type)
-         (shoot-7 n no-type) (shoot-7 nw no-type)
-         (shoot-7 s no-type) (shoot-7 se no-type)
-         (shoot-7 e no-type) (shoot-7 ne no-type)
-         (shoot-7 w no-type) (shoot-7 sw no-type)
-         (shoot-8 n no-type) (shoot-8 nw no-type)
-         (shoot-8 s no-type) (shoot-8 se no-type)
-         (shoot-8 e no-type) (shoot-8 ne no-type)
-         (shoot-8 w no-type) (shoot-8 sw no-type)
          (move-type no-type)
+     )
+  )
+
+  (board-setup
+    (White 
+         (Moai c1)
+         (Ariki a1 e1)
+         (MatoToa a2 e2)
+    )
+    (Black 
+         (Moai c5)
+         (Ariki a5 e5)
+         (MatoToa a4 e4)
+    )
+  )
+
+  (win-condition  (Black) (absolute-config Moai (a1 b1 c1 d1 e1)))
+  (win-condition  (White) (absolute-config Moai (a5 b5 c5 d5 e5)))
+  (loss-condition (White Black) (pieces-remaining 0 Moai))
+)
+
+(variant
+  (title "Hanga Roa (debug)")
+  (default)
+  (board
+     (image "images/hanga-roa/board-mini.bmp")
+     (grid
+         (start-rectangle 2 2 52 52)
+         (dimensions
+           ("a/b/c/d/e" (50 0)) ; files
+           ("5/4/3/2/1" (0 50)) ; ranks
+         )
+         (directions 
+           (n 0 -1) (s 0 1) (e 1 0) (w -1 0)
+           (ne 1 -1) (nw -1 -1) (se 1 1) (sw -1 1)
+         )
+     )
+     (positions
+             (X5 252   2 302  52)
+             (X4 252  52 302 102)
+             (X3 252 102 302 152)
+             (X2 252 152 302 202)
+             (X1 252 202 302 252)
+     )
+     (links next
+          (a2 a1) (a1 b1) (b1 c1) (c1 d1) (d1 e1)
+     )
+     (links nb
+          (a2 a5) (a5 b5) (b5 c5) (c5 d5) (d5 e5)
+     )
+     (links br
+          (a5 X5) (X5 X4) (X4 X3)
+     )
+     (links wr
+          (a5 X1) (X1 X2) (X2 X3)
+     )
+     (symmetry Black (br wr) (wr br) (n n) (s s) (w w) (e e) (nw nw) (ne ne) (sw sw) (se se) (next nb) (nb next))
+     (zone (name reserve) (players White Black)
+           (positions X1 X2 X3 X4 X5)
      )
   )
 

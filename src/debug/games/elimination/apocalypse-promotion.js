@@ -27,9 +27,15 @@ var countPieces = function(design, board, type, player) {
   return r;
 }
 
-var checkPromotion = function(design, board, move, piece) {
+var checkPromotion = function(design, board, move, piece, opponent) {
   var knight = design.getPieceType("Knight");
   var limit  = 2 - countPieces(design, board, knight, piece.player);
+  if ((opponent.actions[0][1] !== null) && (move.actions[0][0] !== null) && (opponent.actions[0][1][0] !== move.actions[0][0][0])) {
+      var target = board.getPiece(opponent.actions[0][1][0]);
+      if ((target !== null) && (target.type == knight) && (target.player == piece.player)) {
+          limit++;
+      }
+  }
   if ((move.actions[0][2] !== null) && (move.actions[0][2][0].type != piece.type) && (limit <= 0)) {
        move.actions[0][2] = [ piece ];
   }
@@ -41,8 +47,8 @@ Dagaz.Model.join = function(design, board, a, b) {
   if ((x !== null) && (y !== null)) {
       var r = Dagaz.Model.createMove();
       r.protected = [];
-      checkPromotion(design, board, a, x);
-      checkPromotion(design, board, b, y);
+      checkPromotion(design, board, a, x, b);
+      checkPromotion(design, board, b, y, a);
       var p = a.actions[0][1][0];
       var q = b.actions[0][1][0];
       if ((p == q) && (x.type > y.type)) {

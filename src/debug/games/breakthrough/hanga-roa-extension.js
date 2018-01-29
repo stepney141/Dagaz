@@ -67,6 +67,7 @@ Dagaz.Model.CheckInvariants = function(board) {
   var ne = design.getDirection("ne"); var se = design.getDirection("se");
   var dirs = [n, e, w, s, nw, ne, sw, se];
   var positions = _.filter(design.allPositions(), function(pos) {
+      if (design.inZone(0, board.player, pos)) return false;
       var piece = board.getPiece(pos);
       if (piece === null) return false;
       if (piece.player == board.player) return false;

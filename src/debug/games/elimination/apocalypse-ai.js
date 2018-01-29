@@ -61,9 +61,9 @@ Ai.prototype.getMove = function(ctx) {
       if (move.isSimpleMove()) {
            var pos = move.actions[0][0][0];
            var trg = move.actions[0][1][0];
-           var piece = board.getPiece(pos);
+           var piece = ctx.board.getPiece(pos);
            if (piece !== null) {
-               var target = board.getPiece(trg);
+               var target = ctx.board.getPiece(trg);
                if (piece.type == 1) {
                    if (isCovered(ctx.design, ctx.board, pos, 1)) e += MAXVALUE;
                    if (target === null) {

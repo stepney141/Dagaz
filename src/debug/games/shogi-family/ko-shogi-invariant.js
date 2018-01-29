@@ -1,19 +1,13 @@
 (function() {
 
+Dagaz.Model.WIDTH = 19;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
   if (name != "ko-shogi-invariant") {
       checkVersion(design, name, value);
   }
-}
-
-var getX = function(pos) {
-  return pos % 19;
-}
-
-var getY = function(pos) {
-  return (pos / 19) | 0;
 }
 
 var sign = function(x) {
@@ -46,19 +40,22 @@ Dagaz.Model.CheckInvariants = function(board) {
       var piece = board.getPiece(empty);
       if ((piece !== null) && (piece.player == board.player) && (piece.type == 48)) {
           _.each(captured, function(target) {
-              var sx = sign(getX(target) - getX(pos));
-              var sy = sign(getY(target) - getY(pos));
-              for (var p = pos; p != target; p += sy * 19 + sx) {
-                   if (p < 0) break;
-                   if (p >= design.positions.length) break;
-                   if (p != empty) {
-                       var piece = board.getPiece(p);
-                       if (piece !== null) {
-                           if ((piece.player == board.player) || (_.indexOf(captured, p) < 0)) {
-                               move.failed = true;
-                           }
-                       }
-                   }
+              var sx  = sign(Dagaz.Model.getX(target) - Dagaz.Model.getX(pos));
+              var sy  = sign(Dagaz.Model.getY(target) - Dagaz.Model.getY(pos));
+              var dir = design.findDirection(pos, pos + Dagaz.Model.WIDTH * sy + sx);
+              if (dir !== null) {
+                  var p = pos;
+                  while ((p!== null) && (p != target)) {
+                      if (p != empty) {
+                          var piece = board.getPiece(p);
+                          if (piece !== null) {
+                              if ((piece.player == board.player) || (_.indexOf(captured, p) < 0)) {
+                                  move.failed = true;
+                              }
+                          }
+                      }
+                      p = design.navigate(board.player, p, dir);
+                  }
               }
           });
       }
