@@ -144,6 +144,14 @@
          (players White Black) 
          (positions a1 b2 c3 d4 e5 f6 g7 h8)
       )
+      (zone (name last-rank)  
+         (players White) 
+         (positions a8 b8 c8 d8 e8 f8 g8 h8)
+      )
+      (zone (name last-rank)  
+         (players Black) 
+         (positions a1 b1 c1 d1 e1 f1 g1 h1)
+      )
    )
 
    (dragon Orange o) (sumo Orange o)
@@ -225,7 +233,6 @@
 
 (variant
    (title "Debug")
-   (default)
    (board-setup
       (White 
          (OrangeDragon h1)
@@ -246,6 +253,32 @@
          (RedDragon    f8) 
          (GreenDragon  g8) 
          (BrownDragon  h8) 
+      )
+   )
+)
+
+(variant
+   (title "Debug")
+   (board-setup
+      (White 
+         (OrangeDragon h4)
+         (BlueDragon   g6) 
+         (PurpleDragon f1) 
+         (PinkDragon   e1) 
+         (YellowDragon g4) 
+         (RedDragon    c1) 
+         (GreenDragon  b1) 
+         (BrownDragon  d4) 
+      )
+      (Black 
+         (OrangeDragon a8) 
+         (BlueDragon   b8) 
+         (PurpleDragon f5) 
+         (PinkDragon   f6) 
+         (YellowDragon e4) 
+         (RedDragon    f8) 
+         (GreenDragon  g8) 
+         (BrownDragon  h5) 
       )
    )
 )

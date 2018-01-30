@@ -1,5 +1,8 @@
 (function() {
 
+Dagaz.Model.WIDTH  = 8;
+Dagaz.Model.HEIGHT = 8;
+
 Dagaz.View.showHint = function(view) {}
 
 var checkVersion = Dagaz.Model.checkVersion;
@@ -8,6 +11,80 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   if (name != "kamisado-extension") {
      checkVersion(design, name, value);
   }
+}
+
+var toChar = function(n) {
+  if (n < 10) {
+      return String.fromCharCode("0".charCodeAt(0) + n);
+  } else {
+      return String.fromCharCode("A".charCodeAt(0) + n - 10);
+  }
+}
+
+var toStr = function(n) {
+  var r = "";
+  if (n == 0) return "0";
+  while (n > 0) {
+      r = toChar(n % 36) + r;
+      n = (n / 36) | 0;
+  }
+  return r;
+}
+
+Dagaz.Model.continue = function(design, board, text) {
+  var str = "?setup=";
+  var offset = (Dagaz.Model.HEIGHT - 1) * Dagaz.Model.WIDTH;
+  _.chain(design.allPositions())
+   .filter(function(pos) {
+        var piece = board.getPiece(pos);
+        if (piece === null) return false;
+        return piece.player == 1;
+    })
+   .sortBy(function(pos) {
+        var x = Dagaz.Model.getX(pos);
+        var y = Dagaz.Model.HEIGHT - Dagaz.Model.getY(pos);
+        return (y * Dagaz.Model.WIDTH) + x;
+    })
+   .each(function(pos) {
+        var piece = board.getPiece(pos);
+        if (piece !== null) {
+            var type = piece.type;
+            if ((type % 2 == 0) && design.inZone(8, 1, pos)) {
+                type++;
+            }
+            str = str + toChar(type);
+            str = str + toStr(offset);
+            str = str + ";";
+            offset++;
+        }
+    });
+  str = str + "-";
+  offset = Dagaz.Model.WIDTH - 1;
+  _.chain(design.allPositions())
+   .filter(function(pos) {
+        var piece = board.getPiece(pos);
+        if (piece === null) return false;
+        return piece.player == 2;
+    })
+   .sortBy(function(pos) {
+        var x = Dagaz.Model.WIDTH - Dagaz.Model.getX(pos);
+        var y = Dagaz.Model.getY(pos);
+        return (y * Dagaz.Model.WIDTH) + x;
+    })
+   .each(function(pos) {
+        var piece = board.getPiece(pos);
+        if (piece !== null) {
+            var type = piece.type;
+            if ((type % 2 == 0) && design.inZone(8, 2, pos)) {
+                type++;
+            }
+            str = str + toChar(type);
+            str = str + toStr(offset);
+            str = str + ";";
+            offset--;
+        }
+    });
+  return str;
 }
 
 Dagaz.AI.eval = function(design, params, board, player) {

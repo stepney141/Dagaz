@@ -24,6 +24,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("zrf", "3.0");
     design.checkVersion("pass-turn", "forced");
     design.checkVersion("highlight-goals", "false");
+    design.checkVersion("progressive-levels", "true");
     design.checkVersion("kamisado-extension", "true");
 
     design.addDirection("w");
@@ -119,6 +120,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addZone("green", 2, [16, 57, 34, 11, 52, 29, 6, 47]);
     design.addZone("brown", 1, [56, 49, 42, 35, 28, 21, 14, 7]);
     design.addZone("brown", 2, [56, 49, 42, 35, 28, 21, 14, 7]);
+    design.addZone("last-rank", 1, [0, 1, 2, 3, 4, 5, 6, 7]);
+    design.addZone("last-rank", 2, [56, 57, 58, 59, 60, 61, 62, 63]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
