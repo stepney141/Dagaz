@@ -185,6 +185,9 @@ App.prototype.exec = function() {
          if (_.isUndefined(this.list)) {
              var player = this.design.playerNames[this.board.player];
              console.log("Player: " + player);
+             if (!_.isUndefined(Dagaz.Model.getSetup)) {
+                 console.log("Setup: " + Dagaz.Model.getSetup(this.design, this.board));
+             }
              this.list  = Dagaz.Model.getMoveList(this.board);
              if (!_.isUndefined(this.move)) {
                  this.list.setLastMove(this.move);
@@ -218,6 +221,9 @@ App.prototype.exec = function() {
       var result = this.getAI().getMove(ctx);
       if (once) {
           console.log("Player: " + player);
+          if (!_.isUndefined(Dagaz.Model.getSetup)) {
+              console.log("Setup: " + Dagaz.Model.getSetup(this.design, this.board));
+          }
           once = false;
       }
       if (result) {

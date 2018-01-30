@@ -53,4 +53,38 @@ Dagaz.Model.setup = function(board) {
   }
 }
 
+var toChar = function(n) {
+  if (n < 10) {
+      return String.fromCharCode("0".charCodeAt(0) + n);
+  } else {
+      return String.fromCharCode("A".charCodeAt(0) + n - 10);
+  }
+}
+
+var toStr = function(n) {
+  var r = "";
+  if (n == 0) return "0";
+  while (n > 0) {
+      r = toChar(n % 36) + r;
+      n = (n / 36) | 0;
+  }
+  return r;
+}
+
+Dagaz.Model.getSetup = function(design, board) {
+  var str = "";
+  for (var player = 1; player <= design.playerNames.length; player++) {
+      if (str != "") str = str + "-";
+      _.each(design.allPositions(), function(pos) {
+            var piece = board.getPiece(pos);
+            if ((piece !== null) && (piece.player == player)) {
+                str = str + toChar(piece.type);
+                str = str + toStr(pos);
+                str = str + ";";
+            }
+      });
+  }
+  return "?setup=" + str;
+}
+
 })();
