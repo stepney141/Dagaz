@@ -73,7 +73,7 @@ var toStr = function(n) {
 
 Dagaz.Model.getSetup = function(design, board) {
   var str = "";
-  for (var player = 1; player <= design.playerNames.length; player++) {
+  for (var player = 1; player < design.playerNames.length; player++) {
       if (str != "") str = str + "-";
       _.each(design.allPositions(), function(pos) {
             var piece = board.getPiece(pos);
