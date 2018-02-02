@@ -25,6 +25,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("smart-moves", "false");
     design.checkVersion("show-blink", "false");
     design.checkVersion("pass-turn", "forced");
+    design.checkVersion("shogi-extension", "true");
+    design.checkVersion("shogi-promotion", "true");
+    design.checkVersion("common-shogi-invariant", "true");
 
     design.addDirection("w");
     design.addDirection("e");
