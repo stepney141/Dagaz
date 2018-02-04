@@ -70,7 +70,22 @@
   add
 ))
 
-(define jump (
+(define jump-1 (
+  $1 (verify empty?)
+  $2 (verify not-friend?)
+  (verify (not-piece? Xing))
+  add
+))
+
+(define jump-2 (
+  $1 (verify empty?)
+  $2 (verify empty?)
+  $2 (verify not-friend?)
+  (verify (not-piece? Xing))
+  add
+))
+
+(define jump-3 (
   $1 (verify empty?)
   $2 (verify empty?)
   $2 (verify empty?)
@@ -336,8 +351,13 @@
             Yan   "Images/qiquo/n-yan.bmp" 
             Qin   "Images/qiquo/n-qin.bmp")
      (moves                   
-        (jump n nw) (jump n ne) (jump e ne) (jump e se)
-        (jump s sw) (jump s se) (jump w nw) (jump w sw)
+        (step-1 n) (step-1 s) (step-1 w) (step-1 e)
+        (jump-1 n nw) (jump-1 n ne) (jump-1 e ne) (jump-1 e se)
+        (jump-1 s sw) (jump-1 s se) (jump-1 w nw) (jump-1 w sw)
+        (jump-2 n nw) (jump-2 n ne) (jump-2 e ne) (jump-2 e se)
+        (jump-2 s sw) (jump-2 s se) (jump-2 w nw) (jump-2 w sw)
+        (jump-3 n nw) (jump-3 n ne) (jump-3 e ne) (jump-3 e se)
+        (jump-3 s sw) (jump-3 s se) (jump-3 w nw) (jump-3 w sw)
      )
   )
   (piece
