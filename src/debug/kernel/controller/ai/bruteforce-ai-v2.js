@@ -1,6 +1,6 @@
 (function() {
 
-Dagaz.AI.AI_FRAME = 2000;
+Dagaz.AI.AI_FRAME = 1000;
 
 function BruteforceAi(params) {
   this.params = params;
@@ -33,14 +33,14 @@ BruteforceAi.prototype.expand = function(ctx, node) {
            if (_.isUndefined(ctx.result)) {
                var board = node.board.apply(move);
                if (!_.isUndefined(node.parent) && (node.parent.board.zSign == board.zSign)) {
-                   node.back = move.toString();
+                   node.back = move;
                    return;
                }
                if (this.isCached(ctx, board)) return;
                var child = {
                    parent: node,
                    board:  board,
-                   move:   move.toString()
+                   move:   move
                };
                if (board.checkGoals(ctx.design, board.player) !== null) {
                    ctx.result = child;
