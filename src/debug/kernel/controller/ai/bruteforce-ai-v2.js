@@ -107,7 +107,7 @@ BruteforceAi.prototype.getMove = function(ctx) {
            done: true,
            move: ctx.locate.back,
            time: Date.now() - ctx.timestamp,
-           ai:  "aggressive"
+           ai:  "bruteforce"
       };
   } else {
       var ix = 0;
@@ -118,7 +118,7 @@ BruteforceAi.prototype.getMove = function(ctx) {
            done: true,
            move: ctx.locate.tree[ix].move,
            time: Date.now() - ctx.timestamp,
-           ai:  "aggressive"
+           ai:  "bruteforce"
       };
   }
 }
