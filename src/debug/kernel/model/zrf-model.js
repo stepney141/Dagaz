@@ -2216,7 +2216,8 @@ Dagaz.Model.getY = function(pos) {
 }
 
 Dagaz.Model.continue = function(design, board, str) {
-  var re  = /^(\D*)(\d+)(.*)$/;
+  str = str + "?";
+  var re  = /^(\D*)(\d+)([^?]*).*$/;
   var num = str.replace(re, "$2");
   if (num) {
       var len = num.length;

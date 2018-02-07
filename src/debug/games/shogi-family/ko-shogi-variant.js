@@ -26,6 +26,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("smart-moves", "false");
     design.checkVersion("ko-shogi-extension", "true");
     design.checkVersion("ko-shogi-invariant", "true");
+    design.checkVersion("ko-shogi-promotion", "true");
 
     design.addDirection("w");
     design.addDirection("e");

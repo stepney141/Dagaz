@@ -26,6 +26,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("smart-moves", "false");
     design.checkVersion("ko-shogi-extension", "true");
     design.checkVersion("ko-shogi-invariant", "true");
+    design.checkVersion("ko-shogi-promotion", "true");
 
     design.addDirection("w");
     design.addDirection("e");
@@ -3778,7 +3779,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "SH", 252);
     design.setup("Black", "SH", 258);
     design.setup("Black", "SH", 254);
-    design.setup("Black", "V", 237);
+//  design.setup("Black", "V", 237);
     design.setup("White", "AG", 18);
     design.setup("White", "AG", 0);
     design.setup("White", "TP", 17);
@@ -3868,9 +3869,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("White", "SH", 100);
     design.setup("White", "SH", 106);
     design.setup("White", "SH", 102);
-//  design.setup("White", "V", 123);
+    design.setup("White", "V", 123);
 
-    design.setup("Black", "EC", 123);
+    design.setup("Black", "C", 237);
+    design.setup("White", "GO", 220);
+    design.setup("White", "MT", 195);
 }
 
 Dagaz.View.configure = function(view) {
