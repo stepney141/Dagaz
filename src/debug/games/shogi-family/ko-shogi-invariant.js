@@ -38,7 +38,7 @@ Dagaz.Model.CheckInvariants = function(board) {
           }
       });
       var piece = board.getPiece(empty);
-      if ((piece !== null) && (piece.player == board.player) && (piece.type == 48)) {
+      if ((piece !== null) && (piece.player == board.player) && (_.indexOf([48, 47], piece.type) >= 0)) { // European cannon, Chariot of the Gods
           _.each(captured, function(target) {
               var sx  = sign(Dagaz.Model.getX(target) - Dagaz.Model.getX(pos));
               var sy  = sign(Dagaz.Model.getY(target) - Dagaz.Model.getY(pos));
@@ -54,7 +54,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                               }
                           }
                       }
-                      p = design.navigate(board.player, p, dir);
+                      p = design.navigate(1, p, dir);
                   }
               }
           });

@@ -31,6 +31,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
       promote[ 52 ] = 51; // Cavalryman -> Cavalry
       promote[ 50 ] = 49; // Cavalry -> Winged horse
       promote[  3 ] =  2; // Pawn -> Patrol unit
+      promote[ 64 ] =  2; // Pawn -> Patrol unit
       promote[ 54 ] = 53; // Patrol unit -> Commissar
       promote[ 62 ] = 61; // Shield -> Shield unit
       promote[ 58 ] = 57; // Shield unit -> Imperial base
@@ -54,10 +55,38 @@ Dagaz.Model.CheckInvariants = function(board) {
           var pos      = action[0][0];
           var piece    = board.getPiece(pos);
           if (move.actions[0][1] !== null) {
-              var target   = action[1][0];
-              var enemy    = board.getPiece(target);
+              var target = action[1][0];
+              var enemy  = board.getPiece(target);
+              if (!_.isUndefined(promote[piece.type])) {
+                  if (design.inZone(0, board.player, pos)) {
+                      promoted = piece.promote(promote[piece.type]);
+                  }
+                  if (_.indexOf([9, 7, 48, 46, 44, 42], piece.type) < 0) { // Taoist priest, Spiritual monk, European cannon, Long bow, Crossbow, Cannon
+                      _.each(move.actions, function(a) {
+                          if ((a[0] !== null) && (a[1] !== null)) {
+                              if (design.inZone(0, board.player, a[1][0])) {
+                                  promoted = piece.promote(promote[piece.type]);
+                              }
+                              action = a;
+                          }
+                      });
+                      if (piece.type == 22) { // Clerk
+                          var f = true;
+                          _.each(design.allPositions(), function(pos) {
+                              if (!design.inZone(0, board.player, pos)) return;
+                              var piece = board.getPiece(pos);
+                              if ((piece === null) || (piece.player != board.player)) return;
+                              if (_.indexOf([4, 25], piece.type) < 0) return; // Heaven's vengeance, Earth's vengeance
+                              f = false;
+                          });
+                          if (f) {
+                              promoted = null;
+                          }
+                      }
+                  }
+              }
               if ((piece !== null) && (enemy !== null) && !_.isUndefined(promote[piece.type])) {
-                  if ((_.indexOf([20, 17, 15, 13, 11, 39, 36, 38, 34, 3, 62], piece.type) >= 0) && // Step movers
+                  if ((_.indexOf([20, 17, 15, 13, 11, 39, 36, 38, 34, 3, 64, 62], piece.type) >= 0) && // Step movers
                       (_.indexOf([18, 31, 37, 35, 0, 1, 39, 38], enemy.type) >= 0)) { // Sumo wrestler, Dragon ascending, Roaming assault, Thunderclap, General, Governor, Middle troop, Banner
                       promoted = piece.promote(promote[piece.type]);
                   }
@@ -80,21 +109,46 @@ Dagaz.Model.CheckInvariants = function(board) {
                       }
                   });
               }
-              // TODO: Don't working
-/*            if (_.indexOf([9, 7, 48, 46, 44, 42], piece.type) >= 0) { // Taoist priest, Spiritual monk, European cannon, Long bow, Crossbow, Cannon
-                  _.each(move.actions, function(a) {
-                      if ((a[0] !== null) && (a[1] === null)) {
-                          var enemy = board.getPiece(a[0][0]);
-                          if ((enemy !== null) && (enemy.player != board.player) && (_.indexOf([0, 1, 39, 38], enemy.type) >= 0)) { // General, Governor, Middle troop, Banner
-                              promoted = piece.promote(promote[piece.type]);
-                          }
-                      }
+              if ((enemy !== null) && (enemy.type == 36)) { // Drum
+                  _.each(design.allPositions(), function(pos) {
+                       var piece = board.getPiece(pos);
+                       if (piece === null) return;
+                       if (piece.player == board.player) return;
+                       if (piece.type == 3) { // Pawn
+                           move.movePiece(pos, pos, piece.promote(64));
+                       }
                   });
-                  if (promoted !== null) {
-                      move.movePiece(pos, pos, piece.promote(promote[piece.type]));
-                      promoted = null;
-                  }
-              } */
+              }
+              if ((enemy !== null) && (enemy.type == 9)) { // Taoist Priest
+                  _.each(design.allPositions(), function(pos) {
+                       var piece = board.getPiece(pos);
+                       if (piece === null) return;
+                       if (piece.player == board.player) return;
+                       var promoted = null;
+                       if (piece.type == 37) { // Roaming assault
+                           promoted = piece.promote(38); // Banner
+                       }
+                       if (piece.type == 35) { // Thunderclap
+                           promoted = piece.promote(36); // Drum
+                       }
+                       if (promoted !== null) {
+                           move.movePiece(pos, pos, promoted);
+                       }
+                  });
+              }
+          }
+      }
+      if ((promoted !== null) && (_.indexOf([36, 38], piece.type) >= 0)) { // Banner, Drum
+          var f = true;
+          _.each(design.allPositions(), function(pos) {
+              var piece = board.getPiece(pos);
+              if (piece === null) return;
+              if (piece.player != board.player) return;
+              if (_.indexOf([8, 9], piece.type) < 0) return; // Taoist Priest, Twelve-mile fog
+              f = false;
+          });
+          if (f) {
+              promoted = null;
           }
       }
       if ((promoted !== null) && (action !== null)) {

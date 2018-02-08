@@ -97,7 +97,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                       // IL, SM, TF, TP <-- IL, SM, TF, TP (only)
                       if ((Math.max(dx, dy) > 1) && (_.indexOf([6, 7, 8, 9], piece.type) >= 0)) {
                            if (_.indexOf([6, 7, 8, 9], target.type) < 0) {
-                              move.failed = true;
+                                move.failed = true;
                            }
                       }
                   }
