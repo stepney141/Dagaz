@@ -235,6 +235,9 @@ App.prototype.exec = function() {
       }
       if (_.isUndefined(this.list)) {
           this.list = Dagaz.Model.getMoveList(this.board);
+          if (!_.isUndefined(Dagaz.Model.getSetup)) {
+              console.log("Setup: " + Dagaz.Model.getSetup(this.design, this.board));
+          }
           if (this.list.isEmpty()) {
               this.state = STATE.DONE;
               Canvas.style.cursor = "default";

@@ -4,6 +4,7 @@ var MAXVALUE     = 1000000;
 var NOISE_FACTOR = 10;
 var SMALL_BONUS  = 20;
 var BONUS        = 100;
+var LARGE_BONUS  = 200;
 
 function Ai(params) {
   this.params = params;
@@ -67,7 +68,7 @@ Ai.prototype.getMove = function(ctx) {
                if (piece.type == 1) {
                    if (isCovered(ctx.design, ctx.board, pos, 1)) e += MAXVALUE;
                    if (target === null) {
-                       if (isCovered(ctx.design, ctx.board, trg, 1, 0)) e += SMALL_BONUS;
+                       if (isCovered(ctx.design, ctx.board, trg, 1, 0)) e += LARGE_BONUS;
                        if (isCovered(ctx.design, ctx.board, trg, 1, 1)) {
                            if ((enemies == 1) && (friends == 2)) {
                                e += BONUS;
