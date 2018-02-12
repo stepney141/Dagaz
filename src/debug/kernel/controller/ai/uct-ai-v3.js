@@ -9,7 +9,6 @@ Dagaz.AI.MAX_DEEP         = 16;
 Dagaz.AI.EVAL_FACTOR      = 10;
 Dagaz.AI.MAX_WEIGHT       = 1000;
 Dagaz.AI.STALEMATE_RESULT = 1;
-Dagaz.AI.UCT_COEFF        = Math.sqrt(2);
 
 function UctAi(params, parent) {
   this.params = params;
@@ -95,8 +94,7 @@ UctAi.prototype.getEval = function(ctx, node) {
 }
 
 UctAi.prototype.shedule = function(ctx, node) {
-  var results = [];
-  var eval = null;
+  var all = 0;
   for (var i = 0; i < node.tree.length; i++) {
       var child = node.tree[i];
       if (node.board.player == ctx.board.player) {
@@ -104,18 +102,22 @@ UctAi.prototype.shedule = function(ctx, node) {
       } else {
           if (child.maxmin <= -MAXVALUE) return child;
       }
-      var uct = Math.sqrt(Math.log(node.all) / child.all) * 
-                Dagaz.AI.UCT_COEFF + child.weight / child.all;
-      if ((eval === null) || (eval < uct)) {
-           eval = uct;
-           results = [ child ];
-      } else if (eval == uct) {
-           results.push(child);
+      if (child.weight > 0) {
+          all += child.weight;
       }
   }
-  if (results.length == 0) return null;
-  if (results.length == 1) return results[0];
-  return results[_.random(0, results.length - 1)];
+  var m = _.random(0, all - 1);
+  all = 0;
+  for (var i = 0; i < node.tree.length; i++) {
+      var child = node.tree[i];
+      if (child.weight > 0) {
+          all += child.weight;
+          if (m < all) {
+              return child;
+          }
+      }
+  }
+  return null;
 }
 
 UctAi.prototype.isSafe = function(ctx, node) {
@@ -134,8 +136,10 @@ var trunc = div(a, b) {
 
 UctAi.prototype.simulate = function(ctx, node, eval, deep) {
   this.expand(ctx, node);
-  if (Math.abs(node.maxmin) >= MAXVALUE) return node.maxmin;
-  if ((deep > Dagaz.AI.MAX_DEEP) || ((deep > Dagaz.AI.MIN_DEEP) && this.isSafe(ctx, node)) return this.getEval(ctx, node);
+  if (node.board.player == ctx.board.player) {
+      if (Math.abs(node.maxmin) >= MAXVALUE) return node.maxmin;
+      if ((deep > Dagaz.AI.MAX_DEEP) || ((deep > Dagaz.AI.MIN_DEEP) && this.isSafe(ctx, node)) return this.getEval(ctx, node);
+  }
   var child = this.shedule(ctx, node);
   if (child === null) return this.getEval(ctx, node);
   var r = this.simulate(ctx, child, eval, deep + 1);

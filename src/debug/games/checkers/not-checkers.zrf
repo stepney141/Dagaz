@@ -9,7 +9,8 @@
 
 (define man-jump (
    $1 (verify enemy?) 
-   change-owner
+;  change-owner
+   capture
    $1 (verify empty?)
    (if (in-zone? promotion)
        (add King)
