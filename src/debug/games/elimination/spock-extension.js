@@ -46,20 +46,15 @@ var spockBalance = function(design, board, player, pos) {
 var heuristic = Dagaz.AI.heuristic;
 
 Dagaz.AI.heuristic = function(ai, design, board, move) {
-  if (move.isSimpleMove()) {
-      var pos    = move.actions[0][0][0];
-      var target = move.actions[0][1][0];
-      var enemy  = board.getPiece(target);
-      if ((enemy !== null) && (enemy.player == board.player) && (enemy.type == 0)) {
-          return -1;
-      }
-      var piece  = board.getPiece(pos);
-      if ((piece !== null) && ((piece.type == 4) || (piece.type == 0))) {
-          var l = 0;
-          if (piece.type == 0) {
-              l = 1;
-          }
-          if (spockBalance(design, board, board.player, target) < l) {
+  if ((move.actions.length > 0) && (move.actions[0][0] !== null) && (move.actions[0][1] !== null)) {
+      var pos = move.actions[0][0][0];
+      var piece = board.getPiece(pos);
+      if ((piece !== null) && (piece.type == 0)) {
+          pos = move.actions[0][1][0];
+          var enemy = board.getPiece(pos);
+          if ((enemy !== null) && (enemy.player != board.player) && (enemy.type == 4)) {
+              return design.price[piece.type];;
+          } else {
               return -1;
           }
       }

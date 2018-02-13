@@ -3,12 +3,13 @@
 var MAXVALUE              = 1000000;
 
 Dagaz.AI.AI_FRAME         = 5000;
-Dagaz.AI.GOAL_DEEP        = 4;
+Dagaz.AI.GOAL_DEEP        = 3;
 Dagaz.AI.MIN_DEEP         = 8;
 Dagaz.AI.MAX_DEEP         = 16;
 Dagaz.AI.EVAL_FACTOR      = 10;
 Dagaz.AI.MAX_WEIGHT       = 1000;
 Dagaz.AI.STALEMATE_RESULT = 1;
+Dagaz.AI.KING_PRICE       = 1000;
 
 function UctAi(params, parent) {
   this.params = params;
@@ -25,23 +26,55 @@ Dagaz.AI.findBot = function(type, params, parent) {
   }
 }
 
+Dagaz.AI.eval = function(design, params, board, player) {
+  var r = 0;
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if (piece !== null) {
+          var v = design.price[piece.type];
+          if (piece.player != player) {
+              v = -v;
+          }
+          r += v;
+      }
+  });
+  return r;
+}
+
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  var r = 1;
+  if ((move.actions.length > 0) && (move.actions[0][0] !== null) && (move.actions[0][1] !== null)) {
+      var pos = move.actions[0][1][0];
+      var piece = board.getPiece(pos);
+      if ((piece !== null) && (piece.player != board.player)) {
+          return design.price[piece.type];;
+      }
+  }
+  return r;
+}
+
+Dagaz.AI.isSafe = function(design, board) {
+  return true;
+}
+
 UctAi.prototype.expand = function(ctx, node) {
   if (_.isUndefined(node.tree)) {
       node.board.moves = Dagaz.AI.generate(ctx, node.board);
-      node.tree = _.map(node.board.moves), function(m) {
+      node.tree = _.map(node.board.moves, function(m) {
            return {
               parent: node,
               board:  node.board.apply(m),
               move:   m,
-              maxmin: 0,
+              cnt:    0,
+              maxmin: null,
               weight: Dagaz.AI.heuristic(this, ctx.design, node.board, m)
            };
       }, this);
       if (node.tree.length == 0) {
            if (node.board.player == ctx.board.player) {
-               node.maxmin = Dagaz.AI.STALEMATE_RESULT * MAXVALUE;
-           } else {
                node.maxmin = -Dagaz.AI.STALEMATE_RESULT * MAXVALUE;
+           } else {
+               node.maxmin = Dagaz.AI.STALEMATE_RESULT * MAXVALUE;
            }
            return;
       }
@@ -50,12 +83,19 @@ UctAi.prototype.expand = function(ctx, node) {
            var g = child.board.checkGoals(ctx.design, ctx.board.player);
            if (g !== null) {
                child.maxmin = g * MAXVALUE;
-               child.all = child.weight;
-               node.all += child.weight;
            }
            return true;
       });
   }
+}
+
+var offset = function(deep) {
+  var r = "";
+  while (deep > 0) {
+      r = r + "  ";
+      deep--;
+  }
+  return r;
 }
 
 UctAi.prototype.minmax = function(ctx, node, deep) {
@@ -64,7 +104,8 @@ UctAi.prototype.minmax = function(ctx, node, deep) {
       this.expand(ctx, node);
       _.each(node.tree, function(child) {
            var r = this.maxmin(ctx, child, deep - 1);
-           if (result > r) {
+           if (r === null) r = 0;
+           if ((result === null) || (result > r)) {
                result = r;
            }
       }, this);
@@ -78,7 +119,8 @@ UctAi.prototype.maxmin = function(ctx, node, deep) {
       this.expand(ctx, node);
       _.each(node.tree, function(child) {
            var r = this.minmax(ctx, child, deep - 1);
-           if (result < r) {
+           if (r === null) r = 0;
+           if ((result === null) || (result < r)) {
                result = r;
            }
       }, this);
@@ -93,40 +135,48 @@ UctAi.prototype.getEval = function(ctx, node) {
   return node.eval;
 }
 
-UctAi.prototype.shedule = function(ctx, node) {
+UctAi.prototype.shedule = function(ctx, childs) {
+  if (childs.length == 0) return null;
+  if (childs.length == 1) return childs[0];
   var all = 0;
-  for (var i = 0; i < node.tree.length; i++) {
-      var child = node.tree[i];
-      if (node.board.player == ctx.board.player) {
-          if (child.maxmin >= MAXVALUE) return child;
-      } else {
-          if (child.maxmin <= -MAXVALUE) return child;
-      }
-      if (child.weight > 0) {
-          all += child.weight;
+  for (var i = 0; i < childs.length; i++) {
+      if (childs[i].weight > 0) {
+          all += childs[i].weight;
       }
   }
   var m = _.random(0, all - 1);
   all = 0;
-  for (var i = 0; i < node.tree.length; i++) {
-      var child = node.tree[i];
-      if (child.weight > 0) {
-          all += child.weight;
+  for (var i = 0; i < childs.length; i++) {
+      if (childs[i].weight > 0) {
+          all += childs[i].weight;
           if (m < all) {
-              return child;
+              return childs[i];
           }
       }
   }
   return null;
 }
 
-UctAi.prototype.isSafe = function(ctx, node) {
-  // TODO:
-
-  return true;
+UctAi.prototype.continue = function(ctx, node) {
+  var positions = [ node.board.lastt ];
+  _.each(ctx.design.allPositions(), function(pos) {
+      var piece = node.board.getPiece(pos);
+      if ((piece !== null) && (piece.player != node.board.player) && (ctx.design.price[piece.type] >= Dagaz.AI.KING_PRICE)) {
+          positions.push(pos);
+      }
+  });
+  var childs = _.filter(node.tree, function(child) {
+      var result = false;
+      _.each(child.move.actions, function(a) {
+          if ((a[0] !== null) && (a[1] !== null) && (_.indexOf(positions, a[1][0]) >= 0)) result = true;
+          if ((a[0] !== null) && (a[1] === null) && (_.indexOf(positions, a[0][0]) >= 0)) result = true;
+      });
+      return result;
+  });
+  return this.shedule(ctx, childs);
 }
 
-var trunc = div(a, b) {
+var div = function(a, b) {
   if (a > 0) {
       return (a / b) | 0;
   } else {
@@ -136,26 +186,46 @@ var trunc = div(a, b) {
 
 UctAi.prototype.simulate = function(ctx, node, eval, deep) {
   this.expand(ctx, node);
+  if ((node.maxmin !== null) && (Math.abs(node.maxmin) >= MAXVALUE)) return node.maxmin;
   if (node.board.player == ctx.board.player) {
-      if (Math.abs(node.maxmin) >= MAXVALUE) return node.maxmin;
-      if ((deep > Dagaz.AI.MAX_DEEP) || ((deep > Dagaz.AI.MIN_DEEP) && this.isSafe(ctx, node)) return this.getEval(ctx, node);
+      if ((deep > Dagaz.AI.MAX_DEEP) || ((deep > Dagaz.AI.MIN_DEEP) && Dagaz.AI.isSafe(ctx.design, node.board))) return this.getEval(ctx, node);
   }
-  var child = this.shedule(ctx, node);
+  var child = null;
+  for (var i = 0; i < node.tree.length; i++) {
+      if (node.board.player == ctx.board.player) {
+          if ((node.tree[i].maxmin !== null) && (node.tree[i].maxmin >= MAXVALUE)) { 
+               child = node.tree[i];
+               break;
+          }
+      } else {
+          if ((node.tree[i].maxmin !== null) && (node.tree[i].maxmin <= -MAXVALUE)) {
+               child = node.tree[i];
+               break;
+          }
+      }
+  }
+  if (child === null) {
+      if (deep == 0) {
+          child = this.shedule(ctx, node.tree);
+      } else {
+          child = this.continue(ctx, node);
+      }
+  }
   if (child === null) return this.getEval(ctx, node);
+  child.cnt++;
   var r = this.simulate(ctx, child, eval, deep + 1);
   var delta = div(r - eval, Dagaz.AI.EVAL_FACTOR);
   if (node.board.player == ctx.board.player) {
-      if (node.maxmin < r) {
-          node.maxmin = r;
+      if ((node.maxmin === null) || (node.maxmin < r)) {
+           node.maxmin = r;
       }
       node.weight += delta;
   } else {
-      if (node.maxmin > r) {
-          node.maxmin = r;
+      if ((node.maxmin === null) || (node.maxmin > r)) {
+           node.maxmin = r;
       }
       node.weight -= delta;
   }
-  node.all += Math.abs(delta);
   if (node.weight < 0) node.weight = 0;
   if (node.weight > Dagaz.AI.MAX_WEIGHT) node.weight = Dagaz.AI.MAX_WEIGHT;
   return r;
@@ -178,7 +248,6 @@ UctAi.prototype.setContext = function(ctx, board) {
   }
   if (_.isUndefined(ctx.current)) {
       ctx.current = ctx;
-      ctx.all = 0;
   }
 }
 
@@ -191,27 +260,37 @@ UctAi.prototype.getMove = function(ctx) {
   this.expand(ctx, ctx.current);
   _.each(ctx.current.tree, function(node) {
        var r = this.minmax(ctx, node, Dagaz.AI.GOAL_DEEP - 1);
-       if (r <= -MAXVALUE) node.weight = 0;
+       if (r === null) return;
+       if (r <= -MAXVALUE) {
+           node.weight = 0;
+           console.log("Bad Move: " + node.move.toString() + ", weight = " + node.weight + ", eval = " + node.maxmin);
+       }
        if (r >= MAXVALUE) {
+           console.log("Best Move: " + node.move.toString() + ", weight = " + node.weight + ", eval = " + node.maxmin);
            result = node;
        }
   }, this);
   ctx.timestamp = Date.now();
   if (result === null) {
       var eval = this.getEval(ctx, ctx.current);
+      var cnt  = 0;
       while (Date.now() - ctx.timestamp < Dagaz.AI.AI_FRAME) {
           this.simulate(ctx, ctx.current, eval, 0);
+          cnt++;
       }
+      console.log("Cnt = " + cnt);
       var maxmin  = null;
       var results = [];
       _.each(ctx.current.tree, function(node) {
+          console.log("Move: " + node.move.toString() + ", weight = " + node.weight + ", eval = " + node.maxmin + ", cnt = " + node.cnt);
           var eval = node.maxmin;
+          if (eval === null) return;
           if ((maxmin === null) || (maxmin < eval)) {
-               console.log("Move: " + node.move.toString() + ", weight = " + node.weight + ", eval = " + node.maxmin);
+//             console.log("Move: " + node.move.toString() + ", weight = " + node.weight + ", eval = " + node.maxmin + ", cnt = " + node.cnt);
                results = [ node ];
                maxmin = eval;
           } else if (maxmin == eval) {
-               console.log("Move: " + node.move.toString() + ", weight = " + node.weight + ", eval = " + node.maxmin);
+//             console.log("Move: " + node.move.toString() + ", weight = " + node.weight + ", eval = " + node.maxmin + ", cnt = " + node.cnt);
                results.push(node);
           }
       });

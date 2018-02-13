@@ -30,9 +30,12 @@
              ("a/b/c/d/e/f/g/h/i/j/k/l/m" (41 0)) ; files
              ("13/12/11/10/9/8/7/6/5/4/3/2/1" (0 41)) ; ranks
          )
-         (directions (n 0 -2) (s 0 2) (e 2 0) (w -2 0))
+         (directions 
+             (n 0 -2) (s 0 2) (e 2 0) (w -2 0)
+             (nw -1 -1) (se 1 1) (sw -1 1) (ne 1 -1)
+         )
      )
-     (symmetry Black (n s) (s n) (w w) (e e))
+     (symmetry Black (n s) (s n) (w w) (e e) (nw nw) (ne ne) (sw sw) (se se))
      (zone (name goal-zone) (players White)
            (positions a13 c13 e13 g13 i13 k13 m13)
      )
@@ -73,4 +76,6 @@
   )
 
   (loss-condition (White Black) (pieces-remaining 0 Man))
+  (win-condition  (White) (absolute-config Man (c13 e13 g13 i13 k13)))
+  (win-condition  (Black) (absolute-config Man (c1 e1 g1 i1 k1)))
 )
