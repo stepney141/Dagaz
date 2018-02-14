@@ -700,8 +700,7 @@
             Black "images/ko/kben.bmp")
      (moves
         (move-type normal-type)
-        (step n) (step s) 
-        (step nw) (step ne)
+        (step n) (step s) (step nw) (step ne)
      )
   )
   (piece

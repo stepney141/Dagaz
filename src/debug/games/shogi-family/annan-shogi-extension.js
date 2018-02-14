@@ -24,8 +24,12 @@ Dagaz.Model.CheckInvariants = function(board) {
                   piece = friend;
               }
           }
-          if ((piece !== null) && (piece.type != move.mode)) {
-              move.failed = true;
+          if (piece !== null) {
+              var t = piece.type;
+              if ((t == 0) || (t >= 10)) t = 10;
+              if (t != move.mode) {
+                  move.failed = true;
+              }
           }
       }
   });
