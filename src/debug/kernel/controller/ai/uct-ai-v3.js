@@ -307,7 +307,7 @@ UctAi.prototype.getMove = function(ctx) {
            node.weight = -1;
            console.log("Bad Move: " + node.move.toString() + ", weight = " + node.weight + ", eval = " + node.maxmin);
        }
-       if (r >= MAXVALUE) {
+       if (node.maxmin >= MAXVALUE) {
            console.log("Best Move: " + node.move.toString() + ", weight = " + node.weight + ", eval = " + node.maxmin);
            result = node;
        }

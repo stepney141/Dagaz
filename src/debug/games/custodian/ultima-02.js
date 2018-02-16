@@ -1,3 +1,5 @@
+Dagaz.Model.WIDTH = 8;
+
 ZRF = {
     JUMP:          0,
     IF:            1,
@@ -25,6 +27,13 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("progressive-levels", "true");
     design.checkVersion("smart-moves", "false");
     design.checkVersion("show-blink", "false");
+    design.checkVersion("ultima-custodian", "true");
+    design.checkVersion("ultima-immobilizer", "true");
+    design.checkVersion("ultima-coordinator", "true");
+    design.checkVersion("ultima-withdrawer", "true");
+    design.checkVersion("ultima-long-leaper", "true");
+    design.checkVersion("ultima-chameleon", "true");
+    design.checkVersion("ultima-goal", "true");
 
     design.addDirection("w");
     design.addDirection("e");
@@ -237,6 +246,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(5, 1, [6, 6], 0);
     design.addMove(5, 1, [3, 3], 0);
     design.addMove(5, 1, [5, 5], 0);
+    design.addMove(5, 2, [], 0);
 
     design.addPiece("Pawn", 6);
     design.addMove(6, 1, [4, 4], 0);

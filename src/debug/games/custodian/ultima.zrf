@@ -110,6 +110,7 @@
      (moves
          (slide n) (slide s) (slide w) (slide e)
          (slide nw) (slide sw) (slide ne) (slide se)
+         (boom)
      )
   )
   (piece
