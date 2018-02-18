@@ -8,6 +8,44 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  return move.actions.length;
+}
+
+var eval = Dagaz.AI.eval;
+
+Dagaz.AI.eval = function(design, params, board, player) {
+  var r = eval(design, params, board, board.player);
+  var cover = board.getCover(design);
+  var cnt = null;
+  _.each(cover, function(list) {
+      var cn = 0;
+      _.each(list, function(pos) {
+          var piece = board.getPiece(pos);
+          if (piece !== null) {
+              if (piece.player == board.player) {
+                  r--;
+              } else {
+                  cn++;
+              }
+          }
+      });
+      if ((cnt === null) || (cnt < cn)) {
+           cnt = cn;
+      }
+  });
+  r += cnt * 3;
+  if (board.player != player) {
+      return -r;
+  } else {
+      return r;
+  }
+}
+
+Dagaz.AI.setContext = function(board) {
+  board.cover = [];
+}
+
 var done = function(design, board, pos, dir, trace, captured) {
   var p = design.navigate(board.player, pos, dir);
   if (p !== null) {

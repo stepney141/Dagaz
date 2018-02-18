@@ -272,6 +272,8 @@ UctAi.prototype.simulate = function(ctx, node, eval, deep) {
   return r;
 }
 
+Dagaz.AI.setContext = function(board) {}
+
 UctAi.prototype.setContext = function(ctx, board) {
   if (this.parent) {
       this.parent.setContext(ctx, board);
@@ -291,6 +293,7 @@ UctAi.prototype.setContext = function(ctx, board) {
       ctx.current = ctx;
       ctx.maxmin  = null;
   }
+  Dagaz.AI.setContext(board);
 }
 
 UctAi.prototype.getMove = function(ctx) {
