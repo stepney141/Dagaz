@@ -78,6 +78,42 @@ Dagaz.AI.eval = function(design, params, board, player) {
   return r;
 }
 
+var drawBar = function(ctx, x, y, height, val) {
+  var h = (height / val.length) | 0;
+  var w = 2;
+  if (h < 2) {
+      h = 2;
+      w = 1;
+  }
+  var last = null;
+  var offset = 0;
+  for (var i = 0; i < val.length; i++) {
+       var isWhite = ((val[i] % 2) == 0);
+       if (inversed) isWhite = !isWhite;
+       if ((last !== null) && (last == val[i])) {
+           ctx.fillStyle = "#000000";
+           ctx.fillRect(x, y + offset - 1, 3 + 2, w);
+       }
+       if (((val[i] / 2) | 0) == 0) {
+           if (isWhite) {
+               ctx.fillStyle = "#FFFFFF";
+           } else {
+               ctx.fillStyle = "#888888";
+           }
+       } else {
+           if (isWhite) {
+               ctx.fillStyle = "#FFFF00";
+           } else {
+               ctx.fillStyle = "#0000FF";
+           }
+       }
+       ctx.fillRect(x, y + offset, 3, h);
+       offset += h; height -= h;
+       if (height < h) break;
+       last = val[i];
+  }
+}
+
 Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
   var val = null;
   if (model) {
@@ -103,9 +139,10 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
           ctx.translate(x + frame.dx / 2, y + frame.dy / 2); 
           ctx.scale(0.95, 0.95);
           ctx.translate(-x - frame.dx /2, -y - frame.dy /2);
-          ctx.drawImage(back.h, x - 2, y + 2, piece.dx, piece.dy);
+          ctx.drawImage(back.h, x + 1, y + 2, piece.dx, piece.dy);
+          drawBar(ctx, x + 42, y - 2, 46, val);
           ctx.restore();
-          x += 5;
+          x -= 5;
           y -= 5;
       }
   }
