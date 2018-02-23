@@ -1,5 +1,7 @@
 (function() {
 
+Dagaz.Model.WIDTH  = 14;
+
 Dagaz.View.SHIFT_X = 2;
 Dagaz.View.SHIFT_Y = 1;
 
@@ -104,15 +106,42 @@ Dagaz.Model.CheckInvariants = function(board) {
       if (move.isSimpleMove()) {
           var piece  = board.getPiece(move.actions[0][0][0]);
           var target = board.getPiece(move.actions[0][1][0]);
-          if ((piece !== null) && (target !== null)) {
+          var dx = Dagaz.Model.getX(move.actions[0][1][0]) - Dagaz.Model.getX(move.actions[0][0][0]);
+          var dy = Dagaz.Model.getY(move.actions[0][1][0]) - Dagaz.Model.getY(move.actions[0][0][0]);
+          var d  = Math.max(Math.abs(dx), Math.abs(dy));
+          if (piece !== null) {
                var stack = piece.getValue(0);
-               if (stack === null) stack = "";
-               stack = stack + target.player;
-               var tail = target.getValue(0);
-               if (tail !== null) {
-                   stack = stack + tail;
+               var len = 0;
+               if (stack !== null) {
+                   len = stack.length;
                }
-               stack = prepareStack(design, board, board.player, stack, move);
+               if (d != len + 1) {
+                   if ((d >= len + 1) || (stack[d - 1] != board.player)) {
+                       move.failed = true;
+                       return;
+                   }
+                   if (len >= d) {
+                       var p = Dagaz.Model.createPiece(0, board.player);
+                       if (len > d) {
+                           p = p.setValue(0, stack.substr(d, len - d));
+                       }
+                       move.dropPiece(move.actions[0][0][0], p);
+                   }
+                   if (len >= d - 1) {
+                       stack = stack.substr(0, d - 1);
+                   } else {
+                       stack = null;
+                   }
+               }
+               if (target !== null) {
+                   if (stack === null) stack = "";
+                   stack = stack + target.player;
+                   var tail = target.getValue(0);
+                   if (tail !== null) {
+                       stack = stack + tail;
+                   }
+                   stack = prepareStack(design, board, board.player, stack, move);
+               }
                piece = piece.setValue(0, stack);
                move.actions[0][2] = [ piece ];
           }
