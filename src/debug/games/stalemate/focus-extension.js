@@ -65,8 +65,8 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
           ctx.drawImage(back.h, x + 1, y + 2, piece.dx, piece.dy);
           drawBar(ctx, x + 42, y - 2, 46, val);
           ctx.restore();
-          x -= 5;
-          y -= 5;
+          x -= 4;
+          y -= 4;
       }
   } else {
       x += 2;
@@ -109,7 +109,7 @@ Dagaz.Model.CheckInvariants = function(board) {
           var dx = Dagaz.Model.getX(move.actions[0][1][0]) - Dagaz.Model.getX(move.actions[0][0][0]);
           var dy = Dagaz.Model.getY(move.actions[0][1][0]) - Dagaz.Model.getY(move.actions[0][0][0]);
           var d  = Math.max(Math.abs(dx), Math.abs(dy));
-          if (piece !== null) {
+          if ((piece !== null) && design.inZone(0, board.player, move.actions[0][0][0])) {
                var stack = piece.getValue(0);
                var len = 0;
                if (stack !== null) {
