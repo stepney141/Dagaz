@@ -1,3 +1,15 @@
+(define init-drop (
+  (verify enemy?)
+  mark $1 (verify friend?) back
+  add
+))
+
+(define init-capture (
+  (verify enemy?)
+  mark $1 (verify not-empty?) back
+  capture add
+))
+
 (define slide (
   (verify (in-zone? board-zone))
   $1 (while (on-board? $1) add $1)
@@ -23,6 +35,7 @@
 
   (players    White Black)
   (turn-order White Black)
+  (move-priorities init-type normal-type)
 
   (board
     (image "images/focus/board.bmp")
@@ -67,16 +80,48 @@
      (name Man)
      (image White "images/focus/white.bmp"
             Black "images/focus/black.bmp")
+     (drops
+         (move-type init-type)
+         (init-drop sm)
+     )
      (moves
+         (move-type normal-type)
          (slide n) (slide w) (slide s) (slide e)
          (drop-piece nx)
      )
   )
 
   (board-setup
-    (White (Man b2 c2 b4 c4 b6 c6 d3 e3 d5 e5 d7 e7 f2 g2 f4 g4 f6 g6))
-    (Black (Man b3 c3 b5 c5 b7 c7 d2 e2 d4 e4 d6 e6 f3 g3 f5 g5 f7 g7))
+    (White (Man b2 c2 b4 c4 b6 c6 d3 e3 d5 e5 d7 e7 f2 g2 f4 g4 f6 g6 off 1))
+    (Black (Man b3 c3 b5 c5 b7 c7 d2 e2 d4 e4 d6 e6 f3 g3 f5 g5 f7 g7 off 1))
   )
 
   (loss-condition (White Black) stalemated)
+)
+
+(variant
+  (title "Focus (variant)")
+  (piece
+     (name Man)
+     (image White "images/focus/white.bmp"
+            Black "images/focus/black.bmp")
+     (moves
+         (move-type normal-type)
+         (slide n) (slide w) (slide s) (slide e)
+         (drop-piece nx)
+     )
+  )
+  (piece
+     (name None)
+     (image White "images/focus/none.bmp"
+            Black "images/focus/none.bmp")
+     (drops
+         (move-type init-type)
+         (init-capture sm)
+     )
+  )
+  (board-setup
+    (White (Man b2 c2 b4 c4 b6 c6 d3 e3 d5 e5 d7 e7 f2 g2 f4 g4 f6 g6) (None off 1))
+    (Black (Man b3 c3 b5 c5 b7 c7 d2 e2 d4 e4 d6 e6 f3 g3 f5 g5 f7 g7) (None off 1))
+  )
 )
