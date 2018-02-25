@@ -1,3 +1,7 @@
+(define step (
+  $1 add
+))
+
 (game
   (title "Toguz Kumalak")
 
@@ -8,7 +12,7 @@
 
   (option "animate captures"  false)
   (option "smart moves"       true)
-  (option "pass turn"         true)
+  (option "pass turn"         forced)
 
   (players South North)
   (turn-order South North)
@@ -29,12 +33,17 @@
            ("2/1" (0 128)) ; ranks
          )
      )
+     (links nx 
+         (a1 b1) (b1 c1) (c1 d1) (d1 e1) (e1 f1) (f1 g1) (g1 h1) (h1 i1) (i1 i2)
+         (i2 h2) (h2 g2) (g2 f2) (f2 e2) (e2 d2) (d2 c2) (c2 b2) (b2 a2) (a2 a1)
+     )
   )
 
   (piece
      (name Seed)
      (image South "images/piece.bmp"
             North "images/piece.bmp")
+     (moves (step nx))
   )
   (piece
      (name Kazan)
