@@ -41,18 +41,18 @@
 
   (piece
      (name Seed)
-     (image South "images/piece.bmp"
-            North "images/piece.bmp")
+     (image South "images/seed.bmp"
+            North "images/seed.bmp")
      (moves (step nx))
   )
   (piece
-     (name Kazan)
-     (image South "images/kazan.bmp"
-            North "images/kazan.bmp")
+     (name Tuzdyk)
+     (image South "images/tuzdyk.bmp"
+            North "images/tuzdyk.bmp")
   )
 
   (board-setup
-    (South (Seed a1 b1 c1 d1 e1 f1 g1 h1 i1) (Kazan X1))
-    (North (Seed a2 b2 c2 d2 e2 f2 g2 h2 i2) (Kazan X2))
+    (South (Seed a1 b1 c1 d1 e1 f1 g1 h1 i1))
+    (North (Seed a2 b2 c2 d2 e2 f2 g2 h2 i2))
   )
 )
