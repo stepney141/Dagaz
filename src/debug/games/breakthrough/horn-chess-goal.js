@@ -43,7 +43,7 @@ Dagaz.AI.eval = function(design, params, board, player) {
   if (white !== null) {
       r -= white;
   }
-  if (board.player == 1) {
+  if (player == 1) {
       r = -r;
   }
   return r;
