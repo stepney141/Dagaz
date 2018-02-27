@@ -1,6 +1,9 @@
 (function() {
 
-var MAXVALUE = 100000;
+var MAXVAL            = 100000;
+
+Dagaz.AI.AI_FRAME     = 100000;
+Dagaz.AI.MIN_DEEP     = 3;
 
 var checkVersion = Dagaz.Model.checkVersion;
 
@@ -10,32 +13,46 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var eval = Dagaz.AI.eval;
-
 Dagaz.AI.eval = function(design, params, board, player) {
-  if (board.player == 1) {
-      var n = 0;  
-      for (var pos = 0; pos < design.positions.length - 3; pos++) {
-           var piece = board.getPiece(pos);
-           if (piece === null) {
-               n = 0;
-               continue;
-           }
-           if (piece.player == 1) {
-               n++;
-           } else {
-               if (n == 2) {
-                   if (board.player != player) {
-                       return MAXVALUE;
-                   } else {
-                       return -MAXVALUE;
-                   }
-               }
-               break;
-           }
+  var r = 0;
+  var white = null;
+  var black = [];
+  for (var pos = 0; pos < design.positions.length - 3; pos++) {
+      var piece = board.getPiece(pos);
+      if (piece !== null) {
+          if (piece.player == 1) {
+              if (white === null) {
+                  black.push(pos);
+              } else {
+                  r += MAXVAL / 2;
+              }
+          } else {
+              white = pos;
+          }
       }
   }
-  return eval(design, params, board, player);
+  if (black.length == 2) {
+      if ((black[0] + 1 == black[1]) && (black[1] + 1 == white)) {
+          if (board.player == 1) {
+              r = MAXVAL;
+          } else {
+              r = -MAXVAL;
+          }
+      }
+  }
+  if (white !== null) {
+      r -= white;
+  }
+  if (board.player == 1) {
+      r = -r;
+  }
+  return r;
+}
+
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  var b = board.apply(move);
+  return Dagaz.AI.eval(design, ai.params, board, board.player) -
+         Dagaz.AI.eval(design, ai.params, b, board.player);
 }
 
 })();
