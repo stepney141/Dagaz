@@ -77,15 +77,26 @@ AbAi.prototype.eval = function(ctx, node) {
   return node.eval;
 }
 
+AbAi.prototype.move = function(node) {
+  if (!_.isUndefined(node.move)) {
+      return node.move.toString();
+  } else {
+      return "root";
+  }
+}
+
 AbAi.prototype.ab = function(ctx, node, a, b, deep) {
   node.loss = 0;
   this.expand(ctx, node);
   if (node.goal !== null) {
-      return node.goal * MAXVALUE;
+      console.log("Goal: " + offset(Dagaz.AI.MIN_DEEP - deep) + this.move(node) + ", weight = " + node.h + ", eval = " + this.eval(ctx, node));
+      return -node.goal * MAXVALUE;
   }
   if (deep <= 0) {
-      return this.eval(ctx, node);
+      console.log("Eval: " + offset(Dagaz.AI.MIN_DEEP - deep) + this.move(node) + ", weight = " + node.h + ", eval = " + this.eval(ctx, node));
+      return -this.eval(ctx, node);
   }
+  console.log("AbAi: " + offset(Dagaz.AI.MIN_DEEP - deep) + this.move(node) + ", weight = " + node.h + ", eval = " + this.eval(ctx, node));
   node.ix = 0;
   node.m  = a;
   while ((node.ix < node.cache.length) && (node.m <= b) && (Date.now() - ctx.timestamp < this.params.AI_FRAME)) { // m <= b
@@ -101,6 +112,7 @@ AbAi.prototype.ab = function(ctx, node, a, b, deep) {
         }
       node.ix++;
   }
+  console.log("MnMx: " + offset(Dagaz.AI.MIN_DEEP - deep) + node.m);
   return node.m;
 }
 
@@ -122,11 +134,11 @@ AbAi.prototype.dump = function(ctx, node, deep) {
   if (!deep) {
        deep = 0;
   }
-  if (deep > 3) return;
+  if (deep > 0) return;
   if (_.isUndefined(node.cache)) return;
   for (var i = 0; i < node.cache.length; i++) {
-       var n = node.cache[i];
-       console.log("Dump: " + offset(deep) + n.move.toString() + ", goal = " + n.goal + ", win = " + n.win + ", weight = " + n.h + ", eval = " + n.m);
+       var n = node.cache[i];       
+       console.log("Dump: " + offset(deep) + n.move.toString() + ", weight = " + n.h + ", eval = " + this.eval(ctx, n));
        if (node.cache) {
            this.dump(ctx, n, deep + 1);
        }
@@ -149,6 +161,8 @@ AbAi.prototype.getMove = function(ctx) {
       return { done: true, ai: "nothing" };
   }
   this.expand(ctx, ctx);
+//console.log("Eval: " + this.eval(ctx, ctx));
+//this.dump(ctx, ctx);
   if (ctx.best === null) {
       for (var i = 0; i < ctx.cache.length; i++) {
            this.expand(ctx, ctx.cache[i]);
@@ -156,7 +170,6 @@ AbAi.prototype.getMove = function(ctx) {
       ctx.timestamp = Date.now();
       this.ab(ctx, ctx, -MAXVALUE, MAXVALUE, this.params.MIN_DEEP);
   }
-  this.dump(ctx, ctx);
   if (ctx.best !== null) {
       return {
            done: true,
