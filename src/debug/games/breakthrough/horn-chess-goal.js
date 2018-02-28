@@ -31,6 +31,9 @@ Dagaz.AI.eval = function(design, params, board, player) {
           }
       }
   }
+  if (white !== null) {
+      r += white;
+  }
   if (black.length == 2) {
       if ((black[0] + 1 == black[1]) && (black[1] + 1 == white)) {
           if (board.player == 1) {
@@ -38,21 +41,19 @@ Dagaz.AI.eval = function(design, params, board, player) {
           } else {
               r = -MAXVAL;
           }
+          if (player == 1) {
+              r = -r;
+          }
       }
-  }
-  if (white !== null) {
-      r -= white;
-  }
-  if (player == 1) {
-      r = -r;
   }
   return r;
 }
 
 Dagaz.AI.heuristic = function(ai, design, board, move) {
   var b = board.apply(move);
-  return Dagaz.AI.eval(design, ai.params, board, board.player) -
-         Dagaz.AI.eval(design, ai.params, b, board.player);
+  return design.positions.length +
+         Dagaz.AI.eval(design, ai.params, b, board.player) -
+         Dagaz.AI.eval(design, ai.params, board, board.player);
 }
 
 })();
