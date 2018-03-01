@@ -133,10 +133,10 @@ Dagaz.Model.GetCover = function(design, board) {
                if (neighbors.length > 1) {
                    var captured = [];
                    if ((_.indexOf(attackers, 1) >= 0) && (_.indexOf(neighbors, 2) >= 0)) {
-                       checkCapturing(design, board, pos, 1, 2, captured);
+                       checkCapturing(design, board, pos, 1, captured);
                    }
                    if ((_.indexOf(attackers, 2) >= 0) && (_.indexOf(neighbors, 1) >= 0)) {
-                       checkCapturing(design, board, pos, 2, 1, captured);
+                       checkCapturing(design, board, pos, 2, captured);
                    }
                    if (captured.length > 0) {
                        board.cover[pos] = _.uniq(captured);
