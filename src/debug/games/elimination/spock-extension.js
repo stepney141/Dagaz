@@ -1,7 +1,7 @@
 (function() {
 
-Dagaz.AI.AI_FRAME = 3000;
-Dagaz.AI.isForced = Dagaz.AI.isChessForced;
+Dagaz.AI.AI_FRAME         = 5000;
+Dagaz.AI.MIN_DEEP         = 5;
 
 var checkVersion = Dagaz.Model.checkVersion;
 
@@ -140,6 +140,47 @@ var spockBalance = function(design, board, player, pos) {
   r += findSpock(design, board, player, pos, w, sw);
   r += findSpock(design, board, player, pos, e, ne);
   r += findSpock(design, board, player, pos, e, se);
+  return r;
+}
+
+Dagaz.AI.eval = function(design, params, board, player) {
+  var r = 0;
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if (piece !== null) {
+          var v = design.price[piece.type];
+          if (piece.player != player) {
+              v = -v;
+          }
+          r += v;
+      }
+  });
+  return r;
+}
+
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  var r = 1;
+  _.each(move.actions, function(a) {
+      if ((a[0] !== null) && (a[1] !== null)) {
+           var piece = board.getPiece(a[0][0]);
+           var enemy = board.getPiece(a[1][0]);
+           if ((enemy !== null) && (enemy.player == board.player) && (enemy.type == 0)) {
+               return -1;
+           }
+           if ((piece !== null) && ((piece.type == 4) || (piece.type == 0))) {
+               var l = 0;
+               if (piece.type == 0) {
+                   l = 1;
+               }
+               if (spockBalance(design, board, board.player, a[1][0]) < l) {
+                   return -1;
+               }
+           }
+           if (enemy !== null) {
+               r += design.price[enemy.type];
+           }
+      }
+  });
   return r;
 }
 
