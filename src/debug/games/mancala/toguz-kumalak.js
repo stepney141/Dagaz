@@ -26,30 +26,34 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-blink", "false");
 
     design.addDirection("nx");
+    design.addDirection("sm");
 
-    design.addPlayer("South", [0]);
-    design.addPlayer("North", [0]);
+    design.addPlayer("South", [0, 1]);
+    design.addPlayer("North", [0, 1]);
 
-    design.addPosition("a2", [9]);
-    design.addPosition("b2", [-1]);
-    design.addPosition("c2", [-1]);
-    design.addPosition("d2", [-1]);
-    design.addPosition("e2", [-1]);
-    design.addPosition("f2", [-1]);
-    design.addPosition("g2", [-1]);
-    design.addPosition("h2", [-1]);
-    design.addPosition("i2", [-1]);
-    design.addPosition("a1", [1]);
-    design.addPosition("b1", [1]);
-    design.addPosition("c1", [1]);
-    design.addPosition("d1", [1]);
-    design.addPosition("e1", [1]);
-    design.addPosition("f1", [1]);
-    design.addPosition("g1", [1]);
-    design.addPosition("h1", [1]);
-    design.addPosition("i1", [-9]);
-    design.addPosition("2", [0]);
-    design.addPosition("1", [0]);
+    design.addPosition("a2", [9, 17]);
+    design.addPosition("b2", [-1, 15]);
+    design.addPosition("c2", [-1, 13]);
+    design.addPosition("d2", [-1, 11]);
+    design.addPosition("e2", [-1, 9]);
+    design.addPosition("f2", [-1, 7]);
+    design.addPosition("g2", [-1, 5]);
+    design.addPosition("h2", [-1, 3]);
+    design.addPosition("i2", [-1, 1]);
+    design.addPosition("a1", [1, -1]);
+    design.addPosition("b1", [1, -3]);
+    design.addPosition("c1", [1, -5]);
+    design.addPosition("d1", [1, -7]);
+    design.addPosition("e1", [1, -9]);
+    design.addPosition("f1", [1, -11]);
+    design.addPosition("g1", [1, -13]);
+    design.addPosition("h1", [1, -15]);
+    design.addPosition("i1", [-9, -17]);
+    design.addPosition("2", [0, 1]);
+    design.addPosition("1", [0, 1]);
+
+    design.addZone("home", 1, [9, 10, 11, 12, 13, 14, 15, 16, 17]);
+    design.addZone("home", 2, [0, 1, 2, 3, 4, 5, 6, 7, 8]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
@@ -61,6 +65,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 0, [0], 0);
 
     design.addPiece("Tuzdyk", 1);
+
+    design.addPiece("Kazan", 2);
 
     design.setup("South", "Seed", 9);
     design.setup("South", "Seed", 10);
@@ -88,25 +94,27 @@ Dagaz.View.configure = function(view) {
     view.defPiece("NorthSeed", "North Seed");
     view.defPiece("SouthTuzdyk", "South Tuzdyk");
     view.defPiece("NorthTuzdyk", "North Tuzdyk");
+    view.defPiece("SouthKazan", "South Kazan");
+    view.defPiece("NorthKazan", "North Kazan");
  
     view.defPosition("a2", 4, 9, 70, 270);
-    view.defPosition("b2", 74, 9, 70, 270);
-    view.defPosition("c2", 144, 9, 70, 270);
-    view.defPosition("d2", 214, 9, 70, 270);
-    view.defPosition("e2", 284, 9, 70, 270);
-    view.defPosition("f2", 354, 9, 70, 270);
-    view.defPosition("g2", 424, 9, 70, 270);
-    view.defPosition("h2", 494, 9, 70, 270);
-    view.defPosition("i2", 564, 9, 70, 270);
+    view.defPosition("b2", 75, 9, 70, 270);
+    view.defPosition("c2", 146, 9, 70, 270);
+    view.defPosition("d2", 217, 9, 70, 270);
+    view.defPosition("e2", 288, 9, 70, 270);
+    view.defPosition("f2", 359, 9, 70, 270);
+    view.defPosition("g2", 430, 9, 70, 270);
+    view.defPosition("h2", 501, 9, 70, 270);
+    view.defPosition("i2", 572, 9, 70, 270);
     view.defPosition("a1", 4, 543, 70, 270);
-    view.defPosition("b1", 74, 543, 70, 270);
-    view.defPosition("c1", 144, 543, 70, 270);
-    view.defPosition("d1", 214, 543, 70, 270);
-    view.defPosition("e1", 284, 543, 70, 270);
-    view.defPosition("f1", 354, 543, 70, 270);
-    view.defPosition("g1", 424, 543, 70, 270);
-    view.defPosition("h1", 494, 543, 70, 270);
-    view.defPosition("i1", 564, 543, 70, 270);
-    view.defPosition("2", 8, 288, 620, 120);
-    view.defPosition("1", 8, 416, 620, 120);
+    view.defPosition("b1", 75, 543, 70, 270);
+    view.defPosition("c1", 146, 543, 70, 270);
+    view.defPosition("d1", 217, 543, 70, 270);
+    view.defPosition("e1", 288, 543, 70, 270);
+    view.defPosition("f1", 359, 543, 70, 270);
+    view.defPosition("g1", 430, 543, 70, 270);
+    view.defPosition("h1", 501, 543, 70, 270);
+    view.defPosition("i1", 572, 543, 70, 270);
+    view.defPosition("2", 8, 288, 628, 120);
+    view.defPosition("1", 8, 416, 628, 120);
 }

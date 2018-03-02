@@ -22,20 +22,27 @@
      (grid
          (start-rectangle 4 9 74 279)
          (dimensions
-           ("a/b/c/d/e/f/g/h/i" (70 0)) ; files
+           ("a/b/c/d/e/f/g/h/i" (71 0)) ; files
            ("2/1" (0 534)) ; ranks
          )
      )
      (grid
-         (start-rectangle 8 288 628 408)
+         (start-rectangle 8 288 636 408)
          (dimensions
-           ("X" (620 0)) ; files
+           ("X" (628 0)) ; files
            ("2/1" (0 128)) ; ranks
          )
      )
      (links nx 
          (a1 b1) (b1 c1) (c1 d1) (d1 e1) (e1 f1) (f1 g1) (g1 h1) (h1 i1) (i1 i2)
          (i2 h2) (h2 g2) (g2 f2) (f2 e2) (e2 d2) (d2 c2) (c2 b2) (b2 a2) (a2 a1)
+     )
+     (links sm (a2 i1) (i1 a2) (b2 h1) (h1 b2) (c2 g1) (g1 c2) (d2 f1) (f1 d2) (e2 e1) (e1 e2) (f2 d1) (d1 f2) (g2 c1) (c1 g2) (h2 b1) (b1 h2) (i2 a1) (a1 i2))
+     (zone (name home) (players North)
+           (positions a2 b2 c2 d2 e2 f2 g2 h2 i2)
+     )
+     (zone (name home) (players South)
+           (positions a1 b1 c1 d1 e1 f1 g1 h1 i1)
      )
   )
 
@@ -49,6 +56,11 @@
      (name Tuzdyk)
      (image South "images/tuzdyk.bmp"
             North "images/tuzdyk.bmp")
+  )
+  (piece
+     (name Kazan)
+     (image South "images/seed.bmp"
+            North "images/seed.bmp")
   )
 
   (board-setup
