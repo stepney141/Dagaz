@@ -4,6 +4,7 @@ var MAXVALUE          = 1000000;
 
 Dagaz.AI.AI_FRAME     = 3000;
 Dagaz.AI.MIN_DEEP     = 2;
+Dagaz.AI.NOISE_FACTOR = 0;
 Dagaz.AI.NO_MOVE_GOAL = -1;
 Dagaz.AI.USE_COVER    = false;
 
@@ -15,6 +16,9 @@ function AbAi(params, parent) {
   }
   if (_.isUndefined(this.params.MIN_DEEP)) {
       this.params.MIN_DEEP = Dagaz.AI.MIN_DEEP;
+  }
+  if (_.isUndefined(this.params.NOISE_FACTOR)) {
+      this.params.NOISE_FACTOR = Dagaz.AI.NOISE_FACTOR;
   }
 }
 
@@ -76,6 +80,12 @@ AbAi.prototype.expand = function(ctx, node) {
        .filter(function(n) {
            return n.h >= 0;
         }).value();
+      if (this.params.NOISE_FACTOR > 1) {
+           _.each(node.cache, function(n) {
+              n.h *= this.params.NOISE_FACTOR;
+              n.h += _.random(0, this.params.NOISE_FACTOR - 1);
+           }, this);
+      }
       node.cache = _.sortBy(node.cache, function(n) {
            return -n.h;
       });
@@ -178,6 +188,32 @@ AbAi.prototype.dump = function(ctx, node, deep) {
   }
 }
 
+AbAi.prototype.changeCache = function(ctx, board) {
+  if (!_.isUndefined(ctx.cache) && (board.zSign != 0)) {
+      for (var i = 0; i < ctx.cache.length - 1; i++) {
+           if ((!_.isUndefined(ctx.cache[i].board)) && (ctx.cache[i].board.zSign == board.zSign)) {
+               if (!_.isUndefined(board.move)) {
+                   if (board.move.toString() != ctx.cache[i].move.toString()) continue;
+               }
+               if (!_.isUndefined(ctx.cache[i].cache)) {
+                   console.log("Cache found: " + ctx.cache[i].move.toString());
+                   ctx.win   = ctx.cache[i].win;
+                   ctx.board = ctx.cache[i].board;
+                   ctx.cache = ctx.cache[i].cache;
+                   return;
+               }
+           }
+      }
+  }
+  delete ctx.cache;
+}
+
+AbAi.prototype.setCache = function(ctx, ix) {
+  ctx.win   = ctx.cache[ix].win;
+  ctx.board = ctx.cache[ix].board;
+  ctx.cache = ctx.cache[ix].cache;
+}
+
 Dagaz.AI.setContext = function(board) {}
 
 AbAi.prototype.setContext = function(ctx, board) {
@@ -188,7 +224,7 @@ AbAi.prototype.setContext = function(ctx, board) {
   ctx.goal      = null;
   ctx.board     = board;
   ctx.timestamp = Date.now();
-  delete ctx.cache;
+  this.changeCache(ctx, board);
 }
 
 AbAi.prototype.getMove = function(ctx) {
@@ -200,19 +236,21 @@ AbAi.prototype.getMove = function(ctx) {
 //console.log("Eval: " + this.eval(ctx, ctx));
 //this.dump(ctx, ctx);
   if (ctx.best === null) {
-      for (var i = 0; i < ctx.cache.length; i++) {
+/*    for (var i = 0; i < ctx.cache.length; i++) {
            this.expand(ctx, ctx.cache[i]);
-      }
+      } */
       ctx.timestamp = Date.now();
       this.ab(ctx, ctx, -MAXVALUE, MAXVALUE, this.params.MIN_DEEP);
   }
   if (ctx.best !== null) {
-      return {
+      var r = {
            done: true,
            move: ctx.cache[ctx.best].move,
            time: Date.now() - ctx.timestamp,
            ai:  "ab"
       };
+      this.setCache(ctx, ctx.best);
+      return r;
   } else {
       delete ctx.cache;
   }
