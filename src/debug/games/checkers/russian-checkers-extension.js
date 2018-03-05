@@ -1,8 +1,7 @@
 (function() {
 
-Dagaz.AI.AI_FRAME      = 2000;
-Dagaz.AI.getForcedMove = Dagaz.AI.getCheckersForcedMove;
-Dagaz.AI.isForced      = Dagaz.AI.isCheckersForced;
+Dagaz.AI.AI_FRAME      = 4000;
+Dagaz.AI.MIN_DEEP      = 6;
 
 var strictMode = false;
 
@@ -25,16 +24,30 @@ var isAttacked = function(design, board, pos, empty, dir, opposite) {
 }
 
 Dagaz.AI.heuristic = function(ai, design, board, move) {
-  if ((move.actions.length == 1) && (move.actions[0][0] !== null) && (move.actions[0][1] !== null)) {
+  var s = null;
+  var d = null;
+  var p = null;
+  _.each(move.actions, function(a) {
+      if ((a[0] !== null) && (a[1] !== null)) {
+          if (s === null) s = a[0][0];
+          d = a[1][0];
+          if (a[2] !== null) p = a[2][0];
+      }
+  });
+  if (p.type > 0) return 10;
+  if ((s !== null) && (d !== null)) {
       var nw = design.getDirection("nw"); var sw = design.getDirection("sw");
       var ne = design.getDirection("ne"); var se = design.getDirection("se");
-      var sr = move.actions[0][0][0];
-      var ds = move.actions[0][1][0];
-      if (isAttacked(design, board, ds, sr, nw, se) ||
-          isAttacked(design, board, ds, sr, ne, sw) ||
-          isAttacked(design, board, ds, sr, se, nw) ||
-          isAttacked(design, board, ds, sr, sw, ne)) {
-          return 3;
+      var cn = 0;
+      if (isAttacked(design, board, d, s, nw, se)) cn++;
+      if (isAttacked(design, board, d, s, ne, sw)) cn++;
+      if (isAttacked(design, board, d, s, sw, ne)) cn++;
+      if (isAttacked(design, board, d, s, se, nw)) cn++;
+      if (move.actions > 1) {
+          if (cn == 0) return 2;
+      } else {
+          if (cn == 1) return 3;
+          return 2;
       }
   }
   return 1;
