@@ -102,7 +102,29 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
+  var cnt = 0;
+  _.each(design.allPositions(), function(pos) {
+      if (board.getPiece(pos) !== null) {
+          cnt++;
+      }
+  });
+  console.log("Cnt = " + cnt);
   _.each(board.moves, function(move) {
+      var isCaptured = false;
+      _.each(move.actions, function(a) {
+           if ((a[0] !== null) && (a[1] === null)) {
+               isCaptured = true;
+           }
+      });
+      if (isCaptured) {
+          if (cnt <= 34) {
+              move.failed = true;
+          }
+      } else {
+          if (cnt > 34) {
+              move.failed = true;
+          }
+      }
       if (move.isSimpleMove()) {
           var piece  = board.getPiece(move.actions[0][0][0]);
           var target = board.getPiece(move.actions[0][1][0]);

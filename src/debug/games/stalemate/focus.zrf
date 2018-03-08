@@ -1,3 +1,9 @@
+(define capture-piece (
+  (verify enemy?)
+  mark $1 (verify not-empty?) back
+  capture add
+))
+
 (define init-drop (
   (verify enemy?)
   mark $1 (verify friend?) back
@@ -11,12 +17,14 @@
 ))
 
 (define slide (
+  (verify friend?)
   (verify (in-zone? board-zone))
   $1 (while (on-board? $1) add $1)
   add
 ))
 
 (define drop-piece (
+  (verify friend?)
   (verify (not-in-zone? board-zone))
   a1 (while (on-board? $1) $1 (if empty? add))
 ))
@@ -80,14 +88,12 @@
      (name Man)
      (image White "images/focus/white.bmp"
             Black "images/focus/black.bmp")
-     (drops
-         (move-type init-type)
-         (init-drop sm)
-     )
      (moves
          (move-type normal-type)
          (slide n) (slide w) (slide s) (slide e)
          (drop-piece nx)
+         (move-type init-type)
+         (capture-piece sm)
      )
   )
 
