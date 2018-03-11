@@ -19,12 +19,12 @@
   (turn-order Black White)
 
   (board
-    (image "images/jarmo/board.bmp")
+    (image "images/jarmo/jarmo.bmp")
     (grid
-      (start-rectangle 11 10 56 55)
+      (start-rectangle 5 7 50 52)
       (dimensions
-        ("a/b/c/d/e" (62 0)) ; files
-        ("5/4/3/2/1" (0 62)) ; ranks
+        ("a/b/c/d/e" (57 0)) ; files
+        ("5/4/3/2/1" (0 57)) ; ranks
       )
     )
     (zone (name goal-zone) (players Black)
