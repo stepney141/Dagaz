@@ -62,6 +62,7 @@ var checkStep = function(design, board, player, pos, d, hia) {
   var p = design.navigate(player, pos, d);
   if (p === null) return false;
   if (board.getPiece(p) !== null) return false;
+  if (checkStop(design, board, player, p, hia)) return false;
   p = design.navigate(player, p, d);
   if (p === null) return false;
   var piece = board.getPiece(p);
