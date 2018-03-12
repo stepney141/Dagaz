@@ -1,11 +1,11 @@
 <html>
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Omega Chess</title>
+<title>Hiashatar</title>
 </head>
 <body>
 
-<img id="Board" style="display:none" src="images/omega.png">
+<img id="Board" style="display:none" src="images/10x10.png">
 <img id="WhitePawn" style="display:none" src="images/wpawn.png">
 <img id="BlackPawn" style="display:none" src="images/bpawn.png">
 <img id="WhiteRook" style="display:none" src="images/wrook.png">
@@ -16,17 +16,15 @@
 <img id="BlackBishop" style="display:none" src="images/bbishop.png">
 <img id="WhiteQueen" style="display:none" src="images/wqueen.png">
 <img id="BlackQueen" style="display:none" src="images/bqueen.png">
+<img id="WhiteHia" style="display:none" src="images/wpaladin.png">
+<img id="BlackHia" style="display:none" src="images/bpaladin.png">
 <img id="WhiteKing" style="display:none" src="images/wking.png">
 <img id="BlackKing" style="display:none" src="images/bking.png">
-<img id="WhiteChampion" style="display:none" src="images/wpaladin.png">
-<img id="BlackChampion" style="display:none" src="images/bpaladin.png">
-<img id="WhiteWizard" style="display:none" src="images/wmoon.png">
-<img id="BlackWizard" style="display:none" src="images/bmoon.png">
 
 <table style="margin:auto; font-family:sans-serif; font-size:14px" id="Table">
-<tr style="height:654px; vertical-align:top">
-<td id="CanvasCell" style="width:654px">
-<canvas id="Canvas" width="654" height="654" style="cursor:default">Broken canvas...</canvas>
+<tr style="height:504px; vertical-align:top">
+<td id="CanvasCell" style="width:502px">
+<canvas id="Canvas" width="502" height="504" style="cursor:default">Broken canvas...</canvas>
 </td><td style="width:300px;">
 <div style="height:510px; overflow:auto" id="ScrollDiv">
 <img id="GlyphImage"><p id="HelpText"></p>
@@ -53,8 +51,7 @@
 <script src="../../kernel/model/zobrist.js"></script>
 <script src="../../kernel/view/2d/2d-view-v2.js"></script>
 <script src="../../kernel/controller/utils/move-list-v2.js"></script>
-<script src="omega-chess-invariant.js"></script>
-<script src="omega-chess.js"></script>
+<script src="hiashatar.js"></script>
 <script src="../../kernel/controller/app-v2.js"></script>
 
 </body>
