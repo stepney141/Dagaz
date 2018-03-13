@@ -19,22 +19,32 @@
   add
 ))
 
-(define en-passant (
+(define en-passant-1 (
   $1 (verify enemy?)
   (verify last-to?)
   (verify (piece? Pawn))
-  capture n to n
-  (if last-from? add)
-  n
-  (if last-from? add)
+  capture n mark n
+  (verify last-from?)
+  back
+  add
+))
+
+(define en-passant-2 (
+  $1 (verify enemy?)
+  (verify last-to?)
+  (verify (piece? Pawn))
+  capture n mark n n
+  (verify last-from?)
+  back add
 ))
 
 (define en-passant-ex (
   $1 (verify enemy?)
   (verify last-to?)
   (verify (piece? Pawn))
-  capture n n to n
-  (if last-from? add)
+  capture n n mark n
+  (verify last-from?)
+  back add
 ))
 
 (define drop-piece (
@@ -176,8 +186,8 @@
      (moves
          (pawn-shift n) (pawn-jump n) 
          (pawn-step nw) (pawn-step ne)
-         (en-passant e) (en-passant-ex se)
-         (en-passant w) (en-passant-ex sw)
+         (en-passant-1 e) (en-passant-2 e) (en-passant-ex se)
+         (en-passant-1 w) (en-passant-2 w) (en-passant-ex sw)
      )
   )
   (piece
@@ -275,7 +285,6 @@
 
 (variant
   (title "Omega Chess Advanced")
-  (default)
 
   (piece
      (name Pawn)
@@ -284,8 +293,8 @@
      (moves
          (pawn-shift n) (pawn-jump n) 
          (pawn-step nw) (pawn-step ne)
-         (en-passant e) (en-passant-ex se)
-         (en-passant w) (en-passant-ex sw)
+         (en-passant-1 e) (en-passant-2 e) (en-passant-ex se)
+         (en-passant-1 w) (en-passant-2 w) (en-passant-ex sw)
      )
   )
   (piece
@@ -363,8 +372,8 @@
          (move-type pawn-type)
          (pawn-shift n) (pawn-jump n) 
          (pawn-step nw) (pawn-step ne)
-         (en-passant e) (en-passant-ex se)
-         (en-passant w) (en-passant-ex sw)
+         (en-passant-1 e) (en-passant-2 e) (en-passant-ex se)
+         (en-passant-1 w) (en-passant-2 w) (en-passant-ex sw)
          (move-type rook-type)
          (slide n) (slide s) (slide w) (slide e)
          (move-type knight-type)
