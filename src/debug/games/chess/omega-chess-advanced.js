@@ -427,6 +427,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(13, ZRF.IN_ZONE,	2);	// restricted-zone
     design.addCommand(13, ZRF.FUNCTION,	0);	// not
     design.addCommand(13, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(13, ZRF.FUNCTION,	25);	// to
     design.addCommand(13, ZRF.FUNCTION,	28);	// end
 
     design.addPiece("Pawn", 0);
