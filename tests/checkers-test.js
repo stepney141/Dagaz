@@ -171,7 +171,6 @@ QUnit.test( "Man's moves", function( assert ) {
   var design = Dagaz.Model.getDesign();
   var board  = Dagaz.Model.getInitBoard();
   board.clear();
-  assert.equal( board.moves.length, 0, "No board moves");
 
   design.setup("White", "Man", Dagaz.Model.stringToPos("c3"));
   design.setup("White", "Man", Dagaz.Model.stringToPos("g7"));
@@ -244,26 +243,6 @@ QUnit.test( "Man's moves", function( assert ) {
   assert.equal( g1.move.toString(1), "c3 - c4", "c3 - c4");
   assert.equal( g1.move.toString(), "c3 - c4", "c3 - c4");
 
-  assert.equal( g1.moveType, 1, "Default MoveType");
-  assert.equal( (g1.template.commands[g1.cmd++])(g1), null, "ZRF_END executed");
-  assert.equal( g1.cmd, 13, "cmd = 13");
-  assert.equal( g1.moveType, 0, "MoveType cleaned");
-  assert.equal( board.moves.length, 1, "Move generated");
-  assert.equal( board.moves[0].toString(), "c3 - c4", "c3 - c4");
-
-  var g2 = Dagaz.Model.createGen(t1, [ design.getDirection("w") ]);
-  g2.init(board, Dagaz.Model.stringToPos("c3"));
-  g2.generate();
-  assert.equal( board.moves.length, 2, "Move generated");
-  assert.equal( board.moves[1].toString(), "c3 - b3", "c3 - b3");
-
-  var g4 = Dagaz.Model.createGen(t1, [ design.getDirection("n") ]);
-  g4.init(board, Dagaz.Model.stringToPos("g7"));
-  g4.generate();
-  assert.equal( board.moves.length, 3, "Move generated");
-  assert.equal( board.moves[2].toString(), "g7 - g8", "g7 - g8");
-  assert.equal( board.moves[2].actions[0][2][0].toString(), "White King", "promoted");
-
   Dagaz.Model.design = undefined;
   Dagaz.Model.board = undefined;
 });
@@ -273,7 +252,6 @@ QUnit.test( "Simple Man's moves", function( assert ) {
   var design = Dagaz.Model.getDesign();
   var board  = Dagaz.Model.getInitBoard();
   board.clear();
-  assert.equal( board.moves.length, 0, "No board moves");
 
   design.setup("White", "Man", Dagaz.Model.stringToPos("c3"));
   board.generate();
@@ -291,7 +269,6 @@ QUnit.test( "Man's capturing priorited", function( assert ) {
   var design = Dagaz.Model.getDesign();
   var board  = Dagaz.Model.getInitBoard();
   board.clear();
-  assert.equal( board.moves.length, 0, "No board moves");
 
   design.setup("White", "Man", Dagaz.Model.stringToPos("b2"));
   design.setup("White", "Man", Dagaz.Model.stringToPos("e2"));
@@ -312,7 +289,6 @@ QUnit.test( "Man's capturing chain", function( assert ) {
   var design = Dagaz.Model.getDesign();
   var board  = Dagaz.Model.getInitBoard();
   board.clear();
-  assert.equal( board.moves.length, 0, "No board moves");
 
   design.setup("White", "Man", Dagaz.Model.stringToPos("d2"));
   design.setup("Black", "Man", Dagaz.Model.stringToPos("d3"));
@@ -333,7 +309,6 @@ QUnit.test( "King's slide", function( assert ) {
   var design = Dagaz.Model.getDesign();
   var board  = Dagaz.Model.getInitBoard();
   board.clear();
-  assert.equal( board.moves.length, 0, "No board moves");
 
   design.setup("White", "King", Dagaz.Model.stringToPos("d4"));
   board.generate();
@@ -362,7 +337,6 @@ QUnit.test( "King's capturing chain", function( assert ) {
   var design = Dagaz.Model.getDesign();
   var board  = Dagaz.Model.getInitBoard();
   board.clear();
-  assert.equal( board.moves.length, 0, "No board moves");
 
   design.setup("White", "King", Dagaz.Model.stringToPos("d4"));
   design.setup("Black", "Man", Dagaz.Model.stringToPos("c4"));
@@ -383,7 +357,6 @@ QUnit.test( "Move List", function( assert ) {
   var design = Dagaz.Model.getDesign();
   var board  = Dagaz.Model.getInitBoard();
   board.clear();
-  assert.equal( board.moves.length, 0, "No board moves");
 
   design.setup("White", "King", Dagaz.Model.stringToPos("d8"));
   design.setup("Black", "Man", Dagaz.Model.stringToPos("e8"));

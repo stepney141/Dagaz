@@ -3,7 +3,6 @@ QUnit.test( "One tile", function( assert ) {
   var design = Dagaz.Model.getDesign();
   var board  = Dagaz.Model.getInitBoard();
   board.clear();
-  assert.equal( board.moves.length, 0, "No board moves");
 
   design.setup("You", "B00009", Dagaz.Model.stringToPos("c3"));
   var piece = board.getPiece(Dagaz.Model.stringToPos("c3"));
@@ -32,12 +31,11 @@ QUnit.test( "One piece", function( assert ) {
   var design = Dagaz.Model.getDesign();
   var board  = Dagaz.Model.getInitBoard();
   board.clear();
-  assert.equal( board.moves.length, 0, "No board moves");
   design.checkVersion("sliding-puzzle", "all")
 
   design.setup("You", "B00009", Dagaz.Model.stringToPos("a3"));
   design.setup("You", "B00009", Dagaz.Model.stringToPos("a2"));
-  assert.equal( board.checkGoals(design), 0, "No win");
+  assert.equal( board.checkGoals(design), null, "No win");
 
   board.generate();
   assert.equal( board.moves.length, 6, "6 moves generated");
@@ -57,7 +55,6 @@ QUnit.test( "More pieces", function( assert ) {
   var design = Dagaz.Model.getDesign();
   var board  = Dagaz.Model.getInitBoard();
   board.clear();
-  assert.equal( board.moves.length, 0, "No board moves");
   design.checkVersion("sliding-puzzle", "distinct")
 
   design.setup("You", "R01002", Dagaz.Model.stringToPos("d5"));
@@ -74,7 +71,7 @@ QUnit.test( "More pieces", function( assert ) {
   assert.equal( board.moves[1].toString(), "d4-d3", "d4-d3 c5-c4-c3");
 
   var board = board.apply(board.moves[0]);
-  assert.equal( board.checkGoals(design), 0, "No win");
+  assert.equal( board.checkGoals(design), null, "No win");
   assert.equal( board.getPiece(Dagaz.Model.stringToPos("d5")).toString(), "You R01002", "R01002 on d5");
   assert.equal( board.getPiece(Dagaz.Model.stringToPos("e5")).toString(), "You R10102", "R10102 on e5");
   assert.equal( board.getPiece(Dagaz.Model.stringToPos("e4")).toString(), "You R00012", "R00012 on e4");
