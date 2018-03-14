@@ -150,7 +150,7 @@ View2D.prototype.clear = function() {
 
 View2D.prototype.addPiece = function(piece, pos, model) {
   this.setup.push({
-       pos:   +pos,
+       pos:  +pos,
        name:  piece,
        model: model, 
        x:     this.pos[pos].x,
