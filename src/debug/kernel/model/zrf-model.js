@@ -384,7 +384,11 @@ Dagaz.Model.functions[Dagaz.Model.ZRF_TO] = function(gen) {
         gen.cover[gen.pos].push(gen.from);
         gen.serial[gen.pos].push(gen.serial);
    }
-   gen.movePiece(gen.from, gen.pos, gen.piece);
+   if (_.isUndefined(gen.from)) {
+       gen.dropPiece(gen.pos, gen.piece);
+   } else {
+       gen.movePiece(gen.from, gen.pos, gen.piece);
+   }
    delete gen.from;
    delete gen.piece;
    gen.generated = true;
@@ -1660,18 +1664,14 @@ ZrfBoard.prototype.generateInternal = function(callback, cont, cover, serial) {
             }, this);
         }, this);
       if (_.isUndefined(cover)) {
-          _.each(design.positions, function(pos) {
-            _.chain(design.pieces)
+          _.each(design.allPositions(), function(pos) {          
+            _.chain(_.range(design.pieces.length))
              .filter(function(tp) { return !Dagaz.Model.noReserve(this, tp); }, this)
              .each(function(tp) {
                    _.chain(design.pieces[tp])
                     .filter(function(move) { return (move.type == 1); })
                     .each(function(move) {
                         var g = Dagaz.Model.createGen(move.template, move.params, this.game.design, move.mode, sn++);
-                        if (!_.isUndefined(cover)) {
-                            g.cover  = cover;
-                            g.serial = serial;
-                        }
                         g.init(this, pos);
                         g.piece = new ZrfPiece(tp, this.player);
                         addPrior(priors, move.mode, g);
@@ -2045,6 +2045,21 @@ Dagaz.Model.moveToString = function(move, part) {
        r = r + "x ";
        r = r + Dagaz.Model.posToString(action[0][0]);
        l = action[0][0];
+    });
+  _.chain(move.actions)
+   .filter(n)
+   .filter(function(action) {
+       return (action[0] === null) && (action[1] !== null);
+    })
+   .each(function(action) {  
+       if (r.length > 0) {
+           r = r + " ";
+       }
+       if ((action[2] !== null)) {
+           r = r + action[2][0].toString() + " ";
+       }
+       r = r + Dagaz.Model.posToString(action[1][0]);
+       l = "";
     });
   return r;
 }
