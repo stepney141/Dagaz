@@ -98,6 +98,16 @@ Dagaz.View.configure = function(view) {
     view.defPiece("NorthTuzdyk", "North Tuzdyk");
     view.defPiece("SouthKazan", "South Kazan");
     view.defPiece("NorthKazan", "North Kazan");
+    view.defPiece("0", "0");
+    view.defPiece("1", "1");
+    view.defPiece("2", "2");
+    view.defPiece("3", "3");
+    view.defPiece("4", "4");
+    view.defPiece("5", "5");
+    view.defPiece("6", "6");
+    view.defPiece("7", "7");
+    view.defPiece("8", "8");
+    view.defPiece("9", "9");
  
     view.defPosition("a2", 4, 9, 70, 270);
     view.defPosition("b2", 75, 9, 70, 270);
