@@ -120,7 +120,7 @@ Dagaz.Model.CheckInvariants = function(board) {
   _.each(board.moves, function(move) {
       var b = board.apply(move);
       var pos  = Dagaz.Model.findPiece(design, b, board.player, king);
-      if (Dagaz.Model.checkPositions(design, b, board.player, [pos])) {
+      if ((pos !== null) && (Dagaz.Model.checkPositions(design, b, board.player, [pos]))) {
           move.failed = true;
           return;
       }
