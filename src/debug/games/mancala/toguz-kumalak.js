@@ -24,8 +24,10 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "true");
     design.checkVersion("show-blink", "false");
+    design.checkVersion("show-hints", "false");
     design.checkVersion("mancala-setup", "9");
     design.checkVersion("mancala-view", "true");
+    design.checkVersion("toguz-kumalak-extension", "true");
 
     design.addDirection("nx");
     design.addDirection("sm");
