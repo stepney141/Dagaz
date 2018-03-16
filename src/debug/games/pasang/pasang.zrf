@@ -1,10 +1,39 @@
+(define capture-move (
+  capture add
+))
+
+(define step (
+  $1 (verify empty?)
+  add
+))
+
+(define jump (
+  $1 (verify not-empty?)
+  $1 (verify empty?)
+  add
+))
+
+(define slide (
+  (verify friend?)
+  $1 (while empty? add $1)
+))
+
 (game
     (title "Pasang (setup 1)")
 
-    (option "pass turn" forced)
+    (move-sound "Audio\Pickup.wav")
+    (release-sound "Audio\Pickup.wav")
+    (capture-sound "")
+    (drop-sound "")
 
-    (players N)
-    (turn-order N)
+    (option "animate captures" false)
+    (option "smart moves"      false)
+    (option "shared-pieces"    true)
+
+    (players Blue Red N)
+    (turn-order Blue Red)
+
+;   (move-priorities first-type second-type normal-type)
 
     (board
         (image "images/pasang.bmp")
@@ -20,14 +49,38 @@
    )
 
    (piece
-      (name White)
-      (help " ")
-      (image N "images/white.bmp")
+      (name Ka)
+      (help "Ka")
+      (image Blue "images/blue.bmp"
+             Red  "images/red.bmp")
+      (moves
+          (move-type normal-type)
+          (slide n) (slide s) (slide w) (slide e)
+      )
    )
    (piece
       (name Black)
       (help " ")
       (image N "images/black.bmp")
+      (moves
+          (move-type first-type)
+          (capture-move)
+          (move-type second-type)
+          (step n) (step s) (step w) (step e)
+          (jump n) (jump s) (jump w) (jump e)
+      )
+   )
+   (piece
+      (name White)
+      (help " ")
+      (image N "images/white.bmp")
+      (moves
+          (move-type first-type)
+          (capture-move)
+          (move-type second-type)
+          (step n) (step s) (step w) (step e)
+          (jump n) (jump s) (jump w) (jump e)
+      )
    )
 
    (board-setup
