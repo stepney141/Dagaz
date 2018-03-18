@@ -67,7 +67,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                }
           }
           if (!design.inZone(0, board.player, pos)) {
-              if (result[ix] % 2 == 0) {
+              if (result[ix - 1] % 2 == 0) {
                   if (board.player == 1) {
                       pos = Dagaz.Model.stringToPos("X1");
                   } else {
@@ -76,13 +76,13 @@ Dagaz.Model.CheckInvariants = function(board) {
                   piece = board.getPiece(pos);
                   if (piece === null) {
                       piece = Dagaz.Model.createPiece(2, board.player);
-                      piece = piece.setValue(0, result[ix]);
+                      piece = piece.setValue(0, result[ix - 1]);
                       move.dropPiece(pos, piece);
                   } else {
-                      piece = piece.setValue(0, result[ix]);
+                      piece = piece.setValue(0, result[ix - 1]);
                       move.movePiece(pos, pos, piece);
                   }
-                  result[ix] = 0;
+                  result[ix - 1] = 0;
               }
           }
           var pos = move.actions[0][0][0];
