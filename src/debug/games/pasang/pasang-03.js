@@ -24,6 +24,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "false");
     design.checkVersion("shared-pieces", "true");
+    design.checkVersion("pasang-extension", "true");
 
     design.addDirection("w");
     design.addDirection("e");
