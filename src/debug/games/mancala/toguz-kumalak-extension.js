@@ -66,6 +66,25 @@ Dagaz.Model.CheckInvariants = function(board) {
                    }
                }
           }
+          if (!design.inZone(0, board.player, pos)) {
+              if (result[ix] % 2 == 0) {
+                  if (board.player == 1) {
+                      pos = Dagaz.Model.stringToPos("X1");
+                  } else {
+                      pos = Dagaz.Model.stringToPos("X2");
+                  }
+                  piece = board.getPiece(pos);
+                  if (piece === null) {
+                      piece = Dagaz.Model.createPiece(2, board.player);
+                      piece = piece.setValue(0, result[ix]);
+                      move.dropPiece(pos, piece);
+                  } else {
+                      piece = piece.setValue(0, result[ix]);
+                      move.movePiece(pos, pos, piece);
+                  }
+                  result[ix] = 0;
+              }
+          }
           var pos = move.actions[0][0][0];
           for (var ix = 0; ix < result.length; ix++) {
                var player = board.player;
@@ -91,7 +110,6 @@ Dagaz.Model.CheckInvariants = function(board) {
                pos = design.navigate(board.player, pos, 0);
           }
       }
-      console.log(move);
   });
   CheckInvariants(board);
 }

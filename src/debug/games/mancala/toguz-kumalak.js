@@ -53,8 +53,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("g1", [1, -13]);
     design.addPosition("h1", [1, -15]);
     design.addPosition("i1", [-9, -17]);
-    design.addPosition("2", [0, 1]);
-    design.addPosition("1", [0, 1]);
+    design.addPosition("X2", [0, 0]);
+    design.addPosition("X1", [0, 0]);
 
     design.addZone("home", 1, [9, 10, 11, 12, 13, 14, 15, 16, 17]);
     design.addZone("home", 2, [0, 1, 2, 3, 4, 5, 6, 7, 8]);
