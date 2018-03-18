@@ -129,6 +129,6 @@ Dagaz.View.configure = function(view) {
     view.defPosition("g1", 430, 543, 70, 270);
     view.defPosition("h1", 501, 543, 70, 270);
     view.defPosition("i1", 572, 543, 70, 270);
-    view.defPosition("2", 8, 288, 628, 120);
-    view.defPosition("1", 8, 416, 628, 120);
+    view.defPosition("X2", 4, 288, 624, 120);
+    view.defPosition("X1", 4, 416, 624, 120);
 }

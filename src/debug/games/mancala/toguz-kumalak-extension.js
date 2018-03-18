@@ -79,6 +79,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                       piece = piece.setValue(0, result[ix - 1]);
                       move.dropPiece(pos, piece);
                   } else {
+                      result[ix - 1] += piece.getValue(0);
                       piece = piece.setValue(0, result[ix - 1]);
                       move.movePiece(pos, pos, piece);
                   }
