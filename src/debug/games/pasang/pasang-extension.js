@@ -22,7 +22,6 @@ Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
   var w = design.getDirection("w"); var gr = design.getDirection("gr"); 
   var e = design.getDirection("e"); var sd = design.getDirection("sd"); 
-  var mode = null;
   _.each(board.moves, function(move) {
       if ((move.actions.length == 1) && (move.actions[0][0] !== null) && (move.actions[0][1] === null)) {
           var pos = move.actions[0][0][0];
@@ -37,15 +36,7 @@ Dagaz.Model.CheckInvariants = function(board) {
               move.capturePiece(pos);
           }
       }
-      if ((mode === null) || (mode > move.mode)) mode = move.mode;
   });
-  if (mode !== null) {
-      _.each(board.moves, function(move) {
-          if (move.mode > mode) {
-              move.failed = true;
-          }
-      });
-  }
   CheckInvariants(board);
 }
 
