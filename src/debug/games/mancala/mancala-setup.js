@@ -15,7 +15,7 @@ Dagaz.Model.setup = function(board) {
   var design = Dagaz.Model.design;
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
-      if (piece !== null) {
+      if ((piece !== null) && (piece.type == 0)) {
           piece = piece.setValue(0, cnt);
           board.setPiece(pos, piece);
       }

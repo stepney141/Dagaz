@@ -27,9 +27,9 @@
          )
      )
      (grid
-         (start-rectangle 8 288 636 408)
+         (start-rectangle 4 288 634 408)
          (dimensions
-           ("X" (628 0)) ; files
+           ("X" (630 0)) ; files
            ("2/1" (0 128)) ; ranks
          )
      )
@@ -43,6 +43,9 @@
      )
      (zone (name home) (players South)
            (positions a1 b1 c1 d1 e1 f1 g1 h1 i1)
+     )
+     (zone (name restricted) (players South North)
+           (positions a2 i1)
      )
   )
 

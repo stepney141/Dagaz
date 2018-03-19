@@ -22,7 +22,7 @@ ZRF = {
 Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-captures", "false");
-    design.checkVersion("smart-moves", "true");
+    design.checkVersion("smart-moves", "from");
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
     design.checkVersion("mancala-setup", "9");
@@ -58,6 +58,8 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addZone("home", 1, [9, 10, 11, 12, 13, 14, 15, 16, 17]);
     design.addZone("home", 2, [0, 1, 2, 3, 4, 5, 6, 7, 8]);
+    design.addZone("restricted", 2, [0, 17]);
+    design.addZone("restricted", 1, [0, 17]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
@@ -129,6 +131,6 @@ Dagaz.View.configure = function(view) {
     view.defPosition("g1", 430, 543, 70, 270);
     view.defPosition("h1", 501, 543, 70, 270);
     view.defPosition("i1", 572, 543, 70, 270);
-    view.defPosition("X2", 4, 288, 624, 120);
-    view.defPosition("X1", 4, 416, 624, 120);
+    view.defPosition("X2", 4, 288, 634, 120);
+    view.defPosition("X1", 4, 416, 634, 120);
 }
