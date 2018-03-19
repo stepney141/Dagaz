@@ -6,7 +6,7 @@
 (define step (
   (verify (in-zone? home-zone))
   $1 (verify empty?)
-  change-owner
+; change-owner
   (add Ka)
 ))
 
@@ -14,7 +14,7 @@
   (verify (in-zone? home-zone))
   $1 (verify not-empty?)
   $1 (verify empty?)
-  change-owner
+; change-owner
   (add Ka)
 ))
 
@@ -141,9 +141,8 @@
       (help " ")
       (image N "images/white.bmp")
       (moves
-          (move-type high-priority)
+          (move-type normal-type)
           (capture-move)
-          (move-type low-priority)
           (step n) (step s) (step w) (step e)
           (jump n) (jump s) (jump w) (jump e)
       )

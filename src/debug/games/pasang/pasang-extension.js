@@ -23,19 +23,29 @@ Dagaz.Model.CheckInvariants = function(board) {
   var w = design.getDirection("w"); var gr = design.getDirection("gr"); 
   var e = design.getDirection("e"); var sd = design.getDirection("sd"); 
   _.each(board.moves, function(move) {
-      if ((move.actions.length == 1) && (move.actions[0][0] !== null) && (move.actions[0][1] === null)) {
-          var pos = move.actions[0][0][0];
-          if (checkDir(design, board, pos, w) || 
-              checkDir(design, board, pos, e) || 
-              checkDir(design, board, pos, sd)) {
-              move.failed = true;
-              return;
-          }
-          for (var i = 0; i < 4; i++) {
-              pos = design.navigate(board.player, pos, gr);
-              move.capturePiece(pos);
+      if (move.isSimpleMove() && (move.actions[0][2] !== null)) {
+          var pos    = move.actions[0][0][0];
+          var piece  = board.getPiece(pos);
+          var target = move.actions[0][2][0];
+          if ((piece !== null) && (piece.type > 0) && (target.type == 0)) {
+              move.actions[0][2] = [ target.changeOwner(board.player) ];
           }
       }
+      _.each(move.actions, function(a) {
+          if ((a[0] !== null) && (a[1] === null)) {
+              var pos = move.actions[1][0];
+              if (checkDir(design, board, pos, w) || 
+                  checkDir(design, board, pos, e) || 
+                  checkDir(design, board, pos, sd)) {
+                  move.failed = true;
+                  return;
+              }
+              for (var i = 0; i < 4; i++) {
+                  pos = design.navigate(board.player, pos, gr);
+                  move.capturePiece(pos);
+              }
+          }
+      });
   });
   CheckInvariants(board);
 }
