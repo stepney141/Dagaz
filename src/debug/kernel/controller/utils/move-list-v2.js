@@ -153,10 +153,10 @@ MoveList.prototype.getStops = function() {
       var canPass   = this.canPass();
       _.each(this.moves, function(move) {
             var actions = _.filter(this.getActions(move), isMove);
-            if (!canPass && (actions.length > 0) && (actions[0][0].length == 1)) {
+            if (!canPass && (actions.length > 0) && (actions[0][0].length == 1) && Dagaz.Model.smartFrom) {
                 positions.push(actions[0][0][0]);
             }
-            if ((actions.length > 0) && (actions[0][1].length == 1)) {
+            if ((actions.length > 0) && (actions[0][1].length == 1) && Dagaz.Model.smartTo) {
                 positions.push(actions[0][1][0]);
             }
       }, this);
