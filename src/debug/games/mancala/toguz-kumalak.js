@@ -74,6 +74,8 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("Kazan", 2);
 
+    design.addPiece("None", 3);
+
     design.setup("South", "Seed", 9);
     design.setup("South", "Seed", 10);
     design.setup("South", "Seed", 11);
@@ -102,6 +104,8 @@ Dagaz.View.configure = function(view) {
     view.defPiece("NorthTuzdyk", "North Tuzdyk");
     view.defPiece("SouthKazan", "South Kazan");
     view.defPiece("NorthKazan", "North Kazan");
+    view.defPiece("SouthNone", "South None");
+    view.defPiece("NorthNone", "North None");
     view.defPiece("0", "0");
     view.defPiece("1", "1");
     view.defPiece("2", "2");

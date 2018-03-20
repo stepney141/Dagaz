@@ -1,8 +1,8 @@
 (function() {
 
-Dagaz.View.DX = 5;
+Dagaz.View.DX = 0;
 Dagaz.View.DY = 0;
-Dagaz.View.MX = 26;
+Dagaz.View.MX = 25;
 
 var checkVersion = Dagaz.Model.checkVersion;
 
