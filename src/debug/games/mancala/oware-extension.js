@@ -51,7 +51,8 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
   _.each(board.moves, function(move) {
-      var fr = 0;
+      var fr  = 0;
+      var dir = move.mode;
       if (move.isSimpleMove()) {
           var pos = move.actions[0][0][0];
           var piece = board.getPiece(pos);
@@ -63,7 +64,7 @@ Dagaz.Model.CheckInvariants = function(board) {
           var result = [];
           result.push(0);
           for (var ix = 1; cnt > 0; cnt--, ix++) {
-               pos = design.navigate(board.player, pos, 0);
+               pos = design.navigate(board.player, pos, dir);
                if (pos === null) {
                    move.failed = true;
                    return;
@@ -88,7 +89,7 @@ Dagaz.Model.CheckInvariants = function(board) {
           while ((pos !== null) && !design.inZone(0, board.player, pos) && ((result[ix] == 2) || (result[ix] == 3))) {
                fr += result[ix];
                result[ix] = 0;
-               pos = design.navigate(board.player, pos, 1);
+               pos = design.navigate(0, pos, dir);
                ix--;
           }
           var pos = move.actions[0][0][0];
@@ -118,7 +119,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                        }
                    }
                }
-               pos = design.navigate(board.player, pos, 0);
+               pos = design.navigate(board.player, pos, dir);
           }
           toReserve(design, board, board.player, move, fr);
       }

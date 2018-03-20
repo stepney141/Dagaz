@@ -26,9 +26,11 @@ Dagaz.Model.CheckInvariants = function(board) {
   if (noFull || noEnemies(design, board, board.player)) {
       var moves = [];
       _.each(board.moves, function(move) {
-           var b = board.apply(move);
-           if (!noEnemies(design, b, board.player)) {
-               moves.push(move);
+           if (_.isUndefined(move.failed)) {
+               var b = board.apply(move);
+               if (!noEnemies(design, b, board.player)) {
+                   moves.push(move);
+               }
            }
       });
       if (moves.length > 0) {

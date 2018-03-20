@@ -65,3 +65,17 @@
     (North (Seed a2 b2 c2 d2 e2 f2))
   )
 )
+
+(variant
+  (title "Cross-Wari")
+  (default)
+  (piece
+     (name Seed)
+     (image South "images/small.bmp"
+            North "images/small.bmp")
+     (moves 
+        (move-type normal-type) (step nx)
+        (move-type revert-type) (step rv)
+     )
+  )
+)
