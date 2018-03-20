@@ -35,7 +35,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addDirection("fr");
     design.addDirection("er");
 
-    design.addPlayer("South", [1, 0, 2, 3]);
+    design.addPlayer("South", [1, 0, 3, 2]);
     design.addPlayer("North", [0, 1, 3, 2]);
 
     design.addPosition("a2", [6, 1, 13, 12]);
@@ -50,8 +50,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("d1", [1, -1, 0, 0]);
     design.addPosition("e1", [1, -1, 0, 0]);
     design.addPosition("f1", [-6, -1, 0, 0]);
-    design.addPosition("X2", [0, 1, 2, 3]);
-    design.addPosition("X1", [0, 1, 2, 3]);
+    design.addPosition("X2", [0, 0, 0, 0]);
+    design.addPosition("X1", [0, 0, 0, 0]);
 
     design.addZone("home", 1, [6, 7, 8, 9, 10, 11]);
     design.addZone("home", 2, [0, 1, 2, 3, 4, 5]);
