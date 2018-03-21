@@ -40,7 +40,6 @@ Dagaz.Model.checkGoals = function(design, board, player) {
            }
        }
   }
-  console.log("player = " + player + ", board.player = " + board.player + ", fr = " + fr + ", er = " + er + ", fc = " + fc + ", ec = " + ec);
   if (fc == 0) {
       if (board.player == player) {
           er += ec;
