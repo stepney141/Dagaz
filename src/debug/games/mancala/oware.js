@@ -99,18 +99,18 @@ Dagaz.View.configure = function(view) {
     view.defPiece("8", "8");
     view.defPiece("9", "9");
  
-    view.defPosition("a2", 163, 3, 80, 80);
-    view.defPosition("b2", 263, 3, 80, 80);
-    view.defPosition("c2", 363, 3, 80, 80);
-    view.defPosition("d2", 463, 3, 80, 80);
-    view.defPosition("e2", 563, 3, 80, 80);
-    view.defPosition("f2", 663, 3, 80, 80);
-    view.defPosition("a1", 163, 103, 80, 80);
-    view.defPosition("b1", 263, 103, 80, 80);
-    view.defPosition("c1", 363, 103, 80, 80);
-    view.defPosition("d1", 463, 103, 80, 80);
-    view.defPosition("e1", 563, 103, 80, 80);
-    view.defPosition("f1", 663, 103, 80, 80);
-    view.defPosition("X2", 3, 3, 140, 180);
-    view.defPosition("X1", 763, 3, 140, 180);
+    view.defPosition("a2", 168, 8, 80, 80);
+    view.defPosition("b2", 268, 8, 80, 80);
+    view.defPosition("c2", 368, 8, 80, 80);
+    view.defPosition("d2", 468, 8, 80, 80);
+    view.defPosition("e2", 568, 8, 80, 80);
+    view.defPosition("f2", 668, 8, 80, 80);
+    view.defPosition("a1", 168, 108, 80, 80);
+    view.defPosition("b1", 268, 108, 80, 80);
+    view.defPosition("c1", 368, 108, 80, 80);
+    view.defPosition("d1", 468, 108, 80, 80);
+    view.defPosition("e1", 568, 108, 80, 80);
+    view.defPosition("f1", 668, 108, 80, 80);
+    view.defPosition("X2", 8, 8, 140, 180);
+    view.defPosition("X1", 768, 8, 140, 180);
 }
