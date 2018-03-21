@@ -1,8 +1,10 @@
 (function() {
 
-Dagaz.View.DX = 5;
-Dagaz.View.DY = 0;
-Dagaz.View.MX = 26;
+Dagaz.Model.WIN_CNT = 81;
+
+Dagaz.View.DX       = 5;
+Dagaz.View.DY       = 0;
+Dagaz.View.MX       = 26;
 
 var cache = [];
 

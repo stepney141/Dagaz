@@ -31,30 +31,32 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addDirection("nx");
     design.addDirection("sm");
+    design.addDirection("fr");
+    design.addDirection("er");
 
-    design.addPlayer("South", [0, 1]);
-    design.addPlayer("North", [0, 1]);
+    design.addPlayer("South", [0, 1, 2, 3]);
+    design.addPlayer("North", [0, 1, 2, 3]);
 
-    design.addPosition("a2", [9, 17]);
-    design.addPosition("b2", [-1, 15]);
-    design.addPosition("c2", [-1, 13]);
-    design.addPosition("d2", [-1, 11]);
-    design.addPosition("e2", [-1, 9]);
-    design.addPosition("f2", [-1, 7]);
-    design.addPosition("g2", [-1, 5]);
-    design.addPosition("h2", [-1, 3]);
-    design.addPosition("i2", [-1, 1]);
-    design.addPosition("a1", [1, -1]);
-    design.addPosition("b1", [1, -3]);
-    design.addPosition("c1", [1, -5]);
-    design.addPosition("d1", [1, -7]);
-    design.addPosition("e1", [1, -9]);
-    design.addPosition("f1", [1, -11]);
-    design.addPosition("g1", [1, -13]);
-    design.addPosition("h1", [1, -15]);
-    design.addPosition("i1", [-9, -17]);
-    design.addPosition("X2", [0, 0]);
-    design.addPosition("X1", [0, 0]);
+    design.addPosition("a2", [9, 17, 19, 18]);
+    design.addPosition("b2", [-1, 15, 0, 0]);
+    design.addPosition("c2", [-1, 13, 0, 0]);
+    design.addPosition("d2", [-1, 11, 0, 0]);
+    design.addPosition("e2", [-1, 9, 0, 0]);
+    design.addPosition("f2", [-1, 7, 0, 0]);
+    design.addPosition("g2", [-1, 5, 0, 0]);
+    design.addPosition("h2", [-1, 3, 0, 0]);
+    design.addPosition("i2", [-1, 1, 0, 0]);
+    design.addPosition("a1", [1, -1, 0, 0]);
+    design.addPosition("b1", [1, -3, 0, 0]);
+    design.addPosition("c1", [1, -5, 0, 0]);
+    design.addPosition("d1", [1, -7, 0, 0]);
+    design.addPosition("e1", [1, -9, 0, 0]);
+    design.addPosition("f1", [1, -11, 0, 0]);
+    design.addPosition("g1", [1, -13, 0, 0]);
+    design.addPosition("h1", [1, -15, 0, 0]);
+    design.addPosition("i1", [-9, -17, 0, 0]);
+    design.addPosition("X2", [0, 1, 2, 3]);
+    design.addPosition("X1", [0, 1, 2, 3]);
 
     design.addZone("home", 1, [9, 10, 11, 12, 13, 14, 15, 16, 17]);
     design.addZone("home", 2, [0, 1, 2, 3, 4, 5, 6, 7, 8]);
@@ -66,6 +68,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
+
 
     design.addPiece("Seed", 0);
     design.addMove(0, 0, [0], 0);
