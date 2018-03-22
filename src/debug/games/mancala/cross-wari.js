@@ -27,10 +27,10 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-hints", "false");
     design.checkVersion("mancala-setup", "4");
     design.checkVersion("mancala-view", "true");
-    design.checkVersion("dearth-extension", "no-full");
+    design.checkVersion("dearth-extension", "no-full-capturing");
     design.checkVersion("cross-extension", "true");
-    design.checkVersion("oware-extension", "true");
     design.checkVersion("mancala-goal", "true");
+    design.checkVersion("oware-extension", "true");
 
     design.addDirection("nx");
     design.addDirection("rv");

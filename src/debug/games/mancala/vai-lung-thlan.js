@@ -25,11 +25,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("smart-moves", "from");
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
-    design.checkVersion("mancala-setup", "4");
+    design.checkVersion("pass-turn", "forced");
+    design.checkVersion("mancala-setup", "5");
     design.checkVersion("mancala-view", "true");
-    design.checkVersion("dearth-extension", "no-full-capturing");
-    design.checkVersion("mancala-goal", "true");
-    design.checkVersion("oware-extension", "true");
+    design.checkVersion("mancala-goal", "forced");
+    design.checkVersion("vai-lung-thlan-extension", "true");
 
     design.addDirection("nx");
     design.addDirection("rv");
@@ -39,18 +39,18 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPlayer("South", [1, 0, 3, 2]);
     design.addPlayer("North", [0, 1, 3, 2]);
 
-    design.addPosition("a2", [6, 1, 13, 12]);
-    design.addPosition("b2", [-1, 1, 0, 0]);
-    design.addPosition("c2", [-1, 1, 0, 0]);
-    design.addPosition("d2", [-1, 1, 0, 0]);
-    design.addPosition("e2", [-1, 1, 0, 0]);
-    design.addPosition("f2", [-1, 6, 0, 0]);
-    design.addPosition("a1", [1, -6, 0, 0]);
-    design.addPosition("b1", [1, -1, 0, 0]);
-    design.addPosition("c1", [1, -1, 0, 0]);
-    design.addPosition("d1", [1, -1, 0, 0]);
-    design.addPosition("e1", [1, -1, 0, 0]);
-    design.addPosition("f1", [-6, -1, 0, 0]);
+    design.addPosition("a2", [1, 6, 13, 12]);
+    design.addPosition("b2", [1, -1, 0, 0]);
+    design.addPosition("c2", [1, -1, 0, 0]);
+    design.addPosition("d2", [1, -1, 0, 0]);
+    design.addPosition("e2", [1, -1, 0, 0]);
+    design.addPosition("f2", [6, -1, 0, 0]);
+    design.addPosition("a1", [-6, 1, 0, 0]);
+    design.addPosition("b1", [-1, 1, 0, 0]);
+    design.addPosition("c1", [-1, 1, 0, 0]);
+    design.addPosition("d1", [-1, 1, 0, 0]);
+    design.addPosition("e1", [-1, 1, 0, 0]);
+    design.addPosition("f1", [-1, -6, 0, 0]);
     design.addPosition("X2", [0, 0, 0, 0]);
     design.addPosition("X1", [0, 0, 0, 0]);
 

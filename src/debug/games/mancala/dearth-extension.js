@@ -6,7 +6,7 @@ var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
   if (name == "dearth-extension") {
-      noFull = (value == "no-full");
+      noFull = (value == "no-full-capturing");
   } else {
       checkVersion(design, name, value);
   }

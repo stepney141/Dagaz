@@ -25,11 +25,10 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("smart-moves", "from");
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
-    design.checkVersion("mancala-setup", "4");
+    design.checkVersion("mancala-setup", "6");
     design.checkVersion("mancala-view", "true");
-    design.checkVersion("dearth-extension", "no-full-capturing");
     design.checkVersion("mancala-goal", "true");
-    design.checkVersion("oware-extension", "true");
+    design.checkVersion("bohnenspiel-extension", "true");
 
     design.addDirection("nx");
     design.addDirection("rv");

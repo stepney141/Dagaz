@@ -1,9 +1,15 @@
 (function() {
 
+var isForced = false;
+
+var MATERIAL_FACTOR = 10;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "mancala-goal") {
+  if (name == "mancala-goal") {
+      isForced = (value == "forced");
+  } else {
       checkVersion(design, name, value);
   }
 }
@@ -17,6 +23,27 @@ var getReserve = function(design, board, player, dir) {
       }
   }
   return 0;
+}
+
+Dagaz.AI.eval = function(design, params, board, player) {
+  var r = 0;
+  r += getReserve(design, board, player, 2) * MATERIAL_FACTOR;
+  r -= getReserve(design, board, player, 3) * MATERIAL_FACTOR;
+  for (var pos = design.positions.length - 3; pos >= 0; pos--) {
+       var piece = board.getPiece(pos);
+       if (piece !== null) {
+           if (piece.player == player) {
+               r++;
+           } else {
+               r--;
+           }
+       }
+  }
+  return r;
+}
+
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  return 1;
 }
 
 var checkGoals = Dagaz.Model.checkGoals;
@@ -40,7 +67,7 @@ Dagaz.Model.checkGoals = function(design, board, player) {
            }
        }
   }
-  if (fc == 0) {
+  if (!isForced && (fc == 0)) {
       if (board.player == player) {
           er += ec;
       } else {
