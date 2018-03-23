@@ -12,6 +12,14 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+Dagaz.Model.getPieceType = function(piece) {
+  var value = piece.getValue(0);
+  if (value !== null) {
+      return +value;
+  }
+  return 0;
+}
+
 var showPiece = Dagaz.View.showPiece;
 
 Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
