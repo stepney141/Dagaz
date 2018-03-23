@@ -16,7 +16,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var createPiece = function(design, player, value) {
+var createPiece = function(design, board, player, value) {
   if (value > 0) {
       if (!_.isUndefined(cache[player]) && !_.isUndefined(cache[player][value])) {
           return cache[player][value];
@@ -29,7 +29,7 @@ var createPiece = function(design, player, value) {
       return r;
   } else {
       if (value == -1) {
-          return Dagaz.Model.createPiece(1, player);
+          return Dagaz.Model.createPiece(1, board.player);
       }
   }
   return null;
@@ -102,6 +102,8 @@ Dagaz.Model.CheckInvariants = function(board) {
                if ((piece !== null) && (piece.type == 1)) {
                    if (ix >= result.length) {
                        result.push(-2);
+                   } else {
+                       result[ix] = -2;
                    }
                    if (piece.player == board.player) {
                        fr++;
@@ -121,13 +123,17 @@ Dagaz.Model.CheckInvariants = function(board) {
                }
           }
           if (!design.inZone(0, board.player, pos)) {
-              if (result[ix - 1] % 2 == 0) {
-                  fr += result[ix - 1];
-                  result[ix - 1] = 0;
+              ix--;
+              piece = board.getPiece(pos);
+              if ((piece === null) || (piece.type != 1)) {
+                  if (result[ix] % 2 == 0) {
+                      fr += result[ix];
+                      result[ix] = 0;
+                  }
               }
-              if ((result[ix - 1] == 3) && canTuzdyk(design, board, pos, board.player)) {
+              if ((result[ix] == 3) && canTuzdyk(design, board, pos, board.player)) {
                   fr += 3;
-                  result[ix - 1] = -1;
+                  result[ix] = -1;
               }
           }
           var pos = move.actions[0][0][0];
@@ -136,7 +142,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                if (!design.inZone(0, board.player, pos)) {
                    player = design.nextPlayer(player);
                }
-               var piece = createPiece(design, player, result[ix]);
+               var piece = createPiece(design, board, player, result[ix]);
                if (result[ix] == 0) {
                    if (ix > 0) {
                        move.capturePiece(pos);
@@ -145,14 +151,21 @@ Dagaz.Model.CheckInvariants = function(board) {
                        }
                    }
                } else {
-                   if (piece !== null) {
-                       if (ix == 1) {
-                           move.actions[0][2] = [ piece ];
+                   if (ix == 1) {
+                       var tuzdyk = board.getPiece(move.actions[0][1][0]);
+                       if ((tuzdyk !== null) && (tuzdyk.type == 1)) {
+                           move.actions[0][2] = [ tuzdyk ];
                        } else {
+                           if (piece !== null) {
+                               move.actions[0][2] = [ piece ];
+                           }
+                       }
+                   } else {
+                       if (piece !== null) {
                            if ((ix > 0) && (board.getPiece(pos) !== null)) {
-                               move.movePiece(pos, pos, piece);
+                                move.movePiece(pos, pos, piece);
                            } else {
-                               move.dropPiece(pos, piece);
+                                move.dropPiece(pos, piece);
                            }
                        }
                    }

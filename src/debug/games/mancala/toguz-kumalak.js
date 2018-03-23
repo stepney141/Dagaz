@@ -34,8 +34,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addDirection("fr");
     design.addDirection("er");
 
-    design.addPlayer("South", [0, 1, 2, 3]);
-    design.addPlayer("North", [0, 1, 2, 3]);
+    design.addPlayer("South", [0, 1, 3, 2]);
+    design.addPlayer("North", [0, 1, 3, 2]);
 
     design.addPosition("a2", [9, 17, 19, 18]);
     design.addPosition("b2", [-1, 15, 0, 0]);
