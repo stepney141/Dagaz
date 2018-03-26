@@ -216,22 +216,19 @@ MoveList.prototype.getDrops = function() {
             });
       }
   }, this);
-  return _.map(_.uniq(result), function(pos) {
-      var r = [];
-      _.chain(this.getActions(move))
-       .filter(isDrop)
-       .each(function(action) {
-           if ((_.indexOf(action[1], pos) >= 0) && (action[2] !== null)) {
-                _.each(action[2], function(piece) {
-                    r.push(piece);
-                });
-           }
-        })
-      return {
-         position: pos,
-         pieces:   r
-      };
-  }, this);
+  return _.uniq(result);
+}
+
+MoveList.prototype.getDropPieces = function(pos) {
+  var result = null;
+  _.each(this.moves, function(move) {
+      _.each(move.actions, function(action) {
+          if ((action[0] === null) && (action[1] !== null) && (action[1][0] == pos)) {
+              result = action[2];
+          }
+      });
+  });
+  return result;
 }
 
 var isEq = function(x, y) {
@@ -273,39 +270,39 @@ MoveList.prototype.setPosition = function(pos) {
                   m[0][0] = [ this.position ];
                   m[0][1] = [ pos ];
                   this.copyActions(result, actions, move.mode);
-                  return result;
+                  return true;
               }
               if (Dagaz.Model.smartFrom && (this.position == null) && (_.indexOf(m[0][0], pos) >= 0)) {
                   // Smart from move
                   m[0][0] = [ pos ];
                   this.copyActions(result, actions, move.mode);
-                  return result;
+                  return true;
               }
               if (Dagaz.Model.smartTo && (this.position == null) && (_.indexOf(m[0][1], pos) >= 0)) {
                   // Smart from move
                   m[0][1] = [ pos ];
                   this.copyActions(result, actions, move.mode);
-                  return result;
+                  return true;
               }
           } else {
               var n = _.chain(actions)
                .filter(isNoMove)
                .filter(function(action) {
-                   if (_.indexOf(action[0], pos) >= 0) {
+                   if ((action[0] !== null) && (_.indexOf(action[0], pos) >= 0)) {
                        // Capture move
                        action[0] = [ pos ];
-                       return result;
+                       return true;
                    }
-                   if (_.indexOf(action[1], pos) >= 0) {
+                   if ((action[1] !== null) && (_.indexOf(action[1], pos) >= 0)) {
                        // Drop move
                        action[1] = [ pos ];
-                       return result;
+                       return true;
                    }
-                   return result;
+                   return false;
                 }).value();
               if (n.length > 0) {
                   this.copyActions(result, actions, move.mode);
-                  return result;
+                  return true;
               }
           }
       }, this);
