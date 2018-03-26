@@ -118,10 +118,22 @@ App.prototype.getTargets = function() {
   return this.targets;
 }
 
+App.prototype.getDrops = function() {
+  if (_.isUndefined(this.drops)) {
+      if (_.isUndefined(this.list)) {
+          this.drops = [];
+      } else {
+          this.drops = this.list.getDrops();
+      }
+  }
+  return this.drops;
+}
+
 App.prototype.clearPositions = function() {
   delete this.starts;
   delete this.stops;
   delete this.targets;
+  delete this.drops;
 }
 
 App.prototype.setPosition = function(pos) {
@@ -150,6 +162,14 @@ App.prototype.syncCaptures = function(move) {
 
 App.prototype.mouseLocate = function(view, pos) {
   if (this.currPos != pos) {
+      if (!_.isUndefined(this.list) && (pos.length == 1) && (_.indexOf(this.getDrops(), pos[0]) >= 0)) {
+          var pieces = this.list.getDropPieces(pos[0]);
+          if ((pieces !== null) && (pieces.length > 0)) {
+              this.view.setDrops(pieces[0].toString(), [ pos[0] ]);
+          }
+      } else {
+          this.view.clearDrops();
+      }
       if ((this.state == STATE.IDLE) && !_.isUndefined(this.list)) {
           if (isDrag) {
               if (_.intersection(this.getStops(), pos).length > 0) {
