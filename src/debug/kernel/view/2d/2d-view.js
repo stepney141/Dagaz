@@ -516,6 +516,7 @@ Dagaz.View.showHint = function(view) {
   if (Dagaz.Model.showHints) {
       var pos = view.pointToPositions(mouseX, mouseY);
       var ix  = posToIx(view, pos);
+      if (pos.length == 0) ix = null;
       if (ix !== null) {
           var piece = view.piece[view.setup[ix].name];
           if (hintedPiece !== piece) {

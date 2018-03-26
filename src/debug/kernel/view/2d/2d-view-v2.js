@@ -38,6 +38,7 @@ function View2D() {
   this.changes = [];
   this.vectors = [];
   this.current = [];
+  this.drops   = [];
 }
 
 Dagaz.View.getView = function() {
@@ -95,6 +96,24 @@ var posToIx = function(view, pos) {
 
 View2D.prototype.isEmpty = function(pos) {
   return posToIx(this, pos) === null;
+}
+
+View2D.prototype.setDrops = function(name, positions) {
+  this.drops = [];
+  if (!_.isUndefined(this.piece[name])) {
+      _.each(positions, function(p) {
+          if (p <= this.pos.length) {
+              this.drops.push({
+                  piece: this.piece[name],
+                  position: this.pos[p]
+              });
+          }
+      }, this);
+  }
+}
+
+View2D.prototype.clearDrops = function() {
+  this.drops = [];
 }
 
 View2D.prototype.defPosition = function(name, x, y, dx, dy) {
@@ -514,6 +533,17 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
   }
 }
 
+View2D.prototype.showDrops = function(ctx) {
+  if (this.drops.length > 0) {
+      ctx.save();
+      ctx.globalAlpha = 0.5;
+      _.each(this.drops, function(f) {
+         ctx.drawImage(f.piece.h, f.position.x, f.position.y, f.piece.dx, f.piece.dy);
+      });
+      ctx.restore();
+  }
+}
+
 View2D.prototype.draw = function(canvas) {
   if (!isConfigured) {
       Dagaz.View.configure(this);
@@ -553,6 +583,7 @@ View2D.prototype.draw = function(canvas) {
            }
         }, this);
       Dagaz.View.showMarks(this, ctx);
+      this.showDrops(ctx);
       this.animate();
   }
 }
@@ -564,8 +595,8 @@ View2D.prototype.debug = function(text) {
 
 Dagaz.View.showHint = function(view) {
   if (Dagaz.Model.showHints) {
-      var positions = view.pointToPieces(mouseX, mouseY);
-      if (positions) {
+      var positions = view.pointToPositions(mouseX, mouseY);
+      if (!_.isUndefined(positions) && (positions.length > 0)) {
           var ix  = posToIx(view, positions[0]);
           if (ix !== null) {
               var piece = view.piece[view.setup[ix].name];
