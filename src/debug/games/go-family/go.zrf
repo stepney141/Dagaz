@@ -1,5 +1,3 @@
-(version "3.0")
-
 (define drop-stone (
   (verify empty?) add
 ))
@@ -8,8 +6,8 @@
   (title "Go (19x19)")
 
   (option "pass turn"    true)
-  (option "go-extension" true)
-  (option "ko" true)
+; (option "go-extension" true)
+; (option "ko" true)
 
   (move-sound    "Audio/Pickup.wav")
   (release-sound "Audio/Pickup.wav")
@@ -20,12 +18,12 @@
   (turn-order Black White)
 
   (board
-      (image "images/go/19x19.bmp")
+      (image "images/19x19.bmp")
       (grid
-          (start-rectangle 15 15 46 46)
+          (start-rectangle 6 6 36 36)
           (dimensions
-            ("a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s" (32 0)) ; files
-            ("a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s" (0 32)) ; ranks
+            ("a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s" (30 0)) ; files
+            ("19/18/17/16/15/14/13/12/11/10/9/8/7/6/5/4/3/2/1" (0 30)) ; ranks
           )
           (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0))
       )
@@ -34,8 +32,8 @@
   (piece
      (name Stone)
      (help " ")
-     (image Black "images/go/bs.bmp"
-            White "images/go/ws.bmp")
+     (image Black "images/bsmall.bmp"
+            White "images/wsmall.bmp")
      (drops (drop-stone))
   )  
 )
@@ -56,33 +54,9 @@
 )
 
 (variant
-  (title "Go (9x9)")
-  (default)
-  (board
-      (image "images/go/9x9.bmp")
-      (grid
-          (start-rectangle 7 7 68 68)
-          (dimensions
-            ("a/b/c/d/e/f/g/h/i" (61 0)) ; files
-            ("9/8/7/6/5/4/3/2/1" (0 61)) ; ranks
-          )
-          (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0))
-      )
-  )
-
-  (piece
-     (name Stone)
-     (help " ")
-     (image Black "images/go/bb.bmp"
-            White "images/go/wb.bmp")
-     (drops (drop-stone))
-  )  
-)
-
-(variant
   (title "Three-color Go (19x19)")
   
-  (option "ko" situation)
+; (option "ko" situation)
 
   (players Black White Red)
   (turn-order Black White Red)
