@@ -119,10 +119,10 @@ App.prototype.getTargets = function() {
 }
 
 App.prototype.getDrops = function() {
-  if (_.isUndefined(this.drops)) {
-      if (_.isUndefined(this.list)) {
-          this.drops = [];
-      } else {
+  if (_.isUndefined(this.list)) {
+      this.drops = [];
+  } else {
+      if (_.isUndefined(this.drops) || (this.drops.length == 0)) {
           this.drops = this.list.getDrops();
       }
   }
