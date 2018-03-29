@@ -538,7 +538,9 @@ View2D.prototype.showDrops = function(ctx) {
       ctx.save();
       ctx.globalAlpha = 0.5;
       _.each(this.drops, function(f) {
-         ctx.drawImage(f.piece.h, f.position.x, f.position.y, f.piece.dx, f.piece.dy);
+         var dx = (f.position.dx - f.piece.dx) / 2 | 0;
+         var dy = (f.position.dy - f.piece.dy) / 2 | 0;
+         ctx.drawImage(f.piece.h, f.position.x + dx, f.position.y + dy, f.piece.dx, f.piece.dy);
       });
       ctx.restore();
   }
