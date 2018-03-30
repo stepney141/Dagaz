@@ -76,11 +76,9 @@ MoveList.prototype.getTargets = function() {
   var result = [];
   if (this.position !== null) {
       _.each(this.moves, function(move) {
-          var actions = _.filter(this.getActions(move), isMove);
-          if ((actions.length > 0) && (_.indexOf(actions[0][0], this.position) >= 0)) {
-              _.each(actions[0][1], function(pos) {
-                   result.push(pos);
-              });
+          var actions = this.getActions(move);
+          if ((actions.length > 0) && isMove(actions[0]) && (_.indexOf(actions[0][0], this.position) >= 0)) {
+              result.push(actions[0][1][0]);
           }
       }, this);
   }
@@ -91,14 +89,21 @@ MoveList.prototype.getTargets = function() {
 MoveList.prototype.getStarts = function() {
   var result = [];
   _.each(this.moves, function(move) {
-      var actions = _.filter(this.getActions(move), isMove);
-      if (actions.length > 0) {
-          _.each(actions[0][0], function(pos) {
-               result.push(pos);
-          });
+      var actions = this.getActions(move);
+      if ((actions.length > 0) && isMove(actions[0])) {
+          result.push(actions[0][0][0]);
       }
   }, this);
   result = _.uniq(_.union(result, this.getCaptures()));
+  return result;
+}
+
+MoveList.prototype.getMoveActions = function(move) {
+  var result = [];
+  var actions = this.getActions(move);
+  if  ((actions.length > 0) && isMove(actions[0])) {
+      result.push(actions[0]);
+  }
   return result;
 }
 
@@ -108,7 +113,7 @@ MoveList.prototype.getStops = function() {
   }
   var result = this.getTargets();
   _.each(this.moves, function(move) {
-      var actions = _.filter(this.getActions(move), isMove);
+      var actions = this.getMoveActions(move);
       if ((actions.length == 0) || (actions[0][0].length > 1) || (actions[0][1].length > 1)) {
           _.chain(this.getActions(move))
            .filter(isNoMove)
@@ -131,10 +136,10 @@ MoveList.prototype.getStops = function() {
       var canPass   = this.canPass();
       _.each(this.moves, function(move) {
             var actions = _.filter(this.getActions(move), isMove);
-            if (!canPass && (actions.length > 0) && (actions[0][0].length == 1)) {
+            if (!canPass && (actions.length > 0) && (actions[0][0].length == 1) && Dagaz.Model.smartFrom) {
                 positions.push(actions[0][0][0]);
             }
-            if ((actions.length > 0) && (actions[0][1].length == 1)) {
+            if ((actions.length > 0) && (actions[0][1].length == 1) && Dagaz.Model.smartTo) {
                 positions.push(actions[0][1][0]);
             }
       }, this);
@@ -153,7 +158,7 @@ MoveList.prototype.getStops = function() {
 MoveList.prototype.getCaptures = function() {
   var result = [];
   _.each(this.moves, function(move) {
-      var actions = _.filter(this.getActions(move), isMove);
+      var actions = this.getMoveActions(move);
       if (((actions.length > 0) && (_.indexOf(actions[0][0], this.position) >= 0)) ||
           ((actions.length == 0) && (this.position === null))) {
           _.chain(this.getActions(move))
@@ -172,7 +177,7 @@ MoveList.prototype.getCaptures = function() {
 MoveList.prototype.getDrops = function() {
   var result = [];
   _.each(this.moves, function(move) {
-      var actions = _.filter(this.getActions(move), isMove);
+      var actions = this.getMoveActions(move);
       if (actions.length == 0) {
           _.chain(this.getActions(move))
            .filter(isDrop)
@@ -183,22 +188,19 @@ MoveList.prototype.getDrops = function() {
             });
       }
   }, this);
-  return _.map(_.uniq(result), function(pos) {
-      var r = [];
-      _.chain(this.getActions(move))
-       .filter(isDrop)
-       .each(function(action) {
-           if ((_.indexOf(action[1], pos) >= 0) && (action[2] !== null)) {
-                _.each(action[2], function(piece) {
-                    r.push(piece);
-                });
-           }
-        })
-      return {
-         position: pos,
-         pieces:   r
-      };
-  }, this);
+  return _.uniq(result);
+}
+
+MoveList.prototype.getDropPieces = function(pos) {
+  var result = null;
+  _.each(this.moves, function(move) {
+      _.each(move.actions, function(action) {
+          if ((action[0] === null) && (action[1] !== null) && (action[1][0] == pos)) {
+              result = action[2];
+          }
+      });
+  });
+  return result;
 }
 
 var isEq = function(x, y) {
@@ -232,7 +234,7 @@ MoveList.prototype.setPosition = function(pos) {
   if (_.indexOf(this.getStops(), pos) >= 0) {
       var moves = _.filter(this.moves, function(move) {
           var actions = this.getActions(move);
-          var m = _.filter(actions, isMove);
+          var m = this.getMoveActions(move);
           if (m.length > 0) {
               if ((_.indexOf(m[0][0], this.position) >= 0) && (_.indexOf(m[0][1], pos) >= 0)) {
                   // Regular move
@@ -280,13 +282,12 @@ MoveList.prototype.setPosition = function(pos) {
           this.level++;
       }
       this.position = null;
-  } else {
-      if (_.indexOf(this.getStarts(), pos) >= 0) {
-          if (this.position == pos) {
-              this.position = null;
-          } else {
-              this.position = pos;
-          }
+  }
+  if (_.indexOf(this.getStarts(), pos) >= 0) {
+      if (this.position == pos) {
+          this.position = null;
+      } else {
+          this.position = pos;
       }
   }
   this.stops = null;
