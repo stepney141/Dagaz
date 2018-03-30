@@ -14,7 +14,7 @@ Dagaz.Model.smartTo         = false;
 Dagaz.Model.showGoals       = true;
 Dagaz.Model.showCaptures    = true;
 Dagaz.Model.showMoves       = true;
-Dagaz.Model.showHints       = true;
+Dagaz.Model.showHints       = false;
 Dagaz.Model.stalemateDraw   = false;
 Dagaz.Model.showBlink       = true;
 Dagaz.Model.chessCapturing  = true;
@@ -1282,28 +1282,14 @@ ZrfMoveGenerator.prototype.setAttr = function(name, pos, value) {
 }
 
 ZrfMoveGenerator.prototype.generate = function() {
-//Dagaz.KPI.open("generate", "succeed");
-  var succeed = true;
   while (this.cmd < this.template.commands.length) {
      var r = (this.template.commands[this.cmd++])(this);
-     if (r === null) {
-         succeed = false;
-         break;
-     }
+     if (r === null) return;
      this.cmd += r;
-     if (this.cmd < 0) {
-         succeed = false;
-         break;
-     }
+     if (this.cmd < 0) return;
   }
   this.cmd = 0;
-  if (succeed) {
-// ? Dagaz.KPI.set("actions", this.move.actions.length, "generate", "succeed");
-//   Dagaz.KPI.close("generate");
-     this.completed = true;
-/*} else {
-     Dagaz.KPI.close("generate", "failed"); */
-  }
+  this.completed = true;
 }
 
 function ZrfPiece(type, player) {
@@ -1640,7 +1626,6 @@ ZrfBoard.prototype.generateInternal = function(callback, cont, cover, serial) {
       return;
   }
   var sn = 0;
-  Dagaz.KPI.stage("init");
   if ((this.moves.length == 0) && !design.failed && (this.player > 0)) {
       var priors = [];
       _.chain(_.keys(this.pieces))
@@ -1679,24 +1664,6 @@ ZrfBoard.prototype.generateInternal = function(callback, cont, cover, serial) {
                }, this);
           }, this);
       }
-      Dagaz.KPI.set("modes", priors.length);
-      var high = null;
-      var low  = 0;
-      for (var i = 0; i <= design.modes.length; i++) {
-          if (!_.isUndefined(priors[i])) {
-              if (high === null) {
-                  high = priors[i].length;
-              } else {
-                  low += priors[i].length;
-             }
-          }
-      }
-      if (high !== null) {
-          Dagaz.KPI.set("moves", high + low);
-          Dagaz.KPI.set("high", high);
-          Dagaz.KPI.set("low", low);
-      }
-      Dagaz.KPI.stage("generate");
       this.forks = [];
       if (callback.checkContinue()) {
           for (var i = 0; i <= design.modes.length; i++) {
@@ -1726,12 +1693,8 @@ ZrfBoard.prototype.generateInternal = function(callback, cont, cover, serial) {
                }
           }
       }
-      Dagaz.KPI.set("moves", this.moves.length);
-      Dagaz.KPI.stage("extension");
       Dagaz.Model.Extension(this);
-      Dagaz.KPI.set("moves", this.moves.length);
       if (cont) {
-          Dagaz.KPI.stage("invariant");
           Dagaz.Model.CheckInvariants(this);
           Dagaz.Model.PostActions(this);
           if (Dagaz.Model.passTurn == 1) {
@@ -1742,7 +1705,6 @@ ZrfBoard.prototype.generateInternal = function(callback, cont, cover, serial) {
                   this.moves.push(new ZrfMove());
               }
           }
-          Dagaz.KPI.set("moves", this.moves.length);
       }
   }
 }
