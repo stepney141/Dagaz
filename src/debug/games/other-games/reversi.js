@@ -23,6 +23,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-drops", "false");
     design.checkVersion("animate-captures", "false");
+    design.checkVersion("smart-moves", "false");
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
     design.checkVersion("pass-turn", "forced");
@@ -105,13 +106,18 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("g1", [-1, 1, 0, -7, -8, 0, 0, -9]);
     design.addPosition("h1", [-1, 0, 0, 0, -8, 0, 0, -9]);
 
+    design.addZone("strong", 2, [56, 0, 63, 7]);
+    design.addZone("strong", 1, [56, 0, 63, 7]);
+    design.addZone("weak", 2, [49, 9, 54, 14]);
+    design.addZone("weak", 1, [49, 9, 54, 14]);
+
     design.addCommand(0, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(0, ZRF.FUNCTION,	20);	// verify
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
 
-    design.addPiece("Stone", 0, 4);
+    design.addPiece("Stone", 0, 2);
     design.addDrop(0, 0, [], 0);
 
     design.setup("White", "Stone", 27);
