@@ -81,8 +81,9 @@ Dagaz.Model.checkGoals = function(design, board, player) {
   });
   var f = true;
   _.each(positions, function(pos) {
-      if (f && isValid(design, board, board.player, pos)) {
-          f = false;
+      if (f) {
+          if (isValid(design, board, player, pos)) f = false;
+          if (isValid(design, board, design.nextPlayer(player), pos)) f = false;
       }
   });
   if (f) {
