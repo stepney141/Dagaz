@@ -347,7 +347,6 @@ App.prototype.exec = function() {
   if (this.state == STATE.EXEC) {
       this.state = STATE.IDLE;
       isDrag = false;
-      Dagaz.KPI.dump();
       if (!this.move.isPass()) {
           this.view.markPositions(Dagaz.View.markType.TARGET, []);
           this.view.markPositions(Dagaz.View.markType.CURRENT, []);
