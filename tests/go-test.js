@@ -58,6 +58,9 @@ QUnit.test("Move list", function( assert ) {
   var stops = list.getStops();
   assert.equal( stops.length, 81, "81 Stop positions");
 
+  var drops = list.getDrops();
+  assert.equal( drops.length, 81, "81 Drop positions");
+
   var move = list.setPosition(80);
   assert.equal( move.toString(), "Black Stone i1", "Black Stone i1");
 
