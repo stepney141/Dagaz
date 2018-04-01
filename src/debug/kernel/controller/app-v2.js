@@ -119,7 +119,7 @@ App.prototype.getTargets = function() {
 }
 
 App.prototype.getDrops = function() {
-  if (_.isUndefined(this.list)) {
+  if (_.isUndefined(this.list) || (Dagaz.Model.showDrops == 0)) {
       this.drops = [];
   } else {
       if (_.isUndefined(this.drops) || (this.drops.length == 0)) {
@@ -134,6 +134,7 @@ App.prototype.clearPositions = function() {
   delete this.stops;
   delete this.targets;
   delete this.drops;
+  this.view.clearDrops();
 }
 
 App.prototype.setPosition = function(pos) {
@@ -162,13 +163,15 @@ App.prototype.syncCaptures = function(move) {
 
 App.prototype.mouseLocate = function(view, pos) {
   if (this.currPos != pos) {
-      if (!_.isUndefined(this.list) && (pos.length == 1) && (_.indexOf(this.getDrops(), pos[0]) >= 0)) {
-          var pieces = this.list.getDropPieces(pos[0]);
-          if ((pieces !== null) && (pieces.length > 0)) {
-              this.view.setDrops(pieces[0].toString(), [ pos[0] ]);
+      if (Dagaz.Model.showDrops == 1) {
+          if (!_.isUndefined(this.list) && (pos.length == 1) && (_.indexOf(this.getDrops(), pos[0]) >= 0)) {
+              var pieces = this.list.getDropPieces(pos[0]);
+              if ((pieces !== null) && (pieces.length > 0)) {
+                  this.view.setDrops(pieces[0].toString(), [ pos[0] ]);
+              }
+          } else {
+              this.view.clearDrops();
           }
-      } else {
-          this.view.clearDrops();
       }
       if ((this.state == STATE.IDLE) && !_.isUndefined(this.list)) {
           if (isDrag) {
@@ -221,6 +224,7 @@ App.prototype.mouseDown = function(view, pos) {
                       this.syncCaptures(moves[0]);
                       this.state = STATE.IDLE;
                       delete this.list;
+                      this.view.clearDrops();
                       lastPosition = null;
                       this.view.markPositions(Dagaz.View.markType.ATTACKING, []);
                       this.view.markPositions(Dagaz.View.markType.CURRENT, []);
@@ -316,6 +320,16 @@ App.prototype.exec = function() {
                  console.log("Setup: " + Dagaz.Model.getSetup(this.design, this.board));
              }
              this.list = Dagaz.Model.getMoveList(this.board);
+             if (Dagaz.Model.showDrops == 2) {
+                 var drops = this.getDrops();
+                 if (drops.length > 0) {
+                     var pieces = this.list.getDropPieces(drops[0]);
+                     if ((pieces !== null) && (pieces.length > 0)) {
+                         this.view.setDrops(pieces[0].toString(), drops);
+                     }
+                 }
+                 this.view.invalidate();
+             }
              if (this.list.isPassForced()) {
                   if (passForced >= this.design.getPlayersCount()) {
                       this.state = STATE.DONE;
@@ -325,6 +339,7 @@ App.prototype.exec = function() {
                       this.board = this.board.apply(Dagaz.Model.createMove());
                       this.state = STATE.IDLE;
                       delete this.list;
+                      this.view.clearDrops();
                       passForced++;
                   }
                   return;
@@ -367,6 +382,7 @@ App.prototype.exec = function() {
                   } else {
                       this.state = STATE.IDLE;
                       delete this.list;
+                      this.view.clearDrops();
                       passForced++;
                       return;
                   }
@@ -400,6 +416,7 @@ App.prototype.exec = function() {
               this.view.markPositions(Dagaz.View.markType.CURRENT, []);
               var moves = this.list.getMoves();
               delete this.list;
+              this.view.clearDrops();
               if ((moves.length > 0) || (determinated !== null)) {
                   var m = moves[0];
                   if (determinated !== null) {
