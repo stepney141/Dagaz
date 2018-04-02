@@ -63,10 +63,10 @@ Dagaz.Model.CheckInvariants = function(board) {
                        if (value === null) move.failed = true;
                        if (piece.player == board.player) {
                            dame += value - 1;
-                           group.push(pos);
+                           group.push(p);
                        } else {
                            if (value <= 1) {
-                               captured.push(pos);
+                               captured.push(p);
                                expand(design, board, captured, piece.player);
                                _.each(captured, function(q) {
                                     enemies.push(q);
@@ -94,6 +94,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                        move.failed = true;
                    }
                    capture(move, group);
+                   move.capturePiece(pos);
                    return;
                }
            }
