@@ -1,7 +1,8 @@
 (function() {
 
-var checkVersion = Dagaz.Model.checkVersion;
 var suicideMode = false;
+
+var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
   if (name == "go-extension") {
@@ -13,24 +14,11 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-Model.Move.moveToString = function(move, part) {
-  if (move.actions.length == 0) return "";
-  return _.chain(move.actions)
-   .filter(function (action) {
-       return (action[0] === null) && (action[1] !== null) && (action[2] !== null);
-    })
-   .map(function (action) {
-       return Dagaz.Model.posToString(action[1][0]);
-    })
-   .first()
-   .value();
-}
-
 var expand = function(design, board, group, player) {
    for (var i = 0; i < group.length; i++) {
         var pos = group[i];
-        _.each(_.range(design.dirs.length), function(dir) {
-            var p = design.navigate(board.player, pos, dir);
+        _.each(design.allDirections(), function(dir) {
+            var p = design.navigate(player, pos, dir);
             if (p !== null) {
                 var piece = board.getPiece(p);
                 if ((piece !== null) && (piece.player == player)) {
@@ -47,14 +35,11 @@ var capture = function(move, group) {
    });
 }
 
-var change = function(move, board, group, dame, cnt) {
+var change = function(move, board, group, dame) {
    _.each(group, function(pos) {
         var piece = board.getPiece(pos);
         if (piece !== null) {
             piece = piece.setValue(0, dame);
-            if (cnt) {
-                piece = piece.setValue(1, cnt);
-            }
             move.movePiece(pos, pos, piece);
         }
    });
@@ -64,67 +49,57 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
-  _.chain(board.moves)
-   .filter(function(move) {
-      return move.actions.length == 1;
-    })
-   .each(function(move) {
-      var dame   = -1;
-      var cnt    = 1;
-      var pos    = move.actions[0][1][0];
-      var friend = [];
-      var enemy  = [];
-      _.each(_.range(design.dirs.length), function(dir) {
-          var p = design.navigate(board.player, pos, dir);
-          if (p !== null) {
-              var piece = board.getPiece(p);
-              if (piece === null) {
-                  dame++;
-              } else {
-                  if (piece.player != board.player) {
-                      if (_.indexOf(enemy, p) < 0) {
-                          var d = piece.getValue(0);
-                          var g = [ p ];
-                          expand(design, board, g, piece.player);
-                          if (d <= 1) {
-                              move.addValue(piece.player, g.length);
-                              capture(move, g);
-                              dame++;
-                          } else {
-                              change(move, board, g, d - 1);
-                          }
-                          _.each(g, function(pos) {
-                               enemy.push(pos);
-                          });
-                      }
-                  } else {
-                      if (_.indexOf(friend, p) < 0) {
-                          var g = [ p ];
-                          expand(design, board, g, board.player);
-                          dame += piece.getValue(0);
-                          cnt  += piece.getValue(1);
-                          _.each(g, function(pos) {
-                               friend.push(pos);
-                          });
-                      }
-                  }
-              }
-          }
-      });
-      if (dame == 0) {
-          if (!suicideMode || (cnt == 1)) {
-              move.failed = true;
-          } else {
-              move.addValue(board.player, friend.length);
-              capture(move, friend);
-              move.actions.shift();
-          }
-      } else {
-          change(move, board, friend, dame, cnt);
-          var piece = move.actions[0][2][0];
-          piece = piece.setValue(0, dame);
-          piece = piece.setValue(1, cnt);
-          move.actions[0][2][0] = piece;
+  _.each(board.moves, function(move) {
+      if ((move.actions.length == 1) && (move.actions[0][1] !== null) && (move.actions[0][2] !== null)) {
+           var dame = 0;
+           var pos  = move.actions[0][1][0];
+           var captured = []; var group = []; var enemies = [];
+           _.each(design.allDirections(), function(dir) {
+               var p = design.navigate(board.player, pos, dir);
+               if ((p !== null) && (_.indexOf(enemies, p) < 0)) {
+                   var piece = board.getPiece(p);
+                   if (piece !== null) {
+                       var value = piece.getValue(0);
+                       if (value === null) move.failed = true;
+                       if (piece.player == board.player) {
+                           dame += value - 1;
+                           group.push(pos);
+                       } else {
+                           if (value <= 1) {
+                               captured.push(pos);
+                               expand(design, board, captured, piece.player);
+                               _.each(captured, function(q) {
+                                    enemies.push(q);
+                               });
+                           } else {
+                               var g = [ p ];
+                               expand(design, board, g, piece.player);
+                               _.each(g, function(q) {
+                                    enemies.push(q);
+                               });
+                               change(move, board, g, value - 1);
+                           }
+                       }
+                   } else {
+                       dame++;
+                   }
+               }
+           });
+           expand(design, board, group, board.player);
+           if (captured.length > 0) {
+               capture(move, captured);
+           } else {
+               if (dame == 0) {
+                   if (!suicideMode) {
+                       move.failed = true;
+                   }
+                   capture(move, group);
+                   return;
+               }
+           }
+           change(move, board, group, dame);
+           var piece = move.actions[0][2][0].setValue(0, dame);
+           move.actions[0][2] = [ piece ];
       }
   });
   CheckInvariants(board);
