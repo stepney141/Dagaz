@@ -26,6 +26,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
     design.checkVersion("go-extension", "true");
+    design.checkVersion("atari-go-goal", "true");
 
     design.addDirection("w");
     design.addDirection("e");
