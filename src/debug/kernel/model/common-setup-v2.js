@@ -65,10 +65,14 @@ function rep(pattern, separator) {
 }
 
 var num  = rgx(/\d+/);
-var str  = rgx(/[^=;]+/);
+var str  = rgx(/[^=;+]+/);
 
 var attr = seq([
     txt('='), str
+]).then(function(r) {return r[1];});
+
+var quan = seq([
+    txt('+'), num
 ]).then(function(r) {return r[1];});
 
 var parm = seq([
@@ -80,8 +84,11 @@ var parm = seq([
 };});
 
 var term = seq([
-    opt(parm), txt(';')
-]).then(function(r) {return r[0];});
+    opt(parm), opt(quan), txt(';')
+]).then(function(r) {return {
+    body:   r[0],
+    quan:   r[1]
+};});
 
 var conf = rep(term);
 
@@ -91,36 +98,62 @@ Dagaz.Model.setup = function(board) {
   if (setup) {
       var r = conf.exec(setup, 0);
       if (r.end > 0) {
-          _.each(design.allPositions(), function(pos) {
+          var pos = 0;
+          for (var ix = 0; ix < r.res.length; ix++, pos++) {
+              if (pos >= design.positions.length) break;
               var piece = null;
-              if ((pos < r.res.length) && !_.isUndefined(r.res[pos])) {
-                  var type = r.res[pos].type;
-                  var player = r.res[pos].player;
+              if ((ix < r.res.length) && !_.isUndefined(r.res[ix].body)) {
+                  var type = r.res[ix].body.type;
+                  var player = r.res[ix].body.player;
                   piece = Dagaz.Model.createPiece(type, player);
-                  for (var i = 0; i < r.res[pos].attrs.length; i++) {
-                       piece = piece.setValue(i, r.res[pos].attrs[i]);
+                  for (var i = 0; i < r.res[ix].body.attrs.length; i++) {
+                       piece = piece.setValue(i, r.res[ix].body.attrs[i]);
                   }
               }
               board.setPiece(pos, piece);
-          });
+              if (!_.isUndefined(r.res[ix].quan)) {
+                  var cnt = +r.res[ix].quan;
+                  for (var i = 0; i < cnt; i++) {
+                       pos++;
+                       if (pos >= design.positions.length) break;
+                       board.setPiece(pos, piece);
+                  }
+              }
+          }
       }
   }
 }
 
 Dagaz.Model.getSetup = function(design, board) {
-  var str = "";
+  var str = ""; var prev = ""; var cnt = 0;
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
+      var s = "";
       if (piece !== null) {
-          str = str + piece.type + ":" + piece.player;
+          s = s + piece.type + ":" + piece.player;
           for (var i = 0; i < 10; i++) {
                var value = piece.getValue(i);
                if (value === null) break;
-               str = str + "=" + value;
+               s = s + "=" + value;
           }
       }
-      str = str + ";";
+      if (prev != s) {
+          str = str + prev;
+          if (cnt > 0) {
+              str = str + "+" + cnt;
+          }
+          str = str + ";";
+          prev = s;
+          cnt = 0;
+      } else {
+          cnt++;
+      }
   });
+  str = str + prev;
+  if (cnt > 0) {
+      str = str + "+" + cnt;
+  }
+  str = str + ";";
   return "?setup=" + str;
 }
 
