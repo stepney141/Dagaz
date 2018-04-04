@@ -84,30 +84,28 @@ Dagaz.AI.eval = function(design, params, board, player) {
   var fp = null; var ep = null;
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
-      if (piece !== null) {
-          var value = piece.getValue(0);
-          if (value !== null) {
-              if (piece.player == board.player) {
-                  if (fa == 1) {
-                      var p = getAtari(design, board, pos);
-                      if (p === null) return;
-                      if ((fp !== null) && (fp != p)) {
-                          fa = 0;
-                      }
-                      fp = p;
+      if ((piece !== null) && (piece.getValue(0) !== null)) {
+          var value = +piece.getValue(0);
+          if (piece.player == board.player) {
+              if (fa == 1) {
+                  var p = getAtari(design, board, pos);
+                  if (p === null) return;
+                  if ((fp !== null) && (fp != p)) {
+                      fa = 0;
                   }
-                  if ((fa === null) || (fa > value)) fa = value;
-              } else {
-                  if (ea == 1) {
-                      var p = getAtari(design, board, pos);
-                      if (p === null) return;
-                      if ((ep !== null) && (ep != p)) {
-                          ea = 0;
-                      }
-                      ep = p;
-                  }
-                  if ((ea === null) || (ea > value)) ea = value;
+                  fp = p;
               }
+              if ((fa === null) || (fa > value)) fa = value;
+          } else {
+              if (ea == 1) {
+                  var p = getAtari(design, board, pos);
+                  if (p === null) return;
+                  if ((ep !== null) && (ep != p)) {
+                      ea = 0;
+                  }
+                  ep = p;
+              }
+              if ((ea === null) || (ea > value)) ea = value;
           }
       }
   });
@@ -133,7 +131,7 @@ Dagaz.AI.eval = function(design, params, board, player) {
 }
 
 Dagaz.AI.heuristic = function(ai, design, board, move) {
-  var isAtari = false;
+  var atari = 0;
   if ((move.actions.length > 0) && (move.actions[0][1] !== null)) {
       var pos = move.actions[0][1][0];
       var pattern = 0;
@@ -141,9 +139,10 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
           var p = design.navigate(board.player, pos, dir);
           if (p !== null) {
               var piece = board.getPiece(p);
-              if (piece !== null) {
-                  if (piece.getValue(0) == 1) {
-                      isAtari = true;
+              if ((piece !== null) && (piece.getValue(0) !== null)) {
+                  if (+piece.getValue(0) == 1) {
+                      atari = MAXVALUE;
+                      if (piece.player == board.player) atari = (atari / 2) | 0;
                       return;
                   }
                   if (piece.player == board.player) {
@@ -157,7 +156,7 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
           }
           pattern = pattern * 10;
       });
-      if (isAtari) return MAXVALUE;
+      if (atari > 0) return atari;
       if (!_.isUndefined(patterns[pattern])) {
           return patterns[pattern];
       } else {

@@ -59,8 +59,11 @@ Dagaz.Model.CheckInvariants = function(board) {
                if ((p !== null) && (_.indexOf(enemies, p) < 0)) {
                    var piece = board.getPiece(p);
                    if (piece !== null) {
-                       var value = piece.getValue(0);
-                       if (value === null) move.failed = true;
+                       if (piece.getValue(0) === null) {
+                           move.failed = true;
+                           return;
+                       }
+                       var value = +piece.getValue(0);
                        if (piece.player == board.player) {
                            dame += value - 1;
                            group.push(p);
