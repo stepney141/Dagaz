@@ -1,32 +1,35 @@
 (function() {
 
-var suicideMode = false;
-
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name == "go-extension") {
-     if (value == "suicide") {
-         suicideMode = true;
-     }
-  } else {
+  if (name != "go-extension") {
      checkVersion(design, name, value);
   }
 }
 
-var expand = function(design, board, group, player) {
+var expand = function(design, board, group, player, captured) {
+   var r = 0;
    for (var i = 0; i < group.length; i++) {
         var pos = group[i];
         _.each(design.allDirections(), function(dir) {
             var p = design.navigate(player, pos, dir);
             if (p !== null) {
                 var piece = board.getPiece(p);
-                if ((piece !== null) && (piece.player == player)) {
-                    if (_.indexOf(group, p) < 0) group.push(p);
+                if (piece !== null) {
+                    if ((piece.player == player) && (_.indexOf(group, p) < 0)) {
+                        group.push(p);
+                    }
+                    if (!_.isUndefined(captured) && (_.indexOf(captured, p) >= 0)) {
+                        r++;
+                    }
+                } else {
+                    r++;
                 }
             }
         });
    }
+   return r;
 }
 
 var capture = function(move, group) {
@@ -53,7 +56,7 @@ Dagaz.Model.CheckInvariants = function(board) {
       if ((move.actions.length == 1) && (move.actions[0][1] !== null) && (move.actions[0][2] !== null)) {
            var dame = 0;
            var pos  = move.actions[0][1][0];
-           var captured = []; var group = []; var enemies = [];
+           var captured = []; var group = []; var enemies = []; 
            _.each(design.allDirections(), function(dir) {
                var p = design.navigate(board.player, pos, dir);
                if ((p !== null) && (_.indexOf(enemies, p) < 0)) {
@@ -74,6 +77,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                                _.each(captured, function(q) {
                                     enemies.push(q);
                                });
+                               dame++;
                            } else {
                                var g = [ p ];
                                expand(design, board, g, piece.player);
@@ -91,13 +95,27 @@ Dagaz.Model.CheckInvariants = function(board) {
            expand(design, board, group, board.player);
            if (captured.length > 0) {
                capture(move, captured);
+               var friends = [];
+               _.each(captured, function(e) {
+                   _.each(design.allDirections(), function(dir) {
+                       var p = design.navigate(board.player, e, dir);
+                       if ((p !== null) && (_.indexOf(group, p) < 0) && (_.indexOf(friends, p) < 0)) {
+                            var g = [ p ];
+                            var d = expand(design, board, g, board.player, captured);
+                            _.each(g, function(q) {
+                                friends.push(q);
+                                var piece = board.getPiece(q);
+                                if ((piece !== null) && (piece.player == board.player)) {
+                                     piece = piece.setValue(0, d);
+                                     move.movePiece(q, q, piece);
+                                }
+                            });
+                       }
+                   });
+               });
            } else {
                if (dame == 0) {
-                   if (!suicideMode) {
-                       move.failed = true;
-                   }
-                   capture(move, group);
-                   move.capturePiece(pos);
+                   move.failed = true;
                    return;
                }
            }
