@@ -8,8 +8,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var expand = function(design, board, group, player, captured) {
-   var r = 0;
+var expand = function(design, board, player, group, dame, captured) {
    for (var i = 0; i < group.length; i++) {
         var pos = group[i];
         _.each(design.allDirections(), function(dir) {
@@ -21,15 +20,14 @@ var expand = function(design, board, group, player, captured) {
                         group.push(p);
                     }
                     if (!_.isUndefined(captured) && (_.indexOf(captured, p) >= 0)) {
-                        r++;
+                        if (_.indexOf(dame, p) < 0) dame.push(p);
                     }
                 } else {
-                    r++;
+                    if (_.indexOf(dame, p) < 0) dame.push(p);
                 }
             }
         });
    }
-   return r;
 }
 
 var capture = function(move, group) {
@@ -54,9 +52,9 @@ Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
   _.each(board.moves, function(move) {
       if ((move.actions.length == 1) && (move.actions[0][1] !== null) && (move.actions[0][2] !== null)) {
-           var dame = 0;
            var pos  = move.actions[0][1][0];
-           var captured = []; var group = []; var enemies = []; 
+           var captured = []; var group = []; 
+           var enemies  = []; var dame  = [ pos ];
            _.each(design.allDirections(), function(dir) {
                var p = design.navigate(board.player, pos, dir);
                if ((p !== null) && (_.indexOf(enemies, p) < 0)) {
@@ -68,19 +66,18 @@ Dagaz.Model.CheckInvariants = function(board) {
                        }
                        var value = +piece.getValue(0);
                        if (piece.player == board.player) {
-                           dame += value - 1;
                            group.push(p);
                        } else {
                            if (value <= 1) {
                                captured.push(p);
-                               expand(design, board, captured, piece.player);
+                               expand(design, board, piece.player, captured, []);
                                _.each(captured, function(q) {
                                     enemies.push(q);
                                });
-                               dame++;
+                               dame.push(p);
                            } else {
                                var g = [ p ];
-                               expand(design, board, g, piece.player);
+                               expand(design, board, piece.player, g, []);
                                _.each(g, function(q) {
                                     enemies.push(q);
                                });
@@ -88,11 +85,11 @@ Dagaz.Model.CheckInvariants = function(board) {
                            }
                        }
                    } else {
-                       dame++;
+                       dame.push(p);
                    }
                }
            });
-           expand(design, board, group, board.player);
+           expand(design, board, board.player, group, dame);
            if (captured.length > 0) {
                capture(move, captured);
                var friends = [];
@@ -100,13 +97,13 @@ Dagaz.Model.CheckInvariants = function(board) {
                    _.each(design.allDirections(), function(dir) {
                        var p = design.navigate(board.player, e, dir);
                        if ((p !== null) && (_.indexOf(group, p) < 0) && (_.indexOf(friends, p) < 0)) {
-                            var g = [ p ];
-                            var d = expand(design, board, g, board.player, captured);
+                            var g = [ p ]; var d = [];
+                            expand(design, board, board.player, g, d, captured);
                             _.each(g, function(q) {
                                 friends.push(q);
                                 var piece = board.getPiece(q);
                                 if ((piece !== null) && (piece.player == board.player)) {
-                                     piece = piece.setValue(0, d);
+                                     piece = piece.setValue(0, d.length);
                                      move.movePiece(q, q, piece);
                                 }
                             });
@@ -114,13 +111,13 @@ Dagaz.Model.CheckInvariants = function(board) {
                    });
                });
            } else {
-               if (dame == 0) {
+               if (dame.length <= 1) {
                    move.failed = true;
                    return;
                }
            }
-           change(move, board, group, dame);
-           var piece = move.actions[0][2][0].setValue(0, dame);
+           change(move, board, group, dame.length - 1);
+           var piece = move.actions[0][2][0].setValue(0, dame.length - 1);
            move.actions[0][2] = [ piece ];
       }
   });
