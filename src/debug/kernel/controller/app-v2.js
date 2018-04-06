@@ -163,7 +163,8 @@ App.prototype.syncCaptures = function(move) {
 
 App.prototype.mouseLocate = function(view, pos) {
   if (this.currPos != pos) {
-      if (Dagaz.Model.showDrops == 1) {
+      this.getDrops();
+      if ((Dagaz.Model.showDrops == -1) || (!_.isUndefined(this.drops) && (Dagaz.Model.showDrops > 0) && (this.drops.length > Dagaz.Model.showDrops))) {
           if (!_.isUndefined(this.list) && (pos.length == 1) && (_.indexOf(this.getDrops(), pos[0]) >= 0)) {
               var pieces = this.list.getDropPieces(pos[0]);
               if ((pieces !== null) && (pieces.length > 0)) {
@@ -320,8 +321,8 @@ App.prototype.exec = function() {
                  console.log("Setup: " + Dagaz.Model.getSetup(this.design, this.board));
              }
              this.list = Dagaz.Model.getMoveList(this.board);
-             if (Dagaz.Model.showDrops == 2) {
-                 var drops = this.getDrops();
+             var drops = this.getDrops();
+             if ((Dagaz.Model.showDrops == -2) || (!_.isUndefined(this.drops) && (Dagaz.Model.showDrops > 0) && (this.drops.length <= Dagaz.Model.showDrops))) {
                  if (drops.length > 0) {
                      var pieces = this.list.getDropPieces(drops[0]);
                      if ((pieces !== null) && (pieces.length > 0)) {
