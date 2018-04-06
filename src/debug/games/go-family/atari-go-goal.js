@@ -38,8 +38,11 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
           }
       }
       if (fa) return 500;
-      if ((fm !== null) && (fm < 4) && (fs + dm > fm)) return 200 - fm;
-      if ((em !== null) && (em < 4)) return 100;
+      var r = 0;
+      if ((fm !== null) && (fm < 4) && (fs + dm > fm)) r += 200 - fm;
+      if ((em !== null) && (em < 4)) r += 100;
+      if (eg) r--;
+      if (r > 0) return r;
       if (eg || nn) return -1;
       if (em !== null) return 100 - em;
       return 1;
