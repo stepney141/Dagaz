@@ -8,12 +8,12 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var nvl = function(value, default) {
-  if (!default) default = 0;
+var nvl = function(value, def) {
+  if (!def) def = 0;
   if (value) {
       return value;
   } else {
-      return default;
+      return def;
   }
 }
 
