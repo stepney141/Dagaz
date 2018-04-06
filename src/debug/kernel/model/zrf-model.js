@@ -19,7 +19,7 @@ Dagaz.Model.stalemateDraw   = false;
 Dagaz.Model.showBlink       = true;
 Dagaz.Model.chessCapturing  = true;
 Dagaz.Model.progressive     = false;
-Dagaz.Model.showDrops       = 1;
+Dagaz.Model.showDrops       = -1;
 
 Dagaz.Model.checkVersion = function(design, name, value) {  
   if (name == "z2j") {
@@ -51,8 +51,9 @@ Dagaz.Model.checkVersion = function(design, name, value) {
          design.failed = true;
      }
      if (name == "show-drops") {
-         if (value == "false") Dagaz.Model.showDrops = 0;
-         if (value == "all") Dagaz.Model.showDrops = 2;
+         if (!_.isNaN(value))    Dagaz.Model.showDrops = +value;
+         if (value == "false")   Dagaz.Model.showDrops = 0;
+         if (value == "all")     Dagaz.Model.showDrops = -2;
      }
      if (name == "progressive-levels") {
          Dagaz.Model.progressive = (value == "true");
