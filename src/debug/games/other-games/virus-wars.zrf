@@ -25,7 +25,7 @@
   (board
       (image "images/virus-wars/board.bmp")
       (grid
-          (start-rectangle 7 8 34 34)
+          (start-rectangle 6 8 33 34)
           (dimensions
             ("a/b/c/d/e/f/g/h/i/j" (26 0)) ; files
             ("10/9/8/7/6/5/4/3/2/1" (0 26)) ; ranks
