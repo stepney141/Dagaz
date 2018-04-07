@@ -125,9 +125,6 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("Stone", 0);
     design.addDrop(0, 0, [], 0);
-
-    design.reserve("White", "Stone", 81);
-    design.reserve("Black", "Stone", 81);
 }
 
 Dagaz.View.configure = function(view) {
