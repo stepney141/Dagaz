@@ -39,7 +39,6 @@
      (help " ")
      (image Black "images/paper/bdead.bmp"
             White "images/paper/wdead.bmp")
-     (drops (drop-stone))
   )  
 
   (board-setup
