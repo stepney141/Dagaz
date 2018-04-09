@@ -53,6 +53,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
      if (name == "show-drops") {
          if (!_.isNaN(value))    Dagaz.Model.showDrops = +value;
          if (value == "false")   Dagaz.Model.showDrops = 0;
+         if (value == "true")    Dagaz.Model.showDrops = -1;
          if (value == "all")     Dagaz.Model.showDrops = -2;
      }
      if (name == "progressive-levels") {
