@@ -19,9 +19,11 @@ var getLine = function(design, board, player, pos, dir, ix) {
 
 var createLine = function(a, b) {
   if ((a < 0) && (b < 0)) return -1;
-  if (a < 0) return -b - 1;
-  if (b < 0) return -a - 1;
-  return a + b + 1;
+  var r = a + b + 1;
+  if (a < 0) r = b + 1;
+  if (b < 0) r = a + 1;
+  if ((r < 5) && ((a < 0) || (b < 0))) r = -r;
+  return r;
 }
 
 var updateLine = function(design, board, player, pos, ix, vl, dir, move) {
