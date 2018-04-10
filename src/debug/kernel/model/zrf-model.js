@@ -1354,6 +1354,13 @@ ZrfPiece.prototype.setValue = function(name, value) {
   if (_.isUndefined(piece.values)) {
      piece.values = [];
   }
+  if (!_.isUndefined(this.values)) {
+      for (var ix = 0; ix < this.values.length; ix++) {
+         if (!_.isUndefined(this.values[ix])) {
+             piece.values[ix] = this.values[ix];
+         }
+      }
+  }
   piece.values[name] = value;
   return piece;
 }

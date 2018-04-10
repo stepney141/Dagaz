@@ -125,7 +125,7 @@ Dagaz.Model.setup = function(board) {
 }
 
 Dagaz.Model.getSetup = function(design, board) {
-  var str = ""; var prev = ""; var cnt = 0;
+  var str = ""; var prev = null; var cnt = 0;
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
       var s = "";
@@ -137,12 +137,14 @@ Dagaz.Model.getSetup = function(design, board) {
                s = s + "=" + value;
           }
       }
-      if (prev != s) {
-          str = str + prev;
-          if (cnt > 0) {
-              str = str + "+" + cnt;
+      if ((prev === null) || (prev != s)) {
+          if (prev !== null) {
+              str = str + prev;
+              if (cnt > 0) {
+                  str = str + "+" + cnt;
+              }
+              str = str + ";";
           }
-          str = str + ";";
           prev = s;
           cnt = 0;
       } else {
