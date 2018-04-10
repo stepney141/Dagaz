@@ -27,6 +27,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-drops", "23");
     design.checkVersion("renju-restrictions", "true");
+    design.checkVersion("renju-extension", "true");
+    design.checkVersion("renju-invariant", "true");
 
     design.addDirection("w");
     design.addDirection("e");
