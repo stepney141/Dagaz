@@ -17,33 +17,11 @@ var getLine = function(design, board, player, pos, dir, ix) {
   return +piece.getValue(ix);
 }
 
-var createLine = function(a, b) {
-  if ((a < 0) && (b < 0)) return -1;
-  var r = a + b + 1;
-  if (a < 0) r = b + 1;
-  if (b < 0) r = a + 1;
-  if ((r < 5) && ((a < 0) || (b < 0))) r = -r;
-  return r;
-}
-
 var updateLine = function(design, board, player, pos, ix, vl, dir, move) {
   var p = design.navigate(player, pos, dir);
   while (p !== null) {
       var piece = board.getPiece(p);
       if ((piece === null) || (piece.player != board.player)) break;
-      piece = piece.setValue(ix, vl);
-      move.movePiece(p, p, piece);
-      p = design.navigate(player, p, dir);
-  }
-}
-
-var closeLine = function(design, board, player, pos, ix, dir, move) {
-  var p = design.navigate(player, pos, dir);
-  while (p !== null) {
-      var piece = board.getPiece(p);
-      if ((piece === null) || (piece.player == board.player)) break;
-      var vl = +piece.getValue(ix);
-      if (vl > 0) vl = -vl;
       piece = piece.setValue(ix, vl);
       move.movePiece(p, p, piece);
       p = design.navigate(player, p, dir);
@@ -62,13 +40,11 @@ Dagaz.Model.CheckInvariants = function(board) {
           var pos   = move.actions[0][1][0];
           var piece = move.actions[0][2][0];
           for (var ix = 0; ix < dirs.length; ix++) {
-               var fw = getLine(design, board, board.player, pos, dirs[ix], ix);
-               var bk = getLine(design, board, 0, pos, dirs[ix], ix);
-               var vl = createLine(fw, bk);
+               var vl = 1;
+               vl += getLine(design, board, board.player, pos, dirs[ix], ix);
+               vl += getLine(design, board, 0, pos, dirs[ix], ix);
                updateLine(design, board, board.player, pos, ix, vl, dirs[ix], move);
                updateLine(design, board, 0, pos, ix, vl, dirs[ix], move);
-               if (fw < 0) closeLine(design, board, board.player, pos, ix, dirs[ix], move);
-               if (bk < 0) closeLine(design, board, 0, pos, ix, dirs[ix], move);
                piece = piece.setValue(ix, vl);
           }
           move.actions[0][2] = [ piece ];
