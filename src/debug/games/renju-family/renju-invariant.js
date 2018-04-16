@@ -3,8 +3,8 @@
 var MAXVALUE      = 1000000;
 
 var NEAR_FACTOR   = 1;
-var FRIEND_FACTOR = 1;
-var ENEMY_FACTOR  = 1;
+var FRIEND_FACTOR = 10;
+var ENEMY_FACTOR  = 20;
 
 var checkVersion = Dagaz.Model.checkVersion;
 
@@ -124,6 +124,7 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
               if (piece !== null) {
                   var v = +piece.getValue(ix);
                   if (v) {
+                      if (v > 2) v = v * v;
                       if (v > 3) r += 1000;
                       v *= NEAR_FACTOR;
                       if (piece.player == board.player) {
@@ -171,6 +172,11 @@ var getLine = function(design, board, player, pos, dir, ix) {
   var r = 1;
   var p = design.navigate(player, pos, dir);
   r += getValue(board, player, p, ix);
+  if (r == 3) {
+      var q = design.navigate(0, pos, dir);
+      var v = getValue(board, player, q, ix);
+      if (v == 2) return 0;
+  }
   if (p === null) return 0;
   var piece = board.getPiece(p);
   while (piece !== null) {
