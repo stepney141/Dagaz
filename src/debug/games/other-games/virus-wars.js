@@ -41,6 +41,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPlayer("Red", [0, 1, 2, 3, 4, 5, 6, 7]);
     design.addTurn(1);
     design.addTurn(1);
+    design.addTurn(2);
+    design.addTurn(2);
+    design.repeatMark();
+    design.addTurn(1);
+    design.addTurn(1);
     design.addTurn(1);
     design.addTurn(2);
     design.addTurn(2);

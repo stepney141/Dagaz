@@ -34,8 +34,14 @@ Dagaz.Model.checkGoals = function(design, board, player) {
 
 var getSteps = function(board) {
   var c = board.turn;
-  while (c >= 3) c -= 3;
-  return 3 - c;
+  if (c < 4) {
+      while (c >= 2) c -= 2;
+      return 2 - c;
+  } else {
+      c -= 4;
+      while (c >= 3) c -= 3;
+      return 3 - c;
+  }
 }
 
 Dagaz.AI.heuristic = function(ai, design, board, move) {
@@ -160,6 +166,7 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
               }
           }
       }
+      console.log("Move: " + move.toString() + ", weight = " + r);
       return r + _.random(0, 10);
   } else {
       return -1;
