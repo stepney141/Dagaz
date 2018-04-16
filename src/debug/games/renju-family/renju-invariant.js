@@ -175,7 +175,7 @@ var getLine = function(design, board, player, pos, dir, ix) {
   if (r == 3) {
       var q = design.navigate(0, pos, dir);
       var v = getValue(board, player, q, ix);
-      if (v == 2) return 0;
+      if (v == 2) return -1;
   }
   if (p === null) return 0;
   var piece = board.getPiece(p);
@@ -245,7 +245,12 @@ Dagaz.Model.CheckInvariants = function(board) {
                   var ix = _.indexOf(dirs, dir);
                   if (ix > 3) ix -= 4;
                   if (ix < 0) move.failed = true;
-                  if (getLine(design, board, board.player, pos, dir, ix) >= 3) {
+                  var l = getLine(design, board, board.player, pos, dir, ix);
+                  if (l < 0) {
+                      cnt = 0;
+                      return;
+                  }
+                  if (l >= 3) {
                       cnt++;
                   }
               });
