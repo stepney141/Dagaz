@@ -10,10 +10,10 @@ Dagaz.Model.checkVersion = function(design, name, value) {
 
 var getLine = function(design, board, player, pos, dir, ix) {
   var p = design.navigate(player, pos, dir);
-  if (p === null) return -1;
+  if (p === null) return 0;
   var piece = board.getPiece(p);
   if (piece === null) return 0;
-  if (piece.player != board.player) return -1;
+  if (piece.player != board.player) return 0;
   return +piece.getValue(ix);
 }
 
