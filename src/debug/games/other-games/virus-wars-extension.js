@@ -105,6 +105,7 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
               }
               r += 100 + mobility;
           }
+          console.log("Move: " + move.toString() + ", friends = " + friends + ", mobility = " + mobility + ", dead = " + dead + ", weight = " + r);
       } else {
           var dist  = 0;
           var all   = [ pos ];
@@ -161,13 +162,13 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
           } else {
               if (dead.length == 0) {
                   if (alive.length + dist - 1 <= getSteps(board)) {
-                      r += 50 + alive.length;
+                      r += 50 + alive.length - dist;
                   }
               }
           }
+          console.log("Move: " + move.toString() + ", dist = " + dist + ", dead = " + dead.length + ", alive = " + alive.length + ", steps = " + getSteps(board) + ", weight = " + r);
       }
-      console.log("Move: " + move.toString() + ", weight = " + r);
-      return r + _.random(0, 10);
+      return r;
   } else {
       return -1;
   }
