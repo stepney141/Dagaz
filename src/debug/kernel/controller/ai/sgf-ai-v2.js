@@ -20,13 +20,13 @@ Dagaz.AI.findBot = function(type, params, parent) {
 
 var getNote = function(move) {
   var r = "";
-  if (move.actions.length == 1) {
-      if (move.actions[0][0] !== null) {
-          r = Dagaz.Model.posToString(move.actions[0][0][0]);
-      }
-      if (move.actions[0][1] !== null) {
-          r = r + Dagaz.Model.posToString(move.actions[0][1][0]);
-      }
+  for (var i = 0; i < move.actions.length; i++) {
+       var action = move.actions[i];
+       if ((action[0] !== null) && (action[1] !== null)) {
+           r = Dagaz.Model.posToString(action[0][0]) + 
+               Dagaz.Model.posToString(action[1][0]);
+           break;
+       }
   }
   return r;
 }
@@ -60,8 +60,6 @@ var find = function(ctx, position, sgf, move) {
       return sgf;
   }
 }
-
-var compareMove = Dagaz.Model.compareMove;
 
 SgfAi.prototype.setContext = function(ctx, board) {
   if (this.parent) {
