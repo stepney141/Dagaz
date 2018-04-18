@@ -24,6 +24,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "false");
     design.checkVersion("show-blink", "false");
+    design.checkVersion("show-hints", "false");
     design.checkVersion("show-captures", "false");
     design.checkVersion("micro-shogi-extension", "true");
     design.checkVersion("micro-shogi-invariant", "true");
@@ -286,14 +287,14 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 0, [1], 0);
     design.addMove(0, 0, [3], 0);
 
-    design.addPiece("Bishop", 1, 10);
+    design.addPiece("Bishop", 1, 5);
     design.addMove(1, 1, [7, 7], 0);
     design.addMove(1, 1, [5, 5], 0);
     design.addMove(1, 1, [6, 6], 0);
     design.addMove(1, 1, [3, 3], 0);
     design.addMove(1, 2, [43, 10], 0);
 
-    design.addPiece("Tokin", 2, 6);
+    design.addPiece("Tokin", 2, 7);
     design.addMove(2, 3, [4], 0);
     design.addMove(2, 3, [7], 0);
     design.addMove(2, 3, [2], 0);
@@ -302,7 +303,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(2, 3, [1], 0);
     design.addMove(2, 2, [43, 10], 0);
 
-    design.addPiece("Gold", 3, 6);
+    design.addPiece("Gold", 3, 8);
     design.addMove(3, 4, [4], 0);
     design.addMove(3, 4, [7], 0);
     design.addMove(3, 4, [2], 0);
@@ -311,14 +312,14 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(3, 4, [1], 0);
     design.addMove(3, 2, [43, 10], 0);
 
-    design.addPiece("Rook", 4, 15);
+    design.addPiece("Rook", 4, 8);
     design.addMove(4, 5, [4, 4], 0);
     design.addMove(4, 5, [1, 1], 0);
     design.addMove(4, 5, [0, 0], 0);
     design.addMove(4, 5, [2, 2], 0);
     design.addMove(4, 2, [43, 10], 0);
 
-    design.addPiece("Silver", 5, 5);
+    design.addPiece("Silver", 5, 6);
     design.addMove(5, 6, [7], 0);
     design.addMove(5, 6, [6], 0);
     design.addMove(5, 6, [5], 0);
@@ -326,7 +327,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(5, 6, [4], 0);
     design.addMove(5, 2, [43, 10], 0);
 
-    design.addPiece("Lance", 6, 7);
+    design.addPiece("Lance", 6, 4);
     design.addMove(6, 7, [4, 4], 0);
     design.addMove(6, 2, [43, 10], 0);
 

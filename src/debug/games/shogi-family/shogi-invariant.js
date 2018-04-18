@@ -36,6 +36,7 @@ var isAttacked = function(design, board, player, pos, dir, leapers, riders) {
       if (piece.player == player) return false;
       if (_.indexOf(leapers, piece.type) >= 0) return true;
       if (_.indexOf(riders, piece.type) >= 0) return true;
+      return false;
   }
   p = design.navigate(player, p, dir);
   while (p !== null) {

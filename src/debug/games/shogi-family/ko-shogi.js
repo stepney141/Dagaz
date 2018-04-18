@@ -24,6 +24,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("pass-partial", "true");
     design.checkVersion("smart-moves", "false");
+    design.checkVersion("show-hints", "false");
+    design.checkVersion("show-blink", "true");
     design.checkVersion("ko-shogi-extension", "true");
     design.checkVersion("ko-shogi-invariant", "true");
     design.checkVersion("ko-shogi-promotion", "true");

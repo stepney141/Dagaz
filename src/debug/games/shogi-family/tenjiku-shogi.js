@@ -23,6 +23,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("pass-partial", "true");
     design.checkVersion("smart-moves", "false");
+    design.checkVersion("show-hints", "false");
+    design.checkVersion("show-blink", "true");
     design.checkVersion("show-captures", "false");
     design.checkVersion("tenjiku-shogi-extension", "true");
     design.checkVersion("tenjiku-shogi-promotion", "true");
