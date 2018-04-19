@@ -176,18 +176,20 @@ MoveList.prototype.getCaptures = function() {
 
 MoveList.prototype.getDrops = function() {
   var result = [];
-  _.each(this.moves, function(move) {
-      var actions = this.getMoveActions(move);
-      if (actions.length == 0) {
-          _.chain(this.getActions(move))
-           .filter(isDrop)
-           .each(function(action) {
-                _.each(action[1], function(pos) {
-                    result.push(pos);
+  if (this.position === null) {
+      _.each(this.moves, function(move) {
+          var actions = this.getMoveActions(move);
+          if (actions.length == 0) {
+              _.chain(this.getActions(move))
+               .filter(isDrop)
+               .each(function(action) {
+                    _.each(action[1], function(pos) {
+                        result.push(pos);
+                    });
                 });
-            });
-      }
-  }, this);
+          }
+      }, this);
+  }
   return _.uniq(result);
 }
 
@@ -271,7 +273,7 @@ MoveList.prototype.setPosition = function(pos) {
                    }
                    return false;
                 }).value();
-              if (n.length > 0) {
+              if ((this.position === null) && (n.length > 0)) {
                   this.copyActions(result, actions, move.mode);
                   return true;
               }
