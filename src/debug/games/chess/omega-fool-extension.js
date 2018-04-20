@@ -8,6 +8,28 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+var checkGoals = Dagaz.Model.checkGoals;
+
+Dagaz.Model.checkGoals = function(design, board, player) {
+  var design = Dagaz.Model.design;
+  var king   = design.getPieceType("King");
+  var fk     = false;
+  var ek     = false;
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if ((piece !== null) && (piece.type == king)) {
+          if (piece.player == player) {
+              fk = true;
+          } else {
+              ek = true;
+          }
+      }
+  });
+  if (!ek) return 1;
+  if (!fk) return -1;
+  return checkGoals(design, board, player);
+}
+
 var isFoolSpawn = function(board, pos) {
   if (_.isUndefined(board.parent) || (board.parent === null)) return false;
   var b = board.parent;
@@ -30,7 +52,31 @@ var isValidFoolMove = function(board, type) {
   if (!move.isSimpleMove()) return false;
   var piece = b.getPiece(move.actions[0][0][0]);
   if (piece === null) return false;
+  while (piece.type == 8) {
+      if (_.isUndefined(b.parent) || (b.parent === null)) return false;
+      if (_.isUndefined(b.move)) return false;
+      move = b.move;
+      b = b.parent;
+      if (!move.isSimpleMove()) return false;
+      piece = b.getPiece(move.actions[0][0][0]);
+      if (piece === null) return false;
+  }
   return piece.type == type;
+}
+
+var isImmobilized = function(design, board, player, pos) {
+  var r = false;
+  for (var dir = 0; dir < design.dirs.length; dir++) {
+       var p = design.navigate(player, pos, dir);
+       if (p !== null) {
+           var piece = board.getPiece(p);
+           if ((piece !== null) && (piece.type == 8)) {
+               if (piece.player == player) return false;
+               r = true;
+           }
+       }
+  }
+  return r;
 }
 
 var CheckInvariants = Dagaz.Model.CheckInvariants;
@@ -53,8 +99,18 @@ Dagaz.Model.CheckInvariants = function(board) {
                    }
               }
           });
-          if ((move.mode < 8) && !isValidFoolMove(board, move.mode)) {
-              move.failed = false;
+          if (move.mode < 8) {
+              if (!isValidFoolMove(board, move.mode)) {
+                  move.failed = true;
+                  return;
+              }
+          } else {
+              _.each(move.actions, function(a) {
+                  if ((a[0] !== null) && (a[1] !== null) && isImmobilized(design, board, board.player, a[0][0])) {
+                      move.failed = true;
+                      return;
+                  }
+              });
           }
       }
   });
