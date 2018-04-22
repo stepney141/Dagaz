@@ -26,9 +26,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-drops", "23");
-    design.checkVersion("renju-restrictions", "true");
+    design.checkVersion("pente-restrictions", "true");
     design.checkVersion("renju-extension", "true");
-    design.checkVersion("renju-invariant", "true");
+    design.checkVersion("pente-extension", "true");
 
     design.addDirection("w");
     design.addDirection("e");
@@ -269,7 +269,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("o1", [-1, 0, 0, 0, -15, 0, 0, -16]);
 
     design.addZone("first-move", 1, [112]);
-    design.addZone("second-move", 2, [126, 111, 96, 127, 97, 128, 113, 98]);
     design.addZone("third-move", 1, [126, 111, 96, 127, 97, 128, 113, 98, 140, 125, 110, 95, 80, 141, 81, 142, 82, 143, 83, 144, 129, 114, 99, 84]);
 
     design.addCommand(0, ZRF.FUNCTION,	1);	// empty?
