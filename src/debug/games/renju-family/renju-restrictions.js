@@ -12,10 +12,7 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
-  var cnt = _.chain(board.pieces)
-   .compact()
-   .size()
-   .value();
+  var cnt = _.chain(board.pieces).compact().size().value();
   if (cnt < 3) {
       _.chain(board.moves)
        .filter(function(move) {

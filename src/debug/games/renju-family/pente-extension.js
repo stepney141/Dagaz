@@ -13,7 +13,7 @@ var getPiece = function(board, pos) {
   return board.getPiece(pos);
 }
 
-var getLine = function(design, board, p, dir, captured) {
+var getLine = function(design, board, pos, dir, captured) {
   var r = 1;
   var p = design.navigate(board.player, pos, dir);
   while (p !== null) {

@@ -3,7 +3,7 @@
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "renju-invariant") {
+  if (name != "ninuki-invariant") {
       checkVersion(design, name, value);
   }
 }
@@ -66,7 +66,7 @@ Dagaz.Model.CheckInvariants = function(board) {
           });
           if (_.isUndefined(move.failed)) {
               var pos = move.actions[0][1][0];
-              var cnt = 0;
+              var cnt = 0; var mx = 0;
               _.each(design.allDirections(), function(dir) {
                   var ix = _.indexOf(dirs, dir);
                   if (ix > 3) ix -= 4;
@@ -76,27 +76,15 @@ Dagaz.Model.CheckInvariants = function(board) {
                       cnt = 0;
                       return;
                   }
-                  if ((cnt == 0) && (l == 3)) {
-                      cnt = 1;
-                      return;
-                  }
-                  if ((cnt == 0) && (l == 4)) {
-                      cnt = 2;
-                      return;
-                  }
-                  if ((cnt == 2) && (l == 3)) {
-                      cnt = 3;
-                      return;
-                  }
-                  if ((cnt == 1) && (l == 4)) {
-                      cnt = 3;
-                      return;
-                  }
-                  if ((cnt > 0) && (l >= 3)) {
-                      cnt = 4;
+                  if (l >= 3) {
+                      cnt++;
+                      if (mx < l) mx = l;
                   }
               });
-              if (cnt > 3) {
+              if ((cnt == 2) && (mx == 3)) {
+                  move.failed = true;
+              }
+              if (cnt > 2) {
                   move.failed = true;
               }
           }
