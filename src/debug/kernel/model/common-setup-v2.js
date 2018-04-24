@@ -2,8 +2,22 @@
 
 var getSetup = function() {
   var str = window.location.search.toString();
-  var re  = /^\?setup=(.*)$/;
-  return str.replace(re, "$1");
+  var result = str.match(/\?setup=([^&]*)/);
+  if (result) {
+      return result[1];
+  } else {
+      return "";
+  }
+}
+
+var getTurn = function() {
+  var str = window.location.search.toString();
+  var result = str.match(/&turn=(\d+)/);
+  if (result) {
+      return result[1];
+  } else {
+      return "";
+  }
 }
 
 function Pattern(exec) {
@@ -119,6 +133,11 @@ Dagaz.Model.setup = function(board) {
                        board.setPiece(pos, piece);
                   }
               }
+              var turn = getTurn();
+              if (turn) {
+                  board.turn   = +turn;
+                  board.player = design.currPlayer(board.turn);
+              }
           }
       }
   }
@@ -155,7 +174,7 @@ Dagaz.Model.getSetup = function(design, board) {
   if (cnt > 0) {
       str = str + "+" + cnt;
   }
-  str = str + ";";
+  str = str + ";&turn=" + board.turn;
   return "?setup=" + str;
 }
 
