@@ -85,6 +85,7 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
            if ((fw.value == -1) && !fw.closed && (bk.value == -1) && !bk.closed) r += 10;
            if ((fw.value == 1)  && !fw.closed && !bk.closed && (bk.value >= 0)) r += 4;
            if ((bk.value == 1)  && !fw.closed && !bk.closed && (fw.value >= 0)) r += 4;
+           if ((fw.value == -1) || (bk.value == -1)) r += 1;
       }
   }
   if (r != 0) {
