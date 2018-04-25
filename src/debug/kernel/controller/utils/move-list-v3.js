@@ -72,12 +72,26 @@ var isCapturing = function(action) {
   return (action[0] !== null) && (action[1] === null);
 }
 
+MoveList.prototype.getMoveActions = function(move) {
+  var result = [];
+  var actions = this.getActions(move);
+  for (var i = 0; i < actions.length; i++) {
+      if (actions[i][1] !== null) {
+          if (actions[i][0] !== null) {
+              result.push(actions[i]);
+          }
+          break;
+      }
+  }
+  return result;
+}
+
 MoveList.prototype.getTargets = function() {
   var result = [];
   if (this.position !== null) {
       _.each(this.moves, function(move) {
-          var actions = this.getActions(move);
-          if ((actions.length > 0) && isMove(actions[0]) && (_.indexOf(actions[0][0], this.position) >= 0)) {
+          var actions = this.getMoveActions(move);
+          if ((actions.length > 0) && (_.indexOf(actions[0][0], this.position) >= 0)) {
               result.push(actions[0][1][0]);
           }
       }, this);
@@ -89,21 +103,12 @@ MoveList.prototype.getTargets = function() {
 MoveList.prototype.getStarts = function() {
   var result = [];
   _.each(this.moves, function(move) {
-      var actions = this.getActions(move);
-      if ((actions.length > 0) && isMove(actions[0])) {
+      var actions = this.getMoveActions(move);
+      if (actions.length > 0) {
           result.push(actions[0][0][0]);
       }
   }, this);
   result = _.uniq(_.union(result, this.getCaptures()));
-  return result;
-}
-
-MoveList.prototype.getMoveActions = function(move) {
-  var result = [];
-  var actions = this.getActions(move);
-  if  ((actions.length > 0) && isMove(actions[0])) {
-      result.push(actions[0]);
-  }
   return result;
 }
 
@@ -284,12 +289,13 @@ MoveList.prototype.setPosition = function(pos) {
           this.level++;
       }
       this.position = null;
-  }
-  if (_.indexOf(this.getStarts(), pos) >= 0) {
-      if (this.position == pos) {
-          this.position = null;
-      } else {
-          this.position = pos;
+  } else {
+      if (_.indexOf(this.getStarts(), pos) >= 0) {
+          if (this.position == pos) {
+              this.position = null;
+          } else {
+              this.position = pos;
+          }
       }
   }
   this.stops = null;
