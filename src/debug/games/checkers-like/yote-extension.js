@@ -8,33 +8,83 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  return move.actions.length;
+}
+
+var isCapture = function(move) {
+  if (move.actions.length != 2) return false;
+  if (move.actions[0][0] === null) return false;
+  if (move.actions[0][1] !== null) return false;
+  if (move.actions[1][0] === null) return false;
+  if (move.actions[1][1] === null) return false;
+  return (move.actions[0][0][0] == move.actions[1][0][0]) &&
+         (move.actions[1][0][0] == move.actions[1][1][0]);
+}
+
+var calcCaptured = function(board, player) {
+  var r = 0;
+  while (!_.isUndefined(board.move) && !_.isUndefined(board.parent) && (board.parent !== null)) {
+      if (board.player == player) {
+          if (isCapture(board.move)) {
+              r--;
+          } else {
+              _.each(board.move.actions, function(a) {
+                 if ((a[0] !== null) && (a[1] === null)) {
+                     r++;
+                 }
+              });
+              break;
+          }
+      }
+      board = board.parent;
+  }
+  return r;
+}
+
+var calcPieces = function(design, board, player) {
+  var r = 0;
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if ((piece !== null) && (piece.player == player)) r++;
+  });
+  return r;
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
-  for (var i in board.moves) {
-       var m = board.moves[i];
-       for (var j in m.actions) {
-            fp = m.actions[j][0];
-            tp = m.actions[j][1];
-            pn = m.actions[j][3];
-            if ((fp !== null) && (tp === null)) {
-                var captured = [];
-                var len = design.positions.length;
-                for (var p = 0; p < len; p++) {
-                    if (p != fp[0]) {
-                       var piece = board.getPiece(p);
-                       if ((piece !== null) && (piece.player != board.player)) {
-                           captured.push(p);
-                       }
-                    }
-                }
-                if (captured.length > 0) {
-                    m.actions.push([captured, null, null, pn]);
-                }
-                break;
-            }
-       }
+  var disableCaptures = true;
+  if (!_.isUndefined(board.move) && !_.isUndefined(board.parent) && (board.parent !== null)) {
+      if ((board.move.actions.length > 1) || isCapture(board.move)) {
+          var captured = calcCaptured(board, board.player);
+          var count = calcPieces(design, board, board.player);
+          if ((captured > 0) && (count > 0)) {
+              _.each(board.moves, function(move) {
+                  move.failed = true;
+              });
+              if (board.moves.length > 0) {
+                  board.moves.push(Dagaz.Model.createMove(0));
+              }
+          }
+      } else {
+          if (board.move.isPass()) {
+              _.each(board.moves, function(move) {
+                  if (!isCapture(move)) {
+                      move.failed = true;
+                  }
+              });
+              disableCaptures = false;
+          }
+      }
+      if (disableCaptures) {
+          _.each(board.moves, function(move) {
+              if (isCapture(move)) {
+                  move.failed = true;
+              }
+          });
+      }
   }
   CheckInvariants(board);
 }
