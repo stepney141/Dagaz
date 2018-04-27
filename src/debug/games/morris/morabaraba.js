@@ -42,8 +42,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addDirection("nw");
     design.addDirection("se");
 
-    design.addPlayer("White", [3, 2, 1, 0, 4, 6, 5, 8, 7]);
-    design.addPlayer("Black", [0, 1, 2, 3, 4, 5, 6, 7, 8]);
+    design.addPlayer("Blue", [3, 2, 1, 0, 4, 6, 5, 8, 7]);
+    design.addPlayer("Red", [0, 1, 2, 3, 4, 5, 6, 7, 8]);
 
     design.addPosition("a7", [0, 3, 0, 21, 21, 0, 0, 0, 8]);
     design.addPosition("b7", [0, 1, 2, 3, 4, 5, 6, 7, 8]);
@@ -158,14 +158,14 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 2, [], 0);
     design.addMove(0, 3, [0, 4], 1);
 
-    design.reserve("White", "Stone", 12);
-    design.reserve("Black", "Stone", 12);
+    design.reserve("Blue", "Stone", 12);
+    design.reserve("Red", "Stone", 12);
 }
 
 Dagaz.View.configure = function(view) {
     view.defBoard("Board");
-    view.defPiece("WhiteStone", "White Stone");
-    view.defPiece("BlackStone", "Black Stone");
+    view.defPiece("BlueStone", "Blue Stone");
+    view.defPiece("RedStone", "Red Stone");
  
     view.defPosition("a7", 16, 16, 42, 42);
     view.defPosition("b7", 58, 16, 42, 42);

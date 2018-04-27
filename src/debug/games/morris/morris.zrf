@@ -17,7 +17,7 @@
 
 (define fly (
   (verify friend?)
-  a7 (while (on-board? $1) (if empty? add) $1)
+  $1 (while (on-board? $2) (if empty? add) $2)
   (verify empty?)
   add
 ))
@@ -34,8 +34,8 @@
   (option "animate drops"     false)
   (option "smart moves"       false)
 
-  (players White Black)
-  (turn-order White Black)
+  (players Blue Red)
+  (turn-order Blue Red)
 
   (board
      (image "images/morris.bmp")
@@ -52,15 +52,15 @@
      (links w (d1 a1) (g1 d1) (d2 b2) (f2 d2) (d3 c3) (e3 d3) (b4 a4) (c4 b4) (f4 e4) (g4 f4) (d5 c5) (e5 d5) (d6 b6) (f6 d6) (d7 a7) (g7 d7))
      (links s (a4 a1) (a7 a4) (b4 b2) (b6 b4) (c4 c3) (c5 c4) (d2 d1) (d3 d2) (d6 d5) (d7 d6) (e4 e3) (e5 e4) (f4 f2) (f6 f4) (g4 g1) (g7 g4))
      (links x (a1 b6) (b2 c5) (c3 d7) (d5 d3) (d1 e5) (e3 f6) (f2 g7) (a4 a1) (a7 a4) (b4 b2) (b6 b4) (c4 c3) (c5 c4) (d2 d1) (d3 d2) (d6 d5) (d7 d6) (e4 e3) (e5 e4) (f4 f2) (f6 f4) (g4 g1) (g7 g4))
-     (zone (name killed) (players White Black)
+     (zone (name killed) (players Blue Red)
          (positions a2 a3 a5 a6 b1 b3 b5 b7 c1 c2 c6 c7 d4 e1 e2 e6 e7 f1 f3 f5 f7 g2 g3 g5 g6)
      )
   )
 
   (piece
      (name  Stone)
-     (image White "images/white.bmp"
-            Black "images/black.bmp")
+     (image Blue "images/white.bmp"
+            Red "images/black.bmp")
      (drops
         (move-type normal-type)
         (drop)
@@ -70,13 +70,13 @@
         (step n) (step s) (step w) (step e)
         (kill) 
         (move-type fly-type)
-        (fly x)
+        (fly a7 x)
      )
   )
 
   (board-setup
-     (White (Stone off 9))
-     (Black (Stone off 9))
+     (Blue (Stone off 9))
+     (Red (Stone off 9))
   )
 )
 
@@ -102,15 +102,15 @@
      (links sw (b2 a1) (c3 b2) (f6 e5) (g7 f6))
      (links nw (g1 f2) (f2 e3) (c5 b6) (b6 a7))
      (links se (f2 g1) (e3 f2) (b6 c5) (a7 b6))
-     (zone (name killed) (players White Black)
+     (zone (name killed) (players Blue Red)
          (positions a2 a3 a5 a6 b1 b3 b5 b7 c1 c2 c6 c7 d4 e1 e2 e6 e7 f1 f3 f5 f7 g2 g3 g5 g6)
      )
   )
 
   (piece
      (name  Stone)
-     (image White "images/white.bmp"
-            Black "images/black.bmp")
+     (image Blue "images/white.bmp"
+            Red "images/black.bmp")
      (drops
         (move-type normal-type)
         (drop)
@@ -121,12 +121,60 @@
         (step nw) (step se) (step sw) (step ne)
         (kill) 
         (move-type fly-type)
-        (fly x)
+        (fly a7 x)
      )
   )
 
   (board-setup
-     (White (Stone off 12))
-     (Black (Stone off 12))
+     (Blue (Stone off 12))
+     (Red (Stone off 12))
+  )
+)
+
+(variant
+  (title "Three Men's Morris")
+  (description "https://en.wikipedia.org/wiki/Three_Men%27s_Morris")
+  (default)
+
+  (board
+     (image "images/3x3.bmp")
+     (grid
+         (start-rectangle 32 32 116 116)
+         (dimensions
+           ("a/b/c" (84 0)) ; files
+           ("3/2/1" (0 84)) ; ranks
+         )
+         (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0) (x 0 1))
+     )
+     (links x  (a1 b3) (b1 c3))
+     (links ne (a1 b2) (b2 c3))
+     (links sw (b2 a1) (c3 b2))
+     (links nw (c1 b2) (b2 a3))
+     (links se (b2 c1) (a3 b2))
+     (zone (name killed) (players Blue Red)
+         (positions a1)
+     )
+  )
+
+  (piece
+     (name  Stone)
+     (image Blue "images/wbig.bmp"
+            Red "images/bbig.bmp")
+     (drops
+        (move-type normal-type)
+        (drop)
+     )
+     (moves
+        (move-type normal-type)
+        (step n) (step s) (step w) (step e)
+        (step nw) (step se) (step sw) (step ne)
+        (move-type fly-type)
+        (fly a3 x)
+     )
+  )
+
+  (board-setup
+     (Blue (Stone off 3))
+     (Red (Stone off 3))
   )
 )

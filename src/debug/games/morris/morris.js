@@ -27,6 +27,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
     design.checkVersion("shared-pieces", "true");
+//  design.checkVersion("ko", "situation");
     design.checkVersion("morris-restrictions", "true");
     design.checkVersion("morris-extension", "true");
     design.checkVersion("morris-invariant", "true");
@@ -38,8 +39,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addDirection("s");
     design.addDirection("x");
 
-    design.addPlayer("White", [3, 2, 1, 0, 4]);
-    design.addPlayer("Black", [0, 1, 2, 3, 4]);
+    design.addPlayer("Blue", [3, 2, 1, 0, 4]);
+    design.addPlayer("Red", [0, 1, 2, 3, 4]);
 
     design.addPosition("a7", [0, 3, 0, 21, 21]);
     design.addPosition("b7", [0, 1, 2, 3, 4]);
@@ -141,7 +142,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(3, ZRF.FUNCTION,	25);	// to
     design.addCommand(3, ZRF.FUNCTION,	28);	// end
 
-
     design.addPiece("Stone", 0);
     design.addDrop(0, 0, [], 0);
     design.addMove(0, 1, [0], 0);
@@ -151,15 +151,14 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 2, [], 0);
     design.addMove(0, 3, [0, 4], 1);
 
-    design.reserve("White", "Stone", 9);
-    design.reserve("Black", "Stone", 9);
-
+    design.reserve("Blue", "Stone", 9);
+    design.reserve("Red", "Stone", 9);
 }
 
 Dagaz.View.configure = function(view) {
     view.defBoard("Board");
-    view.defPiece("WhiteStone", "White Stone");
-    view.defPiece("BlackStone", "Black Stone");
+    view.defPiece("BlueStone", "Blue Stone");
+    view.defPiece("RedStone", "Red Stone");
  
     view.defPosition("a7", 16, 16, 42, 42);
     view.defPosition("b7", 58, 16, 42, 42);

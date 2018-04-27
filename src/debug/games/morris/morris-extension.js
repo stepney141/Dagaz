@@ -43,6 +43,8 @@ Dagaz.Model.CheckInvariants = function(board) {
   var dirs   = [];
   dirs.push(design.getDirection("n")); dirs.push(design.getDirection("ne"));
   dirs.push(design.getDirection("e")); dirs.push(design.getDirection("se"));
+  dirs.push(design.getDirection("s")); dirs.push(design.getDirection("sw"));
+  dirs.push(design.getDirection("w")); dirs.push(design.getDirection("nw"));
   _.each(board.moves, function(move) {
       var cnt   = 0;
       var empty = null;
@@ -51,16 +53,16 @@ Dagaz.Model.CheckInvariants = function(board) {
           if (move.actions[0][0] !== null) {
               empty = move.actions[0][0][0];
           }
-          _.each(design.allDirections(), function(dir) {
-              if (isLine(design, board, board.player, pos, dir, empty)) {
+          for (var i = 0; i < 8; i++) {
+              if (isLine(design, board, board.player, pos, dirs[i], empty)) {
                   cnt++;
               }
-          });
-          _.each(dirs, function(dir) {
-              if (isMiddle(design, board, board.player, pos, dir, empty)) {
+          }
+          for (var i = 0; i < 4; i++) {
+              if (isMiddle(design, board, board.player, pos, dirs[i], empty)) {
                   cnt++;
               }
-          });
+          }
       }
       move.mode = cnt;
   });
