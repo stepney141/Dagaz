@@ -93,8 +93,7 @@ SgfAi.prototype.getMove = function(ctx) {
       }
       console.log(notes);
       if (notes) {
-          var moves = Dagaz.AI.generate(ctx, ctx.board);
-          var moves = _.filter(moves, function(move) {
+          var moves = _.filter(Dagaz.AI.generate(ctx, ctx.board), function(move) {
               return _.indexOf(notes, getNote(move)) >= 0;
           });
           if (moves.length > 0) {
