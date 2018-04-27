@@ -55,7 +55,7 @@ Dagaz.Model.CheckInvariants = function(board) {
   _.each(board.moves, function(move) {
       if (board.player == 1) {
           _.each(move.actions, function(a) {
-               if (a[2] !== null) {
+               if ((a[1] !== null) && (a[2] !== null)) {
                    var piece = a[2][0];
                    for (var ix = 0; ix < 4; ix++) {
                         if (+piece.getValue(ix) > 5) {

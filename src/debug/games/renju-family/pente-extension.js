@@ -68,31 +68,34 @@ Dagaz.Model.CheckInvariants = function(board) {
           _.each(design.allDirections(), function(dir) {
               var ix = _.indexOf(dirs, dir);
               if (ix > 3) ix -= 4;
-              var p = design.navigate(board.player, pos, dir);
-              if ((p !== null) && (_.indexOf(captured, p) < 0)) {
-                  var piece = board.getPiece(p);
+              var q = design.navigate(board.player, p, dir);
+              if ((q !== null) && (_.indexOf(captured, q) < 0)) {
+                  var piece = board.getPiece(q);
                   if ((piece !== null) && (piece.player != board.player)) {
-                      var v = getLine(design, board, p, dir, captured);
-                      while (p !== null) {
-                          var piece = board.getPiece(p);
+                      var v = getLine(design, board, q, dir, captured);
+                      while (q !== null) {
+                          var piece = board.getPiece(q);
                           if (piece === null) break;
                           if (piece.player == board.player) break;
-                          var k = _.indexOf(positions, p);
+                          var k = _.indexOf(positions, q);
                           if (k < 0) {
                               k = positions.length;
-                              positions.push(p);
+                              positions.push(q);
                               pieces.push(piece);
                           } else {
                               piece = pieces[k];
                           }
                           pieces[k] = piece.setValue(ix, v);
-                          p = design.navigate(board.player, p, dir);
+                          q = design.navigate(board.player, q, dir);
                       }
                   }
               }
           });
           move.capturePiece(p);
       });
+      if (captured.length > 0) {
+          move.addValue(board.player, 1);
+      }
       for (var i = 0; i < positions.length; i++) {
           move.movePiece(positions[i], positions[i], pieces[i]);
       }

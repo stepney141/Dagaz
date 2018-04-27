@@ -98,6 +98,14 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
 var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {
+  var fv = board.getValue(player);
+  var ev = board.getValue(design.nextPlayer(player));
+  if ((fv !== null) && (fv >= 5)) {
+      return 1;
+  }
+  if ((ev !== null) && (ev >= 5)) {
+      return -1;
+  }
   for (var pos = 0; pos < design.positions.length; pos++) {
        var piece = board.getPiece(pos);
        if (piece !== null) {
