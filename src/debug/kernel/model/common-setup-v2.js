@@ -133,12 +133,17 @@ Dagaz.Model.setup = function(board) {
                        board.setPiece(pos, piece);
                   }
               }
-              var turn = getTurn();
-              if (turn) {
-                  board.turn   = +turn;
-                  board.player = design.currPlayer(board.turn);
-              }
           }
+          var turn = getTurn();
+          if (turn) {
+              board.turn   = +turn;
+              board.player = design.currPlayer(board.turn);
+          }
+          _.each(board.reserve, function(r) {
+              _.each(_.keys(r), function(player) {
+                  r[player] = 0;
+              });
+          });
       }
   }
 }
