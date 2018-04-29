@@ -8,7 +8,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var isLine = function(design, board, player, pos, dir, empty) {
+Dagaz.Model.isLine = function(design, board, player, pos, dir, empty) {
   var p = design.navigate(player, pos, dir);
   if (p === null) return false;
   if ((empty !== null) && (p == empty)) return false;
@@ -22,7 +22,7 @@ var isLine = function(design, board, player, pos, dir, empty) {
   return piece.player == player;
 }
 
-var isMiddle = function(design, board, player, pos, dir, empty) {
+Dagaz.Model.isMiddle = function(design, board, player, pos, dir, empty) {
   var p = design.navigate(player, pos, dir);
   if (p === null) return false;
   if ((empty !== null) && (p == empty)) return false;
@@ -54,12 +54,12 @@ Dagaz.Model.CheckInvariants = function(board) {
               empty = move.actions[0][0][0];
           }
           for (var i = 0; i < 8; i++) {
-              if (isLine(design, board, board.player, pos, dirs[i], empty)) {
+              if (Dagaz.Model.isLine(design, board, board.player, pos, dirs[i], empty)) {
                   cnt++;
               }
           }
           for (var i = 0; i < 4; i++) {
-              if (isMiddle(design, board, board.player, pos, dirs[i], empty)) {
+              if (Dagaz.Model.isMiddle(design, board, board.player, pos, dirs[i], empty)) {
                   cnt++;
               }
           }

@@ -50,7 +50,7 @@ Dagaz.Model.CheckInvariants = function(board) {
           });
       } else {
           _.each(board.moves, function(move) {
-              if ((move.mode == 1) && !Dagaz.Model.isCapture(move)) {
+              if ((move.mode != 1) && !Dagaz.Model.isCapture(move)) {
                   move.failed = true;
               }
           });

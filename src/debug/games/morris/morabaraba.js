@@ -30,6 +30,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("morris-restrictions", "true");
     design.checkVersion("morris-extension", "true");
     design.checkVersion("morris-invariant", "once");
+    design.checkVersion("morris-check", "true");
     design.checkVersion("morris-goal", "true");
 
     design.addDirection("n");
