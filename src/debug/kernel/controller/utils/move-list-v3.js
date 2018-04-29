@@ -174,6 +174,12 @@ MoveList.prototype.getCaptures = function() {
                 });
             });
       }
+      if ((this.position === null) && (actions.length > 0) && (actions[0][0] !== null) && (actions[0][1] !== null) && (actions[0][0][0] == actions[0][1][0])) {
+          actions = this.getActions(move);
+          if ((actions.length > 0) && (actions[0][0] !== null) && (actions[0][1] === null)) {
+               result.push(actions[1][0][0]);
+          }
+      }
   }, this);
   result = _.uniq(result);
   return result;
