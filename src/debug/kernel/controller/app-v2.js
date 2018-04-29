@@ -321,6 +321,9 @@ App.prototype.exec = function() {
                  console.log("Setup: " + Dagaz.Model.getSetup(this.design, this.board));
              }
              this.list = Dagaz.Model.getMoveList(this.board);
+             if (this.params.SHOW_ATTACKING && Dagaz.Model.showCaptures) {
+                 this.view.markPositions(Dagaz.View.markType.ATTACKING, this.list.getCaptures());
+             }
              var drops = this.getDrops();
              if ((Dagaz.Model.showDrops == -2) || (!_.isUndefined(this.drops) && (Dagaz.Model.showDrops > 0) && (this.drops.length <= Dagaz.Model.showDrops))) {
                  if (drops.length > 0) {
