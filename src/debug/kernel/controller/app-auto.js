@@ -284,9 +284,9 @@ App.prototype.exec = function() {
              this.list = Dagaz.Model.getMoveList(this.board);
              if (this.list.isPassForced()) {
                   if (passForced >= this.design.getPlayersCount()) {
-                      this.state = STATE.DONE;
+/*                    this.state = STATE.DONE;
                       Canvas.style.cursor = "default";
-                      this.gameOver("Draw", 0);
+                      this.gameOver("Draw", 0); */
                   } else {
                       this.board = this.board.apply(Dagaz.Model.createMove());
                       this.state = STATE.IDLE;
