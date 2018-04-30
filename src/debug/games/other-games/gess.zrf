@@ -1,6 +1,6 @@
-(define slide (
-; (create Handle)
-  (while (on-board? $1) $1 add)
+(define step (
+  (create Handle)
+  $1 add
 ))
 
 (game
@@ -23,7 +23,7 @@
       (grid
           (start-rectangle 21 21 51 51)
           (dimensions
-            ("A/B/C/D/E/F/G/H/I/J/K/L/M/N/O/P/Q/R" (30 0)) ; files
+            ("a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r" (30 0)) ; files
             ("18/17/16/15/14/13/12/11/10/9/8/7/6/5/4/3/2/1" (0 30)) ; ranks
           )
           (directions 
@@ -34,7 +34,7 @@
       (grid
           (start-rectangle 21 21 51 51)
           (dimensions
-            ("a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r" (30 0)) ; files
+            ("A/B/C/D/E/F/G/H/I/J/K/L/M/N/O/P/Q/R" (30 0)) ; files
             ("18/17/16/15/14/13/12/11/10/9/8/7/6/5/4/3/2/1" (0 30)) ; ranks
           )
           (directions 
@@ -54,10 +54,10 @@
      (image Black "images/gess/handle.bmp"
             White "images/gess/handle.bmp")
      (moves
-        (slide n) (slide nw)
-        (slide w) (slide sw)
-        (slide s) (slide se)
-        (slide e) (slide ne)
+        (step n) (step nw)
+        (step w) (step sw)
+        (step s) (step se)
+        (step e) (step ne)
      )
   )  
 
