@@ -1,0 +1,68 @@
+(define drop (
+  (verify empty?)
+  add
+))
+
+(define slide (
+  (verify friend?)
+  $1 (while empty? add $1)
+))
+
+(define kill (
+  (verify enemy?)
+  capture add
+))
+
+(game
+  (title "Fangqi")
+
+  (move-sound "Audio\Pickup.wav")
+  (release-sound "Audio\Pickup.wav")
+  (capture-sound "")
+  (drop-sound "")
+
+  (option "animate captures"  false)
+  (option "animate drops"     false)
+  (option "smart moves"       false)
+; (option "shared pieces"     true)
+; (option "ko"                true)
+
+  (players Black White)
+  (turn-order Black White)
+  (move-priorities drop-type normal-type kill-type)
+
+  (board
+     (image "images/fangqi/board.bmp")
+     (grid
+         (start-rectangle 12 12 73 73)
+         (dimensions
+           ("a/b/c/d/e/f/g" (60 0)) ; files
+           ("8/7/6/5/4/3/2/1" (0 60)) ; ranks
+         )
+         (directions 
+           (n 0 -1) (s 0 1) (e 1 0) (w -1 0)
+         )
+     )
+  )
+
+  (piece
+     (name Stone)
+     (image White "images/fangqi/white.bmp"
+            Black "images/fangqi/black.bmp")
+     (drops
+         (move-type drop-type)
+         (drop)
+     )
+     (moves
+         (move-type normal-type)
+         (slide n) (slide w) (slide s) (slide e)
+         (move-type kill-type)
+         (kill)
+     )
+  )
+
+  (board-setup
+     (White (Stone off 28))
+     (Black (Stone off 28))
+  )
+)
