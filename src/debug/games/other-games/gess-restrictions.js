@@ -1,6 +1,6 @@
 (function() {
 
-var BOARD_SIZE = 18 * 18;
+Dagaz.Model.BOARD_SIZE = 18 * 18;
 
 var checkVersion = Dagaz.Model.checkVersion;
 
@@ -17,7 +17,7 @@ Dagaz.Model.CheckInvariants = function(board) {
   _.each(board.moves, function(move) {
       _.each(move.actions, function(a) {
           if ((a[0] !== null) && (a[1] !== null)) {
-              var pos = a[0][0] - BOARD_SIZE;
+              var pos = a[0][0] - Dagaz.Model.BOARD_SIZE;
               var piece = board.getPiece(pos);
               if ((piece !== null) && (piece.player != board.player)) {
                   move.failed = true;
@@ -33,7 +33,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                       }
                   }
               });
-              pos = a[1][0] - BOARD_SIZE;
+              pos = a[1][0] - Dagaz.Model.BOARD_SIZE;
               piece = board.getPiece(pos);
               if (piece === null) {
                   move.failed = true;
