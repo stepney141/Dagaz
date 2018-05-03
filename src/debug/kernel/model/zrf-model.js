@@ -1501,11 +1501,20 @@ ZrfBoard.prototype.copy = function() {
   r.parent  = this;
   r.player  = this.player;
   r.zSign   = this.zSign;
-  r.reserve = this.reserve;
   r.lastf   = this.lastf;
   r.lastt   = this.lastt;
+  r.reserve = [];
+  _.each(_.keys(this.reserve), function(t) {
+      r.reserve[t] = [];
+      _.each(_.keys(this.reserve[t]), function(p) {
+         r.reserve[t][p] = this.reserve[t][p];
+      }, this);
+  }, this);
   _.each(_.keys(this.pieces), function(pos) {
       r.pieces[pos] = this.pieces[pos];
+  }, this);
+  _.each(_.keys(this.values), function(k) {
+      r.values[k] = this.values[k];
   }, this);
   return r;
 }
@@ -1757,7 +1766,8 @@ ZrfBoard.prototype.checkContinue = function() {
 
 Dagaz.Model.decReserve = function(board, piece) {
   if (!_.isUndefined(board.reserve[piece.type])) {
-      if (!_.isUndefined(board.reserve[piece.type][piece.player])) {
+      if (!_.isUndefined(board.reserve[piece.type][piece.player]) &&
+          (board.reserve[piece.type][piece.player] > 0)) {
           board.reserve[piece.type][piece.player]--;
       }
   }
