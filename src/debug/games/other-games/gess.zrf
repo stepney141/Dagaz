@@ -14,7 +14,7 @@
   (option "animate captures"  false)
   (option "animate drops"     false)
   (option "smart moves"       false)
-; (option "shared pieces"     true)
+  (option "shared pieces"     true)
 
   (players Black White)
   (turn-order Black White)

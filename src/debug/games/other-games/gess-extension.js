@@ -1,5 +1,7 @@
 (function() {
 
+var checkVersion = Dagaz.Model.checkVersion;
+
 Dagaz.Model.checkVersion = function(design, name, value) {
   if (name != "gess-extension") {
      checkVersion(design, name, value);
@@ -55,7 +57,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                       m.movePiece(pos, target, piece);
                   } else {
                       if (board.getPiece(target) !== null) {
-                          m.capturePiece(q);
+                          m.capturePiece(target);
                       }
                   }
                   var isBreaked = false;
@@ -65,7 +67,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                   _.each(design.allDirections(), function(d) {
                       var p = design.navigate(board.player, pos, d);
                       if (p === null) return;
-                      var q = design.navigate(board.player, p, dir);
+                      var q = design.navigate(board.player, target, d);
                       if (q === null) return;
                       if (board.getPiece(q) !== null) {
                           isBreaked = true;
