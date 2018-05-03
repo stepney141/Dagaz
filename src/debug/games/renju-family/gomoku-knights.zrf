@@ -3,7 +3,6 @@
 ))
 
 (define jump (
-  (create Stone)
   $1 $2 (verify empty?) add
 ))
 

@@ -37,9 +37,9 @@ Dagaz.Model.CheckInvariants = function(board) {
   dirs.push(design.getDirection("n")); dirs.push(design.getDirection("ne"));
   dirs.push(design.getDirection("e")); dirs.push(design.getDirection("se"));
   _.each(board.moves, function(move) {
-      if ((move.actions.length > 0) && (move.actions[0][0] === null) && (move.actions[0][1] !== null) && (move.actions[0][2] !== null)) {
-          var pos   = move.actions[0][1][0];
-          var piece = move.actions[0][2][0];
+      if ((move.actions.length > 1) && (move.actions[1][0] === null) && (move.actions[1][1] !== null) && (move.actions[1][2] !== null)) {
+          var pos   = move.actions[1][1][0];
+          var piece = move.actions[1][2][0];
           for (var ix = 0; ix < dirs.length; ix++) {
                var vl = 1;
                vl += getLine(design, board, board.player, pos, dirs[ix], ix);
@@ -48,7 +48,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                updateLine(design, board, 0, pos, ix, vl, dirs[ix], move);
                piece = piece.setValue(ix, vl);
           }
-          move.actions[0][2] = [ piece ];
+          move.actions[1][2] = [ piece ];
       }
   });
   CheckInvariants(board);

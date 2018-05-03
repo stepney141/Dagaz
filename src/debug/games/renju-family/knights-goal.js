@@ -111,8 +111,8 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
       });
   });
   var r = 0;
-  if ((move.actions.length > 1) && (move.actions[1][0] !== null) && (move.actions[1][1] !== null)) {
-      var pos = move.actions[1][1][0];
+  if ((move.actions.length > 1) && (move.actions[0][0] !== null) && (move.actions[0][1] !== null)) {
+      var pos = move.actions[0][1][0];
       for (var i = 0; i < positions.length; i++) {
           if (_.indexOf(positions[i], pos) >= 0) {
               r += prices[i];
@@ -131,7 +131,7 @@ var checkGoals = Dagaz.Model.checkGoals;
 Dagaz.Model.checkGoals = function(design, board, player) {
   for (var pos = 0; pos < design.positions.length; pos++) {
        var piece = board.getPiece(pos);
-       if (piece !== null) {
+       if ((piece !== null) && (piece.type == 0)) {
            for (var ix = 0; ix < 4; ix++) {
                 var vl = +piece.getValue(ix);
                 if (vl >= 5) {

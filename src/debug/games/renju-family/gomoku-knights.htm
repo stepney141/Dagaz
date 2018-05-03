@@ -1,18 +1,20 @@
 <html>
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Ninuki Renju</title>
+<title>Gomoku Knights</title>
 </head>
 <body>
 
-<img id="Board" style="display:none" src="images/19x19.png">
+<img id="Board" style="display:none" src="images/15x15.png">
 <img id="BlackStone" style="display:none" src="images/bsmall.png">
 <img id="WhiteStone" style="display:none" src="images/wsmall.png">
+<img id="BlackKnight" style="display:none" src="images/bknight.png">
+<img id="WhiteKnight" style="display:none" src="images/wknight.png">
 
 <table style="margin:auto; font-family:sans-serif; font-size:14px" id="Table">
-<tr style="height:583px; vertical-align:top">
-<td id="CanvasCell" style="width:583px">
-<canvas id="Canvas" width="583" height="583" style="cursor:default">Broken canvas...</canvas>
+<tr style="height:462px; vertical-align:top">
+<td id="CanvasCell" style="width:462px">
+<canvas id="Canvas" width="462" height="462" style="cursor:default">Broken canvas...</canvas>
 </td><td style="width:300px;">
 <div style="height:510px; overflow:auto" id="ScrollDiv">
 <img id="GlyphImage"><p id="HelpText"></p>
@@ -40,12 +42,12 @@
 <script src="../../kernel/model/common-setup-v2.js"></script>
 <script src="../../kernel/view/2d/2d-view-v2.js"></script>
 <script src="../../kernel/controller/utils/move-list-v3.js"></script>
-<script src="pente-goal.js"></script>
-<script src="ninuki-invariant.js"></script>
-<script src="pente-extension.js"></script>
-<script src="renju-extension.js"></script>
-<script src="pente-restrictions.js"></script>
-<script src="pente.js"></script>
+<script src="../../kernel/controller/ai/random-ai.js"></script>
+<script src="../../kernel/controller/ai/heuristic-ai.js"></script>
+<script src="knights-goal.js"></script>
+<script src="knights-extension.js"></script>
+<script src="knights-restrictions.js"></script>
+<script src="gomoku-knights.js"></script>
 <script src="../../kernel/controller/app-v2.js"></script>
 
 </body>

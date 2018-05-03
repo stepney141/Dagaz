@@ -21,6 +21,11 @@ Dagaz.Model.CheckInvariants = function(board) {
           }
       });
   }
+  _.each(board.moves, function(move) {
+      if (move.isSimpleMove()) {
+          move.dropPiece(move.actions[0][0][0], Dagaz.Model.createPiece(0, board.player));
+      }
+  });
   CheckInvariants(board);
 }
 
