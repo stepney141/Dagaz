@@ -1,5 +1,7 @@
 (function() {
 
+Dagaz.AI.AI_FRAME = 1000;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
