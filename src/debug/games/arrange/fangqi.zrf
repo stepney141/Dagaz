@@ -14,7 +14,7 @@
 ))
 
 (game
-  (title "Fangqi")
+  (title "Ningxia Fangqi")
 
   (move-sound "Audio\Pickup.wav")
   (release-sound "Audio\Pickup.wav")
@@ -41,6 +41,7 @@
          )
          (directions 
            (n 0 -1) (s 0 1) (e 1 0) (w -1 0)
+           (nw -1 -1) (sw -1 1) (ne 1 -1) (se 1 1)
          )
      )
   )
@@ -64,5 +65,34 @@
   (board-setup
      (White (Stone off 28))
      (Black (Stone off 28))
+  )
+)
+
+(variant
+  (title "Xinjiang Fangqi")
+  (default)
+
+  (board
+     (image "images/fangqi/7x7.bmp")
+     (grid
+         (start-rectangle 12 12 73 73)
+         (dimensions
+           ("a/b/c/d/e/f/g" (60 0)) ; files
+           ("7/6/5/4/3/2/1" (0 60)) ; ranks
+         )
+         (directions 
+           (n 0 -1) (s 0 1) (e 1 0) (w -1 0)
+           (nw -1 -1) (sw -1 1) (ne 1 -1) (se 1 1)
+         )
+     )
+     (zone (name first-move)  
+         (players Black) 
+         (positions d4)
+     )
+  )
+
+  (board-setup
+     (White (Stone off 24))
+     (Black (Stone off 25))
   )
 )
