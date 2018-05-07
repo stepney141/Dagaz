@@ -47,6 +47,14 @@ var findPattern = function(pattern) {
 
 Dagaz.AI.heuristic = function(ai, design, board, move) {
   var r = 0;
+  var cnt = _.chain(board.pieces).compact().size().value();
+  if (cnt == 0) {
+      var pos = move.actions[0][1][0];
+      if (pos == 40) {
+          return 1;
+      }
+      return -1;
+  }
   if ((move.actions.length > 0) && (move.actions[0][1] !== null)) {
       var p   = "";
       var f   = true;
