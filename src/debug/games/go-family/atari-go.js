@@ -35,8 +35,10 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addDirection("s");
     design.addDirection("n");
 
-    design.addPlayer("Black", [1, 0, 3, 2]);
-    design.addPlayer("White", [0, 1, 2, 3]);
+    design.addPlayer("White", [1, 0, 3, 2]);
+    design.addPlayer("Black", [0, 1, 2, 3]);
+    design.addTurn(2);
+    design.addTurn(1);
 
     design.addPosition("a9", [0, 1, 9, 0]);
     design.addPosition("b9", [-1, 1, 9, 0]);
@@ -131,8 +133,8 @@ Dagaz.Model.BuildDesign = function(design) {
 
 Dagaz.View.configure = function(view) {
     view.defBoard("Board");
-    view.defPiece("WhiteStone", "White Stone");
     view.defPiece("BlackStone", "Black Stone");
+    view.defPiece("WhiteStone", "White Stone");
  
     view.defPosition("a9", 12, 12, 61, 61);
     view.defPosition("b9", 72, 12, 61, 61);
