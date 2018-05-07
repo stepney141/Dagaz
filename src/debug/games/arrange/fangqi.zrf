@@ -29,7 +29,7 @@
 
   (players Black White)
   (turn-order Black White)
-  (move-priorities drop-type normal-type kill-type)
+  (move-priorities drop-type normal-type)
 
   (board
      (image "images/fangqi/board.bmp")
@@ -57,7 +57,6 @@
      (moves
          (move-type normal-type)
          (slide n) (slide w) (slide s) (slide e)
-         (move-type kill-type)
          (kill)
      )
   )

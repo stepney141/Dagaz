@@ -1,3 +1,9 @@
+Dagaz.Model.WIDTH  = 7;
+Dagaz.Model.HEIGHT = 7;
+
+Dagaz.Model.C1     = 1;
+Dagaz.Model.C2     = 2;
+
 ZRF = {
     JUMP:          0,
     IF:            1,
@@ -27,6 +33,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
     design.checkVersion("shared-pieces", "true");
+    design.checkVersion("fangqi-extension", "true");
+    design.checkVersion("fangqi-invariant", "true");
+    design.checkVersion("fangqi-goal", "true");
 
     design.addDirection("w");
     design.addDirection("e");
@@ -122,7 +131,6 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPriority(0);			// drop-type
     design.addPriority(1);			// normal-type
-    design.addPriority(2);			// kill-type
 
     design.addPiece("Stone", 0);
     design.addDrop(0, 0, [], 0);
@@ -130,7 +138,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 1, [0, 0], 1);
     design.addMove(0, 1, [2, 2], 1);
     design.addMove(0, 1, [1, 1], 1);
-    design.addMove(0, 2, [], 2);
+    design.addMove(0, 2, [], 1);
 
     design.reserve("White", "Stone", 24);
     design.reserve("Black", "Stone", 25);
