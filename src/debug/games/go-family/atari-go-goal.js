@@ -18,14 +18,15 @@ var getPattern = function(board, x, y) {
   var piece = board.getPiece(pos);
   if (piece === null) return "0";
   var v = +piece.getValue(0);
-  if (v === null) return "0";
   if (piece.player == board.player) {
+      if (v === null) return "x";
       if (v == 1) return "a";
       if (v == 2) return "b";
       if (v == 3) return "c";
       if (v == 4) return "d";
       return "x";
   } else {
+      if (v === null) return "X";
       if (v == 1) return "A";
       if (v == 2) return "B";
       if (v == 3) return "C";
@@ -35,18 +36,17 @@ var getPattern = function(board, x, y) {
 }
 
 var findPattern = function(pattern) {
-  var r = null;
   for (var i = 0; i < Dagaz.AI.Patterns.length; i++) {
       var result = pattern.match(Dagaz.AI.Patterns[i].re);
-      if (result && ((r === null) || (r < Dagaz.AI.Patterns[i].price))) {
-          r = Dagaz.AI.Patterns[i].price;
+      if (result) {
+          return Dagaz.AI.Patterns[i].price;
       }
   }
-  return r;
+  return null;
 }
 
 Dagaz.AI.heuristic = function(ai, design, board, move) {
-  var r = -1;
+  var r = 0;
   if ((move.actions.length > 0) && (move.actions[0][1] !== null)) {
       var p   = "";
       var f   = true;
