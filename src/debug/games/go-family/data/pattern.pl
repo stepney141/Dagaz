@@ -86,7 +86,7 @@ while (<>) {
   if (/^(-?\d+)/) {
       $price = $1;
   }
-  if (/^([?+*.a-zA-Z]{5})/) {
+  if (/^([?+*.!a-zA-Z]{5})/) {
       $pattern .= $1;
   }
   if (length($pattern) == 25) {
