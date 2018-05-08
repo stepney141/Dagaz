@@ -18,10 +18,10 @@ Dagaz.Model.CheckInvariants = function(board) {
       if (move.isSimpleMove()) {
           var empty = move.actions[0][0][0];
           var pos   = move.actions[0][1][0];
-          if (Dagaz.Model.isLine(design, board, board.player, pos, n, empty) ||
-              Dagaz.Model.isLine(design, board, board.player, pos, w, empty) ||
-              Dagaz.Model.isLine(design, board, board.player, pos, s, empty) ||
-              Dagaz.Model.isLine(design, board, board.player, pos, e, empty) ||
+          if (Dagaz.Model.isLine(design,   board, board.player, pos, n, empty) ||
+              Dagaz.Model.isLine(design,   board, board.player, pos, w, empty) ||
+              Dagaz.Model.isLine(design,   board, board.player, pos, s, empty) ||
+              Dagaz.Model.isLine(design,   board, board.player, pos, e, empty) ||
               Dagaz.Model.isMiddle(design, board, board.player, pos, n, empty) ||
               Dagaz.Model.isMiddle(design, board, board.player, pos, w, empty)) {
               move.mode = 2;

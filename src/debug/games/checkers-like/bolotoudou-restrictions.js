@@ -47,10 +47,10 @@ Dagaz.Model.CheckInvariants = function(board) {
   _.each(board.moves, function(move) {
       if (move.isDropMove()) {
           var pos = move.actions[0][1][0];
-          if (Dagaz.Model.isLine(design, board, board.player, pos, n) ||
-              Dagaz.Model.isLine(design, board, board.player, pos, w) ||
-              Dagaz.Model.isLine(design, board, board.player, pos, s) ||
-              Dagaz.Model.isLine(design, board, board.player, pos, e) ||
+          if (Dagaz.Model.isLine(design,   board, board.player, pos, n) ||
+              Dagaz.Model.isLine(design,   board, board.player, pos, w) ||
+              Dagaz.Model.isLine(design,   board, board.player, pos, s) ||
+              Dagaz.Model.isLine(design,   board, board.player, pos, e) ||
               Dagaz.Model.isMiddle(design, board, board.player, pos, n) ||
               Dagaz.Model.isMiddle(design, board, board.player, pos, w)) {
               move.failed = true;
