@@ -8,19 +8,18 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var expand = function(design, board, player, group, dame, captured) {
+var expand = function(design, board, player, group, dame) {
    for (var i = 0; i < group.length; i++) {
         var pos = group[i];
         _.each(design.allDirections(), function(dir) {
             var p = design.navigate(player, pos, dir);
             if (p !== null) {
                 var piece = board.getPiece(p);
-                if ((piece !== null) && (piece.type == 0)) {
-                    if ((piece.player == player) && (_.indexOf(group, p) < 0)) {
-                        group.push(p);
-                    }
-                    if (!_.isUndefined(captured) && (_.indexOf(captured, p) >= 0)) {
-                        if (_.indexOf(dame, p) < 0) dame.push(p);
+                if (piece !== null) {
+                    if (piece.type == 0) {
+                        if ((piece.player == player) && (_.indexOf(group, p) < 0)) {
+                            group.push(p);
+                        }
                     }
                 } else {
                     if (_.indexOf(dame, p) < 0) dame.push(p);
@@ -63,29 +62,30 @@ Dagaz.Model.CheckInvariants = function(board) {
                var p = design.navigate(board.player, pos, dir);
                if ((p !== null) && (_.indexOf(enemies, p) < 0)) {
                    var piece = board.getPiece(p);
-                   if ((piece !== null) && (piece.type == 0)) {
-                       if (piece.getValue(0) === null) {
-                           move.failed = true;
-                           return;
-                       }
-                       var value = +piece.getValue(0);
-                       if (piece.player == board.player) {
-                           group.push(p);
-                       } else {
-                           if (value <= 1) {
-                               captured.push(p);
-                               expand(design, board, piece.player, captured, []);
-                               _.each(captured, function(q) {
-                                    enemies.push(q);
-                               });
-                               dame.push(p);
+                   if (piece !== null) {
+                       if (piece.type == 0) {
+                           if (piece.getValue(0) === null) {
+                               move.failed = true;
+                               return;
+                           }
+                           var value = +piece.getValue(0);
+                           if (piece.player == board.player) {
+                               group.push(p);
                            } else {
-                               var g = [ p ];
-                               expand(design, board, piece.player, g, []);
-                               _.each(g, function(q) {
-                                    enemies.push(q);
-                               });
-                               change(move, board, g, value - 1);
+                               if (value <= 1) {
+                                   captured.push(p);
+                                   expand(design, board, piece.player, captured, []);
+                                   _.each(captured, function(q) {
+                                        enemies.push(q);
+                                   });
+                               } else {
+                                   var g = [ p ];
+                                   expand(design, board, piece.player, g, []);
+                                   _.each(g, function(q) {
+                                        enemies.push(q);
+                                   });
+                                   change(move, board, g, value - 1);
+                               }
                            }
                        }
                    } else {
@@ -102,7 +102,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                        var p = design.navigate(board.player, e, dir);
                        if ((p !== null) && (_.indexOf(group, p) < 0) && (_.indexOf(friends, p) < 0)) {
                             var g = [ p ]; var d = [];
-                            expand(design, board, board.player, g, d, captured);
+                            expand(design, board, board.player, g, d);
                             _.each(g, function(q) {
                                 friends.push(q);
                                 var piece = board.getPiece(q);
