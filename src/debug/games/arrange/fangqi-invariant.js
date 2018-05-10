@@ -34,25 +34,39 @@ Dagaz.Model.CheckInvariants = function(board) {
   if (req === null) req = 0;
   if ((req > 0) && (avail > 0) && !_.isUndefined(board.move) && isCapturing(board.move)) {
       board.moves = [ Dagaz.Model.createMove(1) ];
+      CheckInvariants(board);
+      return;
   }
   req = board.getValue(board.player);
   if (req === null) req = 0;
   if (req > 0) {
-      avail = 0;
+      var f = true;
       _.each(board.moves, function(move) {
-          if (move.isDropMove()) return;
-          var pos = move.actions[0][0][0];
-          var piece = board.getPiece(pos);
-          if (isCapturing(move) && (Dagaz.Model.calcForms(board, piece.player, pos, null) == 0)) {
-              avail++;
-          } else {
-              move.failed = true;
+          if (move.isDropMove()) {
+              f = false;
+              return;
+          }
+          if (isCapturing(move)) {
+              var pos = move.actions[0][0][0];
+              var piece = board.getPiece(pos);
+              if (Dagaz.Model.calcForms(board, piece.player, pos, null) == 0) {
+                  move.addValue(board.player, -1);
+                  f = false;
+              }
           }
       });
-      if (avail == 1) {
-          move.addValue(board.player, -req);
-      } else {
-          move.addValue(board.player, -1);
+      if (f) {
+          avail = board.getValue(design.nextPlayer(board.player));
+          if ((avail !== null) && (avail > 0)) {
+             var move = Dagaz.Model.createMove(1);
+             move.addValue(board.player, -req);
+             board.moves = [ move ];
+             CheckInvariants(board);
+             return;
+          } 
+          _.each(board.moves, function(move) {
+             move.addValue(board.player, -req);
+          });
       }
   } else {
       _.each(board.moves, function(move) {
