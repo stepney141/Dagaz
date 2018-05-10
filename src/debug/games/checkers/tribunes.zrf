@@ -154,7 +154,7 @@
      )
   )
   (piece
-     (name K2)
+     (name K3)
      (image White "images/wdamone-3.bmp"
             Black "images/bdamone-3.bmp")
      (moves
