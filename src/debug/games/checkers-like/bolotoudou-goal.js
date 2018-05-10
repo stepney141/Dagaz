@@ -80,6 +80,7 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
   var r = 1;
   var n = design.getDirection("n"); var w = design.getDirection("w");
   var s = design.getDirection("s"); var e = design.getDirection("e");
+  if (move.isPass()) return r;
   if (move.isDropMove()) {
       var pos = move.actions[0][1][0];
       if (_.indexOf(getEnemyPositions(design, board), pos) >= 0) r += 10;
@@ -99,35 +100,36 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
               }
           }
       });
-  }
-  if (move.isSimpleMove()) {
-      var empty = move.actions[0][0][0];
-      var pos   = move.actions[0][1][0];
-      var dist  = getDistance(design, board, empty)[pos];
-      if (dist !== null) {
-          return 100 - dist;
-      }
-      _.each(design.allDirections(), function(dir) {
-          var p = design.navigate(board.player, pos, dir);
-          if ((p !== null) && (p != empty)) {
+  } else {
+      if (move.isSimpleMove()) {
+          var empty = move.actions[0][0][0];
+          var pos   = move.actions[0][1][0];
+          var dist  = getDistance(design, board, empty)[pos];
+          if (dist !== null) {
+              return 100 - dist;
+          }
+          _.each(design.allDirections(), function(dir) {
+              var p = design.navigate(board.player, pos, dir);
+              if ((p !== null) && (p != empty)) {
+                  var piece = board.getPiece(p);
+                  if ((piece !== null) && (piece.player == board.player)) {
+                      r += 10;
+                  }
+              }
+          });
+      } else {
+          var pos = move.actions[0][0][0];
+          _.each(design.allDirections(), function(dir) {
+              var p = design.navigate(board.player, pos, dir);
+              if ((p !== null) && (_.indexOf(getEnemyPositions(design, board), p) >= 0)) {
+                  r += 100;
+              }
               var piece = board.getPiece(p);
-              if ((piece !== null) && (piece.player == board.player)) {
+              if ((piece !== null) && (piece.player != board.player)) {
                   r += 10;
               }
-          }
-      });
-  } else {
-      var pos = move.actions[0][0][0];
-      _.each(design.allDirections(), function(dir) {
-          var p = design.navigate(board.player, pos, dir);
-          if ((p !== null) && (_.indexOf(getEnemyPositions(design, board), p) >= 0)) {
-              r += 100;
-          }
-          var piece = board.getPiece(p);
-          if ((piece !== null) && (piece.player != board.player)) {
-              r += 10;
-          }
-      });
+          });
+      }
   }
   return r;
 }
