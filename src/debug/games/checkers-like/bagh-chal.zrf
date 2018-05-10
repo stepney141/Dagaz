@@ -86,7 +86,7 @@
   )
 
   (board-setup
-    (White (Tiger a1 a5 e1 e5))
+    (White (Tiger a1 a5 e1 e5 off 0))
     (Black (Goat off 20))
   )
 
