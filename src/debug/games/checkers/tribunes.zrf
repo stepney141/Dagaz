@@ -18,6 +18,17 @@
    )
 ))
 
+(define spanish-checker-jump (
+   $1 (verify enemy?) 
+   capture 
+   $1 (verify empty?)
+   (if (in-zone? promotion)
+       (add K1)
+    else
+       (add-partial jump-type)
+   )
+))
+
 (define king-shift (
    $1 (while empty?
        add $1
@@ -175,4 +186,43 @@
   (loss-condition (White Black) (pieces-remaining 0))
   (loss-condition (White Black) stalemated)
   (loss-condition (White Black) repetition)
+)
+
+(variant
+  (title "Spanish Tribunes")
+  (default)
+
+  (piece
+     (name M1)
+     (image White "images/wman.bmp"
+            Black "images/bman.bmp")
+     (moves
+         (move-type jump-type)
+         (spanish-checker-jump nw) (spanish-checker-jump ne)
+         (move-type normal-type)
+         (checker-shift nw) (checker-shift ne)
+     )
+  )
+  (piece
+     (name M2)
+     (image White "images/wman-2.bmp"
+            Black "images/bman-2.bmp")
+     (moves
+         (move-type jump-type)
+         (spanish-checker-jump nw) (spanish-checker-jump ne)
+         (move-type normal-type)
+         (checker-shift nw) (checker-shift ne)
+     )
+  )
+  (piece
+     (name M3)
+     (image White "images/wman-3.bmp"
+            Black "images/bman-3.bmp")
+     (moves
+         (move-type jump-type)
+         (spanish-checker-jump nw) (spanish-checker-jump ne)
+         (move-type normal-type)
+         (checker-shift nw) (checker-shift ne)
+     )
+  )
 )
