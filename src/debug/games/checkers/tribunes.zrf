@@ -190,7 +190,6 @@
 
 (variant
   (title "Spanish Tribunes")
-  (default)
 
   (piece
      (name M1)

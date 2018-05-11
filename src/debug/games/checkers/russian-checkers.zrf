@@ -180,7 +180,6 @@
 
 (variant
   (title "Northern Checkers (variant)")
-  (default)
 
   (option "animate captures"   false)
   (option "smart moves"        true)
