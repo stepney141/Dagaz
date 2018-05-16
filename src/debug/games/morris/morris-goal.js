@@ -59,15 +59,18 @@ var getPair = function(design, board, pos, dir, frozen) {
   return board.player;
 }
 
-var expance = function(design, board, frozen, group) {
+var expance = function(design, board, frozen, group, distance) {
+  var x = design.getDirection("x");
   for (var i = 0; i < group.length; i++) {
       _.each(design.allDirections(), function(dir) {
-           var p = design.navigate(board.player, group[i], dir);
-           if ((p !== null) && (_.indexOf(group, p) < 0) && (_.indexOf(frozen, p) < 0)) {
-                board.targets[pos].distance[p] = board.targets[pos].distance[group[i]] + 1;
-                if (board.getPiece(p) === null) {
-                    group.push(p);
-                }
+           if (dir != x) {
+               var p = design.navigate(board.player, group[i], dir);
+               if ((p !== null) && (_.indexOf(group, p) < 0) && (_.indexOf(frozen, p) < 0)) {
+                    distance[p] = distance[group[i]] + 1;
+                    if (board.getPiece(p) === null) {
+                        group.push(p);
+                    }
+               }
            }
       });
   }
@@ -75,6 +78,7 @@ var expance = function(design, board, frozen, group) {
 
 var getTargets = function(design, board) {
   var f = true;
+  var x = design.getDirection("x");
   if (_.isUndefined(board.targets)) {
       board.targets = [];
       _.each(design.allPositions(), function(pos) {
@@ -83,18 +87,22 @@ var getTargets = function(design, board) {
                var player = 0;
                var frozen = [];
                _.each(design.allDirections(), function(dir) {
-                   var p = getLine(design, board, pos, dir, frozen);
-                   if (p != 0) {
-                       if ((player == 0) || (p == board.player)) player = p;
-                       cnt++;
+                   if (dir != x) {
+                       var p = getLine(design, board, pos, dir, frozen);
+                       if (p != 0) {
+                           if ((player == 0) || (p == board.player)) player = p;
+                           cnt++;
+                       }
                    }
                });
                if (cnt == 0) {
                    _.each(design.allDirections(), function(dir) {
-                       var p = getMiddle(design, board, pos, dir, frozen);
-                       if (p != 0) {
-                           if ((player == 0) || (p == board.player)) player = p;
-                           cnt++;
+                       if (dir != x) {
+                           var p = getMiddle(design, board, pos, dir, frozen);
+                           if (p != 0) {
+                               if ((player == 0) || (p == board.player)) player = p;
+                               cnt++;
+                           }
                        }
                    });
                }
@@ -108,7 +116,7 @@ var getTargets = function(design, board) {
                       distance: []
                    };
                    board.targets[pos].distance[pos] = 0;
-                   expance(design, board, frozen, [ pos ]);
+                   expance(design, board, frozen, [ pos ], board.targets[pos].distance);
                }
            }
       });
@@ -119,10 +127,12 @@ var getTargets = function(design, board) {
                    var player = 0;
                    var frozen = [];
                    _.each(design.allDirections(), function(dir) {
-                       var p = getPair(design, board, pos, dir, frozen);
-                       if (p != 0) {
-                           if ((player == 0) || (p == board.player)) player = p;
-                           cnt++;
+                       if (dir != x) {
+                           var p = getPair(design, board, pos, dir, frozen);
+                           if (p != 0) {
+                               if ((player == 0) || (p == board.player)) player = p;
+                               cnt++;
+                           }
                        }
                    });
                    if (cnt > 0) {
@@ -133,7 +143,7 @@ var getTargets = function(design, board) {
                           distance: []
                        };
                        board.targets[pos].distance[pos] = 0;
-                       expance(design, board, frozen, [ pos ]);
+                       expance(design, board, frozen, [ pos ], board.targets[pos].distance);
                    }
                }
           });
