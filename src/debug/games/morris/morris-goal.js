@@ -46,17 +46,17 @@ var getPair = function(design, board, pos, dir, frozen) {
   if (p === null) return 0;
   var piece = board.getPiece(p);
   if (piece === null) return 0;
-  if (piece.player != board.player) return 0;
+  var player = piece.player;
   var q = design.navigate(board.player, p, dir);
   if ((q !== null) && (board.getPiece(q) === null)) {
       frozen.push(p);
-      return board.player;
+      return player;
   }
   q = design.navigate(0, pos, dir);
   if (q === null) return 0;
   if (board.getPiece(q) !== null) return 0;
   frozen.push(p);
-  return board.player;
+  return player;
 }
 
 var expance = function(design, board, frozen, group, distance) {
@@ -221,10 +221,10 @@ Dagaz.Model.checkGoals = function(design, board, player) {
           }
       }
   });
-  if ((enemies < 3) && (design.reserve[0][design.nextPlayer(player)] == 0)) {
+  if ((enemies < 3) && (board.reserve[0][design.nextPlayer(player)] == 0)) {
       return 1;
   }
-  if ((friends < 3) && (design.reserve[0][player] == 0)) {
+  if ((friends < 3) && (board.reserve[0][player] == 0)) {
       return -1;
   }
   return checkGoals(design, board, player);
