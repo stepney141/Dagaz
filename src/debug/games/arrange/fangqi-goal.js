@@ -23,10 +23,10 @@ Dagaz.Model.checkGoals = function(design, board, player) {
           }
       }
   });
-  if ((enemies < 4) && (design.reserve[0][design.nextPlayer(player)] == 0)) {
+  if ((enemies < 4) && (board.reserve[0][design.nextPlayer(player)] == 0)) {
       return 1;
   }
-  if ((friends < 4) && (design.reserve[0][player] == 0)) {
+  if ((friends < 4) && (board.reserve[0][player] == 0)) {
       return -1;
   }
   return checkGoals(design, board, player);
