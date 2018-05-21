@@ -65,8 +65,9 @@ Dagaz.Model.isMiddle = function(design, board, player, pos, dir, empty) {
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
-  var design = Dagaz.Model.design;
-  var dirs   = [];
+  var design     = Dagaz.Model.design;
+  var dirs       = [];
+  board.zPartial = [];
   dirs.push(design.getDirection("n")); dirs.push(design.getDirection("ne"));
   dirs.push(design.getDirection("e")); dirs.push(design.getDirection("se"));
   dirs.push(design.getDirection("s")); dirs.push(design.getDirection("sw"));
@@ -97,7 +98,7 @@ Dagaz.Model.CheckInvariants = function(board) {
               var b = board;
               while (!_.isUndefined(b.move) && !_.isUndefined(b.parent) && (b.parent !== null)) {
                   if ((b.player != board.player) && (b.move.mode > 0)) {
-                      if (_.intersection(b.move.zPartial, move.zPartial).length > 0) {
+                      if (_.intersection(b.move.zPartial, move.zPartial).length == move.zPartial.length) {
                           move.failed = true;
                       }
                       break;
