@@ -216,10 +216,11 @@
      )
      (moves
         (move-type normal-type)
-;        (step n) (step s) (step w) (step e)
+        (step n) (step s) (step w) (step e)
+        (step nw) (step se) (step sw) (step ne)
         (kill) 
         (move-type fly-type)
-;        (fly a9 x)
+        (fly a9 x)
      )
   )
 

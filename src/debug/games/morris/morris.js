@@ -28,7 +28,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-hints", "false");
     design.checkVersion("shared-pieces", "true");
     design.checkVersion("morris-restrictions", "true");
-    design.checkVersion("morris-extension", "true");
+    design.checkVersion("morris-extension", "ko");
     design.checkVersion("morris-invariant", "true");
     design.checkVersion("morris-check", "true");
     design.checkVersion("morris-goal", "true");
