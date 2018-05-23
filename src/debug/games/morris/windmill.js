@@ -199,6 +199,7 @@ Dagaz.View.configure = function(view) {
     view.defBoard("Board");
     view.defPiece("BlueStone", "Blue Stone");
     view.defPiece("RedStone", "Red Stone");
+    view.defPiece("Ko", "Ko");
  
     view.defPosition("a9", 16, 16, 42, 42);
     view.defPosition("b9", 58, 16, 42, 42);
