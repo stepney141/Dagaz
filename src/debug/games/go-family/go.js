@@ -25,6 +25,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
+    design.checkVersion("show-captures", "false");
     design.checkVersion("ko", "true");
     design.checkVersion("go-extension", "true");
 
@@ -411,6 +412,7 @@ Dagaz.View.configure = function(view) {
     view.defBoard("Board");
     view.defPiece("BlackStone", "Black Stone");
     view.defPiece("WhiteStone", "White Stone");
+    view.defPiece("Ko", "Ko");
  
     view.defPosition("a19", 6, 6, 30, 30);
     view.defPosition("b19", 36, 6, 30, 30);
