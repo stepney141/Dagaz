@@ -33,7 +33,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
     design.checkVersion("shared-pieces", "true");
-    design.checkVersion("fangqi-extension", "true");
+    design.checkVersion("fangqi-extension", "ko");
     design.checkVersion("fangqi-invariant", "true");
     design.checkVersion("fangqi-goal", "true");
 
@@ -153,6 +153,7 @@ Dagaz.View.configure = function(view) {
     view.defBoard("Board");
     view.defPiece("WhiteStone", "White Stone");
     view.defPiece("BlackStone", "Black Stone");
+    view.defPiece("Ko", "Ko");
  
     view.defPosition("a8", 12, 12, 61, 61);
     view.defPosition("b8", 72, 12, 61, 61);

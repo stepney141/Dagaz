@@ -1,44 +1,62 @@
 (function() {
 
+var koMode = false;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "fangqi-extension") {
+  if (name == "fangqi-extension") {
+     if (value == "ko") koMode = true;
+  } else {
      checkVersion(design, name, value);
   }
 }
 
-Dagaz.Model.calcForms = function(board, player, pos, empty) {
-  var c = 0;
+Dagaz.Model.incForm = function(board, player, pos, empty, dx, dy, zPart) {
+  var v = 0;
+  var z = Dagaz.Model.getZobristHash();
   var x = Dagaz.Model.getX(pos);
   var y = Dagaz.Model.getY(pos);
-  for (var i = -1; i < 1; i++) {
-       for (var j = -1; j < 1; j++) {
-            var f = true;
-            for (var k = 0; k < 2; k++) {
-                 for (var t = 0; t < 2; t++) {
-                      if ((x + i + k < 0) || (x + i + k >= Dagaz.Model.WIDTH) ||
-                          (y + j + t < 0) || (y + j + t >= Dagaz.Model.HEIGHT)) {
-                          f = false;
-                          break;
-                      }
-                      var p = (y + j + t) * Dagaz.Model.WIDTH + x + i + k;
-                      if (p == pos) continue;
-                      if ((empty !== null) && (p == empty)) {
-                          f = false;
-                          break;
-                      }
-                      var piece = board.getPiece(p);
-                      if ((piece === null) || (piece.player !== player)) {
-                          f = false;
-                          break;
-                      }
-                 }
+  if ((x + dx < 0) || (x + dx + 1 >= Dagaz.Model.WIDTH))  return 0;
+  if ((y + dy < 0) || (y + dy + 1 >= Dagaz.Model.HEIGHT)) return 0;
+  for (var i = 0; i < 2; i++) {
+       for (var j = 0; j < 2; j++) {
+            var p = (y + dy + i) * Dagaz.Model.WIDTH + x + dx + j;
+            if (p != pos) {
+                if ((empty !== null) && (p == empty)) return 0;
+                var piece = board.getPiece(p);
+                if (piece === null) return 0;
+                if (piece.player != player) return 0;
             }
-            if (f) c++;
+            v = z.update(v, player, 0, p);
        }
   }
-  return c;
+  if (!_.isUndefined(zPart)) {
+      zPart.push(v);
+  }
+  return 1;
+}
+
+Dagaz.Model.calcForms = function(board, player, pos, empty, zPart) {
+  var r = 0;
+  r += Dagaz.Model.incForm(board, player, pos, empty, -1, -1, zPart);
+  r += Dagaz.Model.incForm(board, player, pos, empty, -1,  0, zPart);
+  r += Dagaz.Model.incForm(board, player, pos, empty,  0, -1, zPart);
+  r += Dagaz.Model.incForm(board, player, pos, empty,  0,  0, zPart);
+  return r;
+}
+
+var changeValue = function(design, board, player, add, move) {
+  var c = 0;
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if (piece === null) return;
+      if (piece.player != player) return;
+      c += Dagaz.Model.incForm(board, player, pos, null, 0, 0);
+  });
+  if (add > 0) c += add;
+  if ((add < 0) && (c == 0)) c = -add;
+  move.addValue(player, c);
 }
 
 var CheckInvariants = Dagaz.Model.CheckInvariants;
@@ -49,29 +67,38 @@ Dagaz.Model.CheckInvariants = function(board) {
       if ((move.actions.length > 0) && (move.actions[0][1] !== null)) {
           var empty = null;
           var pos = move.actions[0][1][0];
-          if (move.actions[0][0] !== null) {
+          if (move.isSimpleMove()) {
               empty = move.actions[0][0][0];
+              var zPart = [];
+              var c = Dagaz.Model.calcForms(board, board.player, pos, empty, zPart);
+              if (c > 0) {
+                  move.zPartial = zPart;
+                  if (koMode && _.isUndefined(move.failed) && !_.isUndefined(board.parent) && (board.parent !== null)) {
+                      var b = board.parent;
+                      while (!_.isUndefined(b.move) && !_.isUndefined(b.parent) && (b.parent !== null)) {
+                          if ((b.player != board.player) && !_.isUndefined(b.move.zPartial)) {
+                              if (_.intersection(b.move.zPartial, move.zPartial).length == move.zPartial.length) {
+                                  Dagaz.Model.addKo(board, move);
+                                  move.failed = true;
+                              }
+                              break;
+                          }
+                          b = b.parent;
+                      }
+                  }
+                  move.addValue(board.player, c);
+              }
           }
-          var x = Dagaz.Model.getX(pos);
-          var y = Dagaz.Model.getY(pos);
-          var c = Dagaz.Model.calcForms(board, board.player, pos, empty);
           if (move.isDropMove()) {
               var cnt = 0;
               _.each(design.allPositions(), function(p) {
                   if (board.getPiece(p) === null) cnt++;
               });
               if (cnt == 1) {
-                  if (board.player == 1) {
-                      c += Dagaz.Model.C1;
-                      move.addValue(2, Dagaz.Model.C2);
-                  } else {
-                      c += Dagaz.Model.C2;
-                      move.addValue(1, Dagaz.Model.C1);
-                  }
+                  var b = board.apply(move);
+                  changeValue(design, b, 1, Dagaz.Model.C1, move);
+                  changeValue(design, b, 2, Dagaz.Model.C2, move);
               }
-          }
-          if (c > 0) {
-              move.addValue(board.player, c);
           }
       }
   });

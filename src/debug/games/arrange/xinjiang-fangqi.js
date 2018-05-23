@@ -33,7 +33,10 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
     design.checkVersion("shared-pieces", "true");
-    design.checkVersion("fangqi-extension", "true");
+    design.checkVersion("show-drops", "1");
+    design.checkVersion("xinjiang-restrictions", "true");
+    design.checkVersion("xinjiang-extension", "true");
+    design.checkVersion("fangqi-extension", "ko");
     design.checkVersion("fangqi-invariant", "true");
     design.checkVersion("fangqi-goal", "true");
 
@@ -138,6 +141,10 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 1, [0, 0], 1);
     design.addMove(0, 1, [2, 2], 1);
     design.addMove(0, 1, [1, 1], 1);
+    design.addMove(0, 1, [7, 7], 1);
+    design.addMove(0, 1, [6, 6], 1);
+    design.addMove(0, 1, [5, 5], 1);
+    design.addMove(0, 1, [3, 3], 1);
     design.addMove(0, 2, [], 1);
 
     design.reserve("White", "Stone", 24);
@@ -148,6 +155,7 @@ Dagaz.View.configure = function(view) {
     view.defBoard("Board");
     view.defPiece("WhiteStone", "White Stone");
     view.defPiece("BlackStone", "Black Stone");
+    view.defPiece("Ko", "Ko");
  
     view.defPosition("a7", 12, 12, 61, 61);
     view.defPosition("b7", 72, 12, 61, 61);

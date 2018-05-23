@@ -17,11 +17,23 @@ var isCorner = function(design, board, player, pos, dirs) {
           return;
       }
       var piece = board.getPiece(p);
-      if ((piece === null) || (piece.player == player)) {
+      if ((piece === null) || (piece.player != player)) {
           r = false;
       }
   });
   return r;
+}
+
+Dagaz.Model.addKo = function(board, move) {
+  if ((move.actions.length > 0) && (move.actions[0][1] !== null)) {
+       pos = move.actions[0][1][0];
+       if (_.isUndefined(board.ko)) {
+           board.ko = [];
+       }
+       if (_.indexOf(board.ko, pos) < 0) {
+           board.ko.push(pos);
+       }
+  }
 }
 
 var CheckInvariants = Dagaz.Model.CheckInvariants;
@@ -33,13 +45,20 @@ Dagaz.Model.CheckInvariants = function(board) {
   var nw = design.getDirection("nw"); var sw = design.getDirection("sw");
   var ne = design.getDirection("ne"); var se = design.getDirection("se");
   _.each(board.moves, function(move) {
-      if (move.isDropMove()) {
+      if (move.isDropMove() && (board.moves.length > 1)) {
           var pos = move.actions[0][1][0];
-          if (isCorner(design, board, board.player, pos, [n, w, nw]) ||
-              isCorner(design, board, board.player, pos, [n, e, ne]) ||
-              isCorner(design, board, board.player, pos, [s, e, se]) ||
-              isCorner(design, board, board.player, pos, [s, w, sw])) {
-              move.failed = true;
+          if (!isCorner(design, board, board.player, pos, [n, w, nw]) &&
+              !isCorner(design, board, board.player, pos, [n, e, ne]) &&
+              !isCorner(design, board, board.player, pos, [s, e, se]) &&
+              !isCorner(design, board, board.player, pos, [s, w, sw])) {
+              var player = design.nextPlayer(board.player);
+              if (isCorner(design, board, player, pos, [n, w, nw]) ||
+                  isCorner(design, board, player, pos, [n, e, ne]) ||
+                  isCorner(design, board, player, pos, [s, e, se]) ||
+                  isCorner(design, board, player, pos, [s, w, sw])) {
+                  Dagaz.Model.addKo(board, move);
+                  move.failed = true;
+              }
           }
       }
   });

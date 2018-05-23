@@ -13,7 +13,7 @@ var isCapturing = function(move) {
   if ((move.actions[0][0] === null) || (move.actions[0][1] !== null)) return false;
   if ((move.actions[1][0] === null) || (move.actions[1][1] === null)) return false;
   return (move.actions[0][0][0] == move.actions[1][0][0]) &&
-         (move.actions[1][0][0] == move.actions[1][1][1]);
+         (move.actions[1][0][0] == move.actions[1][1][0]);
 }
 
 var calcAvail = function(design, board, player) {
@@ -29,45 +29,35 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
-  var avail  = calcAvail(design, board, board.player);
-  var req    = board.getValue(design.nextPlayer(board.player));
+  var alt = board.getValue(design.nextPlayer(board.player));
+  if (alt === null) req = 0;
+  var req = board.getValue(board.player);
   if (req === null) req = 0;
-  if ((req > 0) && (avail > 0) && !_.isUndefined(board.move) && isCapturing(board.move)) {
+  if ((alt > 0) && !_.isUndefined(board.move) && 
+      (isCapturing(board.move) || (req == 0))) {
       board.moves = [ Dagaz.Model.createMove(1) ];
       CheckInvariants(board);
       return;
   }
-  req = board.getValue(board.player);
-  if (req === null) req = 0;
-  if (req > 0) {
-      var f = true;
+  var avail = calcAvail(design, board, design.nextPlayer(board.player));
+  if ((req > 0) && (avail > 0)) {
       _.each(board.moves, function(move) {
-          if (move.isDropMove()) {
-              f = false;
-              return;
-          }
           if (isCapturing(move)) {
               var pos = move.actions[0][0][0];
               var piece = board.getPiece(pos);
               if (Dagaz.Model.calcForms(board, piece.player, pos, null) == 0) {
-                  move.addValue(board.player, -1);
-                  f = false;
+                  var delta = -1;
+                  if (avail == 1) {
+                      delta = -req;
+                  }
+                  move.addValue(board.player, delta);
+              } else {
+                  move.failed = true;
               }
+          } else {
+              move.failed = true;
           }
       });
-      if (f) {
-          avail = board.getValue(design.nextPlayer(board.player));
-          if ((avail !== null) && (avail > 0)) {
-             var move = Dagaz.Model.createMove(1);
-             move.addValue(board.player, -req);
-             board.moves = [ move ];
-             CheckInvariants(board);
-             return;
-          } 
-          _.each(board.moves, function(move) {
-             move.addValue(board.player, -req);
-          });
-      }
   } else {
       _.each(board.moves, function(move) {
           if (isCapturing(move)) move.failed = true;

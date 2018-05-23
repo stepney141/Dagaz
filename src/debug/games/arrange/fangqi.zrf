@@ -90,6 +90,22 @@
      )
   )
 
+  (piece
+     (name Stone)
+     (image White "images/fangqi/white.bmp"
+            Black "images/fangqi/black.bmp")
+     (drops
+         (move-type drop-type)
+         (drop)
+     )
+     (moves
+         (move-type normal-type)
+         (slide n) (slide w) (slide s) (slide e)
+         (slide nw) (slide sw) (slide se) (slide ne)
+         (kill)
+     )
+  )
+
   (board-setup
      (White (Stone off 24))
      (Black (Stone off 25))
