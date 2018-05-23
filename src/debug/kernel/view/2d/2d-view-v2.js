@@ -7,7 +7,8 @@ Dagaz.View.markType = {
    TARGET:    0,
    ATTACKING: 1,
    GOAL:      2,
-   CURRENT:   3
+   CURRENT:   3,
+   KO:        4
 };
 
 Dagaz.View.maxSteps = 3;
@@ -39,6 +40,7 @@ function View2D() {
   this.vectors = [];
   this.current = [];
   this.drops   = [];
+  this.ko      = [];
 }
 
 Dagaz.View.getView = function() {
@@ -189,6 +191,9 @@ View2D.prototype.markPositions = function(type, positions) {
   }
   if (type == Dagaz.View.markType.CURRENT) {
       this.current = positions;
+  }
+  if (type == Dagaz.View.markType.KO) {
+      this.ko      = positions;
   }
   this.invalidate();
 }
@@ -354,6 +359,18 @@ var drawMarks = function(ctx, view, list, color) {
         ctx.fill();
         ctx.stroke();
    }, view);
+}
+
+View2D.prototype.drawKo = function(ctx) {
+   if (!_.isUndefined(this.piece["Ko"]) && (this.ko.length > 0)) {
+       var piece = this.piece["Ko"];
+       _.each(this.ko, function(pos) {
+          var p = this.pos[pos];
+          var x = ( p.x + (p.dx - piece.dx) / 2) | 0;
+          var y = ( p.y + (p.dy - piece.dy) / 2) | 0;
+          ctx.drawImage(piece.h, x, y, piece.dx, piece.dy);
+       }, this);
+   }
 }
 
 View2D.prototype.invalidate = function() {
@@ -585,6 +602,7 @@ View2D.prototype.draw = function(canvas) {
            }
         }, this);
       Dagaz.View.showMarks(this, ctx);
+      this.drawKo(ctx);
       this.showDrops(ctx);
       this.animate();
   }
