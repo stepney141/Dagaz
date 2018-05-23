@@ -15,12 +15,13 @@ Dagaz.Model.isLine = function(design, board, player, pos, dir, empty) {
   var piece = board.getPiece(p);
   if (piece === null) return false;
   if (piece.player != player) return false;
-  p = design.navigate(player, p, dir);
-  if (p === null) return false;
-  if (!_.isUndefined(empty) && (p == empty)) return false;
-  piece = board.getPiece(p);
+  var q = design.navigate(player, p, dir);
+  if (q === null) return false;
+  if (!_.isUndefined(empty) && (q == empty)) return false;
+  piece = board.getPiece(q);
   if (piece === null) return false;
-  return piece.player == player;
+  if (piece.player != player) return false;
+  return true;
 }
 
 Dagaz.Model.isMiddle = function(design, board, player, pos, dir, empty) {
@@ -30,12 +31,13 @@ Dagaz.Model.isMiddle = function(design, board, player, pos, dir, empty) {
   var piece = board.getPiece(p);
   if (piece === null) return false;
   if (piece.player != player) return false;
-  p = design.navigate(0, pos, dir);
-  if (p === null) return false;
-  if (!_.isUndefined(empty) && (p == empty)) return false;
-  piece = board.getPiece(p);
+  var q = design.navigate(0, pos, dir);
+  if (q === null) return false;
+  if (!_.isUndefined(empty) && (q == empty)) return false;
+  piece = board.getPiece(q);
   if (piece === null) return false;
-  return piece.player == player;
+  if (piece.player != player) return false;
+  return true;
 }
 
 var CheckInvariants = Dagaz.Model.CheckInvariants;

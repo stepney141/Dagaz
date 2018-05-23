@@ -28,6 +28,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-hints", "false");
     design.checkVersion("shared-pieces", "true");
     design.checkVersion("bolotoudou-restrictions", "true");
+    design.checkVersion("bolotoudou-extension", "true");
     design.checkVersion("bolotoudou-invariant", "strong");
     design.checkVersion("bolotoudou-goal", "true");
 
