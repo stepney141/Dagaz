@@ -43,6 +43,18 @@ var getLine = function(design, board, player, pos, dir, ix) {
   return r + vl;
 }
 
+var addKo = function(board, move) {
+  if ((move.actions.length > 0) && (move.actions[0][1] !== null)) {
+       pos = move.actions[0][1][0];
+       if (_.isUndefined(board.ko)) {
+           board.ko = [];
+       }
+       if (_.indexOf(board.ko, pos) < 0) {
+           board.ko.push(pos);
+       }
+  }
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
@@ -59,6 +71,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                    var piece = a[2][0];
                    for (var ix = 0; ix < 4; ix++) {
                         if (+piece.getValue(ix) > 5) {
+                            addKo(board, move);
                             move.failed = true;
                         }
                    }
@@ -70,7 +83,10 @@ Dagaz.Model.CheckInvariants = function(board) {
               _.each(design.allDirections(), function(dir) {
                   var ix = _.indexOf(dirs, dir);
                   if (ix > 3) ix -= 4;
-                  if (ix < 0) move.failed = true;
+                  if (ix < 0) {
+                      addKo(board, move);
+                      move.failed = true;
+                  }
                   var l = getLine(design, board, board.player, pos, dir, ix);
                   if (l < 0) {
                       cnt = 0;
@@ -97,6 +113,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                   }
               });
               if (cnt > 3) {
+                  addKo(board, move);
                   move.failed = true;
               }
           }
