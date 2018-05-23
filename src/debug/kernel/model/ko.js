@@ -59,6 +59,15 @@ Dagaz.Model.CheckInvariants = function(board) {
                }
            }
            if (r >= numKo) {
+               if ((m.actions.length > 0) && (m.actions[0][1] !== null)) {
+                   pos = m.actions[0][1][0];
+                   if (_.isUndefined(board.ko)) {
+                       board.ko = [];
+                   }
+                   if (_.indexOf(board.ko, pos) < 0) {
+                       board.ko.push(pos);
+                   }
+               }
                m.failed = true;
            }
       }
