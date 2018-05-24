@@ -12,7 +12,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-Dagaz.Model.incForm = function(board, player, pos, empty, dx, dy, zPart) {
+var incForm = function(board, player, pos, empty, dx, dy, zPart) {
   var v = 0;
   var z = Dagaz.Model.getZobristHash();
   var x = Dagaz.Model.getX(pos);
@@ -39,11 +39,15 @@ Dagaz.Model.incForm = function(board, player, pos, empty, dx, dy, zPart) {
 
 Dagaz.Model.calcForms = function(board, player, pos, empty, zPart) {
   var r = 0;
-  r += Dagaz.Model.incForm(board, player, pos, empty, -1, -1, zPart);
-  r += Dagaz.Model.incForm(board, player, pos, empty, -1,  0, zPart);
-  r += Dagaz.Model.incForm(board, player, pos, empty,  0, -1, zPart);
-  r += Dagaz.Model.incForm(board, player, pos, empty,  0,  0, zPart);
+  r += incForm(board, player, pos, empty, -1, -1, zPart);
+  r += incForm(board, player, pos, empty, -1,  0, zPart);
+  r += incForm(board, player, pos, empty,  0, -1, zPart);
+  r += incForm(board, player, pos, empty,  0,  0, zPart);
   return r;
+}
+
+Dagaz.Model.addForm = function(board, player, pos) {
+  return 0;
 }
 
 var changeValue = function(design, board, player, add, move) {
@@ -52,7 +56,8 @@ var changeValue = function(design, board, player, add, move) {
       var piece = board.getPiece(pos);
       if (piece === null) return;
       if (piece.player != player) return;
-      c += Dagaz.Model.incForm(board, player, pos, null, 0, 0);
+      c += incForm(board, player, pos, null, 0, 0);
+      c += Dagaz.Model.addForm(board, player, pos);
   });
   if (add > 0) c += add;
   if ((add < 0) && (c == 0)) c = -add;

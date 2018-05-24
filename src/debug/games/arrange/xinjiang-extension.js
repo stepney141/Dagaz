@@ -15,9 +15,9 @@ var isFilled = function(board, player, pos, empty) {
   return piece.player == player;
 }
 
-var isVector = function(design, board, player, pos, empty, dir) {
+var isVector = function(design, board, player, pos, dir) {
   var r = 0;
-  while (isFilled(board, player, pos, empty)) {
+  while (isFilled(board, player, pos, null)) {
       r++;
       pos = design.navigate(player, pos, dir);
       if (pos === null) break;
@@ -27,21 +27,16 @@ var isVector = function(design, board, player, pos, empty, dir) {
 
 var isLine = function(design, board, player, pos, empty, dir, zPart) {
   var z = Dagaz.Model.getZobristHash();
-  if (!isFilled(board, player, pos, empty)) return false;
   var v = z.update(0, player, 0, pos);
   var p = design.navigate(player, pos, dir);
   while (p !== null) {
-      var piece = board.getPiece(p);
-      if (piece === null) return false;
-      if (piece.player != player) return false;
+      if (!isFilled(board, player, p, empty)) return false;
       v = z.update(v, player, 0, p);
       p = design.navigate(player, p, dir);
   }
   p = design.navigate(0, pos, dir);
   while (p !== null) {
-      var piece = board.getPiece(p);
-      if (piece === null) return false;
-      if (piece.player != player) return false;
+      if (!isFilled(board, player, p, empty)) return false;
       v = z.update(v, player, 0, p);
       p = design.navigate(0, p, dir);
   }
@@ -51,14 +46,12 @@ var isLine = function(design, board, player, pos, empty, dir, zPart) {
   return true;
 }
 
-var incForm = Dagaz.Model.incForm;
-
-Dagaz.Model.incForm = function(board, player, pos, empty, dx, dy, zPart) {
+Dagaz.Model.addForm = function(board, player, pos) {
+  var r = 0;
   var design = Dagaz.Model.design;
   var n = design.getDirection("n"); var e = design.getDirection("e");
-  var r = incForm(board, player, pos, empty, dx, dy, zPart);
-  if (isVector(design, board, player, pos, empty, n)) r++;
-  if (isVector(design, board, player, pos, empty, e)) r++;
+  if (isVector(design, board, player, pos, n)) r += 3;
+  if (isVector(design, board, player, pos, e)) r += 3;
   return r;
 }
 
@@ -68,9 +61,21 @@ Dagaz.Model.calcForms = function(board, player, pos, empty, zPart) {
   var design = Dagaz.Model.design;
   var n = design.getDirection("n"); var e = design.getDirection("e");
   var r = calcForms(board, player, pos, empty, zPart);
-  if (isLine(design, board, player, pos, empty, n)) r += 3;
-  if (isLine(design, board, player, pos, empty, e)) r += 3;
+  if (isLine(design, board, player, pos, empty, n, zPart)) r += 3;
+  if (isLine(design, board, player, pos, empty, e, zPart)) r += 3;
   return r;
+}
+
+Dagaz.Model.addKo = function(board, move) {
+  if ((move.actions.length > 0) && (move.actions[0][1] !== null)) {
+       pos = move.actions[0][1][0];
+       if (_.isUndefined(board.ko)) {
+           board.ko = [];
+       }
+       if (_.indexOf(board.ko, pos) < 0) {
+           board.ko.push(pos);
+       }
+  }
 }
 
 })();
