@@ -64,6 +64,9 @@
       (links ee
              (a2 b2) (b2 c2)
       )
+      (zone (name putahi) (players Black White)
+            (positions b2)
+      )
    )
 
    (piece

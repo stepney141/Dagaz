@@ -16,17 +16,19 @@ Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
   _.each(board.moves, function(move) {
       if (move.isSimpleMove()) {
-          var pos = move.actions[0][0][0];
-          var f = true;
-          _.each(design.allDirections(), function(dir) {
-              var p = design.navigate(board.player, pos, dir);
-              if (p !== null) {
-                  var piece = board.getPiece(p);
-                  if ((piece !== null) && (piece.player != board.player)) f = false;
+          if (design.inZone(0, board.player, move.actions[0][1][0])) {
+              var pos = move.actions[0][0][0];
+              var f = true;
+              _.each(design.allDirections(), function(dir) {
+                  var p = design.navigate(board.player, pos, dir);
+                  if (p !== null) {
+                      var piece = board.getPiece(p);
+                      if ((piece !== null) && (piece.player != board.player)) f = false;
+                  }
+              });
+              if (f) {
+                  move.failed = true;
               }
-          });
-          if (f) {
-              move.failed = true;
           }
       }
   });

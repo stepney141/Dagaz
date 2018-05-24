@@ -48,6 +48,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("b1", [-3, 0, -1, 1, 0, 0, 0, 0, -3, 0]);
     design.addPosition("c1", [-3, 0, -1, 0, 0, 0, -4, 0, 0, 0]);
 
+    design.addZone("putahi", 2, [4]);
+    design.addZone("putahi", 1, [4]);
+
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
     design.addCommand(0, ZRF.FUNCTION,	22);	// navigate
@@ -66,14 +69,14 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 0, [5], 0);
     design.addMove(0, 0, [7], 0);
 
-    design.setup("Black", "Piece", 5);
     design.setup("Black", "Piece", 6);
     design.setup("Black", "Piece", 7);
     design.setup("Black", "Piece", 8);
+    design.setup("Black", "Piece", 5);
+    design.setup("White", "Piece", 3);
     design.setup("White", "Piece", 0);
     design.setup("White", "Piece", 1);
     design.setup("White", "Piece", 2);
-    design.setup("White", "Piece", 3);
 }
 
 Dagaz.View.configure = function(view) {
