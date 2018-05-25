@@ -31,6 +31,12 @@ Dagaz.Model.isLine = function(design, board, player, pos, dir, empty, zPart) {
       v = z.update(v, board.player, 0, pos);
       v = z.update(v, board.player, 0, p);
       v = z.update(v, board.player, 0, q);
+      if (_.isUndefined(zPart.positions)) {
+          zPart.positions = [];
+      }
+      if (_.indexOf(zPart.positions, pos) < 0) zPart.positions.push(pos);
+      if (_.indexOf(zPart.positions, p)   < 0) zPart.positions.push(p);
+      if (_.indexOf(zPart.positions, q)   < 0) zPart.positions.push(q);
       zPart.push(v);
   }
   return true;
@@ -55,21 +61,30 @@ Dagaz.Model.isMiddle = function(design, board, player, pos, dir, empty, zPart) {
       v = z.update(v, board.player, 0, pos);
       v = z.update(v, board.player, 0, p);
       v = z.update(v, board.player, 0, q);
+      if (_.isUndefined(zPart.positions)) {
+          zPart.positions = [];
+      }
+      if (_.indexOf(zPart.positions, pos) < 0) zPart.positions.push(pos);
+      if (_.indexOf(zPart.positions, p)   < 0) zPart.positions.push(p);
+      if (_.indexOf(zPart.positions, q)   < 0) zPart.positions.push(q);
       zPart.push(v);
   }
   return true;
 }
 
-var addKo = function(board, move) {
-  if ((move.actions.length > 0) && (move.actions[0][1] !== null)) {
-       pos = move.actions[0][1][0];
+var addKo = function(board, move, zPart) {
+  var positions = zPart.positions;
+  if (move.isDropMove()) {
+      positions = [ move.actions[0][1][0] ];
+  }
+  _.each(positions, function(pos) {
        if (_.isUndefined(board.ko)) {
            board.ko = [];
        }
        if (_.indexOf(board.ko, pos) < 0) {
            board.ko.push(pos);
        }
-  }
+  });
 }
 
 var CheckInvariants = Dagaz.Model.CheckInvariants;
@@ -109,7 +124,7 @@ Dagaz.Model.CheckInvariants = function(board) {
               while (!_.isUndefined(b.move) && !_.isUndefined(b.parent) && (b.parent !== null)) {
                   if ((b.player != board.player) && (b.move.mode > 0)) {
                       if (_.intersection(b.move.zPartial, move.zPartial).length == move.zPartial.length) {
-                          addKo(board, move);
+                          addKo(board, move, zPart);
                           move.failed = true;
                       }
                       break;
