@@ -38,6 +38,12 @@ var isLine = function(design, board, player, pos, empty, dir, zPart) {
   while (p !== null) {
       if (!isFilled(board, player, p, empty)) return false;
       v = z.update(v, player, 0, p);
+      if (!_.isUndefined(zPart)) {
+          if (_.isUndefined(zPart.positions)) {
+              zPart.positions = [];
+          }
+          if (_.indexOf(zPart.positions, p) < 0) zPart.positions.push(p);
+      }
       p = design.navigate(0, p, dir);
   }
   if (!_.isUndefined(zPart)) {
@@ -66,8 +72,16 @@ Dagaz.Model.calcForms = function(board, player, pos, empty, zPart) {
   return r;
 }
 
-Dagaz.Model.addKo = function(board, move) {
-  if ((move.actions.length > 0) && (move.actions[0][1] !== null)) {
+Dagaz.Model.addKo = function(board, move, zPart) {
+  var positions = [];
+  if (move.isDropMove()) {
+      positions = [ move.actions[0][1][0] ];
+  } else {
+      if (!_.isUndefined(zPart) && !_.isUndefined(zPart.positions)) {
+          positions = zPart.positions;
+      }
+  }
+  _.each(positions, function(pos) {
        pos = move.actions[0][1][0];
        if (_.isUndefined(board.ko)) {
            board.ko = [];
@@ -75,7 +89,7 @@ Dagaz.Model.addKo = function(board, move) {
        if (_.indexOf(board.ko, pos) < 0) {
            board.ko.push(pos);
        }
-  }
+  });
 }
 
 })();

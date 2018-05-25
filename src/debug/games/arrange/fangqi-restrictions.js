@@ -24,8 +24,16 @@ var isCorner = function(design, board, player, pos, dirs) {
   return r;
 }
 
-Dagaz.Model.addKo = function(board, move) {
-  if ((move.actions.length > 0) && (move.actions[0][1] !== null)) {
+Dagaz.Model.addKo = function(board, move, zPart) {
+  var positions = [];
+  if (move.isDropMove()) {
+      positions = [ move.actions[0][1][0] ];
+  } else {
+      if (!_.isUndefined(zPart) && !_.isUndefined(zPart.positions)) {
+          positions = zPart.positions;
+      }
+  }
+  _.each(positions, function(pos) {
        pos = move.actions[0][1][0];
        if (_.isUndefined(board.ko)) {
            board.ko = [];
@@ -33,7 +41,7 @@ Dagaz.Model.addKo = function(board, move) {
        if (_.indexOf(board.ko, pos) < 0) {
            board.ko.push(pos);
        }
-  }
+  });
 }
 
 var CheckInvariants = Dagaz.Model.CheckInvariants;
