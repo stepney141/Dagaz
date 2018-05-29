@@ -1,7 +1,10 @@
 (function() {
 
-Dagaz.View.SHIFT_X = 0;
-Dagaz.View.SHIFT_Y = 0;
+Dagaz.View.SHIFT_X      = 0;
+Dagaz.View.SHIFT_Y      = 0;
+
+Dagaz.View.STRIKE_ALPHA = 0.5;
+Dagaz.View.DROPS_ALPHA  = 0.5;
 
 Dagaz.View.markType = {
    TARGET:    0,
@@ -537,7 +540,7 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
   var dy = 0;
   if (_.indexOf(view.strike, pos) >= 0) {
       ctx.save();
-      ctx.globalAlpha = 0.5;
+      ctx.globalAlpha = Dagaz.View.STRIKE_ALPHA;
       isSaved = true;
   }
   if (Dagaz.Model.showBlink && (_.indexOf(view.current, pos) >= 0)) {
@@ -553,7 +556,7 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
 View2D.prototype.showDrops = function(ctx) {
   if (this.drops.length > 0) {
       ctx.save();
-      ctx.globalAlpha = 0.5;
+      ctx.globalAlpha = Dagaz.View.DROPS_ALPHA;
       _.each(this.drops, function(f) {
          var dx = (f.position.dx - f.piece.dx) / 2 | 0;
          var dy = (f.position.dy - f.piece.dy) / 2 | 0;
