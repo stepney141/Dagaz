@@ -34,7 +34,6 @@ Dagaz.Model.addKo = function(board, move, zPart) {
       }
   }
   _.each(positions, function(pos) {
-       pos = move.actions[0][1][0];
        if (_.isUndefined(board.ko)) {
            board.ko = [];
        }

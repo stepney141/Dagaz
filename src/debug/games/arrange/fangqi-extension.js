@@ -97,7 +97,11 @@ Dagaz.Model.CheckInvariants = function(board) {
                           b = b.parent;
                       }
                   }
-                  move.addValue(board.player, c);
+                  var avail = Dagaz.Model.calcAvail(design, board, design.nextPlayer(board.player));
+                  if (avail < c) c = avail;
+                  if (c > 0) {
+                      move.addValue(board.player, c);
+                  }
               }
           }
           if (move.isDropMove()) {
