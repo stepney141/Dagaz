@@ -9,6 +9,11 @@ Dagaz.Model.getMoveList = function(board) {
   return new MoveList(board);
 }
 
+MoveList.prototype.getPosition = function() {
+  if (_.isUndefined(this.position)) return null;
+  return this.position;
+}
+
 MoveList.prototype.isPassForced = function() {
   return false;
 }
@@ -66,6 +71,11 @@ MoveList.prototype.getDrops = function() {
 
 MoveList.prototype.getDropPieces = function(pos) {
   return null;
+}
+
+MoveList.prototype.getCurrent = function() {
+  if (_.isUndefined(this.blink)) return [];
+      else return this.blink;
 }
 
 MoveList.prototype.getStarts = function() {
