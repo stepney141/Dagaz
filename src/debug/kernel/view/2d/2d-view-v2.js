@@ -544,7 +544,6 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
       isSaved = true;
   }
   if (Dagaz.Model.showBlink && (_.indexOf(view.current, pos) >= 0)) {
-      blink = -blink;
       dx = blink;
   }
   ctx.drawImage(piece.h, x + dx, y + dy, piece.dx, piece.dy);
@@ -604,6 +603,7 @@ View2D.prototype.draw = function(canvas) {
                Dagaz.View.showPiece(this, ctx, pos, p.pos, piece, p.model, x, y);
            }
         }, this);
+      blink = -blink;
       Dagaz.View.showMarks(this, ctx);
       this.drawKo(ctx);
       this.showDrops(ctx);
