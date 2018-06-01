@@ -171,6 +171,7 @@
 )
 
 (define side-2-1 (
+  (verify friend?)
   mark 
   (step-1 $2) to 
   back $1 (verify friend?) 
@@ -180,6 +181,7 @@
 ))
 
 (define side-2-2 (
+  (verify friend?)
   mark 
   (step-2 $2) to 
   back $1 (verify friend?) 
@@ -189,6 +191,7 @@
 ))
 
 (define side-2-3 (
+  (verify friend?)
   mark 
   (step-3 $2) to 
   back $1 (verify friend?) 
@@ -198,6 +201,7 @@
 ))
 
 (define side-2-4 (
+  (verify friend?)
   mark 
   (step-4 $2) to 
   back $1 (verify friend?) 
@@ -207,6 +211,7 @@
 ))
 
 (define side-2-5 (
+  (verify friend?)
   mark 
   (step-5 $2) to 
   back $1 (verify friend?) 
@@ -216,6 +221,7 @@
 ))
 
 (define side-3-1 (
+  (verify friend?)
   mark 
   (step-1 $2) to 
   back $1 (verify friend?) 
@@ -228,6 +234,7 @@
 ))
 
 (define side-3-2 (
+  (verify friend?)
   mark 
   (step-2 $2) to 
   back $1 (verify friend?) 
@@ -240,6 +247,7 @@
 ))
 
 (define side-3-3 (
+  (verify friend?)
   mark 
   (step-3 $2) to 
   back $1 (verify friend?) 
@@ -252,6 +260,7 @@
 ))
 
 (define side-3-4 (
+  (verify friend?)
   mark 
   (step-4 $2) to 
   back $1 (verify friend?) 
@@ -264,6 +273,7 @@
 ))
 
 (define side-3-5 (
+  (verify friend?)
   mark 
   (step-5 $2) to 
   back $1 (verify friend?) 
@@ -276,6 +286,7 @@
 ))
 
 (define side-4-1 (
+  (verify friend?)
   mark 
   (step-1 $2) to 
   back $1 (verify friend?) 
@@ -291,6 +302,7 @@
 ))
 
 (define side-4-2 (
+  (verify friend?)
   mark 
   (step-2 $2) to 
   back $1 (verify friend?) 
@@ -306,6 +318,7 @@
 ))
 
 (define side-4-3 (
+  (verify friend?)
   mark 
   (step-3 $2) to 
   back $1 (verify friend?) 
@@ -321,6 +334,7 @@
 ))
 
 (define side-4-4 (
+  (verify friend?)
   mark 
   (step-4 $2) to 
   back $1 (verify friend?) 
@@ -336,6 +350,7 @@
 ))
 
 (define side-4-5 (
+  (verify friend?)
   mark 
   (step-5 $2) to 
   back $1 (verify friend?) 
@@ -351,6 +366,7 @@
 ))
 
 (define side-5-1 (
+  (verify friend?)
   mark 
   (step-1 $2) to 
   back $1 (verify friend?) 
@@ -369,6 +385,7 @@
 ))
 
 (define side-5-2 (
+  (verify friend?)
   mark 
   (step-2 $2) to 
   back $1 (verify friend?) 
@@ -387,6 +404,7 @@
 ))
 
 (define side-5-3 (
+  (verify friend?)
   mark 
   (step-3 $2) to 
   back $1 (verify friend?) 
@@ -405,6 +423,7 @@
 ))
 
 (define side-5-4 (
+  (verify friend?)
   mark 
   (step-4 $2) to 
   back $1 (verify friend?) 
@@ -423,6 +442,7 @@
 ))
 
 (define side-5-5 (
+  (verify friend?)
   mark 
   (step-5 $2) to 
   back $1 (verify friend?) 
@@ -441,6 +461,7 @@
 ))
 
 (define side-6-1 (
+  (verify friend?)
   mark 
   (step-1 $2) to 
   back $1 (verify friend?) 
@@ -462,6 +483,7 @@
 ))
 
 (define side-6-2 (
+  (verify friend?)
   mark 
   (step-2 $2) to 
   back $1 (verify friend?) 
@@ -483,6 +505,7 @@
 ))
 
 (define side-6-3 (
+  (verify friend?)
   mark 
   (step-3 $2) to 
   back $1 (verify friend?) 
@@ -504,6 +527,7 @@
 ))
 
 (define side-6-4 (
+  (verify friend?)
   mark 
   (step-4 $2) to 
   back $1 (verify friend?) 
@@ -525,6 +549,7 @@
 ))
 
 (define side-6-5 (
+  (verify friend?)
   mark 
   (step-5 $2) to 
   back $1 (verify friend?) 
@@ -780,8 +805,7 @@
 )
 
 (variant
-  (title "Ordo X (variant)")
-  (default)
+  (title "Ordo X")
 
   (piece
      (name Man)
@@ -952,6 +976,19 @@
            (side-6-3 ne se) (side-6-3 ne nw) (side-6-3 ne n) (side-6-3 ne s) (side-6-3 ne w) (side-6-3 ne e)
            (side-6-4 ne se) (side-6-4 ne nw) (side-6-4 ne n) (side-6-4 ne s) (side-6-4 ne w) (side-6-4 ne e)
            (side-6-5 ne se) (side-6-5 ne nw) (side-6-5 ne n) (side-6-5 ne s) (side-6-5 ne w) (side-6-5 ne e)
+     )
+  )
+)
+
+(variant
+  (title "Ordo (debug)")
+
+  (piece
+     (name Man)
+     (image White "images/ordo/white.bmp"
+            Black "images/ordo/black.bmp")
+     (moves
+           (side-2-1 w n) (side-2-1 w s)
      )
   )
 )
