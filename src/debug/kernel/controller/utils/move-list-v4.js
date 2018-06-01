@@ -22,20 +22,22 @@ MoveList.prototype.getMoves = function() {
   if (_.isUndefined(this.moves)) {
       this.moves = [];
       _.each(this.board.moves, function(move) {
-           var r = true;
+           if (!_.isUndefined(move.failed)) return;
+           var r = true;           
            if (!_.isUndefined(this.blink)) {
+               r = false;
                _.each(move.actions, function(a) {
                    if ((a[0] !== null) && (a[1] !== null)) { 
-                       if (_.indexOf(this.blink, a[0][0]) < 0) r = false;
+                       if (_.indexOf(this.blink, a[0][0]) >= 0) r = true;
                    }
                }, this);
-               if (!_.isUndefined(this.position)) {
+/*             if (!_.isUndefined(this.position)) {
                    _.each(move.actions, function(a) {
                        if ((a[0] !== null) && (a[1] !== null) && (a[0][0] == this.position)) { 
                            if (this.board.getPiece(a[1][0]) !== null) r = true;
                        }
                    }, this);
-               }
+               } */
            }
            if (r) {
                this.moves.push(move);
@@ -92,38 +94,70 @@ MoveList.prototype.getStarts = function() {
   return this.starts;
 }
 
+MoveList.prototype.isBlinked = function(move) {
+  var r = true;
+  if (!_.isUndefined(this.blink)) {
+       _.each(move.actions, function(a) {
+            if ((a[0] !== null) && (a[1] !== null)) {
+                 if (_.indexOf(this.blink, a[0][0]) < 0) r = false;
+            }
+       }, this);
+  }
+  return r;
+}
+
 MoveList.prototype.getStops = function() {
   if (_.isUndefined(this.stops)) {
-      var result = [];
-      var except = [];
+      this.stops = [];
       if (!_.isUndefined(this.position)) {
           _.each(this.getMoves(), function(move) {
+              if (!this.isBlinked(move)) return;
               _.each(move.actions, function(a) {
                   if ((a[0] !== null) && (a[1] !== null)) {
-                      if (_.indexOf(result, a[1][0]) < 0) {
-                          result.push(a[1][0]);
-                      } else {
-                          except.push(a[1][0]);
-                      }
+                      if (a[0][0] != this.position) return;
+                      this.stops.push(a[1][0]);
                   }
-              });
-          });
+              }, this);
+          }, this);
       }
-      this.stops = _.difference(result, except);
   }
   return this.stops;
+}
+
+MoveList.prototype.debug = function(result) {
+  if (!_.isUndefined(this.position)) {
+      console.log("Position: " + Dagaz.Model.posToString(this.position));
+  }
+  _.each(this.getMoves(), function(move) {
+       console.log("Move: " + move.toString());
+  });
+/*if (!_.isUndefined(this.blink)) {
+      _.each(this.blink, function(pos) {
+           console.log("Blink: " + Dagaz.Model.posToString(pos));
+      });
+  }*/
+/*_.each(this.getStarts(), function(pos) {
+       console.log("Start: " + Dagaz.Model.posToString(pos));
+  });*/
+  _.each(this.getStops(), function(pos) {
+       console.log("Stop: " + Dagaz.Model.posToString(pos));
+  });
+  if (!result.isPass()) {
+      console.log("Result: " + result.toString());
+  }
 }
 
 MoveList.prototype.setPosition = function(pos) {
   var result = null;
   if (_.indexOf(this.getStops(), pos) >= 0) {
       _.each(this.getMoves(), function(move) {
+         if (!this.isBlinked(move)) return;
          _.each(move.actions, function(a) {
             if ((a[0] !== null) && (a[1] !== null) && (a[1][0] == pos)) {
                 result = move;
             }
          });
-      });
+      }, this);
       if (result !== null) {
           this.moves  = [ result ];
           this.starts = [];
@@ -132,26 +166,35 @@ MoveList.prototype.setPosition = function(pos) {
           delete this.stops;
       }
   } else {
-      var f = false;
-      if (_.isUndefined(this.blink) || (_.indexOf(this.blink, pos) < 0)) {
-          if (_.indexOf(this.getStarts(), pos) >= 0) f = true;
-      }
-      if (f) {
-          if (_.isUndefined(this.blink)) {
-              this.blink = [];
+      if (_.indexOf(this.getStarts(), pos) >= 0) {
+          if (_.indexOf(this.blink, pos) >= 0) {
+              delete this.position;
+              delete this.blink;         
+          } else {
+              var f = false;
+              _.each(this.getMoves(), function(move) {
+                  _.each(move.actions, function(a) {
+                      if ((a[0] !== null) && (a[1] !== 0) && (a[0][0] == pos)) f = true;
+                  });
+              });
+              if (f) {
+                  if (_.isUndefined(this.blink)) {
+                      this.blink = [];
+                  }
+                  this.blink.push(pos);
+              } else {
+                  this.blink = [ pos ];    
+              }
+              this.position = pos;
           }
-          this.blink.push(pos);
-          this.position = pos;
-      } else {
-          delete this.position;
-          delete this.blink;
+          delete this.moves;
+          delete this.stops;
       }
-      delete this.starts;
-      delete this.stops;
   }
   if (result === null) {
       result = Dagaz.Model.createMove();
   }
+  this.debug(result);
   return result;
 }
 
