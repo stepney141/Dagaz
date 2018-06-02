@@ -1,0 +1,145 @@
+(define step (
+  $1 (verify empty?)
+  add
+))
+
+(game
+  (title "Abalone")
+
+  (move-sound "Audio\Pickup.wav")
+  (release-sound "Audio\Pickup.wav")
+  (capture-sound "")
+  (drop-sound "")
+
+  (option "smart moves" false)
+
+  (players Black White)
+  (turn-order Black White)
+
+  (board
+     (image "images/abalone/board.bmp")
+     (grid
+         (start-rectangle 141 75 187 115)
+         (dimensions
+           ("a/b/c/d/e/f/g/h/i" (46 0)) ; files
+           ("9/8/7/6/5/4/3/2/1" (-23 40)) ; ranks
+         )
+         (directions 
+              (e   1  0) (w -1 0)
+              (ne  0 -1) (sw 0 1)
+              (nw -1 -1) (se 1 1)
+         )
+     )
+     (kill-positions a1 a2 a3 a4 b1 b2 b3 c1 c2 d1 f9 g8 g9 h7 h8 h9 i6 i7 i8 i9)
+  )
+  (piece
+     (name Stone)
+     (image Black "images/abalone/black.bmp"
+            White "images/abalone/white.bmp")
+     (moves
+         (step  e) (step  w)
+         (step ne) (step sw)
+         (step nw) (step se)
+     )
+  )
+
+  (board-setup
+    (White 
+         (Stone a9 b9 c9 d9 e9 a8 b8 c8 d8 e8 f8 c7 d7 e7)
+    )
+    (Black 
+         (Stone e1 f1 g1 h1 i1 d2 e2 f2 g2 h2 i2 e3 f3 g3)
+    )
+  )
+)
+
+(variant
+  (title "Abalone (Marguerite)")
+
+  (board-setup
+    (White 
+         (Stone a9 b9 a8 b8 c8 b7 c7 g3 h3 g2 h2 i2 h1 i1)
+    )
+    (Black 
+         (Stone d9 e9 d8 e8 f8 e7 f7 d3 e3 d2 e2 f2 e1 f1)
+    )
+  )
+)
+
+(variant
+  (title "Abalone (Dutch Daisy)")
+
+  (board-setup
+    (White 
+         (Stone a9 b9 a8 e8 c8 b7 c7 g3 h3 g2 e2 i2 h1 i1)
+    )
+    (Black 
+         (Stone d9 e9 d8 b8 f8 e7 f7 d3 e3 d2 h2 f2 e1 f1)
+    )
+  )
+)
+
+(variant
+  (title "Abalone (Swiss Daisy)")
+
+  (board-setup
+    (White 
+         (Stone a8 b8 a7 f7 c7 b6 c6 g4 h4 g3 d3 i3 h2 i2)
+    )
+    (Black 
+         (Stone e8 f8 e7 b7 g7 f6 g6 c4 d4 c3 h3 e3 d2 e2)
+    )
+  )
+)
+
+(variant
+  (title "Abalone (Fujiyama)")
+
+  (board-setup
+    (White 
+         (Stone c8 d8 d7 e4 f4 e3 g3 e2 h2 e1 f1 g1 h1 i1)
+    )
+    (Black 
+         (Stone f2 g2 f3 a9 b9 c9 d9 e9 b8 e8 c7 e7 d6 e6)
+    )
+  )
+)
+
+(variant
+  (title "Abalone (Alien Attack)")
+
+  (board-setup
+    (White 
+         (Stone c8 d8 c7 e7 e4 f4 d3 f3 h3 e2 h2 e1 g1 i1)
+    )
+    (Black 
+         (Stone f2 g2 e3 g3 a9 c9 e9 b8 e8 b7 d7 f7 d6 e6)
+    )
+  )
+)
+
+(variant
+  (title "Abalone (The Wall)")
+
+  (board-setup
+    (White 
+         (Stone b4 c4 d4 e4 f4 g4 h4 i4 d3 e3 f3 g3 h3 g1)
+    )
+    (Black 
+         (Stone a6 b6 c6 d6 e6 f6 g6 h6 b7 c7 d7 e7 f7 c9)
+    )
+  )
+)
+
+(variant
+  (title "Abalone (Snakes)")
+
+  (board-setup
+    (White 
+         (Stone e4 f4 f5 f6 g6 h5 i4 i3 i2 i1 h1 g1 f1 e1)
+    )
+    (Black 
+         (Stone e6 d6 d5 d4 c4 b5 a6 a7 a8 a9 b9 c9 d9 e9)
+    )
+  )
+)
