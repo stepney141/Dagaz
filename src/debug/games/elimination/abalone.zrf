@@ -3,6 +3,38 @@
   add
 ))
 
+(define push (
+  $1 (verify friend?)
+  (while (and not-empty? (on-board? $1))
+      cascade 
+      $1
+  )
+  add
+))
+
+(define side-2 (
+  (verify friend?)
+  mark 
+  $2 (verify empty?) to 
+  back $1 (verify friend?) 
+  cascade
+  $2 (verify empty?)
+  add
+))
+
+(define side-3 (
+  (verify friend?)
+  mark 
+  $2 (verify empty?) to 
+  back $1 (verify friend?) 
+  mark cascade
+  $2 (verify empty?) to
+  back $1 (verify friend?) 
+  cascade
+  $2 (verify empty?)
+  add
+))
+
 (game
   (title "Abalone")
 
@@ -40,6 +72,19 @@
          (step  e) (step  w)
          (step ne) (step sw)
          (step nw) (step se)
+
+         (push  e) (push  w)
+         (push ne) (push sw)
+         (push nw) (push se)
+
+         (side-2 w nw) (side-2 w ne) (side-2 w sw) (side-2 w se)
+         (side-3 w nw) (side-3 w ne) (side-3 w sw) (side-3 w se)
+
+         (side-2 nw ne) (side-2 nw e) (side-2 nw sw) (side-2 nw w)
+         (side-3 nw ne) (side-3 nw e) (side-3 nw sw) (side-3 nw w)
+
+         (side-2 ne nw) (side-2 ne w) (side-2 ne se) (side-2 ne e)
+         (side-3 ne nw) (side-3 ne w) (side-3 ne se) (side-3 ne e)
      )
   )
 
@@ -51,6 +96,8 @@
          (Stone e1 f1 g1 h1 i1 d2 e2 f2 g2 h2 i2 e3 f3 g3)
     )
   )
+
+  (loss-condition (Black White) (pieces-remaining 8))
 )
 
 (variant
