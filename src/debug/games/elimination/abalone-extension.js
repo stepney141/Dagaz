@@ -13,7 +13,7 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 Dagaz.Model.CheckInvariants = function(board) {
   var design = board.game.design;
   _.each(board.moves, function(move) {
-      if ((move.actions.length > 1) && (move.actions[0][0] !== null) && 
+      if ((move.actions.length > 0) && (move.actions[0][0] !== null) && 
           (move.actions[0][1] !== null) && (board.getPiece(move.actions[0][1][0]) !== null)) {
           var pos = move.actions[0][0][0];
           var dir = design.findDirection(pos, move.actions[0][1][0]);
@@ -21,15 +21,16 @@ Dagaz.Model.CheckInvariants = function(board) {
               var c = 0;
               while (pos !== null) {
                   var piece = board.getPiece(pos);
-                  if (piece === null) {
-                      move.failed = true;
-                      return;
-                  }
+                  if (piece === null) return;
                   if (piece.player != board.player) break;
                   pos = design.navigate(board.player, pos, dir);
                   c++;
+                  if (c > 3) {
+                      move.failed = true;
+                      return;
+                  }
               }
-              if ((pos === null) || (c > 3)) {
+              if (pos === null) {
                   move.failed = true;
                   return;
               }
