@@ -266,6 +266,58 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(6, ZRF.FUNCTION,	25);	// to
     design.addCommand(6, ZRF.FUNCTION,	28);	// end
 
+    design.addCommand(7, ZRF.FUNCTION,	24);	// from
+    design.addCommand(7, ZRF.FUNCTION,	6);	// mark
+    design.addCommand(7, ZRF.PARAM,	0);	// $1
+    design.addCommand(7, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(7, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(7, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(7, ZRF.FUNCTION,	25);	// to
+    design.addCommand(7, ZRF.FUNCTION,	7);	// back
+    design.addCommand(7, ZRF.PARAM,	1);	// $2
+    design.addCommand(7, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(7, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(7, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(7, ZRF.FUNCTION,	24);	// from
+    design.addCommand(7, ZRF.PARAM,	2);	// $3
+    design.addCommand(7, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(7, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(7, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(7, ZRF.FUNCTION,	25);	// to
+    design.addCommand(7, ZRF.FUNCTION,	28);	// end
+
+    design.addCommand(8, ZRF.FUNCTION,	24);	// from
+    design.addCommand(8, ZRF.FUNCTION,	6);	// mark
+    design.addCommand(8, ZRF.PARAM,	0);	// $1
+    design.addCommand(8, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(8, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(8, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(8, ZRF.FUNCTION,	25);	// to
+    design.addCommand(8, ZRF.FUNCTION,	7);	// back
+    design.addCommand(8, ZRF.PARAM,	1);	// $2
+    design.addCommand(8, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(8, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(8, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(8, ZRF.FUNCTION,	6);	// mark
+    design.addCommand(8, ZRF.FUNCTION,	24);	// from
+    design.addCommand(8, ZRF.PARAM,	2);	// $3
+    design.addCommand(8, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(8, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(8, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(8, ZRF.FUNCTION,	25);	// to
+    design.addCommand(8, ZRF.FUNCTION,	7);	// back
+    design.addCommand(8, ZRF.PARAM,	3);	// $4
+    design.addCommand(8, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(8, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(8, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(8, ZRF.FUNCTION,	24);	// from
+    design.addCommand(8, ZRF.PARAM,	4);	// $5
+    design.addCommand(8, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(8, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(8, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(8, ZRF.FUNCTION,	25);	// to
+    design.addCommand(8, ZRF.FUNCTION,	28);	// end
+
     design.addPiece("Stone", 0);
     design.addMove(0, 0, [1], 0);
     design.addMove(0, 0, [0], 0);
@@ -279,6 +331,30 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 4, [5, 5], 0);
     design.addMove(0, 5, [4, 4], 0);
     design.addMove(0, 6, [3, 3], 0);
+    design.addMove(0, 7, [4, 0, 4], 0);
+    design.addMove(0, 7, [2, 0, 2], 0);
+    design.addMove(0, 7, [5, 0, 5], 0);
+    design.addMove(0, 7, [3, 0, 3], 0);
+    design.addMove(0, 8, [4, 0, 4, 0, 4], 0);
+    design.addMove(0, 8, [2, 0, 2, 0, 2], 0);
+    design.addMove(0, 8, [5, 0, 5, 0, 5], 0);
+    design.addMove(0, 8, [3, 0, 3, 0, 3], 0);
+    design.addMove(0, 7, [2, 4, 2], 0);
+    design.addMove(0, 7, [1, 4, 1], 0);
+    design.addMove(0, 7, [5, 4, 5], 0);
+    design.addMove(0, 7, [0, 4, 0], 0);
+    design.addMove(0, 8, [2, 4, 2, 4, 2], 0);
+    design.addMove(0, 8, [1, 4, 1, 4, 1], 0);
+    design.addMove(0, 8, [5, 4, 5, 4, 5], 0);
+    design.addMove(0, 8, [0, 4, 0, 4, 0], 0);
+    design.addMove(0, 7, [4, 2, 4], 0);
+    design.addMove(0, 7, [0, 2, 0], 0);
+    design.addMove(0, 7, [3, 2, 3], 0);
+    design.addMove(0, 7, [1, 2, 1], 0);
+    design.addMove(0, 8, [4, 2, 4, 2, 4], 0);
+    design.addMove(0, 8, [0, 2, 0, 2, 0], 0);
+    design.addMove(0, 8, [3, 2, 3, 2, 3], 0);
+    design.addMove(0, 8, [1, 2, 1, 2, 1], 0);
 
     design.setup("Black", "Stone", 9);
     design.setup("Black", "Stone", 10);
