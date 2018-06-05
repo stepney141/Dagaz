@@ -31,13 +31,6 @@ MoveList.prototype.getMoves = function() {
                        if (_.indexOf(this.blink, a[0][0]) >= 0) r = true;
                    }
                }, this);
-/*             if (!_.isUndefined(this.position)) {
-                   _.each(move.actions, function(a) {
-                       if ((a[0] !== null) && (a[1] !== null) && (a[0][0] == this.position)) { 
-                           if (this.board.getPiece(a[1][0]) !== null) r = true;
-                       }
-                   }, this);
-               } */
            }
            if (r) {
                this.moves.push(move);
@@ -83,7 +76,8 @@ MoveList.prototype.getCurrent = function() {
 MoveList.prototype.getStarts = function() {
   if (_.isUndefined(this.starts)) {
       this.starts = [];
-      _.each(this.getMoves(), function(move) {
+      _.each(this.board.moves, function(move) {
+          if (!_.isUndefined(move.failed)) return;
           _.each(move.actions, function(a) {
               if ((a[0] !== null) && (a[1] !== null)) {
                   this.starts.push(a[0][0]);
@@ -95,13 +89,22 @@ MoveList.prototype.getStarts = function() {
 }
 
 MoveList.prototype.isBlinked = function(move) {
-  var r = true;
+  var r = false;
   if (!_.isUndefined(this.blink)) {
+       var starts = [];
+       var stops  = [];
        _.each(move.actions, function(a) {
             if ((a[0] !== null) && (a[1] !== null)) {
-                 if (_.indexOf(this.blink, a[0][0]) < 0) r = false;
+                var pos = a[0][0];
+                var piece = this.board.getPiece(pos);
+                if ((piece !== null) && (piece.player == this.board.player)) {
+                    starts.push(pos);
+                }
             }
        }, this);
+       if ((this.blink.length == starts.length) && (_.intersection(this.blink, starts).length == this.blink.length)) {
+          r = true;
+       }
   }
   return r;
 }
@@ -149,14 +152,16 @@ MoveList.prototype.debug = function(result) {
 
 MoveList.prototype.setPosition = function(pos) {
   var result = null;
-  if (_.indexOf(this.getStops(), pos) >= 0) {
+  if ((_.indexOf(this.getStops(), pos) >= 0) && !_.isUndefined(this.position)) {
       _.each(this.getMoves(), function(move) {
          if (!this.isBlinked(move)) return;
          _.each(move.actions, function(a) {
-            if ((a[0] !== null) && (a[1] !== null) && (a[1][0] == pos)) {
-                result = move;
+            if ((a[0] !== null) && (a[1] !== null)) {
+                if ((a[0][0] == this.position) && (a[1][0] == pos)) {
+                    result = move;
+                }
             }
-         });
+         }, this);
       }, this);
       if (result !== null) {
           this.moves  = [ result ];
@@ -172,17 +177,16 @@ MoveList.prototype.setPosition = function(pos) {
               delete this.blink;         
           } else {
               var f = false;
+              if (_.isUndefined(this.blink)) {
+                  this.blink = [];
+              }
+              this.blink.push(pos);
               _.each(this.getMoves(), function(move) {
-                  _.each(move.actions, function(a) {
-                      if ((a[0] !== null) && (a[1] !== 0) && (a[0][0] == pos)) f = true;
-                  });
-              });
-              if (f) {
-                  if (_.isUndefined(this.blink)) {
-                      this.blink = [];
+                  if (this.isBlinked(move)) {
+                      f = true;
                   }
-                  this.blink.push(pos);
-              } else {
+              }, this);
+              if (!f) {
                   this.blink = [ pos ];    
               }
               this.position = pos;
@@ -194,7 +198,7 @@ MoveList.prototype.setPosition = function(pos) {
   if (result === null) {
       result = Dagaz.Model.createMove();
   }
-  this.debug(result);
+//this.debug(result);
   return result;
 }
 
