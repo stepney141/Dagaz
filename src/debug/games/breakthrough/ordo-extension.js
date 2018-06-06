@@ -1,11 +1,51 @@
 (function() {
 
+Dagaz.Model.WIDTH = 10;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
   if (name != "ordo-extension") {
       checkVersion(design, name, value);
   }
+}
+
+var sign = function(x) {
+  if (x > 0) return 1;
+  if (x < 0) return -1;
+  return 0;
+}
+
+Dagaz.Model.closure = function(board, move, group) {
+  var design = board.game.design;
+  var r = [];
+  _.each(group, function(pos) {
+      r.push(pos);
+  });
+  for (var i = 0; i < r.length; i++) {
+      var pos = r[i];
+      _.each(move.actions, function(a) {
+          if ((a[0] !== null) && (a[1] !== null) && (a[0][0] == pos)) {
+               var target = a[1][0];
+               var x   = Dagaz.Model.getX(pos);
+               var y   = Dagaz.Model.getY(pos);
+               var dx  = sign(Dagaz.Model.getX(target) - x);
+               var dy  = sign(Dagaz.Model.getY(target) - y);
+               var dir = design.findDirection(pos, pos + (dy * Dagaz.Model.WIDTH) + dx);
+               if (dir !== null) {
+                   while ((pos !== null) && (pos != target)) {
+                       var piece = board.getPiece(pos);
+                       if ((piece === null) || (piece.player != board.player)) break;
+                       if (_.indexOf(r, pos) < 0) {
+                           r.push(pos);
+                       }
+                       pos = design.navigate(board.player, pos, dir);
+                   }
+               }
+          }
+      });
+  }
+  return r;
 }
 
 var expand = function(design, board, player, group) {
