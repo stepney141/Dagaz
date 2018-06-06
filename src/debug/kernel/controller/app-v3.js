@@ -14,7 +14,8 @@ var STATE = {
     STOP: 6
 };
 
-var once = false;
+var isPressed = false;
+var isOnce    = false;
 
 function App(canvas) {
   this.canvas = canvas;
@@ -72,20 +73,29 @@ App.prototype.setPosition = function(pos) {
   this.state = STATE.EXEC;
 }
 
-App.prototype.mouseLocate = function(view, pos) {
+App.prototype.mouseLocate = function(view, positions) {
+  if (positions.length != 1) return;
+  var pos = positions[0];
   if ((_.isUndefined(this.currPos)) || (this.currPos != pos)) {
       if ((this.state == STATE.IDLE) && !_.isUndefined(this.list)) {
-          if (_.intersection(this.getTargets(), pos).length > 0) {
+          if (_.intersection(this.getTargets(), positions).length > 0) {
               Canvas.style.cursor = "pointer";
           } else {
               Canvas.style.cursor = "default";
           }
       }
+      if (isPressed && !_.isUndefined(this.list)) {
+          this.list.markPosition(pos);
+          this.view.markPositions(Dagaz.View.markType.TARGET, this.list.getStops());
+          this.view.markPositions(Dagaz.View.markType.CURRENT, this.list.getCurrent());
+      }
   }
   this.currPos = pos;
 }
 
-App.prototype.mouseUp = function(view, pos) {}
+App.prototype.mouseUp = function(view, positions) {
+  isPressed = false;
+}
 
 App.prototype.mouseDown = function(view, pos) {
   if ((this.state == STATE.IDLE) && !_.isUndefined(this.list)) {
@@ -94,6 +104,7 @@ App.prototype.mouseDown = function(view, pos) {
           this.setPosition(positions[0]);
       }
   }
+  isPressed = true;
 }
 
 App.prototype.getAI = function() {
@@ -142,7 +153,7 @@ App.prototype.exec = function() {
           this.state = STATE.BUZY;
           Canvas.style.cursor = "wait";
           this.timestamp = Date.now();
-          once = true;
+          isOnce = true;
       } else {
          if (_.isUndefined(this.list)) {
              var player = this.design.playerNames[this.board.player];
@@ -169,12 +180,12 @@ App.prototype.exec = function() {
       var ctx = this.getContext(this.board.player);
       var player = this.design.playerNames[this.board.player];
       var result = this.getAI().getMove(ctx);
-      if (once) {
+      if (isOnce) {
           console.log("Player: " + player);
           if (!_.isUndefined(Dagaz.Model.getSetup)) {
               console.log("Setup: " + Dagaz.Model.getSetup(this.design, this.board));
           }
-          once = false;
+          isOnce = false;
       }
       if (result) {
           if (_.isUndefined(result.move)) {
@@ -184,7 +195,6 @@ App.prototype.exec = function() {
               return;
           }
           if (result.done || (Date.now() - this.timestamp >= AI_WAIT)) {
-              this.board = this.board.apply(result.move);
               this.move  = result.move;
               this.state = STATE.EXEC;
           }
