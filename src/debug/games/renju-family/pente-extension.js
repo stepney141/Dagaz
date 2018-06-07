@@ -36,11 +36,12 @@ Dagaz.Model.CheckInvariants = function(board) {
   dirs.push(design.getDirection("e")); dirs.push(design.getDirection("se"));
   dirs.push(design.getDirection("s")); dirs.push(design.getDirection("sw"));
   dirs.push(design.getDirection("w")); dirs.push(design.getDirection("nw"));
+  var bc = design.getDirection("bc");
   _.each(board.moves, function(move) {
       var captured = [];
       if ((move.actions.length > 0) && (move.actions[0][0] === null) && (move.actions[0][1] !== null)) {
           var pos = move.actions[0][1][0];
-          _.each(design.allDirections(), function(dir) {
+          _.each(dirs, function(dir) {
               var ix = _.indexOf(dirs, dir);
               if (ix > 3) ix -= 4;
               var p = design.navigate(board.player, pos, dir);
@@ -65,7 +66,7 @@ Dagaz.Model.CheckInvariants = function(board) {
       var positions = [];
       var pieces = [];
       _.each(captured, function(p) {
-          _.each(design.allDirections(), function(dir) {
+          _.each(dirs, function(dir) {
               var ix = _.indexOf(dirs, dir);
               if (ix > 3) ix -= 4;
               var q = design.navigate(board.player, p, dir);
@@ -95,6 +96,19 @@ Dagaz.Model.CheckInvariants = function(board) {
       });
       if (captured.length > 0) {
           move.addValue(board.player, 1);
+          var pos = design.navigate(board.player, 0, bc);
+          var piece = Dagaz.Model.createPiece(1, board.player);
+          while (pos !== null) {
+              if (board.getPiece(pos) === null) {
+                  move.dropPiece(pos, piece);
+                  if (pos !== null) {
+                      pos = design.navigate(board.player, pos, bc);
+                      move.dropPiece(pos, piece);
+                  }
+                  break;
+              }
+              pos = design.navigate(board.player, pos, bc);
+          }
       }
       for (var i = 0; i < positions.length; i++) {
           move.movePiece(positions[i], positions[i], pieces[i]);

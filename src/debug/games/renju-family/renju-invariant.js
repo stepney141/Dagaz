@@ -80,7 +80,7 @@ Dagaz.Model.CheckInvariants = function(board) {
           if (_.isUndefined(move.failed)) {
               var pos = move.actions[0][1][0];
               var cnt = 0;
-              _.each(design.allDirections(), function(dir) {
+              _.each(dirs, function(dir) {
                   var ix = _.indexOf(dirs, dir);
                   if (ix > 3) ix -= 4;
                   if (ix < 0) {

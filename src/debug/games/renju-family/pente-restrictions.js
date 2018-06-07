@@ -37,6 +37,14 @@ Dagaz.Model.CheckInvariants = function(board) {
            }
         });
   }
+  _.each(board.moves, function(move) {
+        if (move.isDropMove()) {
+            var pos = move.actions[0][1][0];
+            if (design.inZone(2, board.player, pos)) {
+                move.failed = true;
+            }
+        }
+  });
   CheckInvariants(board);
 }
 

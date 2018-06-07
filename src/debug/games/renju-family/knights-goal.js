@@ -1,5 +1,7 @@
 (function() {
 
+Dagaz.AI.AI_FRAME = 1000;
+
 var prices = [];
 
 prices[ 0] = 1000000;
@@ -80,7 +82,7 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
   dirs.push(design.getDirection("s")); dirs.push(design.getDirection("sw"));
   dirs.push(design.getDirection("w")); dirs.push(design.getDirection("nw"));
   _.each(design.allPositions(), function(pos) {
-      _.each(design.allDirections(), function(dir) {
+      _.each(dirs, function(dir) {
            var ix = _.indexOf(dirs, dir);
            if (ix > 3) ix -= 4;
            var p = design.navigate(board.player, pos, dir);
