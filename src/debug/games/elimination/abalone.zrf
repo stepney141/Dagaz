@@ -51,18 +51,39 @@
   (board
      (image "images/abalone/board.bmp")
      (grid
-         (start-rectangle 141 75 187 115)
+         (start-rectangle 141 85 187 125)
          (dimensions
            ("a/b/c/d/e/f/g/h/i" (46 0)) ; files
            ("9/8/7/6/5/4/3/2/1" (-23 40)) ; ranks
          )
          (directions 
-              (e   1  0) (w -1 0)
-              (ne  0 -1) (sw 0 1)
-              (nw -1 -1) (se 1 1)
+             (e   1  0) (w -1 0)
+             (ne  0 -1) (sw 0 1)
+             (nw -1 -1) (se 1 1)
          )
      )
+     (positions
+             (a10   3  4  49  44)
+             (b10  49  4  95  44)
+             (c10  95  4 141  44)
+             (d10 141  4 187  44)
+             (e10 187  4 233  44)
+             (f10 233  4 279  44)
+
+             (a0 230 485 276 525)
+             (b0 276 485 322 525)
+             (c0 322 485 368 525)
+             (d0 368 485 414 525)
+             (e0 414 485 460 525)
+             (f0 460 485 506 525)
+     )
      (kill-positions a1 a2 a3 a4 b1 b2 b3 c1 c2 d1 f9 g8 g9 h7 h8 h9 i6 i7 i8 i9)
+     (links bc (a9 f0) (f0 e0) (e0 d0) (d0 c0) (c0 b0) (b0 a0))
+     (links wc (a9 a10) (a10 b10) (b10 c10) (c10 d10) (d10 e10) (e10 f10))
+     (symmetry White (bc wc) (wc bc) (e e) (w w) (ne ne) (sw sw) (nw nw) (se se))
+     (zone (name off-zone) (players Black White)
+           (positions a0 b0 c0 d0 e0 f0 a10 b10 c10 d10 e10 f10)
+     )
   )
   (piece
      (name Stone)
@@ -87,6 +108,11 @@
          (side-3 ne nw) (side-3 ne w) (side-3 ne se) (side-3 ne e)
      )
   )
+  (piece
+     (name Captured)
+     (image Black "images/abalone/white.bmp"
+            White "images/abalone/black.bmp")
+  )
 
   (board-setup
     (White 
@@ -97,7 +123,7 @@
     )
   )
 
-  (loss-condition (Black White) (pieces-remaining 8))
+  (loss-condition (Black White) (pieces-remaining 8 Stone))
 )
 
 (variant

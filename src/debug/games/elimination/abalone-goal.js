@@ -47,6 +47,7 @@ var penalty = function(design, board, player, pos, dir) {
 Dagaz.AI.eval = function(design, params, board, player) {
   var r = 0;
   _.each(design.allPositions(), function(pos) {
+      if (design.inZone(0, player, pos)) return;
       var piece = board.getPiece(pos);
       if (piece !== null) {
           var v = 1000;
@@ -67,7 +68,7 @@ Dagaz.Model.checkGoals = function(design, board, player) {
   var friends = 0;
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
-      if (piece !== null) {
+      if ((piece !== null) && (piece.type == 0)) {
           if (piece.player != player) {
               enemies++;
           } else {
