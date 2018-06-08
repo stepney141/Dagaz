@@ -30,7 +30,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("pass-partial", "true");
     design.checkVersion("banqi-setup", "true");
     design.checkVersion("banqi-extension", "true");
-    design.checkVersion("banqi-invariant", "true");
+    design.checkVersion("banqi-invariant", "chinese");
 
     design.addDirection("w");
     design.addDirection("e");
@@ -114,102 +114,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(7, ZRF.FUNCTION,	25);	// to
     design.addCommand(7, ZRF.FUNCTION,	28);	// end
 
-    design.addCommand(8, ZRF.FUNCTION,	24);	// from
-    design.addCommand(8, ZRF.PARAM,	0);	// $1
-    design.addCommand(8, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(8, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(8, ZRF.FUNCTION,	0);	// not
-    design.addCommand(8, ZRF.IF,	7);
-    design.addCommand(8, ZRF.FORK,	3);
-    design.addCommand(8, ZRF.FUNCTION,	25);	// to
-    design.addCommand(8, ZRF.FUNCTION,	28);	// end
-    design.addCommand(8, ZRF.PARAM,	1);	// $2
-    design.addCommand(8, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(8, ZRF.JUMP,	-8);
-    design.addCommand(8, ZRF.FUNCTION,	28);	// end
-
-    design.addCommand(9, ZRF.FUNCTION,	24);	// from
-    design.addCommand(9, ZRF.PARAM,	0);	// $1
-    design.addCommand(9, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(9, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(9, ZRF.FUNCTION,	0);	// not
-    design.addCommand(9, ZRF.IF,	4);
-    design.addCommand(9, ZRF.PARAM,	1);	// $2
-    design.addCommand(9, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(9, ZRF.JUMP,	-5);
-    design.addCommand(9, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(9, ZRF.FUNCTION,	0);	// not
-    design.addCommand(9, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(9, ZRF.LITERAL,	0);	// UnknownGeneral
-    design.addCommand(9, ZRF.FUNCTION,	10);	// piece?
-    design.addCommand(9, ZRF.FUNCTION,	0);	// not
-    design.addCommand(9, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(9, ZRF.LITERAL,	1);	// UnknownAdvisor
-    design.addCommand(9, ZRF.FUNCTION,	10);	// piece?
-    design.addCommand(9, ZRF.FUNCTION,	0);	// not
-    design.addCommand(9, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(9, ZRF.LITERAL,	2);	// UnknownElephant
-    design.addCommand(9, ZRF.FUNCTION,	10);	// piece?
-    design.addCommand(9, ZRF.FUNCTION,	0);	// not
-    design.addCommand(9, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(9, ZRF.LITERAL,	3);	// UnknownChariot
-    design.addCommand(9, ZRF.FUNCTION,	10);	// piece?
-    design.addCommand(9, ZRF.FUNCTION,	0);	// not
-    design.addCommand(9, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(9, ZRF.LITERAL,	4);	// UnknownHorse
-    design.addCommand(9, ZRF.FUNCTION,	10);	// piece?
-    design.addCommand(9, ZRF.FUNCTION,	0);	// not
-    design.addCommand(9, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(9, ZRF.LITERAL,	5);	// UnknownCannon
-    design.addCommand(9, ZRF.FUNCTION,	10);	// piece?
-    design.addCommand(9, ZRF.FUNCTION,	0);	// not
-    design.addCommand(9, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(9, ZRF.LITERAL,	6);	// UnknownSoldier
-    design.addCommand(9, ZRF.FUNCTION,	10);	// piece?
-    design.addCommand(9, ZRF.FUNCTION,	0);	// not
-    design.addCommand(9, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(9, ZRF.PARAM,	2);	// $3
-    design.addCommand(9, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(9, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(9, ZRF.FUNCTION,	0);	// not
-    design.addCommand(9, ZRF.IF,	4);
-    design.addCommand(9, ZRF.PARAM,	3);	// $4
-    design.addCommand(9, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(9, ZRF.JUMP,	-5);
-    design.addCommand(9, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(9, ZRF.FUNCTION,	0);	// not
-    design.addCommand(9, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(9, ZRF.LITERAL,	0);	// UnknownGeneral
-    design.addCommand(9, ZRF.FUNCTION,	10);	// piece?
-    design.addCommand(9, ZRF.FUNCTION,	0);	// not
-    design.addCommand(9, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(9, ZRF.LITERAL,	1);	// UnknownAdvisor
-    design.addCommand(9, ZRF.FUNCTION,	10);	// piece?
-    design.addCommand(9, ZRF.FUNCTION,	0);	// not
-    design.addCommand(9, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(9, ZRF.LITERAL,	2);	// UnknownElephant
-    design.addCommand(9, ZRF.FUNCTION,	10);	// piece?
-    design.addCommand(9, ZRF.FUNCTION,	0);	// not
-    design.addCommand(9, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(9, ZRF.LITERAL,	3);	// UnknownChariot
-    design.addCommand(9, ZRF.FUNCTION,	10);	// piece?
-    design.addCommand(9, ZRF.FUNCTION,	0);	// not
-    design.addCommand(9, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(9, ZRF.LITERAL,	4);	// UnknownHorse
-    design.addCommand(9, ZRF.FUNCTION,	10);	// piece?
-    design.addCommand(9, ZRF.FUNCTION,	0);	// not
-    design.addCommand(9, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(9, ZRF.LITERAL,	5);	// UnknownCannon
-    design.addCommand(9, ZRF.FUNCTION,	10);	// piece?
-    design.addCommand(9, ZRF.FUNCTION,	0);	// not
-    design.addCommand(9, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(9, ZRF.LITERAL,	6);	// UnknownSoldier
-    design.addCommand(9, ZRF.FUNCTION,	10);	// piece?
-    design.addCommand(9, ZRF.FUNCTION,	0);	// not
-    design.addCommand(9, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(9, ZRF.MODE,	1);	// kill-type
-    design.addCommand(9, ZRF.FUNCTION,	25);	// to
-    design.addCommand(9, ZRF.FUNCTION,	28);	// end
 
     design.addPiece("UnknownGeneral", 0, 0);
     design.addMove(0, 0, [], 0);
@@ -263,14 +167,10 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(11, 7, [2], 0);
 
     design.addPiece("Cannon", 12, 100);
-    design.addMove(12, 8, [3, 3], 0);
-    design.addMove(12, 8, [2, 2], 0);
-    design.addMove(12, 8, [0, 0], 0);
-    design.addMove(12, 8, [1, 1], 0);
-    design.addMove(12, 9, [3, 3, 3, 3], 1);
-    design.addMove(12, 9, [2, 2, 2, 2], 1);
-    design.addMove(12, 9, [0, 0, 0, 0], 1);
-    design.addMove(12, 9, [1, 1, 1, 1], 1);
+    design.addMove(12, 7, [3], 0);
+    design.addMove(12, 7, [1], 0);
+    design.addMove(12, 7, [0], 0);
+    design.addMove(12, 7, [2], 0);
 
     design.addPiece("Soldier", 13, 40);
     design.addMove(13, 7, [3], 0);
