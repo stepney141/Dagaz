@@ -16,16 +16,6 @@
   $1 add
 ))
 
-(define shift (
-  $1 (verify empty?)
-  add
-))
-
-(define kill (
-  $1 (verify not-empty?)
-  (add-partial kill-type)
-))
-
 (define shoot (
   $1 
   (while empty?
@@ -39,26 +29,8 @@
   add
 ))
 
-(define slide (
-  $1 
-  (while empty?
-     add
-     $1
-  )
-))
-
-(define jump (
-  $1 (while empty? $1)
-  (verify not-empty?) 
-  (check-hidden)
-  $1 (while empty? $1)
-  (verify not-empty?)
-  (check-hidden)
-  (add-partial kill-type)
-))
-
 (game
-   (title "Banqi")
+   (title "Banqi (Taiwanese)")
    (description "https://en.wikipedia.org/wiki/Banqi")
 
    (move-sound "Audio\Pickup.wav")
@@ -86,165 +58,6 @@
          (directions (n 0 -1) (e 1 0) (s 0 1) (w -1 0))
       )
    )
-
-   (piece
-      (name UnknownGeneral)
-      (image Red "images/unknown.bmp"  
-             Black "images/unknown.bmp")
-      (moves
-         (move-type normal-type)
-         (change-to General)
-      )
-   )
-   (piece
-      (name UnknownAdvisor)
-      (image Red "images/unknown.bmp"  
-             Black "images/unknown.bmp")
-      (moves
-         (move-type normal-type)
-         (change-to Advisor)
-      )
-   )
-   (piece
-      (name UnknownElephant)
-      (image Red "images/unknown.bmp"  
-             Black "images/unknown.bmp")
-      (moves
-         (move-type normal-type)
-         (change-to Elephant)
-      )
-   )
-   (piece
-      (name UnknownChariot)
-      (image Red "images/unknown.bmp"  
-             Black "images/unknown.bmp")
-      (moves
-         (move-type normal-type)
-         (change-to Chariot)
-      )
-   )
-   (piece
-      (name UnknownHorse)
-      (image Red "images/unknown.bmp"  
-             Black "images/unknown.bmp")
-      (moves
-         (move-type normal-type)
-         (change-to Horse)
-      )
-   )
-   (piece
-      (name UnknownCannon)
-      (image Red "images/unknown.bmp"  
-             Black "images/unknown.bmp")
-      (moves
-         (move-type normal-type)
-         (change-to Cannon)
-      )
-   )
-   (piece
-      (name UnknownSoldier)
-      (image Red "images/unknown.bmp"  
-             Black "images/unknown.bmp")
-      (moves
-         (move-type normal-type)
-         (change-to Soldier)
-      )
-   )
-   (piece
-      (name General)
-      (image Red "images/rgeneral.bmp"  
-             Black "images/bgeneral.bmp")
-      (moves
-         (move-type normal-type)
-         (step n) (step e) (step w) (step s)
-      )
-   )
-   (piece
-      (name Advisor)
-      (image Red "images/rmandarin.bmp" 
-             Black "images/bmandarin.bmp")
-      (moves
-         (move-type normal-type)
-         (step n) (step e) (step w) (step s)
-      )
-   )
-   (piece
-      (name Elephant)
-      (image Red "images/relephant.bmp" 
-             Black "images/belephant.bmp")
-      (moves
-         (move-type normal-type)
-         (step n) (step e) (step w) (step s)
-      )
-   )
-   (piece
-      (name Chariot)
-      (image Red "images/rchariot.bmp" 
-             Black "images/bchariot.bmp")
-      (moves
-         (move-type normal-type)
-         (step n) (step e) (step w) (step s)
-      )
-   )
-   (piece
-      (name Horse)
-      (image Red "images/rhorse.bmp" 
-             Black "images/bhorse.bmp")
-      (moves
-         (move-type normal-type)
-         (step n) (step e) (step w) (step s)
-      )
-   )
-   (piece
-      (name Cannon)
-      (image Red "images/rcannon.bmp" 
-             Black "images/bcannon.bmp")
-      (moves
-         (move-type normal-type)
-         (slide n) (slide s) (slide w) (slide e)
-         (move-type kill-type)
-         (jump n) (jump s) (jump w) (jump e)
-      )
-   )
-   (piece
-      (name Soldier)
-      (image Red "images/rsoldier.bmp" 
-             Black "images/bsoldier.bmp")
-      (moves
-         (move-type normal-type)
-         (step n) (step e) (step w) (step s)
-      )
-   )
-)
-
-(variant
-   (title "Banqi (Large)")
-
-   (board
-      (image "images/10x9.bmp")
-      (grid
-         (start-rectangle 26 27 68 69)
-         (dimensions
-             ("a/b/c/d/e/f/g/h" (45 0)) ; files
-             ("8/7/6/5" (0 45)) ; ranks
-         )
-         (directions (n 0 -1) (e 1 0) (s 0 1) (w -1 0))
-      )
-      (grid
-         (start-rectangle 26 252 68 294)
-         (dimensions
-             ("a/b/c/d/e/f/g/h" (45 0)) ; files
-             ("4/3/2/1" (0 45)) ; ranks
-         )
-         (directions (n 0 -1) (e 1 0) (s 0 1) (w -1 0))
-      )
-      (links n (a4 a5) (b4 b5) (c4 c5) (d4 d5) (e4 e5) (f4 f5) (g4 g5) (h4 h5))
-      (links s (a5 a4) (b5 b4) (c5 c4) (d5 d4) (e5 e4) (f5 f4) (g5 g4) (h5 h4))
-   )
-)
-
-(variant
-   (title "Banqi (Taiwanese)")
 
    (piece
       (name UnknownGeneral)
@@ -362,7 +175,6 @@
 
 (variant
    (title "Banqi (Chinese)")
-   (default)
 
    (piece
       (name UnknownGeneral)
@@ -475,5 +287,31 @@
       (moves
          (step n) (step e) (step w) (step s)
       )
+   )
+)
+
+(variant
+   (title "Banqi (Large)")
+
+   (board
+      (image "images/10x9.bmp")
+      (grid
+         (start-rectangle 26 27 68 69)
+         (dimensions
+             ("a/b/c/d/e/f/g/h" (45 0)) ; files
+             ("8/7/6/5" (0 45)) ; ranks
+         )
+         (directions (n 0 -1) (e 1 0) (s 0 1) (w -1 0))
+      )
+      (grid
+         (start-rectangle 26 252 68 294)
+         (dimensions
+             ("a/b/c/d/e/f/g/h" (45 0)) ; files
+             ("4/3/2/1" (0 45)) ; ranks
+         )
+         (directions (n 0 -1) (e 1 0) (s 0 1) (w -1 0))
+      )
+      (links n (a4 a5) (b4 b5) (c4 c5) (d4 d5) (e4 e5) (f4 f5) (g4 g5) (h4 h5))
+      (links s (a5 a4) (b5 b4) (c5 c4) (d5 d4) (e5 e4) (f5 f4) (g5 g4) (h5 h4))
    )
 )

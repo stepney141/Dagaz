@@ -142,37 +142,37 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(7, 7, [0], 0);
     design.addMove(7, 7, [2], 0);
 
-    design.addPiece("Advisor", 8, 60);
+    design.addPiece("Advisor", 8, 70);
     design.addMove(8, 7, [3], 0);
     design.addMove(8, 7, [1], 0);
     design.addMove(8, 7, [0], 0);
     design.addMove(8, 7, [2], 0);
 
-    design.addPiece("Elephant", 9, 30);
+    design.addPiece("Elephant", 9, 40);
     design.addMove(9, 7, [3], 0);
     design.addMove(9, 7, [1], 0);
     design.addMove(9, 7, [0], 0);
     design.addMove(9, 7, [2], 0);
 
-    design.addPiece("Chariot", 10, 20);
+    design.addPiece("Chariot", 10, 30);
     design.addMove(10, 7, [3], 0);
     design.addMove(10, 7, [1], 0);
     design.addMove(10, 7, [0], 0);
     design.addMove(10, 7, [2], 0);
 
-    design.addPiece("Horse", 11, 10);
+    design.addPiece("Horse", 11, 20);
     design.addMove(11, 7, [3], 0);
     design.addMove(11, 7, [1], 0);
     design.addMove(11, 7, [0], 0);
     design.addMove(11, 7, [2], 0);
 
-    design.addPiece("Cannon", 12, 100);
+    design.addPiece("Cannon", 12, 10);
     design.addMove(12, 7, [3], 0);
     design.addMove(12, 7, [1], 0);
     design.addMove(12, 7, [0], 0);
     design.addMove(12, 7, [2], 0);
 
-    design.addPiece("Soldier", 13, 40);
+    design.addPiece("Soldier", 13, 60);
     design.addMove(13, 7, [3], 0);
     design.addMove(13, 7, [1], 0);
     design.addMove(13, 7, [0], 0);
