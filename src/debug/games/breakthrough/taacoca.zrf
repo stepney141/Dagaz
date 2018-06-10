@@ -1,6 +1,5 @@
 (define step (
-  $1 (verify not-friend?)
-  add
+  $1 add
 ))
 
 (game
