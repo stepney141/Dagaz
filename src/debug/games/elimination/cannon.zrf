@@ -5,8 +5,34 @@
 ))
 
 (define shift (
+  (verify friend?)
   $1 (verify empty?)
   add
+))
+
+(define step (
+  (verify friend?)
+  $1 (verify enemy?)
+  add
+))
+
+(define jump (
+  (verify friend?)
+  $1 (verify empty?)
+  $1 (verify empty?)
+  add
+))
+
+(define push (
+  (verify friend?)
+  $1 (verify friend?) (verify (piece? Cannon)) cascade
+  $1 (verify friend?) (verify (piece? Cannon)) cascade
+  $1 (verify empty?) add
+))
+
+(define kill (
+  (verify enemy?)
+  capture add
 ))
 
 (game
@@ -22,10 +48,11 @@
    (option "animate drops"       false)
    (option "smart moves"         false)
    (option "include off-pieces"  true)
+   (option "shared pieces"       true)
 
    (players Red Black)
    (turn-order Red Black)
-   (move-priorities drop-type normal-type)
+;  (move-priorities drop-type normal-type)
 
    (board
       (image "images/cannon/board.bmp")
@@ -58,7 +85,12 @@
              Black "images/cannon/bcannon.bmp")
       (moves
          (move-type normal-type)
-         (shift n) (shift nw) (shift ne)
+         (shift n) (shift nw) (shift ne) (kill)
+         (step n) (step nw) (step ne) (step w) (step e)
+         (push n) (push nw) (push ne) (push e)
+         (push s) (push sw) (push se) (push w)         
+         (move-type jump-type)
+         (jump s) (jump sw) (jump se)
       )
    )
    (piece
@@ -68,6 +100,10 @@
       (drops
          (move-type drop-type)
          (drop)
+      )
+      (moves
+         (move-type normal-type)
+         (kill)
       )
    )
 
