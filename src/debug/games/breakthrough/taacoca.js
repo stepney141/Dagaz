@@ -24,6 +24,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("smart-moves", "false");
     design.checkVersion("show-blink", "true");
     design.checkVersion("taacoca-extension", "true");
+    design.checkVersion("taacoca-invariant", "true");
+    design.checkVersion("taacoca-goal", "true");
 
     design.addDirection("w");
     design.addDirection("e");
