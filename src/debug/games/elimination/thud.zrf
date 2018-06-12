@@ -13,7 +13,7 @@
   (history "https://en.wikipedia.org/wiki/Games_of_the_Discworld#Thud")
 
   (option "animate captures"  false)
-  (option "smart moves"       true)
+  (option "smart moves"       false)
 ; (option "thud extension"    true)
 
   (players Dwarfs Trolls)
@@ -22,8 +22,7 @@
   (move-sound "Audio\Pickup.wav")
   (release-sound "Audio\Pickup.wav")
   (capture-sound "")
-  (drop-sound "Copyright (c) 2002 Trevor Truran\
-               Inspired by the Discworld novels.")
+  (drop-sound "")
 
   (board
       (image "images/thud/board.bmp")
