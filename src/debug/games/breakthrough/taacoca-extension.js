@@ -8,11 +8,28 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+Dagaz.Model.blinkFailed = function(self) {
+  var r = true;
+  if (!_.isUndefined(self.blink)) {
+      _.each(self.moves, function(move) {
+         var f = true;
+         var starts = _.map(move.actions, function(a) {
+             return a[0][0];
+         });
+         _.each(self.blink, function(pos) {
+             if (_.indexOf(starts, pos) < 0) f = false;
+         }, self);
+         if (f) r = false;
+      }, self);
+  }
+  return r;
+}
+
 Dagaz.Model.closure = function(board, move, group) {
   return group;
 }
 
-var isBadPair(design, a, b) {
+var isBadPair = function(design, a, b) {
   if (!a.isSimpleMove()) return true;
   if (!b.isSimpleMove()) return true;
   if (a.actions[0][0][0] == b.actions[0][0][0]) return true;
@@ -40,7 +57,7 @@ Dagaz.Model.CheckInvariants = function(board) {
   var cnt = 0;
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
-      if ((piece !== null) && (piece == board.piece)) cnt++;
+      if ((piece !== null) && (piece.player == board.player)) cnt++;
   });
   for (var i = 0; i < board.moves.length; i++) {
       if (cnt > 1) {
@@ -65,7 +82,7 @@ Dagaz.Model.CheckInvariants = function(board) {
       } else {
           moves.push(board.moves[i]);
       }
-  }
+  }  
   board.moves = moves;
   CheckInvariants(board);
 }
