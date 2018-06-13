@@ -149,23 +149,27 @@ MoveList.prototype.getStops = function() {
   return this.stops;
 }
 
+Dagaz.Model.blinkFailed = function(self) {
+  var r = true;
+  _.each(self.getMoves(), function(move) {
+      if (self.isBlinked(move)) {
+          r = false;
+      }
+  }, self);
+  return r;
+}
+
 MoveList.prototype.markPosition = function(pos) {
   if (_.indexOf(this.getStarts(), pos) >= 0) {
       if (_.indexOf(this.blink, pos) >= 0) {
           delete this.position;
           delete this.blink;         
       } else {
-          var f = false;
           if (_.isUndefined(this.blink)) {
               this.blink = [];
           }
           this.blink.push(pos);
-          _.each(this.getMoves(), function(move) {
-              if (this.isBlinked(move)) {
-                  f = true;
-              }
-          }, this);
-          if (!f) {
+          if (Dagaz.Model.blinkFailed(this)) {
               this.blink = [ pos ];    
           }
           this.position = pos;
