@@ -4,6 +4,11 @@
   add
 ))
 
+(define drop-all (
+  (verify empty?)
+  add
+))
+
 (define step (
   (verify friend?)
   $1 (verify empty?)
@@ -180,7 +185,6 @@
 
 (variant
   (title "Windmill")
-  (default)
 
   (board
      (image "images/windmill.bmp")
@@ -227,5 +231,53 @@
   (board-setup
      (Blue (Stone off 12))
      (Red (Stone off 12))
+  )
+)
+
+(variant
+  (title "Triangle")
+  (default)
+
+  (board
+     (image "images/triangle.bmp")
+     (positions
+	(P01 268  14 301  47)
+	(P02 170 185 203 218)
+	(P03 229 290 262 323)
+	(P04 306 291 339 324)
+	(P05 426 291 459 324)
+	(P06 266 358 299 391)
+	(P07   7 462  40 495)
+	(P08 204 463 237 496)
+	(P09 526 464 559 497)
+     )
+     (links n  (P08 P03) (P03 P01) (P09 P04) (P04 P02) (P07 P06) (P06 P05))
+     (links s  (P03 P08) (P01 P03) (P04 P09) (P02 P04) (P06 P07) (P05 P06))
+     (links e  (P03 P04) (P04 P05) (P07 P08) (P08 P09))
+     (links w  (P04 P03) (P05 P04) (P08 P07) (P09 P08))
+     (links ne (P07 P02) (P02 P01) (P08 P06) (P06 P04))
+     (links sw (P02 P07) (P01 P02) (P06 P08) (P04 P06))
+     (links nw (P09 P05) (P05 P01) (P06 P03) (P03 P02))
+     (links se (P05 P09) (P01 P05) (P03 P06) (P02 P03))
+  )
+
+  (piece
+     (name  Stone)
+     (image Blue "images/white.bmp"
+            Red "images/black.bmp")
+     (drops
+        (move-type drop-type)
+        (drop-all)
+     )
+     (moves
+        (move-type normal-type)
+        (step n) (step s) (step w) (step e)
+        (step nw) (step se) (step sw) (step ne)
+     )
+  )
+
+  (board-setup
+     (Blue (Stone off 3))
+     (Red (Stone off 3))
   )
 )
