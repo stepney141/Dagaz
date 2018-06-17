@@ -33,7 +33,6 @@ Dagaz.Model.checkGoals = function(design, board, player) {
               if (piece === null) return;
               if (piece.player == 2) cnt++;
           });
-          console.log("*** " + cnt);
           if (cnt >= 3) winner = 2;
       }
   }
