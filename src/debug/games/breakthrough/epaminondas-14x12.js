@@ -1,4 +1,5 @@
-Dagaz.Model.WIDTH = 14;
+Dagaz.Model.WIDTH  = 14;
+Dagaz.Model.HEIGHT = 12;
 
 ZRF = {
     JUMP:          0,
@@ -27,6 +28,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("smart-moves", "false");
     design.checkVersion("show-blink", "false");
     design.checkVersion("epaminondas-invariant", "true");
+    design.checkVersion("epaminondas-goal", "true");
 
     design.addDirection("w");
     design.addDirection("e");
