@@ -53,10 +53,11 @@ Dagaz.Model.CheckInvariants = function(board) {
                       return;
                   }
               }
-              var dx = Dagaz.Model.getX(d) - Dagaz.Model.getX(s);
-              var dy = Dagaz.Model.getY(d) - Dagaz.Model.getY(s);
+              var dx    = Dagaz.Model.getX(d) - Dagaz.Model.getX(s);
+              var dy    = Dagaz.Model.getY(d) - Dagaz.Model.getY(s);
               var delta = Math.max(Math.abs(dx), Math.abs(dy));
-              if (delta > move.actions.length) {
+              var len   = move.actions.length;
+              if (delta > len) {
                   move.failed = true;
                   return;
               }
@@ -65,7 +66,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                   var dir = design.findDirection(s, s + Dagaz.Model.WIDTH * sign(dy) + sign(dx));
                   if (dir !== null) {
                       var cnt = countPieces(design, board, piece.player, d, dir, move);
-                      if (cnt >= move.actions.length) {
+                      if (cnt >= len) {
                           move.failed = true;
                       }
                   }

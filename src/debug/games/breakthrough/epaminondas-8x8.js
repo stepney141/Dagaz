@@ -1,6 +1,8 @@
 Dagaz.Model.WIDTH  = 8;
 Dagaz.Model.HEIGHT = 8;
 
+Dagaz.AI.AI_FRAME  = 1000;
+
 ZRF = {
     JUMP:          0,
     IF:            1,
@@ -27,6 +29,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "false");
     design.checkVersion("show-blink", "false");
+    design.checkVersion("show-hints", "false");
     design.checkVersion("epaminondas-invariant", "crossing");
     design.checkVersion("epaminondas-goal", "true");
 

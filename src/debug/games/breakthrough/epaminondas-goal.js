@@ -14,7 +14,16 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
       if (a[0] !== null) {
           if (a[1] !== null) {
               var piece = board.getPiece(a[1][0]);
-              if ((piece !== null) && (piece.player != board.player)) r++;
+              if (piece !== null) {
+                 if (piece.player != board.player) {
+                     if (design.inZone(0, piece.player, a[1][0])) {
+                         r += 1000;
+                     } else {
+                         r++;
+                     }
+                 }
+                 if (design.inZone(0, design.nextPlayer(piece.player), a[1][0])) r += 1000;
+              }
           } else {
               r++;
           }
@@ -82,7 +91,12 @@ Dagaz.AI.eval = function(design, params, board, player) {
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
       if (piece !== null) {
-          var w = getWeight(design, board, piece.player, pos);
+          var w = 0;
+          if (design.inZone(0, design.nextPlayer(piece.player), pos)) {
+              w = 1000;
+          } else {
+              w = getWeight(design, board, piece.player, pos);
+          }
           if (piece.player == player) {
               r += w;
           } else {
