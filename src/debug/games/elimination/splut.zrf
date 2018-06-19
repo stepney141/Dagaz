@@ -3,6 +3,11 @@
   add
 ))
 
+(define troll-step (
+  $1 (verify (or empty? (piece? Stone)))
+  add
+))
+
 (define push (
   $1 (while not-empty? cascade $1)
   add
@@ -71,7 +76,7 @@
              West  "Images/splut/wtroll.bmp"
              East  "Images/splut/etroll.bmp")
       (moves
-          (step n) (step s) (step w) (step e)
+          (troll-step n) (troll-step s) (troll-step w) (troll-step e)
       )
   )
   (piece
@@ -104,5 +109,7 @@
   (board-setup
      (South (Stone e1) (Wizard d2) (Dwarf e2) (Troll f2))
      (North (Stone e9) (Wizard f8) (Dwarf e8) (Troll d8))
+     (West  (Stone a5))
+     (East  (Stone i5))
   )
 )
