@@ -20,6 +20,7 @@ Dagaz.Model.showBlink       = true;
 Dagaz.Model.chessCapturing  = true;
 Dagaz.Model.progressive     = false;
 Dagaz.Model.showDrops       = -1;
+Dagaz.Model.dragNdrop       = true;
 
 Dagaz.Model.checkVersion = function(design, name, value) {  
   if (name == "z2j") {
@@ -47,8 +48,12 @@ Dagaz.Model.checkVersion = function(design, name, value) {
          (name != "recycle-captures")   &&
          (name != "shared-pieces")      &&
          (name != "show-blink")         &&
+         (name != "drag-n-drop")        &&
          (name != "silent-?-moves")) {
          design.failed = true;
+     }
+     if (name == "drag-n-drop") {
+         if (value == "false")   Dagaz.Model.dragNdrop = false;
      }
      if (name == "show-drops") {
          if (!_.isNaN(value))    Dagaz.Model.showDrops = +value;
