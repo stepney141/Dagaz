@@ -241,7 +241,7 @@ App.prototype.mouseDown = function(view, pos) {
 }
 
 App.prototype.mouseUp = function(view, pos) {
-  if ((this.state == STATE.IDLE) && !_.isUndefined(this.list)) {
+  if ((this.state == STATE.IDLE) && !_.isUndefined(this.list) && Dagaz.Model.dragNdrop) {
       var positions = _.intersection(this.getTargets(), pos);
       if (positions.length > 0) {
           this.setPosition(positions[0]);
