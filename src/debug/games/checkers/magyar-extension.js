@@ -49,8 +49,10 @@ var pushToBottom = function(piece) {
   if (value === null) {
       value = player;
   } else {
-      while (player <= value) {
+      var v = value;
+      while (v > 0) {
           player *= 10;
+          v = (v / 10) | 0;
       }
       value += player;
   }
