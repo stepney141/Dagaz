@@ -8,13 +8,24 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+var isSingle = function(design, board, pos, dirs) {
+  var cnt = 0;
+  _.each(dirs, function(dir) {
+      var p = design.navigate(board.player, pos, dir);
+      if ((p !== null) && (board.getPiece(p) !== null)) cnt++;
+  });
+  return cnt < 3;
+}
+
 var notValid = function(design, board, pos, dirs, empty) {
   var pattern = "";
+  var f = false;
   _.each(dirs, function(dir) {
       var p = design.navigate(board.player, pos, dir);
       if ((p !== null) && (_.isUndefined(empty) || (p != empty))) {
           var piece = board.getPiece(p);
           if (piece !== null) {
+              if (_.isUndefined(empty) && isSingle(design, board, p, dirs)) f = true;
               pattern = pattern + "*";
           } else {
               pattern = pattern + ".";
@@ -23,6 +34,7 @@ var notValid = function(design, board, pos, dirs, empty) {
           pattern = pattern + ".";
       }
   });
+  if (f) return true;
   if ((pattern == "**....") || (pattern == ".**...") || (pattern == "..**..") ||
       (pattern == "...**.") || (pattern == "....**") || (pattern == "*....*") || 
       (pattern == "***...") || (pattern == ".***..") || (pattern == "..***.") || 
