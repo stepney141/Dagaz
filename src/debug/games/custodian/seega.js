@@ -59,8 +59,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addTurn(2);
     design.addTurn(2);
     design.repeatMark();
-    design.addTurn(1);
     design.addTurn(2);
+    design.addTurn(1);
 
     design.addPosition("a5", [0, 1, 5, 0]);
     design.addPosition("b5", [-1, 1, 5, 0]);
