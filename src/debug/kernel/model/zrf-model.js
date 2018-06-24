@@ -19,6 +19,7 @@ Dagaz.Model.stalemateDraw   = false;
 Dagaz.Model.showBlink       = true;
 Dagaz.Model.chessCapturing  = true;
 Dagaz.Model.progressive     = false;
+Dagaz.Model.silent          = false;
 Dagaz.Model.showDrops       = -1;
 Dagaz.Model.dragNdrop       = true;
 
@@ -63,6 +64,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
      }
      if (name == "progressive-levels") {
          Dagaz.Model.progressive = (value == "true");
+         Dagaz.Model.silent = (value == "silent");
      }
      if (name == "show-blink") {
          Dagaz.Model.showBlink = (value == "true");
