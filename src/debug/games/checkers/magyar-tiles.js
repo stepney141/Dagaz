@@ -8,13 +8,25 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var isSingle = function(design, board, pos, dirs) {
-  var cnt = 0;
+var isSingle = function(design, board, pos, dirs, empty) {
+  var pattern = "";
   _.each(dirs, function(dir) {
       var p = design.navigate(board.player, pos, dir);
-      if ((p !== null) && (board.getPiece(p) !== null)) cnt++;
+      if ((p !== null) && (_.isUndefined(empty) || (p != empty)) && (board.getPiece(p) !== null)) {
+           pattern = pattern + "*";
+      } else {
+           pattern = pattern + ".";
+      }
   });
-  return cnt < 3;
+  if ((pattern == "**....") || (pattern == ".**...") || (pattern == "..**..") ||
+      (pattern == "...**.") || (pattern == "....**") || (pattern == "*....*") || 
+      (pattern == "***...") || (pattern == ".***..") || (pattern == "..***.") || 
+      (pattern == "...***") || (pattern == "*...**") || (pattern == "**...*") ||
+      (pattern == "****..") || (pattern == ".****.") || (pattern == "..****") ||
+      (pattern == "*..***") || (pattern == "**..**") || (pattern == "***..*") ||
+      (pattern == "*****.") || (pattern == ".*****") || (pattern == "*.****") ||
+      (pattern == "**.***") || (pattern == "***.**") || (pattern == "****.*")) return false;
+  return true;
 }
 
 var notValid = function(design, board, pos, dirs, empty) {
@@ -25,7 +37,7 @@ var notValid = function(design, board, pos, dirs, empty) {
       if ((p !== null) && (_.isUndefined(empty) || (p != empty))) {
           var piece = board.getPiece(p);
           if (piece !== null) {
-              if (_.isUndefined(empty) && isSingle(design, board, p, dirs)) f = true;
+              if (_.isUndefined(empty) && isSingle(design, board, p, dirs, pos)) f = true;
               pattern = pattern + "*";
           } else {
               pattern = pattern + ".";
