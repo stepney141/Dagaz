@@ -31,9 +31,12 @@ Dagaz.Model.BuildDesign = function(design) {
 //  design.checkVersion("pass-turn", "forced");
     design.checkVersion("shared-pieces", "true");
     design.checkVersion("drag-n-drop", "false");
+    design.checkVersion("progressive-levels", "silent");
     design.checkVersion("magyar-invariant", "true");
     design.checkVersion("magyar-extension", "true");
     design.checkVersion("magyar-tiles", "true");
+    design.checkVersion("magyar-goal", "true");
+    design.checkVersion("magyar-setup", "true");
 
     design.addDirection("nx");
     design.addDirection("w");
