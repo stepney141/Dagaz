@@ -40,8 +40,10 @@ function App(canvas, params) {
   }
 }
 
-var gameOver = function(text, self) {
-  alert(text);
+var gameOver = function(text, self, player) {
+  if (!Dagaz.Model.silent || (player != 0)) {
+      alert(text);
+  }
   if (Dagaz.Model.progressive) {
       var str = Dagaz.Model.continue(self.design, self.board, window.location.toString());
       if (str !== null) {
@@ -51,7 +53,7 @@ var gameOver = function(text, self) {
 }
 
 App.prototype.gameOver = function(text, player) {
-  _.delay(gameOver, 500, text, this);
+  _.delay(gameOver, 500, text, this, player);
   if (this.board) {
      var captured = [];
      _.each(this.design.allPositions(), function(pos) {
