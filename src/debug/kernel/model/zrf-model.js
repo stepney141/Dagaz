@@ -64,7 +64,10 @@ Dagaz.Model.checkVersion = function(design, name, value) {
      }
      if (name == "progressive-levels") {
          Dagaz.Model.progressive = (value == "true");
-         Dagaz.Model.silent = (value == "silent");
+         if (value == "silent") {
+             Dagaz.Model.progressive = true;
+             Dagaz.Model.silent      = true;
+         }
      }
      if (name == "show-blink") {
          Dagaz.Model.showBlink = (value == "true");
@@ -838,16 +841,13 @@ ZrfDesign.prototype.getPlayersCount = function() {
   return this.playerNames.length - 1;
 }
 
-ZrfDesign.prototype.addTurn = function(player, mode) {
-  if (!mode) {
-      mode = null;
-  }
+ZrfDesign.prototype.addTurn = function(player, modes) {
   if (_.isUndefined(this.turns)) {
       this.turns = [];
   }
   this.turns.push({
       player: player,
-      mode:   mode
+      modes:  modes
   });
 }
 
@@ -898,11 +898,13 @@ ZrfDesign.prototype.currPlayer = function(turn) {
   }
 }
 
-ZrfDesign.prototype.currMode = function(turn) {
-  if (_.isUndefined(this.turns)) {
-      return null;
+ZrfDesign.prototype.isValidMode = function(turn, mode) {
+  if (_.isUndefined(this.turns) || 
+      _.isUndefined(this.turns[turn]) ||
+      _.isUndefined(this.turns[turn].modes)) {
+      return true;
   } else {
-      return this.turns[turn].mode;
+      return _.indexOf(this.turns[turn].modes, mode) >= 0;
   }
 }
 
@@ -1669,6 +1671,9 @@ ZrfBoard.prototype.generateInternal = function(callback, cont, cover, serial) {
            var piece = this.pieces[pos];
            _.chain(design.pieces[piece.type])
             .filter(function(move) { return (move.type == 0); })
+            .filter(function(move) { 
+                return design.isValidMode(this.turn, move.mode); 
+             }, this)
             .each(function(move) {
                 var g = Dagaz.Model.createGen(move.template, move.params, this.game.design, move.mode, sn++);
                 if (!_.isUndefined(cover)) {
@@ -1686,6 +1691,9 @@ ZrfBoard.prototype.generateInternal = function(callback, cont, cover, serial) {
              .each(function(tp) {
                    _.chain(design.pieces[tp])
                     .filter(function(move) { return (move.type == 1); })
+                    .filter(function(move) { 
+                        return design.isValidMode(this.turn, move.mode); 
+                     }, this)
                     .each(function(move) {
                         var g = Dagaz.Model.createGen(move.template, move.params, this.game.design, move.mode, sn++);
                         g.init(this, pos);
