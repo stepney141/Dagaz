@@ -15,7 +15,7 @@ Dagaz.Model.CheckInvariants = function(board) {
   if (!_.isUndefined(board.move) && _.isUndefined(board.isInternal)) {
       if (board.move.isPass() && !_.isUndefined(board.parent) && (board.parent !== null)) {
           var b = board.parent;
-          if (!_.isUndefined(b.move) && (b.move.actions.length > 0) && (b.move.actions[0][0] !== null) && (b.move.actions[0][1] !== null)) {
+          if (!_.isUndefined(b.move) && (b.move.actions.length > 1) && (b.move.actions[0][0] !== null) && (b.move.actions[0][1] !== null)) {
               var src = b.move.actions[0][0][0];
               var pos = b.move.actions[0][1][0];
               _.each(board.moves, function(move) {
