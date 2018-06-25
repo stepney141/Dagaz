@@ -45,6 +45,7 @@ var gameOver = function(text, self, player) {
       alert(text);
   }
   if (Dagaz.Model.progressive) {
+      if (Dagaz.Model.silent && (player != 0)) return;
       var str = Dagaz.Model.continue(self.design, self.board, window.location.toString());
       if (str !== null) {
           window.location = str;
