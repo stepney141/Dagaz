@@ -24,11 +24,17 @@ Dagaz.Model.CheckInvariants = function(board) {
               if (piece !== null) {
                   c = 17;
                   move.movePiece(pos, target, piece);
+              } else {
+                  if (board.getPiece(target) !== null) {
+                      move.capturePiece(target);
+                  }
               }
               var init = [];
               _.each(design.allDirections(), function(d) {
                   var p = design.navigate(board.player, pos, d);
-                  init.push(p);
+                  if (p !== null) {
+                      init.push(p);
+                  }
               });
               _.each(design.allDirections(), function(d) {
                   var p = design.navigate(board.player, pos, d);
@@ -61,7 +67,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                       }
                   }
                   var isBreaked = false;
-                  if (board.getPiece(target) !== null) {
+                  if ((board.getPiece(target) !== null) && (_.indexOf(init, target) < 0)) {
                       isBreaked = true;
                   }
                   _.each(design.allDirections(), function(d) {
@@ -69,7 +75,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                       if (p === null) return;
                       var q = design.navigate(board.player, target, d);
                       if (q === null) return;
-                      if (board.getPiece(q) !== null) {
+                      if ((board.getPiece(q) !== null) && (_.indexOf(init, q) < 0)) {
                           isBreaked = true;
                       }
                       var piece = board.getPiece(p);
