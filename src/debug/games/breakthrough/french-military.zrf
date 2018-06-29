@@ -1,4 +1,8 @@
-(version "3.0")
+(define drop (
+  (verify (in-zone? board-zone))
+  (verify empty?)
+  add
+))
 
 (define shift (
    $1 (verify empty?) 
@@ -10,11 +14,9 @@
     (history "This game war popular in French military circles during and after the Franco-Prussian War of 1870-1871.")
 
     (option "highlight goals" false)
-    (option "show hints"      false)
-    (option "ko" situation)
 
     (players Green Red)
-    (turn-order Green Red)
+    (turn-order Red Green)
 
     (board
         (image "images/french-military/small.bmp")
@@ -31,12 +33,19 @@
         (links sw (c2 b1) (c4 b3) (b3 a2) (b5 a4))
         (links nw (b1 a2) (c2 b3) (b3 a4) (c4 b5))
         (kill-positions a1 a5 c1 c5)
+        (zone (name board-zone) 
+              (players Green Red)
+              (positions b1 a2 b2 c2 a3 b3 c3 a4 b4 c4 b5)
+        )
    )
 
    (piece
       (name RedPiece)
       (help " ")
       (image Red "images/french-military/red.bmp")
+      (drops
+         (drop)
+      )
       (moves
          (shift n)
          (shift s)
@@ -63,7 +72,7 @@
 
    (board-setup
         (Green (GreenPiece a2 b1 c2))
-        (Red (RedPiece b3))
+        (Red (RedPiece off 1))
    )
 
    (loss-condition (Green Red) stalemated)
@@ -73,7 +82,6 @@
 
 (variant
     (title "French Military Game")
-    (default)
  
     (board
         (image "images/french-military/large.bmp")
@@ -90,10 +98,14 @@
         (links sw (c2 b1) (c4 b3) (b3 a2) (c6 b5) (b5 a4) (b7 a6))
         (links nw (b1 a2) (c2 b3) (b3 a4) (c4 b5) (b5 a6) (c6 b7))
         (kill-positions a1 a7 c1 c7)
+        (zone (name board-zone) 
+              (players Green Red)
+              (positions b1 a2 b2 c2 a3 b3 c3 a4 b4 c4 a5 b5 c5 a6 b6 c6 b7)
+        )
    )
 
    (board-setup
         (Green (GreenPiece a2 b1 c2))
-        (Red (RedPiece b4))
+        (Red (RedPiece off 1))
    )
 )

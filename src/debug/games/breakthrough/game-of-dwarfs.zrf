@@ -1,4 +1,8 @@
-(version "2.0")
+(define drop (
+  (verify (in-zone? board-zone))
+  (verify empty?)
+  add
+))
 
 (define shift (
    $1 (verify empty?) 
@@ -9,10 +13,9 @@
     (title "Game of Dwarfs")
 
     (option "highlight goals" false)
-    (option "show hints"      false)
 
     (players Green Red)
-    (turn-order Green Red)
+    (turn-order Red Green)
 
     (board
         (image "images/french-military/dwarfs.bmp")
@@ -32,12 +35,19 @@
         (links sw (c2 b1) (c4 b3) (b3 a2) (b5 a4))
         (links nw (b1 a2) (c2 b3) (b3 a4) (c4 b5))
         (kill-positions a1 a5 c1 c5 a3 c3)
+        (zone (name board-zone) 
+              (players Green Red)
+              (positions b1 a2 b2 c2 b3 a4 b4 c4 b5)
+        )
    )
 
    (piece
       (name RedPiece)
       (help " ")
       (image Red "images/french-military/red.bmp")
+      (drops
+         (drop)
+      )
       (moves
          (shift n)
          (shift s)
@@ -64,7 +74,7 @@
 
    (board-setup
         (Green (GreenPiece a2 b1 c2))
-        (Red (RedPiece b2))
+        (Red (RedPiece off 1))
    )
 
    (loss-condition (Green Red) stalemated)
