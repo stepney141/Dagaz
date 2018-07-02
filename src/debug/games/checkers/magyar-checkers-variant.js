@@ -35,7 +35,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("magyar-extension", "true");
     design.checkVersion("magyar-tiles", "true");
     design.checkVersion("magyar-goal", "true");
-    design.checkVersion("magyar-setup", "true");
     design.checkVersion("magyar-ko", "true");
 
     design.addDirection("nx");
