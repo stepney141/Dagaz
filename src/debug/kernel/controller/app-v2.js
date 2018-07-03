@@ -146,7 +146,7 @@ App.prototype.setPosition = function(pos) {
   if (this.params.SHOW_TARGETS) {
       this.view.markPositions(Dagaz.View.markType.TARGET, this.getTargets());
   }
-  if (this.params.SHOW_ATTACKING && Dagaz.Model.showCaptures) {
+  if (this.params.SHOW_ATTACKING && Dagaz.Model.showCaptures && _.isUndefined(Dagaz.Model.getMarked)) {
       this.view.markPositions(Dagaz.View.markType.ATTACKING, this.list.getCaptures());
   }
   this.state = STATE.EXEC;
@@ -230,7 +230,9 @@ App.prototype.mouseDown = function(view, pos) {
                       delete this.list;
                       this.view.clearDrops();
                       lastPosition = null;
-                      this.view.markPositions(Dagaz.View.markType.ATTACKING, []);
+                      if (_.isUndefined(Dagaz.Model.getMarked)) {
+                          this.view.markPositions(Dagaz.View.markType.ATTACKING, []);
+                      }
                       this.view.markPositions(Dagaz.View.markType.CURRENT, []);
                       this.view.markPositions(Dagaz.View.markType.TARGET, []);
                       return;
@@ -329,8 +331,12 @@ App.prototype.exec = function() {
                  ko = this.board.ko;
              }
              this.view.markPositions(Dagaz.View.markType.KO, ko);
-             if (this.params.SHOW_ATTACKING && Dagaz.Model.showCaptures) {
-                 this.view.markPositions(Dagaz.View.markType.ATTACKING, this.list.getCaptures());
+             if (!_.isUndefined(Dagaz.Model.getMarked)) {
+                 this.view.markPositions(Dagaz.View.markType.ATTACKING, Dagaz.Model.getMarked(this.list));
+             } else {
+                 if (this.params.SHOW_ATTACKING && Dagaz.Model.showCaptures) {
+                     this.view.markPositions(Dagaz.View.markType.ATTACKING, this.list.getCaptures());
+                 }
              }
              var drops = this.getDrops();
              if ((Dagaz.Model.showDrops == -2) || (!_.isUndefined(this.drops) && (Dagaz.Model.showDrops > 0) && (this.drops.length <= Dagaz.Model.showDrops))) {
