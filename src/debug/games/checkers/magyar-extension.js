@@ -8,33 +8,6 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
-  var value = null;
-  if (model) {
-      value = +model.getValue(0);
-  }
-  if (value !== null) {
-      var stack = [];
-      while (value > 0) {
-          stack.push(value % 10);
-          value = (value / 10) | 0;
-      }
-      var s = stack.length * 5;
-      if (s > 25) s = 25;
-      y += s;
-      while (stack.length > 0) {
-          var player = stack.pop();
-          var p = view.piece["White Stone"];
-          if (player == 1) {
-              p = view.piece["Red Stone"];
-          }
-          ctx.drawImage(p.h, x, y, piece.dx, piece.dy);
-          y -= 10;
-      }
-  }
-  ctx.drawImage(piece.h, x, y, piece.dx, piece.dy);
-}
-
 var nextPlayer = function(player) {
   if (player == 1) {
       return 2;

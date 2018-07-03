@@ -36,6 +36,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("magyar-tiles", "true");
     design.checkVersion("magyar-goal", "true");
     design.checkVersion("magyar-ko", "true");
+    design.checkVersion("magyar-view", "true");
 
     design.addDirection("nx");
     design.addDirection("w");
@@ -445,7 +446,6 @@ Dagaz.Model.BuildDesign = function(design) {
 }
 
 Dagaz.View.configure = function(view) {
-    view.defBoard("Board");
     view.defPiece("NTile", "N Tile");
     view.defPiece("RedStone", "Red Stone");
     view.defPiece("WhiteStone", "White Stone");
