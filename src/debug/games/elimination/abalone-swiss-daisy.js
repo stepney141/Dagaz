@@ -375,6 +375,8 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("Captured", 1);
 
+    design.addPiece("Place", 2);
+
     design.setup("Black", "Stone", 9);
     design.setup("Black", "Stone", 10);
     design.setup("Black", "Stone", 18);
@@ -403,6 +405,18 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("White", "Stone", 58);
     design.setup("White", "Stone", 66);
     design.setup("White", "Stone", 67);
+    design.setup("Black", "Place", 81);
+    design.setup("Black", "Place", 82);
+    design.setup("Black", "Place", 83);
+    design.setup("Black", "Place", 84);
+    design.setup("Black", "Place", 85);
+    design.setup("Black", "Place", 86);
+    design.setup("White", "Place", 87);
+    design.setup("White", "Place", 88);
+    design.setup("White", "Place", 89);
+    design.setup("White", "Place", 90);
+    design.setup("White", "Place", 91);
+    design.setup("White", "Place", 92);
 }
 
 Dagaz.View.configure = function(view) {
@@ -411,6 +425,8 @@ Dagaz.View.configure = function(view) {
     view.defPiece("WhiteStone", "White Stone");
     view.defPiece("BlackCaptured", "Black Captured");
     view.defPiece("WhiteCaptured", "White Captured");
+    view.defPiece("BlackPlace", "Black Place");
+    view.defPiece("WhitePlace", "White Place");
  
     view.defPosition("a9", 141, 85, 46, 40);
     view.defPosition("b9", 187, 85, 46, 40);
