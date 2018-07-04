@@ -84,9 +84,13 @@ var changePieces = function(design, board, move) {
       if (action[0] == null) return;
       if (action[1] == null) return;
       var piece = board.getPiece(action[0][0]);
+      if (action[2] !== null) {
+          piece = action[2][0];
+      }
       if (piece !== null) {
           piece = piece.setValue(0, true);
       }
+      action[2] = [ piece ];
   });
 }
 
