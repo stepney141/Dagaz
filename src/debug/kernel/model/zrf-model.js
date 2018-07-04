@@ -1846,6 +1846,8 @@ ZrfBoard.prototype.commit = function(move) {
   this.changed = [];
 }
 
+Dagaz.Model.Done = function(design, board) {}
+
 ZrfBoard.prototype.apply = function(move) {
   if (!_.isUndefined(move.result)) return move.result;
   var design = Dagaz.Model.design;
