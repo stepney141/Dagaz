@@ -50,7 +50,7 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
           y -= 10;
       }
   } else {
-      if (/*(model.type == 0) &&*/ (_.indexOf(view.strike, pos) >= 0)) {
+      if ((model.type == 0) && (_.indexOf(view.strike, pos) >= 0)) {
           ctx.save();
           ctx.globalAlpha = 0.5;
           isSaved = true;
