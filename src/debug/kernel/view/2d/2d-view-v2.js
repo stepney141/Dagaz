@@ -600,7 +600,7 @@ View2D.prototype.draw = function(canvas) {
            if (piece) {
                x += (pos.dx - piece.dx) / 2 | 0;
                y += (pos.dy - piece.dy) / 2 | 0;
-               Dagaz.View.showPiece(this, ctx, pos, p.pos, piece, p.model, x, y);
+               Dagaz.View.showPiece(this, ctx, pos, p.pos, piece, p.model, x, y, p);
            }
         }, this);
       blink = -blink;
