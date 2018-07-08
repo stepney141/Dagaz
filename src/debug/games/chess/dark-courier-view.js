@@ -6,7 +6,7 @@ Dagaz.Model.invisibleOld = [];
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "dark-chess-view") {
+  if (name != "dark-courier-view") {
       checkVersion(design, name, value);
   }
 }
@@ -82,7 +82,7 @@ Dagaz.Model.Done = function(design, board) {
               checkStep(design, board, piece.player, pos, nw, visible);
               checkStep(design, board, piece.player, pos, ne, visible);
           }
-          if ((piece.type == 1) || (piece.type == 4)) {
+          if ((piece.type == 1) || (piece.type == 5)) {
               checkSlide(design, board, piece.player, pos, n, visible);
               checkSlide(design, board, piece.player, pos, e, visible);
               checkSlide(design, board, piece.player, pos, w, visible);
@@ -98,17 +98,25 @@ Dagaz.Model.Done = function(design, board) {
               checkKnightJump(design, board, piece.player, pos, e, ne, visible);
               checkKnightJump(design, board, piece.player, pos, e, se, visible);
           }
-          if ((piece.type == 3) || (piece.type == 4)) {
+          if (piece.type == 3) {
+              checkJump(design, board, piece.player, pos, nw, visible);
+              checkJump(design, board, piece.player, pos, ne, visible);
+              checkJump(design, board, piece.player, pos, sw, visible);
+              checkJump(design, board, piece.player, pos, se, visible);
+          }
+          if ((piece.type == 4) || (piece.type == 5)) {
               checkSlide(design, board, piece.player, pos, nw, visible);
               checkSlide(design, board, piece.player, pos, ne, visible);
               checkSlide(design, board, piece.player, pos, sw, visible);
               checkSlide(design, board, piece.player, pos, se, visible);
           }
-          if (piece.type == 5) {
+          if ((piece.type == 6) || (piece.type == 8)) {
               checkStep(design, board, piece.player, pos, n, visible);
               checkStep(design, board, piece.player, pos, e, visible);
               checkStep(design, board, piece.player, pos, w, visible);
               checkStep(design, board, piece.player, pos, s, visible);
+          }
+          if ((piece.type == 7) || (piece.type == 8)) {
               checkStep(design, board, piece.player, pos, nw, visible);
               checkStep(design, board, piece.player, pos, ne, visible);
               checkStep(design, board, piece.player, pos, sw, visible);
