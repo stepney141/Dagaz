@@ -1,3 +1,9 @@
+(define drop (
+  (verify (in-zone? setup-place))
+  (verify empty?)
+  add
+))
+
 (define step-palace (
   $1 (verify not-friend?)
   (verify (in-zone? palace))
@@ -76,16 +82,18 @@
 
    (option "smart moves"       true)
    (option "animate captures"  false)
-;  (option "pass turn"         forced)
-   (option "ko"                situation)
-   (option "janggi-extension"  true)
 
    (move-sound "Audio\Pickup.wav")
    (release-sound "Audio\Pickup.wav")
    (capture-sound "")
 
    (players Red Black)
-   (turn-order Red Black)
+   (turn-order 
+       Red Red Red Red
+       Black Black Black Black
+       repeat Red Black
+   )
+   (move-priorities drop-type normal-type)
 
    (board
       (image "images/janggi.bmp")
@@ -115,6 +123,16 @@
          (players Red Black)
          (positions d1 d3 e2 f1 f3 d8 d10 e9 f8 f10)
       )
+      (zone
+         (name setup-place)
+         (players Red)
+         (positions b1 c1 g1 h1)
+      )
+      (zone
+         (name setup-place)
+         (players Black)
+         (positions b10 c10 g10 h10)
+      )
    )
 
    (piece
@@ -123,6 +141,7 @@
       (image Red "images/rsoldier.bmp" 
              Black "images/bsoldier.bmp")
       (moves
+         (move-type normal-type)
          (step-pawn n) (step-pawn w) (step-pawn e)
          (step-fortress nw) (step-fortress ne)
       )
@@ -132,7 +151,12 @@
       (help "Horse/Knight: step orthogonally 1 square then diagonally outward 1 square")
       (image Red "images/rhorse.bmp" 
              Black "images/bhorse.bmp")
+      (drops
+         (move-type drop-type)
+         (drop)
+      )
       (moves
+         (move-type normal-type)
          (step-horse n nw) (step-horse n ne) (step-horse s sw) (step-horse s se)
          (step-horse w nw) (step-horse e ne) (step-horse w sw) (step-horse e se)
       )
@@ -142,7 +166,12 @@
       (help "Elephant: moves 1 step orthogonally plus 2 diagonally outward")
       (image Red "images/relephant.bmp" 
              Black "images/belephant.bmp")
+      (drops
+         (move-type drop-type)
+         (drop)
+      )
       (moves
+         (move-type normal-type)
          (step-elephant n nw) (step-elephant n ne) (step-elephant s sw) (step-elephant s se)
          (step-elephant w nw) (step-elephant e ne) (step-elephant w sw) (step-elephant e se)
       )
@@ -153,6 +182,7 @@
       (image Red "images/rchariot.bmp" 
              Black "images/bchariot.bmp")
       (moves
+         (move-type normal-type)
          (slide n) (slide s) (slide w) (slide e)
          (slide-fortress nw) (slide-fortress ne)
          (slide-fortress sw) (slide-fortress se)
@@ -164,6 +194,7 @@
       (image Red "images/rcannon.bmp" 
              Black "images/bcannon.bmp")
       (moves
+         (move-type normal-type)
          (shoot n) (shoot s) (shoot w) (shoot e)
          (shoot-fortress nw) (shoot-fortress ne)
          (shoot-fortress sw) (shoot-fortress se)
@@ -175,6 +206,7 @@
       (image Red "images/rmandarin.bmp" 
              Black "images/bmandarin.bmp")
       (moves
+         (move-type normal-type)
          (step-palace n)  (step-palace s) (step-fortress nw) (step-fortress sw)
          (step-palace w)  (step-palace e) (step-fortress ne) (step-fortress se)
       )
@@ -185,6 +217,7 @@
       (image Red "images/rgeneral.bmp"  
              Black "images/bgeneral.bmp")
       (moves
+         (move-type normal-type)
          (step-palace n)  (step-palace s) (step-fortress nw) (step-fortress sw)
          (step-palace w)  (step-palace e) (step-fortress ne) (step-fortress se)
       )
@@ -193,8 +226,8 @@
    (board-setup
       (Red
          (Soldier a4 c4 e4 g4 i4)
-         (Horse b1 h1)
-         (Elephant c1 g1)
+         (Horse off 2)
+         (Elephant off 2)
          (Chariot a1 i1)
          (Mandarin d1 f1)
          (Cannon b3 h3)
@@ -202,8 +235,8 @@
       )
       (Black
          (Soldier a7 c7 e7 g7 i7)
-         (Horse b10 h10)
-         (Elephant c10 g10)
+         (Horse off 2)
+         (Elephant off 2)
          (Chariot a10 i10)
          (Mandarin d10 f10)
          (Cannon b8 h8)
@@ -214,364 +247,4 @@
    (loss-condition (Red Black) (checkmated General))
    (loss-condition (Red Black) stalemated)
    (loss-condition (Red Black) repetition)
-)
-
-(variant
-   (title "Janggi (variant 2)")
-   (board-setup
-      (Red
-         (Soldier a4 c4 e4 g4 i4)
-         (Horse b1 g1)
-         (Elephant c1 h1)
-         (Chariot a1 i1)
-         (Mandarin d1 f1)
-         (Cannon b3 h3)
-         (General e2)
-      )
-      (Black
-         (Soldier a7 c7 e7 g7 i7)
-         (Horse b10 h10)
-         (Elephant c10 g10)
-         (Chariot a10 i10)
-         (Mandarin d10 f10)
-         (Cannon b8 h8)
-         (General e9)
-      )
-   )
-)
-
-(variant
-   (title "Janggi (variant 3)")
-   (board-setup
-      (Red
-         (Soldier a4 c4 e4 g4 i4)
-         (Horse c1 h1)
-         (Elephant b1 g1)
-         (Chariot a1 i1)
-         (Mandarin d1 f1)
-         (Cannon b3 h3)
-         (General e2)
-      )
-      (Black
-         (Soldier a7 c7 e7 g7 i7)
-         (Horse b10 h10)
-         (Elephant c10 g10)
-         (Chariot a10 i10)
-         (Mandarin d10 f10)
-         (Cannon b8 h8)
-         (General e9)
-      )
-   )
-)
-
-(variant
-   (title "Janggi (variant 4)")
-   (board-setup
-      (Red
-         (Soldier a4 c4 e4 g4 i4)
-         (Horse c1 g1)
-         (Elephant b1 h1)
-         (Chariot a1 i1)
-         (Mandarin d1 f1)
-         (Cannon b3 h3)
-         (General e2)
-      )
-      (Black
-         (Soldier a7 c7 e7 g7 i7)
-         (Horse b10 h10)
-         (Elephant c10 g10)
-         (Chariot a10 i10)
-         (Mandarin d10 f10)
-         (Cannon b8 h8)
-         (General e9)
-      )
-   )
-)
-
-(variant
-   (title "Janggi (variant 5)")
-   (board-setup
-      (Red
-         (Soldier a4 c4 e4 g4 i4)
-         (Horse b1 h1)
-         (Elephant c1 g1)
-         (Chariot a1 i1)
-         (Mandarin d1 f1)
-         (Cannon b3 h3)
-         (General e2)
-      )
-      (Black
-         (Soldier a7 c7 e7 g7 i7)
-         (Horse b10 g10)
-         (Elephant c10 h10)
-         (Chariot a10 i10)
-         (Mandarin d10 f10)
-         (Cannon b8 h8)
-         (General e9)
-      )
-   )
-)
-
-(variant
-   (title "Janggi (variant 6)")
-   (board-setup
-      (Red
-         (Soldier a4 c4 e4 g4 i4)
-         (Horse b1 g1)
-         (Elephant c1 h1)
-         (Chariot a1 i1)
-         (Mandarin d1 f1)
-         (Cannon b3 h3)
-         (General e2)
-      )
-      (Black
-         (Soldier a7 c7 e7 g7 i7)
-         (Horse b10 g10)
-         (Elephant c10 h10)
-         (Chariot a10 i10)
-         (Mandarin d10 f10)
-         (Cannon b8 h8)
-         (General e9)
-      )
-   )
-)
-
-(variant
-   (title "Janggi (variant 7)")
-   (board-setup
-      (Red
-         (Soldier a4 c4 e4 g4 i4)
-         (Horse c1 h1)
-         (Elephant b1 g1)
-         (Chariot a1 i1)
-         (Mandarin d1 f1)
-         (Cannon b3 h3)
-         (General e2)
-      )
-      (Black
-         (Soldier a7 c7 e7 g7 i7)
-         (Horse b10 g10)
-         (Elephant c10 h10)
-         (Chariot a10 i10)
-         (Mandarin d10 f10)
-         (Cannon b8 h8)
-         (General e9)
-      )
-   )
-)
-
-(variant
-   (title "Janggi (variant 8)")
-   (board-setup
-      (Red
-         (Soldier a4 c4 e4 g4 i4)
-         (Horse c1 g1)
-         (Elephant b1 h1)
-         (Chariot a1 i1)
-         (Mandarin d1 f1)
-         (Cannon b3 h3)
-         (General e2)
-      )
-      (Black
-         (Soldier a7 c7 e7 g7 i7)
-         (Horse b10 g10)
-         (Elephant c10 h10)
-         (Chariot a10 i10)
-         (Mandarin d10 f10)
-         (Cannon b8 h8)
-         (General e9)
-      )
-   )
-)
-
-(variant
-   (title "Janggi (variant 9)")
-   (board-setup
-      (Red
-         (Soldier a4 c4 e4 g4 i4)
-         (Horse b1 h1)
-         (Elephant c1 g1)
-         (Chariot a1 i1)
-         (Mandarin d1 f1)
-         (Cannon b3 h3)
-         (General e2)
-      )
-      (Black
-         (Soldier a7 c7 e7 g7 i7)
-         (Horse c10 h10)
-         (Elephant b10 g10)
-         (Chariot a10 i10)
-         (Mandarin d10 f10)
-         (Cannon b8 h8)
-         (General e9)
-      )
-   )
-)
-
-(variant
-   (title "Janggi (variant 10)")
-   (board-setup
-      (Red
-         (Soldier a4 c4 e4 g4 i4)
-         (Horse b1 g1)
-         (Elephant c1 h1)
-         (Chariot a1 i1)
-         (Mandarin d1 f1)
-         (Cannon b3 h3)
-         (General e2)
-      )
-      (Black
-         (Soldier a7 c7 e7 g7 i7)
-         (Horse c10 h10)
-         (Elephant b10 g10)
-         (Chariot a10 i10)
-         (Mandarin d10 f10)
-         (Cannon b8 h8)
-         (General e9)
-      )
-   )
-)
-
-(variant
-   (title "Janggi (variant 11)")
-   (board-setup
-      (Red
-         (Soldier a4 c4 e4 g4 i4)
-         (Horse c1 h1)
-         (Elephant b1 g1)
-         (Chariot a1 i1)
-         (Mandarin d1 f1)
-         (Cannon b3 h3)
-         (General e2)
-      )
-      (Black
-         (Soldier a7 c7 e7 g7 i7)
-         (Horse c10 h10)
-         (Elephant b10 g10)
-         (Chariot a10 i10)
-         (Mandarin d10 f10)
-         (Cannon b8 h8)
-         (General e9)
-      )
-   )
-)
-
-(variant
-   (title "Janggi (variant 12)")
-   (board-setup
-      (Red
-         (Soldier a4 c4 e4 g4 i4)
-         (Horse c1 g1)
-         (Elephant b1 h1)
-         (Chariot a1 i1)
-         (Mandarin d1 f1)
-         (Cannon b3 h3)
-         (General e2)
-      )
-      (Black
-         (Soldier a7 c7 e7 g7 i7)
-         (Horse c10 h10)
-         (Elephant b10 g10)
-         (Chariot a10 i10)
-         (Mandarin d10 f10)
-         (Cannon b8 h8)
-         (General e9)
-      )
-   )
-)
-
-(variant
-   (title "Janggi (variant 13)")
-   (board-setup
-      (Red
-         (Soldier a4 c4 e4 g4 i4)
-         (Horse b1 h1)
-         (Elephant c1 g1)
-         (Chariot a1 i1)
-         (Mandarin d1 f1)
-         (Cannon b3 h3)
-         (General e2)
-      )
-      (Black
-         (Soldier a7 c7 e7 g7 i7)
-         (Horse c10 g10)
-         (Elephant b10 h10)
-         (Chariot a10 i10)
-         (Mandarin d10 f10)
-         (Cannon b8 h8)
-         (General e9)
-      )
-   )
-)
-
-(variant
-   (title "Janggi (variant 14)")
-   (board-setup
-      (Red
-         (Soldier a4 c4 e4 g4 i4)
-         (Horse b1 g1)
-         (Elephant c1 h1)
-         (Chariot a1 i1)
-         (Mandarin d1 f1)
-         (Cannon b3 h3)
-         (General e2)
-      )
-      (Black
-         (Soldier a7 c7 e7 g7 i7)
-         (Horse c10 g10)
-         (Elephant b10 h10)
-         (Chariot a10 i10)
-         (Mandarin d10 f10)
-         (Cannon b8 h8)
-         (General e9)
-      )
-   )
-)
-
-(variant
-   (title "Janggi (variant 15)")
-   (board-setup
-      (Red
-         (Soldier a4 c4 e4 g4 i4)
-         (Horse c1 h1)
-         (Elephant b1 g1)
-         (Chariot a1 i1)
-         (Mandarin d1 f1)
-         (Cannon b3 h3)
-         (General e2)
-      )
-      (Black
-         (Soldier a7 c7 e7 g7 i7)
-         (Horse c10 g10)
-         (Elephant b10 h10)
-         (Chariot a10 i10)
-         (Mandarin d10 f10)
-         (Cannon b8 h8)
-         (General e9)
-      )
-   )
-)
-
-(variant
-   (title "Janggi (variant 16)")
-   (board-setup
-      (Red
-         (Soldier a4 c4 e4 g4 i4)
-         (Horse c1 g1)
-         (Elephant b1 h1)
-         (Chariot a1 i1)
-         (Mandarin d1 f1)
-         (Cannon b3 h3)
-         (General e2)
-      )
-      (Black
-         (Soldier a7 c7 e7 g7 i7)
-         (Horse c10 g10)
-         (Elephant b10 h10)
-         (Chariot a10 i10)
-         (Mandarin d10 f10)
-         (Cannon b8 h8)
-         (General e9)
-      )
-   )
 )
