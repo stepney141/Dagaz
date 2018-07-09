@@ -11,13 +11,21 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+var isEnemy = function(a, b) {
+  if (a == 1) {
+      return b != 1;
+  } else {
+      return b == 1;
+  }
+}
+
 var checkStep = function(design, board, player, pos, dir, n, visible) {
   for (; n > 0; n--) {
       var p = design.navigate(player, pos, dir);
       if (p === null) return;
       var piece = board.getPiece(p);
       if (piece !== null) {
-          if (piece.player != player) {
+          if (isEnemy(piece.player, player)) {
               visible.push(p);
           }
           return;
@@ -30,7 +38,7 @@ var checkJump = function(design, board, player, pos, o, d, n, visible) {
   if (p === null) return;
   var piece = board.getPiece(p);
   if (piece !== null) {
-      if (piece.player != player) {
+      if (isEnemy(piece.player, player)) {
           visible.push(p);
       }
       return;
@@ -40,7 +48,7 @@ var checkJump = function(design, board, player, pos, o, d, n, visible) {
       if (p === null) return;
       piece = board.getPiece(p);
       if (piece !== null) {
-          if (piece.player != player) {
+          if (isEnemy(piece.player, player)) {
               visible.push(p);
           }
           return;
@@ -53,7 +61,7 @@ var checkSlide = function(design, board, player, pos, dir, visible) {
   while (p !== null) {
       var piece = board.getPiece(p);
       if (piece !== null) {
-          if (piece.player != player) {
+          if (isEnemy(piece.player, player)) {
               visible.push(p);
           }
           return;
@@ -72,7 +80,7 @@ var checkShoot = function(design, board, player, pos, dir, visible) {
   while (p !== null) {
       var piece = board.getPiece(p);
       if (piece !== null) {
-          if (piece.player != player) {
+          if (isEnemy(piece.player, player)) {
               visible.push(p);
           }
           return;
