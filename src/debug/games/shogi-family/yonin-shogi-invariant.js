@@ -32,15 +32,21 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
 var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {
-  var kings = 0;
+  var kings  = 0;
+  var noKing = true;
   var king = design.getPieceType("King");
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
-      if ((piece !== null) && (piece.player == player) && (piece.type == king)) {
-          kings++;
+      if ((piece !== null) && (piece.type == king)) {
+          if (piece.player == player) {
+              kings++;
+          }
+          if (piece.player == 1) {
+              noKing = false;
+          }
       }
   });
-  if (kings == 4) {
+  if (noKing || (kings == 4)) {
       return 1;
   }
   return checkGoals(design, board, player);

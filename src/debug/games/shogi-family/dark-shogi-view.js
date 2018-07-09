@@ -11,12 +11,20 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+var isEnemy = function(a, b) {
+  if (a == 1) {
+      return b != 1;
+  } else {
+      return b == 1;
+  }
+}
+
 var checkStep = function(design, board, player, pos, dir, visible) {
   var p = design.navigate(player, pos, dir);
   if (p === null) return;
   var piece = board.getPiece(p);
   if (piece === null) return;
-  if (piece.player != player) {
+  if (isEnemy(piece.player, player)) {
       visible.push(p);
   }
 }
@@ -28,7 +36,7 @@ var checkJump = function(design, board, player, pos, o, d, visible) {
   if (p === null) return;
   var piece = board.getPiece(p);
   if (piece === null) return;
-  if (piece.player != player) {
+  if (isEnemy(piece.player, player)) {
       visible.push(p);
   }
 }
@@ -38,7 +46,7 @@ var checkSlide = function(design, board, player, pos, dir, visible) {
   while (p !== null) {
       var piece = board.getPiece(p);
       if (piece !== null) {
-          if (piece.player != player) {
+          if (isEnemy(piece.player, player)) {
               visible.push(p);
           }
           return;
@@ -57,6 +65,7 @@ Dagaz.Model.Done = function(design, board) {
       var piece = board.getPiece(pos);
       if (piece !== null) {
           if (!design.inZone(0, piece.player, pos)) {
+              visible.push(pos);
               return;
           }
           if ((piece.type == 1) || (piece.type == 8) || (piece.type == 9) || (piece.type == 10) || (piece.type == 13) || (piece.type == 12) || (piece.type == 0) || (piece.type == 2)) {
