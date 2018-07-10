@@ -673,7 +673,11 @@ var mouseDown = function(event) {
 }
 
 var mouseWheel = function(event) {
-  if (event.wheelDelta > 0) {
+  var delta = event.wheelDelta;
+  if (_.isUndefined(event.wheelDelta)) {
+      delta = -event.deltaY;
+  }
+  if (delta > 0) {
       self.controller.mouseWheel(self, -1);
   } else {
       self.controller.mouseWheel(self, 1);
