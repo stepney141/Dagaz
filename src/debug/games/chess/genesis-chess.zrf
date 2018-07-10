@@ -180,3 +180,27 @@
   (loss-condition (White Black) (checkmated King))
   (draw-condition (White Black) stalemated)
 )
+
+(variant
+  (title "Genesis Chess (variant)")
+  (default)
+
+  (board-setup
+    (White 
+         (Pawn off 8)
+         (Rook off 2)
+         (Knight off 2)
+         (Bishop off 2)
+         (Queen off 1)
+         (King off 1)
+    )
+    (Black 
+         (Pawn a7 b7 c7 d7 e7 f7 g7 h7)
+         (Rook a8 h8)
+         (Knight b8 g8)
+         (Bishop c8 f8)
+         (Queen d8)
+         (King e8)
+    )
+  )
+)
