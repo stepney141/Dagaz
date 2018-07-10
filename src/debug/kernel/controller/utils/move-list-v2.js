@@ -198,6 +198,10 @@ MoveList.prototype.getDropPieces = function(pos) {
   return result;
 }
 
+MoveList.prototype.filterDrops = function(moves, ix) {
+  return moves;
+}
+
 var isEq = function(x, y) {
   if (x === null) return y === null;
   if (y === null) return false;

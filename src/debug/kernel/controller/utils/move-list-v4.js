@@ -159,6 +159,10 @@ Dagaz.Model.blinkFailed = function(self) {
   return r;
 }
 
+MoveList.prototype.filterDrops = function(moves, ix) {
+  return moves;
+}
+
 MoveList.prototype.markPosition = function(pos) {
   if (_.indexOf(this.getStarts(), pos) >= 0) {
       if (_.indexOf(this.blink, pos) >= 0) {
