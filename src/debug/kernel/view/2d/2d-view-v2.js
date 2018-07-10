@@ -672,12 +672,27 @@ var mouseDown = function(event) {
   event.preventDefault(); 
 }
 
+var mouseWheel = function(event) {
+  if (event.wheelDelta > 0) {
+      self.controller.mouseWheel(self, -1);
+  } else {
+      self.controller.mouseWheel(self, 1);
+  }
+}
+
 View2D.prototype.init = function(canvas, controller) {
   self = this;
   canvas.onmousemove = mouseMove;
   canvas.onmouseup   = mouseUp;
   canvas.onmousedown = mouseDown;
-  this.controller    = controller;
+  if ('onwheel' in document) {
+      document.onwheel = mouseWheel;
+  } else if ('onmousewheel' in document) {
+      document.onmousewheel = mouseWheel;
+  } else {
+      document.MozMousePixelScroll = mouseWheel;
+  }
+  this.controller = controller;
 }
 
 })();
