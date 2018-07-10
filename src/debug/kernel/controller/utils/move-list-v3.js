@@ -205,13 +205,41 @@ MoveList.prototype.getDrops = function() {
 }
 
 MoveList.prototype.getDropPieces = function(pos) {
-  var result = null;
+  var result = [];
   _.each(this.moves, function(move) {
       _.each(move.actions, function(action) {
           if ((action[0] === null) && (action[1] !== null) && (action[1][0] == pos)) {
-              result = action[2];
+              result.push(action[2][0]);
           }
       });
+  });
+  return _.sortBy(result, function(piece) {
+      return piece.type;
+  });
+}
+
+MoveList.prototype.filterDrops = function(moves, ix) {
+  var list = [];
+  var pieces = [];
+  _.each(moves, function(move) {
+      if (move.isDropMove()) {
+          list = _.union(list, move.actions[0][1]);
+          pieces.push(move.actions[0][2][0].type);
+      }
+  });
+  if ((list.length != 1) || (pieces.length == 0)) return moves;
+  var pos = list[0];
+  if (pieces.length > 1) {
+      pieces = _.sortBy(_.union(pieces), function(type) {
+          return type;
+      });
+  }
+  if (ix >= pieces.length) ix = pieces.length - 1;
+  var result = [];
+  _.each(moves, function(move) {
+      if (move.isDropMove() && (move.actions[0][2][0].type == pieces[ix])) {
+          result.push(move);
+      }
   });
   return result;
 }
