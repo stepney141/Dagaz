@@ -15,6 +15,7 @@ var passForced = 0;
 var once = false;
 var lastPosition = null;
 var determinated = null;
+var dropIndex = 0;
 
 function App(canvas, params) {
   this.design = Dagaz.Model.getDesign();
@@ -164,6 +165,14 @@ App.prototype.syncCaptures = function(move) {
   m.applyAll(this.view);
 }
 
+App.prototype.mouseWheel = function(view, delta) {
+  dropIndex += delta;
+  if (dropIndex < 0) dropIndex = 0;
+  var pos = this.currPos;
+  this.currPos = -1;
+  this.mouseLocate(view, pos);
+}
+
 App.prototype.mouseLocate = function(view, pos) {
   if (this.currPos != pos) {
       this.getDrops();
@@ -171,7 +180,8 @@ App.prototype.mouseLocate = function(view, pos) {
           if (!_.isUndefined(this.list) && (pos.length == 1) && (_.indexOf(this.getDrops(), pos[0]) >= 0)) {
               var pieces = this.list.getDropPieces(pos[0]);
               if ((pieces !== null) && (pieces.length > 0)) {
-                  this.view.setDrops(pieces[0].toString(), [ pos[0] ]);
+                  if (dropIndex >= pieces.length) dropIndex = pieces.length - 1;
+                  this.view.setDrops(pieces[dropIndex].toString(), [ pos[0] ]);
               }
           } else {
               this.view.clearDrops();
@@ -326,6 +336,7 @@ App.prototype.exec = function() {
              if (!_.isUndefined(Dagaz.Model.getSetup)) {
                  console.log("Setup: " + Dagaz.Model.getSetup(this.design, this.board));
              }
+             dropIndex = 0;
              this.list = Dagaz.Model.getMoveList(this.board);
              var ko = [];
              if (!_.isUndefined(this.board.ko)) {
@@ -344,7 +355,8 @@ App.prototype.exec = function() {
                  if (drops.length > 0) {
                      var pieces = this.list.getDropPieces(drops[0]);
                      if ((pieces !== null) && (pieces.length > 0)) {
-                         this.view.setDrops(pieces[0].toString(), drops);
+                         if (dropIndex >= pieces.length) dropIndex = pieces.length - 1;
+                         this.view.setDrops(pieces[dropIndex].toString(), drops);
                      }
                  }
                  this.view.invalidate();
@@ -417,6 +429,10 @@ App.prototype.exec = function() {
   if (this.state == STATE.EXEC) {
       this.state = STATE.IDLE;
       isDrag = false;
+      if (!_.isUndefined(this.list) && this.list.isDone()) {
+          var moves = this.list.filterDrops(this.list.getMoves(), dropIndex);
+          if (moves.length == 1) this.move = moves[0];
+      }
       if (!this.move.isPass()) {
           this.view.markPositions(Dagaz.View.markType.TARGET, []);
           this.view.markPositions(Dagaz.View.markType.CURRENT, []);
@@ -434,7 +450,7 @@ App.prototype.exec = function() {
       if (!_.isUndefined(this.list)) {
           if (this.list.isDone()) {
               this.view.markPositions(Dagaz.View.markType.CURRENT, []);
-              var moves = this.list.getMoves();
+              var moves = this.list.filterDrops(this.list.getMoves(), dropIndex);
               delete this.list;
               this.view.clearDrops();
               if ((moves.length > 0) || (determinated !== null)) {
