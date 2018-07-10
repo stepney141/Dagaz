@@ -281,6 +281,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.reserve("White", "Yahhta", 2);
     design.reserve("White", "Myin", 2);
     design.reserve("White", "Sin", 2);
+    design.reserve("Black", "Min-gyi", 0);
+    design.reserve("Black", "Sit-ke", 0);
+    design.reserve("Black", "Yahhta", 0);
+    design.reserve("Black", "Myin", 0);
+    design.reserve("Black", "Sin", 0);
     design.setup("Black", "Ne", 24);
     design.setup("Black", "Ne", 25);
     design.setup("Black", "Ne", 26);
