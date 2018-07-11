@@ -81,9 +81,12 @@ Dagaz.Model.checkPositions = function(design, board, player, positions) {
 
 var changePieces = function(design, board, move) {
   _.each(move.actions, function(action) {
-      if (action[0] == null) return;
-      if (action[1] == null) return;
-      var piece = board.getPiece(action[0][0]);
+      var piece = null;
+      if (action[0] !== null) {
+          piece = board.getPiece(action[0][0]);
+      } else {
+          piece = board.getPiece(action[1][0]);
+      }
       if (action[2] !== null) {
           piece = action[2][0];
       }
