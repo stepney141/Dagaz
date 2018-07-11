@@ -93,17 +93,24 @@ var checkSlideZone = function(design, board, player, pos, dir, zone, visible) {
   }
 }
 
+var isCannon = function(type) {
+  return (type == 14) || (type == 15) || (type == 16);
+}
+
 var checkShoot = function(design, board, player, pos, dir, visible) {
   var p = design.navigate(player, pos, dir);
   while (p !== null) {
       var piece = board.getPiece(p);
       p = design.navigate(player, p, dir);
-      if (piece !== null) break;
+      if (piece !== null) {
+          if (isCannon(piece.type)) return;
+          break;
+      }
   }
   while (p !== null) {
       var piece = board.getPiece(p);
       if (piece !== null) {
-          if (piece.player != player) {
+          if ((piece.player != player) && !isCannon(piece.type)) {
               visible.push(p);
           }
           return;
@@ -119,13 +126,16 @@ var checkShootZone = function(design, board, player, pos, dir, zone, visible) {
       if (!design.inZone(zone, player, p)) return;
       var piece = board.getPiece(p);
       p = design.navigate(player, p, dir);
-      if (piece !== null) break;
+      if (piece !== null) {
+          if (isCannon(piece.type)) return;
+          break;
+      }
   }
   while (p !== null) {
       if (!design.inZone(zone, player, p)) return;
       var piece = board.getPiece(p);
       if (piece !== null) {
-          if (piece.player != player) {
+          if ((piece.player != player) && !isCannon(piece.type)) {
               visible.push(p);
           }
           return;

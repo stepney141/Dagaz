@@ -28,6 +28,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-drops", "true");
     design.checkVersion("show-captures", "false");
+    design.checkVersion("ko", "situation");
+    design.checkVersion("janggi-extension", "true");
+    design.checkVersion("janggi-setup", "true");
 
     design.addDirection("w");
     design.addDirection("e");

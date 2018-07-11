@@ -96,12 +96,15 @@ var checkShoot = function(design, board, player, pos, dir, visible) {
   while (p !== null) {
       var piece = board.getPiece(p);
       p = design.navigate(player, p, dir);
-      if (piece !== null) break;
+      if (piece !== null) {
+          if (piece.type == 4) return;
+          break;
+      }
   }
   while (p !== null) {
       var piece = board.getPiece(p);
       if (piece !== null) {
-          if (piece.player != player) {
+          if ((piece.player != player) && (piece.type != 4)) {
               visible.push(p);
           }
           return;
@@ -117,13 +120,16 @@ var checkShootZone = function(design, board, player, pos, dir, zone, visible) {
       if (!design.inZone(zone, player, p)) return;
       var piece = board.getPiece(p);
       p = design.navigate(player, p, dir);
-      if (piece !== null) break;
+      if (piece !== null) {
+          if (piece.type == 4) return;
+          break;
+      }
   }
   while (p !== null) {
       if (!design.inZone(zone, player, p)) return;
       var piece = board.getPiece(p);
       if (piece !== null) {
-          if (piece.player != player) {
+          if ((piece.player != player) && (piece.type != 4)) {
               visible.push(p);
           }
           return;
