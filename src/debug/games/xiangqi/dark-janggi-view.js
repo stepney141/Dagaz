@@ -15,9 +15,11 @@ var checkStep = function(design, board, player, pos, dir, visible) {
   var p = design.navigate(player, pos, dir);
   if (p === null) return;
   var piece = board.getPiece(p);
-  if (piece === null) return;
-  if (piece.player != player) {
-      visible.push(p);
+  var piece = board.getPiece(p);
+  if (piece === null) {
+     if (player == 1) visible.push(p);
+  } else {
+     if (piece.player != player) visible.push(p);
   }
 }
 
@@ -27,9 +29,10 @@ var checkStepZone = function(design, board, player, pos, dir, zone, visible) {
   if (p === null) return;
   if (!design.inZone(zone, player, p)) return;
   var piece = board.getPiece(p);
-  if (piece === null) return;
-  if (piece.player != player) {
-      visible.push(p);
+  if (piece === null) {
+     if (player == 1) visible.push(p);
+  } else {
+     if (piece.player != player) visible.push(p);
   }
 }
 
@@ -40,9 +43,10 @@ var checkKnightJump = function(design, board, player, pos, o, d, visible) {
   p = design.navigate(player, p, d);
   if (p === null) return;
   var piece = board.getPiece(p);
-  if (piece === null) return;
-  if (piece.player != player) {
-      visible.push(p);
+  if (piece === null) {
+     if (player == 1) visible.push(p);
+  } else {
+     if (piece.player != player) visible.push(p);
   }
 }
 
@@ -55,9 +59,10 @@ var checkElephantJump = function(design, board, player, pos, o, d, visible) {
   p = design.navigate(player, p, d);
   if (p === null) return;
   var piece = board.getPiece(p);
-  if (piece === null) return;
-  if (piece.player != player) {
-      visible.push(p);
+  if (piece === null) {
+     if (player == 1) visible.push(p);
+  } else {
+     if (piece.player != player) visible.push(p);
   }
 }
 
@@ -71,6 +76,7 @@ var checkSlide = function(design, board, player, pos, dir, visible) {
           }
           return;
       }
+      if (player == 1) visible.push(p);
       p = design.navigate(player, p, dir);
   }
 }
@@ -87,6 +93,7 @@ var checkSlideZone = function(design, board, player, pos, dir, zone, visible) {
           }
           return;
       }
+      if (player == 1) visible.push(p);
       p = design.navigate(player, p, dir);
   }
 }
@@ -109,6 +116,7 @@ var checkShoot = function(design, board, player, pos, dir, visible) {
           }
           return;
       }
+      if (player == 1) visible.push(p);
       p = design.navigate(player, p, dir);
   }
 }
@@ -134,6 +142,7 @@ var checkShootZone = function(design, board, player, pos, dir, zone, visible) {
           }
           return;
       }
+      if (player == 1) visible.push(p);
       p = design.navigate(player, p, dir);
   }
 }
@@ -219,6 +228,16 @@ Dagaz.Model.Done = function(design, board) {
           Dagaz.Model.invisible.push(pos);
       }
   });
+  var ko = [];
+  _.each(design.allPositions(), function(pos) {
+      if (_.indexOf(visible, pos) >= 0) return;
+      var piece = board.getPiece(pos);
+      if ((piece !== null) && (piece.player == 1)) return;
+      ko.push(pos);
+  });
+  if (ko.length > 0) {
+      board.ko = ko;
+  }
 }
 
 Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y, setup) {
@@ -226,7 +245,7 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y, setup
   if (_.indexOf(_.union(Dagaz.Model.invisible, Dagaz.Model.invisibleOld), setup.pos) >= 0) {
       ctx.save();
       if (model.player == 1) {
-          ctx.globalAlpha = 0.5;
+          ctx.globalAlpha = 0.7;
       } else {
           ctx.globalAlpha = 0;
       }
