@@ -604,8 +604,8 @@ View2D.prototype.draw = function(canvas) {
            }
         }, this);
       blink = -blink;
-      Dagaz.View.showMarks(this, ctx);
       this.drawKo(ctx);
+      Dagaz.View.showMarks(this, ctx);
       this.showDrops(ctx);
       this.animate();
   }
