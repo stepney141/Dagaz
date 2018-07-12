@@ -11,34 +11,14 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var checkPawnShift = function(design, board, player, pos, dir, visible) {
-  var p = design.navigate(player, pos, dir);
-  if (p === null) return;
-  var piece = board.getPiece(p);
-  if (design.inZone(1, player, p)) {
-      if (piece !== null) {
-          if (piece.player != player) {
-              visible.push(p);
-          }
-          return;
-      }
-      p = design.navigate(player, p, dir);
-      if (p === null) return;
-      piece = board.getPiece(p);
-  }
-  if (piece === null) return;
-  if (piece.player != player) {
-      visible.push(p);
-  }
-}
-
 var checkStep = function(design, board, player, pos, dir, visible) {
   var p = design.navigate(player, pos, dir);
   if (p === null) return;
   var piece = board.getPiece(p);
-  if (piece === null) return;
-  if (piece.player != player) {
-      visible.push(p);
+  if (piece === null) {
+     if (player == 1) visible.push(p);
+  } else {
+     if (piece.player != player) visible.push(p);
   }
 }
 
@@ -48,9 +28,23 @@ var checkKnightJump = function(design, board, player, pos, o, d, visible) {
   p = design.navigate(player, p, d);
   if (p === null) return;
   var piece = board.getPiece(p);
-  if (piece === null) return;
-  if (piece.player != player) {
-      visible.push(p);
+  if (piece === null) {
+     if (player == 1) visible.push(p);
+  } else {
+     if (piece.player != player) visible.push(p);
+  }
+}
+
+var checkJump = function(design, board, player, pos, dir, visible) {
+  var p = design.navigate(player, pos, dir);
+  if (p === null) return;
+  p = design.navigate(player, p, dir);
+  if (p === null) return;
+  var piece = board.getPiece(p);
+  if (piece === null) {
+     if (player == 1) visible.push(p);
+  } else {
+     if (piece.player != player) visible.push(p);
   }
 }
 
@@ -64,6 +58,7 @@ var checkSlide = function(design, board, player, pos, dir, visible) {
           }
           return;
       }
+      if (player == 1) visible.push(p);
       p = design.navigate(player, p, dir);
   }
 }
@@ -78,7 +73,7 @@ Dagaz.Model.Done = function(design, board) {
       var piece = board.getPiece(pos);
       if (piece !== null) {
           if (piece.type == 0) {
-              checkPawnShift(design, board, piece.player, pos, n, visible);
+              checkStep(design, board, piece.player, pos, n,  visible);
               checkStep(design, board, piece.player, pos, nw, visible);
               checkStep(design, board, piece.player, pos, ne, visible);
           }
@@ -104,7 +99,7 @@ Dagaz.Model.Done = function(design, board) {
               checkJump(design, board, piece.player, pos, sw, visible);
               checkJump(design, board, piece.player, pos, se, visible);
           }
-          if ((piece.type == 4) || (piece.type == 5)) {
+          if (piece.type == 4) {
               checkSlide(design, board, piece.player, pos, nw, visible);
               checkSlide(design, board, piece.player, pos, ne, visible);
               checkSlide(design, board, piece.player, pos, sw, visible);
@@ -116,7 +111,7 @@ Dagaz.Model.Done = function(design, board) {
               checkStep(design, board, piece.player, pos, w, visible);
               checkStep(design, board, piece.player, pos, s, visible);
           }
-          if ((piece.type == 7) || (piece.type == 8)) {
+          if ((piece.type == 7) || (piece.type == 8) || (piece.type == 5)) {
               checkStep(design, board, piece.player, pos, nw, visible);
               checkStep(design, board, piece.player, pos, ne, visible);
               checkStep(design, board, piece.player, pos, sw, visible);
@@ -137,6 +132,16 @@ Dagaz.Model.Done = function(design, board) {
           Dagaz.Model.invisible.push(pos);
       }
   });
+  var ko = [];
+  _.each(design.allPositions(), function(pos) {
+      if (_.indexOf(visible, pos) >= 0) return;
+      var piece = board.getPiece(pos);
+      if ((piece !== null) && (piece.player == 1)) return;
+      ko.push(pos);
+  });
+  if (ko.length > 0) {
+      board.ko = ko;
+  }
 }
 
 Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y, setup) {
