@@ -1,15 +1,15 @@
-- Stalemate games
+п»ї- Stalemate games
   * Lewthwaite's game
   * Hunt
   - Checkers-like games
     * Bagh Chal
     * Fox and Geese
     * 4 Fields Kono
-    * Алькуэрк
+    * РђР»СЊРєСѓСЌСЂРє
     * Dablot
     > Choko
     * Konane
-    * Фанорона
+    * Р¤Р°РЅРѕСЂРѕРЅР°
     > Nubia
   * Checkers family
     * Turkish Dama
@@ -23,17 +23,17 @@
     * Canadian Checkers
     * Frisian Checkers
     * Thai Checkers
-    * Северные шашки
-    * Ставропольские шашки
-    * Самоеды
-    * Столбовые шашки
+    * РЎРµРІРµСЂРЅС‹Рµ С€Р°С€РєРё
+    * РЎС‚Р°РІСЂРѕРїРѕР»СЊСЃРєРёРµ С€Р°С€РєРё
+    * РЎР°РјРѕРµРґС‹
+    * РЎС‚РѕР»Р±РѕРІС‹Рµ С€Р°С€РєРё
     * Harzdame
   > Pasang
   * Watermelon
 - Breakthrough games
   * French Military game (3 variants)
   * Shafran's game
-  * Джунгли
+  * Р”Р¶СѓРЅРіР»Рё
   * Kamisado
   * Prairie
   > Neutron
@@ -43,7 +43,7 @@
   * Archimedes
   * Doubutsu Shogi
   - Arimaa
-  > Ордо
+  > РћСЂРґРѕ
 - Control games
   * Asalto
   * Gala
@@ -56,9 +56,9 @@
   * Seega
   * High Jump
   * Makyek
-  * Йотай
+  * Р™РѕС‚Р°Р№
   * Nam Dinh
-  * Евклид
+  * Р•РІРєР»РёРґ
   * Abalone
   * Epaminondas
   * Walhall
@@ -66,8 +66,8 @@
   * Cheskers
   * Shatra
   * Yonin Shogi
-  * Ультима
-  - Игры с неполной информацией
+  * РЈР»СЊС‚РёРјР°
+  - РРіСЂС‹ СЃ РЅРµРїРѕР»РЅРѕР№ РёРЅС„РѕСЂРјР°С†РёРµР№
     * Apocalypse
     - Luzhanqi
     > Banqi
@@ -82,22 +82,22 @@
     * Gwangsanghui
     ? Xiang Hex
   - Chess Family
-    * Чатуранга
-    > Чатурандж
-    * Шатрандж
-    * Макрук
+    * Р§Р°С‚СѓСЂР°РЅРіР°
+    > Р§Р°С‚СѓСЂР°РЅРґР¶
+    * РЁР°С‚СЂР°РЅРґР¶
+    * РњР°РєСЂСѓРє
     * Sittuyin
     * Courier Chess
-    * Шахматы
+    * РЁР°С…РјР°С‚С‹
     * Hiashatar
     * Advanced Omega Chess
-    ? Таврели
+    ? РўР°РІСЂРµР»Рё
   * Platform Chess
   ? Morph Chess
   ? Philosophers Chess
   * Caissa
   - Chad
-  * Шабел
+  * РЁР°Р±РµР»
   - Shogi Family
     * Shogi
     * Goro goro shogi
@@ -113,23 +113,23 @@
     - Hishigata Shogi
     * Annan Shogi
   - Escalation
-  > Шакти
+  > РЁР°РєС‚Рё
   ? Cubic Chess
   - Congo
   - Flip Chess
   * Chessence
 - Arrange games
-  - Семейство Рендзю
-    * Рендзю
-    * Нинуки Рендзю (Пента)
-    > Боку
-  * Три мушкетёра
+  - РЎРµРјРµР№СЃС‚РІРѕ Р РµРЅРґР·СЋ
+    * Р РµРЅРґР·СЋ
+    * РќРёРЅСѓРєРё Р РµРЅРґР·СЋ (РџРµРЅС‚Р°)
+    > Р‘РѕРєСѓ
+  * РўСЂРё РјСѓС€РєРµС‚С‘СЂР°
   - Halma family
     > Halma
     > Pyon Pyon Shogi (2 variants)
   * Hasami Shogi
   * Morris family
-  * Болотуду
+  * Р‘РѕР»РѕС‚СѓРґСѓ
   * Lines of action
   * Three Crowns
   > Quantum tic-tac-toe
@@ -140,38 +140,38 @@
 - Territory games
   * Reversi
   - Desdemona
-  * Минг-манг
-  > Тибетское Го
+  * РњРёРЅРі-РјР°РЅРі
+  > РўРёР±РµС‚СЃРєРѕРµ Р“Рѕ
   * Go
   * Three Colors Go
   - Stoical Go
   * Pen and Pencil Go
   - MarGo
   - War Go
-- Гонки
-  * Доджем
+- Р“РѕРЅРєРё
+  * Р”РѕРґР¶РµРј
   * Agon
   > Toads and Frogs
   > Grensholm
-  - Шен
-  - Сенет
-  - Ур
-  - Таб
-  - Дальдоза
-  - Сакхо
-  - Пулук
+  - РЁРµРЅ
+  - РЎРµРЅРµС‚
+  - РЈСЂ
+  - РўР°Р±
+  - Р”Р°Р»СЊРґРѕР·Р°
+  - РЎР°РєС…Рѕ
+  - РџСѓР»СѓРє
   - Ludo
-  - Семейство Нард
-    - Табула
-    - Длинные Нарды (варианты)
-    - Короткие Нарды (варианты)
+  - РЎРµРјРµР№СЃС‚РІРѕ РќР°СЂРґ
+    - РўР°Р±СѓР»Р°
+    - Р”Р»РёРЅРЅС‹Рµ РќР°СЂРґС‹ (РІР°СЂРёР°РЅС‚С‹)
+    - РљРѕСЂРѕС‚РєРёРµ РќР°СЂРґС‹ (РІР°СЂРёР°РЅС‚С‹)
 - Mancala
-  * Оваре
-  > Дакон
+  * РћРІР°СЂРµ
+  > Р”Р°РєРѕРЅ
   > Ohojitxi
-  - Габата
-  - Селус
-  * Тогыз Кумалак
+  - Р“Р°Р±Р°С‚Р°
+  - РЎРµР»СѓСЃ
+  * РўРѕРіС‹Р· РљСѓРјР°Р»Р°Рє
   - Tschuba
   - Redu
 - Other games
@@ -180,15 +180,15 @@
   - Ki Shogi
   * Viruses
   > GESS
-  - Тамск
+  - РўР°РјСЃРє
   - The Way of Go, BeSiege
 - Puzzles
   * Sliding puzzles
   * Solitair puzzles
   * Halma puzzles
   * LightOff puzzles
-  * Ханойские башни (перемешивание выполнением серии случайных ходов)
+  * РҐР°РЅРѕР№СЃРєРёРµ Р±Р°С€РЅРё (РїРµСЂРµРјРµС€РёРІР°РЅРёРµ РІС‹РїРѕР»РЅРµРЅРёРµРј СЃРµСЂРёРё СЃР»СѓС‡Р°Р№РЅС‹С… С…РѕРґРѕРІ)
   * Sokoban
   > Mancala puzzles (Tchuka Ruma)
   - Chameleon Chess puzzles
-  - Быки и коровы
+  - Р‘С‹РєРё Рё РєРѕСЂРѕРІС‹
