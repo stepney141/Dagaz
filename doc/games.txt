@@ -1,15 +1,15 @@
-п»ї- Stalemate games
-  * Lewthwaite's game (4 variants)
+- Stalemate games
+  * Lewthwaite's game
   * Hunt
   - Checkers-like games
-    - Bagh Chal
-    * Fox and Geese (4 variants)
+    * Bagh Chal
+    * Fox and Geese
     * 4 Fields Kono
-    * РђР»СЊРєСѓСЌСЂРє
+    * Алькуэрк
     * Dablot
-    - Choko
+    > Choko
     * Konane
-    * Р¤Р°РЅРѕСЂРѕРЅР°
+    * Фанорона
     > Nubia
   * Checkers family
     * Turkish Dama
@@ -23,17 +23,17 @@
     * Canadian Checkers
     * Frisian Checkers
     * Thai Checkers
-    * РЎРµРІРµСЂРЅС‹Рµ С€Р°С€РєРё
-    * РЎС‚Р°РІСЂРѕРїРѕР»СЊСЃРєРёРµ С€Р°С€РєРё
-    * РЎР°РјРѕРµРґС‹
-    * РЎС‚РѕР»Р±РѕРІС‹Рµ С€Р°С€РєРё
+    * Северные шашки
+    * Ставропольские шашки
+    * Самоеды
+    * Столбовые шашки
     * Harzdame
-  - Pasang
-  - Watermelon
+  > Pasang
+  * Watermelon
 - Breakthrough games
   * French Military game (3 variants)
   * Shafran's game
-  * Р”Р¶СѓРЅРіР»Рё
+  * Джунгли
   * Kamisado
   * Prairie
   > Neutron
@@ -43,7 +43,7 @@
   * Archimedes
   * Doubutsu Shogi
   - Arimaa
-  > РћСЂРґРѕ
+  > Ордо
 - Control games
   * Asalto
   * Gala
@@ -52,29 +52,29 @@
   * Maharaja
   * 4 Fields Gonu
   * EleHunt
-  - Atari Go
-  - Seega
+  * Atari Go
+  * Seega
   * High Jump
   * Makyek
-  - Р™РѕС‚Р°Р№
+  * Йотай
   * Nam Dinh
-  * Р•РІРєР»РёРґ
-  > Abalone
-  > Epaminondas
+  * Евклид
+  * Abalone
+  * Epaminondas
   * Walhall
   * NotChess
   * Cheskers
   * Shatra
-  > Yonin Shogi
-  > РЈР»СЊС‚РёРјР°
-  - РРіСЂС‹ СЃ РЅРµРїРѕР»РЅРѕР№ РёРЅС„РѕСЂРјР°С†РёРµР№
+  * Yonin Shogi
+  * Ультима
+  - Игры с неполной информацией
     * Apocalypse
     - Luzhanqi
-    - Banqi
+    > Banqi
 - Checkmate games
   * Knight's Court
   ? Andalusia
-  - Kantorai
+  ? Kantorai
   - Xiangqi Family
     * Xiangqi
     * Xiangqi-42 (Mini Xiangqi)
@@ -82,24 +82,24 @@
     * Gwangsanghui
     ? Xiang Hex
   - Chess Family
-    * Р§Р°С‚СѓСЂР°РЅРіР°
-    > Р§Р°С‚СѓСЂР°РЅРґР¶
-    * РЁР°С‚СЂР°РЅРґР¶
-    * РњР°РєСЂСѓРє
+    * Чатуранга
+    > Чатурандж
+    * Шатрандж
+    * Макрук
     * Sittuyin
     * Courier Chess
-    * РЁР°С…РјР°С‚С‹
-    > Hiashatar
-    - Advanced Omega Chess
-    ? РўР°РІСЂРµР»Рё
+    * Шахматы
+    * Hiashatar
+    * Advanced Omega Chess
+    ? Таврели
   * Platform Chess
-  - Morph Chess
+  ? Morph Chess
   ? Philosophers Chess
   * Caissa
   - Chad
-  * РЁР°Р±РµР»
+  * Шабел
   - Shogi Family
-    > Shogi
+    * Shogi
     * Goro goro shogi
     * REN Shogi
     * Mini Shogi
@@ -110,87 +110,85 @@
     - Tori Shogi
     - Chu Shogi
     * Tenjiku Shogi
-    > Hishigata Shogi
-    > Annan Shogi
+    - Hishigata Shogi
+    * Annan Shogi
   - Escalation
-  > РЁР°РєС‚Рё
-  - Cubic Chess
+  > Шакти
+  ? Cubic Chess
   - Congo
   - Flip Chess
   * Chessence
 - Arrange games
-  - РЎРµРјРµР№СЃС‚РІРѕ Р РµРЅРґР·СЋ
-    - Р РµРЅРґР·СЋ
-    - РќРёРЅСѓРєРё Р РµРЅРґР·СЋ (РџРµРЅС‚Р°)
-    - Р‘РѕРєСѓ
-  - Cavalier au Cordeau
-  * РўСЂРё РјСѓС€РєРµС‚С‘СЂР°
+  - Семейство Рендзю
+    * Рендзю
+    * Нинуки Рендзю (Пента)
+    > Боку
+  * Три мушкетёра
   - Halma family
     > Halma
     > Pyon Pyon Shogi (2 variants)
   * Hasami Shogi
-  - Morris family
-  - Р‘РѕР»РѕС‚СѓРґСѓ
+  * Morris family
+  * Болотуду
   * Lines of action
   * Three Crowns
-  - Quantum tic-tac-toe
+  > Quantum tic-tac-toe
   - Rithmomachy
 - Connect Games
-  - Hex
-  - Gonnect
+  > Hex
+  > Gonnect
 - Territory games
-  - Reversi
-  - РћС‚РµР»Р»Рѕ
+  * Reversi
   - Desdemona
-  > РњРёРЅРі-РјР°РЅРі
-  - РўРёР±РµС‚СЃРєРѕРµ Р“Рѕ
-  - Go
-  - Three Colors Go
+  * Минг-манг
+  > Тибетское Го
+  * Go
+  * Three Colors Go
   - Stoical Go
-  - Pen and Pencil Go
+  * Pen and Pencil Go
   - MarGo
   - War Go
-- Р“РѕРЅРєРё
-  * Р”РѕРґР¶РµРј
-  > Agon
+- Гонки
+  * Доджем
+  * Agon
   > Toads and Frogs
   > Grensholm
-  - РЁРµРЅ
-  - РЎРµРЅРµС‚
-  - РЈСЂ
-  - РўР°Р±
-  - Р”Р°Р»СЊРґРѕР·Р°
-  - РЎР°РєС…Рѕ
-  - РџСѓР»СѓРє
+  - Шен
+  - Сенет
+  - Ур
+  - Таб
+  - Дальдоза
+  - Сакхо
+  - Пулук
   - Ludo
-  - РЎРµРјРµР№СЃС‚РІРѕ РќР°СЂРґ
-    - РўР°Р±СѓР»Р°
-    - Р”Р»РёРЅРЅС‹Рµ РќР°СЂРґС‹ (РІР°СЂРёР°РЅС‚С‹)
-    - РљРѕСЂРѕС‚РєРёРµ РќР°СЂРґС‹ (РІР°СЂРёР°РЅС‚С‹)
+  - Семейство Нард
+    - Табула
+    - Длинные Нарды (варианты)
+    - Короткие Нарды (варианты)
 - Mancala
-  > РћРІР°СЂРµ
-  - Р”Р°РєРѕРЅ
-  - Ohojitxi
-  - Р“Р°Р±Р°С‚Р°
-  - РЎРµР»СѓСЃ
-  > РўРѕРіС‹Р· РљСѓРјР°Р»Р°Рє
+  * Оваре
+  > Дакон
+  > Ohojitxi
+  - Габата
+  - Селус
+  * Тогыз Кумалак
   - Tschuba
   - Redu
 - Other games
   - Klin Zha
   - Ninny Chess
   - Ki Shogi
-  - Viruses (РІР°СЂРёР°РЅС‚С‹)
-  - GESS
-  - РўР°РјСЃРє
+  * Viruses
+  > GESS
+  - Тамск
   - The Way of Go, BeSiege
 - Puzzles
   * Sliding puzzles
   * Solitair puzzles
   * Halma puzzles
   * LightOff puzzles
-  * РҐР°РЅРѕР№СЃРєРёРµ Р±Р°С€РЅРё (РїРµСЂРµРјРµС€РёРІР°РЅРёРµ РІС‹РїРѕР»РЅРµРЅРёРµРј СЃРµСЂРёРё СЃР»СѓС‡Р°Р№РЅС‹С… С…РѕРґРѕРІ)
-  - Sokoban
+  * Ханойские башни (перемешивание выполнением серии случайных ходов)
+  * Sokoban
   > Mancala puzzles (Tchuka Ruma)
   - Chameleon Chess puzzles
-  - Р‘С‹РєРё Рё РєРѕСЂРѕРІС‹
+  - Быки и коровы
