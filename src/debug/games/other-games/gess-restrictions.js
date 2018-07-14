@@ -1,6 +1,6 @@
 (function() {
 
-Dagaz.Model.BOARD_SIZE = 18 * 18;
+Dagaz.Model.BOARD_SIZE = 20 * 20;
 
 var checkVersion = Dagaz.Model.checkVersion;
 
