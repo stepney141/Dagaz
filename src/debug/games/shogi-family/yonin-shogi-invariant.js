@@ -8,50 +8,6 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var heuristic = Dagaz.AI.heuristic;
-
-Dagaz.AI.heuristic = function(ai, design, board, move) {
-  if (move.isSimpleMove()) {
-      var king  = design.getPieceType("King");
-      var pos   = move.actions[0][0][0];
-      var piece = board.getPiece(pos);
-      if (!design.inZone(0, board.player, pos) && (piece !== null) && (piece.type == king)) {
-          var cnt = 0;
-          _.each(design.allPositions(), function(pos) {
-              if (design.inZone(0, board.player, pos)) {
-                  var piece = board.getPiece(pos);
-                  if ((piece !== null) && (piece.player == board.player) && (piece.type == king)) cnt++;
-              }
-          });
-          if (cnt > 0) return -1;
-      }
-  }
-  return heuristic(ai, design, board, move);
-}
-
-var checkGoals = Dagaz.Model.checkGoals;
-
-Dagaz.Model.checkGoals = function(design, board, player) {
-  var kings  = 0;
-  var noKing = true;
-  var king = design.getPieceType("King");
-  _.each(design.allPositions(), function(pos) {
-      var piece = board.getPiece(pos);
-      if ((piece !== null) && (piece.type == king)) {
-          if (piece.player == player) {
-              kings++;
-          }
-          if (piece.player == 1) {
-              noKing = false;
-          }
-      }
-  });
-  if (noKing || (kings == 4)) {
-      return 1;
-  }
-  return checkGoals(design, board, player);
-}
-
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
