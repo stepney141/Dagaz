@@ -60,6 +60,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPiece("BlackStone", 0);
     design.addMove(0, 0, [0], 0);
     design.addMove(0, 0, [4], 0);
+    design.addMove(0, 0, [5], 0);
     design.addMove(0, 0, [3], 1);
     design.addMove(0, 0, [2], 1);
 
