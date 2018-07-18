@@ -212,8 +212,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(7, ZRF.FUNCTION,	25);	// to
     design.addCommand(7, ZRF.FUNCTION,	28);	// end
 
-    design.addPriority(0);			// jump-type
-    design.addPriority(1);			// normal-type
+//  design.addPriority(0);			// jump-type
+//  design.addPriority(1);			// normal-type
 
     design.addPiece("Man", 0, 1);
     design.addMove(0, 0, [7, 7], 0);
