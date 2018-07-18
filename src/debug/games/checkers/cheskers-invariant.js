@@ -21,6 +21,12 @@ var getType = function(board, move) {
   return r;
 }
 
+var isCapturing = function(board, move) {
+  if (!move.isSimpleMove()) return true;
+  var pos = move.actions[0][1][0];
+  return board.getPiece(pos) !== null;
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
@@ -30,13 +36,13 @@ Dagaz.Model.CheckInvariants = function(board) {
   types.push(design.getPieceType("Camel"));
   var isPriority = false;
   _.each(board.moves, function(move) {
-      if (!move.isSimpleMove()) {
+      if (isCapturing(board, move)) {
           if (_.indexOf(types, getType(board, move)) < 0) isPriority = true;
       }
   });
   if (isPriority) {
      _.each(board.moves, function(move) {
-          if (move.isSimpleMove()) {
+          if (!isCapturing(board, move)) {
               move.failed = true;
           }
      });
