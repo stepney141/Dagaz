@@ -138,7 +138,7 @@ Dagaz.Model.prepare = function(design, board) {
       });
       _.each(design.allPositions(), function(pos) {
           if (!design.inZone(0, board.player, pos)) return;
-          Dagaz.Model.influence(design, board, p);
+          Dagaz.Model.influence(design, board, pos);
       });
   }
 }
@@ -261,6 +261,7 @@ Dagaz.Model.apply = function(design, board, move) {
   });
   r.cover = [];
   _.each(design.allPositions(), function(p) {
+      // TODO: <-- 
       r.cover[pos] = _.difference(board.cover[pos], positions);
   });
   r.attacked = _.without(board.attacked, pos);
@@ -273,7 +274,7 @@ Dagaz.Model.apply = function(design, board, move) {
   return r;
 }
 
-Dagaz.AI.eval = function(ai, design, board) {
+Dagaz.AI.eval = function(ai, design, board, player) {
   Dagaz.Model.prepare(design, board);
   var r = 0;
   _.each(design.allPositions(), function(pos) {
