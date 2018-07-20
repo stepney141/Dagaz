@@ -53,7 +53,7 @@ Ai.prototype.getMove = function(ctx) {
   for (var i = 0; i < moves.length; i++) {
        if ((r !== null) && (Date.now() - ctx.timestamp >= Dagaz.AI.AI_FRAME)) break;
        var b = Dagaz.Model.apply(ctx.design, ctx.board, moves[i]);
-       var w = Dagaz.AI.eval(this, ctx.design, b);
+       var w = Dagaz.AI.eval(this, ctx.design, b, ctx.board.player);
        if (Dagaz.AI.NOISE_FACTOR > 1) {
            w *= Dagaz.AI.NOISE_FACTOR;
            w += _.random(0, Dagaz.AI.NOISE_FACTOR - 1);
