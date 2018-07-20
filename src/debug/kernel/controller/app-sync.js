@@ -186,6 +186,8 @@ App.prototype.mouseUp = function(view, pos) {
   isDrag = false;
 }
 
+App.prototype.mouseWheel = function(view, delta) {}
+
 App.prototype.getAI = function() {
   if (_.isUndefined(this.ai)) {
       this.ai = null;

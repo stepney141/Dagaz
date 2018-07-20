@@ -107,6 +107,8 @@ App.prototype.mouseDown = function(view, pos) {
   isPressed = true;
 }
 
+App.prototype.mouseWheel = function(view, delta) {}
+
 App.prototype.getAI = function() {
   if (_.isUndefined(this.ai)) {
       this.ai = null;
