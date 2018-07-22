@@ -100,7 +100,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("c6", [-1, 1, 11, -11, 0, 0]);
     design.addPosition("d6", [-1, 1, 11, -11, 0, 0]);
     design.addPosition("e6", [-1, 0, 11, -11, 0, 0]);
-    design.addPosition("f6", [0, 1, 2, 3, 4, 5]);
+    design.addPosition("f6", [0, 0, 0, 0, 0, 0]);
     design.addPosition("g6", [0, 1, 11, -11, 0, 0]);
     design.addPosition("h6", [-1, 1, 11, -11, 0, 0]);
     design.addPosition("i6", [-1, 1, 11, -11, 0, 0]);
