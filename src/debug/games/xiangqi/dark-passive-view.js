@@ -22,18 +22,6 @@ var checkStep = function(design, board, player, pos, dir, visible) {
   }
 }
 
-var checkStepZone = function(design, board, player, pos, dir, zone, visible) {
-  if (!design.inZone(zone, player, pos)) return;
-  var p = design.navigate(player, pos, dir);
-  if (p === null) return;
-  var piece = board.getPiece(p);
-  if (piece === null) {
-     if (player == 1) visible.push(p);
-  } else {
-     if (piece.player != player) visible.push(p);
-  }
-}
-
 var checkKnightJump = function(design, board, player, pos, o, d, visible) {
   var p = design.navigate(player, pos, o);
   if (p === null) return;
@@ -107,12 +95,7 @@ Dagaz.Model.Done = function(design, board) {
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
       if (piece !== null) {
-          if (piece.type == 0) {
-              checkStep(design, board, piece.player, pos, n, visible);
-              checkStepZone(design, board, piece.player, pos, w, 2, visible);
-              checkStepZone(design, board, piece.player, pos, e, 2, visible);
-          }
-          if (piece.type == 1) {
+          if (piece.type === design.getPieceType("Horse")) {
               checkKnightJump(design, board, piece.player, pos, n, nw, visible);
               checkKnightJump(design, board, piece.player, pos, n, ne, visible);
               checkKnightJump(design, board, piece.player, pos, s, sw, visible);
@@ -122,35 +105,35 @@ Dagaz.Model.Done = function(design, board) {
               checkKnightJump(design, board, piece.player, pos, e, ne, visible);
               checkKnightJump(design, board, piece.player, pos, e, se, visible);
           }
-          if (piece.type == 2) {
+          if (piece.type === design.getPieceType("Elephant")) {
               checkElephantJump(design, board, piece.player, pos, nw, visible);
               checkElephantJump(design, board, piece.player, pos, ne, visible);
               checkElephantJump(design, board, piece.player, pos, sw, visible);
               checkElephantJump(design, board, piece.player, pos, se, visible);
           }
-          if (piece.type == 3) {
+          if (piece.type === design.getPieceType("Chariot")) {
               checkSlide(design, board, piece.player, pos, n, visible);
               checkSlide(design, board, piece.player, pos, e, visible);
               checkSlide(design, board, piece.player, pos, w, visible);
               checkSlide(design, board, piece.player, pos, s, visible);
           }
-          if (piece.type == 4) {
+          if (piece.type == design.getPieceType("Cannon")) {
               checkShoot(design, board, piece.player, pos, n, visible);
               checkShoot(design, board, piece.player, pos, e, visible);
               checkShoot(design, board, piece.player, pos, w, visible);
               checkShoot(design, board, piece.player, pos, s, visible);
           }
-          if (piece.type == 5) {
-              checkStepZone(design, board, piece.player, pos, nw, 0, visible);
-              checkStepZone(design, board, piece.player, pos, ne, 0, visible);
-              checkStepZone(design, board, piece.player, pos, sw, 0, visible);
-              checkStepZone(design, board, piece.player, pos, se, 0, visible);
+          if (piece.type == design.getPieceType("Mandarin")) {
+              checkStep(design, board, piece.player, pos, nw, visible);
+              checkStep(design, board, piece.player, pos, ne, visible);
+              checkStep(design, board, piece.player, pos, sw, visible);
+              checkStep(design, board, piece.player, pos, se, visible);
           }
-          if (piece.type == 6) {
-              checkStepZone(design, board, piece.player, pos, n, 0, visible);
-              checkStepZone(design, board, piece.player, pos, e, 0, visible);
-              checkStepZone(design, board, piece.player, pos, w, 0, visible);
-              checkStepZone(design, board, piece.player, pos, s, 0, visible);
+          if (piece.type == design.getPieceType("General")) {
+              checkStep(design, board, piece.player, pos, n, visible);
+              checkStep(design, board, piece.player, pos, e, visible);
+              checkStep(design, board, piece.player, pos, w, visible);
+              checkStep(design, board, piece.player, pos, s, visible);
           }
       }
   });
