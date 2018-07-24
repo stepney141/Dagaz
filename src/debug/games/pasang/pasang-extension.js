@@ -31,9 +31,14 @@ Dagaz.Model.CheckInvariants = function(board) {
               move.actions[0][2] = [ target.changeOwner(board.player) ];
           }
       }
+      var s = 0;
       _.each(move.actions, function(a) {
           if ((a[0] !== null) && (a[1] === null)) {
               var pos = move.actions[1][0];
+              var piece = board.getPiece(pos);
+              if (piece !== null) {
+                  s += piece.type;
+              }
               if (checkDir(design, board, pos, w) || 
                   checkDir(design, board, pos, e) || 
                   checkDir(design, board, pos, sd)) {
@@ -42,10 +47,17 @@ Dagaz.Model.CheckInvariants = function(board) {
               }
               for (var i = 0; i < 4; i++) {
                   pos = design.navigate(board.player, pos, gr);
+                  var piece = board.getPiece(pos);
+                  if (piece !== null) {
+                      s += piece.type;
+                  }
                   move.capturePiece(pos);
               }
           }
       });
+      if (s > 0) {
+          move.addValue(board.player, s);
+      }
   });
   CheckInvariants(board);
 }

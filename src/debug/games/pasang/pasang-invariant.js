@@ -17,11 +17,14 @@ var checkDir = function(design, board, player, pos, dir, result) {
       var piece = board.getPiece(p);
       if (piece !== null) {
           if (piece.type == 0) break;
-          if ((type !== null) && (piece.type !== type)) break;
+          if ((type !== null) && (piece.type != type)) break;
           if (type === null) {
               type = piece.type;
-              if ((result.length > 0) && (result[result.length - 1].length > 0) && (result[result.length - 1][0] != type)) {
-                   result.push([]);
+              if ((result.length > 0) && (result[result.length - 1].length > 0)) {
+                   var q = board.getPiece(result[result.length - 1][0]);
+                   if ((q !== null) && (q.type != type)) {
+                       result.push([]);
+                   }
               }
           }
           result[result.length - 1].push(p);
@@ -70,16 +73,29 @@ Dagaz.Model.CheckInvariants = function(board) {
               if (captures.length > 0) {
                   if (captures.length > 1) {
                       for (var i = 0; i < captures.length; i++) {
-                          var m = Dagaz.Model.createMove(move.mode);
-                          _.each(captures[i], function(p) {
-                              move.capturePiece(p, 2);
-                          });
-                          moves.push(m);
+                           var m = Dagaz.Model.createMove(move.mode);
+                           m.actions.push(move.actions[0]);
+                           var s = 0;
+                           _.each(captures[i], function(p) {
+                               var piece = b.getPiece(p);
+                               if (piece !== null) {
+                                   s += piece.type;
+                               }
+                               m.capturePiece(p, 2);
+                           });
+                           m.addValue(board.player, s);
+                           moves.push(m);
                       }
                   } else {
+                      var s = 0;
                       _.each(captures[0], function(p) {
+                          var piece = b.getPiece(p);
+                          if (piece !== null) {
+                              s += piece.type;
+                          }
                           move.capturePiece(p);
                       });
+                      move.addValue(board.player, s);
                       moves.push(move);
                   }
               }
