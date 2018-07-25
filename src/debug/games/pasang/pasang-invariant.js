@@ -41,7 +41,7 @@ Dagaz.Model.CheckInvariants = function(board) {
   var n = design.getDirection("n"); 
   var moves  = [];
   _.each(board.moves, function(move) {
-      if (move.isSimpleMove()) {
+      if (move.isSimpleMove() && _.isUndefined(move.failed)) {
           var src = move.actions[0][0][0];
           var dst = move.actions[0][1][0];
           var piece = board.getPiece(src);
