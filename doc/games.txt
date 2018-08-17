@@ -1,194 +1,225 @@
-﻿- Stalemate games
-  * Lewthwaite's game
-  * Hunt
-  - Checkers-like games
-    * Bagh Chal
-    * Fox and Geese
-    * 4 Fields Kono
-    * Алькуэрк
-    * Dablot
-    > Choko
-    * Konane
-    * Фанорона
-    > Nubia
-  * Checkers family
-    * Turkish Dama
-    * Greek Checkers
-    * Armenian Tama
-    * Checkers
-    * Italian Checkers
-    * International Checkers
-    * Russian Checkers
-    * 80 Cells Checkers
-    * Canadian Checkers
-    * Frisian Checkers
-    * Thai Checkers
-    * Северные шашки
-    * Ставропольские шашки
-    * Самоеды
-    * Столбовые шашки
-    * Harzdame
-  > Pasang
-  * Watermelon
-- Breakthrough games
-  * French Military game (3 variants)
-  * Shafran's game
-  * Джунгли
-  * Kamisado
-  * Prairie
-  > Neutron
-  * Gauntlet
-  * Tafl family
-  * Italian Damone
-  * Archimedes
-  * Doubutsu Shogi
-  - Arimaa
-  > Ордо
-- Control games
-  * Asalto
-  * Gala
-  - Elementals
-- Elimination games
-  * Maharaja
-  * 4 Fields Gonu
-  * EleHunt
-  * Atari Go
-  * Seega
-  * High Jump
-  * Makyek
-  * Йотай
-  * Nam Dinh
-  * Евклид
-  * Abalone
-  * Epaminondas
-  * Walhall
-  * NotChess
-  * Cheskers
-  * Shatra
-  * Yonin Shogi
-  * Ультима
-  - Игры с неполной информацией
-    * Apocalypse
-    - Luzhanqi
-    > Banqi
-- Checkmate games
-  * Knight's Court
-  ? Andalusia
-  ? Kantorai
-  - Xiangqi Family
-    * Xiangqi
-    * Xiangqi-42 (Mini Xiangqi)
-    * Janggi
-    * Gwangsanghui
-    ? Xiang Hex
-  - Chess Family
-    * Чатуранга
-    > Чатурандж
-    * Шатрандж
-    * Макрук
-    * Sittuyin
-    * Courier Chess
-    * Шахматы
-    * Hiashatar
-    * Advanced Omega Chess
-    ? Таврели
-  * Platform Chess
-  ? Morph Chess
-  ? Philosophers Chess
-  * Caissa
-  - Chad
-  * Шабел
-  - Shogi Family
-    * Shogi
-    * Goro goro shogi
-    * REN Shogi
-    * Mini Shogi
-    * Micro Shogi
-    * Kyoto Shogi
-    - Wa Shogi
-    - Whale Shogi, Great Whale Shogi
-    - Tori Shogi
-    - Chu Shogi
-    * Tenjiku Shogi
-    - Hishigata Shogi
-    * Annan Shogi
-  - Escalation
-  > Шакти
-  ? Cubic Chess
-  - Congo
-  - Flip Chess
-  * Chessence
-- Arrange games
-  - Семейство Рендзю
-    * Рендзю
-    * Нинуки Рендзю (Пента)
-    > Боку
-  * Три мушкетёра
-  - Halma family
-    > Halma
-    > Pyon Pyon Shogi (2 variants)
-  * Hasami Shogi
-  * Morris family
-  * Болотуду
-  * Lines of action
-  * Three Crowns
-  > Quantum tic-tac-toe
-  - Rithmomachy
-- Connect Games
-  > Hex
-  > Gonnect
-- Territory games
-  * Reversi
-  - Desdemona
-  * Минг-манг
-  > Тибетское Го
-  * Go
-  * Three Colors Go
-  - Stoical Go
-  * Pen and Pencil Go
-  - MarGo
-  - War Go
-- Гонки
-  * Доджем
-  * Agon
-  > Toads and Frogs
-  > Grensholm
-  - Шен
-  - Сенет
-  - Ур
-  - Таб
-  - Дальдоза
-  - Сакхо
-  - Пулук
-  - Ludo
-  - Семейство Нард
-    - Табула
-    - Длинные Нарды (варианты)
-    - Короткие Нарды (варианты)
-- Mancala
-  * Оваре
-  > Дакон
-  > Ohojitxi
-  - Габата
-  - Селус
-  * Тогыз Кумалак
-  - Tschuba
-  - Redu
-- Other games
-  - Klin Zha
-  - Ninny Chess
-  - Ki Shogi
-  * Viruses
-  > GESS
-  - Тамск
-  - The Way of Go, BeSiege
-- Puzzles
-  * Sliding puzzles
-  * Solitair puzzles
-  * Halma puzzles
-  * LightOff puzzles
-  * Ханойские башни (перемешивание выполнением серии случайных ходов)
-  * Sokoban
-  > Mancala puzzles (Tchuka Ruma)
-  - Chameleon Chess puzzles
-  - Быки и коровы
+- Mancala [scoring, heaps]
+  - Al-manqala
+  - Bohnenspiel
+  - Vai Lung Thlan
+  - Oware [cross]
+  - Alemungula
+  - Toguz Kumalak [trap, best]
+  - Tchuka Ruma [todo, puzzle]
+  - Kauri [todo]
+  - Dakon [todo]
+  - Abalala'e [todo]
+  - Ohojitxi [todo]
+  - Selus [todo, traps]
+  - Tschuba [todo]
+  - Redu [todo]
+- Elimination [elimination]
+  - Four Lines Kono [best]
+  - GESS [king, groups]
+  - Spock [todo:ai, best]
+  - Apocalypse [sync, best, kings]
+  - Euclid [cooperative]
+  - Maharadja [asym, best, king]
+  - Not Chess
+  - Thud! [asym]
+  - Koom Valley [todo, composite, asym]
+  - EleHunt [asym, cooperative, checkmate]
+  - Ultima [todo:ai, cooperative, king]
+  - Cannon [groups, shoots, king]
+  - Abalone [groups, best, scoring]
+  - Pasang [todo:ui, composite, best, scoring]
+  - Liberian Queah [reserve]
+  - Choko [todo, bonus, shoots]
+  - Mana [todo, setups, king]
+  - Surakarta [todo]
+  - Splut! [todo, turns, king, 4-players]
+  - Rithmomachy [todo, heaps, arrange, cooperative]
+  - Banqi [todo:ai, cloack]
+- Stalemate [stalemate]
+  - Bear games
+  - Mu Torere
+  - Rhombic Chess [drops, best]
+  - Lewthwaite's games [groups]
+  - Hunt
+  - Konane [shoots]
+  - Focus [stacks]
+  - Virus Wars [drops, turns, todo:ai]
+  - Tamsk [todo]
+- Custodian [cooperative]
+  - Seega [drops, elimination]
+  - Mak-yek [stalemate]
+  - Gwyddbwyll [todo:ai, best, asym, breakthrough, king]
+  - Fidchell [todo:ai, best, asym, breakthrough, king]
+  - Brandubh [todo:ai, best, asym, breakthrough, king]
+  - Ard-Ri [todo:ai, best, asym, breakthrough, king]
+  - Tablut [todo:ai, asym, breakthrough, king]
+  - Tawlbwrdd [todo:ai, asym, breakthrough, king]
+  - Tawlbyund [todo:ai, asym, breakthrough, king]
+  - Swords & Shields [todo:ai, asym, breakthrough, king]
+  - Hnefatafl [todo:ai, asym, breakthrough, king]
+  - Alea Evangeli [huge, asym, breakthrough, king]
+  - Hasami Shogi [todo:ai, arrange]
+  - Watermelon Chess [todo:ai]
+  - Reversi [best, drops, territory]
+  - Ming Mang [best, territory, todo:goal]
+- Go family [restrictions]
+  - Go [todo:ai, drops]
+  - Atari Go [best, drops]
+  - Three Color Go [todo:ai, drops]
+  - Paper and Pencil Go [todo:ai, drops]
+  - Stoical Go [todo, drops]
+  - Tibetan Go [todo, drops, scroring]
+  - WarGo [todo, drops]
+  - MarGo [todo, drops, best]
+- Checkers games [composite]
+  - Fox and Geese [asym, best]
+  - Asalto [asym, zone, control]
+  - Bagh-Chal [asym, best, drops]
+  - Alquerque [best]
+  - Zamma [best, huge, promotion]
+  - Kharbaga [best, huge, promotion]
+  - Dablot [king, hierarchy]
+  - Kolowisi Awithlaknannai [best, partial]
+  - High Jump [zone]
+  - Yote [drops, bonus, shoots]
+  - Checkers [best, promotion, todo:ai, openings, endings]
+  - Italian Checkers [best, hierarchy, promotion, todo:ai]
+  - Italian Damone [kings, hierarchy, promotion, breakthrough]
+  - Harzdame [promotion, todo:ai]
+  - Dameo [groups, promotion, todo:ai]
+  - Walhall [best, asym]
+  - Fanorona [best, partial, bug]
+  - Black & White 
+  - Samoedy 
+  - Tribunes
+  - Northern Checkers
+  - Column Checkers [best, stacks, todo:ai]
+  - Laska [stacks]
+  - Magyar Dama [stacks, transformer, best, bug:scroll]
+  - Stavropol Checkers [shared, invariant]
+  - Swedish Checkers [reserve, 4-players]
+  - Cheskers [kings, best, invariant, todo:dialog]
+  - Altai Shatra [king, reserve]
+  - Elementals [todo, best, control]
+- Breakthrough [breakthrough]
+  - Horn Chess [best]
+  - French Military Game [best]
+  - Just You Wait! 
+  - Jungle [todo:ai]
+  - Prairie 
+  - Breakthrough [todo:ai] 
+  - Alapo [dark, best]
+  - Kamisado [best, todo:ai, todo:rounds]
+  - Archimedes [cooperative]
+  - Gauntlet [best, todo:ai]
+  - Epaminondas [groups, goal]
+  - Taacoca [groups]
+  - Ordo [best, groups]
+  - Nubia [todo]
+  - HiQue [todo]
+  - Luzhanqi [todo, flag, cloack]
+  - Stratego [todo, cloack]
+  - Neutron [todo, shared]
+  - Arimaa [todo, turns, elimination, stalemate]
+- Races
+  - Jasir [todo:ai]
+  - Jeson Mor [todo:ai]
+  - Agon [todo:ai]
+  - Gala [control]
+  - Hanga Roa [best, todo:ai]
+  - Dodgem [best]
+  - Halma [todo]
+  - Pyon Pyon Shogi [todo]
+  - Sahkku [todo, dices]
+  - Puluc [todo, best, dices, stacks]
+  - Ur [todo, stacks, best, dices]
+  - Hounds contra Jackals [dices]
+  - Senet [todo, dices]
+  - Tab [todo, dices]
+  - Daldosa [todo, dices]
+  - Nyout [todo, dices]
+  - Backgammon [todo, best, dices]
+- XiangQi family
+  - Qiquo Xiangqi [dark, 7-players, king]
+  - XiangQi [dark, cloack, best, todo:ai, checkmate, openings]
+  - Mini XiangQi [dark, cloack, best, todo:ai, checkmate]
+  - Janggi [dark, cloack, best, todo:ai, checkmate]
+  - Gwangsanghui [dark, cloack, best, todo:ai, huge, kings]
+  - Passive Chess [dark, cloack, best, checkmate]
+- Chess family
+  - Chaturanga [king]
+  - Chaturanji [todo, kings, 4-players, dices]
+  - Shatranj [dark, setups, best, checkmate]
+  - Makruk [best, checkmate]
+  - Sittuyin [dark, setups, drops, best, checkmate]
+  - Courier Chess [dark, checkmate]
+  - Chess [dark, checkmate, todo:ai, openings, endings, todo:stalemate, todo:dialog]
+    - Mini Chess variants
+    - Dunsany's Chess 
+    - Charge of the Light Brigade 
+    - Weak! 
+    - Horde Chess
+  - Hiashatar [checkmate, todo:goal, todo:invariant]
+  - Genesis Chess [drops, checkmate, todo:ai]
+  - Omega Chess [drops, checkmate, todo:ai]
+  - Omega Chess Advanced [drops, checkmate, todo:ai, todo:dark]
+  - Belarusian Chess [best, checkmate, invariant, todo:ai]
+  - Platform Chess [best, checkmate, transformer]
+  - Cyvasse [best, cooperative, turns, todo]
+  - Alice Chess [todo, checkmate]
+  - Resurrection Chess [todo, checkmate]
+- Shogi family
+  - Doubutsu Shogi [best, reserve, king, breakthrough]
+  - Goro Goro Doubutsu Shogi [reserve, king, todo:ai]
+  - MiniShogi [best, checkmate, reserve, todo:ai]
+  - REN Shogi [best, checkmate, reserve]
+  - Micro Shogi [checkmate, reserve, todo:ai]
+  - Kyoto Shogi [checkmate, reserve, todo:ai]
+  - Shogi [checkmate, reserve, todo:ai]
+  - Annan Shogi [best, checkmate, reserve, todo:ai]
+  - Yonin Shogi [best, 4-players, reserve, dark, cloack, todo:ai]
+  - Tenjiku Shogi [kings, huge, composite]
+  - Ko Shogi [kings, huge, composite]
+  - Hishigata Shogi [todo, huge]
+  - Ki Shogi [todo, transformer]
+- Checkmate games [checkmate]
+  - Knight's Court 
+  - Nam Dinh [best, cooperative]
+  - Caissa [todo:ai]
+  - Chessence [reserve, todo:ai]
+  - Klin Zha [todo, drops, dark, cloack]
+- Arrange [Arrange]
+  - Renju [best, drops, restrictions]
+  - Gomoku [drops]
+  - Ninuki Renju [best, drops, cooperative, scoring, restrictions]
+  - Pente [drops]
+  - Gomoku Knights [drops]
+  - Captain's Mistress [drops, best]
+  - Shisima
+  - Three Men's Morris [drops]
+    - Les Pendus 
+    - Triangle [best]
+  - Morris [drops, best, restrictions]
+    - Morabaraba 
+    - Windmill
+  - Bolotoudou [best, drops, bonus, shoots, restrictions]
+  - Ningxia Fangqi [drops, best, restrictions]
+  - Xinjiang Fangqi [drops, best, restrictions]
+  - Three Musketeers [asym, stalemate]
+  - Three Crowns [todo:ai]
+  - Lines of Action [todo:ai, goal, restrictions]
+  - Pentago [todo, groups]
+  - Quatuum Tic Tac Toe [todo, drops, best]
+  - Quatuum Morris [todo, drops, best]
+- Connect games
+  - Hex [todo]
+  - Gonnect [todo]
+- Puzzles [puzzle]
+  - Solitaire [best, solver]
+  - LightOff [best]
+  - Swappers [solver]
+  - Towers [solver]
+  - Sliding [best, solver, todo:triangles]
+  - Sokoban [best]
+  - Flippers [todo]
+  - Chameleon Chess [todo]
