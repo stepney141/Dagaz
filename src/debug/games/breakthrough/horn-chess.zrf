@@ -56,7 +56,7 @@
       (image Black "images/horn/black.bmp")
       (moves
          (move-type up-type)
-         (shift n) (shift nw)
+         (shift n) (shift nw) (shift se)
          (move-type middle-type)
          (shift w) (shift e)
       )
