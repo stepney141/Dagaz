@@ -58,13 +58,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("d1", [-1, 1, 0, -5]);
     design.addPosition("e1", [-1, 0, 0, -5]);
 
-
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
     design.addCommand(0, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
-
 
     design.addPiece("B01001", 0);
     design.addAttribute(0, 0, 1);
@@ -234,6 +232,14 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(20, 0, [0], 0);
     design.addMove(20, 0, [1], 0);
 
+    design.addPiece("B0000A", 21);
+    design.addAttribute(21, 0, 10);
+    design.addAttribute(21, 1, 'B0000');
+    design.addMove(21, 0, [3], 0);
+    design.addMove(21, 0, [2], 0);
+    design.addMove(21, 0, [0], 0);
+    design.addMove(21, 0, [1], 0);
+
     design.setup("You", "B01001", 0);
     design.setup("You", "B00111", 1);
     design.setup("You", "B10001", 2);
@@ -254,7 +260,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("You", "B01008", 17);
     design.setup("You", "B00118", 18);
     design.setup("You", "B10008", 19);
-    design.setup("You", "B00009", 22);
+    design.setup("You", "B00009", 20);
+    design.setup("You", "B0000A", 24);
 
     design.goal(0, "You", "R01002", [3]);
     design.goal(0, "You", "R10102", [4]);
@@ -292,6 +299,7 @@ Dagaz.View.configure = function(view) {
     view.defPiece("YouB00118", "You B00118");
     view.defPiece("YouB10008", "You B10008");
     view.defPiece("YouB00009", "You B00009");
+    view.defPiece("YouB0000A", "You B0000A");
  
     view.defPosition("a5", 0, 0, 100, 100);
     view.defPosition("b5", 100, 0, 100, 100);
