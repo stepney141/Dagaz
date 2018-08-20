@@ -1,5 +1,5 @@
 (define step (
-  $1 add
+  $1 (verify empty?) add
 ))
 
 (define T
@@ -32,9 +32,13 @@
          )
          (directions
              (nw -1 -1) (ne 1 -1) (se 1 1) (sw -1 1) (ee 2 0) (ww -2 0)
+             (e 1 0) (w -1 0) (n 0 -1) (s 0 1)
          )
      )
      (kill-positions a2 a3 a4 b3 b4 c4 e4 f3 f4 g2 g3 g4)
+     (zone (name up) (players You)
+           (positions a1 c1 e1 g1 b2 d2 f2 c3 e3 d4)
+     )
   )
 
   (T bu 1)
