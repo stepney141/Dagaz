@@ -1,0 +1,42 @@
+- Internal Options
+  - Dagaz.Model.passTurn = pass-turn(false, todo:true, forced)
+  - Dagaz.Model.passPartial = pass-partial(false, true)
+  - Dagaz.Model.sharedPieces = shared-pieces(false, true)
+  - Dagaz.Model.smartFrom = smart-moves(false, from, true)
+  - Dagaz.Model.smartTo = smart-moves(false, to, true)
+  - Dagaz.Model.recycleCaptures = recycle-captures(false, true)
+  - Dagaz.App.progressive = progressive-levels(false, true, silent)
+  - Dagaz.App.silent = progressive-levels(silent)
+  - Dagaz.View.showCaptures = show-captures(false, true)
+  - Dagaz.View.showBlink = show-blink(false, true)
+  - Dagaz.View.showDrops = show-drops(false, true, all, N)
+- Global
+  - Dagaz.Model.checkOption(name, value)
+  - Dagaz.Model.getDesign(player)
+  - todo:Dagaz.Model.zupdate(value, piece, pos)
+- Design
+  - createMove(mode)
+  - checkOption(name, value) = co
+  - addDirection(name) = di
+  - addPlayer(name, dirs) = pl
+  - addPosition(name, dirs) = ps
+  - todo:setup(player, piece, name, selector) = su
+  - todo:reserve(player, piece, cnt) = rs
+  - allDirections()
+  - allPositions()
+  - posToString(pos)
+  - stringToPos(name)
+- Move
+  - isPass()
+  - capturePiece(pos)
+  - dropPiece(pos, pieces)
+  - startMove(pos)
+  - endMove(pos, pieces)
+  - closePart()
+  - todo:setValue(name, value)
+  - todo:addValue(name, value)
+  - todo:addReper(pos)
+- Action
+  - isMove()
+  - isCapture()
+  - isDrop()
