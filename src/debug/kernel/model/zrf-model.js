@@ -1497,8 +1497,10 @@ ZrfBoard.prototype.checkGoals = function(design, player) {
 
 Dagaz.Model.setup = function(board) {}
 
-ZrfBoard.prototype.setup = function(view) {
-  Dagaz.Model.setup(this);
+ZrfBoard.prototype.setup = function(view, initialize) {
+  if (initialize) {
+      Dagaz.Model.setup(this);
+  }
   view.clear();
   _.each(_.keys(this.pieces), function(pos) {
      var piece = this.pieces[pos];
