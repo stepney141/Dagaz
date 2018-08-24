@@ -33,30 +33,6 @@
   add
 ))
 
-(define pq-slide-bk (
-  $1 
-  (while empty? (add Queen) $1)
-  (verify not-friend?)
-  (add Queen)
-))
-
-(define pq-slide-dg (
-  $1 (verify empty?)
-  (while empty? (add Queen) $1)
-  (verify not-friend?)
-  (add Queen)
-))
-
-(define pq-slide-fw (
-  $1 
-  (if empty?
-      $1
-      (while empty? (add Queen) $1)
-  )
-  (verify not-friend?)
-  (add Queen)
-))
-
 (define pq-shift (
   (create Queen)
   $1 (verify empty?)
@@ -103,6 +79,15 @@
      )
      (zone (name last-rank) (players Black)
            (positions a1 b1 c1 d1 e1 f1 g1 h1)
+     )
+     (zone (name home) (players White)
+           (positions a1 b1 c1 d1 e1 f1 g1 h1 a2 b2 c2 d2 e2 f2 g2 h2)
+     )
+     (zone (name home) (players Black)
+           (positions a8 b8 c8 d8 e8 f8 g8 h8 a7 b7 c7 d7 e7 f7 g7 h7)
+     )
+     (zone (name black) (players White Black)
+           (positions a1 c1 e1 g1 b2 d2 f2 h2 a3 c3 e3 g3 b4 d4 f4 h4 a5 c5 e5 g5 b6 d6 f6 h6 a7 c7 e7 g7 b8 d8 f8 h8)
      )
   )
 
@@ -163,8 +148,6 @@
      (image White "images/wpq.bmp"
             Black "images/bpq.bmp")
      (moves
-         (pq-slide-fw n) (pq-slide-bk s) (pq-slide-bk w) (pq-slide-bk e)
-         (pq-slide-dg nw) (pq-slide-bk sw) (pq-slide-dg ne) (pq-slide-bk se)
          (pq-shift n)
          (pq-step nw) (pq-step ne)
      )
@@ -196,7 +179,6 @@
 
 (variant
   (title "Short Assize")
-  (default)
 
   (board-setup
     (White 
