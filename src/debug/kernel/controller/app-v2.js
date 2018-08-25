@@ -86,6 +86,9 @@ App.prototype.done = function() {
           this.gameOver(this.doneMessage, this.winPlayer);
       }
   }
+  if (!_.isUndefined(Dagaz.Controller.stop)) {
+      Dagaz.Controller.stop();
+  }
 }
 
 App.prototype.getStarts = function() {
@@ -455,6 +458,9 @@ App.prototype.exec = function() {
               this.view.markPositions(Dagaz.View.markType.CURRENT, [ this.move.getTarget() ]);
           }
           this.state = STATE.WAIT;
+          if (!_.isUndefined(Dagaz.Controller.play)) {
+              Dagaz.Controller.play(0);
+          }
       }
       if (!_.isUndefined(this.list)) {
           if (this.list.isDone()) {
