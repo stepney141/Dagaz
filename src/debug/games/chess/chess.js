@@ -26,6 +26,10 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-blink", "false");
     design.checkVersion("chess-invariant", "true");
 
+    if (!_.isUndefined(Dagaz.Controller.addSound)) {
+        Dagaz.Controller.addSound(0, "../../sounds/clack.wav");
+    }
+
     design.addDirection("w");
     design.addDirection("e");
     design.addDirection("s");
