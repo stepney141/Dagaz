@@ -30,6 +30,10 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("go-extension", "true");
     design.checkVersion("atari-go-goal", "true");
 
+    if (!_.isUndefined(Dagaz.Controller.addSound)) {
+        Dagaz.Controller.addSound(0, "../../sounds/clack.wav");
+    }
+
     design.addDirection("w");
     design.addDirection("e");
     design.addDirection("s");
