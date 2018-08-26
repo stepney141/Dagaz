@@ -1,3 +1,7 @@
+- URL
+  - setup
+  - turn
+  - selector
 - Internal Options
   - Dagaz.Model.passTurn = pass-turn(false, todo:true, forced)
   - Dagaz.Model.passPartial = pass-partial(false, true)
@@ -10,33 +14,110 @@
   - Dagaz.View.showCaptures = show-captures(false, true)
   - Dagaz.View.showBlink = show-blink(false, true)
   - Dagaz.View.showDrops = show-drops(false, true, all, N)
-- Global
-  - Dagaz.Model.checkOption(name, value)
-  - Dagaz.Model.getDesign(player)
-  - todo:Dagaz.Model.zupdate(value, piece, pos)
+- Constants
+  - Dagaz.Model.WIDTH: int
+  - Dagaz.Model.HEIGHT: int
+- Hooks
+  - Dagaz.Model.BuildDesign(design: Design)
+  - Dagaz.Model.checkOption(name: string, value: string)
+  - Dagaz.Model.getDesign(player: int) -> Design
+  - todo:Dagaz.Model.getInitBoard() -> board: Board
+  - todo:Dagaz.Model.setup(board: Board)
+  - todo:Dagaz.Model.getSetup(board: Board) -> setup: string // common-setup
+  - todo:Dagaz.Model.getPieceType(piece: Piece) -> type: int // zobrist
+  - todo:Dagaz.Model.zupdate(zobrist: int, piece: Piece, pos: int) -> zobrist: int // zobrist
+  - todo:Dagaz.Model.Extension(moves: [Move]) -> moves: [Move]
+  - todo:Dagaz.Model.CheckInvariants(moves: [Move]) -> moves: [Move]
+  - todo:Dagaz.Model.getMoveList(board) -> MoveList // move-list
+  - todo:Dagaz.Model.getX(pos: int) -> x: int
+  - todo:Dagaz.Model.getY(pos: int) -> y: int
+  - todo:Dagaz.App.getSessionManager(app: Controller) -> SessionManager // session-manager
+  - todo:Dagaz.App.continue(board: Board) // common-setup
+  - Dagaz.App.addSound(ix, src) // sound-manager
+  - Dagaz.App.play(ix) // sound-manager
+  - Dagaz.App.stop() // sound-manager
+  - todo:Dagaz.AI.findBot(type: string, parent)
+  - todo:Dagaz.AI.isFriend(player: int, opponent: int)
 - Design
-  - createMove(mode)
-  - checkOption(name, value) = co
-  - addDirection(name) = di
-  - addPlayer(name, dirs) = pl
-  - addPosition(name, dirs) = ps
-  - todo:setup(player, piece, name, selector) = su
-  - todo:reserve(player, piece, cnt) = rs
-  - allDirections()
-  - allPositions()
-  - posToString(pos)
-  - stringToPos(name)
+  - checkOption(name: string, value: string) = co
+  - addDirection(name: string) = di // ix: int
+  - addPlayer(name: string, dirs: [int]) = pl
+  - todo:addTurn(player: int, modes: [int]) = tu
+  - todo:repeatMark() = rm
+  - addPosition(name: string, todo:dirs: [int]) = ps
+  - todo:addRepers(from: int, to: int, positions: [int] [, mode: int]) = rp
+  - todo:addZone(name:string, player: int, positions: [int]) = zn // ix: int
+  - todo:addPriority(mode: int) = pr
+  - todo:selector(max: int) = sl
+  - todo:setup(player: int, piece: string, pos: string [, selector: int ]) = su
+  - todo:reserve(player: int, piece: string, cnt: int [, selector: int]) = rs
+  - todo:addPiece(name: string, type: int [, price: int]) = pc
+  - todo:addAttribute(type: int, ix: int, value) = at
+  - todo:addMove(type: int, code: function, params: [] [, mode: int, sound: int]) = mv
+  - todo:addDrop(type: int, code: function, params: [] [, mode: int, sound: int]) = dr
+  - todo:addCapture(code: function, params: [] [, mode:int, sound: int]) = cp
+  - allDirections() -> [int]
+  - allPositions() -> [int]
+  - posToString(pos: int) -> name: string
+  - stringToPos(name: string) -> pos: int
+  - todo:navigate(player: int, pos: int, dir: int) -> pos: int | null
+  - todo:inZone(player: int, pos: int, zone: int) -> boolean
+  - todo:getPieceType(name: string) -> type: int
+  - todo:getDirection(name: string) -> dir: int
+  - todo:findDirection(from: int, to: int) -> dir: int
+  - todo:nextPlayer(player: int) -> player: int
+  - todo:prevPlayer(player: int) -> player: int
+  - todo:currPlayer(turn: int) -> player: int
+  - todo:nextTurn(board: Board) -> turn: int
+  - todo:prevTurn(board: Board) -> turn: int
+  - todo:isPuzzle() -> boolean
+  - createMove([mode: int]) -> move: Move
+  - todo:createPiece(type, player) -> piece: Piece
+- todo:View
+  - todo:defPiece(res: string, name: string)
+  - todo:defBoard(board: int, res: string [, x: int, y: int])
+  - todo:defPosition(name: string, board: int [, x: int, y: int, dx: int, dy: int])
+  - todo:determinatePosition(function(view: View, x: int, y: int) -> name: string)
+- SessionManager // session-manager
+  - addState(move: Move, board: Board)
+  - todo:current() -> Board
+  - forward() -> Board
+  - backward() -> Board
+- Piece
+  - todo:promote(type: int) -> piece: Piece
+  - todo:changeOwner(player: int) -> piece: Piece
+  - todo:getValue(name: string) -> value
+  - todo:setValue(name: string, value) -> piece: Piece
+  - todo:toString() -> string
+- Board
+  - todo:getPiece(pos: int) -> piece: Piece | null
+  - todo:setPiece(pos: int [, piece: Piece | null])
+  - todo:getValue(name: string) -> value
+  - todo:setValue(name: string, value)
+  - todo:getSign() -> zobrist: int
+  - todo:getMoves() -> moves: [Move]
+  - todo:generate(design: Design)
+  - todo:apply(move: Move) -> board: Board
+  - todo:clear()
+  - todo:copy() -> board: Board
 - Move
-  - isPass()
-  - capturePiece(pos)
-  - dropPiece(pos, pieces)
-  - startMove(pos)
-  - endMove(pos, pieces)
+  - isPass() -> boolean
+  - capturePiece(pos: int)
+  - dropPiece(pos: int, pieces: [Piece])
+  - startMove(pos: int)
+  - endMove(pos: int, pieces: [Piece])
   - closePart()
-  - todo:setValue(name, value)
-  - todo:addValue(name, value)
-  - todo:addReper(pos)
+  - todo:setMode(mode: int)
+  - todo:isSimpleMove() -> boolean
+  - todo:isSimpleDrop() -> boolean
+  - todo:isSimpleCapture() -> boolean
+  - todo:setValue(ix: int, value)
+  - todo:addValue(ix: int, value: int)
+  - todo:addReper(pos: int)
+  - todo:toString() -> string
+  - todo:copy() -> move: Move
 - Action
-  - isMove()
-  - isCapture()
-  - isDrop()
+  - isMove() -> boolean
+  - isCapture(todo) -> boolean
+  - isDrop() -> boolean
+  - todo:setSound(sound: int)
