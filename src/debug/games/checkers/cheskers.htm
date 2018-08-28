@@ -16,7 +16,9 @@
 <img id="BlackCamel" style="display:none" src="images/cheskers/bknight.png">
 
 <table style="margin:auto; font-family:sans-serif; font-size:14px" id="Table">
-<tr><td><a href="javascript:Dagaz.Controller.backward()" style="display:none" id="backward">&lt;&lt;&lt;</a> Copyright (c) 1948 Solomon W. Golomb <a href="javascript:Dagaz.Controller.forward()" style="display:none" id="forward">&gt;&gt;&gt;</a></td></tr>
+<tr><td><a href="javascript:Dagaz.Controller.backward()" style="display:none" id="backward"><img src="../../images/undo.png"/></a> 
+Copyright (c) 1948 Solomon W. Golomb 
+<a href="javascript:Dagaz.Controller.forward()" style="display:none" id="forward"><img src="../../images/redo.png"/></a></td></tr>
 <tr style="height:404px; vertical-align:top">
 <td id="CanvasCell" style="width:404px">
 <canvas id="Canvas" width="404" height="404" style="cursor:default">Broken canvas...</canvas>
@@ -48,6 +50,8 @@
 <script src="../../kernel/view/2d/2d-view-v2.js"></script>
 <script src="../../kernel/controller/utils/move-list-v2.js"></script>
 <script src="../../kernel/controller/utils/session-manager.js"></script>
+<script src="../../kernel/controller/ai/random-ai.js"></script>
+<script src="../../kernel/controller/ai/maxmin-ai-v2.js"></script>
 <script src="cheskers-extension.js"></script>
 <script src="cheskers-invariant.js"></script>
 <script src="cheskers.js"></script>
