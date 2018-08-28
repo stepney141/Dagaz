@@ -12,6 +12,52 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+var getShadow = function(design, board) {
+  var player = board.getValue(board.player);
+  if (player === null) return [];
+  if (_.isUndefined(board.shadow)) {
+      board.shadow = [];
+      _.each(design.allPositions(), function(pos) {
+           var piece = board.getPiece(pos);
+           if ((piece !== null) && (piece.type < 7)) {
+               var value = piece.type + 7;
+               if (piece.player != player) {
+                   value = -value;
+               }
+               board.shadow.push(value);
+           }
+      });
+  }
+  return board.shadow;
+}
+
+var isPiece = function(design, x, y) {
+  return x == y;
+}
+
+var isAttacker = function(design, x, enemy) {
+  if (x < 0) return false;
+  if ((x == 13) && (enemy == 7)) return true;
+  if (!chinese && (x == 7) && (enemy == 13)) return false;
+  if (!chinese && (x == 12)) return false;
+  return x <= enemy;
+}
+
+var isDefender = function(design, x, enemy, friend) {
+  if (!isAttacker(design, x, enemy)) return false;
+  return design.price[friend] <= design.price[enemy];
+}
+
+var estimate = function(design, board, p, y, z) {
+  var shadow = getShadow(design, board);
+  if (shadow.length == 0) return 0;
+  var r = 0;
+  _.each(shadow, function(x) {
+      if (p(design, x, y, z)) r++;
+  });
+  return r / shadow.length;
+}
+
 var getGoals = function(design, board) {
   var r = [];
   _.each(design.allPositions(), function(pos) {
@@ -92,14 +138,38 @@ var getTrace = function(design, src, dst, level) {
   return null;
 }
 
-Dagaz.AI.heuristic = function(ai, design, board, move) {
-  var r = 1;
+var getChainPrice = function(design, board, attacker, attacking, len) {
+  if (attacking === null) return null;
+  if (attacker.player == attacking.player) return false;
+  var isAttacking = isAttacker(design, attacker.type, attacking.type);
+  var isAttacked  = isAttacker(design, attacking.type, attacker.type);
+  if (!chinese && (attacker.type == 12)) {
+      isAttacking = true;
+      isAttacked  = (attacking.type == attacker.type) && (len == 1);
+  }
+  var price = 0;
+  if (isAttacking) {
+      if (isAttacked) {
+          price = (len % 2 == 0) ? (len - design.price[attacker.type]) : (design.price[attacking.type] - len);
+      } else {
+          price = design.price[attacking.type] - len;
+          if (len % 2 == 0) price = (price / 2) | 0;
+      }
+  } else {
+      price = len - design.price[attacker.type];
+  }
+  return price;
+}
+
+var getChains = function(design, board) {
   if (_.isUndefined(board.chains)) {
       board.chains = [];
       var pieces   = getGoals(design, board);
       var targets  = getTargets(design, board, pieces);
       _.each(pieces, function(pos) {
           var goals = pieces; var f = true;
+          var piece = board.getPiece(pos);
+          if (piece === null) return;
           if (!chinese && (piece.type == 12)) {
               goals = targets;
               f = false;
@@ -120,13 +190,15 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
                                   var c = copy(t);
                                   c.push(q);
                                   board.chains[pos].push({
-                                      trace: c
+                                      trace: c,
+                                      price: getChainPrice(design, board, piece, board.getPiece(q), c.length)
                                   });
                               });
                           }
                       } else {
                           board.chains[pos].push({
-                              trace: t
+                              trace: t,
+                              price: getChainPrice(design, board, piece, board.getPiece(group[i]), t.length)
                           });
                       }
                   }
@@ -144,6 +216,12 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
           }
       });
   }
+  return board.chains;
+}
+
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  var r = 1;
+  var chains = board.getChains(design, board);
   // TODO: Use Chains
 
   return r;
