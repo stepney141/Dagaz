@@ -111,7 +111,7 @@ var copy = function(list) {
   return r;
 }
 
-var getTrace = function(design, src, dst, level) {
+var getTrace = function(design, board, src, dst, level) {
   var r = [];
   var pos = dst;
   while (pos !== null) {
@@ -139,8 +139,8 @@ var getTrace = function(design, src, dst, level) {
 }
 
 var getChainPrice = function(design, board, attacker, attacking, len) {
-  if (attacking === null) return null;
-  if (attacker.player == attacking.player) return false;
+  if ((attacker == null) || (attacking === null)) return 0;
+  if (attacker.player == attacking.player) return 0;
   var isAttacking = isAttacker(design, attacker.type, attacking.type);
   var isAttacked  = isAttacker(design, attacking.type, attacker.type);
   if (!chinese && (attacker.type == 12)) {
@@ -151,17 +151,23 @@ var getChainPrice = function(design, board, attacker, attacking, len) {
   if (isAttacking) {
       if (isAttacked) {
           price = (len % 2 == 0) ? (len - design.price[attacker.type]) : (design.price[attacking.type] - len);
+          if (len == 1) price *= 100;
       } else {
           price = design.price[attacking.type] - len;
           if (len % 2 == 0) price = (price / 2) | 0;
       }
   } else {
-      price = len - design.price[attacker.type];
+      if (isAttacked) {
+          price = len - design.price[attacker.type];
+          if (len == 1) price *= 100;
+      }
   }
   return price;
 }
 
 var getChains = function(design, board) {
+  var player = board.getValue(board.player);
+  if (player === null) return [];
   if (_.isUndefined(board.chains)) {
       board.chains = [];
       var pieces   = getGoals(design, board);
@@ -183,23 +189,33 @@ var getChains = function(design, board) {
                       if (_.isUndefined(board.chains[pos])) {
                           board.chains[pos] = [];
                       }
-                      var t = getTrace(design, pos, group[i], level);
+                      var t = getTrace(design, board, pos, group[i], level);
                       if (!f) {
                           if (!_.isUndefined(goals.map[ group[i] ])) {
                               _.each(goals.map[ group[i] ], function(q) {
                                   var c = copy(t);
                                   c.push(q);
-                                  board.chains[pos].push({
-                                      trace: c,
-                                      price: getChainPrice(design, board, piece, board.getPiece(q), c.length)
-                                  });
+                                  var target = board.getPiece(q);
+                                  if (target !== null) {
+                                      board.chains[pos].push({
+                                          trace: c,
+                                          price: getChainPrice(design, board, piece, target, c.length),
+                                          e_src: piece.player  != player,
+                                          e_dst: target.player != player
+                                      });
+                                  }
                               });
                           }
                       } else {
-                          board.chains[pos].push({
-                              trace: t,
-                              price: getChainPrice(design, board, piece, board.getPiece(group[i]), t.length)
-                          });
+                          var target = board.getPiece(group[i]);
+                          if (target !== null) {
+                              board.chains[pos].push({
+                                  trace: t,
+                                  price: getChainPrice(design, board, piece, target, t.length),
+                                  e_src: piece.player  != player,
+                                  e_dst: target.player != player
+                              });
+                          }
                       }
                   }
               }
@@ -222,7 +238,7 @@ var getChains = function(design, board) {
 Dagaz.AI.heuristic = function(ai, design, board, move) {
   var r = 1;
   var chains = board.getChains(design, board);
-  // TODO: Use Chains
+  // TODO:
 
   return r;
 }
@@ -240,7 +256,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                if ((a[0] !== null) && (a[1] !== null) && (a[0][0] != a[1][0])) {
                    var target = board.getPiece(a[1][0]);
                    if (target === null) return;
-                   if (target.player == piece.player) {
+                   if ((target.player == piece.player) || (target.type < 7)) {
                        move.failed = true;
                        return;
                    }

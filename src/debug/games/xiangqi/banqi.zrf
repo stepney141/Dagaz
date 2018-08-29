@@ -25,7 +25,7 @@
   (verify not-empty?) $1
   (while empty? $1)
   (verify not-empty?)
-  (check-hidden)
+; (check-hidden)
   add
 ))
 
