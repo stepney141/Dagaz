@@ -172,34 +172,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(8, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(8, ZRF.FUNCTION,	0);	// not
     design.addCommand(8, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(8, ZRF.LITERAL,	0);	// UnknownGeneral
-    design.addCommand(8, ZRF.FUNCTION,	10);	// piece?
-    design.addCommand(8, ZRF.FUNCTION,	0);	// not
-    design.addCommand(8, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(8, ZRF.LITERAL,	1);	// UnknownAdvisor
-    design.addCommand(8, ZRF.FUNCTION,	10);	// piece?
-    design.addCommand(8, ZRF.FUNCTION,	0);	// not
-    design.addCommand(8, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(8, ZRF.LITERAL,	2);	// UnknownElephant
-    design.addCommand(8, ZRF.FUNCTION,	10);	// piece?
-    design.addCommand(8, ZRF.FUNCTION,	0);	// not
-    design.addCommand(8, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(8, ZRF.LITERAL,	3);	// UnknownChariot
-    design.addCommand(8, ZRF.FUNCTION,	10);	// piece?
-    design.addCommand(8, ZRF.FUNCTION,	0);	// not
-    design.addCommand(8, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(8, ZRF.LITERAL,	4);	// UnknownHorse
-    design.addCommand(8, ZRF.FUNCTION,	10);	// piece?
-    design.addCommand(8, ZRF.FUNCTION,	0);	// not
-    design.addCommand(8, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(8, ZRF.LITERAL,	5);	// UnknownCannon
-    design.addCommand(8, ZRF.FUNCTION,	10);	// piece?
-    design.addCommand(8, ZRF.FUNCTION,	0);	// not
-    design.addCommand(8, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(8, ZRF.LITERAL,	6);	// UnknownSoldier
-    design.addCommand(8, ZRF.FUNCTION,	10);	// piece?
-    design.addCommand(8, ZRF.FUNCTION,	0);	// not
-    design.addCommand(8, ZRF.FUNCTION,	20);	// verify
     design.addCommand(8, ZRF.FUNCTION,	25);	// to
     design.addCommand(8, ZRF.FUNCTION,	28);	// end
 
