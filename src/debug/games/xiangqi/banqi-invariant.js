@@ -201,20 +201,24 @@ var getChains = function(design, board) {
                                   c.push(q);
                                   var target = board.getPiece(q);
                                   if (target !== null) {
+                                      var price = getChainPrice(design, board, piece, target, c.length);
                                       board.chains[pos].push({
                                           trace: c,
-                                          price: getChainPrice(design, board, piece, target, c.length)
+                                          price: price
                                       });
+                                      console.log("Chain[C]: " + chainToStr(c) + ", price = " + price);
                                   }
                               });
                           }
                       } else {
                           var target = board.getPiece(group[i]);
                           if (target !== null) {
+                              var price = getChainPrice(design, board, piece, target, t.length);
                               board.chains[pos].push({
                                   trace: t,
-                                  price: getChainPrice(design, board, piece, target, t.length)
+                                  price: price
                               });
+                              console.log("Chain[L]: " + chainToStr(t) + ", price = " + price);
                           }
                       }
                   }
@@ -235,26 +239,81 @@ var getChains = function(design, board) {
   return board.chains;
 }
 
-var addWish = function(board, price, src, dst) {
+var addWish = function(board, comment, price, src, dst) {
   if (_.isUndefined(board.wish[src])) {
       board.wish[src] = [];
   }
   if (_.isUndefined(dst)) dst = src;
-  board.wish[src][dst] = price;
+  if (_.isUndefined(board.wish[src][dst])) {
+      board.wish[src][dst] = price;
+  } else {
+      board.wish[src][dst] += price;
+  }
+  console.log("Wish [" + comment + "]: " + Dagaz.Model.posToString(src) + " - " + Dagaz.Model.posToString(dst) + " = " + price);
 }
 
 var getWish = function(design, board) {
-  if (_.isUndefined(board.wish)) {
+  if (_.isUndefined(board.wish)) {      
       var player = board.getValue(board.player);
       if (player === null) return [];
-      board.wish = [];
-      // TODO: Use Chains
-
-
+      var chains   = getChains(design, board);
+      board.wish   = [];
+      var attacks  = [];
+      _.each(design.allPositions(), function(pos) {
+          if (!_.isUndefined(chains[pos])) {
+              var piece = board.getPiece(pos);
+              if ((piece === null) || (piece.type < 7)) return;
+              if (piece.player == player) {
+                  _.each(chains[pos], function(chain) {
+                      if (chain.trace.length == 0) return;
+                      var price = chain.price;
+                      if (chain.trace.length == 1) price *= 10;
+                      if ((chain.trace.length > 3) && (price > 0)) price /= 10;
+                      addWish(board, "1", price, pos, chain.trace[0]);
+                  });
+              } else {
+                  var len = _.chain(chains[pos]).map(function(chain) {
+                      return chain.trace.length;
+                  }).min().value();
+                  if ((len > 1) && (len < 4)) {
+                      attacks.push(pos);
+                  }
+              }
+          }
+      });
       if (board.wish.length == 0) {
           var pFriend = estimate(design, board, isFriend);
           if (pFriend > 30) {
               var pCannon = estimate(design, board, isPiece, 12);
+              var chain   = null;
+              var maxp    = 0;
+              _.each(attacks, function(pos) {
+                  var piece = board.getPiece(pos);
+                  if ((piece !== null) && (piece.player != player)) {
+                      var p = estimate(design, board, isAttacker, piece.type);
+                      if (p > 30) {
+                          if ((chain === null) || (p > maxp)) {
+                               chain = _.min(chains[pos], function(chain) {
+                                   return chain.trace.length;
+                               });
+                               maxp  = p;
+                          }
+                      }
+                  }
+              });
+              if ((chain !== null) && (maxp > 50)) {
+                 for (var ix = 0; ix < chain.trace - 1; ix++) {
+                     _.each(design.allDirections(), function(dir) {
+                          var p = design.navigate(board.player, chain.trace[ix], dir);
+                          if (p !== null) {
+                              var piece = board.getPiece(p);
+                              if ((piece !== null) && (piece.type < 7)) {
+                                  addWish(board, "2", chain.price * maxp, p);
+                              }
+                          }
+                     });
+                 }
+              }
               _.each(design.allPositions(), function(pos) {
                   var piece = board.getPiece(pos);
                   if ((piece !== null) && (piece.player != player) && (piece.type >= 7)) {
@@ -272,7 +331,7 @@ var getWish = function(design, board) {
                                       }
                                   }
                                   if (r > 50) {
-                                      addWish(board, design.price[piece.type] * r, p);
+                                      addWish(board, "3", design.price[piece.type] * r, p);
                                   }
                               }
                               if (!chinese && (piece.type != 12)) {
@@ -290,7 +349,7 @@ var getWish = function(design, board) {
                                       x = board.getPiece(p);
                                   }
                                   if (x.type < 7) {
-                                      addWish(board, design.price[piece.type] * pCannon, p);
+                                      addWish(board, "4", design.price[piece.type] * pCannon, p);
                                   }
                               }
                           }
@@ -299,10 +358,10 @@ var getWish = function(design, board) {
               });
               var targets = []; var enemies = [];
               _.each(design.allPositions(), function(pos) {
-                  if (!_.isUndefined(board.chains[pos])) {
+                  if (!_.isUndefined(chains[pos])) {
                       var piece = board.getPiece(pos) {
                       if ((piece !== null) && (piece.player != player) && (piece.type >= 7)) {
-                          _.each(board.chains[pos], function(chain) {
+                          _.each(chains[pos], function(chain) {
                               if (chain.trace.length == 1) {
                                   var p  = chain.trace[0];
                                   var ix = _.indexOf(targets, p);
@@ -330,7 +389,7 @@ var getWish = function(design, board) {
                           var x = board.getPiece(p);
                           if (x !== null) {
                               if ((x.type < 7) && (pDefend > 50)) {
-                                  addWish(board, design.price[piece.type], p);
+                                  addWish(board, "5", design.price[piece.type], p);
                               }
                           } else {
                               emp.push(p);
@@ -338,7 +397,7 @@ var getWish = function(design, board) {
                       }
                   });
                   _.each(emp, function(p) {
-                      addWish(board, design.price[piece.type], pos, p);
+                      addWish(board, "6", design.price[piece.type], pos, p);
                   });
               }
           }
@@ -348,8 +407,7 @@ var getWish = function(design, board) {
 }
 
 Dagaz.AI.heuristic = function(ai, design, board, move) {
-  var chains = getChains(design, board);
-  var wish   = getWish(design, board);
+  var wish = getWish(design, board);
   if (move.isSimpleMove() &&
       !_.isUndefined(wish[ move.actions[0][0][0] ]) &&
       !_.isUndefined(wish[ move.actions[0][0][0] ][ move.actions[0][1][0] ])) {
