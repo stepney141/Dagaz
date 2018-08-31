@@ -10,6 +10,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
 
 Dagaz.AI.heuristic = function(ai, design, board, move) {
   var r = 1;
+  if (move.isPass()) return -1;
   _.each(move.actions, function(a) {
       if (a[0] !== null) {
           if (a[1] === null) {
