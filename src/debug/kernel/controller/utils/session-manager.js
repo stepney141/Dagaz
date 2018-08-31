@@ -80,7 +80,7 @@ Dagaz.Controller.redo = function() {
   var current = sm.current;
   var board   = sm.redo();
   if (board !== null) {
-      while ((sm.aiPresent() && (board.player != current.board.player)) || noMoves(board)) {
+      while ((sm.aiPresent() && (board.player != current.board.player) && sm.current.current) || noMoves(board)) {
          var b = sm.redo();
          if (b === null) {
              sm.current = current;
@@ -106,7 +106,7 @@ Dagaz.Controller.undo = function() {
   var current = sm.current;
   var board   = sm.undo();
   if (board !== null) {
-      while ((sm.aiPresent() && (board.player != current.board.player)) || noMoves(board)) {
+      while ((sm.aiPresent() && (board.player != current.board.player) && board.parent) || noMoves(board)) {
          var b = sm.undo();
          if (b === null) {
              sm.current = current;
