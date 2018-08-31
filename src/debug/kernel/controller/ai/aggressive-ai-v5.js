@@ -123,10 +123,12 @@ AggressiveAi.prototype.getMove = function(ctx) {
       return { done: true, ai: "nothing" };
   }
   var best  = null;
-  var moves = _.sortBy(ctx.board.moves, function(move) {
+  var moves = _.chain(ctx.board.moves).filter(function(move) {
       move.h = Dagaz.AI.heuristic(this, ctx.design, ctx.board, move);
+      return move.h >= 0;
+  },  this).sortBy(function(move) {
       return -move.h;
-  }, this);
+  }).value();
   ctx.timestamp = Date.now();
   var mx = -MAXVALUE;
   for (var i = 0; i < moves.length; i++) {
