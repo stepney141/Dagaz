@@ -20,14 +20,14 @@ SessionManager.prototype.aiPresent = function() {
 
 SessionManager.prototype.updateButtons = function() {
   if (!_.isUndefined(this.current) && !_.isUndefined(this.current.parent)) {
-      backward.style.display = "inline";
+      undo.style.display = "inline";
   } else {
-      backward.style.display = "none";
+      undo.style.display = "none";
   }
   if (!_.isUndefined(this.current) && !_.isUndefined(this.current.current)) {
-      forward.style.display = "inline";
+      redo.style.display = "inline";
   } else {
-      forward.style.display = "none";
+      redo.style.display = "none";
   }
 }
 
@@ -60,21 +60,28 @@ Dagaz.Controller.addState = function(move, board) {
   sm.updateButtons();
 }
 
-SessionManager.prototype.forward = function(board) {
+var noMoves = function(board) {
+  for (var ix = 0; ix < board.moves.length; ix++) {
+       if (!board.moves[ix].isPass()) return false;
+  }
+  return true;
+}
+
+SessionManager.prototype.redo = function(board) {
   if (_.isUndefined(this.current) || _.isUndefined(this.current.current)) return null;
   this.current = this.current.current;
-  console.log("Forward");
+  console.log("redo");
   return this.current.board;
 }
 
-Dagaz.Controller.forward = function() {
+Dagaz.Controller.redo = function() {
   var sm = Dagaz.Controller.getSessionManager();
   if (_.isUndefined(sm.current) || _.isUndefined(sm.controller.setBoard) || !sm.controller.isReady()) return;
   var current = sm.current;
-  var board   = sm.forward();
+  var board   = sm.redo();
   if (board !== null) {
-      while (sm.aiPresent() && (board.player != current.board.player)) {
-         var b = sm.forward();
+      while ((sm.aiPresent() && (board.player != current.board.player)) || noMoves(board)) {
+         var b = sm.redo();
          if (b === null) {
              sm.current = current;
              return;
@@ -86,21 +93,21 @@ Dagaz.Controller.forward = function() {
   sm.updateButtons();
 }
 
-SessionManager.prototype.backward = function() {
+SessionManager.prototype.undo = function() {
   if (_.isUndefined(this.current) || _.isUndefined(this.current.parent)) return null;
   this.current = this.current.parent;
-  console.log("Backward");
+  console.log("undo");
   return this.current.board;
 }
 
-Dagaz.Controller.backward = function() {
+Dagaz.Controller.undo = function() {
   var sm = Dagaz.Controller.getSessionManager();
   if (_.isUndefined(sm.current) || _.isUndefined(sm.controller.setBoard) || !sm.controller.isReady()) return;
   var current = sm.current;
-  var board   = sm.backward();
+  var board   = sm.undo();
   if (board !== null) {
-      while (sm.aiPresent() && (board.player != current.board.player)) {
-         var b = sm.backward();
+      while ((sm.aiPresent() && (board.player != current.board.player)) || noMoves(board)) {
+         var b = sm.undo();
          if (b === null) {
              sm.current = current;
              return;
