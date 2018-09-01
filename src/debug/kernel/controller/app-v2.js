@@ -329,6 +329,7 @@ App.prototype.setBoard = function(board) {
       this.view.reInit(board);
       delete this.list;
       this.clearPositions();
+      this.view.markPositions(Dagaz.View.markType.TARGET, []);
   }
 }
 
@@ -459,7 +460,11 @@ App.prototype.exec = function() {
           }
           this.state = STATE.WAIT;
           if (!_.isUndefined(Dagaz.Controller.play)) {
-              Dagaz.Controller.play(0);
+              var sound = Dagaz.Sounds.move;
+              if (!_.isUndefined(this.move.sound)) {
+                  sound = this.move.sound;
+              }
+              Dagaz.Controller.play(sound);
           }
       }
       if (!_.isUndefined(this.list)) {
