@@ -1,13 +1,18 @@
 (function() {
 
-var checkVersion = Dagaz.Model.checkVersion;
-
 var wazirMode  = false;
 var fersMode   = false;
 var knightMode = false;
 var rookMode   = false;
 var bishopMode = false;
 var hexMode    = false;
+
+if (!_.isUndefined(Dagaz.Controller.play)) {
+    Dagaz.Controller.addSound(Dagaz.Sounds.move, "../../sounds/off.wav");
+    Dagaz.Controller.addSound(Dagaz.Sounds.drop, "../../sounds/on.wav");
+}
+
+var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
   if (name == "light-off-extension") {
@@ -115,6 +120,10 @@ Dagaz.Model.CheckInvariants = function(board) {
   }
   _.each(board.moves, function(move) {
       var pos = move.actions[0][0][0];
+      var piece = board.getPiece(pos);
+      if (piece !== null) {
+          move.sound = piece.type;
+      }
       _.each(slide, function(dir) {
            var p = design.navigate(board.player, pos, dir);
            while (p !== null) {
