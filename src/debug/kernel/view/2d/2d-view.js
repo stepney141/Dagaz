@@ -471,7 +471,7 @@ View2D.prototype.draw = function(canvas) {
       Dagaz.View.configure(this);
       if (this.controller) {
           var board = this.controller.getBoard();
-          board.setup(this);
+          board.setup(this, true);
           this.controller.done();
       }
       isConfigured = true;
