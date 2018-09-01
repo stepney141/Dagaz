@@ -1,3 +1,9 @@
+Dagaz.Sounds = [];
+
+Dagaz.Sounds.move = 0;
+Dagaz.Sounds.drop = 1;
+Dagaz.Sounds.win  = 2;
+
 (function() {
 
 var sounds  = [];
@@ -38,3 +44,7 @@ Dagaz.Controller.stop = function() {
 }
 
 })();
+
+Dagaz.Controller.addSound(Dagaz.Sounds.move, "../../sounds/clack.wav");
+Dagaz.Controller.addSound(Dagaz.Sounds.drop, "../../sounds/on.wav");
+Dagaz.Controller.addSound(Dagaz.Sounds.win,  "../../sounds/win.wav");
