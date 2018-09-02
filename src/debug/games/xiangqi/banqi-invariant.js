@@ -302,7 +302,7 @@ var getWish = function(design, board) {
                       } else {
                           if ((price > 0) && (chain.trace.length == 1)) price *= 10;
                       }
-                      addWish(board, "1", price, pos, chain.trace[0]);
+                      addWish(board, "1", price, pos, chain.trace[1]);
                   });
               } else {
                   var len = _.chain(chains[pos]).map(function(chain) {
