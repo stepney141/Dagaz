@@ -144,7 +144,8 @@ var getTrace = function(design, board, dst, level) {
 }
 
 var getChainPrice = function(design, board, attacker, attacking, len) {
-  if ((attacker == null) || (attacking === null)) return 0;
+  var player = board.getValue(board.player);
+  if ((player === null) || (attacker == null) || (attacking === null)) return 0;
   if (attacker.player == attacking.player) return 0;
   var isAttacking = isAttacker(design, attacker.type, attacking.type);
   var isAttacked  = isAttacker(design, attacking.type, attacker.type);
@@ -153,12 +154,14 @@ var getChainPrice = function(design, board, attacker, attacking, len) {
       isAttacked  = (attacking.type == attacker.type) && (len == 1);
   }
   var price = 0;
+  var f = (len % 2 == 0);
+  if (attacker.player == player) f = !f;
   if (isAttacking) {
       if (isAttacked) {
-          price = (len % 2 == 0) ? (len - design.price[attacker.type]) : (design.price[attacking.type] - len);
+          price = f ? (len - design.price[attacker.type]) : (design.price[attacking.type] - len);
       } else {
           price = design.price[attacking.type] - len;
-          if (len % 2 == 0) price = (price / 2) | 0;
+          if (f) price = (price / 2) | 0;
       }
   } else {
       if (isAttacked) {
@@ -186,7 +189,7 @@ var getChains = function(design, board) {
       board.chains = [];
       var pieces   = getGoals(design, board);
       var targets  = getTargets(design, board, pieces);
-      _.each(pieces, function(pos) {
+      _.each(pieces.positions, function(pos) {
           var goals = pieces; var f = true;
           var piece = board.getPiece(pos);
           if (piece === null) return;
@@ -264,10 +267,14 @@ var addWish = function(board, comment, price, src, dst) {
 
 var isDefended = function(design, board, target, attacker, len) {
   var chains = getChains(design, board);
-  for (var pos = 0; pos < this.positions.length; pos++) {
-       if (!_.isUndefined(chains[pos]) && (chains[pos].trace.length <= len)) {
-           var piece = board.getPiece(pos);
-           if ((piece !== null) && (piece.type != attacker.type) && isAttacker(design, piece.type, attacker.type)) return true;
+  for (var pos = 0; pos < design.positions.length; pos++) {
+       if (!_.isUndefined(chains[pos])) {
+           _.each(chains[pos], function(chain) {
+               if (chain.trace.length <= len) {
+                   var piece = board.getPiece(pos);
+                   if ((piece !== null) && (piece.type != attacker.type) && isAttacker(design, piece.type, attacker.type)) return true;
+               }
+           });
        }
   }
   return false;
