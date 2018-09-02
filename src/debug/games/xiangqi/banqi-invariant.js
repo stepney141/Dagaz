@@ -81,13 +81,14 @@ var getTargets = function(design, board, goals) {
   };
   if (!chinese) {
       r.map = [];
-      _.each(goals, function(pos) {
+      _.each(goals.positions, function(pos) {
           _.each(design.allDirections(), function(dir) {
               var p = design.navigate(board.player, pos, dir);
               while (p !== null) {
                   if (board.getPiece(p) !== null) break;
                   p = design.navigate(board.player, p, dir);
               }
+              if (p === null) return;
               p = design.navigate(board.player, p, dir);
               while (p !== null) {
                   var piece = board.getPiece(p);
@@ -115,7 +116,7 @@ var copy = function(list) {
   return r;
 }
 
-var getTrace = function(design, board, src, dst, level) {
+var getTrace = function(design, board, dst, level) {
   var r = [];
   var pos = dst;
   while (pos !== null) {
@@ -155,7 +156,6 @@ var getChainPrice = function(design, board, attacker, attacking, len) {
   if (isAttacking) {
       if (isAttacked) {
           price = (len % 2 == 0) ? (len - design.price[attacker.type]) : (design.price[attacking.type] - len);
-          if (len == 1) price *= 100;
       } else {
           price = design.price[attacking.type] - len;
           if (len % 2 == 0) price = (price / 2) | 0;
@@ -163,10 +163,20 @@ var getChainPrice = function(design, board, attacker, attacking, len) {
   } else {
       if (isAttacked) {
           price = len - design.price[attacker.type];
-          if (len == 1) price *= 100;
       }
   }
   return price;
+}
+
+var chainToStr = function(trace) {
+  var r = "";
+  _.each(trace, function(pos) {
+      if (r.length != 0) {
+          r = r + ",";
+      }
+      r = r + Dagaz.Model.posToString(pos);
+  });
+  return r;
 }
 
 var getChains = function(design, board) {
@@ -193,7 +203,7 @@ var getChains = function(design, board) {
                       if (_.isUndefined(board.chains[pos])) {
                           board.chains[pos] = [];
                       }
-                      var t = getTrace(design, board, pos, group[i], level);
+                      var t = getTrace(design, board, group[i], level);
                       if (!f) {
                           if (!_.isUndefined(goals.map[ group[i] ])) {
                               _.each(goals.map[ group[i] ], function(q) {
@@ -252,6 +262,17 @@ var addWish = function(board, comment, price, src, dst) {
   console.log("Wish [" + comment + "]: " + Dagaz.Model.posToString(src) + " - " + Dagaz.Model.posToString(dst) + " = " + price);
 }
 
+var isDefended = function(design, board, target, attacker, len) {
+  var chains = getChains(design, board);
+  for (var pos = 0; pos < this.positions.length; pos++) {
+       if (!_.isUndefined(chains[pos]) && (chains[pos].trace.length <= len)) {
+           var piece = board.getPiece(pos);
+           if ((piece !== null) && (piece.type != attacker.type) && isAttacker(design, piece.type, attacker.type)) return true;
+       }
+  }
+  return false;
+}
+
 var getWish = function(design, board) {
   if (_.isUndefined(board.wish)) {      
       var player = board.getValue(board.player);
@@ -267,8 +288,13 @@ var getWish = function(design, board) {
                   _.each(chains[pos], function(chain) {
                       if (chain.trace.length == 0) return;
                       var price = chain.price;
-                      if (chain.trace.length == 1) price *= 10;
                       if ((chain.trace.length > 3) && (price > 0)) price /= 10;
+                      var p = chain.trace[ chain.trace.length - 1];
+                      if (isDefended(design, board, p, piece, chain.trace.length)) {
+                          price -= design.price[piece.type];
+                      } else {
+                          if ((price > 0) && (chain.trace.length == 1)) price *= 10;
+                      }
                       addWish(board, "1", price, pos, chain.trace[0]);
                   });
               } else {
@@ -359,7 +385,7 @@ var getWish = function(design, board) {
               var targets = []; var enemies = [];
               _.each(design.allPositions(), function(pos) {
                   if (!_.isUndefined(chains[pos])) {
-                      var piece = board.getPiece(pos) {
+                      var piece = board.getPiece(pos);
                       if ((piece !== null) && (piece.player != player) && (piece.type >= 7)) {
                           _.each(chains[pos], function(chain) {
                               if (chain.trace.length == 1) {
