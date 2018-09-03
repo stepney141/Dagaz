@@ -2276,4 +2276,29 @@ ZrfDesign.prototype.setupSelector = function(val) {
   Dagaz.Model.getSetupSelector(val);
 }
 
+Dagaz.Model.getResourceSelector = function() {
+  return Dagaz.Model.setupSelector;
+}
+
+ZrfDesign.prototype.killPositions = function(list, selector) {
+  if (!_.isUndefined(selector) && (selector != Dagaz.Model.getResourceSelector())) return;
+  for (var pos = 0; pos < this.positions.length; pos++) {
+      for (var dir = 0; dir < this.dirs.length; dir++) {
+           if (this.positions[pos][dir] != 0) {
+               var p = + pos + this.positions[pos][dir];
+               if (_.indexOf(list, p) >= 0) {
+                   this.positions[pos][dir] = 0;
+               }
+           }
+      }
+  }
+  var dirs = [];
+  for (var dir = 0; dir < this.dirs.length; dir++) {
+       dirs.push(0);
+  }
+  _.each(list, function(pos) {
+       this.positions[pos] = dirs;
+  }, this);
+}
+
 })();
