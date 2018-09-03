@@ -117,18 +117,72 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
-
     design.addPiece("Stone", 0, 2);
     design.addDrop(0, 0, [], 0);
 
-    design.setup("White", "Stone", 27);
-    design.setup("White", "Stone", 36);
-    design.setup("Black", "Stone", 35);
-    design.setup("Black", "Stone", 28);
+    design.setupSelector(10);
+    design.killPositions([49, 42, 9, 18, 45, 54, 21, 14], 1);
+    design.killPositions([41, 17, 50, 10, 53, 13, 46, 22], 2);
+    design.killPositions([56, 48, 8, 0, 57, 49, 9, 1, 62, 54, 14, 6, 63, 55, 15, 7], 3);
+    design.killPositions([56, 48, 8, 0, 57, 1, 62, 6, 63, 55, 15, 7], 4);
+
+    design.setup("White", "Stone", 27, 1);
+    design.setup("White", "Stone", 36, 1);
+    design.setup("Black", "Stone", 35, 1);
+    design.setup("Black", "Stone", 28, 1);
+
+    design.setup("White", "Stone", 28, 2);
+    design.setup("White", "Stone", 36, 2);
+    design.setup("Black", "Stone", 35, 2);
+    design.setup("Black", "Stone", 27, 2);
+
+    design.setup("White", "Stone", 27, 3);
+    design.setup("White", "Stone", 36, 3);
+    design.setup("Black", "Stone", 35, 3);
+    design.setup("Black", "Stone", 28, 3);
+
+    design.setup("White", "Stone", 28, 4);
+    design.setup("White", "Stone", 36, 4);
+    design.setup("Black", "Stone", 35, 4);
+    design.setup("Black", "Stone", 27, 4);
+
+    design.setup("White", "Stone", 27, 5);
+    design.setup("White", "Stone", 36, 5);
+    design.setup("Black", "Stone", 35, 5);
+    design.setup("Black", "Stone", 28, 5);
+
+    design.setup("White", "Stone", 28, 6);
+    design.setup("White", "Stone", 36, 6);
+    design.setup("Black", "Stone", 35, 6);
+    design.setup("Black", "Stone", 27, 6);
+
+    design.setup("White", "Stone", 27, 7);
+    design.setup("White", "Stone", 36, 7);
+    design.setup("Black", "Stone", 35, 7);
+    design.setup("Black", "Stone", 28, 7);
+
+    design.setup("White", "Stone", 28, 8);
+    design.setup("White", "Stone", 36, 8);
+    design.setup("Black", "Stone", 35, 8);
+    design.setup("Black", "Stone", 27, 8);
+
+    design.setup("White", "Stone", 27, 9);
+    design.setup("White", "Stone", 36, 9);
+    design.setup("Black", "Stone", 35, 9);
+    design.setup("Black", "Stone", 28, 9);
+
+    design.setup("White", "Stone", 28, 10);
+    design.setup("White", "Stone", 36, 10);
+    design.setup("Black", "Stone", 35, 10);
+    design.setup("Black", "Stone", 27, 10);
 }
 
 Dagaz.View.configure = function(view) {
-    view.defBoard("Board");
+    view.defBoard("Board_0", 0, 0, 0);
+    view.defBoard("Board_1", 0, 0, 1);
+    view.defBoard("Board_2", 0, 0, 2);
+    view.defBoard("Board_3", 0, 0, 3);
+    view.defBoard("Board_4", 0, 0, 4);
     view.defPiece("WhiteStone", "White Stone");
     view.defPiece("BlackStone", "Black Stone");
  

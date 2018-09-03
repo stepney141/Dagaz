@@ -13,6 +13,10 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+Dagaz.Model.getResourceSelector = function() {
+  return ((Dagaz.Model.setupSelector - 1) / 2) | 0;
+}
+
 var isValid = function(design, board, player, pos) {
   for (var dir = 0; dir < design.dirs.length; dir++) {
        var p = design.navigate(player, pos, dir);
