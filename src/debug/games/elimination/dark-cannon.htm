@@ -1,0 +1,59 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Cannon</title>
+</head>
+<body>
+
+<img id="Board" style="display:none" src="images/cannon/board.png">
+<img id="RedCannon" style="display:none" src="images/cannon/rcannon.png">
+<img id="BlackCannon" style="display:none" src="images/cannon/bcannon.png">
+<img id="RedHQ" style="display:none" src="images/cannon/rmandarin.png">
+<img id="BlackHQ" style="display:none" src="images/cannon/bmandarin.png">
+<img id="Ko" style="display:none" src="images/cannon/ko.png">
+
+<table style="margin:auto; font-family:sans-serif; font-size:14px" id="Table">
+<tr><td><a href="javascript:Dagaz.Controller.undo()" style="display:none" id="undo"><img src="../../images/undo.png"/></a> 
+Copyright (c) 2003 David E. Whitcher (<a href="http://www.iggamecenter.com/info/en/cannon.html">rules</a>)
+<a href="javascript:Dagaz.Controller.redo()" style="display:none" id="redo"><img src="../../images/redo.png"/></a></td></tr>
+<tr style="height:458px; vertical-align:top">
+<td id="CanvasCell" style="width:456px">
+<canvas id="Canvas" width="456" height="458" style="cursor:default">Broken canvas...</canvas>
+</td><td style="width:300px;">
+<div style="height:510px; overflow:auto" id="ScrollDiv">
+<img id="GlyphImage"><p id="HelpText"></p>
+<p id="GameSession"></p>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div style="height:100px; width:500px; margin-left:auto; margin-right:auto">
+<table>
+<tr style="display:none" id="PieceInfo">
+<td><img id="PieceInfoImage"></td><td id="PieceInfoText"></td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+
+<script src="http://underscorejs.ru/underscore-min.js"></script>
+<script src="../../kernel/dagaz.js"></script>
+<script src="../../kernel/model/zrf-model.js"></script>
+<script src="../../kernel/model/zobrist.js"></script>
+<script src="../../kernel/model/common-setup-v2.js"></script>
+<script src="../../kernel/view/2d/2d-view-v2.js"></script>
+<script src="../../kernel/controller/utils/move-list-v3.js"></script>
+<script src="../../kernel/controller/utils/session-manager.js"></script>
+<script src="../../kernel/controller/ai/random-ai.js"></script>
+<script src="../../kernel/controller/ai/maxmin-ai-v2.js"></script>
+<script src="dark-cannon-view.js"></script>
+<script src="cannon-goal.js"></script>
+<script src="cannon-restrictions.js"></script>
+<script src="dark-cannon.js"></script>
+<script src="../../kernel/controller/app-v2.js"></script>
+
+</body>
+</html>
