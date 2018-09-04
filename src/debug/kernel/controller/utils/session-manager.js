@@ -89,6 +89,9 @@ Dagaz.Controller.redo = function() {
          board = b;
       }
   }
+  if (!_.isUndefined(Dagaz.Controller.play)) {
+      Dagaz.Controller.play(Dagaz.Sounds.page);
+  }
   sm.controller.setBoard(board);
   sm.updateButtons();
 }
@@ -114,6 +117,9 @@ Dagaz.Controller.undo = function() {
          }
          board = b;
       }
+  }
+  if (!_.isUndefined(Dagaz.Controller.play)) {
+      Dagaz.Controller.play(Dagaz.Sounds.page);
   }
   sm.controller.setBoard(board);
   sm.updateButtons();
