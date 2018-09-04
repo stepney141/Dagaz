@@ -773,7 +773,7 @@ ZrfDesign.prototype.addPiece = function(name, type, price) {
   this.price[type] = price ? price : 1;
 }
 
-ZrfDesign.prototype.addMove = function(type, template, params, mode) {
+ZrfDesign.prototype.addMove = function(type, template, params, mode, sound) {
   if (_.isUndefined(this.pieces[type])) {
       this.pieces[type] = [];
   }
@@ -782,12 +782,13 @@ ZrfDesign.prototype.addMove = function(type, template, params, mode) {
          type: 0,
          template: this.templates[template],
          params: params,
+         sound: sound,
          mode: mode
       });
   }
 }
 
-ZrfDesign.prototype.addDrop = function(type, template, params, mode) {
+ZrfDesign.prototype.addDrop = function(type, template, params, mode, sound) {
   if (_.isUndefined(this.pieces[type])) {
       this.pieces[type] = [];
   }
@@ -796,6 +797,7 @@ ZrfDesign.prototype.addDrop = function(type, template, params, mode) {
          type: 1,
          template: this.templates[template],
          params: params,
+         sound: sound,
          mode: mode
       });
   }
@@ -1017,8 +1019,8 @@ ZrfMoveTemplate.prototype.addCommand = function(name, param) {
   }
 }
 
-function ZrfMoveGenerator(design, mode, serial) {
-  this.move     = new ZrfMove(mode, serial);
+function ZrfMoveGenerator(design, mode, serial, sound) {
+  this.move     = new ZrfMove(mode, serial, sound);
   this.start    = mode;
   this.moveType = 1;
   this.template = null;
@@ -1038,11 +1040,11 @@ function ZrfMoveGenerator(design, mode, serial) {
   this.design   = design;
 }
 
-Dagaz.Model.createGen = function(template, params, design, mode, serial) {
+Dagaz.Model.createGen = function(template, params, design, mode, serial, sound) {
   if (_.isUndefined(design)) {
       design = Dagaz.Model.getDesign();
   }
-  var r = new ZrfMoveGenerator(design, mode, serial);
+  var r = new ZrfMoveGenerator(design, mode, serial, sound);
   r.template = template;
   r.params   = Dagaz.int32Array(params);
   return r;
@@ -1054,7 +1056,7 @@ ZrfMoveGenerator.prototype.init = function(board, pos) {
 }
 
 ZrfMoveGenerator.prototype.clone = function() {
-  var r = new ZrfMoveGenerator(this.design, this.start, this.serial);
+  var r = new ZrfMoveGenerator(this.design, this.start, this.serial, this.sound);
   r.template = this.template;
   r.params   = this.params;  
   r.level    = this.level;
@@ -1098,7 +1100,7 @@ ZrfMoveGenerator.prototype.clone = function() {
 }
 
 ZrfMoveGenerator.prototype.copy = function(template, params) {
-  var r = Dagaz.Model.createGen(template, params, this.design, this.move.mode, this.serial);
+  var r = Dagaz.Model.createGen(template, params, this.design, this.move.mode, this.serial, this.move.sound);
   r.level    = this.level + 1;
   r.parent   = this;
   r.board    = this.board;
@@ -1680,7 +1682,7 @@ ZrfBoard.prototype.generateInternal = function(callback, cont, cover, serial) {
                 return design.isValidMode(this.turn, move.mode); 
              }, this)
             .each(function(move) {
-                var g = Dagaz.Model.createGen(move.template, move.params, this.game.design, move.mode, sn++);
+                var g = Dagaz.Model.createGen(move.template, move.params, this.game.design, move.mode, sn++, move.sound);
                 if (!_.isUndefined(cover)) {
                     g.cover  = cover;
                     g.serial = serial;
@@ -1700,7 +1702,7 @@ ZrfBoard.prototype.generateInternal = function(callback, cont, cover, serial) {
                         return design.isValidMode(this.turn, move.mode); 
                      }, this)
                     .each(function(move) {
-                        var g = Dagaz.Model.createGen(move.template, move.params, this.game.design, move.mode, sn++);
+                        var g = Dagaz.Model.createGen(move.template, move.params, this.game.design, move.mode, sn++, move.sound);
                         g.init(this, pos);
                         g.piece = new ZrfPiece(tp, this.player);
                         addPrior(priors, move.mode, g);
@@ -1864,9 +1866,12 @@ ZrfBoard.prototype.apply = function(move) {
   return r;
 }
 
-function ZrfMove(mode, serial) {
+function ZrfMove(mode, serial, sound) {
   this.actions  = [];
   this.serial   = serial;
+  if (!_.isUndefined(sound)) {
+      this.sound = sound;
+  }
   if (_.isUndefined(mode)) {
       this.mode = 0;
   } else {
