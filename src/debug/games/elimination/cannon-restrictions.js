@@ -8,6 +8,10 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+if (!_.isUndefined(Dagaz.Controller.addSound)) {
+    Dagaz.Controller.addSound(10, "../../sounds/shoot.wav");
+}
+
 var isCannon = function(design, board, player, pos, dir) {
   var a = 0; var b = 0;
   var p = design.navigate(player, pos, dir);
