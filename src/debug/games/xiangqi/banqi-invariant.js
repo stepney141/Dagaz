@@ -120,9 +120,9 @@ var getTrace = function(design, board, dst, level) {
   var r = [];
   var pos = dst;
   while (pos !== null) {
-      r.unshift(pos);
       var current = level[pos];
       if (current == 0) return r;
+      r.unshift(pos);
       var next = null;
       _.each(design.allDirections(), function(dir) {
           if (next === null) {
@@ -302,7 +302,7 @@ var getWish = function(design, board) {
                       } else {
                           if ((price > 0) && (chain.trace.length == 1)) price *= 10;
                       }
-                      addWish(board, "1", price, pos, chain.trace[1]);
+                      addWish(board, "1", price, pos, chain.trace[0]);
                   });
               } else {
                   var len = _.chain(chains[pos]).map(function(chain) {
