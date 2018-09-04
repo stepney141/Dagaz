@@ -155,7 +155,7 @@ var getChainPrice = function(design, board, attacker, attacking, len) {
   }
   var price = 0;
   var f = (len % 2 == 0);
-  if (attacker.player == player) f = !f;
+  if (attacker.player != player) f = !f;
   if (isAttacking) {
       if (isAttacked) {
           price = f ? (len - design.price[attacker.type]) : (design.price[attacking.type] - len);
