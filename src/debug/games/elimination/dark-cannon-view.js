@@ -155,7 +155,7 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y, setup
   if (_.indexOf(_.union(Dagaz.Model.invisible, Dagaz.Model.invisibleOld), setup.pos) >= 0) {
       ctx.save();
       if (model.player == 1) {
-          ctx.globalAlpha = 0.7;
+          ctx.globalAlpha = 0.9;
       } else {
           ctx.globalAlpha = 0;
       }
