@@ -86,9 +86,6 @@ App.prototype.done = function() {
           this.gameOver(this.doneMessage, this.winPlayer);
       }
   }
-  if (!_.isUndefined(Dagaz.Controller.stop)) {
-      Dagaz.Controller.stop();
-  }
 }
 
 App.prototype.getStarts = function() {
@@ -158,7 +155,7 @@ App.prototype.setPosition = function(pos) {
 }
 
 App.prototype.syncCaptures = function(move) {
-  var m = Dagaz.Model.createMove(move.mode);
+  var m = Dagaz.Model.createMove(move.mode, move.sound);
   _.each(move.actions, function(a) {
       if ((a[0] !== null) && (a[1] === null)) {
           m.actions.push(a);
