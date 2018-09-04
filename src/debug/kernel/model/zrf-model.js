@@ -1879,8 +1879,10 @@ function ZrfMove(mode, serial, sound) {
   }
 }
 
-Dagaz.Model.createMove = function(mode) {
-  return new ZrfMove(mode);
+Dagaz.Model.createMove = function(mode, sound) {
+  var r = new ZrfMove(mode);
+  r.sound = sound;
+  return r;
 }
 
 Dagaz.Model.compareMove = function(move, notation) {
@@ -1990,12 +1992,14 @@ ZrfMove.prototype.copy = function() {
   var r = new ZrfMove(this.mode);
   r.actions = _.filter(this.actions);
   r.serial  = this.serial;
+  r.sound   = this.sound;
   return r;
 }
 
 ZrfMove.prototype.clone = function(level) {
   var r = new ZrfMove(this.mode);
   r.serial = this.serial;
+  r.sound  = this.sound;
   var o = true;
   r.actions = _.chain(this.actions)
    .filter(function(action) {
