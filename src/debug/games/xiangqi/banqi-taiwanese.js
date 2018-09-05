@@ -28,7 +28,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-blink", "false");
     design.checkVersion("shared-pieces", "true");
     design.checkVersion("pass-partial", "true");
-    design.checkVersion("banqi-setup", "true");
     design.checkVersion("banqi-extension", "true");
     design.checkVersion("banqi-invariant", "true");
 
@@ -205,6 +204,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(13, 7, [1], 0);
     design.addMove(13, 7, [0], 0);
     design.addMove(13, 7, [2], 0);
+
+    // DEBUG:
+/*  design.setup("Black", "UnknownHorse", 0);
+    design.setup("Black", "UnknownSoldier", 1);
+    design.setup("Red", "Cannon", 3 + 8); */
 }
 
 Dagaz.View.configure = function(view) {

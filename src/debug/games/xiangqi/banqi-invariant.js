@@ -219,7 +219,7 @@ var getChains = function(design, board) {
                                           trace: c,
                                           price: price
                                       });
-                                      console.log("Chain[C]: " + chainToStr(c) + ", price = " + price);
+                                      console.log("Chain[C]: " + Dagaz.Model.posToString(pos) + " -> " + chainToStr(c) + ", price = " + price);
                                   }
                               });
                           }
@@ -231,11 +231,12 @@ var getChains = function(design, board) {
                                   trace: t,
                                   price: price
                               });
-                              console.log("Chain[L]: " + chainToStr(t) + ", price = " + price);
+                              console.log("Chain[L]: " + Dagaz.Model.posToString(pos) + " -> " + chainToStr(t) + ", price = " + price);
                           }
                       }
                   }
               }
+              if ((i > 0) && (board.getPiece(group[i]) !== null)) continue;
               _.each(design.allDirections(), function(dir) {
                    p = design.navigate(board.player, group[i], dir);
                    while (p !== null) {
