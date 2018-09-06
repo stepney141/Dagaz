@@ -1,0 +1,56 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Fox Hunting</title>
+</head>
+<body>
+
+<img id="Board" style="display:none" src="images/fox-hunting/board-10x10.png">
+<img id="Youp0" style="display:none" src="images/fox-hunting/0.png">
+<img id="Youp1" style="display:none" src="images/fox-hunting/1.png">
+<img id="Youp2" style="display:none" src="images/fox-hunting/2.png">
+<img id="Youp3" style="display:none" src="images/fox-hunting/3.png">
+<img id="Youp4" style="display:none" src="images/fox-hunting/4.png">
+<img id="Youp5" style="display:none" src="images/fox-hunting/5.png">
+<img id="Youp6" style="display:none" src="images/fox-hunting/6.png">
+<img id="Youp7" style="display:none" src="images/fox-hunting/7.png">
+<img id="Youp8" style="display:none" src="images/fox-hunting/8.png">
+<img id="Youinvisible-fox" style="display:none" src="images/fox-hunting/invisible.png">
+<img id="Youfox" style="display:none" src="images/fox-hunting/fox.png">
+
+<table style="margin:auto; font-family:sans-serif; font-size:14px" id="Table">
+<tr style="height:320px; vertical-align:top">
+<td id="CanvasCell" style="width:320px">
+<canvas id="Canvas" width="320" height="320" style="cursor:default">Broken canvas...</canvas>
+</td><td style="width:300px;">
+<div style="height:510px; overflow:auto" id="ScrollDiv">
+<img id="GlyphImage"><p id="HelpText"></p>
+<p id="GameSession"></p>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div style="height:100px; width:500px; margin-left:auto; margin-right:auto">
+<table>
+<tr style="display:none" id="PieceInfo">
+<td><img id="PieceInfoImage"></td><td id="PieceInfoText"></td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+
+<script src="http://underscorejs.ru/underscore-min.js"></script>
+<script src="../../kernel/dagaz.js"></script>
+<script src="../../kernel/model/zrf-model.js"></script>
+<script src="../../kernel/model/zobrist.js"></script>
+<script src="../../kernel/view/2d/2d-view-v2.js"></script>
+<script src="../../kernel/controller/utils/move-list-v3.js"></script>
+<script src="fox-setup.js"></script>
+<script src="fox-hunting.js"></script>
+<script src="../../kernel/controller/app-v2.js"></script>
+
+</body>
+</html>
