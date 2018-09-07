@@ -6,6 +6,8 @@ var Dagaz  = {
   Controller: {}
 };
 
+Dagaz.Controller.Done = function(board) {}
+
 Dagaz.KPI.open  = function(scope, stage) {}
 Dagaz.KPI.stage = function(stage, scope) {}
 Dagaz.KPI.close = function(scope, stage) {}
@@ -31,15 +33,12 @@ Dagaz.AI.generate = function(ctx, board) {
       return board.moves;
   }
   board.generate(ctx.design);
-  Dagaz.KPI.stage("determinate");
-  var r = _.chain(board.moves)
+  return _.chain(board.moves)
    .map(function(move) {
        return move.determinate();
     })
    .flatten()
    .value();
-  Dagaz.KPI.set("moves", r.length);
-  return r;
 }
 
 Dagaz.AI.reject = function(ctx, move) {
