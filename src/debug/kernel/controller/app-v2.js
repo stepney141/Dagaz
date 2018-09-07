@@ -54,6 +54,8 @@ var gameOver = function(text, self, player) {
 }
 
 App.prototype.gameOver = function(text, player) {
+  Dagaz.Controller.Done(this.board);
+  this.view.markPositions(Dagaz.View.markType.KO, []);
   _.delay(gameOver, 500, text, this, player);
   if (this.board) {
      var captured = [];
@@ -76,6 +78,12 @@ Dagaz.Controller.createApp = function(canvas) {
       Dagaz.Controller.app = new App(canvas);
   }
   return Dagaz.Controller.app;
+}
+
+var sendStat = function(goal, player) {
+  if (player != 1) {
+      goal = -goal;
+  }
 }
 
 App.prototype.done = function() {
@@ -379,6 +387,7 @@ App.prototype.exec = function() {
                   if (passForced >= this.design.getPlayersCount()) {
                       this.state = STATE.DONE;
                       Canvas.style.cursor = "default";
+                      sendStat(0, this.board.player);
                       this.gameOver("Draw", 0);
                   } else {
                       this.boardApply(Dagaz.Model.createMove());
@@ -393,6 +402,7 @@ App.prototype.exec = function() {
              if (this.list.isEmpty()) {
                  this.state = STATE.DONE;
                  Canvas.style.cursor = "default";
+                 sendStat(-1, this.board.player);
                  this.gameOver(player + " loss", -this.board.player);
                  return;
              }
@@ -414,6 +424,7 @@ App.prototype.exec = function() {
           if (_.isUndefined(result.move)) {
               this.state = STATE.DONE;
               Canvas.style.cursor = "default";
+              sendStat(-1, this.board.player);
               this.gameOver(player + " loss", -this.board.player);
               return;
           }
@@ -424,6 +435,7 @@ App.prototype.exec = function() {
                   if (passForced >= this.design.getPlayersCount()) {
                       this.state = STATE.DONE;
                       Canvas.style.cursor = "default";
+                      sendStat(0, this.board.player);
                       this.gameOver("Draw", 0);
                   } else {
                       this.state = STATE.IDLE;
@@ -489,6 +501,9 @@ App.prototype.exec = function() {
               this.state = STATE.DONE;
               Canvas.style.cursor = "default";
               if (g > 0) {
+                  if (!_.isUndefined(Dagaz.Controller.play)) {
+                      Dagaz.Controller.play(Dagaz.Sounds.win);
+                  }
                   this.doneMessage = player + " win";
                   this.winPlayer   = this.board.parent.player;
               } else if (g < 0) {
@@ -498,6 +513,7 @@ App.prototype.exec = function() {
                   this.doneMessage = "Draw";
                   this.winPlayer   = 0;
               }
+              sendStat(g, this.board.parent.player);
           }
      }
   }
