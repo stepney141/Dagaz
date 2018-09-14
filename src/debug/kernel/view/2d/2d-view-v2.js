@@ -661,8 +661,14 @@ var mouseMove = function(event) {
   }
 }
 
+Dagaz.View.PKM = function(view, positions) {}
+
 var mouseUp = function() { 
   var pos = self.pointToPositions(mouseX, mouseY);
+  if (event.button == 2) {
+      Dagaz.View.PKM(self, pos);
+      return;
+  }
   if (pos && self.controller) {
       self.controller.mouseUp(self, pos);
   }
@@ -670,6 +676,7 @@ var mouseUp = function() {
 }
 
 var mouseDown = function(event) { 
+  if (event.button == 2) return;
   mousePressed = true; 
   var pos = self.pointToPositions(mouseX, mouseY);
   if (pos && self.controller) {
@@ -704,5 +711,7 @@ View2D.prototype.init = function(canvas, controller) {
   }
   this.controller = controller;
 }
+
+document.oncontextmenu = function()  { return false; }
 
 })();
