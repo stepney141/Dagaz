@@ -27,7 +27,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-drops", "true");
     design.checkVersion("show-captures", "false");
-    design.checkVersion("fox-extension", "moving");
+    design.checkVersion("fox-extension", "auto");
 
     design.addDirection("w");
     design.addDirection("e");
@@ -172,6 +172,7 @@ Dagaz.View.configure = function(view) {
     view.defPiece("Youp8", "You p8");
     view.defPiece("Youinvisible-fox", "You invisible-fox");
     view.defPiece("Youfox", "You fox");
+    view.defPiece("Ko", "Ko");
  
     view.defPosition("a10", 0, 0, 32, 32);
     view.defPosition("b10", 32, 0, 32, 32);
