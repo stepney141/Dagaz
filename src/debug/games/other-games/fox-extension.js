@@ -96,7 +96,8 @@ Dagaz.Model.CheckInvariants = function(board) {
       if (!_.isUndefined(board.parent) && (board.parent !== null) && !_.isUndefined(board.parent.ko)) {
           var ko = board.parent.ko;
           _.each(ko, function(pos) {
-              if (board.getPiece(pos) === null) {
+              var piece = board.getPiece(pos);
+              if ((piece === null) || (piece.type == 9)) {
                   if (_.isUndefined(board.ko)) {
                       board.ko = [];
                   }
