@@ -12,6 +12,26 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+Dagaz.View.PKM = function(view, positions) {
+  if (positions) {       
+      var app = view.controller;
+      var pos = positions[0];
+      if (!_.isUndefined(pos)) {
+          var piece = app.board.getPiece(pos);
+          if ((piece !== null) && (piece.type != 9)) return;
+          if (_.isUndefined(app.board.ko)) {
+              app.board.ko = [];
+          }
+          if (_.indexOf(app.board.ko, pos) < 0) {
+              app.board.ko.push(pos);
+          } else {
+              app.board.ko = _.without(app.board.ko, pos);
+          }
+          view.markPositions(Dagaz.View.markType.KO, app.board.ko);
+      }
+  }
+}
+
 var isFox = function(type) {
   return type >= 9;
 }
@@ -53,26 +73,38 @@ Dagaz.Model.CheckInvariants = function(board) {
               var cnt = countFoxes(design, board, pos, isFox);
               move.dropPiece(pos, Dagaz.Model.createPiece(cnt, 1));
           }
-          if (auto) {
-              board.ko = [];
-              _.each(design.allPositions(), function(pos) {
-                   var piece = board.getPiece(pos);
-                   if ((piece !== null) && (piece.type < 9)) {
-                       var cnt = countFoxes(design, board, pos, isAliveFox);
-                       if (cnt == 0) {
-                           _.each(design.allDirections(), function(dir) {
-                               var p = design.navigate(board.player, pos, dir);
-                               while (p !== null) {
-                                   if (board.getPiece(p) === null) board.ko.push(p);
-                                   p = design.navigate(board.player, p, dir);
-                               }
-                           });
-                       }
-                   }
-              });
-          }
       }
   });
+  if (auto) {
+      board.ko = [];
+      _.each(design.allPositions(), function(pos) {
+           var piece = board.getPiece(pos);
+           if ((piece !== null) && (piece.type < 9)) {
+               var cnt = countFoxes(design, board, pos, isAliveFox);
+               if (cnt == 0) {
+                   _.each(design.allDirections(), function(dir) {
+                       var p = design.navigate(board.player, pos, dir);
+                       while (p !== null) {
+                           if (board.getPiece(p) === null) board.ko.push(p);
+                           p = design.navigate(board.player, p, dir);
+                       }
+                   });
+               }
+           }
+      });
+  } else {
+      if (!_.isUndefined(board.parent) && (board.parent !== null) && !_.isUndefined(board.parent.ko)) {
+          var ko = board.parent.ko;
+          _.each(ko, function(pos) {
+              if (board.getPiece(pos) === null) {
+                  if (_.isUndefined(board.ko)) {
+                      board.ko = [];
+                  }
+                  board.ko.push(pos);
+              }
+          });
+      }
+  }
   CheckInvariants(board);
 }
 
