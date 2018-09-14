@@ -663,12 +663,9 @@ var mouseMove = function(event) {
 
 Dagaz.View.PKM = function(view, positions) {}
 
-var mouseUp = function() { 
+var mouseUp = function(event) { 
   var pos = self.pointToPositions(mouseX, mouseY);
-  if (event.button == 2) {
-      Dagaz.View.PKM(self, pos);
-      return;
-  }
+  if (event.button == 2) return;
   if (pos && self.controller) {
       self.controller.mouseUp(self, pos);
   }
@@ -712,6 +709,10 @@ View2D.prototype.init = function(canvas, controller) {
   this.controller = controller;
 }
 
-document.oncontextmenu = function()  { return false; }
+document.oncontextmenu = function()  { 
+  var pos = self.pointToPositions(mouseX, mouseY);
+  Dagaz.View.PKM(self, pos);
+  return false; 
+}
 
 })();
