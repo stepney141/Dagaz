@@ -47,10 +47,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addTurn(1);
     design.addTurn(1);
     design.addTurn(1);
-    design.addTurn(2);
-    design.addTurn(2);
-    design.addTurn(2);
-    design.addTurn(2);
     design.repeatMark();
     design.addTurn(1);
     design.addTurn(2);
@@ -416,8 +412,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "Soldier", 31);
     design.setup("Black", "Soldier", 33);
     design.setup("Black", "Soldier", 35);
-    design.reserve("Black", "Horse", 2);
-    design.reserve("Black", "Elephant", 2);
+    design.reserve("Black", "Horse", 0);
+    design.reserve("Black", "Elephant", 0);
     design.setup("Black", "Chariot", 0);
     design.setup("Black", "Chariot", 8);
     design.setup("Black", "Mandarin", 3);
@@ -425,6 +421,28 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "Cannon", 19);
     design.setup("Black", "Cannon", 25);
     design.setup("Black", "General", 13);
+
+    design.setupSelector(4);
+
+    design.setup("Black", "Horse", 1, 1);
+    design.setup("Black", "Elephant", 2, 1);
+    design.setup("Black", "Elephant", 6, 1);
+    design.setup("Black", "Horse", 7, 1);
+
+    design.setup("Black", "Elephant", 1, 2);
+    design.setup("Black", "Horse", 2, 2);
+    design.setup("Black", "Elephant", 6, 2);
+    design.setup("Black", "Horse", 7, 2);
+
+    design.setup("Black", "Horse", 1, 3);
+    design.setup("Black", "Elephant", 2, 3);
+    design.setup("Black", "Horse", 6, 3);
+    design.setup("Black", "Elephant", 7, 3);
+
+    design.setup("Black", "Elephant", 1, 4);
+    design.setup("Black", "Horse", 2, 4);
+    design.setup("Black", "Horse", 6, 4);
+    design.setup("Black", "Elephant", 7, 4);
 }
 
 Dagaz.View.configure = function(view) {
