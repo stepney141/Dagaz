@@ -45,7 +45,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                       if (_.indexOf(setup, group[i]) >= 0) continue;
                       if (i > 0) {
                           t = countNeighbors(design, board, group[i], pos, setup);
-                          move.dropPiece(pos, Dagaz.Model.createPiece(t, 1));
+                          move.dropPiece(group[i], Dagaz.Model.createPiece(t, 1));
                           if (t > 0) continue;
                       }
                       _.each(design.allDirections(), function(dir) {
