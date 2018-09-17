@@ -44,8 +44,8 @@ Dagaz.Model.CheckInvariants = function(board) {
                       move.sound = 1;
                       _.each(design.allPositions(), function(p) {
                           if (p == pos) return;
-                          piece = board.getPiece(p);
-                          if ((piece !== null) && (piece == 9)) {
+                          var piece = board.getPiece(p);
+                          if ((piece !== null) && (piece.type == 9)) {
                               piece = piece.promote(11);
                               move.dropPiece(p, piece);
                           }
