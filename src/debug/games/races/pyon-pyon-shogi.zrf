@@ -1,0 +1,67 @@
+(define step (
+  $1 (verify empty?) add
+))
+
+(define jump (
+  $1 (verify not-empty?)
+  (while not-empty? $1)
+  (verify empty?) 
+  (add-partial continue-type)
+))
+
+(game
+  (title "Hasami Shogi")
+
+  (move-sound "Audio\Pickup.wav")
+  (release-sound "Audio\Pickup.wav")
+  (capture-sound "")
+  (drop-sound "")
+
+  (option "animate captures" false)
+  (option "smart moves"      false)
+
+  (players South North)
+  (turn-order South North)
+
+  (board
+     (image "images/pyon/board.bmp")
+     (grid
+         (start-rectangle 8 9 49 55)
+         (dimensions
+           ("a/b/c/d/e/f/g/h/i" (41 0)) ; files
+           ("9/8/7/6/5/4/3/2/1" (0 46)) ; ranks
+         )
+         (directions 
+             (n 0 -1) (s 0 1) 
+         )
+     )
+     (symmetry North (n s) (s n))
+     (zone (name goal-zone) (players South)
+         (positions 
+             d9 e9 f9 d8 e8 f8 d7 e7 f7
+         )
+     )
+     (zone (name goal-zone) (players North)
+         (positions 
+             d1 e1 f1 d2 e2 f2 d3 e3 f3
+         )
+     )
+  )
+
+  (piece
+     (name  Pawn)
+     (image South "images/pyon/spawn.bmp"
+            North "images/pyon/ntokin.bmp")
+     (moves
+           (move-type normal-type)
+           (step n)
+           (move-type continue-type)
+           (jump n)
+     )
+  )
+
+  (board-setup
+    (South (Pawn d1 e1 f1 d2 e2 f2 d3 e3 f3))
+    (North (Pawn d9 e9 f9 d8 e8 f8 d7 e7 f7))
+  )
+)
