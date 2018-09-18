@@ -3,7 +3,7 @@ Dagaz.Sounds = [];
 Dagaz.Sounds.move  = 0;
 Dagaz.Sounds.drop  = 1;
 Dagaz.Sounds.win   = 2;
-Dagaz.Sounds.loss  = 3;
+Dagaz.Sounds.lose  = 3;
 Dagaz.Sounds.draw  = 4;
 Dagaz.Sounds.page  = 5;
 
