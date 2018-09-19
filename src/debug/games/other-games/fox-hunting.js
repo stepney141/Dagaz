@@ -145,8 +145,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
     design.addPiece("p0", 0);
-    design.addDrop(0, 0, [], 0);
-
     design.addPiece("p1", 1);
     design.addPiece("p2", 2);
     design.addPiece("p3", 3);
@@ -157,6 +155,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPiece("p8", 8);
     design.addPiece("invisible-fox", 9);
     design.addPiece("fox", 10);
+    design.addPiece("empty", 11);
+
+    design.addDrop(11, 0, [], 0);
 }
 
 Dagaz.View.configure = function(view) {
@@ -172,6 +173,7 @@ Dagaz.View.configure = function(view) {
     view.defPiece("Youp8", "You p8");
     view.defPiece("Youinvisible-fox", "You invisible-fox");
     view.defPiece("Youfox", "You fox");
+    view.defPiece("Youempty", "You empty");
     view.defPiece("Ko", "Ko");
  
     view.defPosition("a10", 0, 0, 32, 32);
