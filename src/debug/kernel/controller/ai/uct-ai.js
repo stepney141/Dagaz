@@ -39,7 +39,7 @@ function UctAi(params, parent) {
 var findBot = Dagaz.AI.findBot;
 
 Dagaz.AI.findBot = function(type, params, parent) {
-  if ((type == "common") || (type == "uct") || (type == "2")) {
+  if ((type == "common") || (type == "uct") || (type == "1") || (type == "2")) {
       return new UctAi(params, parent);
   } else {
       return findBot(type, params, parent);
@@ -190,7 +190,6 @@ UctAi.prototype.simulate = function(ctx, node, eval) {
   while (Date.now() - ctx.timestamp < this.params.AI_FRAME) {
       if (deep > this.params.MAX_DEEP) break;
       this.generate(ctx, board);
-      Dagaz.KPI.stage("simulate");
       if (board.moves.length == 0) {
           if (!Dagaz.Model.stalemateDraw) {
               if (board.player != ctx.board.player) {
@@ -293,9 +292,7 @@ UctAi.prototype.setContext = function(ctx, board) {
 }
 
 UctAi.prototype.getMove = function(ctx) {
-  Dagaz.KPI.open("model");
   this.generate(ctx, ctx.board);
-  Dagaz.KPI.close("model");
   if (ctx.board.moves.length == 0) {
       return { done: true, ai: "nothing" };
   }
@@ -350,7 +347,6 @@ UctAi.prototype.getMove = function(ctx) {
           ctx.init++;
       }
   }
-  Dagaz.KPI.open("ai");
   while (Date.now() - ctx.timestamp < this.params.AI_FRAME) {
       var node = null;
       if (ctx.init < ctx.childs.length) {
@@ -375,7 +371,6 @@ UctAi.prototype.getMove = function(ctx) {
       node.all++;
       ctx.all++;
   }
-  Dagaz.KPI.close("ai");
   ctx.childs = _.filter(ctx.childs, function(node) {
       return !node.bad;
   });

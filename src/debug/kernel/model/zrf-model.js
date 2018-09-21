@@ -946,6 +946,10 @@ ZrfDesign.prototype.findDirection = function(from, to) {
   return dir;
 }
 
+ZrfDesign.prototype.opposite = function(dir) {
+   return this.players[0][dir];
+}
+
 ZrfDesign.prototype.navigate = function(player, pos, dir) {
   if (!_.isUndefined(this.players[player])) {
       dir = this.players[player][dir];

@@ -113,6 +113,18 @@ Design.prototype.stringToPos = function(name) {
    }
 }
 
+Design.prototype.opposite = function(dir) {
+   // TODO:
+}
+
+Design.prototype.navigate = function(player, pos, dir) {
+   // TODO:
+}
+
+Design.prototype.inZone = function(player, pos, zone) {
+   // TODO:
+}
+
 function Move(mode) {
    this.mode  = mode;
    this.parts = [];
