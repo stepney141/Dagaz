@@ -26,6 +26,8 @@ function App(canvas) {
 }
 
 App.prototype.gameOver = function(text, player) {
+  Dagaz.Controller.Done(this.board);
+  this.view.markPositions(Dagaz.View.markType.KO, []);
   _.delay(alert, GAME_OVER_DELAY, text);
   if (this.board) {
       var captured = [];
@@ -63,6 +65,14 @@ App.prototype.done = function() {
 App.prototype.getTargets = function() {
   if (_.isUndefined(this.list)) return [];
       else return _.union(this.list.getStarts(), this.list.getStops());
+}
+
+App.prototype.clearPositions = function() {
+  delete this.starts;
+  delete this.stops;
+  delete this.targets;
+  delete this.drops;
+  this.view.clearDrops();
 }
 
 App.prototype.setPosition = function(pos) {
@@ -109,6 +119,13 @@ App.prototype.mouseDown = function(view, pos) {
 
 App.prototype.mouseWheel = function(view, delta) {}
 
+App.prototype.boardApply = function(move) {
+  this.board = this.board.apply(move);
+  if (!_.isUndefined(Dagaz.Controller.addState)) {
+      Dagaz.Controller.addState(move, this.board);
+  }
+}
+
 App.prototype.getAI = function() {
   if (_.isUndefined(this.ai)) {
       this.ai = null;
@@ -125,7 +142,10 @@ App.prototype.getAI = function() {
 
 App.prototype.getBoard = function() {
   if (_.isUndefined(this.board)) {
-      this.board  = Dagaz.Model.getInitBoard();
+      this.board = Dagaz.Model.getInitBoard();
+      if (!_.isUndefined(Dagaz.Controller.addState)) {
+          Dagaz.Controller.addState(Dagaz.Model.createMove(), this.board);
+      }
   }
   return this.board;
 }
@@ -139,6 +159,20 @@ App.prototype.getContext = function(player) {
       this.context[player] = Dagaz.AI.createContext(this.design);
   }
   return this.context[player];
+}
+
+App.prototype.isReady = function() {
+  return this.state == STATE.IDLE;
+}
+
+App.prototype.setBoard = function(board) {
+  if (this.isReady()) {
+      this.board = board;
+      this.view.reInit(board);
+      delete this.list;
+      this.clearPositions();
+      this.view.markPositions(Dagaz.View.markType.TARGET, []);
+  }
 }
 
 App.prototype.exec = function() {
@@ -172,6 +206,9 @@ App.prototype.exec = function() {
              if (this.list.isEmpty()) {
                  this.state = STATE.DONE;
                  Canvas.style.cursor = "default";
+                 if (!_.isUndefined(Dagaz.Controller.play)) {
+                     Dagaz.Controller.play(Dagaz.Sounds.lose);
+                 }
                  this.gameOver(player + " lose", -this.board.player);
                  return;
              }
@@ -193,6 +230,9 @@ App.prototype.exec = function() {
           if (_.isUndefined(result.move)) {
               this.state = STATE.DONE;
               Canvas.style.cursor = "default";
+              if (!_.isUndefined(Dagaz.Controller.play)) {
+                  Dagaz.Controller.play(Dagaz.Sounds.win);
+              }
               this.gameOver(player + " lose", -this.board.player);
               return;
           }
@@ -211,9 +251,16 @@ App.prototype.exec = function() {
               console.log(this.move.toString());
           }
           this.move.applyAll(this.view);
-          this.board = this.board.apply(this.move);
+          this.boardApply(this.move);
           delete this.list;
           this.state = STATE.WAIT;
+          if (!_.isUndefined(Dagaz.Controller.play)) {
+              var sound = Dagaz.Sounds.move;
+              if (!_.isUndefined(this.move.sound)) {
+                  sound = this.move.sound;
+              }
+              Dagaz.Controller.play(sound);
+          }
       }
       if (this.board.parent !== null) {
           var g = this.board.checkGoals(this.design, this.board.parent.player);
@@ -222,12 +269,29 @@ App.prototype.exec = function() {
               this.state = STATE.DONE;
               Canvas.style.cursor = "default";
               if (g > 0) {
+                  if (!_.isUndefined(Dagaz.Controller.play)) {
+                      if (this.board.parent.player == 1) {
+                         Dagaz.Controller.play(Dagaz.Sounds.win);
+                      } else {
+                         Dagaz.Controller.play(Dagaz.Sounds.lose);
+                      }
+                  }
                   this.doneMessage = player + " win";
                   this.winPlayer   = this.board.parent.player;
               } else if (g < 0) {
+                  if (!_.isUndefined(Dagaz.Controller.play)) {
+                      if (this.board.parent.player != 1) {
+                         Dagaz.Controller.play(Dagaz.Sounds.win);
+                      } else {
+                         Dagaz.Controller.play(Dagaz.Sounds.lose);
+                      }
+                  }
                   this.doneMessage = player + " lose";
                   this.winPlayer   = -this.board.parent.player;
               } else {
+                  if (!_.isUndefined(Dagaz.Controller.play)) {
+                      Dagaz.Controller.play(Dagaz.Sounds.draw);
+                  }
                   this.doneMessage = "Draw";
                   this.winPlayer   = 0;
               }
@@ -238,6 +302,10 @@ App.prototype.exec = function() {
 
 Dagaz.Model.InitGame();
 Dagaz.Controller.createApp(Canvas);
+
+if (!_.isUndefined(Dagaz.Controller.getSessionManager)) {
+  Dagaz.Controller.getSessionManager(Dagaz.Controller.app);
+}
 
 App.prototype.run = function() {
   var timestamp = Date.now();

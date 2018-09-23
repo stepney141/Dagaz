@@ -198,6 +198,9 @@ App.prototype.exec = function() {
                   if (passForced >= this.design.getPlayersCount()) {
                       this.state = STATE.DONE;
                       Canvas.style.cursor = "default";
+                      if (!_.isUndefined(Dagaz.Controller.play)) {
+                          Dagaz.Controller.play(Dagaz.Sounds.draw);
+                      }
                       this.gameOver("Draw");
                   } else {
                       this.board = this.board.apply(this.list.getMoves()[0]);                 
@@ -211,6 +214,9 @@ App.prototype.exec = function() {
              if (this.list.getMoves().length == 0) {
                  this.state = STATE.DONE;
                  Canvas.style.cursor = "default";
+                 if (!_.isUndefined(Dagaz.Controller.play)) {
+                     Dagaz.Controller.play(Dagaz.Sounds.lose);
+                 }
                  this.gameOver(player + " lose");
                  return;
              }
@@ -232,6 +238,9 @@ App.prototype.exec = function() {
           if (_.isUndefined(result.move)) {
               this.state = STATE.DONE;
               Canvas.style.cursor = "default";
+              if (!_.isUndefined(Dagaz.Controller.play)) {
+                  Dagaz.Controller.play(Dagaz.Sounds.win);
+              }
               this.gameOver(player + " lose");
               return;
           }
@@ -240,6 +249,9 @@ App.prototype.exec = function() {
                   if (passForced >= this.design.getPlayersCount()) {
                       this.state = STATE.DONE;
                       Canvas.style.cursor = "default";
+                      if (!_.isUndefined(Dagaz.Controller.play)) {
+                          Dagaz.Controller.play(Dagaz.Sounds.draw);
+                      }
                       this.gameOver("Draw");
                   } else {
                       this.board = this.board.apply(result.move);                 
@@ -277,13 +289,30 @@ App.prototype.exec = function() {
           this.state = STATE.DONE;
           Canvas.style.cursor = "default";
           if (g > 0) {
+              if (!_.isUndefined(Dagaz.Controller.play)) {
+                  if (this.board.parent.player == 1) {
+                      Dagaz.Controller.play(Dagaz.Sounds.win);
+                  } else {
+                      Dagaz.Controller.play(Dagaz.Sounds.lose);
+                  }
+              }
               this.doneMessage = player + " win";
               if (!_.isUndefined(Dagaz.Controller.play)) {
                   Dagaz.Controller.play(Dagaz.Sounds.win);
               }
           } else if (g < 0) {
+              if (!_.isUndefined(Dagaz.Controller.play)) {
+                  if (this.board.parent.player != 1) {
+                     Dagaz.Controller.play(Dagaz.Sounds.win);
+                  } else {
+                     Dagaz.Controller.play(Dagaz.Sounds.lose);
+                  }
+              }
               this.doneMessage = player + " lose";
           } else {
+              if (!_.isUndefined(Dagaz.Controller.play)) {
+                  Dagaz.Controller.play(Dagaz.Sounds.draw);
+              }
               this.doneMessage = "Draw";
           }
       } else {
