@@ -92,17 +92,17 @@ Dagaz.Model.CheckInvariants = function(board) {
           var pos = move.actions[0][0][0];
           var piece = board.getPiece(pos);
           if (piece !== null) {
+              var b = board.apply(move);
               if (piece.player == 3) {
                   if (checkDirection && !isAttacked(design, board, pos) && (move.mode == 3)) {
                       move.failed = true;
                       return;
                   }
                   pos = move.actions[0][1][0];
-                  if (isAttacked(design, board, pos)) {
+                  if (isAttacked(design, b, pos)) {
                       move.failed = true;
                   }
               } else {
-                  var b = board.apply(move);
                   var pos = findKing(design, b);
                   if ((pos !== null) && isAttacked(design, b, pos, b.player)) {
                       move.failed = true;
