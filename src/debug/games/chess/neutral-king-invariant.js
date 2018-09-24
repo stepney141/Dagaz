@@ -21,13 +21,16 @@ var findKing = function(design, board) {
   return null;
 }
 
-var checkDirection = function(design, board, player, pos, dir, leapers, riders) {
+var checkDirection = function(design, board, player, pos, dir, leapers, riders, owner) {
   var p = design.navigate(1, pos, dir);
   if (p === null) return false;
   var piece = board.getPiece(p);
   if (piece !== null) {
       if (!_.isUndefined(player)) {
           if (piece.player != player) return false;
+      }
+      if (!_.isUndefined(owner) && (piece.type == 0)) {
+          if (piece.player == owner) return false;
       }
       return (_.indexOf(leapers, piece.type) >= 0) || (_.indexOf(riders, piece.type) >= 0);
   }
@@ -68,10 +71,10 @@ var isAttacked = function(design, board, pos, player) {
   if (checkDirection(design, board, player, pos, s,  [], [rook])) return true;
   if (checkDirection(design, board, player, pos, w,  [], [rook])) return true;
   if (checkDirection(design, board, player, pos, e,  [], [rook])) return true;
-  if (checkDirection(design, board, player, pos, nw, [pawn], [bishop])) return true;
-  if (checkDirection(design, board, player, pos, ne, [pawn], [bishop])) return true;
-  if (checkDirection(design, board, player, pos, sw, [], [bishop])) return true;
-  if (checkDirection(design, board, player, pos, se, [], [bishop])) return true;
+  if (checkDirection(design, board, player, pos, nw, [pawn], [bishop], 1)) return true;
+  if (checkDirection(design, board, player, pos, ne, [pawn], [bishop], 1)) return true;
+  if (checkDirection(design, board, player, pos, sw, [pawn], [bishop], 2)) return true;
+  if (checkDirection(design, board, player, pos, se, [pawn], [bishop], 2)) return true;
   if (checkLeap(design, board, player, pos, n, nw, knight)) return true;
   if (checkLeap(design, board, player, pos, n, ne, knight)) return true;
   if (checkLeap(design, board, player, pos, s, sw, knight)) return true;
