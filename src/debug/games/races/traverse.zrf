@@ -129,6 +129,9 @@
             West  "images/traverse/wc.bmp"
             North "images/traverse/nc.bmp"
             East  "images/traverse/ec.bmp")
+     (drops
+         (drop)
+     )
      (moves
          (move-type normal-type)
          (step n) (step nw)
