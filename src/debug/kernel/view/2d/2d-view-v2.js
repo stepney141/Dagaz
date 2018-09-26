@@ -357,6 +357,9 @@ var drawMarks = function(ctx, view, list, color) {
         if (Math.abs(pos.dy - pos.dx) > 10) {
             r = Math.min(pos.dy, pos.dx) / 2;
         }
+        if (!_.isUndefined(Dagaz.View.MARK_R)) {
+            r = Dagaz.View.MARK_R;
+        }
         ctx.beginPath();
         ctx.fillStyle = color;
         ctx.arc(x + Dagaz.View.SHIFT_X, y + Dagaz.View.SHIFT_Y, r, 0, 2 * Math.PI);

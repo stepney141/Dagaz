@@ -22,6 +22,7 @@ Dagaz.Model.progressive     = false;
 Dagaz.Model.silent          = false;
 Dagaz.Model.showDrops       = -1;
 Dagaz.Model.dragNdrop       = true;
+Dagaz.Model.detectLoops     = false;
 
 Dagaz.Model.checkVersion = function(design, name, value) {  
   if (name == "z2j") {
@@ -50,8 +51,12 @@ Dagaz.Model.checkVersion = function(design, name, value) {
          (name != "shared-pieces")      &&
          (name != "show-blink")         &&
          (name != "drag-n-drop")        &&
+         (name != "detect-loops")       &&
          (name != "silent-?-moves")) {
          design.failed = true;
+     }
+     if (name == "detect-loops") {
+         if (value == "true")    Dagaz.Model.detectLoops = true;
      }
      if (name == "drag-n-drop") {
          if (value == "false")   Dagaz.Model.dragNdrop = false;
@@ -409,7 +414,7 @@ Dagaz.Model.functions[Dagaz.Model.ZRF_TO] = function(gen) {
    }
    delete gen.from;
    delete gen.piece;
-   if (gen.pos !== null) {
+   if (Dagaz.Model.detectLoops && (gen.pos !== null)) {
        if (!gen.notLooped()) {
            gen.move.failed = true;
        }
@@ -1063,7 +1068,9 @@ Dagaz.Model.createGen = function(template, params, design, mode, serial, sound) 
 ZrfMoveGenerator.prototype.init = function(board, pos) {
   this.board    = board;
   this.pos      = +pos;
-  this.steps.push(this.pos);
+  if (Dagaz.Model.detectLoops) {
+      this.steps.push(this.pos);
+  }
 }
 
 ZrfMoveGenerator.prototype.clone = function() {
@@ -1112,9 +1119,11 @@ ZrfMoveGenerator.prototype.clone = function() {
 
 var copyArray = function(a) {
   var r = [];
-  _.each(a, function(x) {
-      r.push(x);
-  });
+  if (Dagaz.Model.detectLoops) {
+      _.each(a, function(x) {
+          r.push(x);
+      });
+  }
   return r;
 }
 
@@ -1126,7 +1135,9 @@ ZrfMoveGenerator.prototype.copy = function(template, params) {
   r.pos      = this.pos;
   r.move     = this.move.copy();
   r.steps    = copyArray(this.steps);
-  r.steps.push(this.pos);
+  if (Dagaz.Model.detectLoops) {
+      r.steps.push(this.pos);
+  }
   if (!_.isUndefined(this.cover)) {
       r.cover   = this.cover;
       r.serial  = this.serial;
