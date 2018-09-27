@@ -38,17 +38,17 @@
          )
      )
      (zone (name goal-zone) (players White)
-           (positions f10 g10 h10 i10 j10 g9 h9 i9 j9 h8 i8 j8 i7 j7 j6)
+           (positions a10 b10 c10 d10 a9 b9 c9 d9 a8 b8 c8 a7 b7)
      )
      (zone (name goal-zone) (players Black)
-           (positions a1 b1 c1 d1 e1 a2 b2 c2 d2 a3 b3 c3 a4 b4 a5)
+           (positions g1 h1 i1 j1 g2 h2 i2 j2 h3 i3 j3 i4 j4)
      )
   )
 
   (piece
      (name Man)
-     (image White "images/halma/wman.bmp"
-            Black "images/halma/bman.bmp")
+     (image White "images/halma/rman.bmp"
+            Black "images/halma/uman.bmp")
      (moves
          (move-type normal-type)
          (step n) (step nw)
@@ -64,8 +64,8 @@
   )
 
   (board-setup
-    (White (Man a1 b1 c1 d1 e1 a2 b2 c2 d2 a3 b3 c3 a4 b4 a5))
-    (Black (Man f10 g10 h10 i10 j10 g9 h9 i9 j9 h8 i8 j8 i7 j7 j6))
+    (White (Man g1 h1 i1 j1 g2 h2 i2 j2 h3 i3 j3 i4 j4))
+    (Black (Man a10 b10 c10 d10 a9 b9 c9 d9 a8 b8 c8 a7 b7))
   )
 )
 
