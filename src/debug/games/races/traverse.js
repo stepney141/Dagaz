@@ -24,6 +24,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "false");
     design.checkVersion("pass-partial", "true");
+    design.checkVersion("show-hints", "false");
+    design.checkVersion("show-drops", "true");
     design.checkVersion("detect-loops", "true");
 
     design.addDirection("se");
@@ -39,6 +41,20 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPlayer("West", [2, 4, 6, 1, 7, 0, 5, 3]);
     design.addPlayer("North", [6, 7, 5, 4, 3, 2, 0, 1]);
     design.addPlayer("East", [5, 3, 0, 7, 1, 6, 2, 4]);
+
+    design.addTurn(1, [2]);
+    design.addTurn(1, [2]);
+    design.addTurn(1, [2]);
+    design.addTurn(1, [2]);
+    design.addTurn(1, [2]);
+    design.addTurn(1, [2]);
+    design.addTurn(1, [2]);
+    design.addTurn(1, [2]);
+    design.repeatMark();
+    design.addTurn(1);
+    design.addTurn(2);
+    design.addTurn(3);
+    design.addTurn(4);
 
     design.addPosition("X9", [0, 1, 2, 3, 4, 5, 6, 7]);
     design.addPosition("a9", [11, 10, 9, 1, 0, 0, 0, 0]);
@@ -172,7 +188,15 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(1, ZRF.FUNCTION,	25);	// to
     design.addCommand(1, ZRF.FUNCTION,	28);	// end
 
+    design.addCommand(2, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(2, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(2, ZRF.IN_ZONE,	1);	// home-zone
+    design.addCommand(2, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(2, ZRF.FUNCTION,	25);	// to
+    design.addCommand(2, ZRF.FUNCTION,	28);	// end
+
     design.addPiece("T", 0);
+    design.addDrop(0, 2, [], 2);
     design.addMove(0, 0, [6], 0);
     design.addMove(0, 0, [5], 0);
     design.addMove(0, 0, [1], 0);
@@ -181,6 +205,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 1, [1, 1], 1);
 
     design.addPiece("S", 1);
+    design.addDrop(1, 2, [], 2);
     design.addMove(1, 0, [7], 0);
     design.addMove(1, 0, [3], 0);
     design.addMove(1, 0, [4], 0);
@@ -191,6 +216,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(1, 1, [1, 1], 1);
 
     design.addPiece("R", 2);
+    design.addDrop(2, 2, [], 2);
     design.addMove(2, 0, [6], 0);
     design.addMove(2, 0, [5], 0);
     design.addMove(2, 0, [2], 0);
@@ -201,6 +227,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(2, 1, [0, 0], 1);
 
     design.addPiece("C", 3);
+    design.addDrop(3, 2, [], 2);
     design.addMove(3, 0, [7], 0);
     design.addMove(3, 0, [6], 0);
     design.addMove(3, 0, [3], 0);
@@ -218,14 +245,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(3, 1, [1, 1], 1);
     design.addMove(3, 1, [0, 0], 1);
 
-    design.setup("South", "S", 91);
-    design.setup("South", "S", 98);
-    design.setup("South", "T", 92);
-    design.setup("South", "T", 97);
-    design.setup("South", "R", 93);
-    design.setup("South", "R", 96);
-    design.setup("South", "C", 94);
-    design.setup("South", "C", 95);
     design.setup("West", "S", 80);
     design.setup("West", "S", 10);
     design.setup("West", "T", 70);
@@ -234,6 +253,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("West", "R", 30);
     design.setup("West", "C", 50);
     design.setup("West", "C", 40);
+
     design.setup("North", "S", 1);
     design.setup("North", "S", 8);
     design.setup("North", "T", 2);
@@ -242,6 +262,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("North", "R", 6);
     design.setup("North", "C", 4);
     design.setup("North", "C", 5);
+
     design.setup("East", "S", 89);
     design.setup("East", "S", 19);
     design.setup("East", "T", 79);
@@ -250,6 +271,26 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("East", "R", 39);
     design.setup("East", "C", 59);
     design.setup("East", "C", 49);
+
+    design.reserve("South", "S", 2);
+    design.reserve("South", "T", 2);
+    design.reserve("South", "R", 2);
+    design.reserve("South", "C", 2);
+
+    design.reserve("West", "S", 0);
+    design.reserve("West", "T", 0);
+    design.reserve("West", "R", 0);
+    design.reserve("West", "C", 0);
+
+    design.reserve("North", "S", 0);
+    design.reserve("North", "T", 0);
+    design.reserve("North", "R", 0);
+    design.reserve("North", "C", 0);
+
+    design.reserve("East", "S", 0);
+    design.reserve("East", "T", 0);
+    design.reserve("East", "R", 0);
+    design.reserve("East", "C", 0);
 }
 
 Dagaz.View.configure = function(view) {

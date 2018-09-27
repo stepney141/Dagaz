@@ -1149,7 +1149,7 @@ ZrfMoveGenerator.prototype.copy = function(template, params) {
 }
 
 ZrfMoveGenerator.prototype.notLooped = function() {
-  return _.indexOf(this.steps, this.pos) < 0;
+  return (this.steps.length < 2) || (_.indexOf(this.steps, this.pos) < 0);
 }
 
 ZrfMoveGenerator.prototype.getPos = function() {

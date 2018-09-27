@@ -35,6 +35,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPlayer("White", [3, 2, 1, 0]);
     design.addPlayer("Black", [0, 1, 2, 3]);
+
     design.addTurn(1);
     design.addTurn(1);
     design.addTurn(1);
@@ -59,7 +60,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.repeatMark();
     design.addTurn(1);
     design.addTurn(2);
-
 
     design.addPosition("a8", [9, 1, 0, 0]);
     design.addPosition("b8", [9, 1, -1, 0]);
