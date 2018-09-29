@@ -540,6 +540,9 @@ Dagaz.Controller.app = Dagaz.Controller.createApp(Canvas);
 if (!_.isUndefined(Dagaz.Controller.getSessionManager)) {
   Dagaz.Controller.getSessionManager(Dagaz.Controller.app);
 }
+if (!_.isUndefined(Dagaz.Controller.play)) {
+  Dagaz.Controller.play(Dagaz.Sounds.start);
+}
 
 App.prototype.run = function() {
   var timestamp = Date.now();
