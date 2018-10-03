@@ -25,7 +25,7 @@ var showPiece = Dagaz.View.showPiece;
 Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
   var val = null;
   if (model) {
-      val = model.getValue(0);
+      val = Math.abs(model.getValue(0));
   }
   if (val !== null) {
       var dx = frame.dx; var dy = frame.dy;

@@ -27,6 +27,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-hints", "false");
     design.checkVersion("mancala-setup", "4");
     design.checkVersion("mancala-view", "true");
+    design.checkVersion("tchuka-ruma-extension", "7");
 
     design.addDirection("nx");
 
@@ -64,6 +65,7 @@ Dagaz.Model.BuildDesign = function(design) {
 Dagaz.View.configure = function(view) {
     view.defBoard("Board");
     view.defPiece("YouSeed", "You Seed");
+    view.defPiece("Ko", "Ko");
  
     view.defPosition("a1", 8, 8, 80, 80);
     view.defPosition("b1", 108, 8, 80, 80);

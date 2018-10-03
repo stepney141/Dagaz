@@ -7,17 +7,20 @@ Dagaz.View.DY       = 0;
 Dagaz.View.MX       = 25;
 
 var cache = [];
+var size  = 5;
 
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "tchuka-ruma-extension") {
+  if (name == "tchuka-ruma-extension") {
+      size = +value;
+  } else {
       checkVersion(design, name, value);
   }
 }
 
 var createPiece = function(design, player, value) {
-  if (value > 0) {
+  if (value != 0) {
       if (!_.isUndefined(cache[player]) && !_.isUndefined(cache[player][value])) {
           return cache[player][value];
       }
@@ -40,7 +43,7 @@ Dagaz.Model.CheckInvariants = function(board) {
       if (move.isSimpleMove()) {
           var pos = move.actions[0][0][0];
           var piece = board.getPiece(pos);
-          var cnt = piece.getValue(0);
+          var cnt = Math.abs(piece.getValue(0));
           if (_.isUndefined(cache[piece.player])) {
               cache[piece.player] = [];
               cache[piece.player][cnt] = piece;
@@ -53,7 +56,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                    move.failed = true;
                    return;
                }
-               if (ix >= 12) {
+               if (ix >= size) {
                    ix = 0;
                }
                piece = board.getPiece(pos);
@@ -63,10 +66,12 @@ Dagaz.Model.CheckInvariants = function(board) {
                    if (piece === null) {
                        result.push(1);
                    } else {
-                       result.push(piece.getValue(0) + 1);
+                       result.push(Math.abs(piece.getValue(0)) + 1);
                    }
                }
           }
+          console.log(result);
+          result[result.length - 1] = -result[result.length - 1];
           var pos = move.actions[0][0][0];
           for (var ix = 0; ix < result.length; ix++) {
                var player = board.player;
@@ -95,6 +100,21 @@ Dagaz.Model.CheckInvariants = function(board) {
           }
       }
   });
+  var ko = [];
+  _.each(design.allPositions(), function(pos) {
+      if (design.inZone(0, 1, pos)) {
+          var piece = board.getPiece(pos);
+          if (piece !== null) {
+              var value = piece.getValue(0);
+              if ((value !== null) && (value < -1)) {
+                  ko.push(pos);
+              }
+          }
+      }
+  });
+  if (ko.length > 0) {
+      board.ko = ko;
+  }
   CheckInvariants(board);
 }
 
