@@ -25,7 +25,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("smart-moves", "from");
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
-    design.checkVersion("mancala-setup", "5");
+    design.checkVersion("mancala-setup", "2");
     design.checkVersion("mancala-view", "true");
     design.checkVersion("tchuka-ruma-extension", "5");
 
