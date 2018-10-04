@@ -18,7 +18,7 @@ Dagaz.Model.CheckInvariants = function(board) {
       _.each(design.allPositions(), function(pos) {
           var piece = board.getPiece(pos);
           if (piece !== null) {
-              var value = piece.getValue(0);
+              var value = +piece.getValue(0);
               if ((value !== null) && (value < 0)) {
                   if (design.inZone(0, 1, pos)) {
                       if (value < -1) {

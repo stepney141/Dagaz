@@ -101,6 +101,16 @@ Dagaz.View.configure = function(view) {
     view.defPiece("NorthSeed", "North Seed");
     view.defPiece("SouthNone", "South None");
     view.defPiece("NorthNone", "North None");
+    view.defPiece("0", "0");
+    view.defPiece("1", "1");
+    view.defPiece("2", "2");
+    view.defPiece("3", "3");
+    view.defPiece("4", "4");
+    view.defPiece("5", "5");
+    view.defPiece("6", "6");
+    view.defPiece("7", "7");
+    view.defPiece("8", "8");
+    view.defPiece("9", "9");
  
     view.defPosition("a2", 168, 8, 80, 80);
     view.defPosition("b2", 268, 8, 80, 80);

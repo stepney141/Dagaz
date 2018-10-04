@@ -211,8 +211,9 @@ var isEq = function(x, y) {
   return _.intersection(x, y).length > 0;
 }
 
-MoveList.prototype.copyActions = function(move, actions, mode) {
-  move.mode = mode;
+MoveList.prototype.copyActions = function(move, actions, mode, sound) {
+  move.mode  = mode;
+  move.sound = sound;
   if (actions.length == 0) return;
   if (move.isPass()) {
       _.each(actions, function(action) {
@@ -242,19 +243,19 @@ MoveList.prototype.setPosition = function(pos) {
                   // Regular move
                   m[0][0] = [ this.position ];
                   m[0][1] = [ pos ];
-                  this.copyActions(result, actions, move.mode);
+                  this.copyActions(result, actions, move.mode, move.sound);
                   return true;
               }
               if (Dagaz.Model.smartFrom && (this.position == null) && (_.indexOf(m[0][0], pos) >= 0)) {
                   // Smart from move
                   m[0][0] = [ pos ];
-                  this.copyActions(result, actions, move.mode);
+                  this.copyActions(result, actions, move.mode, move.sound);
                   return true;
               }
               if (Dagaz.Model.smartTo && (this.position == null) && (_.indexOf(m[0][1], pos) >= 0)) {
                   // Smart from move
                   m[0][1] = [ pos ];
-                  this.copyActions(result, actions, move.mode);
+                  this.copyActions(result, actions, move.mode, move.sound);
                   return true;
               }
           } else {
@@ -274,7 +275,7 @@ MoveList.prototype.setPosition = function(pos) {
                    return false;
                 }).value();
               if (n.length > 0) {
-                  this.copyActions(result, actions, move.mode);
+                  this.copyActions(result, actions, move.mode, move.sound);
                   return true;
               }
           }

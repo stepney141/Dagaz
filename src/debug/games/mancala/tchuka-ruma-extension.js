@@ -43,7 +43,7 @@ Dagaz.Model.CheckInvariants = function(board) {
       if (move.isSimpleMove()) {
           var pos = move.actions[0][0][0];
           var piece = board.getPiece(pos);
-          var cnt = Math.abs(piece.getValue(0));
+          var cnt = Math.abs(+piece.getValue(0));
           if (_.isUndefined(cache[piece.player])) {
               cache[piece.player] = [];
               cache[piece.player][cnt] = piece;
@@ -66,16 +66,15 @@ Dagaz.Model.CheckInvariants = function(board) {
                    if (piece === null) {
                        result.push(1);
                    } else {
-                       result.push(Math.abs(piece.getValue(0)) + 1);
+                       result.push(Math.abs(+piece.getValue(0)) + 1);
                    }
                }
           }
-          console.log(result);
           result[result.length - 1] = -result[result.length - 1];
           var pos = move.actions[0][0][0];
           for (var ix = 0; ix < result.length; ix++) {
                var player = board.player;
-               var piece = createPiece(design, player, result[ix]);
+               var piece  = createPiece(design, player, result[ix]);
                if (result[ix] == 0) {
                    if (ix > 0) {
                        move.capturePiece(pos);
@@ -88,7 +87,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                        if (ix == 1) {
                            move.actions[0][2] = [ piece ];
                        } else {
-                           if (board.getPiece(pos) !== null) {
+                           if ((board.getPiece(pos) !== null) && (ix > 0)) {
                                move.movePiece(pos, pos, piece);
                            } else {
                                move.dropPiece(pos, piece);
@@ -98,6 +97,23 @@ Dagaz.Model.CheckInvariants = function(board) {
                }
                pos = design.navigate(board.player, pos, 0);
           }
+          var f = true;
+          _.each(move.actions, function(a) {
+              if ((a[1] !== null) && (a[1][0] == size - 1)) {
+                  f = false;
+              }
+          });
+          if (f) {
+              var pos = size - 1;
+              var piece = board.getPiece(pos);
+              if (piece !== null) {
+                  var value = +piece.getValue(0);
+                  if (value < 0) {
+                      piece = piece.setValue(0, -value);
+                      move.movePiece(pos, pos, piece);
+                  }
+              }
+          }
       }
   });
   var ko = [];
@@ -105,7 +121,7 @@ Dagaz.Model.CheckInvariants = function(board) {
       if (design.inZone(0, 1, pos)) {
           var piece = board.getPiece(pos);
           if (piece !== null) {
-              var value = piece.getValue(0);
+              var value = +piece.getValue(0);
               if ((value !== null) && (value < -1)) {
                   ko.push(pos);
               }
