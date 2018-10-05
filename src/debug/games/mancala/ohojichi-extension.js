@@ -5,12 +5,12 @@ Dagaz.View.DY       = 0;
 Dagaz.View.MX       = 25;
 
 var cache = [];
-var size  = 5;
+var size  = 6;
 
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name == "tchuka-ruma-extension") {
+  if (name == "ohojichi-extension") {
       size = +value;
   } else {
       checkVersion(design, name, value);
@@ -68,7 +68,9 @@ Dagaz.Model.CheckInvariants = function(board) {
                    }
                }
           }
-          result[ix - 1] = -result[ix - 1];
+          if (result[ix - 1] == 4) {
+              result[ix - 1] = -4;
+          }
           var pos = move.actions[0][0][0];
           for (var ix = 0; ix < result.length; ix++) {
                var player = board.player;
@@ -95,34 +97,15 @@ Dagaz.Model.CheckInvariants = function(board) {
                }
                pos = design.navigate(board.player, pos, 0);
           }
-          var f = true;
-          _.each(move.actions, function(a) {
-              if ((a[1] !== null) && (a[1][0] == size - 1)) {
-                  f = false;
-              }
-          });
-          if (f) {
-              var pos = size - 1;
-              var piece = board.getPiece(pos);
-              if (piece !== null) {
-                  var value = +piece.getValue(0);
-                  if (value < 0) {
-                      piece = piece.setValue(0, -value);
-                      move.movePiece(pos, pos, piece);
-                  }
-              }
-          }
       }
   });
   var ko = [];
   _.each(design.allPositions(), function(pos) {
-      if (design.inZone(0, 1, pos)) {
-          var piece = board.getPiece(pos);
-          if (piece !== null) {
-              var value = +piece.getValue(0);
-              if ((value !== null) && (value < -1)) {
-                  ko.push(pos);
-              }
+      var piece = board.getPiece(pos);
+      if (piece !== null) {
+          var value = +piece.getValue(0);
+          if ((value !== null) && (value < -1)) {
+              ko.push(pos);
           }
       }
   });

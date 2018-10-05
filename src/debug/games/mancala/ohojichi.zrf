@@ -1,0 +1,63 @@
+(define step (
+  (verify (in-zone? $2))
+  $1 add
+))
+
+(game
+  (title "Ohojichi")
+
+  (move-sound "Audio\Pickup.wav")
+  (release-sound "Audio\Pickup.wav")
+  (capture-sound "")
+  (drop-sound "")
+
+  (option "animate captures"  false)
+  (option "smart moves"       from)
+
+  (players South North)
+  (turn-order South North)
+
+  (board
+     (image "images/2x6.bmp")
+     (grid
+         (start-rectangle 8 8 88 88)
+         (dimensions
+           ("a/b" (100 0)) ; files
+           ("6/5/4/3/2/1" (0 100)) ; ranks
+         )
+     )
+     (links nx
+         (a1 b1) (b1 b2) (b2 b3) (b3 a3) (a3 a2) (a2 a1)
+         (a4 b4) (b4 b5) (b5 b6) (b6 a6) (a6 a5) (a5 a4)
+     )
+     (links tn
+         (a1 a6) (a2 a6) (a3 a6) (b1 a6) (b2 a6) (b3 a6)
+         (a6 b6) (b6 a5) (a5 b5) (b5 a4) (a4 b4)
+     )
+     (links ts
+         (a4 a3) (a5 a3) (a6 a3) (b4 a3) (b5 a3) (b6 a3)
+         (a3 b3) (b3 a2) (a2 b2) (b2 a1) (a1 b1)
+     )
+     (symmetry North (nx nx) (tn ts) (ts tn))
+     (zone (name home) (players North)
+           (positions a4 a5 a6 b4 b5 b6)
+     )
+     (zone (name home) (players South)
+           (positions a1 a2 a3 b1 b2 b3)
+     )
+  )
+
+  (piece
+     (name Seed)
+     (image South "images/small.bmp"
+            North "images/small.bmp")
+     (moves 
+        (step nx)
+     )
+  )
+
+  (board-setup
+    (South (Seed a1 a2 a3 b1 b2 b3))
+    (North (Seed a4 a5 a6 b4 b5 b6))
+  )
+)
