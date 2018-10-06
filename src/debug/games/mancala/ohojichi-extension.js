@@ -39,8 +39,9 @@ Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
   _.each(board.moves, function(move) {
       if (move.isSimpleMove()) {
+          if (move.mode > 0) return;
           var pos = move.actions[0][0][0];
-          var piece = board.getPiece(pos);
+          var piece = board.getPiece(pos);       
           var cnt = Math.abs(+piece.getValue(0));
           if (_.isUndefined(cache[piece.player])) {
               cache[piece.player] = [];
