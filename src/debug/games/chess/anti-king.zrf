@@ -183,8 +183,8 @@
   )
   (piece
      (name AntiKing)
-     (image White "images/wking.bmp"
-            Black "images/bking.bmp")
+     (image White "images/wanti.bmp"
+            Black "images/banti.bmp")
      (moves
          (shift n) (shift s) (shift w) (shift e)
          (shift nw) (shift sw) (shift ne) (shift se)
@@ -244,8 +244,8 @@
   )
   (piece
      (name AntiKing)
-     (image White "images/wking.bmp"
-            Black "images/bking.bmp")
+     (image White "images/wanti.bmp"
+            Black "images/banti.bmp")
      (moves
          (shift n) (shift s) (shift w) (shift e)
          (shift nw) (shift sw) (shift ne) (shift se)
