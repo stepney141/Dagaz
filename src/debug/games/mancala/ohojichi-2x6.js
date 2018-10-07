@@ -25,8 +25,10 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("smart-moves", "from");
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
+    design.checkVersion("pass-turn", "forced");
     design.checkVersion("mancala-setup", "4");
     design.checkVersion("mancala-view", "true");
+    design.checkVersion("ohojichi-extension", "6");
 
     design.addDirection("nx");
     design.addDirection("rv");

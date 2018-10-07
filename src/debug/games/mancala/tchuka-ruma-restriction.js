@@ -21,7 +21,7 @@ Dagaz.Model.CheckInvariants = function(board) {
               var value = +piece.getValue(0);
               if ((value !== null) && (value < 0)) {
                   if (design.inZone(0, 1, pos)) {
-                      if (value < -1) {
+                      if (value < 0) {
                           ko.push(pos);
                       }
                   } else {
