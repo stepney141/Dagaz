@@ -259,7 +259,6 @@
 
 (variant
   (title "Shatranj (Muwashshah)")
-  (default)
   (board-setup
     (White 
          (Sarbaz a3 b3 c3 d4 e3 f5 g4 h2)
@@ -342,6 +341,117 @@
          (Alfil e6 h6)
          (Fers f6)
          (Shah f7)
+    )
+  )
+)
+
+(variant
+  (title "Shatranj (Pharaon's stones)")
+  (default)
+  (board-setup
+    (White 
+         (Sarbaz a4 b3 c4 d2 e2 f4 g3 h4)
+         (Rokh c1 h1)
+         (Asb c3 f3)
+         (Alfil a3 d3)
+         (Fers e3)
+         (Shah f2)
+    )
+    (Black 
+         (Sarbaz a5 b6 c5 d7 e7 f5 g6 h5)
+         (Rokh c8 h8)
+         (Asb c6 f6)
+         (Alfil a6 d6)
+         (Fers e6)
+         (Shah f7)
+    )
+  )
+)
+
+(variant
+  (title "Shatranj (The goat-peg)")
+  (board-setup
+    (White 
+         (Sarbaz a3 b3 c3 d3 e3 f3 g4 h3)
+         (Rokh f2 g1)
+         (Asb d2 e2)
+         (Alfil c1 f1)
+         (Fers e1)
+         (Shah d1)
+    )
+    (Black 
+         (Sarbaz a6 b6 c6 d6 e6 f6 g5 h6)
+         (Rokh f7 g8)
+         (Asb d7 e7)
+         (Alfil c8 f8)
+         (Fers e8)
+         (Shah d8)
+    )
+  )
+)
+
+(variant
+  (title "Shatranj (Moved to and from)")
+  (board-setup
+    (White 
+         (Sarbaz a3 b4 c3 d4 e4 f3 g3 h3)
+         (Rokh b1 h1)
+         (Asb c2 f2)
+         (Alfil c1 d3)
+         (Fers e3)
+         (Shah d1)
+    )
+    (Black 
+         (Sarbaz a6 b5 c6 d5 e5 f6 g6 h6)
+         (Rokh b8 h8)
+         (Asb c7 f7)
+         (Alfil c8 d6)
+         (Fers e6)
+         (Shah d8)
+    )
+  )
+)
+
+(variant
+  (title "Shatranj (The old woman)")
+  (board-setup
+    (White 
+         (Sarbaz a3 b3 c3 d4 e4 f3 g3 h3)
+         (Rokh c2 f2)
+         (Asb d2 e2)
+         (Alfil c1 d3)
+         (Fers e3)
+         (Shah d1)
+    )
+    (Black 
+         (Sarbaz a6 b6 c6 d5 e5 f6 g6 h6)
+         (Rokh c7 f7)
+         (Asb d7 e7)
+         (Alfil c8 d6)
+         (Fers e6)
+         (Shah d8)
+    )
+  )
+)
+
+(variant
+  (title "Shatranj (The conjoined)")
+  (board-setup
+    (White 
+         (Sarbaz a2 b4 c4 d3 e3 f3 g3 h3)
+         (Rokh b1 c2)
+         (Asb d2 e2)
+         (Alfil c1 f1)
+         (Fers c3)
+         (Shah d1)
+    )
+    (Black 
+         (Sarbaz a7 b5 c5 d6 e6 f6 g6 h6)
+         (Rokh b8 c7)
+         (Asb d7 e7)
+         (Alfil c8 f8)
+         (Fers c6)
+         (Shah d8)
     )
   )
 )

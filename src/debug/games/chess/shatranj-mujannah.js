@@ -22,8 +22,10 @@ ZRF = {
 Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-captures", "false");
-    design.checkVersion("smart-moves", "true");
+    design.checkVersion("smart-moves", "false");
     design.checkVersion("show-blink", "false");
+    design.checkVersion("show-hints", "false");
+    design.checkVersion("shatranj-invariant", "true");
 
     design.addDirection("w");
     design.addDirection("e");
@@ -231,7 +233,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("White", "Fers", 60);
     design.setup("White", "Shah", 59);
 
-    design.setupSelector(4);
+    design.setupSelector(9);
 
     design.setup("Black", "Sarbaz", 8, 1);
     design.setup("Black", "Sarbaz", 17, 1);
@@ -300,6 +302,91 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "Alfil", 20, 4);
     design.setup("Black", "Fers", 10, 4);
     design.setup("Black", "Shah", 13, 4);
+
+    design.setup("Black", "Sarbaz", 24, 5);
+    design.setup("Black", "Sarbaz", 17, 5);
+    design.setup("Black", "Sarbaz", 26, 5);
+    design.setup("Black", "Sarbaz", 11, 5);
+    design.setup("Black", "Sarbaz", 12, 5);
+    design.setup("Black", "Sarbaz", 29, 5);
+    design.setup("Black", "Sarbaz", 22, 5);
+    design.setup("Black", "Sarbaz", 31, 5);
+    design.setup("Black", "Rokh", 2, 5);
+    design.setup("Black", "Rokh", 7, 5);
+    design.setup("Black", "Asb", 18, 5);
+    design.setup("Black", "Asb", 21, 5);
+    design.setup("Black", "Alfil", 16, 5);
+    design.setup("Black", "Alfil", 19, 5);
+    design.setup("Black", "Fers", 20, 5);
+    design.setup("Black", "Shah", 13, 5);
+
+    design.setup("Black", "Sarbaz", 16, 6);
+    design.setup("Black", "Sarbaz", 17, 6);
+    design.setup("Black", "Sarbaz", 18, 6);
+    design.setup("Black", "Sarbaz", 19, 6);
+    design.setup("Black", "Sarbaz", 20, 6);
+    design.setup("Black", "Sarbaz", 21, 6);
+    design.setup("Black", "Sarbaz", 30, 6);
+    design.setup("Black", "Sarbaz", 23, 6);
+    design.setup("Black", "Rokh", 13, 6);
+    design.setup("Black", "Rokh", 6, 6);
+    design.setup("Black", "Asb", 11, 6);
+    design.setup("Black", "Asb", 12, 6);
+    design.setup("Black", "Alfil", 2, 6);
+    design.setup("Black", "Alfil", 5, 6);
+    design.setup("Black", "Fers", 4, 6);
+    design.setup("Black", "Shah", 3, 6);
+
+    design.setup("Black", "Sarbaz", 16, 7);
+    design.setup("Black", "Sarbaz", 25, 7);
+    design.setup("Black", "Sarbaz", 18, 7);
+    design.setup("Black", "Sarbaz", 27, 7);
+    design.setup("Black", "Sarbaz", 28, 7);
+    design.setup("Black", "Sarbaz", 21, 7);
+    design.setup("Black", "Sarbaz", 22, 7);
+    design.setup("Black", "Sarbaz", 23, 7);
+    design.setup("Black", "Rokh", 1, 7);
+    design.setup("Black", "Rokh", 7, 7);
+    design.setup("Black", "Asb", 10, 7);
+    design.setup("Black", "Asb", 13, 7);
+    design.setup("Black", "Alfil", 2, 7);
+    design.setup("Black", "Alfil", 19, 7);
+    design.setup("Black", "Fers", 20, 7);
+    design.setup("Black", "Shah", 3, 7);
+
+    design.setup("Black", "Sarbaz", 16, 8);
+    design.setup("Black", "Sarbaz", 17, 8);
+    design.setup("Black", "Sarbaz", 18, 8);
+    design.setup("Black", "Sarbaz", 27, 8);
+    design.setup("Black", "Sarbaz", 28, 8);
+    design.setup("Black", "Sarbaz", 21, 8);
+    design.setup("Black", "Sarbaz", 22, 8);
+    design.setup("Black", "Sarbaz", 23, 8);
+    design.setup("Black", "Rokh", 10, 8);
+    design.setup("Black", "Rokh", 13, 8);
+    design.setup("Black", "Asb", 11, 8);
+    design.setup("Black", "Asb", 12, 8);
+    design.setup("Black", "Alfil", 2, 8);
+    design.setup("Black", "Alfil", 19, 8);
+    design.setup("Black", "Fers", 20, 8);
+    design.setup("Black", "Shah", 3, 8);
+
+    design.setup("Black", "Sarbaz", 8, 9);
+    design.setup("Black", "Sarbaz", 25, 9);
+    design.setup("Black", "Sarbaz", 26, 9);
+    design.setup("Black", "Sarbaz", 19, 9);
+    design.setup("Black", "Sarbaz", 20, 9);
+    design.setup("Black", "Sarbaz", 21, 9);
+    design.setup("Black", "Sarbaz", 22, 9);
+    design.setup("Black", "Sarbaz", 23, 9);
+    design.setup("Black", "Rokh", 1, 9);
+    design.setup("Black", "Rokh", 10, 9);
+    design.setup("Black", "Asb", 11, 9);
+    design.setup("Black", "Asb", 12, 9);
+    design.setup("Black", "Alfil", 2, 9);
+    design.setup("Black", "Alfil", 5, 9);
+    design.setup("Black", "Fers", 18, 9);
+    design.setup("Black", "Shah", 3, 9);
 }
 
 Dagaz.View.configure = function(view) {
