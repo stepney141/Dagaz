@@ -34,22 +34,24 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addDirection("rv");
     design.addDirection("tn");
     design.addDirection("ts");
+    design.addDirection("ss");
+    design.addDirection("ns");
 
-    design.addPlayer("South", [1, 0, 2, 3]);
-    design.addPlayer("North", [0, 1, 3, 2]);
+    design.addPlayer("South", [1, 0, 2, 3, 4, 5]);
+    design.addPlayer("North", [0, 1, 3, 2, 5, 4]);
 
-    design.addPosition("a6", [2, 1, 1, 6]);
-    design.addPosition("b6", [-1, 2, 1, 5]);
-    design.addPosition("a5", [2, -2, 1, 4]);
-    design.addPosition("b5", [-2, 2, 1, 3]);
-    design.addPosition("a4", [1, -2, 1, 2]);
-    design.addPosition("b4", [-2, -1, 0, 1]);
-    design.addPosition("a3", [2, 1, -6, 1]);
-    design.addPosition("b3", [-1, 2, -7, 1]);
-    design.addPosition("a2", [2, -2, -8, 1]);
-    design.addPosition("b2", [-2, 2, -9, 1]);
-    design.addPosition("a1", [1, -2, -10, 1]);
-    design.addPosition("b1", [-2, -1, -11, 0]);
+    design.addPosition("a6", [2, 1, 1, 6, 1, 10]);
+    design.addPosition("b6", [-1, 2, 1, 5, 0, 0]);
+    design.addPosition("a5", [2, -2, 1, 4, 0, 0]);
+    design.addPosition("b5", [-2, 2, 1, 3, 0, 0]);
+    design.addPosition("a4", [1, -2, 1, 2, 0, 0]);
+    design.addPosition("b4", [-2, -1, 0, 1, 0, 0]);
+    design.addPosition("a3", [2, 1, -6, 1, 0, 0]);
+    design.addPosition("b3", [-1, 2, -7, 1, 0, 0]);
+    design.addPosition("a2", [2, -2, -8, 1, 0, 0]);
+    design.addPosition("b2", [-2, 2, -9, 1, 0, 0]);
+    design.addPosition("a1", [1, -2, -10, 1, 0, 0]);
+    design.addPosition("b1", [-2, -1, -11, 0, 0, 0]);
 
     design.addZone("home", 1, [10, 8, 6, 11, 9, 7]);
     design.addZone("home", 2, [4, 2, 0, 5, 3, 1]);

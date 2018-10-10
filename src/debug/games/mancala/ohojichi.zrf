@@ -46,7 +46,13 @@
          (a4 a3) (a5 a3) (a6 a3) (b4 a3) (b5 a3) (b6 a3)
          (a3 b3) (b3 a2) (a2 b2) (b2 a1) (a1 b1)
      )
-     (symmetry North (nx nx) (rv rv) (tn ts) (ts tn))
+     (links ss
+         (a6 b6)
+     )
+     (links ns
+         (a6 a1)
+     )
+     (symmetry North (nx nx) (rv rv) (tn ts) (ts tn) (ss ns) (ns ss))
      (zone (name home) (players North)
            (positions a4 a5 a6 b4 b5 b6)
      )
