@@ -40,11 +40,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPlayer("South", [1, 0, 2, 3, 4, 5]);
     design.addPlayer("North", [0, 1, 3, 2, 5, 4]);
 
-    design.addPosition("a8", [2, 1, 1, 8, 0, 0]);
+    design.addPosition("a8", [2, 1, 1, 8, 1, 14]);
     design.addPosition("b8", [-1, 2, 1, 7, 0, 0]);
     design.addPosition("a7", [2, -2, 1, 6, 0, 0]);
     design.addPosition("b7", [-2, 2, 1, 5, 0, 0]);
-    design.addPosition("a6", [2, -2, 1, 4, 1, 10]);
+    design.addPosition("a6", [2, -2, 1, 4, 0, 0]);
     design.addPosition("b6", [-2, 2, 1, 3, 0, 0]);
     design.addPosition("a5", [1, -2, 1, 2, 0, 0]);
     design.addPosition("b5", [-2, -1, 0, 1, 0, 0]);
