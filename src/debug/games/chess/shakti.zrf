@@ -6,7 +6,9 @@
 
 (define step-warrior (
   $1 (verify not-friend?)
-  (verify (piece? King))
+  (if not-empty?
+      (verify (piece? King))
+  )
   add
 ))
 
@@ -18,8 +20,7 @@
 ))
 
 (define jump (
-  $1 (verify (piece? Hole))
-  (while (piece? Hole) $1)
+  $1 (while (piece? Hole) $1)
   (verify empty?) (create Hole)
   $1 (verify empty?)
   add
@@ -42,10 +43,10 @@
   (board
      (image "images/shakti.bmp")
      (grid
-         (start-rectangle 2 2 70 70)
+         (start-rectangle 2 2 52 52)
          (dimensions
-           ("a/b/c/d/e/f/g" (68 0)) ; files
-           ("7/6/5/4/3/2/1" (0 68)) ; ranks
+           ("a/b/c/d/e/f/g" (50 0)) ; files
+           ("7/6/5/4/3/2/1" (0 50)) ; ranks
          )
          (directions 
               (n 0 -1) (s 0 1) (e 1 0) (w -1 0)
