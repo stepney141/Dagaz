@@ -55,3 +55,4 @@ Dagaz.Controller.addSound(Dagaz.Sounds.win,  "../../sounds/tadam.wav");
 Dagaz.Controller.addSound(Dagaz.Sounds.lose, "../../sounds/loss.wav");
 Dagaz.Controller.addSound(Dagaz.Sounds.draw, "../../sounds/draw.ogg");
 Dagaz.Controller.addSound(Dagaz.Sounds.page, "../../sounds/page.wav");
+Dagaz.Controller.addSound(Dagaz.Sounds.hint, "../../sounds/bird.wav");
