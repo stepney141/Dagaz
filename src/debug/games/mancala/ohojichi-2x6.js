@@ -29,6 +29,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("mancala-setup", "4");
     design.checkVersion("mancala-view", "true");
     design.checkVersion("ohojichi-extension", "6");
+    design.checkVersion("advisor-wait", "5");
 
     design.addDirection("nx");
     design.addDirection("rv");

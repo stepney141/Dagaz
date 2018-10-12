@@ -23,6 +23,7 @@ Dagaz.Model.silent          = false;
 Dagaz.Model.showDrops       = -1;
 Dagaz.Model.dragNdrop       = true;
 Dagaz.Model.detectLoops     = false;
+Dagaz.Model.advisorWait     = null;
 
 Dagaz.Model.checkVersion = function(design, name, value) {  
   if (name == "z2j") {
@@ -52,8 +53,12 @@ Dagaz.Model.checkVersion = function(design, name, value) {
          (name != "show-blink")         &&
          (name != "drag-n-drop")        &&
          (name != "detect-loops")       &&
+         (name != "advisor-wait")       &&
          (name != "silent-?-moves")) {
          design.failed = true;
+     }
+     if (name == "advisor-wait") {
+         Dagaz.Model.advisorWait = +value * 1000;
      }
      if (name == "detect-loops") {
          if (value == "true")    Dagaz.Model.detectLoops = true;

@@ -7,6 +7,7 @@ Dagaz.Sounds.lose  = 3;
 Dagaz.Sounds.draw  = 4;
 Dagaz.Sounds.page  = 5;
 Dagaz.Sounds.start = 6;
+Dagaz.Sounds.hint  = 7;
 
 (function() {
 

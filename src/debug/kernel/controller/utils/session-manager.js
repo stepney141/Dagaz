@@ -60,6 +60,26 @@ Dagaz.Controller.addState = function(move, board) {
   sm.updateButtons();
 }
 
+Dagaz.Controller.pushState = function(move, board) {
+  var sm = Dagaz.Controller.getSessionManager();
+  if (!_.isUndefined(sm.current) && _.isUndefined(sm.current.current)) {
+      board.generate();
+      sm.current.current = {
+          parent: sm.current,
+          move:   move,
+          board:  board,
+          states: []
+      };
+      sm.current.states.push(sm.current.current);
+      sm.updateButtons();
+  }
+}
+
+Dagaz.Controller.noRedo = function() {
+  var sm = Dagaz.Controller.getSessionManager();
+  return !_.isUndefined(sm.current) && _.isUndefined(sm.current.current);
+}
+
 var noMoves = function(board) {
   for (var ix = 0; ix < board.moves.length; ix++) {
        if (!board.moves[ix].isPass()) return false;
@@ -81,6 +101,7 @@ Dagaz.Controller.redo = function() {
   var board   = sm.redo();
   if (board !== null) {
       while ((sm.aiPresent() && (board.player != current.board.player) && sm.current.current) || noMoves(board)) {
+         if (_.isUndefined(sm.current.current)) break;
          var b = sm.redo();
          if (b === null) {
              sm.current = current;
