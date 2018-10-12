@@ -77,10 +77,21 @@ var getStartPos = function(design, board) {
 
 Dagaz.AI.heuristic = function(ai, design, board, move) {
   var r = 1;
-  if ((move.mode == 0) && (move.actions.length > 0)) {
-      var pos = move.actions[0][0][0];
-      if (pos == getStartPos(design, board)) {
-          r += 100;
+  if (move.actions.length > 0) {
+      if (move.mode == 0) {
+          var pos = move.actions[0][0][0];
+          if (pos == getStartPos(design, board)) {
+              r += 100;
+          }
+      } else {
+          var pos = move.actions[0][1][0];
+          var piece = board.getPiece(pos);
+          if (piece !== null) {
+              var value = piece.getValue(0);
+              if ((value !== null) && (Math.abs(value) == 3)) {
+                  r += 100;
+              }
+          }
       }
   }
   return r;

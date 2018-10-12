@@ -65,6 +65,16 @@ Dagaz.Model.BuildDesign = function(design) {
 Dagaz.View.configure = function(view) {
     view.defBoard("Board");
     view.defPiece("YouSeed", "You Seed");
+    view.defPiece("0", "0");
+    view.defPiece("1", "1");
+    view.defPiece("2", "2");
+    view.defPiece("3", "3");
+    view.defPiece("4", "4");
+    view.defPiece("5", "5");
+    view.defPiece("6", "6");
+    view.defPiece("7", "7");
+    view.defPiece("8", "8");
+    view.defPiece("9", "9");
     view.defPiece("Ko", "Ko");
  
     view.defPosition("a1", 8, 8, 80, 80);

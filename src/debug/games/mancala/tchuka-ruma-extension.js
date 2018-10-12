@@ -7,6 +7,10 @@ Dagaz.View.MX       = 25;
 var cache = [];
 var size  = 5;
 
+if (!_.isUndefined(Dagaz.Controller.addSound)) {
+    Dagaz.Controller.addSound(2, "../../sounds/win.wav");
+}
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
