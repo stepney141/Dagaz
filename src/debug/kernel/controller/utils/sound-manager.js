@@ -14,28 +14,50 @@ Dagaz.Sounds.hint  = 7;
 var sounds  = [];
 var current = null;
 
-function Sound(src) {
+var play = function(sound) {
+    sound.play();
+}
+
+function Sound(src, duration) {
     this.sound = document.createElement("audio");
     this.sound.src = src;
     this.sound.setAttribute("preload", "auto");
     this.sound.setAttribute("controls", "none");
     this.sound.style.display = "none";
+    this.duration = duration;
+    this.start = null;
     this.play = function(){
-        this.sound.play();
+        var isDelayed = false;
+        if (!_.isUndefined(this.duration)) {
+            var now = Date.now();
+            if (this.start !== null) {
+                if (now - this.start < this.duration) {
+                    isDelayed = true;
+                } else {
+                    this.start = null;
+                }
+            } else {
+                this.start = now;
+            }
+        }
+        if (isDelayed) {
+            _.delay(play, 100, this);
+        } else {
+            this.sound.play();
+        }
     }
     this.stop = function(){
         this.sound.pause();
     }
 }
 
-Dagaz.Controller.addSound = function(ix, src) {
-    sounds[ix] = src;
+Dagaz.Controller.addSound = function(ix, src, duration) {
+    sounds[ix] = new Sound(src, duration);
 }
 
 Dagaz.Controller.play = function(ix) {
-    Dagaz.Controller.stop();
-    if ((current === null) && !_.isUndefined(sounds[ix])) {
-         current = new Sound(sounds[ix]);
+    if (!_.isUndefined(sounds[ix])) {
+         current = sounds[ix];
          current.play();
     }
 }
