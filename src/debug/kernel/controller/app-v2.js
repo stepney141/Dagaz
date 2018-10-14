@@ -492,13 +492,6 @@ App.prototype.exec = function() {
               this.view.markPositions(Dagaz.View.markType.CURRENT, [ this.move.getTarget() ]);
           }
           this.state = STATE.WAIT;
-          if (!_.isUndefined(Dagaz.Controller.play)) {
-              var sound = Dagaz.Sounds.move;
-              if (!_.isUndefined(this.move.sound)) {
-                  sound = this.move.sound;
-              }
-              Dagaz.Controller.play(sound);
-          }
       }
       if (!_.isUndefined(this.list)) {
           if (this.list.isDone()) {
@@ -516,6 +509,15 @@ App.prototype.exec = function() {
                   Dagaz.Model.Done(this.design, this.board);
                   console.log("Debug: " + m.toString());
               }
+          }
+      }
+      if (!this.move.isPass()) {
+          if (!_.isUndefined(Dagaz.Controller.play)) {
+              var sound = Dagaz.Sounds.move;
+              if (!_.isUndefined(this.move.sound)) {
+                  sound = this.move.sound;
+              }
+              Dagaz.Controller.play(sound, this.board.player);
           }
       }
       if (this.board.parent !== null) {
