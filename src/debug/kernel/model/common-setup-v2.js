@@ -78,7 +78,7 @@ function rep(pattern, separator) {
     });
 }
 
-var num  = rgx(/\d+/);
+var num  = rgx(/-?\d+/);
 var str  = rgx(/[^=;+]+/);
 
 var attr = seq([
