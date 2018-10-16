@@ -477,6 +477,7 @@ App.prototype.exec = function() {
       }
   }
   if (this.state == STATE.EXEC) {
+      delete Dagaz.AI.advisorStamp;
       this.state = STATE.IDLE;
       isDrag = false;
       if (!this.move.isPass()) {

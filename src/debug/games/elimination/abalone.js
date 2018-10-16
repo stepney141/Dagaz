@@ -27,6 +27,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-blink", "true");
     design.checkVersion("abalone-extension", "true");
     design.checkVersion("abalone-goal", "true");
+    design.checkVersion("advisor-wait", "1");
 
     design.addDirection("w");
     design.addDirection("e");

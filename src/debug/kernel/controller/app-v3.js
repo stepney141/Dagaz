@@ -150,8 +150,8 @@ App.prototype.getBoard = function() {
   return this.board;
 }
 
-App.prototype.getContext = function(player) {
-  if (Dagaz.AI.isFriend(1, player) && !this.design.isPuzzle()) return null;
+App.prototype.getContext = function(player, forced) {
+  if (_.isUndefined(forced) && Dagaz.AI.isFriend(1, player) && !this.design.isPuzzle()) return null;
   if (_.isUndefined(this.context)) {
       this.context = [];
   }
@@ -191,7 +191,29 @@ App.prototype.exec = function() {
           this.timestamp = Date.now();
           isOnce = true;
       } else {
+         if (!_.isUndefined(Dagaz.AI.advisorStamp) && !_.isUndefined(Dagaz.Controller.pushState) && (ai !== null) && (Dagaz.Model.advisorWait !== null)) {
+             var timestamp = Date.now();
+             if (Dagaz.AI.advisorStamp === null) {
+                 Dagaz.AI.advisorStamp = timestamp + Dagaz.Model.advisorWait;
+             }
+             if (Dagaz.Controller.noRedo() && (Dagaz.AI.advisorStamp < timestamp)) {
+                 var ctx = this.getContext(this.board.player, true);
+                 if (ctx !== null) {
+                     ai.setContext(ctx, this.board);
+                     var result = ai.getMove(ctx);
+                     if (result && result.done) {
+                         delete Dagaz.AI.advisorStamp;
+                         var board = this.board.apply(result.move);
+                         Dagaz.Controller.pushState(result.move, board);
+                         if (!_.isUndefined(Dagaz.Sounds.hint)) {
+                             Dagaz.Controller.play(Dagaz.Sounds.hint);
+                         }
+                     }
+                 }
+             }
+         }
          if (_.isUndefined(this.list)) {
+             Dagaz.AI.advisorStamp = null;
              var player = this.design.playerNames[this.board.player];
              console.log("Player: " + player);
              if (!_.isUndefined(Dagaz.Model.getSetup)) {
@@ -243,6 +265,7 @@ App.prototype.exec = function() {
       }
   }
   if (this.state == STATE.EXEC) {
+      delete Dagaz.AI.advisorStamp;
       this.state = STATE.IDLE;
       if (!this.move.isPass()) {
           this.view.markPositions(Dagaz.View.markType.TARGET, []);
@@ -259,7 +282,7 @@ App.prototype.exec = function() {
               if (!_.isUndefined(this.move.sound)) {
                   sound = this.move.sound;
               }
-              Dagaz.Controller.play(sound);
+              Dagaz.Controller.play(sound, this.board.player);
           }
       }
       if (this.board.parent !== null) {
@@ -305,6 +328,9 @@ Dagaz.Controller.createApp(Canvas);
 
 if (!_.isUndefined(Dagaz.Controller.getSessionManager)) {
   Dagaz.Controller.getSessionManager(Dagaz.Controller.app);
+}
+if (!_.isUndefined(Dagaz.Controller.play)) {
+  Dagaz.Controller.play(Dagaz.Sounds.start);
 }
 
 App.prototype.run = function() {
