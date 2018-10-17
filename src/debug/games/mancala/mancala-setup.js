@@ -13,8 +13,12 @@ Dagaz.Model.checkVersion = function(design, name, value) {
 
 var getSetup = function() {
   var str = window.location.search.toString();
-  var re  = /^\?setup=(.*)$/;
-  return str.replace(re, "$1");
+  var result = str.match(/\?setup=([^&]*)/);
+  if (result) {
+      return result[1];
+  } else {
+      return "";
+  }
 }
 
 function Pattern(exec) {
