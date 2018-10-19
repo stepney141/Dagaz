@@ -29,36 +29,40 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("mancala-setup", "7");
     design.checkVersion("mancala-view", "true");
     design.checkVersion("mancala-goal", "true");
+    design.checkVersion("dakon-extension", "mikul");
 
-    design.addDirection("cw");
-    design.addDirection("cc");
+    design.addDirection("sx");
+    design.addDirection("nx");
     design.addDirection("fr");
     design.addDirection("er");
     design.addDirection("up");
     design.addDirection("dn");
+    design.addDirection("rv");
 
-    design.addPlayer("South", [1, 0, 2, 3, 5, 4]);
-    design.addPlayer("North", [1, 0, 3, 2, 5, 4]);
+    design.addPlayer("South", [1, 0, 2, 3, 5, 4, 6]);
+    design.addPlayer("North", [1, 0, 3, 2, 5, 4, 6]);
 
-    design.addPosition("a2", [1, 1, 15, 14, 0, 7]);
-    design.addPosition("b2", [1, 1, 0, 0, 0, 7]);
-    design.addPosition("c2", [1, 1, 0, 0, 0, 7]);
-    design.addPosition("d2", [1, 1, 0, 0, 0, 7]);
-    design.addPosition("e2", [1, 1, 0, 0, 0, 7]);
-    design.addPosition("f2", [1, 1, 0, 0, 0, 7]);
-    design.addPosition("g2", [9, 7, 0, 0, 0, 7]);
-    design.addPosition("a1", [-7, 7, 0, 0, -7, 0]);
-    design.addPosition("b1", [-1, -1, 0, 0, -7, 0]);
-    design.addPosition("c1", [-1, -1, 0, 0, -7, 0]);
-    design.addPosition("d1", [-1, -1, 0, 0, -7, 0]);
-    design.addPosition("e1", [-1, -1, 0, 0, -7, 0]);
-    design.addPosition("f1", [-1, -1, 0, 0, -7, 0]);
-    design.addPosition("g1", [-1, -1, 0, 0, -7, 0]);
-    design.addPosition("X2", [0, -14, 0, 0, 0, 0]);
-    design.addPosition("X1", [-2, 0, 0, 0, 0, 0]);
+    design.addPosition("a2", [1, 1, 14, 15, 0, 7, 0]);
+    design.addPosition("b2", [1, 1, 0, 0, 0, 7, -1]);
+    design.addPosition("c2", [1, 1, 0, 0, 0, 7, -1]);
+    design.addPosition("d2", [1, 1, 0, 0, 0, 7, -1]);
+    design.addPosition("e2", [1, 1, 0, 0, 0, 7, -1]);
+    design.addPosition("f2", [1, 1, 0, 0, 0, 7, -1]);
+    design.addPosition("g2", [7, 9, 0, 0, 0, 7, 0]);
+    design.addPosition("a1", [7, -7, 0, 0, -7, 0, 0]);
+    design.addPosition("b1", [-1, -1, 0, 0, -7, 0, 1]);
+    design.addPosition("c1", [-1, -1, 0, 0, -7, 0, 1]);
+    design.addPosition("d1", [-1, -1, 0, 0, -7, 0, 1]);
+    design.addPosition("e1", [-1, -1, 0, 0, -7, 0, 1]);
+    design.addPosition("f1", [-1, -1, 0, 0, -7, 0, 1]);
+    design.addPosition("g1", [-1, -1, 0, 0, -7, 0, 0]);
+    design.addPosition("X1", [-14, 0, 0, 0, 0, 0, 0]);
+    design.addPosition("X2", [0, -2, 0, 0, 0, 0, 0]);
 
     design.addZone("home", 1, [7, 8, 9, 10, 11, 12, 13]);
     design.addZone("home", 2, [0, 1, 2, 3, 4, 5, 6]);
+    design.addZone("pool", 1, [14, 15]);
+    design.addZone("pool", 2, [14, 15]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
@@ -115,6 +119,6 @@ Dagaz.View.configure = function(view) {
     view.defPosition("e1", 568, 108, 80, 80);
     view.defPosition("f1", 668, 108, 80, 80);
     view.defPosition("g1", 768, 108, 80, 80);
-    view.defPosition("X2", 8, 8, 140, 180);
-    view.defPosition("X1", 868, 8, 140, 180);
+    view.defPosition("X1", 8, 8, 140, 180);
+    view.defPosition("X2", 868, 8, 140, 180);
 }
