@@ -129,7 +129,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                       var q = design.navigate(board.player, pos, 6);
                       if (isMikul && (p !== null) && (q !== null) && (result.length > 1)) {
                           var piece = board.getPiece(p);
-                          if (Math.abs(+piece.getValue(0)) == Math.abs(result[ix - 1])) {
+                          if ((piece !== null) && (Math.abs(+piece.getValue(0)) == Math.abs(result[ix - 1]))) {
                               captured.push(p);
                               captured.push(q);
                               fr++;
