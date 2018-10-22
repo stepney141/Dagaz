@@ -24,7 +24,6 @@ Dagaz.AI.eval = function(design, params, board, player) {
       }
   });
   if (mobility == 0) return -1;
-  if (isForced) return 10000;
   return eval(design, params, board, player) * 100 + mobility;
 }
 
@@ -32,14 +31,21 @@ var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {
   var f = 0; var e = 0; var s = 0;
+  var w = 0; var l = 0;
   _.each(design.allPositions(), function(pos) {
-      if (!design.inZone(1, player, pos)) {
-          var piece = board.getPiece(pos);
-          if (piece !== null) {
-              var v = Math.abs(+piece.getValue(0));
-              if (piece.player == player) {
+      var piece = board.getPiece(pos);
+      if (piece !== null) {
+          var v = Math.abs(+piece.getValue(0));
+          if (piece.player == player) {
+              if (design.inZone(1, player, pos)) {
+                  w += v;
+              } else {
                   f++;
                   s += v;
+              }
+          } else {
+              if (design.inZone(1, player, pos)) {
+                  l += v;
               } else {
                   e++;
                   s -= v;
@@ -47,6 +53,8 @@ Dagaz.Model.checkGoals = function(design, board, player) {
           }
       }
   });
+  if (w > Dagaz.Model.WIN_CNT) return 1;
+  if (l > Dagaz.Model.WIN_CNT) return -1;
   if ((f == 0) || (e == 0)) {
       var e = eval(design, [], board, player) + s;
       if (e > 0) {

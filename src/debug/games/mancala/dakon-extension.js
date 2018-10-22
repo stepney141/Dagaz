@@ -162,7 +162,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                    fr = 0;
                }
                var player = board.player;
-               if (!design.inZone(0, board.player, pos) && (result[ix] > 0)) {
+               if (!design.inZone(0, board.player, pos) && !design.inZone(1, board.player, pos) && (result[ix] > 0)) {
                    player = design.nextPlayer(player);
                }
                var piece = createPiece(design, player, result[ix]);

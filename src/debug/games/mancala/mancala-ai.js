@@ -1,6 +1,6 @@
 (function() {
 
-var MAX_DEEP = 10;
+var MAX_DEEP = 100;
 
 var checkVersion = Dagaz.Model.checkVersion;
 
@@ -30,7 +30,7 @@ Dagaz.AI.eval = function(design, params, board, player) {
   return r;
 }
 
-var findMove(design, board, player) {
+var findMove = function(design, board, player) {
   var src = null;
   _.each(design.allPositions(), function(pos) {
       if (!design.inZone(1, player, pos)) {
@@ -52,18 +52,20 @@ var findMove(design, board, player) {
 }
 
 Dagaz.AI.heuristic = function(ai, design, board, move) {
-  var b = board;
+  var b = board; var m = move;
   if (board.moves.length > 1) {
       var stack = [ board.zSign ];
-      while (move !== null) {
+      while (m !== null) {
           if ((MAX_DEEP !== null) && (stack.length >= MAX_DEEP)) return -1;
-          b = b.apply(move);
+          b = b.apply(m);
           b.player = board.player;
           if (_.indexOf(stack, b.zSign) >= 0) return -1;
           stack.push(b.zSign);
-          move = findMove(design, b, board.player);
+          m = findMove(design, b, board.player);
       }
-      return Dagaz.AI.eval(design, ai.params, b, board.player);
+      var e = Dagaz.AI.eval(design, ai.params, b, board.player);
+      console.log("Debug: " + move.toString() + ", deep = " + stack.length + ", eval = " + e);
+      return e;
   }
   return 1;
 }

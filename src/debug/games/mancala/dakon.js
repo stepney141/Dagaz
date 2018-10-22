@@ -28,7 +28,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("pass-turn", "forced");
     design.checkVersion("mancala-setup", "7");
     design.checkVersion("mancala-view", "true");
-    design.checkVersion("mancala-goal", "true");
     design.checkVersion("dakon-extension", "mikul");
 
     design.addDirection("sx");
