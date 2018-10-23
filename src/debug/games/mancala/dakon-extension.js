@@ -11,6 +11,7 @@ var size  = 15;
 
 var isMikul = false;
 var isMatiBela = false;
+var isSimulate = false;
 
 var checkVersion = Dagaz.Model.checkVersion;
 
@@ -18,6 +19,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   if (name == "dakon-extension") {
       if (value == "mikul") isMikul = true;
       if (value == "mati-bela") isMatiBela = true;
+      if (value == "simulate") isSimulate = true;
   } else {
       checkVersion(design, name, value);
   }
@@ -68,6 +70,10 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;  
+  var noCapturing = false;
+  if (_.isUndefined(board.noInitial) && isSimulate) {
+      noCapturing = (board.parent === null) || (board.parent.parent === null);
+  }
   _.each(board.moves, function(move) {
       var isPool = false;
       var fr = 0;
@@ -83,10 +89,12 @@ Dagaz.Model.CheckInvariants = function(board) {
               cache[piece.player] = [];
               cache[piece.player][cnt] = piece;
           }
+          var positions = [];
           var result = [];
           result.push(0);
           for (var ix = 1; cnt > 0; cnt--, ix++) {
                pos = design.navigate(board.player, pos, 0);
+               positions.push(pos);
                if (pos === null) {
                    move.failed = true;
                    return;
@@ -108,32 +116,34 @@ Dagaz.Model.CheckInvariants = function(board) {
           ix--;
           var captured = [];
           isPool = design.inZone(1, board.player, pos);
-          if ((result[ix] > 1) || isPool) {
-              result[ix] = -result[ix];
-          } else {
-              if (!isPool) {
-                  if (design.inZone(0, board.player, pos)) {
-                      pos = design.navigate(board.player, pos, 4);
-                      if (pos !== null) {
-                          piece = board.getPiece(pos);
-                          if ((piece !== null) || (result.length == size)) {
-                              captured.push(pos);
-                              if (isMatiBela) {
+          if (!noCapturing) {
+              if ((result[ix] > 1) || isPool) {
+                  result[ix] = -result[ix];
+              } else {
+                  if (!isPool) {
+                      if (design.inZone(0, board.player, pos)) {
+                          pos = design.navigate(board.player, pos, 4);
+                          if (pos !== null) {
+                              piece = board.getPiece(pos);
+                              if ((piece !== null) || (result.length == size) || (_.indexOf(positions, pos) >= 0)) {
+                                  captured.push(pos);
+                                  if (isMatiBela) {
+                                      fr++;
+                                      result[ix] = 0;
+                                  }
+                              }
+                          }
+                      } else {
+                          var p = design.navigate(board.player, pos, 0);
+                          var q = design.navigate(board.player, pos, 6);
+                          if (isMikul && (p !== null) && (q !== null) && (result.length > 1)) {
+                              var piece = board.getPiece(p);
+                              if ((piece !== null) && (Math.abs(+piece.getValue(0)) == Math.abs(result[ix - 1]))) {
+                                  captured.push(p);
+                                  captured.push(q);
                                   fr++;
                                   result[ix] = 0;
                               }
-                          }
-                      }
-                  } else {
-                      var p = design.navigate(board.player, pos, 0);
-                      var q = design.navigate(board.player, pos, 6);
-                      if (isMikul && (p !== null) && (q !== null) && (result.length > 1)) {
-                          var piece = board.getPiece(p);
-                          if ((piece !== null) && (Math.abs(+piece.getValue(0)) == Math.abs(result[ix - 1]))) {
-                              captured.push(p);
-                              captured.push(q);
-                              fr++;
-                              result[ix] = 0;
                           }
                       }
                   }

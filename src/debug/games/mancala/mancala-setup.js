@@ -118,6 +118,7 @@ Dagaz.Model.setup = function(board) {
               board.setPiece(pos, piece);
           });
       }
+      board.noInitial = true;
   } else {
       _.each(design.allPositions(), function(pos) {
           var piece = board.getPiece(pos);

@@ -61,37 +61,37 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
                   ctx.drawImage(r.h, sx, sy, r.dx, r.dy);
               }
           }
-          return;
-      }
-      var sx = x + Dagaz.View.DX - (dx - piece.dx) / 2 | 0;
-      var sy = y + Dagaz.View.DY + (cy - 1) * piece.dy - (dy - piece.dy) / 2 | 0;
-      var ov = 0;
-      if (val > cx * cy) {
-          ov = val - cx * cy;
-          val = cx * cy;
-      }
-      for (var cn = 0; val > 0; val--) {
-          ctx.drawImage(piece.h, sx, sy, piece.dx, piece.dy);
-          if (cn < cx - 1) {
-              sx += piece.dx;
-              cn++;
-          } else {
-              sx -= piece.dx * (cx - 1);
-              sy -= piece.dy;
-              cn = 0;
+      } else {
+          var sx = x + Dagaz.View.DX - (dx - piece.dx) / 2 | 0;
+          var sy = y + Dagaz.View.DY + (cy - 1) * piece.dy - (dy - piece.dy) / 2 | 0;
+          var ov = 0;
+          if (val > cx * cy) {
+              ov = val - cx * cy;
+              val = cx * cy;
           }
-      }
-      var sx = x + Dagaz.View.DX - (dx - piece.dx) / 2 + (piece.dx / 2) | 0;
-      var sy = y + Dagaz.View.DY + (cy - 1) * piece.dy - (dy - piece.dy) / 2 - (piece.dy / 2) | 0;
-      for (var cn = 0; ov > 0; ov--) {
-          ctx.drawImage(piece.h, sx, sy, piece.dx, piece.dy);
-          if (cn < cx - 2) {
-              sx += piece.dx;
-              cn++;
-          } else {
-              sx -= piece.dx * (cx - 2);
-              sy -= piece.dy;
-              cn = 0;
+          for (var cn = 0; val > 0; val--) {
+              ctx.drawImage(piece.h, sx, sy, piece.dx, piece.dy);
+              if (cn < cx - 1) {
+                  sx += piece.dx;
+                  cn++;
+              } else {
+                  sx -= piece.dx * (cx - 1);
+                  sy -= piece.dy;
+                  cn = 0;
+              }
+          }
+          var sx = x + Dagaz.View.DX - (dx - piece.dx) / 2 + (piece.dx / 2) | 0;
+          var sy = y + Dagaz.View.DY + (cy - 1) * piece.dy - (dy - piece.dy) / 2 - (piece.dy / 2) | 0;
+          for (var cn = 0; ov > 0; ov--) {
+              ctx.drawImage(piece.h, sx, sy, piece.dx, piece.dy);
+              if (cn < cx - 2) {
+                  sx += piece.dx;
+                  cn++;
+              } else {
+                  sx -= piece.dx * (cx - 2);
+                  sy -= piece.dy;
+                  cn = 0;
+              }
           }
       }
   } else {

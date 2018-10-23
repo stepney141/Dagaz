@@ -1,9 +1,13 @@
 (function() {
 
+var isExtended = false;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "dakon-goal") {
+  if (name == "dakon-goal") {
+      if (value == "extended") isExtended = true;
+  } else {
       checkVersion(design, name, value);
   }
 }
@@ -24,7 +28,11 @@ Dagaz.AI.eval = function(design, params, board, player) {
       }
   });
   if (mobility == 0) return -1;
-  return eval(design, params, board, player) * 100 + mobility;
+  var r = eval(design, params, board, player) * 100 + mobility;
+  if (isExtended && isForced) {
+      r += 10;
+  }
+  return r;
 }
 
 var checkGoals = Dagaz.Model.checkGoals;
