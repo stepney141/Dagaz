@@ -82,6 +82,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 0, [0], 0);
     design.addMove(0, 1, [2, 2], 1);
 
+    design.addPiece("None", 1);
+
     design.setup("South", "Seed", 10);
     design.setup("South", "Seed", 8);
     design.setup("South", "Seed", 6);
@@ -100,6 +102,8 @@ Dagaz.View.configure = function(view) {
     view.defBoard("Board");
     view.defPiece("SouthSeed", "South Seed");
     view.defPiece("NorthSeed", "North Seed");
+    view.defPiece("SouthNone", "South None");
+    view.defPiece("NorthNone", "North None");
     view.defPiece("0", "0");
     view.defPiece("1", "1");
     view.defPiece("2", "2");

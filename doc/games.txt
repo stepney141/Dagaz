@@ -7,8 +7,8 @@
   - Toguz Kumalak [trap, best]
   - Tchuka Ruma [puzzle, best]
   - Kauri [todo]
-  - Congklak [todo]
-  - Dakon [todo]
+  - Congklak [best]
+  - Dakon
   - Abalala'e [todo]
   - Ohojitxi [best, sounds]
   - Selus [todo, traps]

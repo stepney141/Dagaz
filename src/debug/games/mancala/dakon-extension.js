@@ -8,6 +8,7 @@ Dagaz.View.MX       = 25;
 
 var cache = [];
 var size  = 15;
+var half  = 7;
 
 var isMikul = false;
 var isMatiBela = false;
@@ -72,7 +73,7 @@ Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;  
   var noCapturing = false;
   if (_.isUndefined(board.noInitial) && isSimulate) {
-      noCapturing = (board.parent === null) || (board.parent.parent === null);
+      noCapturing = (board.parent === null);
   }
   _.each(board.moves, function(move) {
       var isPool = false;
@@ -116,7 +117,58 @@ Dagaz.Model.CheckInvariants = function(board) {
           ix--;
           var captured = [];
           isPool = design.inZone(1, board.player, pos);
-          if (!noCapturing) {
+          if (noCapturing) {
+              var start = _.random(0, half - 1);
+              var ps = _.indexOf(positions, start);
+              if (ps < 0) {
+                  while (pos != start) {
+                     pos = design.navigate(board.player, pos, 0);
+                     if ((pos === null) || !design.inZone(0, 2, pos)) {
+                         move.failed = true;
+                         return;
+                     }
+                     positions.push(pos);
+                     ix++;
+                     var piece = board.getPiece(pos);
+                     if (piece === null) {
+                         result.push(0);
+                     } else {
+                         result.push(Math.abs(+piece.getValue(0)));
+                     }
+                  }
+              } else {
+                  pos = positions[ps];
+                  x = ps;
+              }
+              result[ix] -= half;
+              for (var i = 0; i < half; i++) {
+                   pos = design.navigate(2, pos, 0);
+                   if (pos === null) {
+                       move.failed = true;
+                       return;
+                   }
+                   if (design.inZone(1, 2, pos)) {
+                       var piece = Dagaz.Model.createPiece(0, 2).setValue(0, 1);
+                       move.dropPiece(pos, piece);
+                       continue;
+                   }
+                   ix++;
+                   if (ix >= size) {
+                       ix = 0;
+                   }
+                   var piece = board.getPiece(pos);
+                   if (ix < result.length) {
+                       result[ix]++;
+                   } else {
+                       if (piece === null) {
+                           result.push(1);
+                       } else {
+                           result.push(Math.abs(+piece.getValue(0)) + 1);
+                       }
+                   }
+              }
+              console.log(result);
+          } else {
               if ((result[ix] > 1) || isPool) {
                   result[ix] = -result[ix];
               } else {

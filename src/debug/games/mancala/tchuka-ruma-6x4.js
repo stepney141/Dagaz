@@ -54,6 +54,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPiece("Seed", 0);
     design.addMove(0, 0, [0], 0);
 
+    design.addPiece("None", 1);
+
     design.setup("You", "Seed", 0);
     design.setup("You", "Seed", 1);
     design.setup("You", "Seed", 2);
@@ -65,6 +67,7 @@ Dagaz.Model.BuildDesign = function(design) {
 Dagaz.View.configure = function(view) {
     view.defBoard("Board");
     view.defPiece("YouSeed", "You Seed");
+    view.defPiece("YouNone", "You None");
     view.defPiece("0", "0");
     view.defPiece("1", "1");
     view.defPiece("2", "2");
