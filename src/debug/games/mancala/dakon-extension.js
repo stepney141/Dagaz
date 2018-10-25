@@ -179,7 +179,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                   result[ix] = -result[ix];
               } else {
                   if (!isPool) {
-                      if (design.inZone(0, board.player, pos)) {
+                      if (design.inZone(0, board.player, pos) && (result[ix] == 1)) {
                           pos = design.navigate(board.player, pos, 4);
                           if (pos !== null) {
                               piece = board.getPiece(pos);
