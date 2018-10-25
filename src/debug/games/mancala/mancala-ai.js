@@ -2,10 +2,16 @@
 
 var MAX_DEEP = 100;
 
+var isSimple = false;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
   if (name == "mancala-ai") {
+      if (value == "simple") {
+          isSimple = true;
+          return;
+      }
       MAX_DEEP = +value;
   } else {
       checkVersion(design, name, value);
@@ -61,6 +67,7 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
           b.player = board.player;
           if (_.indexOf(stack, b.zSign) >= 0) return -1;
           stack.push(b.zSign);
+          if (isSimple) break;
           m = findMove(design, b, board.player);
       }
       var e = Dagaz.AI.eval(design, ai.params, b, board.player);
