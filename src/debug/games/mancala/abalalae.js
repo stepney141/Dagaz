@@ -57,8 +57,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("X1", [0, 1, 2, 3]);
     design.addPosition("X2", [0, 1, 2, 3]);
 
-    design.addZone("home", 1, [0, 1, 2, 3, 4, 5, 6, 7, 8]);
-    design.addZone("home", 2, [12, 13, 14, 15, 16, 17, 9, 10, 11]);
+    design.addZone("home", 1, [12, 13, 14, 15, 16, 17, 9, 10, 11]);
+    design.addZone("home", 2, [0, 1, 2, 3, 4, 5, 6, 7, 8]);
     design.addZone("pool", 1, [18, 19]);
     design.addZone("pool", 2, [18, 19]);
 
