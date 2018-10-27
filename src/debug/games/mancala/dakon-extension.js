@@ -99,6 +99,7 @@ Dagaz.Model.CheckInvariants = function(board) {
           var positions = [];
           var result = [];
           result.push(0);
+          positions.push(pos);
           for (var ix = 1; cnt > 0; cnt--, ix++) {
                pos = design.navigate(board.player, pos, dir);
                positions.push(pos);
@@ -173,7 +174,6 @@ Dagaz.Model.CheckInvariants = function(board) {
                        }
                    }
               }
-              console.log(result);
           } else {
               if ((!isSimple && (result[ix] > 1)) || isPool) {
                   result[ix] = -result[ix];
