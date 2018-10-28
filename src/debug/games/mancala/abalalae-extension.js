@@ -71,10 +71,12 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
+  var noCapturing = (board.getValue(1) === null) || (board.getValue(2) === null);
   _.each(board.moves, function(move) {
       var fr  = 0;
       var dir = 0;
       if (move.isSimpleMove()) {
+          var isCollision = false;
           var pos = move.actions[0][0][0];
           if (design.inZone(1, board.player, pos)) {
               move.failed = true;
@@ -90,7 +92,11 @@ Dagaz.Model.CheckInvariants = function(board) {
           }
           var positions = [];
           var result = [];
-          result.push(0);
+          if (piece.getValue(1) === null) {
+              result.push(0);
+          } else {
+              result.push(piece.getValue(1));
+          }
           positions.push(pos);
           for (var ix = 1; cnt > 0; cnt--, ix++) {
                pos = design.navigate(board.player, pos, dir);
@@ -115,20 +121,35 @@ Dagaz.Model.CheckInvariants = function(board) {
           }
           ix--;
           if (result[ix] == 1) {
-              if (design.inZone(0, board.player, pos)) {
-                  var p = design.navigate(board.player, pos, 3);
-                  if (p !== null) {
-                      fr += capture(design, board, p, result, positions, move);
-                      p = design.navigate(board.player, p, 3);
-                  }
-                  if (p !== null) {
-                      fr += capture(design, board, p, result, positions, move);
-                  }
-                  if (fr > 0) {
-                      result[ix] = -result[ix];
+              if (!noCapturing) {
+                  if (design.inZone(0, board.player, pos)) {
+                      var p = design.navigate(board.player, pos, 3);
+                      if (p !== null) {
+                          fr += capture(design, board, p, result, positions, move);
+                          p = design.navigate(board.player, p, 3);
+                      }
+                      if (p !== null) {
+                          fr += capture(design, board, p, result, positions, move);
+                      }
+                      if (fr > 0) {
+                          result[ix] = -result[ix];
+                      }                  
                   }
               }
+              if (board.getValue(board.player) === null) {
+                  move.setValue(board.player, 1);
+              }
           } else {
+              if (noCapturing) {
+                  var piece = board.getPiece(pos);
+                  if ((piece !== null) && (piece.player != board.player) && (piece.getValue(0) < 0)) {
+                      result[ix]--;
+                      isCollision = true;
+                      if (board.getValue(board.player) === null) {
+                          move.setValue(board.player, 1);
+                      }
+                  }
+              }
               if (!isBreakable) {
                   result[ix] = -result[ix];
               }
@@ -137,9 +158,15 @@ Dagaz.Model.CheckInvariants = function(board) {
           for (var ix = 0; ix < result.length; ix++) {
                var player = board.player;
                if (!design.inZone(0, board.player, pos) && (result[ix] > 0)) {
-                   player = design.nextPlayer(player);
+                   player = design.nextPlayer(board.player);
+               }
+               if (isCollision && (result[ix] < 0)) {
+                   player = design.nextPlayer(board.player);
                }
                var piece = createPiece(design, player, result[ix]);
+               if (isCollision && (result[ix] < 0)) {
+                   piece = piece.setValue(1, 1);
+               }
                if (result[ix] == 0) {
                    if (ix > 0) {
                        move.capturePiece(pos);
