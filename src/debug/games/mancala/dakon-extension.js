@@ -145,7 +145,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                   }
               } else {
                   pos = positions[ps];
-                  x = ps;
+                  ix = ps;
               }
               result[ix] -= Dagaz.Model.HALF;
               for (var i = 0; i < Dagaz.Model.HALF; i++) {
