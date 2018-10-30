@@ -8,41 +8,6 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var getValue = function(board, player, pos, ix) {
-  if (pos === null) return 0;
-  var piece = board.getPiece(pos);
-  if ((piece === null) || (piece.player != player)) return 0;
-  var r = +piece.getValue(ix);
-  if (r === null) return 0;
-  return r;
-}
-
-var getLine = function(design, board, player, pos, dir, ix) {
-  var r = 1;
-  var p = design.navigate(player, pos, dir);
-  r += getValue(board, player, p, ix);
-  if (r == 3) {
-      var q = design.navigate(0, pos, dir);
-      var v = getValue(board, player, q, ix);
-      if (v == 2) return -1;
-  }
-  if (p === null) return 0;
-  var piece = board.getPiece(p);
-  while (piece !== null) {
-      p = design.navigate(player, p, dir);
-      if (p === null) return 0;
-      piece = board.getPiece(p);
-  }
-  if (r >= 3) return r;
-  p = design.navigate(player, p, dir);
-  if (p === null) return r;
-  piece = board.getPiece(p);
-  if ((piece === null) || (piece.player != player)) return r;
-  var vl = +piece.getValue(ix);
-  if (vl === null) return r;
-  return r + vl;
-}
-
 var addKo = function(board, move) {
   if ((move.actions.length > 0) && (move.actions[0][1] !== null)) {
        pos = move.actions[0][1][0];
@@ -53,6 +18,69 @@ var addKo = function(board, move) {
            board.ko.push(pos);
        }
   }
+}
+
+var getRank = function(design, board, player, pos, dir, opposite) {
+  var cnt = 1;
+  var p = design.navigate(player, pos, opposite);
+  while (p !== null) {
+      var piece = board.getPiece(p);
+      if ((piece === null) || (piece.player != player)) break;
+      p = design.navigate(player, p, opposite);
+      cnt++;
+  }
+  p = design.navigate(player, pos, dir);
+  while (p !== null) {
+      var piece = board.getPiece(p);
+      if (piece === null) {
+          p = design.navigate(player, p, dir);
+          var sign = 1;
+          while (p !== null) {
+              piece = board.getPiece(p);
+              if (piece === null) break;
+              if (piece.player != player) return cnt * sign;
+              p = design.navigate(player, p, dir);
+              cnt++;
+              sign = -1;
+          }
+          return cnt;
+      }
+      if (piece.player != player) return 0;
+      p = design.navigate(player, p, dir);
+      cnt++;
+  }
+  return 0;
+}
+
+var calcRank = function(x, y) {
+  if ((x < 0) && (y < 0)) {
+      if (x < y) {
+          return x;
+      } else {
+          return y;
+      }
+  }
+  if (Math.abs(x) > 3) return x;
+  if (Math.abs(y) > 3) return y;
+  if ((x <= 0) && (y <= 0)) return 0;
+  if (Math.abs(x) > Math.abs(y)) {
+      return x;
+  } else {
+      return y;
+  }
+}
+
+var isTriplet = function(design, board, player, pos, dir, opposite) {
+  p = design.navigate(player, pos, dir);
+  while (p !== null) {
+      if (board.getPiece(p) === null) {
+          var x = getRank(design, board, player, p, dir, opposite);
+          var y = getRank(design, board, player, p, opposite, dir);
+          return calcRank(x, y) == 4;
+      }
+      p = design.navigate(player, p, dir);
+  }
+  return false;
 }
 
 var CheckInvariants = Dagaz.Model.CheckInvariants;
@@ -66,56 +94,43 @@ Dagaz.Model.CheckInvariants = function(board) {
   dirs.push(design.getDirection("w")); dirs.push(design.getDirection("nw"));
   _.each(board.moves, function(move) {
       if (board.player == 1) {
-          _.each(move.actions, function(a) {
-               if (a[2] !== null) {
-                   var piece = a[2][0];
-                   for (var ix = 0; ix < 4; ix++) {
-                        if (+piece.getValue(ix) > 5) {
-                            addKo(board, move);
-                            move.failed = true;
-                        }
+          var pos   = move.actions[0][1][0];
+          var piece = move.actions[0][2][0];
+          var res   = [];
+          for (var ix = 0; ix < 4; ix++) {
+               var v = +piece.getValue(ix);
+               if (v > 5) {
+                   addKo(board, move);
+                   move.failed = true;
+                   return;
+               }
+               var x = getRank(design, board, board.player, pos, dirs[ix], dirs[ix + 4]);
+               var y = getRank(design, board, board.player, pos, dirs[ix + 4], dirs[ix]);
+               res.push(calcRank(x, y));
+          }
+          if (_.filter(res, function(x) { return Math.abs(x) >= 4; }).length >= 2) {
+               addKo(board, move);
+               move.failed = true;
+               return;
+          }
+          if (_.filter(res, function(x) { return (x < -3) || (x >= 3); }).length >= 2) {
+               var b = board.apply(move);
+               var cnt = 0;
+               for (var ix = 0; ix < 4; ix++) {
+                   if (Math.abs(res[ix]) > 3) {
+                       cnt++;
+                       continue;
+                   }
+                   if (res[ix] == 3) {
+                       if (isTriplet(design, b, board.player, pos, dirs[ix], dirs[ix + 4]) ||
+                           isTriplet(design, b, board.player, pos, dirs[ix + 4], dirs[ix])) cnt++;
                    }
                }
-          });
-          if (_.isUndefined(move.failed)) {
-              var pos = move.actions[0][1][0];
-              var cnt = 0;
-              _.each(dirs, function(dir) {
-                  var ix = _.indexOf(dirs, dir);
-                  if (ix > 3) ix -= 4;
-                  if (ix < 0) {
-                      addKo(board, move);
-                      move.failed = true;
-                  }
-                  var l = getLine(design, board, board.player, pos, dir, ix);
-                  if (l < 0) {
-                      cnt = 0;
-                      return;
-                  }
-                  if ((cnt == 0) && (l == 3)) {
-                      cnt = 1;
-                      return;
-                  }
-                  if ((cnt == 0) && (l == 4)) {
-                      cnt = 2;
-                      return;
-                  }
-                  if ((cnt == 2) && (l == 3)) {
-                      cnt = 3;
-                      return;
-                  }
-                  if ((cnt == 1) && (l == 4)) {
-                      cnt = 3;
-                      return;
-                  }
-                  if ((cnt > 0) && (l >= 3)) {
-                      cnt = 4;
-                  }
-              });
-              if (cnt > 3) {
-                  addKo(board, move);
-                  move.failed = true;
-              }
+               if (cnt >= 2) {
+                   addKo(board, move);
+                   move.failed = true;
+                   return;
+               }
           }
       }
   });
