@@ -180,6 +180,11 @@ Dagaz.Model.CheckInvariants = function(board) {
                            move.actions[0][2] = [ piece ];
                        } else {
                            if ((ix > 0) && (board.getPiece(pos) !== null)) {
+                               var x = board.getPiece(pos);
+                               if ((x !== null) && (x.player != board.player) && (+x.getValue(0) < 0)) {
+                                   piece = piece.changeOwner(x.player);
+                                   piece = piece.setValue(0, -(Math.abs(+piece.getValue(0)) + Math.abs(+x.getValue(0))));
+                               }
                                move.movePiece(pos, pos, piece);
                            } else {
                                move.dropPiece(pos, piece);
