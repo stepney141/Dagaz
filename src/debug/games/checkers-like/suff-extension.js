@@ -49,8 +49,13 @@ Dagaz.Model.CheckInvariants = function(board) {
               var target = findTarget(a[0][0], a[1][0]);
               if (target !== null) {
                   var enemy  = board.getPiece(target);
-                  if ((enemy !== null) && (enemy.player != piece.player)) {
+                  if ((enemy !== null) && (enemy.player != piece.player) && design.inZone(0, board.player, target)) {
                       if (isLarge || isDiagonal(a[0][0], a[1][0])) {
+                          if (design.inZone(3, board.player, target) || 
+                              design.inZone(3, design.nextPlayer(board.player), target)) {
+                              move.failed = true;
+                              return;
+                          }
                           if (_.indexOf(captured, target) >= 0) {
                               move.failed = true;
                           }

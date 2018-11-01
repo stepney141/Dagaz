@@ -15,7 +15,7 @@ Dagaz.Model.CheckInvariants = function(board) {
   _.each(board.moves, function(move) {
       if (move.mode <= 1) {
           var pos = move.actions[0][0][0];
-          if (!design.inZone(1, board.player, pos)) {
+          if (!design.inZone(1, board.player, pos) && !design.inZone(2, board.player, pos)) {
               move.failed = true;
               return;
           }
@@ -30,6 +30,12 @@ Dagaz.Model.CheckInvariants = function(board) {
               }
               inGoal = design.inZone(3, board.player, pos);
           });
+      } else {
+          if (design.inZone(2, board.player, move.actions[0][0][0]) && 
+              design.inZone(2, board.player, move.actions[0][1][0])) {
+              move.failed = true;
+              return;
+          }
       }
   });
   CheckInvariants(board);
