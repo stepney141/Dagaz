@@ -12,10 +12,18 @@
   add
 ))
 
-(define slide (
+(define slide-king (
   $1 (verify (piece? Hole))
   (while (piece? Hole) $1)
   (verify not-friend?)
+  add
+))
+
+(define slide-warrior (
+  $1 (verify (piece? Hole))
+  (while (piece? Hole) $1)
+  (verify not-friend?)
+  (verify (piece? King))
   add
 ))
 
@@ -70,8 +78,8 @@
          (step-king n) (step-king s) (step-king w) (step-king e)
          (step-king nw) (step-king sw) (step-king ne) (step-king se)
          (move-type jump-type)
-         (slide n) (slide s) (slide w) (slide e)
-         (slide nw) (slide sw) (slide ne) (slide se)
+         (slide-king n) (slide-king s) (slide-king w) (slide-king e)
+         (slide-king nw) (slide-king sw) (slide-king ne) (slide-king se)
      )
   )
   (piece
@@ -82,8 +90,8 @@
          (move-type normal-type)
          (step-warrior n) (step-warrior s) (step-warrior w) (step-warrior e)
          (step-warrior nw) (step-warrior sw) (step-warrior ne) (step-warrior se)
-         (slide n) (slide s) (slide w) (slide e)
-         (slide nw) (slide sw) (slide ne) (slide se)
+         (slide-warrior n) (slide-warrior s) (slide-warrior w) (slide-warrior e)
+         (slide-warrior nw) (slide-warrior sw) (slide-warrior ne) (slide-warrior se)
          (jump n) (jump s) (jump w) (jump e)
          (jump nw) (jump sw) (jump ne) (jump se)
      )
