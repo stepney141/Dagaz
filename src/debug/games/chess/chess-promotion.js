@@ -8,42 +8,28 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var promote = function(arr, name, player) {
-  var design = Dagaz.Model.design;
-  var t = design.getPieceType(name);
-  if (t !== null) {
-      arr.push(Dagaz.Model.createPiece(t, player));
-  }
-}
-
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
-  for (var i in board.moves) {
-       var m = board.moves[i];
-       for (var j in m.actions) {
-            fp = m.actions[j][0];
-            tp = m.actions[j][1];
-            if ((fp !== null) && (tp !== null)) {
-                var piece = board.getPiece(fp[0]);
-                if ((piece !== null) && (piece.getType() == "Pawn")) {
-                    var p = design.navigate(board.player, tp[0], design.getDirection("n"));
-                    if (p === null) {
-                        var promoted = [];
-                        promote(promoted, "Queen",  board.player);
-                        promote(promoted, "Rook",   board.player);
-                        promote(promoted, "Knight", board.player);
-                        promote(promoted, "Bishop", board.player);
-                        if (promoted.length > 0) {
-                            m.actions[j][2] = promoted;
-                        }
-                    }
-                }
-                break;
-            }
-       }
-  }
+  var pawn   = design.getPieceType("Pawn");
+  _.each(board.moves, function(move) {
+      if (move.isSimpleMove()) {
+          var pos = move.actions[0][0][0];
+          var piece = board.getPiece(pos);
+          if ((piece !== null) && (piece.type == pawn) && 
+              (move.actions[0][2] !== null) && 
+              (move.actions[0][2][0].type != pawn)) {
+              piece = move.actions[0][2][0];
+              var pieces = [];
+              pieces.push(piece.promote(design.getPieceType("Bishop")));
+              pieces.push(piece.promote(design.getPieceType("Knight")));
+              pieces.push(piece.promote(design.getPieceType("Rook")));
+              pieces.push(piece.promote(design.getPieceType("Queen")));
+              move.actions[0][2] = pieces;
+          }
+      }
+  });
   CheckInvariants(board);
 }
 
