@@ -25,15 +25,30 @@ Dagaz.Model.CheckInvariants = function(board) {
                       return;
                   }
               }
-              if (m == 0) {
-                  piece = piece.promote(piece.type + 1);
+              var pieces = [];
+              if ((a[2] !== null) && (a[2][0].type != piece.type)) {
+                  piece = a[2][0];
+                  if (m == 0) {
+                      pieces.push(piece.promote(7));
+                      pieces.push(piece.promote(5));
+                      pieces.push(piece.promote(3));
+                      pieces.push(piece.promote(9));
+                  } else {
+                      pieces.push(piece.promote(6));
+                      pieces.push(piece.promote(4));
+                      pieces.push(piece.promote(2));
+                      pieces.push(piece.promote(8));
+                  }
               } else {
-                  piece = piece.promote(piece.type - 1);
+                  if (m == 0) {
+                      pieces.push(piece.promote(piece.type + 1));
+                  } else {
+                      pieces.push(piece.promote(piece.type - 1));
+                  }
               }
-              if ((a[2] !== null) && (a[2][0].type == 8) && (m == 0)) {
-                  piece = piece.promote(a[2][0].type + 1);
+              if (pieces.length > 0) {
+                  a[2] = pieces;
               }
-              a[2] = [ piece ];
           }
       });
   });

@@ -96,13 +96,15 @@ var changePieces = function(design, board, move) {
       } else {
           piece = board.getPiece(action[1][0]);
       }
+      var pieces = [];
       if (action[2] !== null) {
-          piece = action[2][0];
+          _.each(action[2], function(piece) {
+               pieces.push(piece.setValue(0, true));
+          });
+      } else {
+          pieces.push(piece.setValue(0, true));
       }
-      if (piece !== null) {
-          piece = piece.setValue(0, true);
-      }
-      action[2] = [ piece ];
+      action[2] = pieces;
   });
 }
 
