@@ -1,3 +1,5 @@
+Dagaz.Model.WIDTH = 10;
+
 ZRF = {
     JUMP:          0,
     IF:            1,
@@ -26,14 +28,14 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("pass-partial", "true");
     design.checkVersion("detect-loops", "true");
 
-    design.addDirection("w");
-    design.addDirection("e");
-    design.addDirection("s");
-    design.addDirection("ne");
-    design.addDirection("n");
-    design.addDirection("se");
-    design.addDirection("sw");
-    design.addDirection("nw");
+    design.addDirection("w");  // 0
+    design.addDirection("e");  // 1
+    design.addDirection("s");  // 2
+    design.addDirection("ne"); // 3
+    design.addDirection("n");  // 4
+    design.addDirection("se"); // 5
+    design.addDirection("sw"); // 6
+    design.addDirection("nw"); // 7
 
     design.addPlayer("White", [1, 0, 4, 6, 2, 7, 3, 5]);
     design.addPlayer("Black", [0, 1, 2, 3, 4, 5, 6, 7]);

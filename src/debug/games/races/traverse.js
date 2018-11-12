@@ -1,3 +1,5 @@
+Dagaz.Model.WIDTH = 10;
+
 ZRF = {
     JUMP:          0,
     IF:            1,
