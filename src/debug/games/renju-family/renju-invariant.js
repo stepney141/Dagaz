@@ -25,7 +25,7 @@ var getRank = function(design, board, player, pos, dir, opposite) {
   var p = design.navigate(player, pos, opposite);
   while (p !== null) {
       var piece = board.getPiece(p);
-      if ((piece === null) || (piece.player != player)) break;
+      if ((piece === null) || (piece.player != player)) return -cnt; // break;
       p = design.navigate(player, p, opposite);
       cnt++;
   }
