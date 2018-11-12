@@ -687,6 +687,10 @@ ZrfDesign.prototype.allDirections = function() {
   return _.range(this.dirs.length);
 }
 
+ZrfDesign.prototype.allPlayers = function() {
+  return _.range(1, this.playerNames.length);
+}
+
 ZrfDesign.prototype.reserve = function(player, piece, cnt) {
   var o = Dagaz.find(this.playerNames, player);
   var t = Dagaz.find(this.pieceNames, piece);

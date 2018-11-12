@@ -29,6 +29,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-drops", "true");
     design.checkVersion("detect-loops", "true");
+    design.checkVersion("halma-restrictions", "strong");
 
     design.addDirection("se");
     design.addDirection("s");
@@ -198,7 +199,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(2, ZRF.FUNCTION,	28);	// end
 
     design.addPiece("T", 0);
-    design.addDrop(0, 2, [], 2);
+    design.addDrop(0, 2, [], 2, 10);
     design.addMove(0, 0, [6], 0);
     design.addMove(0, 0, [5], 0);
     design.addMove(0, 0, [1], 0);
@@ -207,7 +208,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 1, [1, 1], 1);
 
     design.addPiece("S", 1);
-    design.addDrop(1, 2, [], 2);
+    design.addDrop(1, 2, [], 2, 10);
     design.addMove(1, 0, [7], 0);
     design.addMove(1, 0, [3], 0);
     design.addMove(1, 0, [4], 0);
@@ -218,7 +219,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(1, 1, [1, 1], 1);
 
     design.addPiece("R", 2);
-    design.addDrop(2, 2, [], 2);
+    design.addDrop(2, 2, [], 2, 10);
     design.addMove(2, 0, [6], 0);
     design.addMove(2, 0, [5], 0);
     design.addMove(2, 0, [2], 0);
@@ -229,7 +230,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(2, 1, [0, 0], 1);
 
     design.addPiece("C", 3);
-    design.addDrop(3, 2, [], 2);
+    design.addDrop(3, 2, [], 2, 10);
     design.addMove(3, 0, [7], 0);
     design.addMove(3, 0, [6], 0);
     design.addMove(3, 0, [3], 0);
@@ -313,6 +314,7 @@ Dagaz.View.configure = function(view) {
     view.defPiece("WestC", "West C");
     view.defPiece("NorthC", "North C");
     view.defPiece("EastC", "East C");
+    view.defPiece("Ko", "Ko");
  
     view.defPosition("X9", 2, 2, 50, 50);
     view.defPosition("a9", 52, 2, 50, 50);

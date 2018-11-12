@@ -107,13 +107,16 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
 var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {
-  var c = [0, 0, 0, 0];
   var m = 2;
+  var c = [0, 0, 0, 0];
+  var p = [0, 0, 0, 0];
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
       if (piece !== null) {
           if (!design.inZone(0, piece.player, pos)) {
               c[piece.player - 1]++;
+          } else {
+              p[piece.player - 1]++;
           }
           if (piece.player > m) {
               m = piece.player;
@@ -121,7 +124,7 @@ Dagaz.Model.checkGoals = function(design, board, player) {
       }
   });
   for (var i = 0; i < m; i++) {
-      if (c[i] == 0) {
+      if ((c[i] == 0) && (p[i] != 0)) {
           if (i + 1 == player) {
               return 1;
           } else {

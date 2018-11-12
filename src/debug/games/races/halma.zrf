@@ -34,7 +34,6 @@
          )
          (directions 
               (n 0 -1) (s 0 1) (e 1 0) (w -1 0)
-              (nw -1 -1) (sw -1 1) (ne 1 -1) (se 1 1)
          )
      )
      (zone (name goal-zone) (players White)
@@ -51,15 +50,11 @@
             Black "images/halma/uman.bmp")
      (moves
          (move-type normal-type)
-         (step n) (step nw)
-         (step e) (step ne)
-         (step w) (step sw)
-         (step s) (step se)
+         (step n) (step e)
+         (step w) (step s)
          (move-type continue-type)
-         (jump n) (jump nw)
-         (jump e) (jump ne)
-         (jump w) (jump sw)
-         (jump s) (jump se)
+         (jump n) (jump e)
+         (jump w) (jump s)
      )
   )
 
