@@ -25,7 +25,7 @@ var getRank = function(design, board, player, pos, dir, opposite) {
   var p = design.navigate(player, pos, opposite);
   while (p !== null) {
       var piece = board.getPiece(p);
-      if ((piece === null) || (piece.player != player)) return -cnt; // break;
+      if ((piece === null) || (piece.player != player)) break;
       p = design.navigate(player, p, opposite);
       cnt++;
   }
@@ -45,7 +45,7 @@ var getRank = function(design, board, player, pos, dir, opposite) {
           }
           return cnt;
       }
-      if (piece.player != player) return 0;
+      if (piece.player != player) return -cnt;
       p = design.navigate(player, p, dir);
       cnt++;
   }
@@ -53,15 +53,13 @@ var getRank = function(design, board, player, pos, dir, opposite) {
 }
 
 var calcRank = function(x, y) {
-  if ((x < 0) && (y < 0)) {
+  if (((x < 0) && (y < 0)) || (Math.abs(x) > 3) || (Math.abs(y) > 3)) {
       if (x < y) {
           return x;
       } else {
           return y;
       }
   }
-  if (Math.abs(x) > 3) return x;
-  if (Math.abs(y) > 3) return y;
   if ((x <= 0) && (y <= 0)) return 0;
   if (Math.abs(x) > Math.abs(y)) {
       return x;
@@ -92,8 +90,8 @@ Dagaz.Model.CheckInvariants = function(board) {
   dirs.push(design.getDirection("e")); dirs.push(design.getDirection("se"));
   dirs.push(design.getDirection("s")); dirs.push(design.getDirection("sw"));
   dirs.push(design.getDirection("w")); dirs.push(design.getDirection("nw"));
-  _.each(board.moves, function(move) {
-      if (board.player == 1) {
+  if (board.player == 1) {
+      _.each(board.moves, function(move) {          
           var pos   = move.actions[0][1][0];
           var piece = move.actions[0][2][0];
           var res   = [];
@@ -132,8 +130,8 @@ Dagaz.Model.CheckInvariants = function(board) {
                    return;
                }
           }
-      }
-  });
+      });
+  }
   CheckInvariants(board);
 }
 
