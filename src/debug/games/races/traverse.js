@@ -29,6 +29,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-drops", "true");
     design.checkVersion("detect-loops", "true");
+    design.checkVersion("advisor-wait", "5");
     design.checkVersion("halma-restrictions", "strong");
 
     design.addDirection("se");

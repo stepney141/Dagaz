@@ -3,7 +3,7 @@
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "halma-goal") {
+  if (name != "traverse-goal") {
      checkVersion(design, name, value);
   }
 }
@@ -16,19 +16,13 @@ var getTarget = function(design, board, player) {
   if (_.isUndefined(board.targetPos)) {
       board.targetPos = null;
       _.each(design.allPositions(), function(pos) {
-           if ((board.targetPos === null) && (design.inZone(2, player, pos))) {
-                board.targetPos = pos;
+           if ((board.targetPos === null) && (design.inZone(0, player, pos))) {
+               var piece = board.getPiece(pos);
+               if ((piece === null) || (piece.player != player)) {
+                   board.targetPos = pos;
+               }
            }
       });
-      var nx = design.getDirection("nx");
-      if (board.targetPos !== null) {
-          var p = board.targetPos;
-          while (p !== null) {
-              board.targetPos = p;
-              if (board.getPiece(p) === null) break;
-              p = design.navigate(player, p, nx);
-          }
-      }
   }
   return board.targetPos;
 }
@@ -89,12 +83,10 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
       }
   }
   if ((move.actions.length > 0) && (s !== null) && (e !== null)) {
-//    if (!design.inZone(0, board.player, s) && 
-//         design.inZone(0, board.player, e)) return 100000;
+      if (design.inZone(0, board.player, s)) return -1;
       var t = getTarget(design, board, board.player);
       if (t !== null) {
           var d = 10 + getDistance(s, t) - getDistance(e, t);
-//        if (design.inZone(0, board.player, s)) d -= 10;
           if (notBestDistance(board, d)) return -1;
           r = d * 100;
           var b = board.apply(move);

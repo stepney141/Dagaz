@@ -27,6 +27,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "false");
     design.checkVersion("show-blink", "false");
+    design.checkVersion("advisor-wait", "5");
 
     design.addDirection("s");
     design.addDirection("e");
@@ -35,7 +36,6 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPlayer("White", [3, 2, 1, 0]);
     design.addPlayer("Black", [0, 1, 2, 3]);
-
     design.addTurn(1);
     design.addTurn(1);
     design.addTurn(1);
