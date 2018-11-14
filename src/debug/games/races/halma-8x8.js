@@ -27,7 +27,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("smart-moves", "false");
     design.checkVersion("pass-partial", "true");
     design.checkVersion("detect-loops", "true");
-    design.checkVersion("advisor-wait", "5");
+    design.checkVersion("advisor-wait", "1");
     design.checkVersion("halma-restrictions", "strong");
 
     design.addDirection("se"); // 0

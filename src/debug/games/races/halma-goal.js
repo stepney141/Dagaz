@@ -12,25 +12,22 @@ if (!_.isUndefined(Dagaz.Controller.addSound)) {
     Dagaz.Controller.addSound(0, "../../sounds/slide.ogg", true);
 }
 
-var getTarget = function(design, board, player) {
-  if (_.isUndefined(board.targetPos)) {
-      board.targetPos = null;
-      _.each(design.allPositions(), function(pos) {
-           if ((board.targetPos === null) && (design.inZone(2, player, pos))) {
-                board.targetPos = pos;
+var getTargets = function(design, board, player) {
+  if (_.isUndefined(board.targets)) {
+      board.targets = [];
+      var pos = null;
+      _.each(design.allPositions(), function(p) {
+           if (design.inZone(2, player, p)) {
+               pos = p;
            }
       });
       var nx = design.getDirection("nx");
-      if (board.targetPos !== null) {
-          var p = board.targetPos;
-          while (p !== null) {
-              board.targetPos = p;
-              if (board.getPiece(p) === null) break;
-              p = design.navigate(player, p, nx);
-          }
+      while (pos !== null) {
+          board.targets.push(pos);
+          pos = design.navigate(player, pos, nx);
       }
   }
-  return board.targetPos;
+  return board.targets;
 }
 
 var getDistance = function(a, b) {
@@ -38,78 +35,100 @@ var getDistance = function(a, b) {
          Math.abs(Dagaz.Model.getY(a) - Dagaz.Model.getY(b));
 }
 
-var notBestDistance = function(board, x) {
-  if (_.isUndefined(board.bestDistance)) {
-      board.bestDistance = x;
+var getMove = function(move) {
+  var r = null;
+  for (var i = 0; i < move.actions.length; i++) {
+      if ((move.actions[i][0] !== null) && (move.actions[i][1] !== null)) {
+          if (r === null) {
+              r = {
+                  start: move.actions[i][0][0]
+              };
+          }
+          r.end = move.actions[i][1][0];
+      }
+  }
+  return r;
+}
+
+var notBest = function(design, board, val) {
+  if (_.isUndefined(board.bestVal)) {
+      board.bestVal = val;
       return false;
   }
-  if (board.bestDistance > x) return true;
-  board.bestDistance = x;
+  if (board.bestVal > val) return true;
+  board.bestVal = val;
   return false;
 }
 
-var penalty = function(design, board, pos) {
-  var r = 10;
-  _.each(design.allDirections(), function(dir) {
-      var q = design.navigate(0, pos, dir);
-      if ((q === null) || (board.getPiece(q) !== null)) return;
-      var p = design.navigate(board.player, pos, dir);
-      if ((p !== null) && (board.getPiece(p) === null)) {
-          var f = false;
-          _.each(design.allDirections(), function(d) {
-              if (!f) {
-                  var q = design.navigate(board.player, p, d);
-                  if ((q !== null) && (q != pos) && 
-                      (board.getPiece(q) !== null)) {
-                      q = design.navigate(board.player, q, d);
-                      if ((q !== null) && (board.getPiece(q) === null)) {
-                          f = true;
-                      }
-                  }
-              }
-          });
-          if (f) {
-              r = 0;
-          }
-      }
-  });
-  return r;
+var getEnemies = function(design, board, player) {
+  if (_.isUndefined(board.enemies)) {
+      board.enemies = [];
+      _.each(design.allPositions(), function(pos) {
+           if (design.inZone(0, player, pos)) {
+               var piece = board.getPiece(pos);
+               if ((piece !== null) && (piece.player != player)) {
+                   board.enemies.push(pos);
+               }
+           }
+      });
+  }
+  return board.enemies;
+}
+
+var isLocked = function(design, board, player, group) {
+  var r = true;
+  var nx = design.getDirection("nx");
+  for (var i = 0; i < group.length; i++) {
+       _.each(design.allDirections(), function(dir) {
+           if (dir == nx) return;
+           var pos = design.navigate(player, group[i], dir);
+           if ((pos !== null) && (_.indexOf(group, pos) < 0)) {
+               if (board.getPiece(pos) !== null) {
+                   pos = design.navigate(player, pos, dir);
+                   if ((pos !== null) && (_.indexOf(group, pos) < 0) && (board.getPiece(pos) === null)) {
+                       if (!design.inZone(0, player, pos)) {
+                           r = false;
+                           return;
+                       }
+                       group.push(pos);
+                   }
+               } else {
+                   if (!design.inZone(0, player, pos)) {
+                       r = false;
+                       return;
+                   }
+                   group.push(pos);
+               }
+           }
+       });
+       if (!r) return false;
+  }
+  return true;
+}
+
+var isRestricted = function(design, board, player, enemies) {
+  for (var i = 0; i < enemies.length; i++) {       
+       if (isLocked(design, board, player, [ enemies[i] ])) return true;
+  }
+  return false;
 }
 
 Dagaz.AI.heuristic = function(ai, design, board, move) {
   var r = 1;
-  var s = null;
-  var e = null;
-  for (var i = 0; i < move.actions.length; i++) {
-      if ((move.actions[i][0] !== null) && (move.actions[i][1] !== null)) {
-          if (s === null) {
-              s = move.actions[i][0][0];
-          }
-          e = move.actions[i][1][0];
+  var m = getMove(move);
+  var targets = getTargets(design, board, board.player);
+  if ((m !== null) && (targets.length > 0)) {
+      var s = _.indexOf(targets, m.start);
+      var e = _.indexOf(targets, m.end);
+      if ((s >= 0) && (e >= 0) && (e < s)) r = 1000;
+      if ((s < 0) && (e >= 0)) r = 100;
+      if ((s < 0) && (e < 0)) {
+           r = 100 - getDistance(m.end, targets[0]);
       }
-  }
-  if ((move.actions.length > 0) && (s !== null) && (e !== null)) {
-//    if (!design.inZone(0, board.player, s) && 
-//         design.inZone(0, board.player, e)) return 100000;
-      var t = getTarget(design, board, board.player);
-      if (t !== null) {
-          var d = 10 + getDistance(s, t) - getDistance(e, t);
-//        if (design.inZone(0, board.player, s)) d -= 10;
-          if (notBestDistance(board, d)) return -1;
-          r = d * 100;
-          var b = board.apply(move);
-          _.each(design.allPositions(), function(pos) {
-              var piece = b.getPiece(pos);
-              if (piece !== null) {
-                  var p = penalty(design, b, pos);
-                  if (piece.player == board.player) {
-                      r -= p;
-                  } else {
-                      r += p;
-                  }
-              }
-          });
-      }
+      if (notBest(design, board, r)) return -1;
+      var b = board.apply(move);
+      var enemies = getEnemies(design, board, board.player);
+      if (isRestricted(design, b, board.player, enemies)) return -1;
   }
   return r;
 }
