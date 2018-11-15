@@ -13,25 +13,9 @@
   add
 ))
 
-(define jump (
-  (verify (in-zone? board-zone))
-  $1 $2 (verify not-friend?)
-  add
-))
-
-(define slide (
-  (verify (in-zone? board-zone)) $1
-  (while empty?
-     add
-     $1
-  )
-  (verify enemy?)
-  add
-))
-
 (game
-  (title "Treasure Shogi")
-  (history "Copyright (c) 2010 Yamamoto Mitsuo.")
+  (title "Simple Shogi")
+  (history "Copyright (c) 2012 Itsubaki Yoshihisa.")
 
   (option "animate captures"      false)
   (option "animate drops"         false)
@@ -140,38 +124,18 @@
        )
   )
   (piece 
-       (name Knight)
-       (image South "images/sknight.bmp" 
-              North "images/nknight.bmp")
+       (name Pawn)
+       (image South "images/spawn.bmp" 
+              North "images/npawn.bmp")
        (moves
-           (jump n nw)
-           (jump n ne)
+           (step n)
            (drop-piece nx)
        )
   )
   (piece 
-       (name KnightP)
-       (image South "images/sknightp.bmp" 
-              North "images/nknightp.bmp")
-       (moves
-           (step n) (step nw)
-           (step s) (step ne)
-           (step w) (step e) 
-       )
-  )
-  (piece 
-       (name Lance)
-       (image South "images/slance.bmp" 
-              North "images/nlance.bmp")
-       (moves
-           (slide n)
-           (drop-piece nx)
-       )
-  )
-  (piece 
-       (name LanceP)
-       (image South "images/slancep.bmp" 
-              North "images/nlancep.bmp")
+       (name PawnP)
+       (image South "images/spawnp.bmp" 
+              North "images/npawnp.bmp")
        (moves
            (step n) (step nw)
            (step s) (step ne)
@@ -182,17 +146,15 @@
   (board-setup
         ( South 
            (King   b1)
-           (Gold   a1)
-           (Silver c1)
-           (Knight Z1)
-           (Lance  T1)
+           (Pawn   b2)
+           (Gold   Z1)
+           (Silver T1)
         )
         ( North 
            (King   b5)
-           (Gold   c5)
-           (Silver a5)
-           (Knight X5)
-           (Lance  Y5)
+           (Pawn   b4)
+           (Gold   Y5)
+           (Silver X5)
         )
   )
 

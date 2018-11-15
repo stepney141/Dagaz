@@ -12,96 +12,101 @@ if (!_.isUndefined(Dagaz.Controller.addSound)) {
     Dagaz.Controller.addSound(0, "../../sounds/slide.ogg", true);
 }
 
-var getTarget = function(design, board, player) {
-  if (_.isUndefined(board.targetPos)) {
-      board.targetPos = null;
+var getTargets = function(design, board, player) {
+  if (_.isUndefined(board.targets)) {
+      board.targets = [];
       _.each(design.allPositions(), function(pos) {
-           if ((board.targetPos === null) && (design.inZone(0, player, pos))) {
-               var piece = board.getPiece(pos);
-               if ((piece === null) || (piece.player != player)) {
-                   board.targetPos = pos;
+           if (design.inZone(0, player, pos) && (board.getPiece(pos) === null)) {
+               board.targets.push(pos);
+           }
+      });
+  }
+  return board.targets;
+}
+
+var getMove = function(move) {
+  var r = null;
+  for (var i = 0; i < move.actions.length; i++) {
+      if ((move.actions[i][0] !== null) && (move.actions[i][1] !== null)) {
+          if (r === null) {
+              r = {
+                  start: move.actions[i][0][0]
+              };
+          }
+          r.end = move.actions[i][1][0];
+      }
+  }
+  return r;
+}
+
+var getDirs = function(design, type) {
+  if (type == 0) {
+      return [5, 6, 1];
+  }
+  if (type == 1) {
+      return [7, 3, 4, 1];
+  }
+  if (type == 2) {
+      return [5, 6, 0, 2];
+  }
+  return design.allDirections();
+}
+
+var getChains = function(design, board, player) {
+  var targets = getTargets(design, board, player);
+  if (_.isUndefined(board.chains)) {
+      board.chains = [];
+      _.each(board.moves, function(move) {
+           var m = getMove(move);
+           if (m !== null) {
+               var res   = [];
+               var piece = board.getPiece(m.start);
+               var dirs  = getDirs(design, piece.type);
+               var b = board.apply(move);
+               var group = [ m.end ];
+               for (var i = 0; i < group.length; i++) {
+                   _.each(dirs, function(dir) {
+                       var pos = design.navigate(player, group[i], dir);
+                       if ((pos !== null) && (_.indexOf(group, pos) < 0)) {
+                           if (_.indexOf(targets, pos) >= 0) {
+                               if (_.indexOf(res, pos) < 0) res.push(pos);
+                               return;
+                           }
+                           if (b.getPiece(pos) !== null) {
+                               pos = design.navigate(player, pos, dir);
+                               if ((pos !== null) && (_.indexOf(group, pos) < 0)) {
+                                   if (_.indexOf(targets, pos) >= 0) {
+                                       if (_.indexOf(res, pos) < 0) res.push(pos);
+                                       return;
+                                   }
+                                   if (b.getPiece(pos) === null) group.push(pos);
+                               }
+                           } else {
+                               group.push(pos);
+                           }
+                       }
+                   });
+               }
+               if (targets.length > 0) {
+                   board.chains.push({
+                       m: move,
+                       p: piece,
+                       t: res
+                   });
                }
            }
       });
   }
-  return board.targetPos;
-}
-
-var getDistance = function(a, b) {
-  return Math.abs(Dagaz.Model.getX(a) - Dagaz.Model.getX(b)) +
-         Math.abs(Dagaz.Model.getY(a) - Dagaz.Model.getY(b));
-}
-
-var notBestDistance = function(board, x) {
-  if (_.isUndefined(board.bestDistance)) {
-      board.bestDistance = x;
-      return false;
-  }
-  if (board.bestDistance > x) return true;
-  board.bestDistance = x;
-  return false;
-}
-
-var penalty = function(design, board, pos) {
-  var r = 10;
-  _.each(design.allDirections(), function(dir) {
-      var q = design.navigate(0, pos, dir);
-      if ((q === null) || (board.getPiece(q) !== null)) return;
-      var p = design.navigate(board.player, pos, dir);
-      if ((p !== null) && (board.getPiece(p) === null)) {
-          var f = false;
-          _.each(design.allDirections(), function(d) {
-              if (!f) {
-                  var q = design.navigate(board.player, p, d);
-                  if ((q !== null) && (q != pos) && 
-                      (board.getPiece(q) !== null)) {
-                      q = design.navigate(board.player, q, d);
-                      if ((q !== null) && (board.getPiece(q) === null)) {
-                          f = true;
-                      }
-                  }
-              }
-          });
-          if (f) {
-              r = 0;
-          }
-      }
-  });
-  return r;
+  return board.chains;
 }
 
 Dagaz.AI.heuristic = function(ai, design, board, move) {
   var r = 1;
-  var s = null;
-  var e = null;
-  for (var i = 0; i < move.actions.length; i++) {
-      if ((move.actions[i][0] !== null) && (move.actions[i][1] !== null)) {
-          if (s === null) {
-              s = move.actions[i][0][0];
-          }
-          e = move.actions[i][1][0];
-      }
-  }
-  if ((move.actions.length > 0) && (s !== null) && (e !== null)) {
-      if (design.inZone(0, board.player, s)) return -1;
-      var t = getTarget(design, board, board.player);
-      if (t !== null) {
-          var d = 10 + getDistance(s, t) - getDistance(e, t);
-          if (notBestDistance(board, d)) return -1;
-          r = d * 100;
-          var b = board.apply(move);
-          _.each(design.allPositions(), function(pos) {
-              var piece = b.getPiece(pos);
-              if (piece !== null) {
-                  var p = penalty(design, b, pos);
-                  if (piece.player == board.player) {
-                      r -= p;
-                  } else {
-                      r += p;
-                  }
-              }
-          });
-      }
+  var m = getMove(move);
+  if (m !== null) {
+      var chains = getChains(design, board, board.player);
+      // TODO:
+
   }
   return r;
 }

@@ -127,38 +127,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(1, ZRF.FUNCTION,	25);	// to
     design.addCommand(1, ZRF.FUNCTION,	28);	// end
 
-    design.addCommand(2, ZRF.FUNCTION,	24);	// from
-    design.addCommand(2, ZRF.IN_ZONE,	0);	// board-zone
-    design.addCommand(2, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(2, ZRF.PARAM,	0);	// $1
-    design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(2, ZRF.PARAM,	1);	// $2
-    design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(2, ZRF.FUNCTION,	3);	// friend?
-    design.addCommand(2, ZRF.FUNCTION,	0);	// not
-    design.addCommand(2, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(2, ZRF.FUNCTION,	25);	// to
-    design.addCommand(2, ZRF.FUNCTION,	28);	// end
-
-    design.addCommand(3, ZRF.FUNCTION,	24);	// from
-    design.addCommand(3, ZRF.IN_ZONE,	0);	// board-zone
-    design.addCommand(3, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(3, ZRF.PARAM,	0);	// $1
-    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(3, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(3, ZRF.FUNCTION,	0);	// not
-    design.addCommand(3, ZRF.IF,	7);
-    design.addCommand(3, ZRF.FORK,	3);
-    design.addCommand(3, ZRF.FUNCTION,	25);	// to
-    design.addCommand(3, ZRF.FUNCTION,	28);	// end
-    design.addCommand(3, ZRF.PARAM,	1);	// $2
-    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(3, ZRF.JUMP,	-8);
-    design.addCommand(3, ZRF.FUNCTION,	2);	// enemy?
-    design.addCommand(3, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(3, ZRF.FUNCTION,	25);	// to
-    design.addCommand(3, ZRF.FUNCTION,	28);	// end
-
     design.addPiece("King", 0, 100);
     design.addMove(0, 0, [8], 0);
     design.addMove(0, 0, [6], 0);
@@ -194,12 +162,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(3, 0, [4], 0);
     design.addMove(3, 0, [3], 0);
 
-    design.addPiece("Knight", 4, 2);
-    design.addMove(4, 2, [8, 6], 0);
-    design.addMove(4, 2, [8, 5], 0);
+    design.addPiece("Pawn", 4, 1);
+    design.addMove(4, 0, [8], 0);
     design.addMove(4, 1, [39, 7], 0);
 
-    design.addPiece("KnightP", 5, 6);
+    design.addPiece("PawnP", 5, 6);
     design.addMove(5, 0, [8], 0);
     design.addMove(5, 0, [6], 0);
     design.addMove(5, 0, [1], 0);
@@ -207,28 +174,14 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(5, 0, [4], 0);
     design.addMove(5, 0, [3], 0);
 
-    design.addPiece("Lance", 6, 5);
-    design.addMove(6, 3, [8, 8], 0);
-    design.addMove(6, 1, [39, 7], 0);
-
-    design.addPiece("LanceP", 7, 6);
-    design.addMove(7, 0, [8], 0);
-    design.addMove(7, 0, [6], 0);
-    design.addMove(7, 0, [1], 0);
-    design.addMove(7, 0, [5], 0);
-    design.addMove(7, 0, [4], 0);
-    design.addMove(7, 0, [3], 0);
-
     design.setup("South", "King", 40);
-    design.setup("South", "Gold", 39);
-    design.setup("South", "Silver", 41);
-    design.setup("South", "Knight", 43);
-    design.setup("South", "Lance", 44);
+    design.setup("South", "Pawn", 31);
+    design.setup("South", "Gold", 44);
+    design.setup("South", "Silver", 43);
     design.setup("North", "King", 4);
-    design.setup("North", "Gold", 5);
-    design.setup("North", "Silver", 3);
-    design.setup("North", "Knight", 0);
-    design.setup("North", "Lance", 1);
+    design.setup("North", "Pawn", 13);
+    design.setup("North", "Gold", 0);
+    design.setup("North", "Silver", 1);
 }
 
 Dagaz.View.configure = function(view) {
@@ -241,14 +194,10 @@ Dagaz.View.configure = function(view) {
     view.defPiece("NorthSilver", "North Silver");
     view.defPiece("SouthSilverP", "South SilverP");
     view.defPiece("NorthSilverP", "North SilverP");
-    view.defPiece("SouthKnight", "South Knight");
-    view.defPiece("NorthKnight", "North Knight");
-    view.defPiece("SouthKnightP", "South KnightP");
-    view.defPiece("NorthKnightP", "North KnightP");
-    view.defPiece("SouthLance", "South Lance");
-    view.defPiece("NorthLance", "North Lance");
-    view.defPiece("SouthLanceP", "South LanceP");
-    view.defPiece("NorthLanceP", "North LanceP");
+    view.defPiece("SouthPawn", "South Pawn");
+    view.defPiece("NorthPawn", "North Pawn");
+    view.defPiece("SouthPawnP", "South PawnP");
+    view.defPiece("NorthPawnP", "North PawnP");
  
     view.defPosition("X5", 9, 15, 41, 46);
     view.defPosition("Y5", 50, 15, 41, 46);

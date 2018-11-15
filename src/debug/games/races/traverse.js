@@ -32,14 +32,14 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("advisor-wait", "5");
     design.checkVersion("halma-restrictions", "strong");
 
-    design.addDirection("se");
-    design.addDirection("s");
-    design.addDirection("sw");
-    design.addDirection("e");
-    design.addDirection("w");
-    design.addDirection("ne");
-    design.addDirection("nw");
-    design.addDirection("n");
+    design.addDirection("se"); // 0
+    design.addDirection("s");  // 1
+    design.addDirection("sw"); // 2
+    design.addDirection("e");  // 3
+    design.addDirection("w");  // 4
+    design.addDirection("ne"); // 5
+    design.addDirection("nw"); // 6
+    design.addDirection("n");  // 7
 
     design.addPlayer("South", [6, 7, 5, 4, 3, 2, 0, 1]);
     design.addPlayer("West", [2, 4, 6, 1, 7, 0, 5, 3]);
