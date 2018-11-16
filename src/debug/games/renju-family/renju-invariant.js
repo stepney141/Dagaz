@@ -115,7 +115,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                var b = board.apply(move);
                var cnt = 0;
                for (var ix = 0; ix < 4; ix++) {
-                   if (Math.abs(res[ix]) > 3) {
+                   if (res[ix] > 3) {
                        cnt++;
                        continue;
                    }
