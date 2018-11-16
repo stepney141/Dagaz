@@ -8,25 +8,6 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var eval = Dagaz.AI.eval;
-
-Dagaz.AI.eval = function(design, params, board, player) {
-  var r = eval(design, params, board, player);
-  _.each(design.allPositions(), function(pos) {
-      if (!design.inZone(0, player, pos)) {
-          var piece = board.getPiece(pos);
-          if (piece !== null) {
-              var v = design.price[piece.type];
-              if (piece.player != player) {
-                  v = -v;
-              }
-              r += v;
-          }
-      }
-  });
-  return r;
-}
-
 var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {

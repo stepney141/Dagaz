@@ -25,21 +25,22 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("highlight-goals", "false");
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-blink", "false");
-    design.checkVersion("smart-moves", "true");
+    design.checkVersion("smart-moves", "false");
+    design.checkVersion("advisor-wait", "5");
     design.checkVersion("gorogoro-shogi-extension", "true");
     design.checkVersion("gorogoro-shogi-promotion", "true");
 
-    design.addDirection("nx");
-    design.addDirection("n");
-    design.addDirection("s");
-    design.addDirection("w");
-    design.addDirection("e");
-    design.addDirection("ne");
-    design.addDirection("sw");
-    design.addDirection("nw");
-    design.addDirection("se");
-    design.addDirection("th");
-    design.addDirection("tn");
+    design.addDirection("nx"); // 0
+    design.addDirection("n");  // 1
+    design.addDirection("s");  // 2
+    design.addDirection("w");  // 3
+    design.addDirection("e");  // 4
+    design.addDirection("ne"); // 5
+    design.addDirection("sw"); // 6
+    design.addDirection("nw"); // 7
+    design.addDirection("se"); // 8
+    design.addDirection("th"); // 9
+    design.addDirection("tn"); // 10
 
     design.addPlayer("Green", [0, 2, 1, 4, 3, 6, 5, 8, 7, 9, 10]);
     design.addPlayer("Red", [0, 2, 1, 3, 4, 6, 5, 8, 7, 10, 9]);
@@ -98,6 +99,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("e1", [-9, -9, 0, -1, 0, 0, 0, -10, 0, 1, -50]);
     design.addPosition("Z1", [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1]);
     design.addPosition("T1", [0, 0, 0, 0, 0, 0, 0, 0, 0, -10, 0]);
+    design.addPosition("W1", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    design.addPosition("W2", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
     design.addZone("board-zone", 2, [47, 48, 49, 50, 51, 38, 39, 40, 41, 42, 29, 30, 31, 32, 33, 20, 21, 22, 23, 24, 11, 12, 13, 14, 15, 2, 3, 4, 5, 6]);
     design.addZone("board-zone", 1, [47, 48, 49, 50, 51, 38, 39, 40, 41, 42, 29, 30, 31, 32, 33, 20, 21, 22, 23, 24, 11, 12, 13, 14, 15, 2, 3, 4, 5, 6]);
@@ -326,4 +329,8 @@ Dagaz.View.configure = function(view) {
     view.defPosition("e1", 594, 478, 94, 94);
     view.defPosition("Z1", 688, 478, 94, 94);
     view.defPosition("T1", 782, 478, 94, 94);
+
+    view.defPopup("Promote", 322, 120);
+    view.defPopupPosition("W1", 30, 27, 88, 88);
+    view.defPopupPosition("W2", 143, 27, 88, 88);
 }
