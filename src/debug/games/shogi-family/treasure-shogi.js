@@ -95,6 +95,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addZone("board-zone", 2, [39, 40, 41, 30, 31, 32, 21, 22, 23, 12, 13, 14, 3, 4, 5]);
     design.addZone("promotion-zone", 1, [3, 4, 5, 12, 13, 14]);
     design.addZone("promotion-zone", 2, [39, 40, 41, 30, 31, 32]);
+    design.addZone("goal-zone", 1, [3, 4, 5]);
+    design.addZone("goal-zone", 2, [39, 40, 41]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.IN_ZONE,	0);	// board-zone

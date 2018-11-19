@@ -16,7 +16,7 @@ var getTargets = function(design, board, player) {
   if (_.isUndefined(board.targets)) {
       board.targets = [];
       _.each(design.allPositions(), function(pos) {
-           if (design.inZone(0, player, pos) && (board.getPiece(pos) === null)) {
+           if (design.inZone(0, player, pos)) {
                board.targets.push(pos);
            }
       });
@@ -56,42 +56,59 @@ var getChains = function(design, board, player) {
   var targets = getTargets(design, board, player);
   if (_.isUndefined(board.chains)) {
       board.chains = [];
+      board.goals  = [];
       _.each(board.moves, function(move) {
            var m = getMove(move);
            if (m !== null) {
-               var res   = [];
                var piece = board.getPiece(m.start);
                var dirs  = getDirs(design, piece.type);
-               var b = board.apply(move);
                var group = [ m.end ];
+               var level = [];
+               level[ m.end ] = 0;
+               if (_.isUndefined(board.goals[m.start])) {
+                   board.goals[m.start] = [];
+               }
                for (var i = 0; i < group.length; i++) {
                    _.each(dirs, function(dir) {
                        var pos = design.navigate(player, group[i], dir);
                        if ((pos !== null) && (_.indexOf(group, pos) < 0)) {
                            if (_.indexOf(targets, pos) >= 0) {
-                               if (_.indexOf(res, pos) < 0) res.push(pos);
-                               return;
+                               board.chains.push({
+                                  move:  move,
+                                  start: m.start,
+                                  stop:  pos,
+                                  level: level[ group[i] ],
+                                  lowp:  design.inZone(0, player, m.start)
+                               });
+                               if (_.indexOf(board.goals[m.start], pos) < 0) {
+                                  board.goals[m.start].push(pos);
+                               }
                            }
-                           if (b.getPiece(pos) !== null) {
+                           if (board.getPiece(pos) !== null) {
                                pos = design.navigate(player, pos, dir);
                                if ((pos !== null) && (_.indexOf(group, pos) < 0)) {
                                    if (_.indexOf(targets, pos) >= 0) {
-                                       if (_.indexOf(res, pos) < 0) res.push(pos);
-                                       return;
+                                       board.chains.push({
+                                           move:  move,
+                                           start: m.start,
+                                           stop:  pos,
+                                           level: level[ group[i] ],
+                                           lowp:  design.inZone(0, player, m.start)
+                                       });
+                                       if (_.indexOf(board.goals[m.start], pos) < 0) {
+                                           board.goals[m.start].push(pos);
+                                       }
                                    }
-                                   if (b.getPiece(pos) === null) group.push(pos);
+                                   if (board.getPiece(pos) === null) {
+                                       group.push(pos);
+                                       level[pos] = level[ group[i] ] + 1;
+                                   }
                                }
                            } else {
                                group.push(pos);
+                               level[pos] = level[ group[i] ] + 1;
                            }
                        }
-                   });
-               }
-               if (targets.length > 0) {
-                   board.chains.push({
-                       m: move,
-                       p: piece,
-                       t: res
                    });
                }
            }

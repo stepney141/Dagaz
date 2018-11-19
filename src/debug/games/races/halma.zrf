@@ -75,7 +75,6 @@
 
 (variant
   (title "Halma (4 players)")
-  (default)
 
   (players Blue White Red Black)
   (turn-order Blue White Red Black)

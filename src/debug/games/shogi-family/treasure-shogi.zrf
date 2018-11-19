@@ -94,6 +94,12 @@
         (zone (name promotion-zone) (players North)
               (positions a1 b1 c1 a2 b2 c2)
         )
+        (zone (name goal-zone) (players South)
+              (positions a5 b5 c5)
+        )
+        (zone (name goal-zone) (players North)
+              (positions a1 b1 c1)
+        )
   )
 
   (piece 

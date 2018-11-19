@@ -1,18 +1,17 @@
 <html>
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Halma 10x10</title>
+<title>Halma Puzzle 9x9</title>
 </head>
 <body>
 
-<img id="Board" style="display:none" src="images/halma/10x10.png">
-<img id="WhiteMan" style="display:none" src="images/halma/rman.png">
-<img id="BlackMan" style="display:none" src="images/halma/uman.png">
+<img id="Board" style="display:none" src="images/halma/9x9-puzzle.png">
+<img id="YouMan" style="display:none" src="images/halma/wman.png">
 
 <table style="margin:auto; font-family:sans-serif; font-size:14px" id="Table">
-<tr style="height:504px; vertical-align:top">
-<td id="CanvasCell" style="width:504px">
-<canvas id="Canvas" width="504" height="504" style="cursor:default">Broken canvas...</canvas>
+<tr style="height:454px; vertical-align:top">
+<td id="CanvasCell" style="width:454px">
+<canvas id="Canvas" width="454" height="454" style="cursor:default">Broken canvas...</canvas>
 </td><td style="width:300px;">
 <div style="height:510px; overflow:auto" id="ScrollDiv">
 <img id="GlyphImage"><p id="HelpText"></p>
@@ -39,13 +38,12 @@
 <script src="../../kernel/model/zobrist.js"></script>
 <script src="../../kernel/model/common-setup-v2.js"></script>
 <script src="../../kernel/view/2d/2d-view-v2.js"></script>
-<script src="../../kernel/controller/utils/move-list-v1.js"></script>
-<script src="../../kernel/controller/utils/sound-manager-v2.js"></script>
-<script src="../../kernel/controller/ai/random-ai.js"></script>
-<script src="../../kernel/controller/ai/heuristic-ai.js"></script>
-<script src="halma-goal.js"></script>
-<script src="halma-restrictions.js"></script>
-<script src="halma-10x10.js"></script>
+<script src="../../kernel/controller/utils/move-list-v2.js"></script>
+<script src="../../utils/sgf-parser.js"></script>
+<script src="data/halma-9x9.js"></script>
+<script src="../../kernel/controller/ai/sgf-ai.js"></script>
+<script src="halma-puzzle-goal.js"></script>
+<script src="halma-puzzle-9x9.js"></script>
 <script src="../../kernel/controller/app-v2.js"></script>
 
 </body>

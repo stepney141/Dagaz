@@ -330,7 +330,7 @@ Dagaz.View.configure = function(view) {
     view.defPosition("Z1", 688, 478, 94, 94);
     view.defPosition("T1", 782, 478, 94, 94);
 
-    view.defPopup("Promote", 322, 120);
+    view.defPopup("Promote", 325, 120);
     view.defPopupPosition("W1", 30, 27, 88, 88);
     view.defPopupPosition("W2", 143, 27, 88, 88);
 }
