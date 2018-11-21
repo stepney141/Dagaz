@@ -99,10 +99,19 @@ var getData = function(design, board, player) {
            move.tag = tag;
            var m = getMove(move);
            if (m !== null) {
-               var level = [];
-               level[ m.end ] = 0;
                var piece = board.getPiece(m.start);
                var dirs  = getDirs(design, piece.type);
+               if (_.indexOf(targets, m.start) >= 0) {
+                   var item = getItem(board.data, m.start);
+                   item.goal.push({
+                        tag: move.tag,
+                        pos: pos,
+                        value: 0
+                   });
+                   item.value = 0;
+               }
+               var level = [];
+               level[ m.end ] = 0;
                var group = [ m.start, m.end ];
                for (var i = 1; i < group.length; i++) {
                    _.each(dirs, function(dir) {
@@ -148,12 +157,8 @@ var getData = function(design, board, player) {
            tag++;
       });
       board.data.item = _.sortBy(board.data.item, function(item) {
-           var r = 0;
-           if (design.inZone(0, player, item.pos)) {
-               r += 1000;
-           }
-           r += item.value;
-           return r;
+           if (item.value == 0) return 1000;
+           return item.value;
       });
       findSolution(board.data, [], 0);
   }
