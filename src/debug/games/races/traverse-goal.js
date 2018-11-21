@@ -52,59 +52,92 @@ var getDirs = function(design, type) {
   return design.allDirections();
 }
 
-var getChains = function(design, board, player) {
-  var targets = getTargets(design, board, player);
-  if (_.isUndefined(board.chains)) {
-      board.chains = [];
-      board.goals  = [];
+var findSolution = function(data, stack, value) {
+  var level = stack.length;
+  if (level >= data.item.length) {
+      if (_.isUndefined(data.best) || (value < data.best)) {
+          data.best = value;
+          data.tags = [];
+          for (var i = 0; i < stack.length; i++) {
+               data.tags.push(data.item[i].goal[ stack[i] ].tag);
+          }
+      }
+  } else {
+      for (var i = 0; i < data.item[level].goal.length; i++) {
+           var pos = data.item[level].goal[i].pos;
+           if (_.indexOf(stack, pos) < 0) {
+               stack.push(pos);
+               findSolution(data, stack, value + data.item[level].goal[i].value);
+               stack.pop();
+           }
+      }
+  }
+}
+
+var getItem = function(data, pos) {
+  var ix = _.indexOf(data.list, pos);
+  if (ix < 0) {
+      ix = data.list.length;
+      data.list.push(pos);
+      data.item[ix] = {
+           pos: pos,
+           goal: []
+      }
+  }
+  return data.item[ix];
+}
+
+var getData = function(design, board, player) {
+  if (_.isUndefined(board.data)) {
+      board.data = {
+          item: [],
+          list: []
+      };
+      var tag = 0;
+      var targets = getTargets(design, board, player);
       _.each(board.moves, function(move) {
+           move.tag = tag;
            var m = getMove(move);
            if (m !== null) {
-               var piece = board.getPiece(m.start);
-               var dirs  = getDirs(design, piece.type);
-               var group = [ m.end ];
                var level = [];
                level[ m.end ] = 0;
-               if (_.isUndefined(board.goals[m.start])) {
-                   board.goals[m.start] = [];
-               }
-               for (var i = 0; i < group.length; i++) {
+               var piece = board.getPiece(m.start);
+               var dirs  = getDirs(design, piece.type);
+               var group = [ m.start, m.end ];
+               for (var i = 1; i < group.length; i++) {
                    _.each(dirs, function(dir) {
                        var pos = design.navigate(player, group[i], dir);
                        if ((pos !== null) && (_.indexOf(group, pos) < 0)) {
                            if (_.indexOf(targets, pos) >= 0) {
-                               board.chains.push({
-                                  move:  move,
-                                  start: m.start,
-                                  stop:  pos,
-                                  level: level[ group[i] ],
-                                  lowp:  design.inZone(0, player, m.start)
+                               var item = getItem(board.data, m.start);
+                               var v = level[ group[i] ];
+                               item.goal.push({
+                                   tag: move.tag,
+                                   pos: pos,
+                                   value: v
                                });
-                               if (_.indexOf(board.goals[m.start], pos) < 0) {
-                                  board.goals[m.start].push(pos);
+                               if (_.isUndefined(item.value) || (item.value > v)) {
+                                   item.value = v;
                                }
                            }
                            if (board.getPiece(pos) !== null) {
                                pos = design.navigate(player, pos, dir);
                                if ((pos !== null) && (_.indexOf(group, pos) < 0)) {
                                    if (_.indexOf(targets, pos) >= 0) {
-                                       board.chains.push({
-                                           move:  move,
-                                           start: m.start,
-                                           stop:  pos,
-                                           level: level[ group[i] ],
-                                           lowp:  design.inZone(0, player, m.start)
+                                       var item = getItem(board.data, m.start);
+                                       var v = level[ group[i] ];
+                                       item.goal.push({
+                                           tag: move.tag,
+                                           pos: pos,
+                                           value: v
                                        });
-                                       if (_.indexOf(board.goals[m.start], pos) < 0) {
-                                           board.goals[m.start].push(pos);
+                                       if (_.isUndefined(item.value) || (item.value > v)) {
+                                           item.value = v;
                                        }
                                    }
-                                   if (board.getPiece(pos) === null) {
-                                       group.push(pos);
-                                       level[pos] = level[ group[i] ] + 1;
-                                   }
                                }
-                           } else {
+                           }
+                           if (board.getPiece(pos) === null) {
                                group.push(pos);
                                level[pos] = level[ group[i] ] + 1;
                            }
@@ -112,18 +145,29 @@ var getChains = function(design, board, player) {
                    });
                }
            }
+           tag++;
       });
+      board.data.item = _.sortBy(board.data.item, function(item) {
+           var r = 0;
+           if (design.inZone(0, player, item.pos)) {
+               r += 1000;
+           }
+           r += item.value;
+           return r;
+      });
+      findSolution(board.data, [], 0);
   }
-  return board.chains;
+  return board.data;
 }
 
 Dagaz.AI.heuristic = function(ai, design, board, move) {
   var r = 1;
-  var m = getMove(move);
-  if (m !== null) {
-      var chains = getChains(design, board, board.player);
-      // TODO:
-
+  if (move.isDropMove()) return -1;
+  var data = getData(design, board, board.player);
+  if (data !== null) {
+      if (!_.isUndefined(data.tags) && (_.indexOf(data.tags, move.tag) >= 0)) {
+          r = 100 + move.actions.length;
+      }
   }
   return r;
 }
