@@ -27,6 +27,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-hints", "false");
     design.checkVersion("pass-turn", "forced");
     design.checkVersion("advisor-wait", "5");
+    design.checkVersion("promote-dialog", "remap");
     design.checkVersion("shogi-extension", "true");
     design.checkVersion("shogi-promotion", "true");
     design.checkVersion("common-shogi-invariant", "true");
@@ -276,6 +277,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("u14", [-1, 1, 0, -14, -15, 0, 0, -16, -14, -14, 0, 0, 0]);
     design.addPosition("z14", [-1, 1, 0, -14, -15, 0, 0, -16, -14, -14, 0, 0, 0]);
     design.addPosition("t14", [-1, 0, 0, 0, -15, 0, 0, -16, -46, 0, 0, 0, 0]);
+    design.addPosition("W1", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    design.addPosition("W2", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
     design.addZone("board-zone", 4, [168, 169, 170, 171, 172, 173, 174, 175, 176, 153, 154, 155, 156, 157, 158, 159, 160, 161, 138, 139, 140, 141, 142, 143, 144, 145, 146, 123, 124, 125, 126, 127, 128, 129, 130, 131, 108, 109, 110, 111, 112, 113, 114, 115, 116, 93, 94, 95, 96, 97, 98, 99, 100, 101, 78, 79, 80, 81, 82, 83, 84, 85, 86, 63, 64, 65, 66, 67, 68, 69, 70, 71, 48, 49, 50, 51, 52, 53, 54, 55, 56]);
     design.addZone("board-zone", 2, [168, 169, 170, 171, 172, 173, 174, 175, 176, 153, 154, 155, 156, 157, 158, 159, 160, 161, 138, 139, 140, 141, 142, 143, 144, 145, 146, 123, 124, 125, 126, 127, 128, 129, 130, 131, 108, 109, 110, 111, 112, 113, 114, 115, 116, 93, 94, 95, 96, 97, 98, 99, 100, 101, 78, 79, 80, 81, 82, 83, 84, 85, 86, 63, 64, 65, 66, 67, 68, 69, 70, 71, 48, 49, 50, 51, 52, 53, 54, 55, 56]);
@@ -781,4 +784,8 @@ Dagaz.View.configure = function(view) {
     view.defPosition("u14", 505, 587, 40, 45);
     view.defPosition("z14", 546, 587, 40, 45);
     view.defPosition("t14", 587, 587, 40, 45);
+
+    view.defPopup("Promote", 270, 200);
+    view.defPopupPosition("W1", 12, 15, 39, 39);
+    view.defPopupPosition("W2", 52, 15, 39, 39);
 }

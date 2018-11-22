@@ -52,7 +52,7 @@ var getDirs = function(design, type) {
   return design.allDirections();
 }
 
-var findSolution = function(data, stack, value) {
+var findSolution = function(data, stack, positions, value) {
   var level = stack.length;
   if (level >= data.item.length) {
       if (_.isUndefined(data.best) || (value < data.best)) {
@@ -65,10 +65,10 @@ var findSolution = function(data, stack, value) {
   } else {
       for (var i = 0; i < data.item[level].goal.length; i++) {
            var pos = data.item[level].goal[i].pos;
-           if (_.indexOf(stack, pos) < 0) {
-               stack.push(pos);
-               findSolution(data, stack, value + data.item[level].goal[i].value);
-               stack.pop();
+           if (_.indexOf(positions, pos) < 0) {
+               stack.push(i); positions.push(pos);
+               findSolution(data, stack, positions, value + data.item[level].goal[i].value);
+               stack.pop(); positions.pop();
            }
       }
   }
@@ -129,6 +129,7 @@ var getData = function(design, board, player) {
                                    item.value = v;
                                }
                            }
+                           var l = level[ group[i] ];
                            if (board.getPiece(pos) !== null) {
                                pos = design.navigate(player, pos, dir);
                                if ((pos !== null) && (_.indexOf(group, pos) < 0)) {
@@ -145,10 +146,12 @@ var getData = function(design, board, player) {
                                        }
                                    }
                                }
+                           } else {
+                               l++;
                            }
                            if (board.getPiece(pos) === null) {
                                group.push(pos);
-                               level[pos] = level[ group[i] ] + 1;
+                               level[pos] = l;
                            }
                        }
                    });
@@ -160,18 +163,34 @@ var getData = function(design, board, player) {
            if (item.value == 0) return 1000;
            return item.value;
       });
-      findSolution(board.data, [], 0);
+      findSolution(board.data, [], [], 0);
   }
   return board.data;
 }
 
+var getDistance = function(design, board, player, pos) {
+  var targets = getTargets(design, board, player);
+  var x = Dagaz.Model.getX(pos); 
+  var y = Dagaz.Model.getY(pos);
+  for (var i = 0; i < targets.length; i++) {
+       if (x == Dagaz.Model.getX(targets[i])) {
+           return Math.abs(Dagaz.Model.getY(targets[i]) - y);
+       }
+       if (y == Dagaz.Model.getY(targets[i])) {
+           return Math.abs(Dagaz.Model.getX(targets[i]) - x);
+       }
+  }
+  return 0;
+}
+
 Dagaz.AI.heuristic = function(ai, design, board, move) {
   var r = 1;
-  if (move.isDropMove()) return -1;
+  var m = getMove(move);
+  if (m === null) return -1;
   var data = getData(design, board, board.player);
   if (data !== null) {
       if (!_.isUndefined(data.tags) && (_.indexOf(data.tags, move.tag) >= 0)) {
-          r = 100 + move.actions.length;
+          r = 100 + getDistance(design, board, board.player, m.start) - getDistance(design, board, board.player, m.end);
       }
   }
   return r;

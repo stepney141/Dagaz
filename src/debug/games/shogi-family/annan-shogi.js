@@ -26,6 +26,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
     design.checkVersion("advisor-wait", "5");
+    design.checkVersion("promote-dialog", "remap");
     design.checkVersion("shogi-extension", "true");
     design.checkVersion("shogi-promotion", "true");
     design.checkVersion("common-shogi-invariant", "true");
@@ -199,6 +200,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("U1", [0, 1, 0, -16, -17, 0, 0, 0, 1, 0, 0]);
     design.addPosition("V1", [-1, 1, 0, -16, -17, 0, 0, -18, 1, -1, 0]);
     design.addPosition("W1", [-1, 0, 0, 0, -17, 0, 0, -18, -19, -1, 0]);
+    design.addPosition("T1", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    design.addPosition("T2", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
     design.addZone("board-zone", 2, [140, 141, 142, 143, 144, 145, 146, 147, 148, 123, 124, 125, 126, 127, 128, 129, 130, 131, 106, 107, 108, 109, 110, 111, 112, 113, 114, 89, 90, 91, 92, 93, 94, 95, 96, 97, 72, 73, 74, 75, 76, 77, 78, 79, 80, 55, 56, 57, 58, 59, 60, 61, 62, 63, 38, 39, 40, 41, 42, 43, 44, 45, 46, 21, 22, 23, 24, 25, 26, 27, 28, 29, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
     design.addZone("board-zone", 1, [140, 141, 142, 143, 144, 145, 146, 147, 148, 123, 124, 125, 126, 127, 128, 129, 130, 131, 106, 107, 108, 109, 110, 111, 112, 113, 114, 89, 90, 91, 92, 93, 94, 95, 96, 97, 72, 73, 74, 75, 76, 77, 78, 79, 80, 55, 56, 57, 58, 59, 60, 61, 62, 63, 38, 39, 40, 41, 42, 43, 44, 45, 46, 21, 22, 23, 24, 25, 26, 27, 28, 29, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
@@ -1190,4 +1193,8 @@ Dagaz.View.configure = function(view) {
     view.defPosition("U1", 588, 383, 41, 46);
     view.defPosition("V1", 629, 383, 41, 46);
     view.defPosition("W1", 670, 383, 41, 46);
+
+    view.defPopup("Promote", 311, 100);
+    view.defPopupPosition("T1", 12, 15, 39, 39);
+    view.defPopupPosition("T2", 52, 15, 39, 39);
 }
