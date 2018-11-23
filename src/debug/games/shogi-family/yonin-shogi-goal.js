@@ -193,6 +193,7 @@ var getShield = function(design, board) {
 }
 
 Dagaz.AI.heuristic = function(ai, design, board, move) {
+  if (move.isPass()) return 1;
   Dagaz.Model.prepare(design, board);
   if (board.kings.length == 0) {
       var pos = move.actions[0][1][0];

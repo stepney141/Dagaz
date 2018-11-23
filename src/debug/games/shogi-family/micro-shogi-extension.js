@@ -51,6 +51,11 @@ Dagaz.Model.CheckInvariants = function(board) {
               if ((p !== null) && (board.getPiece(p) !== null)) {
                   m.capturePiece(p);
               }
+              var piece = m.actions[0][2][0];
+              if (piece.player != board.player) {
+                  m.actions[0][2] = [ piece.changeOwner(board.player) ];
+                  m.mode = 1;
+              }
           }
       }
   });
