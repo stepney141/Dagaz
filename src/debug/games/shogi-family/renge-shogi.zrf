@@ -3,6 +3,7 @@
   (while (on-board? $1)
      (if empty? add) $1
   )
+  (verify empty?) add
 ))
 
 (define step (
