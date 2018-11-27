@@ -28,19 +28,19 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("pass-partial", "true");
     design.checkVersion("detect-loops", "true");
 
-    design.addDirection("se");
-    design.addDirection("s");
-    design.addDirection("sw");
-    design.addDirection("e");
-    design.addDirection("w");
-    design.addDirection("ne");
-    design.addDirection("nw");
-    design.addDirection("n");
-    design.addDirection("gr");
-    design.addDirection("br");
-    design.addDirection("nx");
+    design.addDirection("se"); // 0
+    design.addDirection("s");  // 1
+    design.addDirection("sw"); // 2
+    design.addDirection("e");  // 3
+    design.addDirection("w");  // 4
+    design.addDirection("ne"); // 5
+    design.addDirection("nw"); // 6
+    design.addDirection("n");  // 7
+    design.addDirection("gr"); // 8
+    design.addDirection("br"); // 9
+    design.addDirection("nx"); // 10
 
-    design.addPlayer("Green", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    design.addPlayer("Green", [6, 7, 5, 4, 3, 2, 0, 1, 8, 9, 10]);
     design.addPlayer("Blue", [0, 1, 2, 3, 4, 5, 6, 7, 9, 8, 10]);
 
     design.addPosition("a17", [18, 17, 0, 1, 0, 0, 0, 0, 16, 272, 273]);
@@ -364,7 +364,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(1, ZRF.FUNCTION,	25);	// to
     design.addCommand(1, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("Small", 0);
+    design.addPiece("Small", 0, 1);
     design.addMove(0, 0, [7], 0);
     design.addMove(0, 0, [6], 0);
     design.addMove(0, 0, [3], 0);
@@ -383,7 +383,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 1, [0, 0], 1);
     design.addMove(0, 0, [10], 2);
 
-    design.addPiece("Big", 1);
+    design.addPiece("Big", 1, 10);
     design.addMove(1, 0, [7], 0);
     design.addMove(1, 0, [6], 0);
     design.addMove(1, 0, [3], 0);
