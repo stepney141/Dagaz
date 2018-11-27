@@ -130,22 +130,25 @@ App.prototype.clearPositions = function() {
 }
 
 var getPieces = function(move) {
-  if ((move.actions.length > 0) && (move.actions[0][2] !== null) && 
-      (move.actions[0][2].length > 1)) {
-       if (Dagaz.Model.remapPromote) {
-           return _.map(move.actions[0][2], function(piece) {
-                return piece.changeOwner(1);
-           });
-       } else return move.actions[0][2];
-  } else {
-       return null;
-  }
+  var r = null;
+  _.each(move.actions, function(a) {
+      if ((a[0] !== null) && (a[1] !== null) && (a[2] !== null) && (a[2].length > 1)) {
+           r = _.map(a[2], function(piece) {
+                if (Dagaz.Model.remapPromote) {
+                    return piece.changeOwner(1);
+                } else {
+                    return piece;
+                }
+           }); 
+      }
+  });
+  return r;
 }
 
 App.prototype.clarify = function(move) {
   if (!_.isUndefined(this.selected)) {
       for (var i = 0; i < move.actions.length; i++) {
-          if ((move.actions[i][2] !== null) && (move.actions[i][2].length > 1)) {
+          if ((move.actions[i][0] !== null) && (move.actions[i][2] !== null) && (move.actions[i][2].length > 1)) {
                move.actions[i][2] = [ this.selected.changeOwner(this.board.player) ];
                break;
           }

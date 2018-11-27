@@ -23,6 +23,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "true");
+    design.checkVersion("show-hints", "false");
+    design.checkVersion("show-blink", "true");
+    design.checkVersion("advisor-wait", "5");
 
     design.addDirection("w");
     design.addDirection("e");
@@ -136,6 +139,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("h1", [-1, 1, 0, -9, -10, 0, 0, -11]);
     design.addPosition("i1", [-1, 1, 0, -9, -10, 0, 0, -11]);
     design.addPosition("j1", [-1, 0, 0, 0, -10, 0, 0, -11]);
+    design.addPosition("X1", [0, 0, 0, 0, 0, 0, 0, 0]);
+    design.addPosition("X2", [0, 0, 0, 0, 0, 0, 0, 0]);
+    design.addPosition("X3", [0, 0, 0, 0, 0, 0, 0, 0]);
 
     design.addZone("promotion", 2, [90, 92, 94, 96, 98]);
     design.addZone("promotion", 1, [1, 3, 5, 7, 9]);
@@ -611,4 +617,9 @@ Dagaz.View.configure = function(view) {
     view.defPosition("h1", 352, 452, 50, 50);
     view.defPosition("i1", 402, 452, 50, 50);
     view.defPosition("j1", 452, 452, 50, 50);
+
+    view.defPopup("Promote", 164, 70);
+    view.defPopupPosition("X1", 10, 7, 50, 50);
+    view.defPopupPosition("X2", 62, 7, 50, 50);
+    view.defPopupPosition("X3", 115, 7, 50, 50);
 }

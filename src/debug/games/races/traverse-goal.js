@@ -149,7 +149,7 @@ var getData = function(design, board, player) {
                            } else {
                                l++;
                            }
-                           if (board.getPiece(pos) === null) {
+                           if ((pos !== null) && (board.getPiece(pos) === null)) {
                                group.push(pos);
                                level[pos] = l;
                            }

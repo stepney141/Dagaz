@@ -106,7 +106,7 @@
   - Magyar Dama [stacks, transformer, best, bug:scroll, bug:moves, shared]
   - Stavropol Checkers [shared, invariant]
   - Swedish Checkers [reserve, 4-players]
-  - Cheskers [kings, best, invariant, todo:dialog(promotion)]
+  - Cheskers [kings, best, invariant, dialog(promotion)]
   - Altai Shatra [king, reserve]
   - Elementals [todo, best, control]
 - Breakthrough [breakthrough]
