@@ -165,7 +165,7 @@
   - Makruk [best, checkmate]
   - Sittuyin [dark, setups, drops, best, checkmate, wheel, limit, sparks, todo:dialog(drops)]
   - Courier Chess [dark, checkmate]
-  - Short Assize [dark, checkmate, todo:dialog(promotion), todo:dialog(drops), setups, drops, wheel, limit, sparks]
+  - Short Assize [dark, checkmate, dialog(promotion), todo:dialog(drops), setups, drops, wheel, limit, sparks]
   - Chess [dark, checkmate, todo:ai, openings, endings, todo:stalemate, dialog(promotion)]
     - Mini Chess variants
     - Dunsany's Chess 
@@ -173,9 +173,9 @@
     - Weak! 
     - Horde Chess
   - Hiashatar [checkmate, todo:goal, todo:invariant, dialog(promotion)]
-  - Genesis Chess [drops, checkmate, todo:ai, wheel, limit, todo:dialog(promotion)]
-  - Omega Chess [checkmate, todo:ai, todo:dialog(promotion)]
-  - Omega Chess Advanced [drops, checkmate, todo:ai, todo:dark, limit, sparks, todo:dialog(promotion)]
+  - Genesis Chess [drops, checkmate, todo:ai, wheel, limit, dialog(promotion)]
+  - Omega Chess [checkmate, todo:ai, dialog(promotion)]
+  - Omega Chess Advanced [drops, checkmate, todo:ai, todo:dark, limit, sparks, dialog(promotion)]
   - Belarusian Chess [best, checkmate, invariant, todo:ai, dialog(promotion)]
   - Platform Chess [best, checkmate, transformer, drag-n-drop=false, dialog(promotion)]
   - Cyvasse [best, cooperative, turns, todo]

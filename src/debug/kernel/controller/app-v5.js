@@ -15,6 +15,7 @@ var isDrag = false;
 var passForced = 0;
 var once = false;
 var lastPosition = null;
+var dropIndex = 0;
 
 function App(canvas, params) {
   this.design = Dagaz.Model.getDesign();
@@ -123,10 +124,23 @@ App.prototype.getTargets = function() {
   return this.targets;
 }
 
+App.prototype.getDrops = function() {
+  if (_.isUndefined(this.list) || (Dagaz.Model.showDrops == 0)) {
+      this.drops = [];
+  } else {
+      if (_.isUndefined(this.drops) || (this.drops.length == 0)) {
+          this.drops = this.list.getDrops();
+      }
+  }
+  return this.drops;
+}
+
 App.prototype.clearPositions = function() {
   delete this.starts;
   delete this.stops;
   delete this.targets;
+  delete this.drops;
+  this.view.clearDrops();
 }
 
 var getPieces = function(move) {
@@ -189,8 +203,28 @@ App.prototype.boardApply = function(move) {
   }
 }
 
+App.prototype.mouseWheel = function(view, delta) {
+  dropIndex += delta;
+  if (dropIndex < 0) dropIndex = 0;
+  var pos = this.currPos;
+  this.currPos = -1;
+  this.mouseLocate(view, pos);
+}
+
 App.prototype.mouseLocate = function(view, pos) {
   if (this.currPos != pos) {
+      this.getDrops();
+      if ((Dagaz.Model.showDrops == -1) || (!_.isUndefined(this.drops) && (Dagaz.Model.showDrops > 0) && (this.drops.length > Dagaz.Model.showDrops))) {
+          if (!_.isUndefined(this.list) && (pos.length == 1) && (_.indexOf(this.getDrops(), pos[0]) >= 0)) {
+              var pieces = this.list.getDropPieces(pos[0]);
+              if ((pieces !== null) && (pieces.length > 0)) {
+                  if (dropIndex >= pieces.length) dropIndex = pieces.length - 1;
+                  this.view.setDrops(pieces[dropIndex].toString(), [ pos[0] ]);
+              }
+          } else {
+              this.view.clearDrops();
+          }
+      }
       if ((this.state == STATE.IDLE) && !_.isUndefined(this.list)) {
           if (isDrag) {
               if (_.intersection(this.getStops(), pos).length > 0) {
@@ -352,6 +386,7 @@ App.prototype.exec = function() {
              if (!_.isUndefined(Dagaz.Model.getSetup)) {
                  console.log("Setup: " + Dagaz.Model.getSetup(this.design, this.board));
              }
+             dropIndex = 0;
              this.list = Dagaz.Model.getMoveList(this.board);
              var ko = [];
              if (!_.isUndefined(this.board.ko)) {
@@ -365,6 +400,17 @@ App.prototype.exec = function() {
                      this.view.markPositions(Dagaz.View.markType.ATTACKING, this.list.getCaptures());
                  }
              }
+             var drops = this.getDrops();
+             if ((Dagaz.Model.showDrops == -2) || (!_.isUndefined(this.drops) && (Dagaz.Model.showDrops > 0) && (this.drops.length <= Dagaz.Model.showDrops))) {
+                 if (drops.length > 0) {
+                     var pieces = this.list.getDropPieces(drops[0]);
+                     if ((pieces !== null) && (pieces.length > 0)) {
+                         if (dropIndex >= pieces.length) dropIndex = pieces.length - 1;
+                         this.view.setDrops(pieces[dropIndex].toString(), drops);
+                     }
+                 }
+                 this.view.invalidate();
+             }
              if (this.list.isPassForced()) {
                   if (passForced >= this.design.getPlayersCount()) {
                       this.state = STATE.DONE;
@@ -377,6 +423,7 @@ App.prototype.exec = function() {
                       this.boardApply(Dagaz.Model.createMove());
                       this.state = STATE.IDLE;
                       delete this.list;
+                      this.view.clearDrops();
                       passForced++;
                   }
                   return;
@@ -429,6 +476,7 @@ App.prototype.exec = function() {
                   } else {
                       this.state = STATE.IDLE;
                       delete this.list;
+                      this.view.clearDrops();
                       passForced++;
                       return;
                   }
@@ -444,6 +492,10 @@ App.prototype.exec = function() {
       delete Dagaz.AI.advisorStamp;
       this.state = STATE.IDLE;
       isDrag = false;
+      if (!_.isUndefined(this.list) && this.list.isDone()) {
+          var moves = this.list.filterDrops(this.list.getMoves(), dropIndex);
+          if (moves.length == 1) this.move = moves[0];
+      }
       if (!this.move.isPass()) {
           this.move = this.clarify(this.move);
           this.view.markPositions(Dagaz.View.markType.TARGET, []);
@@ -461,8 +513,9 @@ App.prototype.exec = function() {
       if (!_.isUndefined(this.list)) {
           if (this.list.isDone()) {
               this.view.markPositions(Dagaz.View.markType.CURRENT, []);
-              var moves = this.list.getMoves();
+              var moves = this.list.filterDrops(this.list.getMoves(), dropIndex);
               delete this.list;
+              this.view.clearDrops();
               if (moves.length > 0) {
                   var m = this.clarify(moves[0]);
                   delete this.selected;

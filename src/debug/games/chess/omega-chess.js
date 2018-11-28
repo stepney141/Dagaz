@@ -24,6 +24,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "false");
     design.checkVersion("show-blink", "false");
+    design.checkVersion("show-hints", "false");
     design.checkVersion("omega-chess-invariant", "true");
 
     design.addDirection("w");
@@ -667,7 +668,7 @@ Dagaz.View.configure = function(view) {
     view.defPosition("x7", 51, 1, 50, 50);
     view.defPosition("x8", 1, 51, 50, 50);
 
-    view.defPopup("Promote", 214, 200);
+    view.defPopup("Promote", 214, 120);
     view.defPopupPosition("Z1", 5, 7, 50, 50);
     view.defPopupPosition("Z2", 60, 7, 50, 50);
     view.defPopupPosition("Z3", 115, 7, 50, 50);
