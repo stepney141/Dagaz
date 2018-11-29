@@ -125,9 +125,9 @@
   - Ordo [best, groups]
   - Nubia [todo]
   - HiQue [todo]
-  - Luzhanqi [todo, flag, cloack, drops, limit, todo:dialog(drops)]
-  - Stratego [todo, cloack, drops, limit, todo:setups, todo:dialog(drops)]
-  - Game of Generals [todo:ai, cloack, drops, limit, breakthrough, todo:dialog(drops)]
+  - Luzhanqi [todo, flag, cloack, drops, limit]
+  - Stratego [todo, cloack, drops, limit, todo:setups]
+  - Game of Generals [todo:ai, cloack, drops, limit, breakthrough]
   - Neutron [todo, shared]
   - Arimaa [todo, turns, elimination, stalemate]
 - Races
@@ -163,9 +163,9 @@
   - Chaturanji [todo, kings, 4-players, dices]
   - Shatranj [dark, setups, best, checkmate]
   - Makruk [best, checkmate]
-  - Sittuyin [dark, setups, drops, best, checkmate, wheel, limit, sparks, todo:dialog(drops)]
+  - Sittuyin [dark, setups, drops, best, checkmate, wheel, limit, sparks]
   - Courier Chess [dark, checkmate]
-  - Short Assize [dark, checkmate, dialog(promotion), todo:dialog(drops), setups, drops, wheel, limit, sparks]
+  - Short Assize [dark, checkmate, dialog(promotion), setups, drops, wheel, limit, sparks]
   - Chess [dark, checkmate, todo:ai, openings, endings, todo:stalemate, dialog(promotion)]
     - Mini Chess variants
     - Dunsany's Chess 
@@ -202,7 +202,7 @@
   - Shogi [checkmate, reserve, todo:ai, dialog(promotion)]
   - Annan Shogi [best, checkmate, reserve, todo:ai, dialog(promotion)]
   - Yonin Shogi [best, 4-players, reserve, dark, cloack, todo:ai, bug:goal(dark), dialog(promotion)]
-  - Tenjiku Shogi [kings, huge, composite]
+  - Tenjiku Shogi [kings, huge, composite, todo:dialog(promotion)]
   - Ko Shogi [kings, huge, composite]
   - Hishigata Shogi [todo, huge]
   - Ki Shogi [todo, transformer]

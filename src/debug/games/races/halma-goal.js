@@ -40,7 +40,7 @@ var getTargets = function(design, board, player) {
           second: []
       };
       _.each(design.allPositions(), function(pos) {
-          if (design.inZone(0, player, pos) && (board.getPiece() === null)) {
+          if (design.inZone(0, player, pos) && (board.getPiece(pos) === null)) {
               board.targets.goal.push(pos);
               _.each(allDirections(design), function(dir) {
                    var p = design.navigate(player, pos, dir);
@@ -128,44 +128,43 @@ var isRestricted = function(design, board, player) {
   var list = [];
   _.each(design.allPositions(), function(pos) {
         if (design.inZone(0, player, pos)) {
-            var piece = board.getPiece();
-            if ((piece === null) || (piece.player != player)) {
+            var piece = board.getPiece(pos);
+            if ((piece !== null) && (piece.player != player)) {
                 list.push(pos);
             }
         }
   });
+  if (list.length == 0) return false;
   var done = [];
+  var r = true;
   for (var i = 0; i < list.length; i++) {
        if (_.indexOf(done, list[i]) < 0) {
            var group = [ list[i] ];
            for (var j = 0; j < group.length; j++) {
-                var f = true;
                 _.each(allDirections(design), function(dir) {
                     var p = design.navigate(player, group[j], dir);
                     if ((p !== null) && (_.indexOf(group, p) < 0)) {
                         if (!design.inZone(0, player, p)) {
-                            f = false;
+                            r = false;
                             return;
                         }
                         var piece = board.getPiece(p);
-                        if (piece !== null) {
-                            if (piece.player == player) {
-                                p = design.navigate(player, p, dir);
-                                if ((p !== null) && (_.indexOf(group, p) < 0) && (board.getPiece(p) === null)) {
-                                    group.push(p);
-                                }
-                            }
+                        if ((piece !== null) && (piece.player == player)) {
+                             p = design.navigate(player, p, dir);
+                             if ((p !== null) && (_.indexOf(group, p) < 0) && (board.getPiece(p) === null)) {
+                                 group.push(p);
+                             }
                         } else {
                             group.push(p);
                         }
                     }
                 });
-                if (f) return true;
+                if (!r) break;
            }
            done = _.union(done, group);
        }
   }
-  return false;
+  return r;
 }
 
 Dagaz.AI.heuristic = function(ai, design, board, move) {
@@ -182,12 +181,16 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
           }
       }
       if (r == 1) {
-          var goals = getGoals(design, board, board.player);
-          r = 100 + getDistance(goals, m.start) - getDistance(goals, m.end);
+          if (design.inZone(2, board.player, m.end) && !design.inZone(2, board.player, m.start)) {
+              r = 200;
+          } else {
+              var goals = getGoals(design, board, board.player);
+              r = 100 + getDistance(goals, m.start) - getDistance(goals, m.end);
+          }
       }
       if (notBest(design, board, r)) return -1;
-//    var b = board.apply(move);
-//    if (isRestricted(design, b, board.player)) return -1;
+      var b = board.apply(move);
+      if (isRestricted(design, b, board.player)) return -1;
   }
   return r;
 }

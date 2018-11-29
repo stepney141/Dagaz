@@ -139,9 +139,9 @@ Dagaz.Model.setup = function(board) {
               board.turn   = +turn;
               board.player = design.currPlayer(board.turn);
           }
-          _.each(board.reserve, function(r) {
-              _.each(_.keys(r), function(player) {
-                  r[player] = 0;
+          _.each(_.keys(board.reserve), function(t) {
+              _.each(_.keys(board.reserve[t]), function(p) {
+                  board.reserve[t][p] = 0;
               });
           });
       }

@@ -16,12 +16,28 @@ var getTargets = function(design, board, player) {
   if (_.isUndefined(board.targets)) {
       board.targets = [];
       _.each(design.allPositions(), function(pos) {
-           if (design.inZone(0, player, pos)) {
-               board.targets.push(pos);
-           }
+          if (design.inZone(0, player, pos) && (board.getPiece(pos) === null)) {
+              board.targets.push(pos);
+          }
       });
   }
   return board.targets;
+}
+
+var distance = function(a, b) {
+  return Math.abs(Dagaz.Model.getX(a) - Dagaz.Model.getX(b)) +
+         Math.abs(Dagaz.Model.getY(a) - Dagaz.Model.getY(b));
+}
+
+var getDistance = function(list, pos) {
+  var r = null;
+  _.each(list, function(goal) {
+      var d = distance(goal, pos);
+      if ((r === null) || (r > d)) {
+          r = d;
+      }
+  });
+  return r;
 }
 
 var getMove = function(move) {
@@ -39,158 +55,15 @@ var getMove = function(move) {
   return r;
 }
 
-var getDirs = function(design, type) {
-  if (type == 0) {
-      return [5, 6, 1];
-  }
-  if (type == 1) {
-      return [7, 3, 4, 1];
-  }
-  if (type == 2) {
-      return [5, 6, 0, 2];
-  }
-  return design.allDirections();
-}
-
-var findSolution = function(data, stack, positions, value) {
-  var level = stack.length;
-  if (level >= data.item.length) {
-      if (_.isUndefined(data.best) || (value < data.best)) {
-          data.best = value;
-          data.tags = [];
-          for (var i = 0; i < stack.length; i++) {
-               data.tags.push(data.item[i].goal[ stack[i] ].tag);
-          }
-      }
-  } else {
-      for (var i = 0; i < data.item[level].goal.length; i++) {
-           var pos = data.item[level].goal[i].pos;
-           if (_.indexOf(positions, pos) < 0) {
-               stack.push(i); positions.push(pos);
-               findSolution(data, stack, positions, value + data.item[level].goal[i].value);
-               stack.pop(); positions.pop();
-           }
-      }
-  }
-}
-
-var getItem = function(data, pos) {
-  var ix = _.indexOf(data.list, pos);
-  if (ix < 0) {
-      ix = data.list.length;
-      data.list.push(pos);
-      data.item[ix] = {
-           pos: pos,
-           goal: []
-      }
-  }
-  return data.item[ix];
-}
-
-var getData = function(design, board, player) {
-  if (_.isUndefined(board.data)) {
-      board.data = {
-          item: [],
-          list: []
-      };
-      var tag = 0;
-      var targets = getTargets(design, board, player);
-      _.each(board.moves, function(move) {
-           move.tag = tag;
-           var m = getMove(move);
-           if (m !== null) {
-               var piece = board.getPiece(m.start);
-               var dirs  = getDirs(design, piece.type);
-               if (_.indexOf(targets, m.start) >= 0) {
-                   var item = getItem(board.data, m.start);
-                   item.goal.push({
-                        tag: move.tag,
-                        pos: pos,
-                        value: 0
-                   });
-                   item.value = 0;
-               }
-               var level = [];
-               level[ m.end ] = 0;
-               var group = [ m.start, m.end ];
-               for (var i = 1; i < group.length; i++) {
-                   _.each(dirs, function(dir) {
-                       var pos = design.navigate(player, group[i], dir);
-                       if ((pos !== null) && (_.indexOf(group, pos) < 0)) {
-                           if (_.indexOf(targets, pos) >= 0) {
-                               var item = getItem(board.data, m.start);
-                               var v = level[ group[i] ];
-                               item.goal.push({
-                                   tag: move.tag,
-                                   pos: pos,
-                                   value: v
-                               });
-                               if (_.isUndefined(item.value) || (item.value > v)) {
-                                   item.value = v;
-                               }
-                           }
-                           var l = level[ group[i] ];
-                           if (board.getPiece(pos) !== null) {
-                               pos = design.navigate(player, pos, dir);
-                               if ((pos !== null) && (_.indexOf(group, pos) < 0)) {
-                                   if (_.indexOf(targets, pos) >= 0) {
-                                       var item = getItem(board.data, m.start);
-                                       var v = level[ group[i] ];
-                                       item.goal.push({
-                                           tag: move.tag,
-                                           pos: pos,
-                                           value: v
-                                       });
-                                       if (_.isUndefined(item.value) || (item.value > v)) {
-                                           item.value = v;
-                                       }
-                                   }
-                               }
-                           } else {
-                               l++;
-                           }
-                           if ((pos !== null) && (board.getPiece(pos) === null)) {
-                               group.push(pos);
-                               level[pos] = l;
-                           }
-                       }
-                   });
-               }
-           }
-           tag++;
-      });
-      board.data.item = _.sortBy(board.data.item, function(item) {
-           if (item.value == 0) return 1000;
-           return item.value;
-      });
-      findSolution(board.data, [], [], 0);
-  }
-  return board.data;
-}
-
-var getDistance = function(design, board, player, pos) {
-  var targets = getTargets(design, board, player);
-  var x = Dagaz.Model.getX(pos); 
-  var y = Dagaz.Model.getY(pos);
-  for (var i = 0; i < targets.length; i++) {
-       if (x == Dagaz.Model.getX(targets[i])) {
-           return Math.abs(Dagaz.Model.getY(targets[i]) - y);
-       }
-       if (y == Dagaz.Model.getY(targets[i])) {
-           return Math.abs(Dagaz.Model.getX(targets[i]) - x);
-       }
-  }
-  return 0;
-}
-
 Dagaz.AI.heuristic = function(ai, design, board, move) {
-  var r = 1;
+  var t = getTargets(design, board, board.player);
   var m = getMove(move);
-  if (m === null) return -1;
-  var data = getData(design, board, board.player);
-  if (data !== null) {
-      if (!_.isUndefined(data.tags) && (_.indexOf(data.tags, move.tag) >= 0)) {
-          r = 100 + getDistance(design, board, board.player, m.start) - getDistance(design, board, board.player, m.end);
+  var r = 1;
+  if (m !== null) {
+      if (!design.inZone(0, board.player, m.start) && (_.indexOf(t, m.end) >= 0)) {
+          r = 1000 + getDistance(t, m.start) - getDistance(t, m.end);
+      } else {
+          r = 100 + getDistance(t, m.start) - getDistance(t, m.end);
       }
   }
   return r;
