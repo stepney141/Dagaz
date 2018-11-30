@@ -88,3 +88,54 @@
   (loss-condition (White Black) stalemated)
   (loss-condition (White Black) repetition)
 )
+
+(variant
+  (title "Rhombic Chess (variant)")
+  (default)
+
+  (board
+     (image "images/rhombic/variant.bmp")
+     (grid
+        (start-rectangle 2 2 62 62)
+        (dimensions
+           ("a/b/c/d" (108 0)) ; files
+           ("3/2/1" (0 178)) ; ranks
+        )
+     )
+     (zone (name board-zone) 
+           (players Black White)
+           (positions a1 b1 c1 d1 b2 c2 a3 b3 c3 d3)
+     )
+     (links n
+           (a1 a3) (b1 b2) (b2 b3) (c1 c2) (c2 c3) (d1 d3)
+     )
+     (links s
+           (a3 a1) (b2 b1) (b3 b2) (c2 c1) (c3 c2) (d3 d1)
+     )
+     (links e
+           (a1 b1) (b1 c1) (c1 d1) (b2 c2) (a3 b3) (b3 c3) (c3 d3)
+     )
+     (links w
+           (b1 a1) (c1 b1) (d1 c1) (c2 b2) (b3 a3) (c3 b3) (d3 c3)
+     )
+  )
+
+  (piece
+     (name Stone)
+     (image Black "images/rhombic/black.bmp"
+            White "images/rhombic/white.bmp")
+     (drops
+         (move-type drop-type)
+         (drop)
+     )
+     (moves
+         (move-type normal-type)
+         (step n) (step w) (step s) (step e)
+     )
+  )
+
+  (board-setup
+    (White (Stone off 4))
+    (Black (Stone off 4))
+  )
+)
