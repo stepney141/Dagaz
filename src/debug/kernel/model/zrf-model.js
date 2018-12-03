@@ -888,6 +888,7 @@ ZrfDesign.prototype.repeatMark = function() {
 }
 
 ZrfDesign.prototype.isPuzzle = function() {
+  if (!_.isUndefined(this.turns) && (this.turns.length == 1)) return true;
   return _.chain(_.keys(this.playerNames)).max().value() == 1;
 }
 

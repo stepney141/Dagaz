@@ -290,7 +290,7 @@ App.prototype.exec = function() {
           Canvas.style.cursor = "default";
           if (g > 0) {
               if (!_.isUndefined(Dagaz.Controller.play)) {
-                  if (this.board.parent.player == 1) {
+                  if (this.design.isPuzzle() || (this.board.parent.player == 1)) {
                       Dagaz.Controller.play(Dagaz.Sounds.win);
                   } else {
                       Dagaz.Controller.play(Dagaz.Sounds.lose);
