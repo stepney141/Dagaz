@@ -56,10 +56,6 @@ Dagaz.Model.CheckInvariants = function(board) {
           opened.push(pos);
       }
   });
-  var bonus = board.getValue(0);
-  if (bonus === null) {
-      bonus = 0;
-  }
   _.each(board.moves, function(move) {
       if (move.mode == 0) {
           if (opened.length <= 1) return;
@@ -77,14 +73,6 @@ Dagaz.Model.CheckInvariants = function(board) {
           if (f) {
               move.mode  = 2;
               move.sound = 1;
-              if (bonus > 0) {
-                  bonus = bonus * 2;
-              } else {
-                  bonus = 1;
-              }
-              move.setValue(0, bonus);
-          } else {
-              move.setValue(0, 0);
           }
       } else {
           if (!isPaired(board, opened)) {
@@ -96,12 +84,6 @@ Dagaz.Model.CheckInvariants = function(board) {
                   move.capturePiece(pos);
               }
           });
-          if (bonus > 0) {
-              bonus = bonus * 2;
-          } else {
-              bonus = 1;
-          }
-          move.setValue(0, bonus);
       }
   });
   CheckInvariants(board);

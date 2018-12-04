@@ -34,9 +34,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPlayer("You", []);
     design.addTurn(5);
 
+    design.addPosition("p2", []);
     design.addPosition("p1", []);
     design.addPosition("p0", []);
-    design.addPosition("s4", []);
     design.addPosition("s3", []);
     design.addPosition("s2", []);
     design.addPosition("s1", []);
@@ -266,8 +266,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPiece("O13", 37);
     design.addMove(37, 1, [], 1, 1);
 
-    design.setup("You", "D9", 0);
-    design.setup("You", "D9", 1);
+    design.setup("You", "D2", 0);
+    design.setup("You", "D0", 1);
     design.setup("You", "D0", 2);
     design.setup("You", "D0", 3);
     design.setup("You", "D0", 4);
@@ -393,9 +393,9 @@ Dagaz.View.configure = function(view) {
     view.defPiece("HeartsO13", "Hearts O13");
     view.defPiece("SpadesO13", "Spades O13");
  
-    view.defPosition("p1", 6, 0, 22, 32);
-    view.defPosition("p0", 28, 0, 22, 32);
-    view.defPosition("s4", 449, 0, 22, 32);
+    view.defPosition("p2", 6, 0, 22, 32);
+    view.defPosition("p1", 28, 0, 22, 32);
+    view.defPosition("p0", 50, 0, 22, 32);
     view.defPosition("s3", 471, 0, 22, 32);
     view.defPosition("s2", 493, 0, 22, 32);
     view.defPosition("s1", 515, 0, 22, 32);
