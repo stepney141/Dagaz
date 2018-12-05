@@ -26,6 +26,10 @@ Ai.prototype.setContext = function(ctx, board) {
   ctx.timestamp = Date.now();
 }
 
+Dagaz.Model.apply = function(design, board, move) {
+  return board.apply(move);
+}
+
 Ai.prototype.getMove = function(ctx) {
   ctx.board.moves = Dagaz.AI.generate(ctx, ctx.board);
   if (ctx.board.moves.length == 0) {
