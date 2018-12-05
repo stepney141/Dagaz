@@ -27,7 +27,7 @@ var isFailed = function(design, board) {
               }
           }
       });
-      if ((f < 6) || (e < 6)) r = false;
+      if ((f < 6) || (e < 6)) r = true;
       board.isFailed = r;
   }
   return board.isFailed;
