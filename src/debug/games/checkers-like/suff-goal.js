@@ -9,7 +9,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
 }
 
 var allDirections = function() {
-  return _.range(7);
+  return _.range(8);
 }
 
 var isDiagonal = function(dir)  {

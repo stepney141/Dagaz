@@ -14,22 +14,10 @@ if (!_.isUndefined(Dagaz.Controller.addSound)) {
 
 var allDirections = function(design) {
   if (design.dirs.length >= 8) {
-      return _.range(7);
+      return _.range(8);
   } else {
-      return _.range(3);
+      return _.range(4);
   }
-}
-
-var getGoals = function(design, board, player) {
-  if (_.isUndefined(board.goals)) {
-      board.goals = [];
-      _.each(design.allPositions(), function(pos) {
-          if (design.inZone(0, player, pos)) {
-              board.goals.push(pos);
-          }
-      });
-  }
-  return board.goals;
 }
 
 var getTargets = function(design, board, player) {
@@ -105,7 +93,8 @@ var getMove = function(move) {
       if ((move.actions[i][0] !== null) && (move.actions[i][1] !== null)) {
           if (r === null) {
               r = {
-                  start: move.actions[i][0][0]
+                  start: move.actions[i][0][0],
+                  next:  move.actions[i][1][0]
               };
           }
           r.end = move.actions[i][1][0];
@@ -167,6 +156,73 @@ var isRestricted = function(design, board, player) {
   return r;
 }
 
+var findNext = function(design, player, pos, level) {
+  var val = null;
+  while (pos !== null) {
+      var best = null; 
+      _.each(allDirections(design), function(dir) {
+          var p = design.navigate(player, pos, dir);
+          if ((p !== null) && !_.isUndefined(level[p])) {
+              if ((val === null) || (val > level[p])) {
+                  best = p;
+                  val = level[p];
+              }
+          }
+      });
+      if (best === null) break;
+      if (val == 1) return best;
+      pos = best;
+  }
+  return null;
+}
+
+var getGoals = function(design, board, player) {
+  if (_.isUndefined(board.goals)) {
+      board.goals = [];
+      var positions = [];
+      _.each(design.allPositions(), function(pos) {
+          if (!design.inZone(0, player, pos)) {
+              var piece = board.getPiece(pos);
+              if ((piece !== null) && (piece.player == player)) {
+                  positions.push(pos);
+              }
+          }
+      });
+      _.each(positions, function(pos) {
+          var group  = [ pos ];
+          var level  = [];
+          level[pos] = 0;
+          for (var i = 0; i < group.length; i++) {
+               var f = false;
+               _.each(allDirections(design), function(dir) {
+                   if (f) return;
+                   var p = design.navigate(player, group[i], dir);
+                   if ((p !== null) && (board.getPiece(p) !== null)) {
+                        p = design.navigate(player, p, dir);
+                   }
+                   if ((p !== null) && (_.indexOf(group, p) < 0) && (board.getPiece(p) === null)) {
+                        if (design.inZone(0, player, p)) {
+                            var n = findNext(design, player, p, level);
+                            if (n !== null) {
+                                board.goals[pos] = {
+                                    next: n,
+                                    end:  p
+                                };
+                                f = true;
+                                return;
+                            }
+                        }
+                        group.push(p);
+                        level[p] = level[ group[i] ] + 1;
+                   }
+               });
+               if (f) break;
+          }
+      });
+  }
+  return board.goals;
+}
+
 Dagaz.AI.heuristic = function(ai, design, board, move) {
   var t = getTargets(design, board, board.player);
   var m = getMove(move);
@@ -176,21 +232,31 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
           if (_.indexOf(t.first, m.end) >= 0) {
               r = 1000 + getDistance(t.first, m.start) - getDistance(t.first, m.end);
           }
+          if (_.indexOf(t.goal, m.end) >= 0) {
+              r = 700 + getDistance(t.first, m.start) - getDistance(t.first, m.end);
+          }
           if ((r == 1) && (_.indexOf(t.second, m.end) >= 0)) {
               r = 500 - getDistance(t.second, m.end);
           }
       }
       if (r == 1) {
           if (design.inZone(2, board.player, m.end) && !design.inZone(2, board.player, m.start)) {
-              r = 200;
+              r = 300;
           } else {
               var goals = getGoals(design, board, board.player);
-              r = 100 + getDistance(goals, m.start) - getDistance(goals, m.end);
+              if (!_.isUndefined(goals[m.start])) {
+                  var goal = goals[m.start];
+                  if (m.next == goal.next) {
+                      r = 100 + distance(goal.end, m.start) - distance(goal.end, m.end);
+                      console.log("*** " + m.next + ", " + goal.next);
+                  }
+              }
           }
       }
-      if (notBest(design, board, r)) return -1;
-      var b = board.apply(move);
-      if (isRestricted(design, b, board.player)) return -1;
+//    console.log("*** " + move.toString() + ", e = " + r);
+//    if (notBest(design, board, r)) return -1;
+//    var b = board.apply(move);
+//    if (isRestricted(design, b, board.player)) return -1;
   }
   return r;
 }
