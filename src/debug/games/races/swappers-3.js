@@ -24,6 +24,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "true");
     design.checkVersion("show-blink", "false");
+    design.checkVersion("show-hints", "false");
 
     design.addDirection("w");
     design.addDirection("e");

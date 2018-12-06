@@ -23,9 +23,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "true");
-    design.checkVersion("pass-turn", "forced");
     design.checkVersion("show-blink", "false");
-    design.checkVersion("ko", "situation");
+    design.checkVersion("show-hints", "false");
+    design.checkVersion("pass-turn", "forced");
+    design.checkVersion("ko", "asymmetric");
+    design.checkVersion("advisor-wait", "5");
     design.checkVersion("high-jump-goal", "true");
 
     design.addDirection("w");

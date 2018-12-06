@@ -103,6 +103,11 @@ var getMove = function(move) {
   return r;
 }
 
+var bestFound = function(design, board, val) {
+  if (_.isUndefined(board.bestVal)) return false;
+  return board.bestVal >= val;
+}
+
 var notBest = function(design, board, val) {
   if (_.isUndefined(board.bestVal)) {
       board.bestVal = val;
@@ -156,21 +161,26 @@ var isRestricted = function(design, board, player) {
   return r;
 }
 
-var findNext = function(design, player, pos, level) {
+var findPath = function(design, board, player, pos, level) {
+  var r = [pos];
   var val = null;
   while (pos !== null) {
-      var best = null; 
+      var best = null;
       _.each(allDirections(design), function(dir) {
           var p = design.navigate(player, pos, dir);
+          if ((p !== null) && (board.getPiece(p) !== null)) {
+              p = design.navigate(player, p, dir);
+          }
           if ((p !== null) && !_.isUndefined(level[p])) {
               if ((val === null) || (val > level[p])) {
-                  best = p;
                   val = level[p];
+                  r.unshift(p);
+                  best = p;
               }
           }
       });
-      if (best === null) break;
-      if (val == 1) return best;
+      if (val == 1) return r;
+      if (best === null) return null;
       pos = best;
   }
   return null;
@@ -202,10 +212,10 @@ var getGoals = function(design, board, player) {
                    }
                    if ((p !== null) && (_.indexOf(group, p) < 0) && (board.getPiece(p) === null)) {
                         if (design.inZone(0, player, p)) {
-                            var n = findNext(design, player, p, level);
-                            if (n !== null) {
+                            var path = findPath(design, board, player, p, level);
+                            if ((path !== null) && (path.length > 0)) {
                                 board.goals[pos] = {
-                                    next: n,
+                                    next: path[0],
                                     end:  p
                                 };
                                 f = true;
@@ -242,21 +252,21 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
       if (r == 1) {
           if (design.inZone(2, board.player, m.end) && !design.inZone(2, board.player, m.start)) {
               r = 300;
-          } else {
-              var goals = getGoals(design, board, board.player);
-              if (!_.isUndefined(goals[m.start])) {
-                  var goal = goals[m.start];
-                  if (m.next == goal.next) {
-                      r = 100 + distance(goal.end, m.start) - distance(goal.end, m.end);
-                      console.log("*** " + m.next + ", " + goal.next);
-                  }
+          }
+      }
+      if (bestFound(design, board, 300)) return -1;
+      if (r == 1) {
+          var goals = getGoals(design, board, board.player);
+          if (!_.isUndefined(goals[m.start])) {
+              var goal = goals[m.start];
+              if (m.next == goal.next) {
+                  r = 100 + distance(goal.end, m.start) - distance(goal.end, m.end);
               }
           }
       }
-//    console.log("*** " + move.toString() + ", e = " + r);
-//    if (notBest(design, board, r)) return -1;
-//    var b = board.apply(move);
-//    if (isRestricted(design, b, board.player)) return -1;
+      if (notBest(design, board, r)) return -1;
+      var b = board.apply(move);
+      if (isRestricted(design, b, board.player)) return -1;
   }
   return r;
 }
