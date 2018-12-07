@@ -386,7 +386,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Red", "Knight", 162);
     design.setup("Red", "Knight", 147);
     design.setup("Red", "Knight", 82);
-    design.setup("Red", "Knight", 98);
+    design.setup("Red", "Knight", 99);
     design.setup("Red", "Man", 146);
     design.setup("Red", "Man", 130);
     design.setup("Red", "Man", 114);
