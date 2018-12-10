@@ -1,6 +1,6 @@
 (function() {
 
-Dagaz.AI.discardVector = [0, 10, 10, 10, 3, 1, 1, 1];
+Dagaz.AI.discardVector = [20, 3, 3, 3];
 
 var checkVersion = Dagaz.Model.checkVersion;
 
