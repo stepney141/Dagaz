@@ -26,7 +26,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
     design.checkVersion("pass-turn", "forced");
-    design.checkVersion("advisor-wait", "5");
+    design.checkVersion("advisor-wait", "1");
     design.checkVersion("promote-dialog", "remap");
     design.checkVersion("shogi-extension", "true");
     design.checkVersion("shogi-promotion", "true");
