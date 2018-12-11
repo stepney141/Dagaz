@@ -25,10 +25,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "false");
+    design.checkVersion("pass-turn", "forced");
     design.checkVersion("pass-partial", "true");
     design.checkVersion("detect-loops", "true");
     design.checkVersion("advisor-wait", "5");
-    design.checkVersion("camelot-goal", "1");
+    design.checkVersion("grand-camelot-goal", "1");
 
     design.addDirection("se"); // 0
     design.addDirection("s");  // 1

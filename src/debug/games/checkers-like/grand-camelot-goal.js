@@ -5,7 +5,7 @@ var win = 2;
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name == "camelot-goal") {
+  if (name == "grand-camelot-goal") {
       win = +value;
   } else {
       checkVersion(design, name, value);
@@ -15,7 +15,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
 var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {
-  var f = [0, 0]; var g = [0, 0];
+  var f = [0, 0, 0, 0]; var g = [0, 0, 0, 0];
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
       if (piece !== null) {
@@ -25,7 +25,7 @@ Dagaz.Model.checkGoals = function(design, board, player) {
           f[piece.player - 1]++;
       }
   });
-  for (var p = 0; p < 2; p++) {
+  for (var p = 0; p < 4; p++) {
       var r = null;
       if (g[p] >= win) r = 1;
       if (f[p] < win) r = -1;
@@ -37,7 +37,7 @@ Dagaz.Model.checkGoals = function(design, board, player) {
           }
       }
   }
-  if ((f[0] < win) && (f[1] < win)) return 0;
+  if ((f[0] < win) && (f[1] < win) && (f[2] < win) && (f[3] < win)) return 0;
   return checkGoals(design, board, player);
 }
 
