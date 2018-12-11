@@ -1,6 +1,6 @@
 (function() {
 
-Dagaz.AI.discardVector = [20, 3, 3, 3];
+Dagaz.AI.discardVector = [0, 5, 5, 5];
 
 var checkVersion = Dagaz.Model.checkVersion;
 
@@ -10,16 +10,132 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+var checkStep = function(design, board, player, pos, dir, cover) {
+  var p = design.navigate(player, pos, dir);
+  if (p === null) return;
+  cover[p].push(pos);
+}
+
+var checkSlide = function(design, board, player, pos, dir, cover) {
+  var p = design.navigate(player, pos, dir);
+  while (p !== null) {
+      p = design.navigate(player, p, dir);
+      if (p !== null) {
+          cover[p].push(pos);
+          if (board.getPiece(p) !== null) break;
+      }
+  }
+}
+
+var checkLeap = function(design, board, player, pos, o, d, cover) {
+  var p = design.navigate(player, pos, o);
+  if (p === null) return;
+  p = design.navigate(player, p, d);
+  if (p === null) return;
+  cover[p].push(pos);
+}
+
+Dagaz.Model.GetCover = function(design, board) {
+  if (_.isUndefined(board.cover)) {
+      var n  = design.getDirection("n");  var w  = design.getDirection("w");
+      var s  = design.getDirection("s");  var e  = design.getDirection("e");
+      var nw = design.getDirection("nw"); var sw = design.getDirection("sw");
+      var ne = design.getDirection("ne"); var se = design.getDirection("se");
+      board.cover = [];
+      _.each(design.allPositions(), function(pos) {
+           board.cover.push([]);
+      });
+      _.each(design.allPositions(), function(pos) {
+           var piece = board.getPiece(pos);
+           if (piece !== null) {
+               if (_.indexOf([0, 1, 2, 4, 6, 7, 8, 9, 10, 11, 12, 13], piece.type) >= 0) {
+                   checkStep(design, board, piece.player, pos, n, board.cover);
+               }
+               if (_.indexOf([0, 1, 6, 8, 9, 10, 11, 12, 13], piece.type) >= 0) {
+                   checkStep(design, board, piece.player, pos, e, board.cover);
+               }
+               if (_.indexOf([0, 1, 6, 8, 9, 10, 11, 12, 13], piece.type) >= 0) {
+                   checkStep(design, board, piece.player, pos, w, board.cover);
+               }
+               if (_.indexOf([0, 1, 6, 8, 9, 10, 11, 12, 13], piece.type) >= 0) {
+                   checkStep(design, board, piece.player, pos, s, board.cover);
+               }
+               if (_.indexOf([0, 1, 2, 5, 8, 9, 10, 11, 12, 13], piece.type) >= 0) {
+                   checkStep(design, board, piece.player, pos, nw, board.cover);
+               }
+               if (_.indexOf([0, 1, 2, 5, 8, 9, 10, 11, 12, 13], piece.type) >= 0) {
+                   checkStep(design, board, piece.player, pos, ne, board.cover);
+               }
+               if (_.indexOf([0, 2, 5, 11, 12], piece.type) >= 0) {
+                   checkStep(design, board, piece.player, pos, sw, board.cover);
+               }
+               if (_.indexOf([0, 2, 5, 11, 12], piece.type) >= 0) {
+                   checkStep(design, board, piece.player, pos, se, board.cover);
+               }
+               if (_.indexOf([4, 6, 12], piece.type) >= 0) {
+                   checkSlide(design, board, piece.player, pos, n, board.cover);
+               }
+               if (_.indexOf([6, 12], piece.type) >= 0) {
+                   checkSlide(design, board, piece.player, pos, e, board.cover);
+                   checkSlide(design, board, piece.player, pos, w, board.cover);
+                   checkSlide(design, board, piece.player, pos, s, board.cover);
+               }
+               if (_.indexOf([5, 11], piece.type) >= 0) {
+                   checkSlide(design, board, piece.player, pos, nw, board.cover);
+                   checkSlide(design, board, piece.player, pos, ne, board.cover);
+                   checkSlide(design, board, piece.player, pos, sw, board.cover);
+                   checkSlide(design, board, piece.player, pos, se, board.cover);
+               }
+               if (piece.type == 3) {
+                   checkLeap(design, board, piece.player, pos, n, nw, board.cover);
+                   checkLeap(design, board, piece.player, pos, n, ne, board.cover);
+               }
+           }
+      });
+  }
+  return board.cover;
+}
+
+var isLast = function(board, pos) {
+  if (_.isUndefined(board.move)) return false;
+  if (board.move.actions.length == 0) return false;
+  if (board.move.actions[0][0] === null) return false;
+  if (board.move.actions[0][1] === null) return false;
+  return board.move.actions[0][1][0] == pos;
+}
+
+var isAttacked = function(board, pos, player) {
+  var r = false;
+  _.each(board.cover[pos], function(p) {
+      if (r) return;
+      var piece = board.getPiece(p);
+      if ((piece !== null) && (piece.player != player)) r = true;
+  });
+  return r;
+}
+
 Dagaz.AI.heuristic = function(ai, design, board, move) {
   var r = 1;
-  _.each(move.actions, function(a) {
-      if ((a[0] !== null) && (a[1] === null)) {
-          var piece = board.getPiece(a[0][0]);
-          if (piece !== null) {
-              r += design.price[piece.type];
+  if ((move.actions.length > 0) && (move.actions[0][0] !== null) && (move.actions[0][1] !== null)) {
+      var pos = move.actions[0][1][0];
+      var piece = board.getPiece(pos);
+      if (piece !== null) {
+          r = design.price[piece.type];
+          if (_.isUndefined(board.cover) && isLast(board, pos)) {
+              r *= 2;
           }
       }
-  });
+      piece = board.getPiece(move.actions[0][0][0]);
+      if (piece !== null) {
+          if (!_.isUndefined(board.cover)) {
+              if (isAttacked(board, pos, piece.player)) {
+                  r -= design.price[piece.type];
+              }
+          } else {
+              r -= (design.price[piece.type] / 2) | 0;
+          }
+      }
+  }
   return r;
 }
 

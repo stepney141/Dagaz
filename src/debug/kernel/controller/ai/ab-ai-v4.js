@@ -6,6 +6,10 @@ Dagaz.AI.AI_FRAME     = 3000;
 Dagaz.AI.NOISE_FACTOR = 10;
 Dagaz.AI.NO_MOVE_GOAL = -1;
 
+var branchCount       = 0;
+var leafCount         = 0;
+var termCount         = 0;
+
 function AbAi(params, parent) {
   this.params = params;
   this.parent = parent;
@@ -61,14 +65,17 @@ var estimate = function(values, player) {
 
 AbAi.prototype.ab = function(node, ctx, level) {
   if (level >= Dagaz.AI.discardVector.length) {
+      leafCount++;
       return Dagaz.AI.getEval(ctx.design, node.board);
   }
   var g = Dagaz.Model.checkGoals(ctx.design, node.board, ctx.board.player);
   if (g !== null) {
+      termCount++;
       return goalVector(ctx.design, g, ctx.board.player);
   }
   this.expand(node, ctx);
   if (node.cache.length == 0) {
+      termCount++;
       if (node.board.player == ctx.board.player) {
           return goalVector(ctx.design, Dagaz.AI.NO_MOVE_GOAL, node.board.player);
       } else {
@@ -90,8 +97,18 @@ AbAi.prototype.ab = function(node, ctx, level) {
            result = v;
            value = e;
        }
+       if (level == 0) {
+           branchCount++;
+           if (Date.now() - ctx.timestamp >= Dagaz.AI.AI_FRAME) break;
+       }
   }
   return result;
+}
+
+var clearStat = function() {
+  branchCount = 0;
+  leafCount   = 0;
+  termCount   = 0;
 }
 
 AbAi.prototype.setContext = function(ctx, board) {
@@ -108,8 +125,12 @@ AbAi.prototype.getMove = function(ctx) {
   if (ctx.board.moves.length == 0) {
       return { done: true, ai: "nothing" };
   }
+  clearStat();
+  Dagaz.Model.GetCover(ctx.design, ctx.board);
   this.expand(ctx, ctx);
+  ctx.timestamp = Date.now();
   this.ab(ctx, ctx, 0);
+  console.log("AI Stat: " + branchCount + "/" + leafCount + "/" + termCount);
   if (ctx.best !== null) {
       var r = {
            done: true,
