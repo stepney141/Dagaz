@@ -32,20 +32,21 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("shogi-promotion", "true");
     design.checkVersion("common-shogi-invariant", "true");
     design.checkVersion("yonin-shogi-invariant", "true");
+    design.checkVersion("yonin-shogi-goal", "true");
 
-    design.addDirection("w");
-    design.addDirection("e");
-    design.addDirection("s");
-    design.addDirection("ne");
-    design.addDirection("n");
-    design.addDirection("se");
-    design.addDirection("sw");
-    design.addDirection("nw");
-    design.addDirection("sr");
-    design.addDirection("wr");
-    design.addDirection("nr");
-    design.addDirection("er");
-    design.addDirection("nx");
+    design.addDirection("w");  // 0
+    design.addDirection("e");  // 1
+    design.addDirection("s");  // 2
+    design.addDirection("ne"); // 3
+    design.addDirection("n");  // 4
+    design.addDirection("se"); // 5
+    design.addDirection("sw"); // 6
+    design.addDirection("nw"); // 7
+    design.addDirection("sr"); // 8
+    design.addDirection("wr"); // 9
+    design.addDirection("nr"); // 10
+    design.addDirection("er"); // 11
+    design.addDirection("nx"); // 12
 
     design.addPlayer("South", [1, 0, 4, 6, 2, 7, 3, 5, 8, 9, 10, 11, 12]);
     design.addPlayer("West", [4, 2, 0, 5, 1, 6, 7, 3, 9, 0, 1, 2, 12]);
