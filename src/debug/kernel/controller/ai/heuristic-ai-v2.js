@@ -18,6 +18,34 @@ Dagaz.AI.findBot = function(type, params, parent) {
   }
 }
 
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  var r = 1;
+  _.each(move.actions, function(a) {
+      if ((a[0] !== null) && (a[1] === null)) {
+          var piece = board.getPiece(a[0][0]);
+          if (piece !== null) {
+              r += design.price[piece.type];
+          }
+      }
+  });
+  return r;
+}
+
+Dagaz.AI.eval = function(ai, design, board, player) {
+  var r = 0;
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if (piece !== null) {
+          var v = design.price[piece.type];
+          if (piece.player != player) {
+              v = -v;
+          }
+          r += v;
+      }
+  });
+  return r;
+}
+
 Ai.prototype.setContext = function(ctx, board) {
   if (this.parent) {
       this.parent.setContext(ctx, board);
