@@ -26,16 +26,17 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-blink", "false");
+    design.checkVersion("advisor-wait", "1");
     design.checkVersion("kono-extension", "true");
 
-    design.addDirection("w");
-    design.addDirection("ww");
-    design.addDirection("ee");
-    design.addDirection("e");
-    design.addDirection("s");
-    design.addDirection("nn");
-    design.addDirection("n");
-    design.addDirection("ss");
+    design.addDirection("w");  // 0
+    design.addDirection("ww"); // 1
+    design.addDirection("ee"); // 2
+    design.addDirection("e");  // 3
+    design.addDirection("s");  // 4
+    design.addDirection("nn"); // 5
+    design.addDirection("n");  // 6
+    design.addDirection("ss"); // 7
 
     design.addPlayer("Black", [3, 2, 1, 0, 6, 7, 4, 5]);
     design.addPlayer("White", [0, 1, 2, 3, 4, 5, 6, 7]);

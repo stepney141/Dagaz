@@ -11,6 +11,25 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+var isAttacked = function(design, board, player, pos) {
+  var r = false;
+  _.each([0, 3, 4, 6], function(dir) {
+      if (r) return;
+      var p = design.navigate(player, pos, dir);
+      if (p === null) return;
+      var piece = board.getPiece(p);
+      if (piece === null) return;
+      if (piece.player == player) return;
+      p = design.navigate(player, p, dir);
+      if (p === null) return;
+      piece = board.getPiece(p);
+      if (piece === null) return;
+      if (piece.player == player) return;
+      r = true;
+  });
+  return r;
+}
+
 Dagaz.AI.eval = function(design, params, board, player) {
   var r = 0;
   _.each(design.allPositions(), function(pos) {
@@ -18,7 +37,10 @@ Dagaz.AI.eval = function(design, params, board, player) {
       if (piece !== null) {
           var v = 10;
           if (design.inZone(0, player, pos)) {
-              v += 3;
+              v += 30;
+          }
+          if (isAttacked(design, board, piece.player, pos)) {
+              v = (v / 2) | 0;
           }
           if (piece.player != player) {
               v = -v;
@@ -58,7 +80,7 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
   if (move.actions.length > 0) {
       var pos = move.actions[0][1][0];
       if (board.getPiece(pos) !== null) {
-          r += 10;
+          r += 9;
       }
   }
   return r;
