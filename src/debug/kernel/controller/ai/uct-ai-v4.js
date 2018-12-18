@@ -26,6 +26,34 @@ Dagaz.AI.findBot = function(type, params, parent) {
   }
 }
 
+Dagaz.AI.eval = function(design, params, board, player) {
+  var r = 0;
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if (piece !== null) {
+          var v = design.price[piece.type];
+          if (piece.player != player) {
+              v = -v;
+          }
+          r += v;
+      }
+  });
+  return r;
+}
+
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  var r = 1;
+  _.each(move.actions, function(a) {
+      if ((a[0] !== null) && (a[1] === null)) {
+          var piece = board.getPiece(a[0][0]);
+          if (piece !== null) {
+              r += design.price[piece.type];
+          }
+      }
+  });
+  return r;
+}
+
 UctAi.prototype.expand = function(ctx, node) {
   var all = 0;
   if (_.isUndefined(node.cache)) {
@@ -114,6 +142,15 @@ UctAi.prototype.getMove = function(ctx) {
   ctx.all = this.expand(ctx, ctx);
   if (ctx.cache.length == 0) {
       return { done: true, ai: "nothing" };
+  }
+  if (ctx.cache.length == 1) {
+      var r = {
+           done: true,
+           move: ctx.cache[0].move,
+           time: Date.now() - ctx.timestamp,
+           ai:  "once"
+      };
+      return r;
   }
   clearStat();
   ctx.timestamp = Date.now();

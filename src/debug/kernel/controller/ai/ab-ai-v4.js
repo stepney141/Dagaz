@@ -125,6 +125,15 @@ AbAi.prototype.getMove = function(ctx) {
   if (ctx.board.moves.length == 0) {
       return { done: true, ai: "nothing" };
   }
+  if (ctx.board.moves.length == 1) {
+      var r = {
+           done: true,
+           move: ctx.board.moves[0].move,
+           time: Date.now() - ctx.timestamp,
+           ai:  "once"
+      };
+      return r;
+  }
   clearStat();
   Dagaz.Model.GetCover(ctx.design, ctx.board);
   this.expand(ctx, ctx);

@@ -90,11 +90,11 @@
   - Kolowisi Awithlaknannai [best, partial, vectors]
   - High Jump [zone]
   - Yote [drops, bonus, shoots, shared, limit]
-  - Checkers [best, promotion, todo:ai, openings, endings, smart]
-  - Italian Checkers [best, hierarchy, promotion, todo:ai]
+  - Checkers [best, promotion, openings, endings, smart]
+  - Italian Checkers [best, hierarchy, promotion]
   - Italian Damone [kings, hierarchy, promotion, breakthrough]
-  - Harzdame [promotion, todo:ai]
-  - Dameo [groups, promotion, todo:ai]
+  - Harzdame [promotion]
+  - Dameo [groups, promotion]
   - Walhall [best, asym]
   - Fanorona [best, partial, bug, todo:rounds]
   - Black & White 
@@ -115,7 +115,7 @@
   - Just You Wait! 
   - Jungle [todo:ai]
   - Prairie 
-  - Breakthrough [todo:ai] 
+  - Breakthrough [todo:ai]
   - Alapo [dark, best]
   - Kamisado [best, todo:ai, todo:rounds, bug]
   - Archimedes [cooperative]

@@ -1,7 +1,9 @@
 (function() {
 
-Dagaz.AI.AI_FRAME     = 1000;
-Dagaz.AI.MAX_DEEP     = 6;
+Dagaz.AI.discardVector = [0, 0, 7, 7, 7, 7];
+
+Dagaz.AI.AI_FRAME      = 1000;
+Dagaz.AI.MAX_DEEP      = 6;
 
 var checkVersion = Dagaz.Model.checkVersion;
 
@@ -30,24 +32,34 @@ var isAttacked = function(design, board, player, pos) {
   return r;
 }
 
+Dagaz.AI.getEval = function(design, board) {
+  if (_.isUndefined(board.eval)) {
+      board.eval = 0;
+      _.each(design.allPositions(), function(pos) {
+          var piece = board.getPiece(pos);
+          if (piece !== null) {
+              var v = 10;
+              if (design.inZone(0, board.player, pos)) {
+                  v += 30;
+              }
+              if (isAttacked(design, board, piece.player, pos)) {
+                  v = (v / 2) | 0;
+              }
+              if (board.player != piece.player) {
+                  v = -v;
+              }
+              board.eval += v;
+          }
+      });
+  }
+  return board.eval;
+}
+
 Dagaz.AI.eval = function(design, params, board, player) {
-  var r = 0;
-  _.each(design.allPositions(), function(pos) {
-      var piece = board.getPiece(pos);
-      if (piece !== null) {
-          var v = 10;
-          if (design.inZone(0, player, pos)) {
-              v += 30;
-          }
-          if (isAttacked(design, board, piece.player, pos)) {
-              v = (v / 2) | 0;
-          }
-          if (piece.player != player) {
-              v = -v;
-          }
-          r += v;
-      }
-  });
+  var r = Dagaz.AI.getEval(design, board);
+  if (board.player != player) {
+      r = -r;
+  }
   return r;
 }
 
