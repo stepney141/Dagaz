@@ -59,6 +59,10 @@
         (a3 b2) (a5 b4) (b2 c1) (b4 c3)
         (c3 d2) (c5 d4) (d2 e1) (d4 e3)
      )
+     (zone
+        (name center) (players White Black)
+        (positions b2 b4 c3 d2 d4)
+     )
   )
 
   (piece

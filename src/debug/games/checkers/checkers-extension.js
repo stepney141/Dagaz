@@ -30,7 +30,7 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
       var sr = move.actions[0][0][0];
       var ds = move.actions[0][1][0];
       if (isAttacked(design, board, ds, sr, nw, se) ||
-          isAttacked(design, board, ds, sr, ne, sw)  {
+          isAttacked(design, board, ds, sr, ne, sw))  {
           return 3;
       }
   }
