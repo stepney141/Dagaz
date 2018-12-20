@@ -14,7 +14,7 @@ Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
   if (!_.isUndefined(board.ko)) {
       _.each(board.moves, function(move) {
-          if ((move.actions.length > 0) && (move.actions[0][0] === null) && (move.actions[0][1] === null)) {
+          if ((move.actions.length > 0) && (move.actions[0][0] === null) && (move.actions[0][1] !== null)) {
                var pos = move.actions[0][1][0];
                if (_.indexOf(board.ko, pos) >= 0) {
                    move.failed = true;
