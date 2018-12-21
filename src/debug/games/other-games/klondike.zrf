@@ -1,0 +1,55 @@
+(define opn (
+  (add O$1)
+))
+
+(define slide (
+  (verify not-empty?)
+  a13 (while (on-board? $1) (if empty? add) $1)
+  (verify empty?)
+  add
+))
+
+(define c
+   (piece
+      (image Diamonds "images/cards/back.bmp"
+             Clubs    "images/cards/back.bmp"
+             Hearts   "images/cards/back.bmp"
+             Spades   "images/cards/back.bmp")
+      (name  C$1)
+      (moves (move-type open-type) (opn $1))
+   )
+   (piece
+      (image Diamonds "images/cards/dia$1.bmp"
+             Clubs    "images/cards/clb$1.bmp"
+             Hearts   "images/cards/hrt$1.bmp"
+             Spades   "images/cards/spd$1.bmp")
+      (name  O$1)
+      (moves (move-type move-type) (slide next))
+   )
+)
+
+(game
+  (title "Klondike")
+
+  (option "animate captures"  false)
+  (option "animate drops"     false)
+  (option "smart moves"       false)
+  (option "shared pieces"     true)
+
+  (players Diamonds Clubs Hearts Spades You)
+  (turn-order You)
+
+  (board
+      (grid
+          (start-rectangle 0 100 62 182)
+          (dimensions
+            ("a/b/c/d/e/f/g" (62 0)) ; files
+            ("13/12/11/10/9/8/7/6/5/4/3/2/1" (0 20)) ; ranks
+          )
+          (directions (next 0 1) (up 0 -1))
+      )
+      (links next (a1 b13) (b1 c13) (c1 d13) (d1 e13) (e1 f13) (f1 g13))
+  )
+
+  (c 1) (c 2) (c 3) (c 4) (c 5) (c 6) (c 7) (c 8) (c 9) (c 10) (c 11) (c 12) (c 13)
+)
