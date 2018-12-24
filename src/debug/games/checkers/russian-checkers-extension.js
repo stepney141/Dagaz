@@ -1,9 +1,11 @@
 (function() {
 
-Dagaz.AI.discardVector = [0, 0, 5, 5, 5, 5];
+Dagaz.AI.discardVector = [0, 10, 0, 10, 0, 10, 0, 1];
 
-Dagaz.AI.AI_FRAME      = 3000;
+Dagaz.AI.AI_FRAME      = 2000;
 Dagaz.AI.MIN_DEEP      = 6;
+
+var MAX_FORCED_FACTOR  = 2;
 
 var strictMode = false;
 
@@ -53,6 +55,33 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
       }
   }
   return 1;
+}
+
+Dagaz.AI.isForced = function(design, board, move) {
+  if (_.isUndefined(move.isForced)) {
+      move.isForced = false;
+      var b = board.apply(move);
+      var c = 0;
+      _.each(design.allPositions(), function(pos) {
+          var piece = b.getPiece(pos);
+          if ((piece !== null) && (piece.type == 0) && (piece.player == b.player)) {
+              _.each(design.allDirections(), function(dir) {
+                   var p = design.navigate(b.player, pos, dir);
+                   if (p !== null) {
+                       piece = b.getPiece(p);
+                       if ((piece !== null) && (piece.type == 0) && (piece.player != b.player)) {
+                            p = design.navigate(b.player, p, dir);
+                            if ((p !== null) && (b.getPiece(p) === null)) c++;
+                       }
+                   }
+              });
+          }
+      });
+      if ((c > 0) && (c <= MAX_FORCED_FACTOR)) {
+          move.isForced = true;
+      }
+  }
+  return move.isForced;
 }
 
 Dagaz.AI.getEval = function(design, board) {
