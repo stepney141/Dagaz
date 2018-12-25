@@ -11,7 +11,7 @@ function ForcedAi(params, parent) {
 var findBot = Dagaz.AI.findBot;
 
 Dagaz.AI.findBot = function(type, params, parent) {
-  if ((type == "forced") || (type == "solver")) {
+  if ((type == "forced") || (type == "smart")) {
       return new ForcedAi(params, parent);
   } else {
       return findBot(type, params, parent);
