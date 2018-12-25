@@ -275,6 +275,7 @@ App.prototype.getAI = function() {
       } else {
           this.ai = Dagaz.AI.findBot("random",  this.params, this.ai);
           this.ai = Dagaz.AI.findBot("common",  this.params, this.ai);
+          this.ai = Dagaz.AI.findBot("solver",  this.params, this.ai);
           this.ai = Dagaz.AI.findBot("opening", this.params, this.ai);
       }
   }
