@@ -1,7 +1,8 @@
 (function() {
 
 var MAXVALUE = 1000000;
-var MAX_DEEP = 5;
+
+Dagaz.AI.MAX_DEEP = 5;
 
 function ForcedAi(params, parent) {
   this.params = params;
@@ -33,7 +34,7 @@ ForcedAi.prototype.estimate = function(ctx, board, player, deep) {
   _.each(board.moves, function(move) {
      var mx = null;
      var b = board.apply(move);
-     if (deep < MAX_DEEP) {
+     if (deep < Dagaz.AI.MAX_DEEP) {
          b.moves = Dagaz.AI.generate(ctx, b);
          _.each(b.moves, function(m) {
             if (Dagaz.AI.isForced(ctx.design, b, m)) {
@@ -58,6 +59,9 @@ ForcedAi.prototype.estimate = function(ctx, board, player, deep) {
      }
      if (mx === null) {
          mx = Dagaz.AI.eval(ctx.design, this.params, b, player);
+/*       if (!_.isUndefined(Dagaz.Model.getSetup)) {
+              console.log("Setup: " + Dagaz.Model.getSetup(ctx.design, b));
+         }*/
      }
      if ((mn === null) || (mn > mx)) {
          mn = mx;
@@ -74,6 +78,7 @@ ForcedAi.prototype.getMove = function(ctx) {
   var e = Dagaz.AI.eval(ctx.design, this.params, ctx.board, ctx.board.player);
   var mx = null;
   _.each(ctx.board.moves, function(move) {
+      if (Date.now() - ctx.timestamp > Dagaz.AI.AI_FRAME) return;
       if (Dagaz.AI.isForced(ctx.design, ctx.board, move)) {
           var v = this.estimate(ctx, ctx.board.apply(move), ctx.board.player, 0) - e;
           if (v === null) {
