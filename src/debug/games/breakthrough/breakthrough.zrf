@@ -38,6 +38,12 @@
          )
      )
      (symmetry Black (n s) (s n) (nw se) (se nw) (ne sw) (sw ne) (w e) (e w))
+     (zone (name last-rank) (players White)
+           (positions a8 b8 c8 d8 e8 f8 g8 h8)
+     )
+     (zone (name last-rank) (players Black)
+           (positions a1 b1 c1 d1 e1 f1 g1 h1)
+     )
   )
 
   (piece
@@ -129,6 +135,12 @@
          )
      )
      (symmetry Black (n s) (s n) (nw se) (se nw) (ne sw) (sw ne) (w e) (e w))
+     (zone (name last-rank) (players White)
+           (positions a5 b5 c5 d5 e5)
+     )
+     (zone (name last-rank) (players Black)
+           (positions a1 b1 c1 d1 e1)
+     )
   )
 
   (board-setup

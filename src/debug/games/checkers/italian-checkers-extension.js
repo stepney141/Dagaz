@@ -1,7 +1,9 @@
 (function() {
 
-Dagaz.AI.AI_FRAME      = 1000;
-Dagaz.AI.getForcedMove = Dagaz.AI.getCheckersForcedMove;
+Dagaz.AI.AI_FRAME      = 2000;
+Dagaz.AI.MIN_DEEP      = 6;
+
+var MAX_FORCED_FACTOR  = 2;
 
 var strictMode = false;
 
@@ -13,47 +15,85 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var isAttacked = function(design, board, pos, empty, dir, opposite) {
-  var p = design.navigate(board.player, pos, dir);
-  if ((p === null) || (p == empty)) return false;
-  var piece = board.getPiece(p);
-  if ((p === null) || (p.player == board.player)) return false;
-  p = design.navigate(board.player, pos, opposite);
-  if (p === null) return false;
-  return (p == empty) || (board.getPiece(p) === null);
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  var r = 1;
+  _.each(move.actions, function(a) {
+      if (a[0] !== null) {
+          if (a[1] !== null) {
+              if (design.inZone(0, board.player, a[1][0])) r += 1000;
+          } else {
+              var piece = board.getPiece(a[0][0]);
+              if (piece !== null) {
+                  r += design.price[piece.type];
+              }
+          }
+      }
+  });
+  return r;
 }
 
-Dagaz.AI.heuristic = function(ai, design, board, move) {
-  if ((move.actions.length == 1) && (move.actions[0][0] !== null) && (move.actions[0][1] !== null)) {
-      var nw = design.getDirection("nw"); var sw = design.getDirection("sw");
-      var ne = design.getDirection("ne"); var se = design.getDirection("se");
-      var sr = move.actions[0][0][0];
-      var ds = move.actions[0][1][0];
-      if (isAttacked(design, board, ds, sr, nw, se) ||
-          isAttacked(design, board, ds, sr, ne, sw)  {
-          return 3;
+var getDirs = function(type) {
+  if (type == 0) {
+      return [0, 3];
+  } else {
+      return [0, 1, 2, 3];
+  }
+}
+
+Dagaz.AI.isForced = function(design, board, move) {
+  if (_.isUndefined(move.isForced)) {
+      move.isForced = false;
+      var b = board.apply(move);
+      var c = 0;
+      _.each(design.allPositions(), function(pos) {
+          var piece = b.getPiece(pos);
+          if ((piece !== null) && (piece.player == b.player)) {
+              _.each(getDirs(piece.type), function(dir) {
+                   var p = design.navigate(b.player, pos, dir);
+                   if (p !== null) {
+                       var enemy = b.getPiece(p);
+                       if ((enemy !== null) && (enemy.type <= piece.type) && (enemy.player != b.player)) {
+                            p = design.navigate(b.player, p, dir);
+                            if ((p !== null) && (b.getPiece(p) === null)) c++;
+                       }
+                   }
+              });
+          }
+      });
+      if ((c > 0) && (c <= MAX_FORCED_FACTOR)) {
+          move.isForced = true;
       }
   }
-  return 1;
+  return move.isForced;
+}
+
+Dagaz.AI.getEval = function(design, board) {
+  if (_.isUndefined(board.eval)) {
+      board.eval = 0;
+      _.each(design.allPositions(), function(pos) {
+          var piece = board.getPiece(pos);
+          if (piece !== null) {
+              var v = design.price[piece.type];
+              var bonus = 1;
+              if (_.indexOf([48, 32, 16, 0, 63, 47, 31, 15], +pos) >= 0) {
+                  bonus--;
+              }
+              v += bonus;
+              if (!Dagaz.AI.isFriend(board.player, piece.player)) {
+                  v = -v;
+              }
+              board.eval += v;
+          }
+      });
+  }
+  return board.eval;
 }
 
 Dagaz.AI.eval = function(design, params, board, player) {
-  var r = 0;
-  _.each(design.allPositions(), function(pos) {
-      var piece = board.getPiece(pos);
-      if (piece !== null) {
-          var v = design.price[piece.type];
-          var bonus = 1;
-          if (_.indexOf([48, 32, 16, 0, 63, 47, 31, 15], +pos) >= 0) {
-              bonus--;
-          }
-          v += bonus;
-          if (!Dagaz.AI.isFriend(player, piece.player)) {
-              v = -v;
-          }
-          r += v;
-      }
-  });
+  var r = Dagaz.AI.getEval(design, board);
+  if (!Dagaz.AI.isFriend(player, board.player)) {
+      r = -r;
+  }
   return r;
 }
 
