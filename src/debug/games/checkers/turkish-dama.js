@@ -24,7 +24,10 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("zrf", "2.0");
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "true");
+    design.checkVersion("show-hints", "false");
+    design.checkVersion("show-blink", "true");
     design.checkVersion("maximal-captures", "true");
+    design.checkVersion("advisor-wait", "5");
 
     design.addDirection("w");
     design.addDirection("e");
@@ -32,7 +35,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addDirection("n");
 
     design.addPlayer("White", [1, 0, 3, 2]);
-    design.addPlayer("Black", [0, 1, 3, 2]);
+    design.addPlayer("Black", [1, 0, 3, 2]);
 
     design.addPosition("a8", [0, 1, 8, 0]);
     design.addPosition("b8", [-1, 1, 8, 0]);
@@ -225,7 +228,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPriority(0);			// jump-type
     design.addPriority(1);			// normal-type
 
-    design.addPiece("Man", 0, 1);
+    design.addPiece("Man", 0, 20);
     design.addMove(0, 0, [3, 3], 0);
     design.addMove(0, 0, [0, 0], 0);
     design.addMove(0, 0, [1, 1], 0);
@@ -233,19 +236,19 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 1, [0], 1);
     design.addMove(0, 1, [1], 1);
 
-    design.addPiece("King", 1, 10);
-    design.addMove(1, 2, [3, 3, 3, 3, 3], 0);
-    design.addMove(1, 2, [0, 0, 0, 0, 0], 0);
-    design.addMove(1, 2, [1, 1, 1, 1, 1], 0);
-    design.addMove(1, 2, [2, 2, 2, 2, 2], 0);
-    design.addMove(1, 3, [3, 3, 3, 3, 3], 2);
-    design.addMove(1, 3, [0, 0, 0, 0, 0], 2);
-    design.addMove(1, 3, [1, 1, 1, 1, 1], 2);
-    design.addMove(1, 3, [2, 2, 2, 2, 2], 2);
-    design.addMove(1, 4, [3, 3], 1);
-    design.addMove(1, 4, [0, 0], 1);
-    design.addMove(1, 4, [1, 1], 1);
-    design.addMove(1, 4, [2, 2], 1);
+    design.addPiece("King", 1, 100);
+    design.addMove(1, 2, [3, 3, 3, 3, 3], 0, 10);
+    design.addMove(1, 2, [0, 0, 0, 0, 0], 0, 10);
+    design.addMove(1, 2, [1, 1, 1, 1, 1], 0, 10);
+    design.addMove(1, 2, [2, 2, 2, 2, 2], 0, 10);
+    design.addMove(1, 3, [3, 3, 3, 3, 3], 2, 10);
+    design.addMove(1, 3, [0, 0, 0, 0, 0], 2, 10);
+    design.addMove(1, 3, [1, 1, 1, 1, 1], 2, 10);
+    design.addMove(1, 3, [2, 2, 2, 2, 2], 2, 10);
+    design.addMove(1, 4, [3, 3], 1, 10);
+    design.addMove(1, 4, [0, 0], 1, 10);
+    design.addMove(1, 4, [1, 1], 1, 10);
+    design.addMove(1, 4, [2, 2], 1, 10);
 
     design.setup("White", "Man", 48);
     design.setup("White", "Man", 49);

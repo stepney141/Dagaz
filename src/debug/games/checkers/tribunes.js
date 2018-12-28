@@ -23,6 +23,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "true");
+    design.checkVersion("advisor-wait", "5");
     design.checkVersion("tribunes-extension", "true");
 
     design.addDirection("ne");
@@ -116,7 +117,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.IN_ZONE,	0);	// promotion
     design.addCommand(0, ZRF.FUNCTION,	0);	// not
     design.addCommand(0, ZRF.IF,	5);
-    design.addCommand(0, ZRF.PROMOTE,	3);	// K1
+    design.addCommand(0, ZRF.PROMOTE,	3);	// King
     design.addCommand(0, ZRF.MODE,	2);	// continue-type
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.JUMP,	3);
@@ -132,7 +133,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(1, ZRF.IN_ZONE,	0);	// promotion
     design.addCommand(1, ZRF.FUNCTION,	0);	// not
     design.addCommand(1, ZRF.IF,	4);
-    design.addCommand(1, ZRF.PROMOTE,	3);	// K1
+    design.addCommand(1, ZRF.PROMOTE,	3);	// King
     design.addCommand(1, ZRF.FUNCTION,	25);	// to
     design.addCommand(1, ZRF.JUMP,	2);
     design.addCommand(1, ZRF.FUNCTION,	25);	// to

@@ -4,7 +4,7 @@ Dagaz.AI.AI_FRAME      = 2000;
 Dagaz.AI.MIN_DEEP      = 2;
 Dagaz.AI.MAX_DEEP      = 3;
 
-var MAX_FORCED_FACTOR  = 1;
+var MAX_FORCED_FACTOR  = 2;
 
 var checkVersion = Dagaz.Model.checkVersion;
 
@@ -34,7 +34,7 @@ Dagaz.AI.isForced = function(design, board, move) {
       var c = 0;
       _.each(design.allPositions(), function(pos) {
           var piece = b.getPiece(pos);
-          if ((piece !== null) && (piece.player == b.player)) {
+          if ((piece !== null) && (piece.type == 2) && (piece.player == b.player)) {
               _.each(design.allDirections(), function(dir) {
                    var p = design.navigate(b.player, pos, dir);
                    if (p !== null) {
