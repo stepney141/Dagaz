@@ -10,7 +10,7 @@ var strictMode = false;
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "checkers-10x10-extension") {
+  if (name != "thai-checkers-extension") {
      checkVersion(design, name, value);
   }
 }
@@ -32,6 +32,14 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
   return r;
 }
 
+var getDirs = function(type) {
+  if (type == 0) {
+      return [0, 3];
+  } else {
+      return [0, 1, 2, 3];
+  }
+}
+
 Dagaz.AI.isForced = function(design, board, move) {
   if (_.isUndefined(move.isForced)) {
       move.isForced = false;
@@ -39,12 +47,19 @@ Dagaz.AI.isForced = function(design, board, move) {
       var c = 0;
       _.each(design.allPositions(), function(pos) {
           var piece = b.getPiece(pos);
-          if ((piece !== null) && (piece.type == 0) && (piece.player == b.player)) {
-              _.each(design.allDirections(), function(dir) {
+          if ((piece !== null) && (piece.player == b.player)) {
+              _.each(getDirs(piece.type), function(dir) {
+                   var piece = b.getPiece(pos);
                    var p = design.navigate(b.player, pos, dir);
+                   if (piece.type == 1) {
+                       while (p !== null) {
+                           if (b.getPiece(p) !== null) break;
+                           p = design.navigate(b.player, p, dir);
+                       }
+                   }
                    if (p !== null) {
-                       piece = b.getPiece(p);
-                       if ((piece !== null) && (piece.type == 0) && (piece.player != b.player)) {
+                       var piece = b.getPiece(p);
+                       if ((piece !== null) && (piece.player != b.player)) {
                             p = design.navigate(b.player, p, dir);
                             if ((p !== null) && (b.getPiece(p) === null)) c++;
                        }
@@ -66,18 +81,9 @@ Dagaz.AI.getEval = function(design, board) {
           var piece = board.getPiece(pos);
           if (piece !== null) {
               var v = design.price[piece.type];
-              var bonus = 6;
-              if (_.indexOf([108, 84, 60, 36, 22, 121, 142, 1], +pos) >= 0) {
-                  bonus -= 3;
-              }
-              if (_.indexOf([132, 12, 131, 11], +pos) >= 0) {
-                  bonus -= 4;
-              }
-              if (_.indexOf([118, 94, 70, 46, 25, 49, 73, 97, 134, 136, 138, 140, 3, 5, 7, 8], +pos) >= 0) {
-                  bonus -= 2;
-              }
-              if ((piece.type == 1) && (_.indexOf([132, 121, 110, 99, 88, 77, 66, 55, 44, 33, 22, 11], +pos) >= 0)) {
-                  bonus += 2;
+              var bonus = 1;
+              if (_.indexOf([56, 40, 24, 8, 55, 39, 23, 7], +pos) >= 0) {
+                  bonus--;
               }
               v += bonus;
               if (!Dagaz.AI.isFriend(board.player, piece.player)) {

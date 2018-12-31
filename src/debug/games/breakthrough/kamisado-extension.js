@@ -1,5 +1,7 @@
 (function() {
 
+var MAXVALUE       = 1000000;
+
 Dagaz.Model.WIDTH  = 8;
 Dagaz.Model.HEIGHT = 8;
 
@@ -11,6 +13,111 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   if (name != "kamisado-extension") {
      checkVersion(design, name, value);
   }
+}
+
+var getColor = function(design, player, pos) {
+  for (var i = 0; i < 8; i++) {
+       if (design.inZone(i, player, pos)) {
+           return i;
+       }
+  }
+  return null;
+}
+
+var trace = function(design, board, player, pos, colors) {
+  var f = false;
+  _.each([3, 4, 7], function(dir) {
+      if (!f) {
+          var p = design.navigate(player, pos, dir);
+          while (p !== null) {
+             if (board.getPiece(p) !== null) break;
+             if (design.inZone(8, player, p)) {
+                 f = true;
+                 return;
+             }
+             var c = getColor(design, player, p);
+             if (_.indexOf(colors, c) < 0) {
+                 colors.push(c);
+             }
+             p = design.navigate(player, p, dir);
+          }
+      }
+  });
+  return f;
+}
+
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  if (_.isUndefined(move.weight)) {
+      move.weight = 1;
+      if (move.isSimpleMove()) {
+          var color = getColor(design, board.player, move.actions[0][1][0]);
+          if (color !== null) {
+              var enemy = null;
+              _.each(design.allPositions(), function(pos) {
+                  if (enemy !== null) return;
+                  var piece = board.getPiece(pos);
+                  if ((piece !== null) && (piece.player != board.player) && (((piece.type / 2) | 0) == color)) {
+                      enemy = pos;
+                  }
+              });
+              var piece = board.getPiece(enemy);
+              if (piece !== null) {
+                  var colors = [];
+                  var b = board.apply(move);
+                  if (trace(design, b, piece.player, enemy, colors)) {
+                      // TODO: Отсеивать ходы с отрицательной эвристикой
+                      move.weight = -1;
+                  } else {
+                      move.weight = 10 - colors.length;
+                  }
+              }
+          }
+      }
+  }
+  return move.weight;
+}
+
+Dagaz.AI.getEval = function(design, board) {
+  if (_.isUndefined(board.eval)) {
+      board.eval = 0;
+      var color = null;
+      if (!_.isUndefined(board.lastt)) {
+          color = getColor(design, board.player, board.lastt);
+      }
+      _.each(design.allPositions(), function(pos) {
+          var piece = board.getPiece(pos);
+          if (piece !== null) {
+              var v = 0;
+              if (design.inZone(8, piece.player, pos)) {
+                  v = MAXVALUE;
+              }
+              var colors = [];
+              if (trace(design, board, piece.player, pos, colors)) {
+                  if ((color !== null) && (piece.player == board.player) && (((piece.type / 2) | 0) == color)) {
+                      v += 1000;
+                  } else {
+                      v += 100;
+                  }
+              } else {
+                  v += colors.length;
+              }
+              if (piece.player == board.player) {
+                  board.eval += v;
+              } else {
+                  board.eval -= v;
+              }
+          }
+      });
+  }
+  return board.eval;
+}
+
+Dagaz.AI.eval = function(design, params, board, player) {
+  var r = Dagaz.AI.getEval(design, board);
+  if (player != board.player) {
+      r = -r;
+  }
+  return r;
 }
 
 var toChar = function(n) {
@@ -87,50 +194,14 @@ Dagaz.Model.continue = function(design, board, text) {
   return str;
 }
 
-Dagaz.AI.eval = function(design, params, board, player) {
-  var r = 0;
-  var design = Dagaz.Model.design;
-  _.each(design.allPositions(), function(pos) {
-      var piece = board.getPiece(pos);
-      if (piece !== null) {
-          var goals = design.getGoalPositions(piece.player, [ piece.type ]);
-          _.each(design.allDirections(), function(dir) {
-              var p = design.navigate(piece.player, pos, dir);
-              while (p !== null) {
-                  if (board.getPiece(p) !== null) break;
-                  if (_.indexOf(goals, p) >= 0) {
-                      if (piece.player == player) {
-                          r++;
-                      } else {
-                          r--;
-                      }
-                      break;
-                  }
-                  p = design.navigate(piece.player, p, dir);
-              }
-          });
-      }
-  });
-  return r;
-}
-
-var getColor = function(player, pos) {
-  var design = Dagaz.Model.design;
-  return _.chain(_.keys(design.zones))
-   .filter(function(zone) {
-       if (_.isUndefined(design.zones[zone][player])) return false;
-       return Dagaz.find(design.zones[zone][player], +pos) >= 0;
-    })
-   .min()
-   .value();
-}
-
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
+// TODO: Проверить баг при выполнении толкающего хода
 Dagaz.Model.CheckInvariants = function(board) {
+  var design = Dagaz.Model.design;
   var color  = -1;
   if (!_.isUndefined(board.lastt)) {
-      color = getColor(board.player, board.lastt);
+      color = getColor(design, board.player, board.lastt);
       var piece = board.getPiece(board.lastt);
       if ((piece !== null) && (piece.player == board.player)) {
           var enemy = _.chain(_.keys(board.pieces))
@@ -145,7 +216,7 @@ Dagaz.Model.CheckInvariants = function(board) {
             })
            .first()
            .value();
-          color = getColor(board.player, enemy); 
+          color = getColor(design, board.player, enemy); 
       }
   }
   if (color >= 0) {

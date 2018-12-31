@@ -213,3 +213,12 @@
   (option "smart moves"                true)
 ; (option "columns-checkers-extension" deferred)
 )
+
+(variant
+  (title "0001")
+  (default)
+  (board-setup
+    (White (Man b4 c3 c5 d4 g1))
+    (Black (Man a5 a7 e7 f4 g3 g5 g7))
+  )
+)

@@ -275,6 +275,7 @@ App.prototype.getAI = function() {
       } else {
           this.ai = Dagaz.AI.findBot("random",  this.params, this.ai);
           this.ai = Dagaz.AI.findBot("common",  this.params, this.ai);
+          this.ai = Dagaz.AI.findBot("smart",   this.params, this.ai);
           this.ai = Dagaz.AI.findBot("opening", this.params, this.ai);
       }
   }
@@ -360,6 +361,7 @@ App.prototype.exec = function() {
                      var result = ai.getMove(ctx);
                      if (result && result.done) {
                          delete Dagaz.AI.advisorStamp;
+                         console.log("Advisor: " + result.move);
                          var board = this.board.apply(result.move);
                          Dagaz.Controller.pushState(result.move, board);
                          if (!_.isUndefined(Dagaz.Sounds) && !_.isUndefined(Dagaz.Sounds.hint)) {

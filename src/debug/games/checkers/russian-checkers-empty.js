@@ -23,6 +23,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "true");
+    design.checkVersion("show-hints", "false");
+    design.checkVersion("show-blink", "true");
     design.checkVersion("deferred-captures", "true");
 
     design.addDirection("ne");
@@ -235,18 +237,18 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 1, [0], 1);
 
     design.addPiece("King", 1, 10);
-    design.addMove(1, 2, [3, 3, 3, 3, 3], 0);
-    design.addMove(1, 2, [0, 0, 0, 0, 0], 0);
-    design.addMove(1, 2, [2, 2, 2, 2, 2], 0);
-    design.addMove(1, 2, [1, 1, 1, 1, 1], 0);
-    design.addMove(1, 3, [3, 3, 3, 3, 3], 2);
-    design.addMove(1, 3, [0, 0, 0, 0, 0], 2);
-    design.addMove(1, 3, [2, 2, 2, 2, 2], 2);
-    design.addMove(1, 3, [1, 1, 1, 1, 1], 2);
-    design.addMove(1, 4, [3, 3], 1);
-    design.addMove(1, 4, [0, 0], 1);
-    design.addMove(1, 4, [2, 2], 1);
-    design.addMove(1, 4, [1, 1], 1);
+    design.addMove(1, 2, [3, 3, 3, 3, 3], 0, 10);
+    design.addMove(1, 2, [0, 0, 0, 0, 0], 0, 10);
+    design.addMove(1, 2, [2, 2, 2, 2, 2], 0, 10);
+    design.addMove(1, 2, [1, 1, 1, 1, 1], 0, 10);
+    design.addMove(1, 3, [3, 3, 3, 3, 3], 2, 10);
+    design.addMove(1, 3, [0, 0, 0, 0, 0], 2, 10);
+    design.addMove(1, 3, [2, 2, 2, 2, 2], 2, 10);
+    design.addMove(1, 3, [1, 1, 1, 1, 1], 2, 10);
+    design.addMove(1, 4, [3, 3], 1, 10);
+    design.addMove(1, 4, [0, 0], 1, 10);
+    design.addMove(1, 4, [2, 2], 1, 10);
+    design.addMove(1, 4, [1, 1], 1, 10);
 }
 
 Dagaz.View.configure = function(view) {

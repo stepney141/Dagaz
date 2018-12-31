@@ -107,6 +107,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("g1", [-1, 1, 0, -7, -8, 0, 0, -9]);
     design.addPosition("h1", [-1, 0, 0, 0, -8, 0, 0, -9]);
 
+    design.addZone("last-rank", 1, [0, 1, 2, 3, 4, 5, 6, 7]);
+    design.addZone("last-rank", 2, [56, 57, 58, 59, 60, 61, 62, 63]);
+
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
     design.addCommand(0, ZRF.FUNCTION,	22);	// navigate
