@@ -10,7 +10,7 @@ var strictMode = false;
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "checkers-extension") {
+  if (name != "italian-checkers-extension") {
      checkVersion(design, name, value);
   }
 }

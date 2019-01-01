@@ -26,7 +26,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-blink", "true");
     design.checkVersion("advisor-wait", "5");
-    design.checkVersion("columns-checkers-extension", "inversed");
+    design.checkVersion("laska-checkers-extension", "inversed");
 
     design.addDirection("ne");
     design.addDirection("se");

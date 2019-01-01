@@ -10,7 +10,7 @@ var strictMode = false;
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "turkish-extension") {
+  if (name != "armenian-extension") {
      checkVersion(design, name, value);
   }
 }
@@ -34,9 +34,9 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
 
 var getDirs = function(type) {
   if (type == 0) {
-      return [0, 1, 3];
+      return [0, 1, 4];
   } else {
-      return [0, 1, 2, 3];
+      return [0, 1, 2, 4];
   }
 }
 
@@ -47,7 +47,7 @@ Dagaz.AI.isForced = function(design, board, move) {
       var c = 0;
       _.each(design.allPositions(), function(pos) {
           var piece = b.getPiece(pos);
-          if ((piece !== null) && (piece.player == b.player)) {
+          if ((piece !== null) && (piece.type == 0) && (piece.player == b.player)) {
               _.each(getDirs(piece.type), function(dir) {
                    var piece = b.getPiece(pos);
                    var p = design.navigate(b.player, pos, dir);

@@ -10,7 +10,7 @@ var inversed = false;
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name == "columns-checkers-extension") {
+  if (name == "laska-checkers-extension") {
       if (value == "deferred") {
           Dagaz.Model.deferredStrike = true;
       }

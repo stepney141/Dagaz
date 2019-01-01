@@ -10,7 +10,7 @@ var strictMode = false;
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "common-checkers-extension") {
+  if (name != "harzdame-extension") {
      checkVersion(design, name, value);
   }
 }

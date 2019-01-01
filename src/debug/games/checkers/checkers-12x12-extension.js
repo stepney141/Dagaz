@@ -10,7 +10,7 @@ var strictMode = false;
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "checkers-10x10-extension") {
+  if (name != "checkers-12x12-extension") {
      checkVersion(design, name, value);
   }
 }
