@@ -31,6 +31,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("shared-pieces", "true");
     design.checkVersion("drag-n-drop", "false");
     design.checkVersion("progressive-levels", "silent");
+    design.checkVersion("advisor-wait", "5");
     design.checkVersion("magyar-invariant", "true");
     design.checkVersion("magyar-extension", "true");
     design.checkVersion("magyar-tiles", "true");
@@ -390,7 +391,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(2, ZRF.FUNCTION,	28);	// end
 
     design.addPiece("Tile", 0);
-    design.addMove(0, 0, [0, 0], 2);
+    design.addMove(0, 0, [0, 0], 2, 10);
 
     design.addPiece("Stone", 1);
     design.addMove(1, 1, [2], 0);

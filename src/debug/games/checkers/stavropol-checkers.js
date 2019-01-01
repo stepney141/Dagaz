@@ -23,8 +23,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "true");
+    design.checkVersion("show-hints", "false");
+    design.checkVersion("show-blink", "true");
     design.checkVersion("shared-pieces", "true");
     design.checkVersion("deferred-captures", "true");
+    design.checkVersion("advisor-wait", "5");
 
     design.addDirection("ne");
     design.addDirection("se");
@@ -402,32 +405,32 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(1, 3, [1], 1);
 
     design.addPiece("WhiteKing", 2, 10);
-    design.addMove(2, 4, [3, 3, 3, 3, 3], 0);
-    design.addMove(2, 4, [0, 0, 0, 0, 0], 0);
-    design.addMove(2, 4, [2, 2, 2, 2, 2], 0);
-    design.addMove(2, 4, [1, 1, 1, 1, 1], 0);
-    design.addMove(2, 5, [3, 3, 3, 3, 3], 2);
-    design.addMove(2, 5, [0, 0, 0, 0, 0], 2);
-    design.addMove(2, 5, [2, 2, 2, 2, 2], 2);
-    design.addMove(2, 5, [1, 1, 1, 1, 1], 2);
-    design.addMove(2, 6, [3, 3], 1);
-    design.addMove(2, 6, [0, 0], 1);
-    design.addMove(2, 6, [2, 2], 1);
-    design.addMove(2, 6, [1, 1], 1);
+    design.addMove(2, 4, [3, 3, 3, 3, 3], 0, 10);
+    design.addMove(2, 4, [0, 0, 0, 0, 0], 0, 10);
+    design.addMove(2, 4, [2, 2, 2, 2, 2], 0, 10);
+    design.addMove(2, 4, [1, 1, 1, 1, 1], 0, 10);
+    design.addMove(2, 5, [3, 3, 3, 3, 3], 2, 10);
+    design.addMove(2, 5, [0, 0, 0, 0, 0], 2, 10);
+    design.addMove(2, 5, [2, 2, 2, 2, 2], 2, 10);
+    design.addMove(2, 5, [1, 1, 1, 1, 1], 2, 10);
+    design.addMove(2, 6, [3, 3], 1, 10);
+    design.addMove(2, 6, [0, 0], 1, 10);
+    design.addMove(2, 6, [2, 2], 1, 10);
+    design.addMove(2, 6, [1, 1], 1, 10);
 
     design.addPiece("BlackKing", 3, 10);
-    design.addMove(3, 7, [3, 3, 3, 3, 3], 0);
-    design.addMove(3, 7, [0, 0, 0, 0, 0], 0);
-    design.addMove(3, 7, [2, 2, 2, 2, 2], 0);
-    design.addMove(3, 7, [1, 1, 1, 1, 1], 0);
-    design.addMove(3, 8, [3, 3, 3, 3, 3], 2);
-    design.addMove(3, 8, [0, 0, 0, 0, 0], 2);
-    design.addMove(3, 8, [2, 2, 2, 2, 2], 2);
-    design.addMove(3, 8, [1, 1, 1, 1, 1], 2);
-    design.addMove(3, 6, [3, 3], 1);
-    design.addMove(3, 6, [0, 0], 1);
-    design.addMove(3, 6, [2, 2], 1);
-    design.addMove(3, 6, [1, 1], 1);
+    design.addMove(3, 7, [3, 3, 3, 3, 3], 0, 10);
+    design.addMove(3, 7, [0, 0, 0, 0, 0], 0, 10);
+    design.addMove(3, 7, [2, 2, 2, 2, 2], 0, 10);
+    design.addMove(3, 7, [1, 1, 1, 1, 1], 0, 10);
+    design.addMove(3, 8, [3, 3, 3, 3, 3], 2, 10);
+    design.addMove(3, 8, [0, 0, 0, 0, 0], 2, 10);
+    design.addMove(3, 8, [2, 2, 2, 2, 2], 2, 10);
+    design.addMove(3, 8, [1, 1, 1, 1, 1], 2, 10);
+    design.addMove(3, 6, [3, 3], 1, 10);
+    design.addMove(3, 6, [0, 0], 1, 10);
+    design.addMove(3, 6, [2, 2], 1, 10);
+    design.addMove(3, 6, [1, 1], 1, 10);
 
     design.setup("White", "WhiteMan", 56);
     design.setup("White", "WhiteMan", 58);

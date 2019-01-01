@@ -23,6 +23,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "true");
+    design.checkVersion("show-hints", "false");
+    design.checkVersion("show-blink", "true");
+    design.checkVersion("advisor-wait", "5");
     design.checkVersion("columns-checkers-extension", "inversed");
 
     design.addDirection("ne");
@@ -32,7 +35,6 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPlayer("Black", [2, 3, 0, 1]);
     design.addPlayer("White", [2, 3, 0, 1]);
-
 
     design.addPosition("a7", [0, 8, 0, 0]);
     design.addPosition("b7", [0, 8, 6, 0]);
@@ -146,13 +148,13 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPriority(0);			// jump-type
     design.addPriority(1);			// normal-type
 
-    design.addPiece("Man", 0, 1);
+    design.addPiece("Man", 0, 20);
     design.addMove(0, 0, [3, 3], 0);
     design.addMove(0, 0, [0, 0], 0);
     design.addMove(0, 1, [3], 1);
     design.addMove(0, 1, [0], 1);
 
-    design.addPiece("King", 1, 2);
+    design.addPiece("King", 1, 40);
     design.addMove(1, 2, [3, 3], 0);
     design.addMove(1, 2, [0, 0], 0);
     design.addMove(1, 2, [2, 2], 0);

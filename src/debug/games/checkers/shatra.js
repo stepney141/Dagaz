@@ -23,6 +23,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "true");
+    design.checkVersion("show-hints", "false");
+    design.checkVersion("show-blink", "true");
     design.checkVersion("deferred-captures", "true");
     design.checkVersion("shatra-extension", "true");
     design.checkVersion("shatra-promotion", "true");
