@@ -17,14 +17,18 @@ Dagaz.Model.checkVersion = function(design, name, value) {
 
 Dagaz.AI.heuristic = function(ai, design, board, move) {
   var r = 1;
+  var piece = null;
   _.each(move.actions, function(a) {
       if (a[0] !== null) {
+          if (piece === null) {
+              piece = board.getPiece(a[0][0]);
+          }
           if (a[1] !== null) {
-              if (design.inZone(0, board.player, a[1][0])) r += 1000;
+              if ((piece.type == 0) && design.inZone(0, board.player, a[1][0])) r += 1000;
           } else {
-              var piece = board.getPiece(a[0][0]);
-              if (piece !== null) {
-                  r += design.price[piece.type];
+              var target = board.getPiece(a[0][0]);
+              if (target !== null) {
+                  r += design.price[target.type];
               }
           }
       }

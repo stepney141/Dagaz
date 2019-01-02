@@ -26,19 +26,17 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-blink", "true");
     design.checkVersion("deferred-captures", "true");
-    design.checkVersion("shatra-extension", "true");
-    design.checkVersion("shatra-promotion", "true");
-    design.checkVersion("shatra-invariant", "true");
+    design.checkVersion("advisor-wait", "5");
 
-    design.addDirection("w");
-    design.addDirection("e");
-    design.addDirection("s");
-    design.addDirection("ne");
-    design.addDirection("n");
-    design.addDirection("se");
-    design.addDirection("sw");
-    design.addDirection("nw");
-    design.addDirection("nx");
+    design.addDirection("w");  // 0
+    design.addDirection("e");  // 1
+    design.addDirection("s");  // 2
+    design.addDirection("ne"); // 3
+    design.addDirection("n");  // 4
+    design.addDirection("se"); // 5
+    design.addDirection("sw"); // 6
+    design.addDirection("nw"); // 7
+    design.addDirection("nx"); // 8
 
     design.addPlayer("White", [1, 0, 4, 6, 2, 7, 3, 5, 8]);
     design.addPlayer("Black", [1, 0, 4, 6, 2, 7, 3, 5, 8]);
@@ -394,7 +392,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPriority(0);			// normal-type
 
-    design.addPiece("Man", 0, 1);
+    design.addPiece("Man", 0, 2);
     design.addMove(0, 0, [4, 4], 1);
     design.addMove(0, 0, [1, 1], 1);
     design.addMove(0, 0, [0, 0], 1);
@@ -421,7 +419,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 5, [1], 0);
     design.addMove(0, 6, [8, 8], 0);
 
-    design.addPiece("King", 1, 100);
+    design.addPiece("King", 1, 1000);
     design.addMove(1, 7, [4, 4], 1);
     design.addMove(1, 7, [1, 1], 1);
     design.addMove(1, 7, [0, 0], 1);
@@ -447,7 +445,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(1, 8, [6], 0);
     design.addMove(1, 8, [5], 0);
 
-    design.addPiece("Bishop", 2, 3);
+    design.addPiece("Bishop", 2, 20);
     design.addMove(2, 9, [7, 7, 7, 7, 7], 1);
     design.addMove(2, 9, [3, 3, 3, 3, 3], 1);
     design.addMove(2, 9, [6, 6, 6, 6, 6], 1);
@@ -462,7 +460,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(2, 11, [5, 5], 0);
     design.addMove(2, 6, [8, 8], 0);
 
-    design.addPiece("Rook", 3, 5);
+    design.addPiece("Rook", 3, 30);
     design.addMove(3, 9, [4, 4, 4, 4, 4], 1);
     design.addMove(3, 9, [1, 1, 1, 1, 1], 1);
     design.addMove(3, 9, [0, 0, 0, 0, 0], 1);
@@ -477,7 +475,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(3, 11, [2, 2], 0);
     design.addMove(3, 6, [8, 8], 0);
 
-    design.addPiece("Queen", 4, 10);
+    design.addPiece("Queen", 4, 50);
     design.addMove(4, 9, [4, 4, 4, 4, 4], 1);
     design.addMove(4, 9, [1, 1, 1, 1, 1], 1);
     design.addMove(4, 9, [0, 0, 0, 0, 0], 1);

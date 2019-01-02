@@ -56,7 +56,7 @@ Dagaz.Model.CheckInvariants = function(board) {
           action[2] = [ piece.setValue(0, 1) ];
       }
   });
-  var moves = [];
+/*var moves = [];
   _.each(board.moves, function(m) {
       if (_.isUndefined(m.failed) && (m.actions.length == 1)) {
           var pos = m.actions[0][0][0];
@@ -67,10 +67,10 @@ Dagaz.Model.CheckInvariants = function(board) {
               }
           }
       }
-  }); 
+  });
   if (moves.length > 0) {
       board.moves = moves;
-  }
+  }*/
   CheckInvariants(board);
 }
 

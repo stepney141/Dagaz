@@ -26,6 +26,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-blink", "true");
     design.checkVersion("deferred-captures", "true");
+    design.checkVersion("advisor-wait", "5");
 
     design.addDirection("w");
     design.addDirection("e");
@@ -352,7 +353,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPriority(0);			// normal-type
 
-    design.addPiece("Man", 0, 1);
+    design.addPiece("Man", 0, 2);
     design.addMove(0, 0, [4, 4], 1);
     design.addMove(0, 0, [1, 1], 1);
     design.addMove(0, 0, [0, 0], 1);
@@ -376,7 +377,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 3, [1], 0);
     design.addMove(0, 4, [8, 8], 0);
 
-    design.addPiece("King", 1, 100);
+    design.addPiece("King", 1, 1000);
     design.addMove(1, 5, [4, 4], 1);
     design.addMove(1, 5, [1, 1], 1);
     design.addMove(1, 5, [0, 0], 1);
@@ -402,7 +403,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(1, 6, [6], 0);
     design.addMove(1, 6, [5], 0);
 
-    design.addPiece("Queen", 4, 10);
+    design.addPiece("Queen", 4, 50);
     design.addMove(4, 7, [4, 4, 4, 4, 4], 1);
     design.addMove(4, 7, [1, 1, 1, 1, 1], 1);
     design.addMove(4, 7, [0, 0, 0, 0, 0], 1);
@@ -477,7 +478,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "Man", 10);
     design.setup("Black", "Man", 3);
     design.setup("Black", "King", 24);
-
 }
 
 Dagaz.View.configure = function(view) {
