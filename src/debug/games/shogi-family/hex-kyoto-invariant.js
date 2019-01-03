@@ -82,7 +82,7 @@ var isKnightAttacked = function(design, board, player, pos, o, d, leapers) {
   var piece = board.getPiece(p);
   if (piece === null) return false;
   if (piece.player == player) return false;
-  return _.indexOf(leapers, piece.type) >= 0;
+  return _.indexOf(leapers, +piece.type) >= 0;
 }
 
 var isAttacked = function(design, board, player, pos, dir, leapers, riders) {
@@ -91,8 +91,8 @@ var isAttacked = function(design, board, player, pos, dir, leapers, riders) {
   var piece = board.getPiece(p);
   if (piece !== null) {
       if (piece.player == player) return false;
-      if (_.indexOf(leapers, piece.type) >= 0) return true;
-      if (_.indexOf(riders, piece.type) >= 0) return true;
+      if (_.indexOf(leapers, +piece.type) >= 0) return true;
+      if (_.indexOf(riders, +piece.type) >= 0) return true;
       return false;
   }
   p = design.navigate(player, p, dir);
@@ -100,7 +100,7 @@ var isAttacked = function(design, board, player, pos, dir, leapers, riders) {
       piece = board.getPiece(p);
       if (piece !== null) {
           if (piece.player == player) return false;
-          return _.indexOf(riders, piece.type) >= 0;
+          return _.indexOf(riders, +piece.type) >= 0;
       }
       p = design.navigate(player, p, dir);
   }
@@ -115,8 +115,8 @@ var isDiagonalAttacked = function(design, board, player, pos, o, d, leapers, rid
   var piece = board.getPiece(p);
   if (piece !== null) {
       if (piece.player == player) return false;
-      if (_.indexOf(leapers, piece.type) >= 0) return true;
-      if (_.indexOf(riders, piece.type) >= 0) return true;
+      if (_.indexOf(leapers, +piece.type) >= 0) return true;
+      if (_.indexOf(riders, +piece.type) >= 0) return true;
       return false;
   }
   p = design.navigate(player, p, o);
@@ -126,7 +126,7 @@ var isDiagonalAttacked = function(design, board, player, pos, o, d, leapers, rid
       piece = board.getPiece(p);
       if (piece !== null) {
           if (piece.player == player) return false;
-          return _.indexOf(riders, piece.type) >= 0;
+          return _.indexOf(riders, +piece.type) >= 0;
       }
       p = design.navigate(player, p, o);
       if (p === null) return false;

@@ -72,36 +72,35 @@ ForcedAi.prototype.estimate = function(ctx, board, player, deep) {
 
 ForcedAi.prototype.getMove = function(ctx) {
   ctx.board.moves = Dagaz.AI.generate(ctx, ctx.board);
-  if (ctx.board.moves.length == 0) {
-      return { done: true, ai: "nothing" };
-  }
-  var e = Dagaz.AI.eval(ctx.design, this.params, ctx.board, ctx.board.player);
-  var mx = null;
-  _.each(ctx.board.moves, function(move) {
-      if (Date.now() - ctx.timestamp > Dagaz.AI.AI_FRAME) return;
-      if (Dagaz.AI.isForced(ctx.design, ctx.board, move)) {
-          var v = this.estimate(ctx, ctx.board.apply(move), ctx.board.player, 0) - e;
-          if (v === null) {
-              ctx.best = move;
-              mx = MAXVALUE;
-              return;
-          }
-          if (v > 0) {
-              if ((mx === null) || (mx < v)) {
-                   ctx.best = move;
-                   mx = v;
+  if (ctx.board.moves.length > 1) {
+      var e = Dagaz.AI.eval(ctx.design, this.params, ctx.board, ctx.board.player);
+      var mx = null;
+      _.each(ctx.board.moves, function(move) {
+          if (Date.now() - ctx.timestamp > Dagaz.AI.AI_FRAME) return;
+          if (Dagaz.AI.isForced(ctx.design, ctx.board, move)) {
+              var v = this.estimate(ctx, ctx.board.apply(move), ctx.board.player, 0) - e;
+              if (v === null) {
+                  ctx.best = move;
+                  mx = MAXVALUE;
+                  return;
               }
+              if (v > 0) {
+                  if ((mx === null) || (mx < v)) {
+                       ctx.best = move;
+                       mx = v;
+                  }
+              }
+              console.log("Forced AI: " + move.toString() + ", estimate = " + v);
           }
-          console.log("Forced AI: " + move.toString() + ", estimate = " + v);
+      }, this);
+      if (!_.isUndefined(ctx.best)) {
+          return {
+               done: true,
+               move: ctx.best,
+               time: Date.now() - ctx.timestamp,
+               ai:  "forced"
+          };
       }
-  }, this);
-  if (!_.isUndefined(ctx.best)) {
-      return {
-           done: true,
-           move: ctx.best,
-           time: Date.now() - ctx.timestamp,
-           ai:  "forced"
-      };
   }
   if (this.parent) {
       return this.parent.getMove(ctx);

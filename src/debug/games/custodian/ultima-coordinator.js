@@ -11,7 +11,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
 var checkPos = function(design, board, player, pos, types, move) {
   var piece = board.getPiece(pos);
   if ((piece !== null) && (piece.player != player)) {
-      if ((types.length == 0) || (_.indexOf(types, piece.type) >= 0)) {
+      if ((types.length == 0) || (_.indexOf(types, +piece.type) >= 0)) {
           move.capturePiece(pos);
       }
   }

@@ -13,7 +13,7 @@ var allDirections = function() {
 }
 
 var isDiagonal = function(dir)  {
-   return _.indexOf([0, 2, 5, 6], dir) >= 0;
+   return _.indexOf([0, 2, 5, 6], +dir) >= 0;
 }
 
 Dagaz.AI.eval = function(ai, design, board, player) {

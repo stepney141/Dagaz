@@ -15,7 +15,7 @@ var checkDirection = function(design, board, player, pos, dir, types, move) {
   if (piece === null) return;
   if (piece.player == player) return;
   if (types.length > 0) {
-      if (_.indexOf(types, piece.type) < 0) return;
+      if (_.indexOf(types, +piece.type) < 0) return;
   }
   var friend = design.navigate(1, enemy, dir);
   if (friend === null) return null;

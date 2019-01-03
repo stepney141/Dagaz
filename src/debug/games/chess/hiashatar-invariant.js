@@ -36,7 +36,7 @@ var checkDirection = function(design, board, player, pos, dir, leapers, riders, 
   var piece = board.getPiece(p);
   if (piece !== null) {
       if (piece.player == player) return false;
-      return (_.indexOf(leapers, piece.type) >= 0) || (_.indexOf(riders, piece.type) >= 0);
+      return (_.indexOf(leapers, +piece.type) >= 0) || (_.indexOf(riders, +piece.type) >= 0);
   }
   while (piece === null) {
       if (checkStop(design, board, player, p, hia)) return false;
@@ -45,7 +45,7 @@ var checkDirection = function(design, board, player, pos, dir, leapers, riders, 
       piece = board.getPiece(p);
   }
   if (piece.player == player) return false;
-  return _.indexOf(riders, piece.type) >= 0;
+  return _.indexOf(riders, +piece.type) >= 0;
 }
 
 var checkLeap = function(design, board, player, pos, o, d, knight) {

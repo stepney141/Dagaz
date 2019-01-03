@@ -24,7 +24,7 @@ var isAttacked = function(design, board, player, pos, dir, leapers) {
   var piece = board.getPiece(p);
   if (piece !== null) {
       if (piece.player == player) return false;
-      if (_.indexOf(leapers, piece.type) >= 0) return true;
+      if (_.indexOf(leapers, +piece.type) >= 0) return true;
       return false;
   }
   return false;

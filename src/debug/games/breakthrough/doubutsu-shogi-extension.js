@@ -19,7 +19,7 @@ var checkDirection = function(design, board, player, pos, dir, types, from) {
   }
   var piece = board.getPiece(p);
   if (piece == null) return 0;
-  if (_.indexOf(types, piece.type) < 0) return 0;
+  if (_.indexOf(types, +piece.type) < 0) return 0;
   if (piece.player != player) {
       return 1;
   } else {

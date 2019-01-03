@@ -44,7 +44,7 @@ var checkDirection = function(design, board, player, pos, dir, types, from) {
   }
   var piece = board.getPiece(p);
   if (piece == null) return false;
-  if (_.indexOf(types, piece.type) < 0) return false;
+  if (_.indexOf(types, +piece.type) < 0) return false;
   return piece.player != player;
 }
 

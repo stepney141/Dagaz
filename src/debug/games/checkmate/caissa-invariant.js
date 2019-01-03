@@ -30,7 +30,7 @@ var checkDirection = function(design, board, player, pos, dir, riders) {
       piece = board.getPiece(p);
   }
   if (piece.player == player) return false;
-  return _.indexOf(riders, piece.type) >= 0;
+  return _.indexOf(riders, +piece.type) >= 0;
 }
 
 var checkLeap = function(design, board, player, pos, o, d, leaper) {

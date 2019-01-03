@@ -32,7 +32,7 @@ var checkStep = function(design, board, player, pos, dir, types, cover) {
       piece = board.getPiece(p);
   }
   if (piece !== null) {
-      if (_.indexOf(types, piece.type) < 0) return;
+      if (_.indexOf(types, +piece.type) < 0) return;
   }
   cover[p].push(pos);
 }
@@ -43,7 +43,7 @@ var checkSlide = function(design, board, player, pos, dir, types, cover) {
       var piece = board.getPiece(p);
       if ((piece === null) || (piece.player != player)) {
           if (piece !== null) {
-              if (_.indexOf(types, piece.type) < 0) return;
+              if (_.indexOf(types, +piece.type) < 0) return;
           }
           cover[p].push(pos);
           if (piece !== null) return;

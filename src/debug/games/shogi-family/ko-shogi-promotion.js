@@ -61,7 +61,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                   if (design.inZone(0, board.player, pos)) {
                       promoted = piece.promote(promote[piece.type]);
                   }
-                  if (_.indexOf([9, 7, 48, 46, 44, 42], piece.type) < 0) { // Taoist priest, Spiritual monk, European cannon, Long bow, Crossbow, Cannon
+                  if (_.indexOf([9, 7, 48, 46, 44, 42], +piece.type) < 0) { // Taoist priest, Spiritual monk, European cannon, Long bow, Crossbow, Cannon
                       _.each(move.actions, function(a) {
                           if ((a[0] !== null) && (a[1] !== null)) {
                               if (design.inZone(0, board.player, a[1][0])) {
@@ -76,7 +76,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                               if (!design.inZone(0, board.player, pos)) return;
                               var piece = board.getPiece(pos);
                               if ((piece === null) || (piece.player != board.player)) return;
-                              if (_.indexOf([4, 25], piece.type) < 0) return; // Heaven's vengeance, Earth's vengeance
+                              if (_.indexOf([4, 25], +piece.type) < 0) return; // Heaven's vengeance, Earth's vengeance
                               f = false;
                           });
                           if (f) {
@@ -86,15 +86,15 @@ Dagaz.Model.CheckInvariants = function(board) {
                   }
               }
               if ((piece !== null) && (enemy !== null) && !_.isUndefined(promote[piece.type])) {
-                  if ((_.indexOf([20, 17, 15, 13, 11, 39, 36, 38, 34, 3, 64, 62], piece.type) >= 0) && // Step movers
-                      (_.indexOf([18, 31, 37, 35, 0, 1, 39, 38], enemy.type) >= 0)) { // Sumo wrestler, Dragon ascending, Roaming assault, Thunderclap, General, Governor, Middle troop, Banner
+                  if ((_.indexOf([20, 17, 15, 13, 11, 39, 36, 38, 34, 3, 64, 62], +piece.type) >= 0) && // Step movers
+                      (_.indexOf([18, 31, 37, 35, 0, 1, 39, 38], +enemy.type) >= 0)) { // Sumo wrestler, Dragon ascending, Roaming assault, Thunderclap, General, Governor, Middle troop, Banner
                       promoted = piece.promote(promote[piece.type]);
                   }
                   if ((piece.type == 52) && (enemy.type == 48)) { // Cavalryman x European cannon
                       promoted = piece.promote(promote[piece.type]);
                   }
-                  if ((_.indexOf([22, 24, 5, 32, 30, 28, 26, 52, 54, 58, 60, 56, 63], piece.type) >= 0) && // Clerk, Staff officer, Advance guard, Millenary, Quartermaster, Centuria, Rear guard, Cavalryman, Patrol unit, Shield unit, Chariot, Chariot unit, Vanguard
-                      (_.indexOf([0, 1, 39, 38], enemy.type) >= 0)) { // General, Governor, Middle troop, Banner
+                  if ((_.indexOf([22, 24, 5, 32, 30, 28, 26, 52, 54, 58, 60, 56, 63], +piece.type) >= 0) && // Clerk, Staff officer, Advance guard, Millenary, Quartermaster, Centuria, Rear guard, Cavalryman, Patrol unit, Shield unit, Chariot, Chariot unit, Vanguard
+                      (_.indexOf([0, 1, 39, 38], +enemy.type) >= 0)) { // General, Governor, Middle troop, Banner
                       promoted = piece.promote(promote[piece.type]);
                   }
               }
@@ -102,7 +102,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                   _.each(move.actions, function(a) {
                       if ((a[0] !== null) && (a[1] !== null)) {
                           var enemy = board.getPiece(a[1][0]);
-                          if ((enemy !== null) && (enemy.player != board.player) && (_.indexOf([0, 1, 39, 38], enemy.type) >= 0)) { // General, Governor, Middle troop, Banner
+                          if ((enemy !== null) && (enemy.player != board.player) && (_.indexOf([0, 1, 39, 38], +enemy.type) >= 0)) { // General, Governor, Middle troop, Banner
                               promoted = piece.promote(promote[piece.type]);
                           }
                           action = a;
@@ -138,13 +138,13 @@ Dagaz.Model.CheckInvariants = function(board) {
               }
           }
       }
-      if ((promoted !== null) && (_.indexOf([36, 38], piece.type) >= 0)) { // Banner, Drum
+      if ((promoted !== null) && (_.indexOf([36, 38], +piece.type) >= 0)) { // Banner, Drum
           var f = true;
           _.each(design.allPositions(), function(pos) {
               var piece = board.getPiece(pos);
               if (piece === null) return;
               if (piece.player != board.player) return;
-              if (_.indexOf([8, 9], piece.type) < 0) return; // Taoist Priest, Twelve-mile fog
+              if (_.indexOf([8, 9], +piece.type) < 0) return; // Taoist Priest, Twelve-mile fog
               f = false;
           });
           if (f) {
@@ -157,7 +157,7 @@ Dagaz.Model.CheckInvariants = function(board) {
               _.each(design.allPositions(), function(pos) {
                    var piece = board.getPiece(pos);
                    if (piece !== null) {
-                       if ((piece.player == board.player) && (_.indexOf([5, 26], piece.type) >= 0)) {
+                       if ((piece.player == board.player) && (_.indexOf([5, 26], +piece.type) >= 0)) {
                            move.movePiece(pos, pos, piece.promote(promote[piece.type]));
                        }
                        if ((piece.player != board.player) && (piece.type == 10)) {

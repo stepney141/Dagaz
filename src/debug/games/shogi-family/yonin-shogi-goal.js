@@ -61,9 +61,9 @@ Dagaz.Model.GetCover = function(design, board) {
            var piece = board.getPiece(pos);
            if (piece !== null) {
                for (var dir = 0; dir < 8; dir++) {
-                    if (_.indexOf(types[dir], piece.type) >= 0) {
+                    if (_.indexOf(types[dir], +piece.type) >= 0) {
                         checkStep(design, board, piece.player, pos, dir, board.cover);
-                        if (_.indexOf(sliders, piece.type) >= 0)  {
+                        if (_.indexOf(sliders, +piece.type) >= 0)  {
                             checkSlide(design, board, piece.player, pos, dir, board.cover);
                         }
                     }
@@ -103,7 +103,7 @@ var isAttackedDir = function(design, board, player, piece, dir) {
   if (piece.player > 1) {
       d = design.opposite(d, piece.player);
   }
-  return _.indexOf(types[d], piece.type) >= 0;
+  return _.indexOf(types[d], +piece.type) >= 0;
 }
 
 var isAttacked = function(design, board, player, pos) {
@@ -120,7 +120,7 @@ var isAttacked = function(design, board, player, pos) {
                        piece = board.getPiece(p);
                    }
                }
-               if ((piece !== null) && (_.indexOf(sliders, piece.type) >= 0)) {
+               if ((piece !== null) && (_.indexOf(sliders, +piece.type) >= 0)) {
                    if (isAttackedDir(design, board, player, piece, dir)) return true;
                }
            }

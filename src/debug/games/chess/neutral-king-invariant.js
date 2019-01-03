@@ -32,7 +32,7 @@ var checkDirection = function(design, board, player, pos, dir, leapers, riders, 
       if (!_.isUndefined(owner) && (piece.type == 0)) {
           if (piece.player == owner) return false;
       }
-      return (_.indexOf(leapers, piece.type) >= 0) || (_.indexOf(riders, piece.type) >= 0);
+      return (_.indexOf(leapers, +piece.type) >= 0) || (_.indexOf(riders, +piece.type) >= 0);
   }
   while (piece === null) {
       p = design.navigate(1, p, dir);
@@ -42,7 +42,7 @@ var checkDirection = function(design, board, player, pos, dir, leapers, riders, 
   if (!_.isUndefined(player)) {
       if (piece.player != player) return false;
   }
-  return _.indexOf(riders, piece.type) >= 0;
+  return _.indexOf(riders, +piece.type) >= 0;
 }
 
 var checkLeap = function(design, board, player, pos, o, d, knight) {

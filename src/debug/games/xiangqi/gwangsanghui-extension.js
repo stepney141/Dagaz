@@ -12,7 +12,7 @@ var changePiecesByType = function(move, board, player, types) {
   var design = Dagaz.Model.design;
   _.each(design.allPositions(), function(p) {
       var piece = board.getPiece(p);
-      if ((piece !== null) && (piece.player != player) && (_.indexOf(types, piece.type) >= 0)) {
+      if ((piece !== null) && (piece.player != player) && (_.indexOf(types, +piece.type) >= 0)) {
           piece = piece.changeOwner(player).setValue(0, 1);
           move.movePiece(p, p, piece);
       }
@@ -23,7 +23,7 @@ var changePiecesByTag = function(move, board, player, types) {
   var design = Dagaz.Model.design;
   _.each(design.allPositions(), function(p) {
       var piece = board.getPiece(p);
-      if ((piece !== null) && (piece.player != player) && (_.indexOf(types, piece.type) >= 0)) {
+      if ((piece !== null) && (piece.player != player) && (_.indexOf(types, +piece.type) >= 0)) {
           var value = piece.getValue(0);
           if ((value !== null) && (value == 1)) {
               piece = piece.changeOwner(player).setValue(0, 0);
