@@ -370,9 +370,10 @@ App.prototype.exec = function() {
                      var result = ai.getMove(ctx);
                      if (result && result.done) {
                          delete Dagaz.AI.advisorStamp;
+                         console.log("Advisor: " + result.move);
                          var board = this.board.apply(result.move);
                          Dagaz.Controller.pushState(result.move, board);
-                         if (!_.isUndefined(Dagaz.Sounds.hint)) {
+                         if (!_.isUndefined(Dagaz.Sounds) && !_.isUndefined(Dagaz.Sounds.hint)) {
                              Dagaz.Controller.play(Dagaz.Sounds.hint);
                          }
                      }

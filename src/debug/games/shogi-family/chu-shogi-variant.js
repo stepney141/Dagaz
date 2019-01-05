@@ -256,6 +256,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(5, ZRF.FUNCTION,	25);	// to
     design.addCommand(5, ZRF.FUNCTION,	28);	// end
 
+    design.addCommand(6, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(6, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(6, ZRF.FUNCTION,	25);	// to
+    design.addCommand(6, ZRF.FUNCTION,	28);	// end
+
     design.addPriority(0);			// normal-type
 
     design.addPiece("Pawn", 0);
@@ -475,6 +480,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(19, 0, [3], 0);
 
     design.addPiece("Kylin", 20);
+    design.addDrop(20, 6, [], 0);
     design.addMove(20, 3, [7, 7], 0);
     design.addMove(20, 3, [1, 1], 0);
     design.addMove(20, 3, [4, 4], 0);
@@ -485,6 +491,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(20, 0, [0], 0);
 
     design.addPiece("Phoenix", 21);
+    design.addDrop(21, 6, [], 0);
     design.addMove(21, 0, [7], 0);
     design.addMove(21, 0, [1], 0);
     design.addMove(21, 0, [4], 0);
@@ -495,10 +502,12 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(21, 3, [0, 0], 0);
 
     design.addPiece("Reverse-Chariot", 22);
+    design.addDrop(22, 6, [], 0);
     design.addMove(22, 1, [7, 7], 0);
     design.addMove(22, 1, [1, 1], 0);
 
     design.addPiece("Side-Mover", 23);
+    design.addDrop(23, 6, [], 0);
     design.addMove(23, 0, [7], 0);
     design.addMove(23, 0, [1], 0);
     design.addMove(23, 1, [4, 4], 0);
@@ -511,6 +520,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(24, 1, [3, 3], 0);
 
     design.addPiece("Vertical-Mover", 25);
+    design.addDrop(25, 6, [], 0);
     design.addMove(25, 0, [4], 0);
     design.addMove(25, 0, [3], 0);
     design.addMove(25, 1, [7, 7], 0);
@@ -533,6 +543,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(27, 0, [0], 0);
 
     design.addPiece("Lance", 28);
+    design.addDrop(28, 6, [], 0);
     design.addMove(28, 1, [7, 7], 0);
 
     design.addPiece("King", 29);
@@ -598,6 +609,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(35, 0, [5], 0);
 
     design.addPiece("Silver-General", 36);
+    design.addDrop(36, 6, [], 0);
     design.addMove(36, 0, [7], 0);
     design.addMove(36, 0, [6], 0);
     design.addMove(36, 0, [2], 0);
@@ -605,6 +617,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(36, 0, [0], 0);
 
     design.addPiece("Copper-General", 37);
+    design.addDrop(37, 6, [], 0);
     design.addMove(37, 0, [7], 0);
     design.addMove(37, 0, [1], 0);
     design.addMove(37, 0, [6], 0);
@@ -642,6 +655,14 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("White", "Dragon-King", 31);
     design.setup("White", "Lion", 30);
     design.setup("White", "Free-King", 29);
+    design.reserve("White", "Lance", 2);
+    design.reserve("White", "Copper-General", 2);
+    design.reserve("White", "Silver-General", 2);
+    design.reserve("White", "Reverse-Chariot", 2);
+    design.reserve("White", "Kylin", 1);
+    design.reserve("White", "Phoenix", 1);
+    design.reserve("White", "Side-Mover", 2);
+    design.reserve("White", "Vertical-Mover", 2);
     design.setup("Black", "Go-Between", 87);
     design.setup("Black", "Go-Between", 92);
     design.setup("Black", "Pawn", 107);
@@ -674,6 +695,14 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "Dragon-King", 115);
     design.setup("Black", "Lion", 113);
     design.setup("Black", "Free-King", 114);
+    design.reserve("Black", "Lance", 2);
+    design.reserve("Black", "Copper-General", 2);
+    design.reserve("Black", "Silver-General", 2);
+    design.reserve("Black", "Reverse-Chariot", 2);
+    design.reserve("Black", "Kylin", 1);
+    design.reserve("Black", "Phoenix", 1);
+    design.reserve("Black", "Side-Mover", 2);
+    design.reserve("Black", "Vertical-Mover", 2);
 }
 
 Dagaz.View.configure = function(view) {
@@ -754,6 +783,7 @@ Dagaz.View.configure = function(view) {
     view.defPiece("BlackSilver-General", "Black Silver-General");
     view.defPiece("WhiteCopper-General", "White Copper-General");
     view.defPiece("BlackCopper-General", "Black Copper-General");
+    view.defPiece("Ko", "Ko");
  
     view.defPosition("12a", 5, 5, 49, 49);
     view.defPosition("11a", 40, 5, 49, 49);

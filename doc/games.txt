@@ -203,6 +203,7 @@
   - Shogi [checkmate, reserve, todo:ai, dialog(promotion)]
   - Annan Shogi [best, checkmate, reserve, todo:ai, dialog(promotion)]
   - Yonin Shogi [best, 4-players, reserve, dark, cloack, todo:ai, bug:goal(dark), dialog(promotion)]
+  - Kantorai
   - Tenjiku Shogi [kings, huge, composite, todo:dialog(promotion)]
   - Ko Shogi [kings, huge, composite]
   - Hishigata Shogi [todo, huge]
