@@ -495,7 +495,7 @@ App.prototype.exec = function() {
       isDrag = false;
       if (!_.isUndefined(this.list) && this.list.isDone()) {
           var moves = this.list.filterDrops(this.list.getMoves(), dropIndex);
-          if (moves.length == 1) this.move = moves[0];
+          if ((moves.length == 1) && (moves[0].isDropMove())) this.move = moves[0];
       }
       if (!this.move.isPass()) {
           this.move = this.clarify(this.move);

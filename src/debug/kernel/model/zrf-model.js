@@ -2295,7 +2295,12 @@ ZrfMove.prototype.isSimpleMove = function() {
 }
 
 ZrfMove.prototype.isDropMove = function() {
-  return (this.actions.length == 1) && (this.actions[0][0] === null) && (this.actions[0][1] !== null) && (this.actions[0][2] !== null);
+  var r = false;
+  for (var i = 0; i < this.actions.length; i++) {
+       if (this.actions[i][0] !== null) return false;
+       if (this.actions[i][1] !== null) r = true;
+  }
+  return r;
 }
 
 Dagaz.Model.getX = function(pos) {
