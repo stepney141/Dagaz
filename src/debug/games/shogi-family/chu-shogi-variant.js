@@ -27,6 +27,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-captures", "false");
     design.checkVersion("pass-partial", "true");
     design.checkVersion("advisor-wait", "5");
+    design.checkVersion("heisei-extension", "1");
+    design.checkVersion("chu-shogi-promotion", "true");
 
     design.addDirection("se"); // 0
     design.addDirection("s");  // 1
@@ -184,6 +186,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("3l", [0, 0, 0, 1, -1, -11, -13, -12]);
     design.addPosition("2l", [0, 0, 0, 1, -1, -11, -13, -12]);
     design.addPosition("1l", [0, 0, 0, 0, -1, 0, -13, -12]);
+    design.addPosition("T1", [0, 0, 0, 0, 0, 0, 0, 0]);
+    design.addPosition("T2", [0, 0, 0, 0, 0, 0, 0, 0]);
 
     design.addZone("promotion-zone", 2, [107, 106, 105, 104, 103, 102, 101, 100, 99, 98, 97, 96, 119, 118, 117, 116, 115, 114, 113, 112, 111, 110, 109, 108, 131, 130, 129, 128, 127, 126, 125, 124, 123, 122, 121, 120, 143, 142, 141, 140, 139, 138, 137, 136, 135, 134, 133, 132]);
     design.addZone("promotion-zone", 1, [11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 47, 46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36]);
@@ -304,15 +308,14 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(6, 1, [5, 5], 0);
     design.addMove(6, 1, [0, 0], 0);
 
-    design.addPiece("Free-King!", 7);
-    design.addMove(7, 1, [7, 7], 0);
-    design.addMove(7, 1, [1, 1], 0);
-    design.addMove(7, 1, [4, 4], 0);
-    design.addMove(7, 1, [3, 3], 0);
-    design.addMove(7, 1, [6, 6], 0);
-    design.addMove(7, 1, [2, 2], 0);
-    design.addMove(7, 1, [5, 5], 0);
-    design.addMove(7, 1, [0, 0], 0);
+    design.addPiece("Drunk-Elephant!", 7);
+    design.addMove(7, 0, [7], 0);
+    design.addMove(7, 0, [4], 0);
+    design.addMove(7, 0, [3], 0);
+    design.addMove(7, 0, [6], 0);
+    design.addMove(7, 0, [2], 0);
+    design.addMove(7, 0, [5], 0);
+    design.addMove(7, 0, [0], 0);
 
     design.addPiece("Flying-Ox", 8);
     design.addMove(8, 1, [7, 7], 0);
@@ -721,8 +724,8 @@ Dagaz.View.configure = function(view) {
     view.defPiece("BlackRook!", "Black Rook!");
     view.defPiece("WhiteFree-King", "White Free-King");
     view.defPiece("BlackFree-King", "Black Free-King");
-    view.defPiece("WhiteFree-King!", "White Free-King!");
-    view.defPiece("BlackFree-King!", "Black Free-King!");
+    view.defPiece("WhiteDrunk-Elephant!", "White Drunk-Elephant!");
+    view.defPiece("BlackDrunk-Elephant!", "Black Drunk-Elephant!");
     view.defPiece("WhiteFlying-Ox", "White Flying-Ox");
     view.defPiece("BlackFlying-Ox", "Black Flying-Ox");
     view.defPiece("WhiteFree-Boar", "White Free-Boar");
@@ -929,4 +932,8 @@ Dagaz.View.configure = function(view) {
     view.defPosition("3l", 320, 390, 49, 49);
     view.defPosition("2l", 355, 390, 49, 49);
     view.defPosition("1l", 390, 390, 49, 49);
+
+    view.defPopup("Promote", 166, 100);
+    view.defPopupPosition("T1", 15, 17, 36, 36);
+    view.defPopupPosition("T2", 55, 17, 36, 36);
 }

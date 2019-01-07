@@ -161,16 +161,16 @@
       )
    )
    (piece
-      (name Free-King!)	
-      (notation "FK!")
-      (help "Free King: moves any number of squares in any direction.")
-      (description "Free King (promoted Phoenix)\\A Free King moves any number of squares in either an orthogonal or diagonal direction (ie: like a Queen in Western Chess). It may not leap over other pieces.")
-      (image White "images/tenjiku/PQueen_W.bmp" 
-	 Black "images/tenjiku/PQueen_B.bmp" )
+      (name Drunk-Elephant!)	
+      (notation "DE!")
+      (help "Drunk Elephant: steps one square in any direction, except backward. Promotes to Prince.")
+      (description "Drunk Elephant\\A Drunk Elephant can step to any adjacent square, except the back one. \May promote to Prince upon reaching the promotion zone (rank 12 to 16).")
+      (image White "images/tenjiku/Elephant_W.bmp" 
+	 Black "images/tenjiku/Elephant_B.bmp" )
       (moves
            (move-type normal-type)
-           (slide n) (slide s) (slide w) (slide e)
-           (slide nw) (slide sw) (slide ne) (slide se)
+           (step n) (step w) (step e)
+           (step nw) (step sw) (step ne) (step se)
       )
    )
    (piece

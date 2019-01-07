@@ -19,6 +19,8 @@
     - Амбар раньше времени переключается на числовое представление
   - Banqi
     - Нотация открывающих ходов
+- session-manager
+  - При откате хода с превращением и повторном его выполнении, promotion-dialog не запрашивается
 - deferred-captures
   - Russian Checkers
     - https://glukkazan.github.io/checkers/russian-checkers-problem.htm?setup=+7;0:2;+2;0:2;;0:2;+12;0:2;;0:2;+1;0:2;+11;0:2;+7;0:1;+7;&turn=0

@@ -27,6 +27,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-captures", "false");
     design.checkVersion("pass-partial", "true");
     design.checkVersion("advisor-wait", "5");
+    design.checkVersion("chu-shogi-promotion", "true");
 
     design.addDirection("se"); // 0
     design.addDirection("s");  // 1
@@ -299,15 +300,14 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(6, 1, [5, 5], 0);
     design.addMove(6, 1, [0, 0], 0);
 
-    design.addPiece("Free-King!", 7);
-    design.addMove(7, 1, [7, 7], 0);
-    design.addMove(7, 1, [1, 1], 0);
-    design.addMove(7, 1, [4, 4], 0);
-    design.addMove(7, 1, [3, 3], 0);
-    design.addMove(7, 1, [6, 6], 0);
-    design.addMove(7, 1, [2, 2], 0);
-    design.addMove(7, 1, [5, 5], 0);
-    design.addMove(7, 1, [0, 0], 0);
+    design.addPiece("Drunk-Elephant!", 7);
+    design.addMove(7, 0, [7], 0);
+    design.addMove(7, 0, [4], 0);
+    design.addMove(7, 0, [3], 0);
+    design.addMove(7, 0, [6], 0);
+    design.addMove(7, 0, [2], 0);
+    design.addMove(7, 0, [5], 0);
+    design.addMove(7, 0, [0], 0);
 
     design.addPiece("Flying-Ox", 8);
     design.addMove(8, 1, [7, 7], 0);
@@ -720,8 +720,8 @@ Dagaz.View.configure = function(view) {
     view.defPiece("BlackRook!", "Black Rook!");
     view.defPiece("WhiteFree-King", "White Free-King");
     view.defPiece("BlackFree-King", "Black Free-King");
-    view.defPiece("WhiteFree-King!", "White Free-King!");
-    view.defPiece("BlackFree-King!", "Black Free-King!");
+    view.defPiece("WhiteDrunk-Elephant!", "White Drunk-Elephant!");
+    view.defPiece("BlackDrunk-Elephant!", "Black Drunk-Elephant!");
     view.defPiece("WhiteFlying-Ox", "White Flying-Ox");
     view.defPiece("BlackFlying-Ox", "Black Flying-Ox");
     view.defPiece("WhiteFree-Boar", "White Free-Boar");
