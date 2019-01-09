@@ -41,15 +41,32 @@
 
   (board
       (grid
+          (start-rectangle 0 0 62 82)
+          (dimensions
+            ("X" (0 82)) ; files
+            ("1/2/3/4/5/6/7" (62 0)) ; ranks
+          )
+      )
+      (grid
           (start-rectangle 0 100 62 182)
           (dimensions
             ("a/b/c/d/e/f/g" (62 0)) ; files
             ("13/12/11/10/9/8/7/6/5/4/3/2/1" (0 20)) ; ranks
           )
-          (directions (next 0 1) (up 0 -1))
+          (directions (next 0 1) (up 0 -1) (down 0 1))
       )
-      (links next (a1 b13) (b1 c13) (c1 d13) (d1 e13) (e1 f13) (f1 g13))
+      (links next (a1 b13) (b1 c13) (c1 d13) (d1 e13) (e1 f13) (f1 g13) (g1 X3) (X3 X4) (X4 X5) (X5 X6))
+      (kill-positions X3)
   )
 
   (c 1) (c 2) (c 3) (c 4) (c 5) (c 6) (c 7) (c 8) (c 9) (c 10) (c 11) (c 12) (c 13)
+
+  (piece
+      (image You "images/cards/back.bmp")
+      (name  P)
+  )
+  (piece
+      (image You "images/cards/back.bmp")
+      (name  S)
+  )
 )

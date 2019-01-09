@@ -18,6 +18,14 @@ var createPieces = function(design) {
   return r;
 }
 
+var without = function(avail, ix) {
+  var r = [];
+  for (var i = 0; i < avail.length; i++) {
+      if (i != ix) r.push(avail[i]);
+  }
+  return r;
+}
+
 var addPiece = function(board, pos, f, avail) {
   var ix = 0;
   if (avail.length > 1) {
@@ -25,10 +33,19 @@ var addPiece = function(board, pos, f, avail) {
   }
   var piece = avail[ix];
   if (f) piece = piece.promote(piece.type + 1);
-  board.setPiece(pos, piece);
+  board.setPiece(pos + 7, piece);
+  return without(avail, ix);
+}
+
+var shuffle = function(avail) {
   var r = [];
-  for (var i = 0; i < avail.length; i++) {
-      if (i != ix) r.push(avail[i]);
+  while (avail.length > 0) {
+      var ix = 0;
+      if (avail.length > 1) {
+          ix = _.random(0, avail.length - 1);
+      }
+      r.push(avail[ix]);
+      avail = without(avail, ix);
   }
   return r;
 }
@@ -44,6 +61,15 @@ Dagaz.Model.setup = function(board) {
             avail = addPiece(board, pos, f, avail);
             f = false;
        }
+  }
+  var piece = board.getPiece(0);
+  if (piece !== null) {
+      avail = _.map(avail, function(piece) {
+          return piece.promote(piece.type + 1);
+      });
+      avail = shuffle(avail);
+      piece = piece.setValue(0, avail);
+      board.setPiece(0, piece);
   }
 }
 
