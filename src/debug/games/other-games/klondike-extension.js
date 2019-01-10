@@ -84,6 +84,10 @@ Dagaz.Model.CheckInvariants = function(board) {
               return;
           }
           var piece = ss.pop();
+          if ((piece.type == 1) && (piece.player + 2 != move.actions[0][1][0])) {
+              move.failed = true;
+              return;
+          }
           move.dropPiece(pos, s.setValue(0, ss));
           s = board.getPiece(move.actions[0][1][0]);
           if (s !== null) {
@@ -113,6 +117,10 @@ Dagaz.Model.CheckInvariants = function(board) {
               return;
           }
           var piece = ss.pop();
+          if (piece.type == 1) {
+              move.failed = true;
+              return;
+          }
           move.dropPiece(pos, s.setValue(0, ss));
           var p = design.navigate(board.player, move.actions[0][1][0], 1);
           if (p === null) {
