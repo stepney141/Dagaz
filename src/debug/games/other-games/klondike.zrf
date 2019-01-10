@@ -51,7 +51,7 @@
           (start-rectangle 0 100 62 182)
           (dimensions
             ("a/b/c/d/e/f/g" (62 0)) ; files
-            ("13/12/11/10/9/8/7/6/5/4/3/2/1" (0 20)) ; ranks
+            ("13/12/11/10/9/8/7/6/5/4/3/2/1" (0 15)) ; ranks
           )
           (directions (next 0 1) (up 0 -1) (down 0 1))
       )

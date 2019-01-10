@@ -50,7 +50,20 @@ var shuffle = function(avail) {
   return r;
 }
 
+var getSeed = function() {
+  var str = window.location.search.toString();
+  var result = str.match(/\?seed=([^&]*)/);
+  if (result) {
+      return result[1];
+  } else {
+      return "" + _.random(0, 10000);
+  }
+}
+
 Dagaz.Model.setup = function(board) {
+  var seed = getSeed();
+  console.log("Seed: " + seed);
+  Math.seedrandom(seed);
   var design = Dagaz.Model.design;
   var avail  = createPieces(design);
   var o = 0;

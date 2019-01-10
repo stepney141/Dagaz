@@ -8,6 +8,12 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+if (!_.isUndefined(Dagaz.Controller.addSound)) {
+    Dagaz.Controller.addSound(0, "../../sounds/card.ogg");
+    Dagaz.Controller.addSound(1, "../../sounds/card.wav");
+    Dagaz.Controller.addSound(2,  "../../sounds/win.wav");
+}
+
 var countStack = function(board, pos) {
   var piece = board.getPiece(pos);
   if (piece === null) return 0;

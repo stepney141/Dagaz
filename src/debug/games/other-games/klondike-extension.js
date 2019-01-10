@@ -44,6 +44,18 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
           var r = stack[stack.length - 1];
           piece = view.piece[r.toString()];
       }
+      if (model.type == 28) {
+          var ix = stack.length - stackSize;
+          if (ix < 0) ix = 0;
+          var offset = 0;
+          for (;ix < stack.length; ix++) {
+              var r = stack[ix];
+              piece = view.piece[r.toString()];
+              ctx.drawImage(piece.h, x + offset, y, piece.dx, piece.dy);
+              offset += 15;
+          }
+          return;
+      }
   }
   ctx.drawImage(piece.h, x, y, piece.dx, piece.dy);
 }
@@ -126,6 +138,10 @@ Dagaz.Model.CheckInvariants = function(board) {
           var p = board.getPiece(move.actions[0][0][0]);
           var s = board.getPiece(move.actions[0][1][0]);
           if ((p !== null) && (s !== null)) {
+              if ((p.type == 1) && (p.player + 2 != move.actions[0][1][0])) {
+                  move.failed = true;
+                  return;
+              }
               var ss = copy(s.getValue(0));
               if (ss.length == 0) {
                   if (p.type !== 1) {
