@@ -1,6 +1,6 @@
 (function() {
 
-var stackSize = 3;
+var stackSize = 1;
 
 var checkVersion = Dagaz.Model.checkVersion;
 

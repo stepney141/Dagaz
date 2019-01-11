@@ -464,7 +464,14 @@ View2D.prototype.drawKo = function(ctx) {
           var p = this.pos[pos];
           var x = ( p.x + (p.dx - piece.dx) / 2) | 0;
           var y = ( p.y + (p.dy - piece.dy) / 2) | 0;
+          if (!_.isUndefined(Dagaz.View.KO_ALPHA)) {
+              ctx.save();
+              ctx.globalAlpha = Dagaz.View.KO_ALPHA;
+          }
           ctx.drawImage(piece.h, x, y, piece.dx, piece.dy);
+          if (!_.isUndefined(Dagaz.View.KO_ALPHA)) {
+              ctx.restore();
+          }
        }, this);
    }
 }

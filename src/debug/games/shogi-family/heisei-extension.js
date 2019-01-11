@@ -1,5 +1,7 @@
 (function() {
 
+Dagaz.View.KO_ALPHA = 0.1;
+
 var dropLimit   = null;
 var sharedLimit = false;
 
