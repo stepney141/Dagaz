@@ -55,6 +55,23 @@ Dagaz.Model.CheckInvariants = function(board) {
           } else {
               move.failed = true;
           }
+          if (move.actions[0][2] !== null) {
+              var piece = move.actions[0][2][0];
+              if (!design.inZone(0, board.player, pos)) {
+                  if (_.indexOf([13, 24, 26, 12, 15, 6, 9, 8], +piece.type) >= 0) {
+                      move.failed = true;
+                  }
+              } else {
+                  if (_.indexOf([23, 25], +piece.type) >= 0) {
+                      move.failed = true;
+                  }
+              }
+              if (_.indexOf([0, 28], +piece.type) >= 0) {
+                  if (design.navigate(board.player, pos, 7) === null) {
+                      move.failed = true;
+                  }
+              }
+          }
       }
   });
   if (ko.length > 0) {
