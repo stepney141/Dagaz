@@ -35,6 +35,7 @@ Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
   _.each(board.moves, function(move) {
       if (!_.isUndefined(move.failed)) return;
+      if (!move.isSimpleMove()) return;
       _.each(move.actions, function(a) {
            var sf = false;
            var piece = null;

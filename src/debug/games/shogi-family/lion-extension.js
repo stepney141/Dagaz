@@ -61,10 +61,12 @@ var checkDirection = function(design, board, player, pos, dir, leapers, riders) 
 }
 
 var checkJump = function(design, board, player, pos, o, d, leapers) {
-  var p = design.navigate(player, o, dir);
+  var p = design.navigate(player, pos, o);
   if (p === null) return false;
   p = design.navigate(player, p, d);
   if (p === null) return false;
+  var piece = board.getPiece(p);
+  if (piece === null) return false;
   if (piece.player == player) return false;
   return _.indexOf(leapers, +piece.type) >= 0;
 }
