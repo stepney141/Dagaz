@@ -8,6 +8,25 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+Dagaz.View.showBoard = function(board, ctx) {
+  var a = board.getValue(1);
+  var b = board.getValue(2);
+  if ((a === null) || (b === null)) return;
+  var m = ((b * 363)/(a + b)) | 0;
+  ctx.save();
+  ctx.fillStyle = 'red';
+  ctx.fillRect(0, 365, m, 6);
+  ctx.fillStyle = 'blue';
+  ctx.fillRect(m, 365, 363 - m, 6);
+  if (a != b) {
+      if (b > a) ctx.fillStyle = 'red';
+      ctx.beginPath();
+      ctx.arc(m, 368, 3, 0, 2 * Math.PI);
+      ctx.fill();
+  }
+  ctx.restore();
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {

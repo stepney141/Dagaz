@@ -32,6 +32,18 @@ Dagaz.Model.CheckInvariants = function(board) {
           });
       }
   }
+  _.each(board.moves, function(move) {
+      if (move.isSimpleMove()) {
+          var pos = move.actions[0][0][0];
+          var piece = board.getPiece(pos);
+          if ((piece !== null) && (piece.type > 0)) {
+              pos = move.actions[0][1][0];
+              if (!design.inZone(0, board.player, pos)) {
+                  move.failed = true;
+              }
+          }
+      }
+  });
   CheckInvariants(board);
 }
 
