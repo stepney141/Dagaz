@@ -18,22 +18,6 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var createPiece = function(design, player, value) {
-  if (value != 0) {
-      if (!_.isUndefined(cache[player]) && !_.isUndefined(cache[player][value])) {
-          return cache[player][value];
-      }
-      var r = Dagaz.Model.createPiece(0, player).setValue(0, value);
-      if (_.isUndefined(cache[player])) {
-          cache[player] = [];
-      }
-      cache[player][value] = r;
-      return r;
-  } else {
-      return null;
-  }
-}
-
 var toReserve = function(design, board, player, move, cnt) {
   var pos = design.navigate(player, 0, 1);
   if ((cnt != 0) && (pos !== null)) {
@@ -59,14 +43,10 @@ Dagaz.Model.CheckInvariants = function(board) {
       var fr  = 0;
       var dir = 0;
       if (move.isSimpleMove()) {
-          var isCollision = false;
           var pos = move.actions[0][0][0];
           if (design.inZone(1, board.player, pos)) {
               move.failed = true;
               return;
-          }
-          if (board.getValue(board.player) === null) {
-              move.setValue(board.player, 1);
           }
           var piece = board.getPiece(pos);
           var cnt = +piece.getValue(0);
@@ -105,32 +85,49 @@ Dagaz.Model.CheckInvariants = function(board) {
                }
           }
           ix--;
-          // TODO: Capturing
-
-          if (result[ix] != 1) {
-              result[ix] = -result[ix];
+          if (noCapturing && (result[ix] == 1)) {
+              if (board.getValue(board.player) === null) {
+                  move.setValue(board.player, 1);
+              }
           }
+          if (result[ix] != 1)  {
+              if (!noCapturing || (result[ix] != 4)) {
+                  result[ix] = -result[ix];
+              }
+          } 
           var pos = move.actions[0][0][0];
           for (var ix = 0; ix < result.length; ix++) {
-               var player = board.player;
-               if (!design.inZone(0, board.player, pos) && (result[ix] > 0)) {
+               var player  = board.player;
+               var piece = board.getPiece(pos);
+               var isCapturing = (ix == result.length - 1) && (piece !== null) && (piece.type == 1);
+               if (isCapturing) {
+                   fr = 2;
+                   result[ix] = piece.getValue(0) - 1;
+               }
+               if ((piece === null) || (piece.type == 2)) {
+                   piece = Dagaz.Model.createPiece(2, board.player);
+               }
+               piece = piece.setValue(0, result[ix]);
+               var isWegue = !isCapturing && (ix == result.length - 1) && (result[ix] == 4);
+               if (!design.inZone(0, board.player, pos) && (result[ix] > 0) && !isWegue) {
                    player = design.nextPlayer(board.player);
                }
-               if (isCollision && (result[ix] < 0)) {
-                   player = design.nextPlayer(board.player);
+               if (piece.player != player) {
+                   piece = piece.changeOwner(player);
                }
-               var piece = createPiece(design, player, result[ix]);
-               if (isCollision && (result[ix] < 0)) {
-                   piece = piece.setValue(1, 1);
+               if (isWegue) {
+                   piece = piece.promote(1);
                }
                if (result[ix] == 0) {
                    if (ix > 0) {
                        move.capturePiece(pos);
                        if (ix == 1) {
-                           move.actions[0][2] = [ Dagaz.Model.createPiece(1, board.player) ];
+                           move.actions[0][2] = [ Dagaz.Model.createPiece(2, board.player) ];
                        }
                    }
                } else {
+                   // TODO:
+
                    if (piece !== null) {
                        if (ix == 1) {
                            move.actions[0][2] = [ piece ];

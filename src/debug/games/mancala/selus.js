@@ -72,6 +72,8 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("Wegue", 1);
 
+    design.addPiece("None", 2);
+
     design.setup("South", "Seed", 12);
     design.setup("South", "Seed", 13);
     design.setup("South", "Seed", 14);
@@ -98,6 +100,8 @@ Dagaz.View.configure = function(view) {
     view.defPiece("NorthSeed", "North Seed");
     view.defPiece("SouthWegue", "South Wegue");
     view.defPiece("NorthWegue", "North Wegue");
+    view.defPiece("SouthNone", "South None");
+    view.defPiece("NorthNone", "North None");
     view.defPiece("0", "0");
     view.defPiece("1", "1");
     view.defPiece("2", "2");
