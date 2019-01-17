@@ -128,7 +128,7 @@ AbAi.prototype.getMove = function(ctx) {
   if (ctx.board.moves.length == 1) {
       var r = {
            done: true,
-           move: ctx.board.moves[0].move,
+           move: ctx.board.moves[0],
            time: Date.now() - ctx.timestamp,
            ai:  "once"
       };

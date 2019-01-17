@@ -335,6 +335,14 @@ MaxMinAi.prototype.getMove = function(ctx) {
   if (ctx.board.moves.length == 0) {
       return { done: true, ai: "nothing" };
   }
+  if (ctx.board.moves.length == 1) {
+      return {
+           done: true,
+           move: ctx.board.moves[0],
+           time: Date.now() - ctx.timestamp,
+           ai:  "once"
+      };
+  }
   for (var ix = 0; ix < ctx.cache.length; ix++) {
        var node = ctx.cache[ix];
        if (_.isUndefined(node.cache)) {
