@@ -8,8 +8,6 @@ Dagaz.View.DX       = 0;
 Dagaz.View.DY       = 0;
 Dagaz.View.MX       = 25;
 
-var cache = [];
-
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
@@ -51,25 +49,14 @@ Dagaz.Model.CheckInvariants = function(board) {
           var piece = board.getPiece(pos);
           var cnt = +piece.getValue(0);
           cnt = Math.abs(cnt);
-          if (_.isUndefined(cache[piece.player])) {
-              cache[piece.player] = [];
-              cache[piece.player][cnt] = piece;
-          }
-          var positions = [];
           var result = [];
-          if (piece.getValue(1) === null) {
-              result.push(0);
-          } else {
-              result.push(piece.getValue(1));
-          }
-          positions.push(pos);
+          result.push(0);
           for (var ix = 1; cnt > 0; cnt--, ix++) {
                pos = design.navigate(board.player, pos, dir);
                if (pos === null) {
                    move.failed = true;
                    return;
                }
-               positions.push(pos);
                if (ix >= Dagaz.Model.SIZE) {
                    ix = 0;
                }
@@ -91,7 +78,7 @@ Dagaz.Model.CheckInvariants = function(board) {
               }
           }
           if (result[ix] != 1)  {
-              if (!noCapturing || (result[ix] != 4)) {
+              if (noCapturing || (result[ix] != 4)) {
                   result[ix] = -result[ix];
               }
           } 
@@ -101,16 +88,26 @@ Dagaz.Model.CheckInvariants = function(board) {
                var piece = board.getPiece(pos);
                var isCapturing = (ix == result.length - 1) && (piece !== null) && (piece.type == 1);
                if (isCapturing) {
-                   fr = 2;
-                   result[ix] = piece.getValue(0) - 1;
+                   if (!design.inZone(2, board.player, pos)) {
+                       fr = 2;
+                       result[ix] = piece.getValue(0) - 1;
+                   } else {
+                       result[ix] = Math.abs(result[ix]);
+                   }
+                   var enemy = design.nextPlayer(board.player);
+                   if (design.inZone(2, enemy, pos)) {
+                       move.setValue(0, enemy);
+                   }
                }
                if ((piece === null) || (piece.type == 2)) {
-                   piece = Dagaz.Model.createPiece(2, board.player);
+                   piece = Dagaz.Model.createPiece(0, board.player);
                }
-               piece = piece.setValue(0, result[ix]);
                var isWegue = !isCapturing && (ix == result.length - 1) && (result[ix] == 4);
                if (!design.inZone(0, board.player, pos) && (result[ix] > 0) && !isWegue) {
                    player = design.nextPlayer(board.player);
+               }
+               if (piece.type == 1) {
+                   player = piece.player;
                }
                if (piece.player != player) {
                    piece = piece.changeOwner(player);
@@ -118,6 +115,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                if (isWegue) {
                    piece = piece.promote(1);
                }
+               piece = piece.setValue(0, result[ix]);
                if (result[ix] == 0) {
                    if (ix > 0) {
                        move.capturePiece(pos);
@@ -126,18 +124,11 @@ Dagaz.Model.CheckInvariants = function(board) {
                        }
                    }
                } else {
-                   // TODO:
-
                    if (piece !== null) {
                        if (ix == 1) {
                            move.actions[0][2] = [ piece ];
                        } else {
                            if ((ix > 0) && (board.getPiece(pos) !== null)) {
-                               var x = board.getPiece(pos);
-                               if ((x !== null) && (x.player != board.player) && (+x.getValue(0) < 0)) {
-                                   piece = piece.changeOwner(x.player);
-                                   piece = piece.setValue(0, -(Math.abs(+piece.getValue(0)) + Math.abs(+x.getValue(0))));
-                               }
                                move.movePiece(pos, pos, piece);
                            } else {
                                move.dropPiece(pos, piece);

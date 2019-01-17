@@ -48,7 +48,7 @@ var toReserve = function(design, board, player, move, cnt) {
           piece = piece.setValue(0, cnt);
           move.dropPiece(pos, piece);
       } else {
-          cnt += piece.getValue(0);
+          cnt += +piece.getValue(0);
           piece = piece.setValue(0, cnt);
           move.movePiece(pos, pos, piece);
       }
@@ -77,7 +77,7 @@ Dagaz.Model.CheckInvariants = function(board) {
       if (move.isSimpleMove()) {
           var pos = move.actions[0][0][0];
           var piece = board.getPiece(pos);
-          var cnt = piece.getValue(0);
+          var cnt = +piece.getValue(0);
           if (_.isUndefined(cache[piece.player])) {
               cache[piece.player] = [];
               cache[piece.player][cnt] = piece;
@@ -117,7 +117,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                        if (piece === null) {
                            result.push(1);
                        } else {
-                           result.push(piece.getValue(0) + 1);
+                           result.push(+piece.getValue(0) + 1);
                        }
                    }
                }

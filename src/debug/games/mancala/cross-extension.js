@@ -16,7 +16,7 @@ Dagaz.Model.CheckInvariants = function(board) {
       if (move.isSimpleMove()) {
           var pos = move.actions[0][0][0];
           var piece = board.getPiece(pos);
-          var cnt = piece.getValue(0);
+          var cnt = +piece.getValue(0);
           if ((cnt + move.mode) % 2 != 0) {
               move.failed = true;
           }

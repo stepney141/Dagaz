@@ -27,6 +27,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-hints", "false");
     design.checkVersion("pass-turn", "forced");
     design.checkVersion("mancala-setup", "3");
+    design.checkVersion("advisor-wait", "5");
 
     design.addDirection("nx");
     design.addDirection("fr");
@@ -60,6 +61,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addZone("home", 2, [0, 1, 2, 3, 4, 5, 6, 7, 8]);
     design.addZone("pool", 1, [18, 19]);
     design.addZone("pool", 2, [18, 19]);
+    design.addZone("eye", 1, [12, 13]);
+    design.addZone("eye", 2, [4, 5]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1

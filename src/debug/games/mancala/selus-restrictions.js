@@ -12,23 +12,31 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
-  if ((board.getValue(1) !== null) || (board.getValue(2) !== null)) {
-      var isForced = false;
-      _.each(design.allPositions(), function(pos) {
+  var isForced = false;
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if ((piece !== null) && (+piece.getValue(0) < 0)) {
+          isForced = true;
+      }
+  });
+  if (isForced) {
+      _.each(board.moves, function(move) {
+          var pos = move.actions[0][0][0];
           var piece = board.getPiece(pos);
-          if ((piece !== null) && (+piece.getValue(0) < 0)) {
-              isForced = true;
+          if ((piece !== null) && (+piece.getValue(0) >= 0)) {
+              move.failed = true;
           }
       });
-      if (isForced) {
-          _.each(board.moves, function(move) {
-              var pos = move.actions[0][0][0];
-              var piece = board.getPiece(pos);
-              if ((piece !== null) && (+piece.getValue(0) >= 0)) {
-                  move.failed = true;
-              }
-          });
-      }
+  }
+  var player = board.getValue(0);
+  if (player !== null) {
+      _.each(board.moves, function(move) {
+           if (board.player == player) {
+               move.failed = true;
+           } else {
+               move.setValue(0, 0);
+           }
+      });
   }
   CheckInvariants(board);
 }

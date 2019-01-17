@@ -1,9 +1,13 @@
 (function() {
 
+var noSync = false;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "abalalae-restrictions") {
+  if (name == "abalalae-restrictions") {
+      if (value == "no-sync") noSync = true;
+  } else {
       checkVersion(design, name, value);
   }
 }
@@ -12,7 +16,7 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
-  if ((board.getValue(1) !== null) || (board.getValue(2) !== null)) {
+  if (noSync || (board.getValue(1) !== null) || (board.getValue(2) !== null)) {
       var isForced = false;
       _.each(design.allPositions(), function(pos) {
           var piece = board.getPiece(pos);
