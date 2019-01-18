@@ -102,6 +102,20 @@ var isAttacked = function(design, board, player, pos) {
          checkJump(design, board, player, pos, se, se, [14, 15, 21]);
 }
 
+var heuristic = Dagaz.AI.heuristic;
+
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  if ((move.actions.length == 1) && (move.actions[0][0] === null) && (move.actions[0][1] !== null) && (move.actions[0][2] !== null)) {
+      var piece = move.actions[0][2][0];
+      if ((piece.type != 15) && (piece.type != 6)) {
+          return -10000;
+      }
+//    if (isAttacked(design, board, board.player, move.actions[0][1][0])) return -10000;
+  } else {
+      return heuristic(ai, design, board, move) * 1000;
+  }
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {

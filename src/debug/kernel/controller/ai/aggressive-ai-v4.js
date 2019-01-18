@@ -209,6 +209,9 @@ AggressiveAi.prototype.expand = function(ctx) {
              weight: Dagaz.AI.heuristic(this, ctx.design, ctx.board, m)
           };
       }, this);
+      ctx.cache = _.filter(ctx.cache, function(n) {
+          return n.weight >= 0;
+      });
       if (this.params.NOISE_FACTOR > 0) {
           _.each(ctx.cache, function(n) {
              n.weight *= this.params.NOISE_FACTOR + 1;
