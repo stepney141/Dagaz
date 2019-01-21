@@ -1,0 +1,176 @@
+(define step (
+  $1 (verify empty?)
+  add
+))
+
+(define jump (
+  $1 (verify not-empty?)
+  $1 (verify empty?)
+  (add-partial continue-type)
+))
+
+(define jump-2 (
+  $1 (verify empty?)
+  $1 (verify not-empty?)
+  $1 (verify empty?)
+  $1 (verify empty?)
+  (add-partial continue-type)
+))
+
+(define jump-3 (
+  $1 (verify empty?)
+  $1 (verify empty?)
+  $1 (verify not-empty?)
+  $1 (verify empty?)
+  $1 (verify empty?)
+  $1 (verify empty?)
+  (add-partial continue-type)
+))
+
+(define jump-4 (
+  $1 (verify empty?)
+  $1 (verify empty?)
+  $1 (verify empty?)
+  $1 (verify not-empty?)
+  $1 (verify empty?)
+  $1 (verify empty?)
+  $1 (verify empty?)
+  $1 (verify empty?)
+  (add-partial continue-type)
+))
+
+(game
+  (title "Chinese Checkers")
+
+  (move-sound "Audio\Pickup.wav")
+  (release-sound "Audio\Pickup.wav")
+  (capture-sound "")
+  (drop-sound "")
+
+  (option "animate captures"        false)
+  (option "smart moves"             false)
+  (option "pass partial"            true)
+
+  (players Red Purple Yellow Blue Green Orange)
+  (turn-order Red Purple Yellow Blue Green Orange)
+
+  (board
+     (image "images/chinese/board.bmp")
+     (grid
+         (start-rectangle 88 8 118 38)
+         (dimensions
+           ("a/b/c/d/e/f/g/h/i/j/k/l/m" (50 0)) ; files
+           ("13/12/11/10/9/8/7/6/5/4/3/2/1" (-25 44)) ; ranks
+         )
+         (directions 
+              (ne 0 -1) (nw -1 -1) (se 1 1) (sw 0 1) (w -1 0) (e 1 0)
+         )
+     )
+     (kill-positions 
+         a13 b13 c13 a12 b12 c12 a11 b11 c11 e13 f13 g13 h13 i13 j13 k13 l13 m13
+         f12 g12 h12 i12 j12 k12 l12 m12 g11 h11 i11 j11 k11 l11 m11 k10 l10 m10
+         a9  k9  l9  m9  a8  b8  k8  l8  m8  a7  b7  c7  k7  l7  m7  a6  b6  c6
+         l6  m6  a5  c5  b5  m5  a4  b4  c4  a3  b3  c3  d3  e3  f3  g3  k3  l3
+         m3  a2  b2  c2  d2  e2  f2  g2  h2  k2  l2  m2  a1  b1  c1  d1  e1  f1
+         g1  h1  i1  k1  l1  m1
+     )
+     (zone (name goal-zone) (players Red)
+           (positions d11 e11 f11 d12 e12 d13)
+     )
+     (zone (name goal-zone) (players Purple)
+           (positions h10 i10 j10 i9 j9 j8)
+     )
+     (zone (name goal-zone) (players Yellow)
+           (positions k4 l4 m4 k5 l5 k6)
+     )
+     (zone (name goal-zone) (players Blue)
+           (positions j1 i2 j2 h3 i3 j3)
+     )
+     (zone (name goal-zone) (players Green)
+           (positions d4 e4 f4 d5 e5 d6)
+     )
+     (zone (name goal-zone) (players Orange)
+           (positions c8 b9 c9 a10 b10 c10)
+     )
+     (zone (name target-zone) (players Red)
+           (positions d13)
+     )
+     (zone (name target-zone) (players Purple)
+           (positions j10)
+     )
+     (zone (name target-zone) (players Yellow)
+           (positions m4)
+     )
+     (zone (name target-zone) (players Blue)
+           (positions j1)
+     )
+     (zone (name target-zone) (players Green)
+           (positions d4)
+     )
+     (zone (name target-zone) (players Orange)
+           (positions a10)
+     )
+  )
+
+  (piece
+     (name Man)
+     (image Red    "images/chinese/red.bmp"
+            Purple "images/chinese/purple.bmp"
+            Yellow "images/chinese/yellow.bmp"
+            Blue   "images/chinese/blue.bmp"
+            Green  "images/chinese/green.bmp"
+            Orange "images/chinese/orange.bmp")
+     (moves
+         (move-type normal-type)
+         (step nw) (step ne)
+         (step sw) (step se)
+         (step e)  (step w) 
+         (move-type continue-type)
+         (jump nw) (jump ne)
+         (jump sw) (jump se)
+         (jump e)  (jump w) 
+     )
+  )
+
+  (board-setup
+    (Red    (Man j1 i2 j2 h3 i3 j3))
+    (Purple (Man d4 e4 f4 d5 e5 d6))
+    (Yellow (Man c8 b9 c9 a10 b10 c10))
+    (Blue   (Man d11 e11 f11 d12 e12 d13))
+    (Green  (Man h10 i10 j10 i9 j9 j8))
+    (Orange (Man k4 l4 m4 k5 l5 k6))
+  )
+)
+
+(variant
+  (title "Super Chinese Checkers")
+  (default)
+  (piece
+     (name Man)
+     (image Red    "images/chinese/red.bmp"
+            Purple "images/chinese/purple.bmp"
+            Yellow "images/chinese/yellow.bmp"
+            Blue   "images/chinese/blue.bmp"
+            Green  "images/chinese/green.bmp"
+            Orange "images/chinese/orange.bmp")
+     (moves
+         (move-type normal-type)
+         (step nw) (step ne)
+         (step sw) (step se)
+         (step e)  (step w) 
+         (move-type continue-type)
+         (jump nw) (jump ne)
+         (jump sw) (jump se)
+         (jump e)  (jump w) 
+         (jump-2 nw) (jump-2 ne)
+         (jump-2 sw) (jump-2 se)
+         (jump-2 e)  (jump-2 w) 
+         (jump-3 nw) (jump-3 ne)
+         (jump-3 sw) (jump-3 se)
+         (jump-3 e)  (jump-3 w) 
+         (jump-4 nw) (jump-4 ne)
+         (jump-4 sw) (jump-4 se)
+         (jump-4 e)  (jump-4 w) 
+     )
+  )
+)

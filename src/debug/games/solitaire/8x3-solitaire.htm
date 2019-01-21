@@ -1,18 +1,18 @@
 <html>
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Pyon-Pyon Shogi</title>
+<title>8x3 Solitaire</title>
 </head>
 <body>
 
-<img id="Board" style="display:none" src="images/pyon/board.png">
-<img id="SouthPawn" style="display:none" src="images/pyon/spawn.png">
-<img id="NorthPawn" style="display:none" src="images/pyon/ntokin.png">
+<img id="Board" style="display:none" src="images/8x3.png">
+<img id="YouWhite" style="display:none" src="images/wman.png">
+<img id="YouBlack" style="display:none" src="images/bman.png">
 
 <table style="margin:auto; font-family:sans-serif; font-size:14px" id="Table">
-<tr style="height:432px; vertical-align:top">
-<td id="CanvasCell" style="width:385px">
-<canvas id="Canvas" width="385" height="432" style="cursor:default">Broken canvas...</canvas>
+<tr style="height:168px; vertical-align:top">
+<td id="CanvasCell" style="width:408px">
+<canvas id="Canvas" width="408" height="168" style="cursor:default">Broken canvas...</canvas>
 </td><td style="width:300px;">
 <div style="height:510px; overflow:auto" id="ScrollDiv">
 <img id="GlyphImage"><p id="HelpText"></p>
@@ -38,13 +38,11 @@
 <script src="../../kernel/model/zrf-model.js"></script>
 <script src="../../kernel/model/zobrist.js"></script>
 <script src="../../kernel/model/common-setup-v2.js"></script>
-<script src="../../kernel/view/2d/2d-view-v2.js"></script>
-<script src="../../kernel/controller/utils/move-list-v1.js"></script>
-<script src="../../kernel/controller/ai/random-ai.js"></script>
-<script src="../../kernel/controller/ai/uct-ai.js"></script>
-<script src="pyon-goal.js"></script>
-<script src="pyon-pyon-shogi.js"></script>
-<script src="../../kernel/controller/app-v2.js"></script>
+<script src="../../kernel/view/2d/2d-view.js"></script>
+<script src="../../kernel/controller/utils/move-list.js"></script>
+<script src="8x3-solitaire-extension.js"></script>
+<script src="8x3-solitaire.js"></script>
+<script src="../../kernel/controller/app.js"></script>
 
 </body>
 </html>

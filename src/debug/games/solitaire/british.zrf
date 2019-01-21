@@ -138,3 +138,38 @@
       (You (Stone a3 b3 b4 c3 c4 c5 d1 d2 d3 d5 d6 d7 e3 e4 e5 f3 f4 g3))
    )
 )
+
+(variant
+  (title "8x3 Solitaire")
+  (default)
+  (board
+     (image "images/8x3.bmp")
+     (grid
+         (start-rectangle 12 12 60 60)
+         (dimensions
+           ("a/b/c/d/e/f/g/h" (48 0)) ; files
+           ("3/2/1" (0 48)) ; ranks
+         )
+         (directions (n 0 -1) (w -1 0) (s 0 1) (e 1 0))
+     )
+  )
+  (piece
+      (image You "images/wman.bmp")
+      (name  White)
+      (moves
+            (step n) (step e)
+            (step s) (step w)
+      )
+  )
+  (piece
+      (image You "images/bman.bmp")
+      (name  Black)
+      (moves
+            (step n) (step e)
+            (step s) (step w)
+      )
+  )
+  (board-setup
+      (You (White a1) (Black b1 c1 d1 e1 f1 g1 h1 a2 b2 c2 d2 e2 f2 g2 h2))
+  )
+)
