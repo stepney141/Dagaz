@@ -140,7 +140,7 @@
   - Hanga Roa [best, todo:ai]
   - Dodgem [best]
   - Halma [loops]
-  - Chinese Checkers [todo:ai]
+  - Chinese Checkers
   - Traverse [todo:ai, loops, setups, drops, wheel, limit, sparks]
   - Pyon Pyon Shogi
   - Sahkku [todo, dices]
