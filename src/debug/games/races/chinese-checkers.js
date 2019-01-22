@@ -225,6 +225,12 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addZone("target-zone", 4, [165]);
     design.addZone("target-zone", 6, [39]);
     design.addZone("target-zone", 5, [120]);
+    design.addZone("home-zone", 1, [165, 151, 152, 137, 138, 139]);
+    design.addZone("home-zone", 2, [120, 121, 122, 107, 108, 94]);
+    design.addZone("home-zone", 3, [67, 53, 54, 39, 40, 41]);
+    design.addZone("home-zone", 4, [29, 30, 31, 16, 17, 3]);
+    design.addZone("home-zone", 6, [127, 128, 129, 114, 115, 101]);
+    design.addZone("home-zone", 5, [46, 47, 48, 60, 61, 74]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1

@@ -1,5 +1,7 @@
 (function() {
 
+Dagaz.Model.WIDTH = 13;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
@@ -76,6 +78,44 @@ Dagaz.Model.checkGoals = function(design, board, player) {
      if (c[i] == 0) return -1;
   }
   return checkGoals(design, board, player);
+}
+
+var sign = function(x) {
+  if (x > 0) return 1;
+  if (x < 0) return -1;
+  return 0;
+}
+
+var CheckInvariants = Dagaz.Model.CheckInvariants;
+
+Dagaz.Model.CheckInvariants = function(board) {
+  var design = Dagaz.Model.design;
+  var moves = []
+  _.each(board.moves, function(move) {
+      var m = getMove(move);
+      if ((m !== null) && design.inZone(2, board.player, m.start) && !design.inZone(2, board.player, m.end)) {
+          var dx  = sign(Dagaz.Model.getX(m.start) - Dagaz.Model.getX(m.next));
+          var dy  = sign(Dagaz.Model.getY(m.start) - Dagaz.Model.getY(m.next));
+          var pos = m.next + dy * Dagaz.Model.WIDTH + dx;
+          var dir = design.findDirection(m.next, pos);
+          if (dir !== null) {
+              while (pos !== null) {
+                  var piece = board.getPiece(pos);
+                  if (piece !== null) {
+                      if (piece.player != board.player) {
+                          moves.push(move);
+                      }
+                      return;
+                  }
+                  pos = design.navigate(board.player, pos, dir);
+              }
+          }
+      }
+  });
+  if (moves.length > 0) {
+      board.moves = moves;
+  }
+  CheckInvariants(board);
 }
 
 })();
