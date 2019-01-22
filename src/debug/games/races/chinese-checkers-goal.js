@@ -56,7 +56,7 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
   var d = getDistance(design, board);
   var m = getMove(move);
   if (m !== null) {
-      return (d[m.start] = d[m.end]) * 100;
+      return (d[m.start] - d[m.end]) * 100;
   }
   return r;
 }
@@ -64,8 +64,17 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
 var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {
-  // TODO:
-
+  var c = [0, 0, 0, 0, 0, 0];
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if ((piece !== null) && !design.inZone(0, piece.player, pos)) {
+          c[piece.player - 1]++;
+      }
+  });
+  if (c[player - 1] == 0) return 1;
+  for (var i = 0; i < 6; i++) {
+     if (c[i] == 0) return -1;
+  }
   return checkGoals(design, board, player);
 }
 

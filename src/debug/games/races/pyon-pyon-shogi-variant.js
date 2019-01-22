@@ -24,6 +24,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "false");
     design.checkVersion("show-blink", "true");
+    design.checkVersion("pass-partial", "true");
     design.checkVersion("show-hints", "false");
     design.checkVersion("advisor-wait", "5");
 
@@ -119,6 +120,14 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addZone("goal-zone", 2, [72, 73, 74, 63, 64, 65, 54, 55, 56]);
     design.addZone("goal-zone", 1, [6, 7, 8, 15, 16, 17, 24, 25, 26]);
+    design.addZone("top-last", 2, [72, 73, 74, 75, 76, 77, 78, 79, 80]);
+    design.addZone("top-last", 1, [0, 1, 2, 3, 4, 5, 6, 7, 8]);
+    design.addZone("top-first", 2, [63, 64, 65, 66, 67, 68, 69, 70, 71]);
+    design.addZone("top-first", 1, [9, 10, 11, 12, 13, 14, 15, 16, 17]);
+    design.addZone("east-last", 2, [72, 63, 54, 45, 36, 27, 18, 9, 0]);
+    design.addZone("east-last", 1, [80, 71, 62, 53, 44, 35, 26, 17, 8]);
+    design.addZone("east-first", 2, [73, 64, 55, 46, 37, 28, 19, 10, 1]);
+    design.addZone("east-first", 1, [79, 70, 61, 52, 43, 34, 25, 16, 7]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
