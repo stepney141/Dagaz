@@ -111,6 +111,13 @@ Dagaz.Model.CheckInvariants = function(board) {
               }
           }
       }
+      var f = false;
+      _.each(move.actions, function(a) {
+          if ((a[0] !== null) && (a[1] !== null)) {
+              if (f && !design.inZone(0, board.player, a[1][0])) move.failed = true;
+              if (design.inZone(0, board.player, a[1][0])) f = true;
+          }
+      });
   });
   if (moves.length > 0) {
       board.moves = moves;
