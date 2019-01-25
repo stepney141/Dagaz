@@ -20,65 +20,37 @@ var addKo = function(board, move) {
   }
 }
 
-var getRank = function(design, board, player, pos, dir, opposite) {
-  var cnt = 1;
-  var p = design.navigate(player, pos, opposite);
-  while (p !== null) {
-      var piece = board.getPiece(p);
-      if ((piece === null) || (piece.player != player)) break;
-      p = design.navigate(player, p, opposite);
-      cnt++;
+var isOpened = function(design, board, player, pos, dir) {
+  var p = design.navigate(player, pos, dir);
+  if (p === null) return false;
+  var piece = board.getPiece(p);
+  while (piece !== null) {
+     if (piece.player != player) return false;
+     p = design.navigate(player, p, dir);
+     if (p === null) return false;
+     piece = board.getPiece(p);
   }
-  p = design.navigate(player, pos, dir);
-  while (p !== null) {
-      var piece = board.getPiece(p);
-      if (piece === null) {
-          p = design.navigate(player, p, dir);
-          var sign = 1;
-          while (p !== null) {
-              piece = board.getPiece(p);
-              if (piece === null) break;
-              if (piece.player != player) return cnt * sign;
-              p = design.navigate(player, p, dir);
-              cnt++;
-              sign = -1;
-          }
-          return cnt;
-      }
-      if (piece.player != player) return -cnt;
-      p = design.navigate(player, p, dir);
-      cnt++;
-  }
-  return 0;
+  return true;
 }
 
-var calcRank = function(x, y) {
-  if (((x < 0) && (y < 0)) || (Math.abs(x) > 3) || (Math.abs(y) > 3)) {
-      if (x < y) {
-          return x;
-      } else {
-          return y;
-      }
+var getRank = function(design, board, player, pos, dir, ix, val) {
+  var p = design.navigate(player, pos, dir);
+  if (p === null) return 0;
+  var piece = board.getPiece(p);
+  while (piece !== null) {
+     if (piece.player != player) return 0;
+     p = design.navigate(player, p, dir);
+     if (p === null) return 0;
+     piece = board.getPiece(p);
   }
-  if ((x <= 0) && (y <= 0)) return 0;
-  if (Math.abs(x) > Math.abs(y)) {
-      return x;
-  } else {
-      return y;
-  }
-}
-
-var isTriplet = function(design, board, player, pos, dir, opposite) {
-  p = design.navigate(player, pos, dir);
-  while (p !== null) {
-      if (board.getPiece(p) === null) {
-          var x = getRank(design, board, player, p, dir, opposite);
-          var y = getRank(design, board, player, p, opposite, dir);
-          return calcRank(x, y) == 4;
-      }
-      p = design.navigate(player, p, dir);
-  }
-  return false;
+  p = design.navigate(player, p, dir);
+  if (p === null) return 0;
+  piece = board.getPiece(p);
+  if (piece == null) return 0;
+  if (piece.player != player) return val;
+//if (!isOpened(design, board, player, p, dir)) return 0;
+  val += +piece.getValue(ix);
+  return val;
 }
 
 var CheckInvariants = Dagaz.Model.CheckInvariants;
@@ -90,11 +62,14 @@ Dagaz.Model.CheckInvariants = function(board) {
   dirs.push(design.getDirection("e")); dirs.push(design.getDirection("se"));
   dirs.push(design.getDirection("s")); dirs.push(design.getDirection("sw"));
   dirs.push(design.getDirection("w")); dirs.push(design.getDirection("nw"));
+  dirs.push(design.getDirection("n")); dirs.push(design.getDirection("ne"));
+  dirs.push(design.getDirection("e")); dirs.push(design.getDirection("se"));
   if (board.player == 1) {
       _.each(board.moves, function(move) {          
+          if (move.isPass()) return;
           var pos   = move.actions[0][1][0];
           var piece = move.actions[0][2][0];
-          var res   = [];
+          var a = 0; var b = 0;
           for (var ix = 0; ix < 4; ix++) {
                var v = +piece.getValue(ix);
                if (v > 5) {
@@ -102,33 +77,24 @@ Dagaz.Model.CheckInvariants = function(board) {
                    move.failed = true;
                    return;
                }
-               var x = getRank(design, board, board.player, pos, dirs[ix], dirs[ix + 4]);
-               var y = getRank(design, board, board.player, pos, dirs[ix + 4], dirs[ix]);
-               res.push(calcRank(x, y));
-          }
-          if (_.filter(res, function(x) { return Math.abs(x) >= 4; }).length >= 2) {
-               addKo(board, move);
-               move.failed = true;
-               return;
-          }
-          if (_.filter(res, function(x) { return (x < -3) || (x >= 3); }).length >= 2) {
-               var b = board.apply(move);
-               var cnt = 0;
-               for (var ix = 0; ix < 4; ix++) {
-                   if (res[ix] > 3) {
-                       cnt++;
-                       continue;
-                   }
-                   if (res[ix] == 3) {
-                       if (isTriplet(design, b, board.player, pos, dirs[ix], dirs[ix + 4]) ||
-                           isTriplet(design, b, board.player, pos, dirs[ix + 4], dirs[ix])) cnt++;
-                   }
+               if ((v > 2) && 
+                   (isOpened(design, board, board.player, pos, dirs[ix]) || 
+                    isOpened(design, board, board.player, pos, dirs[ix + 4]))) {
+                    a++;
                }
-               if (cnt >= 2) {
-                   addKo(board, move);
-                   move.failed = true;
-                   return;
-               }
+          }
+          for (var i = 0; i < 8; i++) {
+               var dir = dirs[i];
+               var ix  = i;
+               if (ix > 3) ix -= 4;
+               var v = +piece.getValue(ix);
+               v = getRank(design, board, board.player, pos, dir, ix, v);
+               if ((v > 2) && isOpened(design, board, board.player, pos, dirs[ix + 4])) b++;
+          }
+          if ((a > 1) || (b > 1)) {
+              addKo(board, move);
+              move.failed = true;
+              return;
           }
       });
   }
