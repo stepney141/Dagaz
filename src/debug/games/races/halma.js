@@ -1,4 +1,5 @@
 Dagaz.Model.WIDTH = 10;
+Dagaz.AI.MAX_DIR  = 8;
 
 ZRF = {
     JUMP:          0,
