@@ -31,11 +31,17 @@ Dagaz.Model.CheckInvariants = function(board) {
           ko.push(move.actions[0][0][0]);
           move.setValue(1, 0);
       } else {
-          _.each(move.actions, function(a) {
-              if ((a[0] !== null) && (a[1] === null)) {
-                  move.setValue(1, board.player);
-              }
-          });
+          if (move.mode == 1) {
+              move.failed = true;
+              return;
+          }
+          if (move.actions.length == 2) {
+              _.each(move.actions, function(a) {
+                  if ((a[0] !== null) && (a[1] === null)) {
+                      move.setValue(1, board.player);
+                  }
+              });
+          }
       }
   });
   if (ko.length > 0) {

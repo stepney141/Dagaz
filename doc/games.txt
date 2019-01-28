@@ -32,7 +32,7 @@
   - Abalone [groups, best, scoring, family:other]
   - Pasang [todo:ui, composite, best, scoring, shared, sparks, bug:moves, family:other]
   - Liberian Queah [reserve, family:checkers]
-  - Choko [todo, bonus, shoots, family:checkers]
+  - Choko [bonus, shoots, family:checkers]
   - Mana [todo, setups, king, family:other]
   - Surakarta [todo, vectors, family:checkers]
   - Splut! [todo, turns, king, 4-players, family:other]

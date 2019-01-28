@@ -28,6 +28,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-drops", "true");
     design.checkVersion("shared-pieces", "true");
     design.checkVersion("pass-turn", "forced");
+    design.checkVersion("ko", "asymmetric");
 
     design.addDirection("s");
     design.addDirection("e");
