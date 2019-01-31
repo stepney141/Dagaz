@@ -19,6 +19,7 @@ Dagaz.Model.CheckInvariants = function(board) {
   var isDrop = false;
   if (!_.isUndefined(board.move)) {
       _.each(board.moves, function(move) {
+          if (move.failed) return;
           if (move.isDropMove()) {
               isDrop = true;
           }
