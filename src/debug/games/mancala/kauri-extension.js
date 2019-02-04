@@ -29,7 +29,7 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
   _.each(board.moves, function(move) {
-      var fr  = 0;
+      var fr  = 0; var er = 0;
       var dir = move.mode;
       if (move.isSimpleMove()) {
           var pos = move.actions[0][0][0];
@@ -53,6 +53,28 @@ Dagaz.Model.CheckInvariants = function(board) {
                    ix = 0;
                }
                piece = board.getPiece(pos);
+               if (!design.inZone(0, board.player, pos) && (piece !== null)) {
+                   if ((i >= cnt) && (+piece.getValue(1) == 0)) {
+                       if (ix < result.length) {
+                           fr += result[ix];
+                           result[ix] = 0;
+                           kauri[ix]++;
+                       } else {
+                           fr += +piece.getValue(0);
+                           result.push(0);
+                           kauri.push(1);
+                       }
+                       continue;
+                   }
+                   if ((i < cnt) && (+piece.getValue(0) == 0)) {
+                       er++;
+                       if (ix >= result.length) {
+                           result.push(0);
+                           kauri.push(+piece.getValue(1));
+                       }
+                       continue;
+                   }                   
+               }
                if (ix < result.length) {
                    if (i < cnt) {
                        result[ix]++;
@@ -79,9 +101,6 @@ Dagaz.Model.CheckInvariants = function(board) {
                    }
                }
           }
-          ix--;
-          // TODO: Capturing
-
           var pos = move.actions[0][0][0];
           for (var ix = 0; ix < result.length; ix++) {
                var player = board.player;
@@ -112,6 +131,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                pos = design.navigate(board.player, pos, dir);
           }
           toReserve(design, board, board.player, move, fr);
+          toReserve(design, board, design.nextPlayer(board.player), move, er);
       }
   });
   CheckInvariants(board);

@@ -3,7 +3,7 @@
 Dagaz.View.DX    = 0;
 Dagaz.View.DY    = 0;
 Dagaz.View.MX    = 16;
-Dagaz.View.SHIFT = true;
+Dagaz.View.SHIFT = false;
 
 var checkVersion = Dagaz.Model.checkVersion;
 
@@ -37,7 +37,8 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
       var sx = x + Dagaz.View.DX - (dx - piece.dx) / 2 | 0;
       var sy = y + Dagaz.View.DY + (cy - 1) * piece.dy - (dy - piece.dy) / 2 | 0;
       var ov = 0;
-      if (val > Dagaz.View.MX) {
+      var cn = 0;
+      if (val + kauri > Dagaz.View.MX) {
           var r = view.piece["0"];
           if (r && (val < 100)) {
               sx = x - (frame.dx - piece.dx) / 2 | 0;
@@ -48,7 +49,7 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
               sx += (frame.dx - r.dx * 2) / 2 | 0;
               r = view.piece[val / 10 | 0];
               if (r) {
-                  ctx.drawImage(r.h, sx, sy, r.dx, r.dy);
+                  ctx.drawImage(r.h, sx, sy - 5, r.dx, r.dy);
               }
               sx += r.dx;
               if (Dagaz.View.SHIFT) {
@@ -56,13 +57,13 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
               }
               r = view.piece[val % 10];
               if (r) {
-                  ctx.drawImage(r.h, sx, sy, r.dx, r.dy);
+                  ctx.drawImage(r.h, sx, sy - 5, r.dx, r.dy);
               }
           }
           sx = x + Dagaz.View.DX - (dx - piece.dx) / 2 | 0;
           sy = y + Dagaz.View.DY + (cy - 1) * piece.dy - (dy - piece.dy) / 2 | 0;
       } else {
-          for (var cn = 0; val > 0; val--) {
+          for (; val > 0; val--) {
               ctx.drawImage(piece.h, sx, sy, piece.dx, piece.dy);
               if (cn < cx - 1) {
                   sx += piece.dx;

@@ -6,7 +6,7 @@
   - Alemungula [family:mancala]
   - Toguz Kumalak [trap, best, family:mancala]
   - Tchuka Ruma [puzzle, best, family:mancala]
-  - Kauri [todo, family:mancala]
+  - Kauri [family:mancala]
   - Congklak [best, sync, family:mancala]
   - Dakon [family:mancala]
   - Kalah [cross, family:mancala]

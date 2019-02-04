@@ -25,6 +25,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("smart-moves", "from");
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
+    design.checkVersion("pass-turn", "forced");
     design.checkVersion("advisor-wait", "5");
 
     design.addDirection("nx");
