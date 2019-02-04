@@ -28,15 +28,15 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("pass-partial", "true");
     design.checkVersion("chu-shogi-promotion", "true");
 
-    design.addDirection("w");
-    design.addDirection("e");
-    design.addDirection("s");
-    design.addDirection("ne");
-    design.addDirection("n");
-    design.addDirection("se");
-    design.addDirection("nx");
-    design.addDirection("sw");
-    design.addDirection("nw");
+    design.addDirection("w");  // 0
+    design.addDirection("e");  // 1
+    design.addDirection("s");  // 2
+    design.addDirection("ne"); // 3
+    design.addDirection("n");  // 4
+    design.addDirection("se"); // 5
+    design.addDirection("nx"); // 6
+    design.addDirection("sw"); // 7
+    design.addDirection("nw"); // 8
 
     design.addPlayer("Black", [1, 0, 4, 7, 2, 8, 6, 3, 5]);
     design.addPlayer("White", [1, 0, 4, 7, 2, 8, 6, 3, 5]);
@@ -233,9 +233,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("l1", [-1, 0, 0, 0, -16, 0, 0, 0, -17]);
     design.addPosition("N1", [0, 0, 0, 0, 0, 0, 0, 0, 0]);
     design.addPosition("Y1", [0, 0, 0, 0, -16, 0, 0, 0, 0]);
+    design.addPosition("T1", [0, 0, 0, 0, 0, 0, 0, 0]);
+    design.addPosition("T2", [0, 0, 0, 0, 0, 0, 0, 0]);
 
-    design.addZone("promotion-zone", 2, [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61]);
-    design.addZone("promotion-zone", 1, [130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189]);
+    design.addZone("promotion-zone", 2, [130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189]);
+    design.addZone("promotion-zone", 1, [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61]);
     design.addZone("board-zone", 2, [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189]);
     design.addZone("board-zone", 1, [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189]);
 
@@ -709,7 +711,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("White", "Pawn", 51);
     design.setup("White", "Pawn", 52);
     design.setup("White", "Pawn", 53);
+    design.setup("White", "Pawn", 54);
     design.setup("White", "Pawn", 55);
+    design.setup("White", "Pawn", 56);
     design.setup("White", "Pawn", 57);
     design.setup("White", "Pawn", 58);
     design.setup("White", "Pawn", 59);
@@ -747,7 +751,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "Pawn", 131);
     design.setup("Black", "Pawn", 132);
     design.setup("Black", "Pawn", 133);
+    design.setup("Black", "Pawn", 134);
     design.setup("Black", "Pawn", 135);
+    design.setup("Black", "Pawn", 136);
     design.setup("Black", "Pawn", 137);
     design.setup("Black", "Pawn", 138);
     design.setup("Black", "Pawn", 139);
@@ -1053,4 +1059,8 @@ Dagaz.View.configure = function(view) {
     view.defPosition("l1", 460, 390, 49, 49);
     view.defPosition("N1", 495, 390, 49, 49);
     view.defPosition("Y1", 530, 390, 49, 49);
+
+    view.defPopup("Promote", 238, 100);
+    view.defPopupPosition("T1", 15, 17, 36, 36);
+    view.defPopupPosition("T2", 55, 17, 36, 36);
 }
