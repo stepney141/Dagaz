@@ -33,6 +33,7 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
+  var n = design.getDirection("n");
   _.each(board.moves, function(move) {
       if (!_.isUndefined(move.failed)) return;
       if (!move.isSimpleMove()) return;
@@ -54,8 +55,8 @@ Dagaz.Model.CheckInvariants = function(board) {
                var promoted = null;
                if ((piece !== null) && !_.isUndefined(promote[piece.type])) {
                    if ((!sf && ef) || (sf && (board.getPiece(pos) !== null)) ||
-                       ((piece.type == 0) && (design.navigate(piece.player, pos, 7) === null))) {
-                       promoted = piece.promote(promote[piece.type]);
+                       ((piece.type == 0) && (design.navigate(piece.player, pos, n) === null))) {
+                         promoted = piece.promote(promote[piece.type]);
                    }
                }
                if ((piece !== null) && (promoted !== null)) {
