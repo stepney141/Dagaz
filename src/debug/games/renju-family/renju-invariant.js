@@ -53,48 +53,30 @@ var createPiece = function(design, board, player, pos) {
   return r;
 }
 
-var getTarget = function(design, board, player, pos, dir, ix) {
-  var p = design.navigate(player, pos, dir);
-  if (p === null) return null;
+var getRank = function(design, board, pos, dir, ix, forced) {
+  var dirs  = [];
+  dirs.push(design.getDirection("n")); dirs.push(design.getDirection("ne"));
+  dirs.push(design.getDirection("e")); dirs.push(design.getDirection("se"));
+  dirs.push(design.getDirection("s")); dirs.push(design.getDirection("sw"));
+  dirs.push(design.getDirection("w")); dirs.push(design.getDirection("nw"));
+  var p = design.navigate(board.player, pos, dir);
+  if (p === null) return 0;
   var piece = board.getPiece(p);
   while (piece !== null) {
-      if (piece.player != player) return null;
-      p = design.navigate(player, p, dir);
-      if (p === null) return null;
+      if (piece.player != board.player) return 0;
+      p = design.navigate(board.player, p, dir);
+      if (p === null) return 0;
       piece = board.getPiece(p);
   }
-  var s = createPiece(design, board, player, p);
-  return {
-      pos:   p,
-      piece: s,
-      value: s.getValue(ix)
-  };
-}
-
-var isTriplet = function(design, board, player, pos, piece, ix) {
-  var dirs  = [];
-  dirs.push(design.getDirection("n")); dirs.push(design.getDirection("ne"));
-  dirs.push(design.getDirection("e")); dirs.push(design.getDirection("se"));
-  dirs.push(design.getDirection("s")); dirs.push(design.getDirection("sw"));
-  dirs.push(design.getDirection("w")); dirs.push(design.getDirection("nw"));
-  var a = getTarget(design, board, player, pos, dirs[ix], ix);
-  var b = getTarget(design, board, player, pos, dirs[ix + 4], ix);
-  if ((a === null) || (b === null)) return false;
-  return (a.value == 5) && (b.value == 5);
-}
-
-var getRank = function(design, board, player, pos, ix) {
-  var dirs  = [];
-  dirs.push(design.getDirection("n")); dirs.push(design.getDirection("ne"));
-  dirs.push(design.getDirection("e")); dirs.push(design.getDirection("se"));
-  dirs.push(design.getDirection("s")); dirs.push(design.getDirection("sw"));
-  dirs.push(design.getDirection("w")); dirs.push(design.getDirection("nw"));
-  var a = getTarget(design, board, player, pos, dirs[ix], ix);
-  if ((a !== null) && (a.value == 5)) return 4;
-  var b = getTarget(design, board, player, pos, dirs[ix + 4], ix);
-  if ((b !== null) && (b.value == 5)) return 4;
-  if ((a !== null) && (a.value == 4) && isTriplet(design, board, player, b.pos, b.piece, ix)) return 3;
-  if ((b !== null) && (b.value == 4) && isTriplet(design, board, player, b.pos, b.piece, ix)) return 3;
+  piece = createPiece(design, board, board.player, p);
+  if (piece.getValue(ix) == 5) return 4;
+  if (forced) {
+      board.setPiece(p, piece);
+      var a = getRank(design, board, p, dirs[ix], ix, false);
+      var b = getRank(design, board, p, dirs[ix + 4], ix, false);
+      board.setPiece(p, null);
+      if ((a == 4) && (b == 4)) return 3;
+  }
   return 0;
 }
 
@@ -102,13 +84,18 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
+  var dirs   = [];
+  dirs.push(design.getDirection("n")); dirs.push(design.getDirection("ne"));
+  dirs.push(design.getDirection("e")); dirs.push(design.getDirection("se"));
+  dirs.push(design.getDirection("s")); dirs.push(design.getDirection("sw"));
+  dirs.push(design.getDirection("w")); dirs.push(design.getDirection("nw"));
   if (board.player == 1) {
       _.each(board.moves, function(move) {          
           if (move.isPass()) return;
           var pos    = move.actions[0][1][0];
           var piece  = move.actions[0][2][0];
           var result = [];
-          var next   = null;
+          board.setPiece(pos, piece);
           for (var ix = 0; ix < 4; ix++) {
                var v = +piece.getValue(ix);
                if (v > 5) {
@@ -116,16 +103,16 @@ Dagaz.Model.CheckInvariants = function(board) {
                    move.failed = true;
                    return;
                }
-               if (v > 2) {
-                   if (next === null) {
-                       next = board.apply(move);
-                   }
-                   v = getRank(design, next, board.player, pos, ix);
-                   if (v > 2) {
-                       result.push[v];
-                   }
+               var a = getRank(design, board, pos, dirs[ix], ix, true);
+               var b = getRank(design, board, pos, dirs[ix + 4], ix, true);
+               if ((a == 4) && (b == 4)) result.push(4);
+               if ((a == 3) && (b != 4)) result.push(3);
+               if ((a != 4) && (b == 3)) result.push(3);
+               if (Dagaz.Model.posToString(pos) == "h4") {
+                  console.log("*** a = " + a + ", b = " + b);
                }
           }
+          board.setPiece(pos, null);
           if (isFork(result)) {
               addKo(board, move);
               move.failed = true;
