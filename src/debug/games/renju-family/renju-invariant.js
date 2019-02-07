@@ -59,7 +59,7 @@ var createPiece = function(design, board, player, pos) {
   return r;
 }
 
-var getRank = function(design, board, pos, dir, ix, forced) {
+var getRank = function(design, board, pos, dir, op, ix) {
   var dirs  = [];
   dirs.push(design.getDirection("n")); dirs.push(design.getDirection("ne"));
   dirs.push(design.getDirection("e")); dirs.push(design.getDirection("se"));
@@ -76,13 +76,15 @@ var getRank = function(design, board, pos, dir, ix, forced) {
   }
   piece = createPiece(design, board, board.player, p);
   if (piece.getValue(ix) == 5) return 4;
-  if (forced) {
-      board.setPiece(p, piece);
-      var a = getRank(design, board, p, dirs[ix], ix, false);
-      var b = getRank(design, board, p, dirs[ix + 4], ix, false);
-      board.setPiece(p, null);
-      if ((a == 4) && (b == 4)) return 3;
-  }
+  var q = design.navigate(board.player, pos, op);
+  if (q === null) return 0;
+  var x = board.getPiece(q);
+  if ((x !== null) && (x.player != board.player)) return 0;
+  p = design.navigate(board.player, p, dir);
+  if (p === null) return 0;
+  var x = board.getPiece(p);
+  if ((x !== null) && (x.player != board.player)) return 0;
+  if (piece.getValue(ix) == 4) return 3;
   return 0;
 }
 
@@ -109,8 +111,8 @@ Dagaz.Model.CheckInvariants = function(board) {
                    move.failed = true;
                    return;
                }
-               var a = getRank(design, board, pos, dirs[ix], ix, true);
-               var b = getRank(design, board, pos, dirs[ix + 4], ix, true);
+               var a = getRank(design, board, pos, dirs[ix], dirs[ix + 4], ix);
+               var b = getRank(design, board, pos, dirs[ix + 4], dirs[ix], ix);
                if ((a == 4) && (b == 4)) {
                     if (v < 4) result.push(4);
                     result.push(4);
@@ -119,7 +121,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                    if ((a == 3) && (b != 4)) result.push(3);
                    if ((a != 4) && (b == 3)) result.push(3);
                } else {
-                   if ((a == 3) || (b == 3)) result.push(3);
+                   if ((a == 3) && (b == 3)) result.push(3);
                }
           }
           board.setPiece(pos, null);
