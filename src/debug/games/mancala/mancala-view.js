@@ -35,7 +35,7 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
           val = Math.abs(val);
       }
   }
-  if (val !== null) {
+  if ((val !== null) && (val > 0)) {
       var dx = frame.dx; var dy = frame.dy;
       var cx = (dx / piece.dx) | 0;
       var cy = (dy / piece.dy) | 0;
