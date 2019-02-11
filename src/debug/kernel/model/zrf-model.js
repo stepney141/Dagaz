@@ -2196,7 +2196,9 @@ ZrfMove.prototype.applyTo = function(obj, part) {
       return (action[0] === null) && (action[1] === null) && (action[2] !== null);
     })
    .each(function (action) {
-      action[2][0].exec(obj);
+      if (!_.isUndefined(action[2][0].exec)) {
+          action[2][0].exec(obj);
+      }
     });
   if (r) {
       obj.commit(this);
@@ -2272,6 +2274,21 @@ ZrfMove.prototype.addValue = function(name, value, part) {
           }
       }
   }], part]);
+}
+
+ZrfMove.prototype.playSound = function(ix, delay, part) {
+  if (!part) part = 1;
+  if (!_.isUndefined(Dagaz.Controller.play)) {
+      this.actions.push([ null, null, [{
+          exec: function(obj) {
+             if (_.isUndefined(delay)) {
+                 Dagaz.Controller.play(ix);
+             } else {
+                 _.delay(Dagaz.Controller.play, delay, ix);
+             }
+          }
+      }], part]);
+  }
 }
 
 ZrfMove.prototype.isPass = function() {

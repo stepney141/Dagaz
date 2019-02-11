@@ -1,9 +1,13 @@
 (function() {
 
+var strictMode = false;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "kauri-extension") {
+  if (name == "kauri-extension") {
+     if (value == "strict") strictMode = true;
+  } else {
      checkVersion(design, name, value);
   }
 }
@@ -37,6 +41,10 @@ Dagaz.Model.CheckInvariants = function(board) {
           var cnt = +piece.getValue(0);
           var kcn = +piece.getValue(1);
           if ((cnt === null) || (kcn === null) || (kcn == 0)) {
+              move.failed = true;
+              return;
+          }
+          if (strictMode && (cnt == 0)) {
               move.failed = true;
               return;
           }

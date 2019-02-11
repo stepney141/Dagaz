@@ -8,6 +8,10 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+if (!_.isUndefined(Dagaz.Controller.addSound)) {
+  Dagaz.Controller.addSound(10,  "../../sounds/magic.wav");
+}
+
 var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {
@@ -91,6 +95,7 @@ Dagaz.Model.CheckInvariants = function(board) {
               return;
           } else {
               board.ko = [ pos ];
+              move.playSound(10, 500);
           }
       } else {
           _.each(move.actions, function(a) {
