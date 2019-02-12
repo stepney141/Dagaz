@@ -46,7 +46,7 @@ Dagaz.Model.CheckInvariants = function(board) {
               pos = move.actions[0][1][0];
               var target = board.getPiece(pos);
               if (target !== null) {
-                  var c = challenge(attacker.type, target.type);
+                  var c = challenge(+attacker.type, +target.type);
                   if (c <= 0) {
                       if (c < 0) {
                           move.actions[0][2] = [ target ];

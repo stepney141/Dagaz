@@ -3,8 +3,25 @@
   add
 ))
 
-(define jump (
+(define jump-king (
   $1 (verify enemy?)
+  capture
+  $1 (verify empty?)
+  (add-partial jump-type)
+))
+
+(define jump-prince (
+  $1 (verify enemy?)
+  (verify (not-piece? King))
+  capture
+  $1 (verify empty?)
+  (add-partial jump-type)
+))
+
+(define jump-man (
+  $1 (verify enemy?)
+  (verify (not-piece? King))
+  (verify (not-piece? Prince))
   capture
   $1 (verify empty?)
   (add-partial jump-type)
@@ -25,7 +42,7 @@
 
   (players Black White)
   (turn-order Black White)
-  (move-priorities normal-type)
+  (move-priorities jump-type normal-type)
 
   (board
      (image "images/dablot/prejjesne.bmp")
@@ -111,11 +128,9 @@
          (move-type normal-type)
          (step n) (step w) (step s) (step e)
          (step nw) (step sw) (step se) (step ne)
-         (jump n) (jump w) (jump s) (jump e)
-         (jump nw) (jump sw) (jump se) (jump ne)
          (move-type jump-type)
-         (jump n) (jump w) (jump s) (jump e)
-         (jump nw) (jump sw) (jump se) (jump ne)
+         (jump-king n) (jump-king w) (jump-king s) (jump-king e)
+         (jump-king nw) (jump-king sw) (jump-king se) (jump-king ne)
      )
   )
   (piece
@@ -126,11 +141,9 @@
          (move-type normal-type)
          (step n) (step w) (step s) (step e)
          (step nw) (step sw) (step se) (step ne)
-         (jump n) (jump w) (jump s) (jump e)
-         (jump nw) (jump sw) (jump se) (jump ne)
          (move-type jump-type)
-         (jump n) (jump w) (jump s) (jump e)
-         (jump nw) (jump sw) (jump se) (jump ne)
+         (jump-prince n) (jump-prince w) (jump-prince s) (jump-prince e)
+         (jump-prince nw) (jump-prince sw) (jump-prince se) (jump-prince ne)
      )
   )
   (piece
@@ -141,11 +154,9 @@
          (move-type normal-type)
          (step n) (step w) (step s) (step e)
          (step nw) (step sw) (step se) (step ne)
-         (jump n) (jump w) (jump s) (jump e)
-         (jump nw) (jump sw) (jump se) (jump ne)
          (move-type jump-type)
-         (jump n) (jump w) (jump s) (jump e)
-         (jump nw) (jump sw) (jump se) (jump ne)
+         (jump-man n) (jump-man w) (jump-man s) (jump-man e)
+         (jump-man nw) (jump-man sw) (jump-man se) (jump-man ne)
      )
   )
 

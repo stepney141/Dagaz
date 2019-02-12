@@ -8,7 +8,17 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var setup = function(design, board, type, positions) {
+var getSetup = function() {
+  var str = window.location.search.toString();
+  var result = str.match(/\?setup=([^&]*)/);
+  if (result) {
+      return result[1];
+  } else {
+      return "";
+  }
+}
+
+var addPiece = function(design, board, type, positions) {
   if (positions.length == 0) return [];
   if (positions.length > 1) {
       var ix = _.random(0, positions.length - 1);
@@ -20,7 +30,13 @@ var setup = function(design, board, type, positions) {
   }
 }
 
+var setup = Dagaz.Model.setup;
+
 Dagaz.Model.setup = function(board) {
+  if (getSetup()) {
+      setup(board);
+      return;
+  }
   var design = Dagaz.Model.design;
   var positions = _.filter(design.allPositions(), function(pos) {
       return design.inZone(0, 2, pos);
@@ -30,7 +46,7 @@ Dagaz.Model.setup = function(board) {
        if (t == 13) c = 2;
        if (t == 12) c = 6;
        for (var i = 0; i < c; i++) {
-            positions = setup(design, board, t, positions);
+            positions = addPiece(design, board, t, positions);
        }
   }
 }

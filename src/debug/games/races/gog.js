@@ -35,7 +35,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addDirection("n");
 
     design.addPlayer("White", [3, 2, 1, 0]);
-    design.addPlayer("Black", [0, 1, 2, 3]);
+    design.addPlayer("Black", [3, 2, 1, 0]);
     design.addTurn(1);
     design.addTurn(1);
     design.addTurn(1);

@@ -39,6 +39,7 @@
               (n 0 -1) (s 0 1) (e 1 0) (w -1 0)
          )
      )
+     (symmetry Black (n s) (s n) (w e) (e w))
      (zone (name home) (players White)
            (positions b1 e1 h1 a2 b2 c2 d2 e2 f2 g2 h2 i2 a3 b3 c3 d3 e3 f3 g3 h3 i3)
      )
