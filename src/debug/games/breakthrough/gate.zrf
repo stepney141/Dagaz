@@ -1,0 +1,64 @@
+(define shift (
+   $1 (verify empty?)
+   (add-partial continue-type)
+))
+
+(define step (
+   $1 (verify not-empty?)
+   add
+))
+
+(game
+  (title "Gate")
+  (history "Copyright (c) 2010 Gregory Keith Van Patten.")
+
+  (move-sound "Audio\Pickup.wav")
+  (release-sound "Audio\Pickup.wav")
+  (capture-sound "")
+  (drop-sound "")
+
+  (option "animate captures"  false)
+  (option "smart moves"       false)
+  (option "pass partial"      true)
+
+  (players Black White)
+  (turn-order Black White)
+
+  (board
+     (image "images/gate/board.bmp")
+     (grid
+         (start-rectangle 33 33 73 73)
+         (dimensions
+           ("a/b/c/d/e" (66 0)) ; files
+           ("5/4/3/2/1" (0 66)) ; ranks
+         )
+         (directions (ne 1 -1) (nw -1 -1) (se 1 1) (sw -1 1))
+     )
+     (symmetry White (nw se) (se nw) (ne sw) (sw ne))
+     (zone (name goal) (players Black)
+           (positions e5)
+     )
+     (zone (name goal) (players White)
+           (positions a1)
+     )
+  )
+
+  (piece
+     (name Stone)
+     (image White "images/gate/wstone.bmp"
+            Black "images/gate/bstone.bmp")
+     (moves
+         (move-type continue-type)
+         (shift ne) (shift nw) (shift se)
+         (move-type normal-type)
+         (step ne) (step nw) (step se)
+     )
+  )
+
+  (board-setup
+    (Black (Stone a1 b1 c1 d1 a2 b2 c2 a3 b3 a4))
+    (White (Stone b5 c5 d5 e5 c4 d4 e4 d3 e3 e2))
+  )
+
+  (loss-condition (White Black) stalemated)
+)
