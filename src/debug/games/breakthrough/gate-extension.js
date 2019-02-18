@@ -23,10 +23,19 @@ Dagaz.Model.CheckInvariants = function(board) {
   var moves  = [];
   _.each(board.moves, function(move) {
       var m = Dagaz.Model.createMove(move.mode);
+      var positions = [];
       _.each(move.actions, function(a) {
           if ((a[0] !== null) && (a[1] !== null)) {
-               var pos = a[0][0];
-               var dir = design.findDirection(pos, a[1][0]);
+               var pos = a[0][0]; var dst = a[1][0];
+               if (positions.length == 0) {
+                   positions.push(pos);
+               }
+               if (_.indexOf(positions, dst) >= 0) {
+                   move.failed = true;
+                   return;
+               }
+               positions.push(dst);
+               var dir = design.findDirection(pos, dst);
                if (dir !== null) {
                    m.actions.push(a);
                    var p = design.navigate(1, pos, dir + 4);
