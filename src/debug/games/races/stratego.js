@@ -25,6 +25,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "false");
     design.checkVersion("show-blink", "false");
+    design.checkVersion("show-captures", "false");
     design.checkVersion("advisor-wait", "5");
 
     design.addDirection("s"); // 0
@@ -220,80 +221,80 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPriority(1);			// drop-type
     design.addPriority(2);			// normal-type
 
-    design.addPiece("Flag", 0);
+    design.addPiece("Flag", 0, 10000);
     design.addDrop(0, 0, [], 0);
 
-    design.addPiece("Spy", 1);
+    design.addPiece("Spy", 1, 100);
     design.addDrop(1, 0, [], 1);
     design.addMove(1, 1, [3], 2);
     design.addMove(1, 1, [1], 2);
     design.addMove(1, 1, [2], 2);
     design.addMove(1, 1, [0], 2);
 
-    design.addPiece("Scout", 2);
+    design.addPiece("Scout", 2, 50);
     design.addDrop(2, 0, [], 1);
     design.addMove(2, 2, [3, 3], 2);
     design.addMove(2, 2, [1, 1], 2);
     design.addMove(2, 2, [2, 2], 2);
     design.addMove(2, 2, [0, 0], 2);
 
-    design.addPiece("Disarmer", 3);
+    design.addPiece("Disarmer", 3, 200);
     design.addDrop(3, 0, [], 1);
     design.addMove(3, 1, [3], 2);
     design.addMove(3, 1, [1], 2);
     design.addMove(3, 1, [2], 2);
     design.addMove(3, 1, [0], 2);
 
-    design.addPiece("Sergeant", 4);
+    design.addPiece("Sergeant", 4, 40);
     design.addDrop(4, 0, [], 1);
     design.addMove(4, 1, [3], 2);
     design.addMove(4, 1, [1], 2);
     design.addMove(4, 1, [2], 2);
     design.addMove(4, 1, [0], 2);
 
-    design.addPiece("Lieutenant", 5);
+    design.addPiece("Lieutenant", 5, 50);
     design.addDrop(5, 0, [], 1);
     design.addMove(5, 1, [3], 2);
     design.addMove(5, 1, [1], 2);
     design.addMove(5, 1, [2], 2);
     design.addMove(5, 1, [0], 2);
 
-    design.addPiece("Captain", 6);
+    design.addPiece("Captain", 6, 60);
     design.addDrop(6, 0, [], 1);
     design.addMove(6, 1, [3], 2);
     design.addMove(6, 1, [1], 2);
     design.addMove(6, 1, [2], 2);
     design.addMove(6, 1, [0], 2);
 
-    design.addPiece("Major", 7);
+    design.addPiece("Major", 7, 70);
     design.addDrop(7, 0, [], 1);
     design.addMove(7, 1, [3], 2);
     design.addMove(7, 1, [1], 2);
     design.addMove(7, 1, [2], 2);
     design.addMove(7, 1, [0], 2);
 
-    design.addPiece("Brigadier", 8);
+    design.addPiece("Brigadier", 8, 80);
     design.addDrop(8, 0, [], 1);
     design.addMove(8, 1, [3], 2);
     design.addMove(8, 1, [1], 2);
     design.addMove(8, 1, [2], 2);
     design.addMove(8, 1, [0], 2);
 
-    design.addPiece("General", 9);
+    design.addPiece("General", 9, 90);
     design.addDrop(9, 0, [], 1);
     design.addMove(9, 1, [3], 2);
     design.addMove(9, 1, [1], 2);
     design.addMove(9, 1, [2], 2);
     design.addMove(9, 1, [0], 2);
 
-    design.addPiece("Commandant", 10);
+    design.addPiece("Commandant", 10, 100);
     design.addDrop(10, 0, [], 1);
     design.addMove(10, 1, [3], 2);
     design.addMove(10, 1, [1], 2);
     design.addMove(10, 1, [2], 2);
     design.addMove(10, 1, [0], 2);
 
-    design.addPiece("Bomb", 11);
+    design.addPiece("Bomb", 11, 2);
     design.addDrop(11, 0, [], 0);
 
     design.reserve("Red", "Flag", 1);
@@ -348,6 +349,7 @@ Dagaz.View.configure = function(view) {
     view.defPiece("BlueCommandant", "Blue Commandant");
     view.defPiece("RedBomb", "Red Bomb");
     view.defPiece("BlueBomb", "Blue Bomb");
+    view.defPiece("Ko", "Ko");
  
     view.defPosition("a9", 0, 0, 40, 40);
     view.defPosition("b9", 40, 0, 40, 40);
