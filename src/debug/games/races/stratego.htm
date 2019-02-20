@@ -1,0 +1,69 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Stratego</title>
+</head>
+<body>
+
+<img id="Board" style="display:none" src="images/stratego/board.png">
+<img id="RedFlag" style="display:none" src="images/stratego/rflag.png">
+<img id="BlueFlag" style="display:none" src="images/stratego/bhidden.png">
+<img id="RedSpy" style="display:none" src="images/stratego/rspy.png">
+<img id="BlueSpy" style="display:none" src="images/stratego/bhidden.png">
+<img id="RedScout" style="display:none" src="images/stratego/rscout.png">
+<img id="BlueScout" style="display:none" src="images/stratego/bhidden.png">
+<img id="RedDisarmer" style="display:none" src="images/stratego/rdisarmer.png">
+<img id="BlueDisarmer" style="display:none" src="images/stratego/bhidden.png">
+<img id="RedSergeant" style="display:none" src="images/stratego/rsergeant.png">
+<img id="BlueSergeant" style="display:none" src="images/stratego/bhidden.png">
+<img id="RedLieutenant" style="display:none" src="images/stratego/rlieutenant.png">
+<img id="BlueLieutenant" style="display:none" src="images/stratego/bhidden.png">
+<img id="RedCaptain" style="display:none" src="images/stratego/rcaptain.png">
+<img id="BlueCaptain" style="display:none" src="images/stratego/bhidden.png">
+<img id="RedMajor" style="display:none" src="images/stratego/rmajor.png">
+<img id="BlueMajor" style="display:none" src="images/stratego/bhidden.png">
+<img id="RedBrigadier" style="display:none" src="images/stratego/rbrigadier.png">
+<img id="BlueBrigadier" style="display:none" src="images/stratego/bhidden.png">
+<img id="RedGeneral" style="display:none" src="images/stratego/rgeneral.png">
+<img id="BlueGeneral" style="display:none" src="images/stratego/bhidden.png">
+<img id="RedCommandant" style="display:none" src="images/stratego/rcommandant.png">
+<img id="BlueCommandant" style="display:none" src="images/stratego/bhidden.png">
+<img id="RedBomb" style="display:none" src="images/stratego/rbomb.png">
+<img id="BlueBomb" style="display:none" src="images/stratego/bhidden.png">
+
+<table style="margin:auto; font-family:sans-serif; font-size:14px" id="Table">
+<tr style="height:400px; vertical-align:top">
+<td id="CanvasCell" style="width:400px">
+<canvas id="Canvas" width="400" height="400" style="cursor:default">Broken canvas...</canvas>
+</td><td style="width:300px;">
+<div style="height:510px; overflow:auto" id="ScrollDiv">
+<img id="GlyphImage"><p id="HelpText"></p>
+<p id="GameSession"></p>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div style="height:100px; width:500px; margin-left:auto; margin-right:auto">
+<table>
+<tr style="display:none" id="PieceInfo">
+<td><img id="PieceInfoImage"></td><td id="PieceInfoText"></td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+
+<script src="http://underscorejs.ru/underscore-min.js"></script>
+<script src="../../kernel/dagaz.js"></script>
+<script src="../../kernel/model/zrf-model.js"></script>
+<script src="../../kernel/model/zobrist.js"></script>
+<script src="../../kernel/model/common-setup-v2.js"></script>
+<script src="../../kernel/view/2d/2d-view-v2.js"></script>
+<script src="../../kernel/controller/utils/move-list-v3.js"></script>
+<script src="stratego.js"></script>
+<script src="../../kernel/controller/app-v4.js"></script>
+
+</body>
+</html>
