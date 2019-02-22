@@ -21,7 +21,7 @@ Dagaz.Model.CheckInvariants = function(board) {
               var pos   = a[0][0];
               var piece = board.getPiece(pos);
               if (piece === null) return;
-              if (piece.type % 3 > 0) {
+              if (+piece.type % 3 > 0) {
                   captured = pos;
               } else {
                   actions.push(a);
@@ -31,10 +31,10 @@ Dagaz.Model.CheckInvariants = function(board) {
                   if (initial === null) {
                       initial = board.getPiece(a[0][0]);
                   }
-                  var m = initial.type % 3;
+                  var m = +initial.type % 3;
                   if ((m > 0) && (initial.type != a[2][0].type)) {
                       var piece = a[2][0];
-                      piece = piece.promote(piece.type + m);
+                      piece = piece.promote(+piece.type + m);
                       a[2]  = [ piece ];
                   }
               }
@@ -42,7 +42,7 @@ Dagaz.Model.CheckInvariants = function(board) {
               if (captured !== null) {
                   var part  = a[3];
                   var piece = board.getPiece(captured);
-                  var m     = piece.type;
+                  var m     = +piece.type;
                   if (m >= 3) {
                       m -= 3;
                   }         

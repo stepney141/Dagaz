@@ -126,7 +126,7 @@
   - Nubia [todo, family:checkers]
   - HiQue [todo, family:custodian]
   - Luzhanqi [todo, flag, cloack, drops, limit, family:chess]
-  - Stratego [todo, cloack, drops, limit, todo:setups, family:chess]
+  - Stratego [cloack, drops, limit, todo:setups, family:chess]
   - Game of Generals [todo:ai, cloack, drops, limit, breakthrough, family:chess]
   - Neutron [todo, shared, family:breakthrough]
   - Arimaa [todo, turns, elimination, stalemate, family:breakthrough]

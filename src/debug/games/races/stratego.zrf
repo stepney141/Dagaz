@@ -10,9 +10,10 @@
 ))
 
 (define slide (
-  $1 (while empty? add $1)
+  $1 (verify empty?)
+  $1 (while empty? (add ScoutOpened) $1)
   (verify not-friend?)
-  add
+  (add ScoutOpened)
 ))
 
 (game
@@ -40,7 +41,7 @@
   (board
      (image "images/stratego/board.bmp")
      (grid
-	(start-rectangle 0 0 40 40)
+	(start-rectangle 1 1 41 41)
 	(dimensions
 	    ("a/b/c/d/e/f/g/h/i/j" (40 0)) ; files
 	    ("9/8/7/6/5/4/3/2/1/0" (0 40)) ; ranks
@@ -102,6 +103,7 @@
      )
      (moves
         (move-type normal-type)
+        (step n) (step e) (step w) (step s)
         (slide n) (slide e) (slide w) (slide s)
      )
   )
@@ -217,6 +219,107 @@
         (move-type priority-type)
         (drop)
      )
+  )
+  (piece
+     (name FlagOpened)
+     (image Red    "images/stratego/rflag.bmp"
+            Blue   "images/stratego/bflag.bmp")
+  )
+  (piece
+     (name SpyOpened)
+     (image Red    "images/stratego/rspy.bmp"
+            Blue   "images/stratego/bspy.bmp")
+     (moves
+        (move-type normal-type)
+        (step n) (step e) (step w) (step s)
+     )
+  )
+  (piece
+     (name ScoutOpened)
+     (image Red    "images/stratego/rscout.bmp"
+            Blue   "images/stratego/bscout.bmp")
+     (moves
+        (move-type normal-type)
+        (step n) (step e) (step w) (step s)
+        (slide n) (slide e) (slide w) (slide s)
+     )
+  )
+  (piece
+     (name DisarmerOpened)
+     (image Red    "images/stratego/rdisarmer.bmp"
+            Blue   "images/stratego/bdisarmer.bmp")
+     (moves
+        (move-type normal-type)
+        (step n) (step e) (step w) (step s)
+     )
+  )
+  (piece
+     (name SergeantOpened)
+     (image Red    "images/stratego/rsergeant.bmp"
+            Blue   "images/stratego/bsergeant.bmp")
+     (moves
+        (move-type normal-type)
+        (step n) (step e) (step w) (step s)
+     )
+  )
+  (piece
+     (name LieutenantOpened)
+     (image Red    "images/stratego/rlieutenant.bmp"
+            Blue   "images/stratego/blieutenant.bmp")
+     (moves
+        (move-type normal-type)
+        (step n) (step e) (step w) (step s)
+     )
+  )
+  (piece
+     (name CaptainOpened)
+     (image Red    "images/stratego/rcaptain.bmp"
+            Blue   "images/stratego/bcaptain.bmp")
+     (moves
+        (move-type normal-type)
+        (step n) (step e) (step w) (step s)
+     )
+  )
+  (piece
+     (name MajorOpened)
+     (image Red    "images/stratego/rmajor.bmp"
+            Blue   "images/stratego/bmajor.bmp")
+     (moves
+        (move-type normal-type)
+        (step n) (step e) (step w) (step s)
+     )
+  )
+  (piece
+     (name BrigadierOpened)
+     (image Red    "images/stratego/rbrigadier.bmp"
+            Blue   "images/stratego/bbrigadier.bmp")
+     (moves
+        (move-type normal-type)
+        (step n) (step e) (step w) (step s)
+     )
+  )
+  (piece
+     (name GeneralOpened)
+     (image Red    "images/stratego/rgeneral.bmp"
+            Blue   "images/stratego/bgeneral.bmp")
+     (moves
+        (move-type normal-type)
+        (step n) (step e) (step w) (step s)
+     )
+  )
+  (piece
+     (name CommandantOpened)
+     (image Red    "images/stratego/rcommandant.bmp"
+            Blue   "images/stratego/bcommandant.bmp")
+     (moves
+        (move-type normal-type)
+        (step n) (step e) (step w) (step s)
+     )
+  )
+  (piece
+     (name BombOpened)
+     (image Red    "images/stratego/rbomb.bmp"
+            Blue   "images/stratego/bbomb.bmp")
   )
 
   (board-setup

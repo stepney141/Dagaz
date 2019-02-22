@@ -65,7 +65,7 @@ Dagaz.Model.getPieceTypes = function(piece, board) {
         return piece.getValue(0) == tag;
     })
    .map(function(piece) {
-        return piece.type;
+        return +piece.type;
     })
    .uniq()
    .value();
@@ -151,7 +151,7 @@ Dagaz.Model.getPieceType = function(piece) {
   if (uniqueMode) {
       return piece.getValue(1);
   } else {
-      return piece.type;
+      return +piece.type;
   }
 }
 

@@ -9,6 +9,8 @@ Dagaz.Model.checkVersion = function(design, name, value) {
 }
 
 var challenge = function(attacker, target) {
+  if (attacker >= 12) attacker -= 12;
+  if (target >= 12) target -= 12;
   if (target == 0) return 1;
   if ((attacker == 1) && (target == 10)) return 1;
   if ((attacker == 3) && (target == 11)) return 1;
@@ -33,9 +35,17 @@ Dagaz.Model.CheckInvariants = function(board) {
                   var c = challenge(+attacker.type, +target.type);
                   if (c <= 0) {
                       if (c < 0) {
+                          if (+target.type < 12) {
+                              target = target.promote(+target.type + 12);
+                          }
                           move.actions[0][2] = [ target ];
                       } else {
                           move.capturePiece(pos);
+                      }
+                  } else {
+                      if (+attacker.type < 12) {
+                          attacker = attacker.promote(+attacker.type + 12);
+                          move.actions[0][2] = [ attacker ];
                       }
                   }
               }

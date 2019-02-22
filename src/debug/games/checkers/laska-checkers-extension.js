@@ -55,7 +55,7 @@ Dagaz.AI.isForced = function(design, board, move) {
       _.each(design.allPositions(), function(pos) {
           var piece = b.getPiece(pos);
           if ((piece !== null) && (piece.type == 0) && (piece.player == b.player)) {
-              _.each(getDirs(piece.type), function(dir) {
+              _.each(getDirs(+piece.type), function(dir) {
                    var p = design.navigate(b.player, pos, dir);
                    if (p !== null) {
                        piece = b.getPiece(p);
@@ -227,7 +227,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                             if (dst === null) {
                                 dst = "";
                             }
-                            dst = dst + ((p.type * 2) + p.player - 1);
+                            dst = dst + ((+p.type * 2) + p.player - 1);
                             var src = p.getValue(0);
                             if ((src === null) || (src == "")) {
                                 if (Dagaz.Model.deferredStrike) {

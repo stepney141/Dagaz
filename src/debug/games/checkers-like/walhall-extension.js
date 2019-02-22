@@ -83,7 +83,7 @@ Dagaz.Model.CheckInvariants = function(board) {
         var to    = move.actions[0][1][0];
         var dir   = design.findDirection(from, to);
         var piece = board.getPiece(from);
-        if ((dir !== null) && (piece !== null) && (piece.type <= 2)) {
+        if ((dir !== null) && (piece !== null) && (+piece.type <= 2)) {
              var pos = design.navigate(0, from, dir);
              while (pos !== null) {
                  if (isDefended(design, board, pos)) break;

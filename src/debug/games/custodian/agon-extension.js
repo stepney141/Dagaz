@@ -67,8 +67,8 @@ Dagaz.Model.CheckInvariants = function(board) {
                   if (piece.type == 1) {
                       piece = piece.changeOwner(design.nextPlayer(piece.player));
                   }
-                  if (piece.type % 2 == 1) {
-                      piece = piece.promote(piece.type - 1);
+                  if (+piece.type % 2 == 1) {
+                      piece = piece.promote(+piece.type - 1);
                       move.actions[0][2] = [ piece ];
                   }
                   var pos = move.actions[0][1][0];
@@ -76,15 +76,15 @@ Dagaz.Model.CheckInvariants = function(board) {
                       var target = design.navigate(board.player, pos, dir);
                       if (target !== null) {
                           var enemy = board.getPiece(target);
-                          if ((enemy !== null) && (enemy.player != piece.player) && (enemy.type % 2 == 0)) {
+                          if ((enemy !== null) && (enemy.player != piece.player) && (+enemy.type % 2 == 0)) {
                                var p = design.navigate(board.player, target, dir);
                                if (p !== null) {
                                    var friend = board.getPiece(p);
-                                   if ((friend !== null) && (friend.type == piece.type) && (piece.type % 2 == 0)) {
+                                   if ((friend !== null) && (friend.type == piece.type) && (+piece.type % 2 == 0)) {
                                        if (enemy.type == 0) {
                                            enemy = enemy.changeOwner(piece.player);
                                        }
-                                       enemy = enemy.promote(enemy.type + 1);
+                                       enemy = enemy.promote(+enemy.type + 1);
                                        move.movePiece(target, target, enemy);
                                    }
                                }

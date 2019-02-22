@@ -52,7 +52,7 @@ Dagaz.Model.CheckInvariants = function(board) {
   var opened = [];
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
-      if ((piece !== null) && (piece.type >= 10) && (piece.type % 2 == 1)) {
+      if ((piece !== null) && (piece.type >= 10) && (+piece.type % 2 == 1)) {
           opened.push(pos);
       }
   });
@@ -66,7 +66,7 @@ Dagaz.Model.CheckInvariants = function(board) {
               } else {
                   var piece = board.getPiece(pos);
                   if (piece !== null) {
-                      move.movePiece(pos, pos, piece.promote(piece.type - 1));
+                      move.movePiece(pos, pos, piece.promote(+piece.type - 1));
                   }
               }
           });

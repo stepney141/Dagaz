@@ -31,7 +31,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                  piece = board.getPiece(action[0][0]);
              });
              if (piece === null) return false;
-             return piece.type > 1;
+             return +piece.type > 1;
         }).value().length >= 1) {
         _.chain(board.moves)
          .filter(function(move) {

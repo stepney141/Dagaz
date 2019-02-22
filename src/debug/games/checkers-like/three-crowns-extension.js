@@ -24,11 +24,11 @@ var isLineDir = function(design, board, player, pos, type, dir) {
   var p = design.navigate(player, pos, dir);
   if (p === null) return false;
   var piece = board.getPiece(p);
-  if ((piece == null) || (piece.player != player) || !isEq(piece.type, type)) return false;
+  if ((piece == null) || (piece.player != player) || !isEq(+piece.type, type)) return false;
   p = design.navigate(player, p, dir);
   if (p !== null) {
       piece = board.getPiece(p);
-      if ((piece !== null) && (piece.player == player) && isEq(piece.type, type)) {
+      if ((piece !== null) && (piece.player == player) && isEq(+piece.type, type)) {
           return true;
       }
   }
@@ -36,7 +36,7 @@ var isLineDir = function(design, board, player, pos, type, dir) {
   if (p === null) return false;
   piece = board.getPiece(p);
   if (piece === null) return false;
-  return (piece.player == player) && isEq(piece.type, type);
+  return (piece.player == player) && isEq(+piece.type, type);
 }
 
 var isLine = function(design, board, player, pos, type) {
@@ -55,7 +55,7 @@ var checkGoals = Dagaz.Model.checkGoals;
 Dagaz.Model.checkGoals = function(design, board, player) {
   var pos = board.lastt;
   var piece = board.getPiece(pos);
-  if ((piece !== null) && (piece.type == 1) && isLine(design, board, piece.player, pos, piece.type)) {
+  if ((piece !== null) && (piece.type == 1) && isLine(design, board, piece.player, pos, +piece.type)) {
       if (piece.player == player) {
           return 1;
       } else {

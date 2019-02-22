@@ -23,7 +23,7 @@ var checkStep = function(design, board, player, pos, dir, result) {
   if (piece.player == player) return;
   result.push({
       pos: p,
-      type: piece.type
+      type: +piece.type
   });
 }
 
@@ -41,7 +41,7 @@ var checkSlide = function(design, board, player, pos, dir, result) {
   if (piece.player == player) return;
   result.push({
       pos: p,
-      type: piece.type
+      type: +piece.type
   });
 }
 
@@ -56,7 +56,7 @@ var checkLeap = function(design, board, player, pos, o, d, result) {
   if (piece.player == player) return;
   result.push({
       pos: p,
-      type: piece.type
+      type: +piece.type
   });
 }
 

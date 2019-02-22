@@ -27,7 +27,7 @@ var checkDirection = function(design, board, player, pos, dir, leapers, riders, 
   var piece = board.getPiece(p);
   if (piece !== null) {
       if (piece.player == player) return false;
-      var m = piece.type % 2;
+      var m = +piece.type % 2;
       if (m != mirrored) return false;
       return (_.indexOf(leapers, +piece.type) >= 0) || (_.indexOf(riders, +piece.type) >= 0);
   }
@@ -37,7 +37,7 @@ var checkDirection = function(design, board, player, pos, dir, leapers, riders, 
       piece = board.getPiece(p);
   }
   if (piece.player == player) return false;
-  var m = piece.type % 2;
+  var m = +piece.type % 2;
   if (m != mirrored) return false;
   return _.indexOf(riders, +piece.type) >= 0;
 }
@@ -50,7 +50,7 @@ var checkLeap = function(design, board, player, pos, o, d, knight, mirrored) {
   var piece = board.getPiece(p);
   if (piece === null) return false;
   if (piece.player == player) return false;
-  var m = piece.type % 2;
+  var m = +piece.type % 2;
   if (m != mirrored) return false;
   return (piece.type == knight) || (piece.type == knight + 1);
 }
@@ -132,7 +132,7 @@ Dagaz.Model.CheckInvariants = function(board) {
           move.failed = true;
           return;
       }
-      var mirrored = piece.type % 2;
+      var mirrored = +piece.type % 2;
       if (move.actions.length == 2) {
           var k = getPiece(board, move.actions[0]);
           var r = getPiece(board, move.actions[1]);

@@ -34,11 +34,11 @@ var isCannon = function(design, board, player, pos, dir) {
       a++;
   }
   if ((a < 1) || (a + b > 2)) return false;
-  if ((piece.player != player) || (piece.type > 0)) return false;
+  if ((piece.player != player) || (+piece.type > 0)) return false;
   p = design.navigate(player, p, dir);
   if (p === null) return false;
   piece = board.getPiece(p);
-  if ((piece === null) || (piece.player != player) || (piece.type > 0)) return false;
+  if ((piece === null) || (piece.player != player) || (+piece.type > 0)) return false;
   p = design.navigate(player, p, dir);
   if (p === null) return false;
   piece = board.getPiece(p);

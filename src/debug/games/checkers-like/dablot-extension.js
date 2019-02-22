@@ -39,7 +39,7 @@ Dagaz.AI.isForced = function(design, board, move) {
                    var p = design.navigate(b.player, pos, dir);
                    if (p !== null) {
                        var enemy = b.getPiece(p);
-                       if ((enemy !== null) && (enemy.type >= piece.type) && (enemy.player != b.player)) {
+                       if ((enemy !== null) && (+enemy.type >= +piece.type) && (enemy.player != b.player)) {
                             p = design.navigate(b.player, p, dir);
                             if ((p !== null) && (b.getPiece(p) === null)) c++;
                        }
@@ -124,7 +124,7 @@ var saveMove = function(moves, move, pn, board, piece) {
    .each(function(action) {
         if ((action[0] !== null) && (action[1] === null)) {
             var p = board.getPiece(action[0][0]);
-            if ((p !== null) && (p.type < piece.type)) {
+            if ((p !== null) && (+p.type < +piece.type)) {
                 notFound = false;
             }
         }
@@ -160,14 +160,14 @@ Dagaz.Model.CheckInvariants = function(board) {
         .each(function(action) {
              piece = board.getPiece(action[0][0]);
          });
-         if ((piece !== null) && (piece.type > 0)) {
+         if ((piece !== null) && (+piece.type > 0)) {
            _.chain(move.actions)
             .filter(function(action) {
                  return (action[0] !== null) && (action[1] === null);
              })
             .each(function(action) {
                  var p = board.getPiece(action[0][0]);
-                 if ((p === null) || (p.type < piece.type)) {
+                 if ((p === null) || (+p.type < +piece.type)) {
                      if (action[3] > 1) {
                          saveMove(moves, move, action[3], board, piece);
                      }

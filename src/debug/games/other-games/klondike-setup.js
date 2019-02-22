@@ -32,7 +32,7 @@ var addPiece = function(board, pos, f, avail) {
       ix = _.random(0, avail.length - 1);
   }
   var piece = avail[ix];
-  if (f) piece = piece.promote(piece.type + 1);
+  if (f) piece = piece.promote(+piece.type + 1);
   board.setPiece(pos + 7, piece);
   return without(avail, ix);
 }
@@ -78,7 +78,7 @@ Dagaz.Model.setup = function(board) {
   var piece = board.getPiece(0);
   if (piece !== null) {
       avail = _.map(avail, function(piece) {
-          return piece.promote(piece.type + 1);
+          return piece.promote(+piece.type + 1);
       });
       avail = shuffle(avail);
       piece = piece.setValue(0, avail);

@@ -13,7 +13,7 @@ Dagaz.Model.checkGoals = function(design, board, player) {
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
       if (piece !== null) {
-          if (piece.type % 2 == 0) {
+          if (+piece.type % 2 == 0) {
               if (pos % 4 != 0) result = null;
           } else {
               if (pos % 4 != 3) result = null;

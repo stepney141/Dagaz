@@ -19,7 +19,7 @@ var checkDir = function(design, board, player, pos, dir, result) {
           if (piece.type == 0) break;
           if ((type !== null) && (piece.type != type)) break;
           if (type === null) {
-              type = piece.type;
+              type = +piece.type;
               if ((result.length > 0) && (result[result.length - 1].length > 0)) {
                    var q = board.getPiece(result[result.length - 1][0]);
                    if ((q !== null) && (q.type != type)) {
@@ -79,7 +79,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                            _.each(captures[i], function(p) {
                                var piece = b.getPiece(p);
                                if (piece !== null) {
-                                   s += piece.type;
+                                   s += +piece.type;
                                }
                                m.capturePiece(p, 2);
                            });
@@ -91,7 +91,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                       _.each(captures[0], function(p) {
                           var piece = b.getPiece(p);
                           if (piece !== null) {
-                              s += piece.type;
+                              s += +piece.type;
                           }
                           move.capturePiece(p);
                       });

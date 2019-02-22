@@ -14,7 +14,7 @@ var getType = function(board, move) {
       if ((r === null) && (a[0] !== null) && (a[1] !== null)) {
           var piece = board.getPiece(a[0][0]);
           if (piece !== null) {
-               r = piece.type;
+               r = +piece.type;
           }
       }
   });

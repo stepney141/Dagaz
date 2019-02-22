@@ -52,11 +52,11 @@ Dagaz.AI.isForced = function(design, board, move) {
       _.each(design.allPositions(), function(pos) {
           var piece = b.getPiece(pos);
           if ((piece !== null) && (piece.player == b.player)) {
-              _.each(getDirs(piece.type), function(dir) {
+              _.each(getDirs(+piece.type), function(dir) {
                    var p = design.navigate(b.player, pos, dir);
                    if (p !== null) {
                        var enemy = b.getPiece(p);
-                       if ((enemy !== null) && (norm(enemy.type) <= norm(piece.type)) && (enemy.player != b.player)) {
+                       if ((enemy !== null) && (norm(+enemy.type) <= norm(+piece.type)) && (enemy.player != b.player)) {
                             p = design.navigate(b.player, p, dir);
                             if ((p !== null) && (b.getPiece(p) === null)) c++;
                        }
@@ -103,7 +103,7 @@ Dagaz.Model.checkGoals = function(design, board, player) {
   var friends = 0;
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
-      if ((piece !== null) && (piece.type >= 3)) {
+      if ((piece !== null) && (+piece.type >= 3)) {
           if (piece.player != player) {
               enemies++;
           } else {

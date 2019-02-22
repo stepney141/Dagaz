@@ -42,7 +42,7 @@ Dagaz.Model.checkGoals = function(design, board, player) {
   var f = 0; var e = 0;
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
-      if ((piece !== null) && (piece.type == 0)) {
+      if ((piece !== null) && ((piece.type == 0) || (piece.type == 12))) {
           if (piece.player == player) {
               f++;
           } else {

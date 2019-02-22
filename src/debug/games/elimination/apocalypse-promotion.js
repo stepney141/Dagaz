@@ -51,7 +51,7 @@ Dagaz.Model.join = function(design, board, a, b) {
       checkPromotion(design, board, b, y, a);
       var p = a.actions[0][1][0];
       var q = b.actions[0][1][0];
-      if ((p == q) && (x.type > y.type)) {
+      if ((p == q) && (+x.type > +y.type)) {
           r.actions.push(b.actions[0]);
           r.actions.push(a.actions[0]);
       } else {
@@ -59,12 +59,12 @@ Dagaz.Model.join = function(design, board, a, b) {
           r.actions.push(b.actions[0]);
       }
       if (p == q) {
-          if (x.type > y.type) {
+          if (+x.type > +y.type) {
               r.actions[0][2] = [ Dagaz.Model.createPiece(2, 2) ];
               r.protected.push(x.player);
               r.captured = p;
           } else {
-              if (x.type == y.type) {
+              if (+x.type == +y.type) {
                   r.actions[0][2] = [ Dagaz.Model.createPiece(2, 1) ];
                   r.actions[1][2] = [ Dagaz.Model.createPiece(2, 1) ];
                   r.capturePiece(p);

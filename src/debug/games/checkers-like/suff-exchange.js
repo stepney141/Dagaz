@@ -91,14 +91,14 @@ Dagaz.Model.CheckInvariants = function(board) {
           }
           var pos   = move.actions[0][0][0];
           var start = board.getPiece(pos);
-          var list  = getFriendList(design, board, pos, start.type);
+          var list  = getFriendList(design, board, pos, +start.type);
           pos = design.navigate(board.player, pos, 10);
           while ((pos !== null) && (list.length > 0)) {
               var p = list.pop();
               pos = design.navigate(board.player, pos, 10);
               move.movePiece(p, pos, board.getPiece(p));
           }
-          list = getEnemyList(design, board, start.type);
+          list = getEnemyList(design, board, +start.type);
           pos  = Dagaz.Model.stringToPos("p17");
           while ((pos !== null) && (list.length > 0)) {
               var p = list.shift();

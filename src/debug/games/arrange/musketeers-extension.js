@@ -24,7 +24,7 @@ Dagaz.Model.checkGoals = function(design, board, player) {
    .filter(function(pos) {
        var piece = board.getPiece(pos);
        if (piece === null) return false;
-       return (piece.type > 0);
+       return (+piece.type > 0);
     })
    .map(function(pos) {
        return {

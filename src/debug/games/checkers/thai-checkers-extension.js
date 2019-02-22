@@ -48,7 +48,7 @@ Dagaz.AI.isForced = function(design, board, move) {
       _.each(design.allPositions(), function(pos) {
           var piece = b.getPiece(pos);
           if ((piece !== null) && (piece.player == b.player)) {
-              _.each(getDirs(piece.type), function(dir) {
+              _.each(getDirs(+piece.type), function(dir) {
                    var piece = b.getPiece(pos);
                    var p = design.navigate(b.player, pos, dir);
                    if (piece.type == 1) {

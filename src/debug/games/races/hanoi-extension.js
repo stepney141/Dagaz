@@ -11,7 +11,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
 var getValue = function(board, pos) {
   var piece = board.getPiece(pos);
   if (piece === null) return 0;
-  return (piece.type / 2) | 0;
+  return (+piece.type / 2) | 0;
 }
 
 var CheckInvariants = Dagaz.Model.CheckInvariants;

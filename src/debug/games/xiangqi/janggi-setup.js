@@ -25,8 +25,8 @@ Dagaz.Model.CheckInvariants = function(board) {
       if (move.isDropMove()) {
           var pos   = move.actions[0][1][0];
           var piece = move.actions[0][2][0];
-          if (checkDir(design, board, pos, w, piece.type) ||
-              checkDir(design, board, pos, e, piece.type)) {
+          if (checkDir(design, board, pos, w, +piece.type) ||
+              checkDir(design, board, pos, e, +piece.type)) {
               move.failed = true;
           }
       }

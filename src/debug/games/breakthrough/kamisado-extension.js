@@ -56,7 +56,7 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
               _.each(design.allPositions(), function(pos) {
                   if (enemy !== null) return;
                   var piece = board.getPiece(pos);
-                  if ((piece !== null) && (piece.player != board.player) && (((piece.type / 2) | 0) == color)) {
+                  if ((piece !== null) && (piece.player != board.player) && (((+piece.type / 2) | 0) == color)) {
                       enemy = pos;
                   }
               });
@@ -93,7 +93,7 @@ Dagaz.AI.getEval = function(design, board) {
               }
               var colors = [];
               if (trace(design, board, piece.player, pos, colors)) {
-                  if ((color !== null) && (piece.player == board.player) && (((piece.type / 2) | 0) == color)) {
+                  if ((color !== null) && (piece.player == board.player) && (((+piece.type / 2) | 0) == color)) {
                       v += 1000;
                   } else {
                       v += 100;
@@ -155,7 +155,7 @@ Dagaz.Model.continue = function(design, board, text) {
    .each(function(pos) {
         var piece = board.getPiece(pos);
         if (piece !== null) {
-            var type = piece.type;
+            var type = +piece.type;
             if ((type % 2 == 0) && design.inZone(8, 1, pos)) {
                 type++;
             }
@@ -181,7 +181,7 @@ Dagaz.Model.continue = function(design, board, text) {
    .each(function(pos) {
         var piece = board.getPiece(pos);
         if (piece !== null) {
-            var type = piece.type;
+            var type = +piece.type;
             if ((type % 2 == 0) && design.inZone(8, 2, pos)) {
                 type++;
             }
@@ -209,7 +209,8 @@ Dagaz.Model.CheckInvariants = function(board) {
                return board.getPiece(pos) !== null;
             })
            .filter(function(pos) {
-               return ((board.getPiece(pos).type / 2) | 0) == color;
+               var piece = board.getPiece(pos);
+               return ((+piece.type / 2) | 0) == color;
             })
            .filter(function(pos) {
                return board.getPiece(pos).player != board.player;
@@ -230,7 +231,7 @@ Dagaz.Model.CheckInvariants = function(board) {
        .each(function(move) {
             var pos = move.actions[0][0][0];
             var piece = board.getPiece(pos);
-            if ((piece !== null) && (((piece.type / 2) | 0) != color)) {
+            if ((piece !== null) && (((+piece.type / 2) | 0) != color)) {
                 move.failed = true;
             }
         });

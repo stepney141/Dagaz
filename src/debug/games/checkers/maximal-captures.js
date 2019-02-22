@@ -36,7 +36,7 @@ Dagaz.Model.PostActions = function(board) {
       })
      .compact()
      .map(function(piece) {
-         return piece.type;
+         return +piece.type;
       })
      .countBy(function(type) {
          return (type == 0) ? "Mans" : "Kings";

@@ -99,7 +99,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                   }
               } else {
                   var q = ss[ss.length - 1];
-                  if ((piece.type != q.type + 2) || (piece.player != q.player)) {
+                  if ((piece.type != +q.type + 2) || (piece.player != q.player)) {
                       move.failed = true;
                       return;
                   }
@@ -130,7 +130,7 @@ Dagaz.Model.CheckInvariants = function(board) {
               }
           } else {
               var t = board.getPiece(p);
-              if ((t === null) || (piece.type + 2 != t.type) || badColors(piece.player, t.player)) {
+              if ((t === null) || (+piece.type + 2 != t.type) || badColors(piece.player, t.player)) {
                   move.failed = true;
                   return;
               }
@@ -158,7 +158,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                   }
               } else {
                   var q = ss[ss.length - 1];
-                  if ((p.type != q.type + 2) || (p.player != q.player)) {
+                  if ((p.type != +q.type + 2) || (p.player != q.player)) {
                       move.failed = true;
                       return;
                   }
@@ -214,7 +214,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                   }
               } else {
                   var t = board.getPiece(p);
-                  if ((t === null) || (piece.type + 2 != t.type) || badColors(piece.player, t.player)) {
+                  if ((t === null) || (+piece.type + 2 != t.type) || badColors(piece.player, t.player)) {
                       move.failed = true;
                       return;
                   }

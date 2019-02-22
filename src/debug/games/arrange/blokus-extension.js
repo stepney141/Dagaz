@@ -462,7 +462,7 @@ Dagaz.Model.CheckInvariants = function(board) {
           var pos   = move.actions[0][1][0];
           var piece = move.actions[0][2][0];
           for (var i = 0; i < pattern.length; i++) {
-               if ((pattern[i][0][1] == piece.type) &&
+               if ((pattern[i][0][1] == +piece.type) &&
                    (_.indexOf(list, pattern[i][0][0]) < 0)) {
                    var m = Dagaz.Model.createMove(i);
                    m.dropPiece(pos, piece);

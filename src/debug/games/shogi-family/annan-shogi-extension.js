@@ -25,7 +25,7 @@ Dagaz.Model.CheckInvariants = function(board) {
               }
           }
           if (piece !== null) {
-              var t = piece.type;
+              var t = +piece.type;
               if ((t == 0) || (t >= 10)) t = 10;
               if (t != move.mode) {
                   move.failed = true;

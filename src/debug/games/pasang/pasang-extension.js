@@ -37,7 +37,7 @@ Dagaz.Model.CheckInvariants = function(board) {
               var pos = move.actions[1][0];
               var piece = board.getPiece(pos);
               if (piece !== null) {
-                  s += piece.type;
+                  s += +piece.type;
               }
               if (checkDir(design, board, pos, w) || 
                   checkDir(design, board, pos, e) || 
@@ -49,7 +49,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                   pos = design.navigate(board.player, pos, gr);
                   var piece = board.getPiece(pos);
                   if (piece !== null) {
-                      s += piece.type;
+                      s += +piece.type;
                   }
                   move.capturePiece(pos);
               }

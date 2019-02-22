@@ -1,8 +1,8 @@
 (function() {
 
 Dagaz.AI.AI_FRAME      = 2000;
-Dagaz.AI.MIN_DEEP      = 2;
-Dagaz.AI.MAX_DEEP      = 3;
+Dagaz.AI.MIN_DEEP      = 1;
+Dagaz.AI.MAX_DEEP      = 2;
 
 var MAX_FORCED_FACTOR  = 1;
 
@@ -49,10 +49,10 @@ Dagaz.AI.isForced = function(design, board, move) {
       _.each(design.allPositions(), function(pos) {
           var piece = b.getPiece(pos);
           if ((piece !== null) && (piece.type != 1) && (piece.player == b.player)) {
-              _.each(getDirs(piece.type), function(dir) {
+              _.each(getDirs(+piece.type), function(dir) {
                    var piece = b.getPiece(pos);
                    var p = design.navigate(b.player, pos, dir);
-                   if (piece.type >= 2) {
+                   if (+piece.type >= 2) {
                        while (p !== null) {
                            if (b.getPiece(p) !== null) break;
                            p = design.navigate(b.player, p, dir);

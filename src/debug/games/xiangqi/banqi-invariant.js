@@ -20,7 +20,7 @@ var getShadow = function(design, board) {
       _.each(design.allPositions(), function(pos) {
            var piece = board.getPiece(pos);
            if ((piece !== null) && (piece.type < 7)) {
-               var value = piece.type + 7;
+               var value = +piece.type + 7;
                if (piece.player != player) {
                    value = -value;
                }
@@ -147,8 +147,8 @@ var getChainPrice = function(design, board, attacker, attacking, len) {
   var player = board.getValue(board.player);
   if ((player === null) || (attacker == null) || (attacking === null)) return 0;
   if (attacker.player == attacking.player) return 0;
-  var isAttacking = isAttacker(design, attacker.type, attacking.type);
-  var isAttacked  = isAttacker(design, attacking.type, attacker.type);
+  var isAttacking = isAttacker(design, +attacker.type, +attacking.type);
+  var isAttacked  = isAttacker(design, +attacking.type, +attacker.type);
   if (!chinese && (attacker.type == 12)) {
       isAttacking = true;
       isAttacked  = (attacking.type == attacker.type) && (len == 1);
@@ -273,7 +273,7 @@ var isDefended = function(design, board, target, attacker, len) {
            _.each(chains[pos], function(chain) {
                if (chain.trace.length <= len) {
                    var piece = board.getPiece(pos);
-                   if ((piece !== null) && (piece.type != attacker.type) && isAttacker(design, piece.type, attacker.type)) return true;
+                   if ((piece !== null) && (piece.type != attacker.type) && isAttacker(design, +piece.type, +attacker.type)) return true;
                }
            });
        }
@@ -324,7 +324,7 @@ var getWish = function(design, board) {
               _.each(attacks, function(pos) {
                   var piece = board.getPiece(pos);
                   if ((piece !== null) && (piece.player != player)) {
-                      var p = estimate(design, board, isAttacker, piece.type);
+                      var p = estimate(design, board, isAttacker, +piece.type);
                       if (p > 30) {
                           if ((chain === null) || (p > maxp)) {
                                chain = _.min(chains[pos], function(chain) {
@@ -356,7 +356,7 @@ var getWish = function(design, board) {
                           if (p !== null) {
                               var x = board.getPiece(p);
                               if ((x !== null) && (x.type < 7)) {
-                                  var r = estimate(design, board, isAttacker, piece.type);
+                                  var r = estimate(design, board, isAttacker, +piece.type);
                                   if (!chinese) {
                                       if (pCannon > 50) {
                                           r = 0;
@@ -404,7 +404,7 @@ var getWish = function(design, board) {
                                   }
                                   targets[ix] = p;
                                   if (_.isUndefined(enemies[ix]) || (enemies[ix] > piece.type)) {
-                                      enemies[ix] = piece.type;
+                                      enemies[ix] = +piece.type;
                                   }
                               }
                           });
@@ -415,7 +415,7 @@ var getWish = function(design, board) {
                   var pos     = targets[ix];
                   var emp     = [];
                   var piece   = board.getPiece(pos);
-                  var pDefend = estimate(design, board, isDefender, enemies[ix], piece.type);
+                  var pDefend = estimate(design, board, isDefender, enemies[ix], +piece.type);
                   if (piece === null) continue;
                   _.each(design.allDirections(), function(dir) {
                       var p = design.navigate(board.player, pos, dir);

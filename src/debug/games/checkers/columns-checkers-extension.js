@@ -236,7 +236,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                             if (dst === null) {
                                 dst = "";
                             }
-                            dst = dst + ((p.type * 2) + p.player - 1);
+                            dst = dst + ((+p.type * 2) + p.player - 1);
                             var src = p.getValue(0);
                             if ((src === null) || (src == "")) {
                                 if (Dagaz.Model.deferredStrike) {

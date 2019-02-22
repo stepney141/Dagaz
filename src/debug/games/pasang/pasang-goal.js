@@ -16,7 +16,7 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
       if ((a[0] !== null) && (a[1] === null)) {
           var piece = board.getPiece(a[0][0]);
           if (piece !== null) {
-              r += piece.type;
+              r += +piece.type;
           }
       }
   });

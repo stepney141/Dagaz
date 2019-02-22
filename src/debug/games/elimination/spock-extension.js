@@ -153,7 +153,7 @@ var isAttacked = function(design, board, player, type, pos) {
           if (!r) {
               var piece = board.getPiece(p);
               if ((piece !== null) && (piece.player != player)) {
-                  if ((piece.type > 0) || (type == 4) || (type == 0)) {
+                  if ((+piece.type > 0) || (type == 4) || (type == 0)) {
                        r = true;
                   }
               }
@@ -176,7 +176,7 @@ Dagaz.AI.eval = function(design, params, board, player) {
                   r = -MAXVALUE;
               }
           } else {
-              if (isAttacked(design, board, piece.player, piece.type, pos)) {
+              if (isAttacked(design, board, piece.player, +piece.type, pos)) {
                   v = (v / 2) | 0;
                   if (piece.type == 0) {
                       var cnt = 0;
@@ -238,7 +238,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                 var target = m.actions[0][1][0];
                 var piece = board.getPiece(target);
                 if (piece !== null) {
-                    var type = piece.type + 1;
+                    var type = +piece.type + 1;
                     if (type >= 5) {
                         type = 0;
                     }

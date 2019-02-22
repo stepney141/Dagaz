@@ -33,7 +33,7 @@ Dagaz.Model.setup = function(board) {
       if (piece !== null) {
           if (setup.length == 0) {
               if (_.random(0, 100) < 50) {
-                  piece = piece.promote(piece.type + 1);
+                  piece = piece.promote(+piece.type + 1);
                   board.setPiece(pos, piece);
               }
           } else {
