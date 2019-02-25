@@ -161,6 +161,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("j11", [0, 0, 1, -10, -1, -11]);
     design.addPosition("k11", [0, 0, 0, 0, -1, -11]);
 
+    design.addZone("start-zone", 1, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    design.addZone("start-zone", 2, [0, 11, 22, 33, 44, 55, 66, 77, 88, 99, 110]);
+    design.addZone("stop-zone", 1, [110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120]);
+    design.addZone("stop-zone", 2, [10, 21, 32, 43, 54, 65, 76, 87, 98, 109, 120]);
+
     design.addCommand(0, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(0, ZRF.FUNCTION,	20);	// verify
     design.addCommand(0, ZRF.FUNCTION,	25);	// to

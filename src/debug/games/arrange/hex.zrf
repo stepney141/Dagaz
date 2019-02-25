@@ -31,6 +31,18 @@
            (e 1 0) (w -1 0)
          )
      )
+     (zone (name start-zone) (players Red)
+           (positions a1 b1 c1 d1 e1 f1 g1 h1 i1 j1 k1)
+     )
+     (zone (name start-zone) (players Blue)
+           (positions a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11)
+     )
+     (zone (name stop-zone) (players Red)
+           (positions a11 b11 c11 d11 e11 f11 g11 h11 i11 j11 k11)
+     )
+     (zone (name stop-zone) (players Blue)
+           (positions k1 k2 k3 k4 k5 k6 k7 k8 k9 k10 k11)
+     )
   )
 
   (piece
