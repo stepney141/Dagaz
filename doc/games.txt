@@ -235,7 +235,7 @@
   - Quatuum Tic Tac Toe [todo, drops, best, family:renju]
   - Quatuum Morris [todo, drops, best, family:morris]
 - Connect games
-  - Hex [todo, family:connect]
+  - Hex [family:connect, todo:ai]
   - Gonnect [todo, family:connect]
 - Puzzles [puzzle]
   - Solitaire [best, solver, smart, family:checkers]
