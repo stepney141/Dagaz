@@ -56,10 +56,65 @@ var checkMiai = function(design, board, player, targets) {
   });
 }
 
+var nextDir = function(dir) {
+  if (dir == 0) return 1;
+  if (dir == 1) return 4;
+  if (dir == 2) return 0;
+  if (dir == 3) return 2;
+  if (dir == 4) return 5;
+  return 3;
+}
+
+var checkCutting = function(design, board, player, targets) {
+  _.each(design.allPositions(), function(pos) {
+      if (board.getPiece(pos) === null) {
+          var f = false;
+          _.each(design.allDirections(), function(dir) {
+              var p = design.navigate(1, pos, dir);
+              if (p !== null) {
+                  var piece = board.getPiece(p);
+                  if ((piece !== null) && (piece.player != player)) {
+                      p = design.navigate(0, pos, dir);
+                      if (p !== null) {
+                          piece = board.getPiece(p);
+                          if ((piece !== null) && (piece.player != player)) {
+                              f = true;
+                          }
+                      }
+                      if (!f) {
+                          var d = nextDir(dir);
+                          p = design.navigate(1, pos, d);
+                          if (p !== null) {
+                              piece = board.getPiece(p);
+                              if ((piece !== null) && (piece.player == player)) {
+                                  d = nextDir(d);
+                                  p = design.navigate(1, pos, d);
+                                  if (p !== null) {
+                                      piece = board.getPiece(p);
+                                      if ((piece !== null) && (piece.player != player)) {
+                                          f = true;
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          });
+          if (f) {
+              targets.push(pos);
+          }
+      }
+  });
+}
+
 var getTargets = function(design, board, player) {
   if (_.isUndefined(board.targets)) {
       board.targets = [];
       checkMiai(design, board, player, board.targets);
+      if (board.targets.length == 0) {
+          checkCutting(design, board, player, board.targets);
+      }
       if (board.targets.length == 0) {
           // TODO:
 
