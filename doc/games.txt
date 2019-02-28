@@ -250,3 +250,4 @@
   - Fox Hunting [pkm, family:other]
   - Mine Sweeper [best, family:other]
   - Klondike [best, family:other]
+  - Mahjong solitaire [best]

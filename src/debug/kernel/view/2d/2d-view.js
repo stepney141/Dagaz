@@ -50,7 +50,7 @@ Dagaz.View.inRect = function(view, pos, x, y) {
 Dagaz.View.pointToPositions = function(view, x, y) {
   var list = _.chain(view.setup)
    .map(function(piece) {
-       return piece.pos;
+       return +piece.pos;
     })
    .filter(function(pos) {
       return Dagaz.View.inRect(view, pos, x, y);
@@ -190,6 +190,7 @@ View2D.prototype.dropPiece = function(move, pos, piece, phase) {
       steps: 1,
       ix:    ix,
       to:    pos,
+      model: piece,
       np:    piece.toString()
   });
 }
@@ -209,6 +210,7 @@ View2D.prototype.addPhase = function(ix, from, to, piece, phase, steps) {
       from:  from,
       to:    to,
       ix:    ix,
+      model: piece,
       np:    (piece === null) ? null : piece.toString(),
       dx:    ((this.pos[to].x - this.pos[from].x) / steps) | 0,
       dy:    ((this.pos[to].y - this.pos[from].y) / steps) | 0
@@ -302,6 +304,9 @@ var drawMarks = function(ctx, view, list, color) {
         var r = pos.dx / 4;
         if (Math.abs(pos.dy - pos.dx) > 10) {
             r = Math.min(pos.dy, pos.dx) / 2;
+        }
+        if (!_.isUndefined(Dagaz.View.MARK_R)) {
+            r = Dagaz.View.MARK_R;
         }
         ctx.beginPath();
         ctx.fillStyle = color;
@@ -408,20 +413,26 @@ View2D.prototype.animate = function() {
    .each(function(frame) {
         if (!_.isUndefined(frame.op) && !_.isUndefined(frame.to)) {
             var piece = this.setup[frame.op];
-            if (frame.np) {
-                piece.name = frame.np;
+            if (piece) {
+                if (frame.np) {
+                    piece.name = frame.np;
+                }
+                if (frame.model) {
+                    piece.model = frame.model;
+                }
+                piece.pos = +frame.to;
+                piece.x = this.pos[frame.to].x;
+                piece.y = this.pos[frame.to].y;
+                delete piece.z;
             }
-            piece.pos = +frame.to;
-            piece.x = this.pos[frame.to].x;
-            piece.y = this.pos[frame.to].y;
-            delete piece.z;
         }
         if (_.isUndefined(frame.op) && !_.isUndefined(frame.to)) {
             this.setup.push({
-                pos:  frame.to,
-                name: frame.np,
-                x:    this.pos[frame.to].x,
-                y:    this.pos[frame.to].y
+                pos:   frame.to,
+                name:  frame.np,
+                model: frame.model,
+                x:     this.pos[frame.to].x,
+                y:     this.pos[frame.to].y
             });
         }
         frame.done = true;
