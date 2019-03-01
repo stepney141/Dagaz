@@ -10,6 +10,8 @@ Dagaz.Sounds.start = 6;
 Dagaz.Sounds.hint  = 7;
 Dagaz.Sounds.popup = 8;
 
+Dagaz.Controller.soundOff = false;
+
 (function() {
 
 var sounds  = [];
@@ -49,6 +51,7 @@ var getSound = function(ix, player) {
 }
 
 Dagaz.Controller.play = function(ix, player) {
+    if (Dagaz.Controller.soundOff) return;
     Dagaz.Controller.stop();
     current = getSound(ix, player);
     if (current !== null) {
@@ -59,6 +62,16 @@ Dagaz.Controller.play = function(ix, player) {
 Dagaz.Controller.stop = function() {
     if (current !== null) {
         current = null;
+    }
+}
+
+Dagaz.Controller.sound = function() {
+    if (Dagaz.Controller.soundOff) {
+        sound.innerHTML = "no Sound";
+        Dagaz.Controller.soundOff = false;
+    } else {
+        sound.innerHTML = "Sound";
+        Dagaz.Controller.soundOff = true;
     }
 }
 

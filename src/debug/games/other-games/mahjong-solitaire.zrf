@@ -73,3 +73,47 @@
   (p P10 pinyin10) (p P11 pinyin11) (p P12 pinyin12) (p P13 pinyin13) (p P14 pinyin14) (p P15 pinyin15)
   (p F1 chrysanthemum) (p F2 lotus) (p F3 orchid) (p F4 peony)
 )
+
+(variant
+  (title "Mahjong solitaire")
+  (board
+     (image "images/mahjong/12x8.bmp")
+     (grid
+         (start-rectangle 624 10 698 99)
+         (dimensions
+           ("a/b/c/d/e/f/g/h/i/j/k/l" (-56 0))
+           ("8/7/6/5/4/3/2/1" (0 81))
+           ("a/b/c/d" (8 -8))
+         )
+         (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0))
+     )
+     (zone (name board-zone)
+           (players You)
+           (positions 
+                              e1a         h1a
+                      c2a d2a e2a         h2a i2a j2a
+                  b3a c3a d3a e3a f3a g3a h3a i3a j3a k3a
+                          d4a e4a         h4a i4a
+                          d5a e5a         h5a i5a
+                  b6a c6a d6a e6a f6a g6a h6a i6a j6a k6a
+                      c7a d7a e7a         h7a i7a j7a
+                              e8a         h8a
+
+                              e1b         h1b
+                      c2b d2b e2b         h2b i2b j2b
+                  b3b c3b d3b e3b f3b g3b h3b i3b j3b k3b
+                          d4b e4b         h4b i4b
+                          d5b e5b         h5b i5b
+                  b6b c6b d6b e6b f6b g6b h6b i6b j6b k6b
+                      c7b d7b e7b         h7b i7b j7b
+                              e8b         h8b
+
+                      c3c d3c e3c f3c g3c h3c i3c j3c
+                      c6c d6c e6c f6c g6c h6c i6c j6c
+
+                      c3d d3d e3d f3d g3d h3d i3d j3d
+                      c6d d6d e6d f6d g6d h6d i6d j6d
+           )
+     )
+  )
+)

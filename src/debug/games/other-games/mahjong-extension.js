@@ -10,20 +10,28 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+var getDirs = function() {
+  var str = window.location.search.toString();
+  var result = str.match(/[?&]easy=[yY]/);
+  if (result) {
+     return [0, 1, 2, 3];
+  } else {
+     return [1, 2];
+  }
+}
+
 var isBadMove = function(design, board, pos) {
   var p = pos + Dagaz.Model.WIDTH * Dagaz.Model.HEIGHT;
   if (p < design.positions.length) {
       if (board.getPiece(p) !== null) return true;
   }
   var r = true;
-  p = design.navigate(1, pos, 1);
-  if ((p === null) || (board.getPiece(p) === null)) {
-      r = false;
-  }
-  p = design.navigate(1, pos, 2);
-  if ((p === null) || (board.getPiece(p) === null)) {
-      r = false;
-  }
+  _.each(getDirs(), function(dir) {
+      var p = design.navigate(1, pos, dir);
+      if ((p === null) || (board.getPiece(p) === null)) {
+          r = false;
+      }
+  });
   return r;
 }
 
@@ -40,6 +48,17 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
   if (val !== null) {
       ctx.restore();
   }
+}
+
+var notPair = function(design, board, pos, type) {
+  var r = true;
+  _.each(design.allPositions(), function(p) {
+      var piece = board.getPiece(p);
+      if ((p != pos) && (piece !== null) && (piece.type == type) && !isBadMove(design, board, p))  {
+          r = false;
+      }
+  });
+  return r;
 }
 
 var CheckInvariants = Dagaz.Model.CheckInvariants;
@@ -68,6 +87,10 @@ Dagaz.Model.CheckInvariants = function(board) {
               }
           }
           if (f) {
+              if (notPair(design, board, pos, piece.type)) {
+                  move.failed = true;
+                  return;
+              }
               piece = piece.setValue(0, 1);
               move.actions = [];
               move.movePiece(pos, pos, piece);

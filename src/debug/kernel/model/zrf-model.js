@@ -995,7 +995,8 @@ ZrfDesign.prototype.getZone = function(name) {
   return zone;
 }
 
-ZrfDesign.prototype.addZone = function(name, player, positions) {
+ZrfDesign.prototype.addZone = function(name, player, positions, selector) {
+  if (!_.isUndefined(selector) && (selector != Dagaz.Model.getResourceSelector())) return;
   var zone = Dagaz.find(this.zoneNames, name);
   if (zone < 0) {
       zone = this.zoneNames.length;
@@ -2329,8 +2330,7 @@ Dagaz.Model.getY = function(pos) {
 }
 
 Dagaz.Model.continue = function(design, board, str) {
-  str = str + "?";
-  var re  = /^(\D*)(\d+)([^?]*).*$/;
+  var re  = /^(\D*)(\d+)([^?]*)$/;
   var num = str.replace(re, "$2");
   if (num) {
       var len = num.length;

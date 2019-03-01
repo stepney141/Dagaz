@@ -10,7 +10,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
 
 var getSeed = function() {
   var str = window.location.search.toString();
-  var result = str.match(/\?seed=([^&]*)/);
+  var result = str.match(/[?&]seed=([^&]*)/);
   if (result) {
       return result[1];
   } else {
@@ -20,11 +20,11 @@ var getSeed = function() {
 
 var isBadDir = function(design, board, pos, dir) {
   var p = design.navigate(1, pos, dir);
-  if (p !== null) {
+  if ((p !== null) && design.inZone(0, 1, p)) {
       if (board.getPiece(p) !== null) return false;
       p = design.navigate(1, p, dir);
   }
-  while (p !== null) {
+  while ((p !== null) && design.inZone(0, 1, p)) {
       if (board.getPiece(p) !== null) return true;
       p = design.navigate(1, p, dir);
   }

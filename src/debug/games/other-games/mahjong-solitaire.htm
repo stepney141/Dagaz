@@ -45,7 +45,10 @@
 <img id="YouF4" style="display:none" src="images/mahjong/peony.png">
 
 <table style="margin:auto; font-family:sans-serif; font-size:14px" id="Table">
-<tr><td>Mahjong tileset designed by <a href="http://www.codeinferno.com">Code Inferno</a></td></tr>
+<tr><td><a href="javascript:Dagaz.Controller.undo()" style="display:none" id="undo"><img src="../../images/undo.png"/></a>
+Mahjong tileset designed by <a href="http://www.codeinferno.com">Code Inferno</a>
+<a href="javascript:Dagaz.Controller.sound()" id="sound">no Sound</a>
+<a href="javascript:Dagaz.Controller.redo()" style="display:none" id="redo"><img src="../../images/redo.png"/></a></td></tr>
 <tr style="height:676px; vertical-align:top">
 <td id="CanvasCell" style="width:706px">
 <canvas id="Canvas" width="706" height="676" style="cursor:default">Broken canvas...</canvas>
@@ -76,6 +79,7 @@
 <script src="../../kernel/model/zobrist.js"></script>
 <script src="../../kernel/view/2d/2d-view.js"></script>
 <script src="../../kernel/controller/utils/move-list.js"></script>
+<script src="../../kernel/controller/utils/session-manager.js"></script>
 <script src="../../kernel/controller/utils/sound-manager-v2.js"></script>
 <script src="mahjong-goal.js"></script>
 <script src="mahjong-setup.js"></script>
