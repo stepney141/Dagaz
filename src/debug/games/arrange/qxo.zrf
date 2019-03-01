@@ -1,0 +1,73 @@
+(define drop-piece (
+  (verify empty?)
+  add
+))
+
+(game
+  (title "Quantum tic-tac-toe")
+
+  (move-sound "Audio\Pickup.wav")
+  (release-sound "Audio\Pickup.wav")
+  (capture-sound "")
+  (drop-sound "")
+
+  (option "animate drops"    false)
+  (option "animate captures" false)
+
+  (players X O)
+  (turn-order X O)
+  (move-priorities type-1 type-2 type-3 type-4)
+
+  (board
+     (image "images/qxo/board.bmp")
+     (grid
+         (start-rectangle 20 50 170 200)
+         (dimensions
+           ("a/b/c" (190 -10)) ; files
+           ("3/2/1" (0 180)) ; ranks
+         )
+     )
+  )
+
+  (piece
+     (name  B1)
+     (image X "images/qxo/bigx1.bmp"
+            O "images/qxo/bigo1.bmp")
+     (drops 
+         (move-type type-1)
+         (drop-piece)
+     )
+  )  
+  (piece
+     (name  B2)
+     (image X "images/qxo/bigx2.bmp"
+            O "images/qxo/bigo2.bmp")
+     (drops 
+         (move-type type-2)
+         (drop-piece)
+     )
+  )  
+  (piece
+     (name  B3)
+     (image X "images/qxo/bigx3.bmp"
+            O "images/qxo/bigo3.bmp")
+     (drops 
+         (move-type type-3)
+         (drop-piece)
+     )
+  )  
+  (piece
+     (name  B4)
+     (image X "images/qxo/bigx4.bmp"
+            O "images/qxo/bigo1.bmp")
+     (drops 
+         (move-type type-4)
+         (drop-piece)
+     )
+  )  
+
+  (board-setup
+     (X (B1 off 1) (B2 off 1) (B3 off 1) (B4 off 1))
+     (O (B1 off 1) (B2 off 1) (B3 off 1) (B4 off 1))
+  )
+)
