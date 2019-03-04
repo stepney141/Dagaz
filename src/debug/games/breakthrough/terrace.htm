@@ -1,0 +1,53 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Terrace</title>
+</head>
+<body>
+
+<img id="Board" style="display:none" src="images/terrace/board.png">
+<img id="BlackT" style="display:none" src="images/terrace/bt.png">
+<img id="WhiteT" style="display:none" src="images/terrace/wt.png">
+<img id="BlackS" style="display:none" src="images/terrace/bs.png">
+<img id="WhiteS" style="display:none" src="images/terrace/ws.png">
+<img id="BlackM" style="display:none" src="images/terrace/bm.png">
+<img id="WhiteM" style="display:none" src="images/terrace/wm.png">
+<img id="BlackL" style="display:none" src="images/terrace/bl.png">
+<img id="WhiteL" style="display:none" src="images/terrace/wl.png">
+
+<table style="margin:auto; font-family:sans-serif; font-size:14px" id="Table">
+<tr style="height:560px; vertical-align:top">
+<td id="CanvasCell" style="width:545px">
+<canvas id="Canvas" width="549" height="560" style="cursor:default">Broken canvas...</canvas>
+</td><td style="width:300px;">
+<div style="height:510px; overflow:auto" id="ScrollDiv">
+<img id="GlyphImage"><p id="HelpText"></p>
+<p id="GameSession"></p>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div style="height:100px; width:500px; margin-left:auto; margin-right:auto">
+<table>
+<tr style="display:none" id="PieceInfo">
+<td><img id="PieceInfoImage"></td><td id="PieceInfoText"></td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/2.3.10/seedrandom.min.js"></script>
+<script src="../../kernel/dagaz.js"></script>
+<script src="../../kernel/model/zrf-model.js"></script>
+<script src="../../kernel/model/zobrist.js"></script>
+<script src="../../kernel/view/2d/2d-view.js"></script>
+<script src="../../kernel/controller/utils/move-list.js"></script>
+<script src="terrace.js"></script>
+<script src="../../kernel/controller/app.js"></script>
+
+</body>
+</html>

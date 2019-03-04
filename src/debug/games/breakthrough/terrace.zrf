@@ -1,0 +1,60 @@
+(define capture-piece (
+  capture add
+))
+
+(define p
+  (piece
+     (name $1)
+     (image Black "images/terrace/b$2.bmp"
+            White "images/terrace/w$2.bmp")
+     (moves
+        (capture-piece)
+     )
+  )
+)
+
+(game
+  (title "Terrace")
+
+  (move-sound "Audio\Pickup.wav")
+  (release-sound "Audio\Pickup.wav")
+  (capture-sound "")
+  (drop-sound "")
+
+  (option "animate drops"    false)
+  (option "animate captures" false)
+  (option "pass turn"        true)
+
+  (players Black White)
+  (turn-order Black White)
+
+  (board
+     (image "images/terrace/board.bmp")
+     (grid
+         (start-rectangle 408 46 510 145)
+         (dimensions
+           ("a/b/c/d/e/f" (-80 0))
+           ("6/5/4/3/2/1" (0 81))
+           ("a/b/c/d/e/f" (8 -8))
+         )
+     )
+     (zone (name board-zone)
+           (players Black White)
+           (positions 
+              a1f b1e c1d d1c e1b f1a
+              a2e b2e c2d d2c e2b f2b
+              a3d b3d c3d d3c e3c f3c
+              a4c b4c c4c d4d e4d f4d
+              a5b b5b c5c d5d e5e f5e
+              a6a b6b c6c d6d e6e f6f
+           )
+     )
+  )
+
+  (p T t) (p S s) (p M m) (p L l)
+
+  (board-setup
+    (Black (L a1f b1e e2b f2b) (M c1d d1c c2d d2c) (S a2e b2e e1b) (T f1a))
+    (White (L e6e f6f a5b b5b) (M c6c d6d c5c d5d) (S e5e f5e b6b) (T a6a))
+  )
+)

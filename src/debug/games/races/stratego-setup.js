@@ -80,7 +80,7 @@ Dagaz.Model.setup = function(board) {
       positions = addPieces(design, board,  7,   3, positions);
       positions = addPieces(design, board,  8,   2, positions);
       positions = addPieces(design, board,  9,   1, positions);
-      positions = addPieces(design, board,  9,  10, positions);
+      positions = addPieces(design, board, 10,   1, positions);
   }
 }
 

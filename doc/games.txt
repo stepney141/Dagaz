@@ -130,6 +130,7 @@
   - Game of Generals [todo:ai, cloack, drops, limit, breakthrough, family:chess]
   - Neutron [todo, shared, family:breakthrough]
   - Arimaa [todo, turns, elimination, stalemate, family:breakthrough]
+  - Terrace [todo, vectors, family:breakthrough]
 - Races
   - Jasir [todo:ai, family:other]
   - Gate [best, family:other]
