@@ -30,24 +30,91 @@
 
   (board
      (image "images/terrace/board.bmp")
-     (grid
-         (start-rectangle 408 46 510 145)
-         (dimensions
-           ("a/b/c/d/e/f" (-80 0))
-           ("6/5/4/3/2/1" (0 81))
-           ("a/b/c/d/e/f" (8 -8))
-         )
+     (positions
+           (f6f  48   6 150 105)
+           (e6e 120  14 222 113)
+           (d6d 192  22 294 121)
+           (c6c 264  30 366 129)
+           (b6b 336  38 438 137)
+           (a6a 408  46 510 145)
+
+           (f5e  40  95 142 194)
+           (e5e 120  95 222 194)
+           (d5d 192 103 294 202)
+           (c5c 264 111 366 210)
+           (b5b 336 119 438 218)
+           (a5b 416 119 518 218)
+
+           (f4d  32 184 134 283)
+           (e4d 112 184 214 283)
+           (d4d 192 184 294 283)
+           (c4c 264 192 366 291)
+           (b4c 344 192 446 291)
+           (a4c 424 192 526 291)
+
+           (f3c  24 273 126 372)
+           (e3c 104 273 206 372)
+           (d3c 184 273 286 372)
+           (c3d 272 265 374 364)
+           (b3d 352 265 454 364)
+           (a3d 432 265 534 364)
+
+           (f2b  16 362 118 461)
+           (e2b  96 362 198 461)
+           (d2c 184 354 286 453)
+           (c2d 272 346 374 445)
+           (b2e 360 338 462 437)
+           (a2e 440 338 542 437)
+
+           (f1a   8 451 110 550)
+           (e1b  96 443 198 542)
+           (d1c 184 435 286 534)
+           (c1d 272 427 374 526)
+           (b1e 360 419 462 518)
+           (a1f 448 411 550 510)
      )
      (zone (name board-zone)
            (players Black White)
            (positions 
-              a1f b1e c1d d1c e1b f1a
-              a2e b2e c2d d2c e2b f2b
-              a3d b3d c3d d3c e3c f3c
-              a4c b4c c4c d4d e4d f4d
-              a5b b5b c5c d5d e5e f5e
-              a6a b6b c6c d6d e6e f6f
+              f6f e6e d6d c6c b6b a6a
+              f5e e5e d5d c5c b5b a5b
+              f4d e4d d4d c4c b4c a4c
+              f3c e3c d3c c3d b3d a3d
+              f2b e2b d2c c2d b2e a2e
+              f1a e1b d1c c1d b1e a1f
            )
+     )
+     (links s
+            (e6e e5e)                              (e2b e1b)
+            (d6d d5d) (d5d d4d)          (d3c d2c) (d2c d1c)
+            (c6c c5c) (c5c c4c)          (c3d c2d) (cd2 c1d)
+            (b6b b5b)                              (b2e b1e)
+     )
+     (links su
+                                (c4c c3d)
+                      (b5b b4c) (b4c b3d) (b3d b2e)
+            (a6a a5b) (a5b a4c) (a4c a3d) (a3d a2e) (a2e a1f)
+     )
+     (links sd
+            (f6f f5e) (f5e f4d) (f4d f3c) (f3c f2b) (f2b f1a)
+                      (e5e e4d) (e4d e3c) (e3c e2b)
+                                (d4d d3c)
+     )
+     (links n
+            (e1b e2b)                               (e5e e6e)
+            (d1c d2c) (d2c d3c)           (d4d d5d) (d5d d6d)
+            (c1d c2d) (c2d c3d)           (c4c c5c) (c5c c6c)
+            (b1e b2e)                               (b5b b6b)
+     )
+     (links nu
+            (f1a f2b) (f2b f3c) (f3c f4d) (f4d f5e) (f5e f6f)
+                      (e2b e3c) (e3c e4d) (e4d e5e)
+                                (d3c d4d)
+     )
+     (links nd
+                               (c3d c4c)
+                     (b2e b3d) (b3d b4c) (b4c b5b)
+           (a1f a2e) (a2e a3d) (a3d a4c) (a4c a5b) (a5b a6a)
      )
   )
 
