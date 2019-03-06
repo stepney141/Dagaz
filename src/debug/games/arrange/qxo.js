@@ -42,6 +42,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPlayer("X", [3, 2, 1, 0, 6, 7, 4, 5, 8, 9]);
     design.addPlayer("O", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
+    design.addTurn(1);
+    design.addTurn(1);
+    design.addTurn(2);
+    design.addTurn(2);
+
     design.addPosition("a3a3", [0, 0, 0, 0, 0, 0, 0, 0, 3, 81]);
     design.addPosition("b3a3", [0, 0, 0, 0, 0, 0, 0, 0, 3, 80]);
     design.addPosition("c3a3", [0, 0, 0, 0, 0, 0, 0, 0, 3, 79]);
@@ -135,6 +140,8 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addZone("board-zone", 1, [87, 88, 89, 84, 85, 86, 81, 82, 83]);
     design.addZone("board-zone", 2, [87, 88, 89, 84, 85, 86, 81, 82, 83]);
+    design.addZone("goal-zone", 1, [87, 88, 89, 84, 81]);
+    design.addZone("goal-zone", 2, [87, 88, 89, 84, 81]);
 
     design.addCommand(0, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(0, ZRF.FUNCTION,	20);	// verify
@@ -166,14 +173,14 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPiece("S4", 7);
     design.addPiece("None", 8);
 
-    design.reserve("X", "B1", 1);
-    design.reserve("X", "B2", 1);
-    design.reserve("X", "B3", 1);
-    design.reserve("X", "B4", 1);
-    design.reserve("O", "B1", 1);
-    design.reserve("O", "B2", 1);
-    design.reserve("O", "B3", 1);
-    design.reserve("O", "B4", 1);
+    design.reserve("X", "B1", 2);
+    design.reserve("X", "B2", 2);
+    design.reserve("X", "B3", 2);
+    design.reserve("X", "B4", 2);
+    design.reserve("O", "B1", 2);
+    design.reserve("O", "B2", 2);
+    design.reserve("O", "B3", 2);
+    design.reserve("O", "B4", 2);
 }
 
 Dagaz.View.configure = function(view) {

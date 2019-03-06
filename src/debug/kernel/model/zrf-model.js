@@ -2281,7 +2281,7 @@ ZrfMove.prototype.playSound = function(ix, delay, part) {
   if (!part) part = 1;
   if (!_.isUndefined(Dagaz.Controller.play)) {
       this.actions.push([ null, null, [{
-          exec: function(obj) {
+          exec: function() {
              if (_.isUndefined(delay)) {
                  Dagaz.Controller.play(ix);
              } else {

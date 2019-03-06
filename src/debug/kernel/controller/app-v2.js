@@ -179,11 +179,15 @@ App.prototype.mouseLocate = function(view, pos) {
   if (this.currPos != pos) {
       this.getDrops();
       if ((Dagaz.Model.showDrops == -1) || (!_.isUndefined(this.drops) && (Dagaz.Model.showDrops > 0) && (this.drops.length > Dagaz.Model.showDrops))) {
-          if (!_.isUndefined(this.list) && (pos.length == 1) && (_.indexOf(this.getDrops(), pos[0]) >= 0)) {
-              var pieces = this.list.getDropPieces(pos[0]);
+          if (!_.isUndefined(this.list) && (_.intersection(this.getDrops(), pos).length >= 0)) {
+              var p = _.intersection(this.getDrops(), pos)[0];
+              var pieces = this.list.getDropPieces(p);
+              if (!_.isUndefined(Dagaz.View.getDropPieces)) {
+                  pieces = Dagaz.View.getDropPieces(this.design, this.board, p);
+              }
               if ((pieces !== null) && (pieces.length > 0)) {
                   if (dropIndex >= pieces.length) dropIndex = pieces.length - 1;
-                  this.view.setDrops(pieces[dropIndex].toString(), [ pos[0] ]);
+                  this.view.setDrops(pieces[dropIndex].toString(), [p]);
               }
           } else {
               this.view.clearDrops();
