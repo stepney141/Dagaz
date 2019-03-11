@@ -81,6 +81,11 @@ Dagaz.Controller.noRedo = function() {
 }
 
 var noMoves = function(board) {
+  if (!_.isUndefined(Dagaz.Controller.skip)) {
+      if (Dagaz.Controller.skip(board)) {
+          return true;
+      }
+  }
   for (var ix = 0; ix < board.moves.length; ix++) {
        if (!board.moves[ix].isPass()) return false;
   }

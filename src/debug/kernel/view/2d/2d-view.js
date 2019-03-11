@@ -86,6 +86,10 @@ View2D.prototype.isEmpty = function(pos) {
   return posToIx(this, pos) === null;
 }
 
+View2D.prototype.clearDrops = function() {
+  this.drops = [];
+}
+
 View2D.prototype.defPosition = function(name, x, y, dx, dy) {
   this.pos.push({
       name: name,
@@ -96,7 +100,8 @@ View2D.prototype.defPosition = function(name, x, y, dx, dy) {
   });
 }
 
-View2D.prototype.defBoard = function(img, x, y) {
+View2D.prototype.defBoard = function(img, x, y, selector) {
+  if (!_.isUndefined(selector) && (selector != Dagaz.Model.getResourceSelector())) return;
   var board = {
      h: document.getElementById(img),
      x: x ? x : 0,
@@ -477,6 +482,11 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
   ctx.drawImage(piece.h, x, y, piece.dx, piece.dy);
 }
 
+View2D.prototype.reInit = function(board) {
+  board.setup(this, false);
+  this.invalidate();
+}
+
 View2D.prototype.draw = function(canvas) {
   if (!isConfigured) {
       Dagaz.View.configure(this);
@@ -515,6 +525,10 @@ View2D.prototype.draw = function(canvas) {
         }, this);
       Dagaz.View.showMarks(this, ctx);
       this.animate();
+      if (!_.isUndefined(Dagaz.View.showBoard)) {
+           var board = this.controller.getBoard();
+           Dagaz.View.showBoard(board, ctx);
+      }
   }
 }
 
