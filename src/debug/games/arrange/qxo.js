@@ -27,6 +27,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-drops", "true");
     design.checkVersion("show-captures", "false");
+    design.checkVersion("smart-moves", "from");
+    design.checkVersion("pass-turn", "forced");
+    design.checkVersion("shared-pieces", "true");
 
     design.addDirection("n");  // 0
     design.addDirection("e");  // 1
@@ -150,10 +153,13 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
-    design.addPriority(0);			// type-1
-    design.addPriority(1);			// type-2
-    design.addPriority(2);			// type-3
-    design.addPriority(3);			// type-4
+    design.addCommand(1, ZRF.FUNCTION,	24);	// from
+    design.addCommand(1, ZRF.PARAM,	0);	// $1
+    design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(1, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(1, ZRF.FUNCTION,	25);	// to
+    design.addCommand(1, ZRF.FUNCTION,	28);	// end
 
     design.addPiece("B1", 0);
     design.addDrop(0, 0, [], 0);
@@ -168,9 +174,17 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addDrop(3, 0, [], 3);
 
     design.addPiece("S1", 4);
+    design.addMove(4, 1, [9], 4);
+
     design.addPiece("S2", 5);
+    design.addMove(5, 1, [9], 4);
+
     design.addPiece("S3", 6);
+    design.addMove(6, 1, [9], 4);
+
     design.addPiece("S4", 7);
+    design.addMove(7, 1, [9], 4);
+
     design.addPiece("None", 8);
 
     design.reserve("X", "B1", 2);

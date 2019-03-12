@@ -4,6 +4,11 @@
   add
 ))
 
+(define collapse (
+  $1 (verify empty?)
+  add
+))
+
 (game
   (title "Quantum tic-tac-toe")
 
@@ -14,10 +19,12 @@
 
   (option "animate drops"    false)
   (option "animate captures" false)
+  (option "smart moves"      true)
+  (option "pass turn"        forced)
 
   (players X O)
   (turn-order X O)
-  (move-priorities type-1 type-2 type-3 type-4)
+; (move-priorities type-1 type-2 type-3 type-4)
 
   (board
      (image "images/qxo/board.bmp")
@@ -194,21 +201,37 @@
      (name  S1)
      (image X "images/qxo/smallx1.bmp"
             O "images/qxo/smallo1.bmp")
+     (moves
+         (move-type collision-type)
+         (collapse up)
+     )
   )  
   (piece
      (name  S2)
      (image X "images/qxo/smallx2.bmp"
             O "images/qxo/smallo2.bmp")
+     (moves
+         (move-type collision-type)
+         (collapse up)
+     )
   )  
   (piece
      (name  S3)
      (image X "images/qxo/smallx3.bmp"
             O "images/qxo/smallo3.bmp")
+     (moves
+         (move-type collision-type)
+         (collapse up)
+     )
   )  
   (piece
      (name  S4)
      (image X "images/qxo/smallx4.bmp"
             O "images/qxo/smallo4.bmp")
+     (moves
+         (move-type collision-type)
+         (collapse up)
+     )
   )  
 
   (board-setup
