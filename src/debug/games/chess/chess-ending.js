@@ -107,6 +107,12 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addZone("last-rank", 2, [56, 57, 58, 59, 60, 61, 62, 63]);
     design.addZone("third-rank", 1, [40, 41, 42, 43, 44, 45, 46, 47]);
     design.addZone("third-rank", 2, [16, 17, 18, 19, 20, 21, 22, 23]);
+    design.addZone("black-zone", 1, [56, 58, 60, 62, 49, 51, 53, 55, 40, 42, 44, 46, 33, 35, 37, 39, 24, 26, 28, 30, 17, 19, 21, 23, 8, 10, 12, 14, 1, 3, 5, 7]);
+    design.addZone("black-zone", 2, [56, 58, 60, 62, 49, 51, 53, 55, 40, 42, 44, 46, 33, 35, 37, 39, 24, 26, 28, 30, 17, 19, 21, 23, 8, 10, 12, 14, 1, 3, 5, 7]);
+    design.addZone("white-diagonal", 1, [0, 9, 18, 27, 36, 37, 54, 63]);
+    design.addZone("white-diagonal", 2, [0, 9, 18, 27, 36, 37, 54, 63]);
+    design.addZone("black-diagonal", 1, [56, 49, 42, 35, 28, 21, 14, 7]);
+    design.addZone("black-diagonal", 2, [56, 49, 42, 35, 28, 21, 14, 7]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
@@ -318,7 +324,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(5, 7, [1, 1, 1, 0, 0], 0);
     design.addMove(5, 8, [0, 0, 0, 0, 1, 1, 1], 0);
 
-    design.reserve("White", "Bishop", 2);
+    design.reserve("White", "Knight", 1);
+    design.reserve("White", "Bishop", 1);
     design.reserve("White", "King", 1);
     design.reserve("Black", "King", 1);
 }
