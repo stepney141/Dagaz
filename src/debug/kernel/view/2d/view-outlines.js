@@ -20,6 +20,12 @@ var getZone = function() {
   }
 }
 
+var isFocused = function(pos) {
+  if (_.isUndefined(Dagaz.Controller.app.currPos)) return false;
+  if (Dagaz.Controller.app.currPos == pos) return true;
+  return _.indexOf(Dagaz.Controller.app.currPos, +pos) >= 0;
+}
+
 var showBoard = Dagaz.View.showBoard;
 
 Dagaz.View.showBoard = function(board, ctx) {
@@ -31,11 +37,16 @@ Dagaz.View.showBoard = function(board, ctx) {
           pos = Dagaz.Model.stringToPos(pos, design);
       }
   }
-  ctx.save();
-  ctx.strokeStyle = "#0000FF";
   _.each(design.allPositions(), function(p) {
       var r = view.pos[p];
       if (!_.isUndefined(r)) {
+          ctx.save();
+          ctx.strokeStyle = "#0030FF";
+          if (!isFocused(p)) {
+              ctx.globalAlpha = 0.4;
+          } else {
+              ctx.strokeStyle = "#0080FF";
+          }
           if ((zone !== null) && design.inZone(zone, board.player, p)) {
               ctx.beginPath();
               ctx.moveTo(r.x, r.y);
@@ -46,9 +57,9 @@ Dagaz.View.showBoard = function(board, ctx) {
           }
           if ((pos !== null) && (pos != p)) return;
           ctx.strokeRect(r.x, r.y, r.dx, r.dy);
+          ctx.restore();
       }
   });
-  ctx.restore();
   if (!_.isUndefined(showBoard)) {
       showBoard(board, ctx);
   }

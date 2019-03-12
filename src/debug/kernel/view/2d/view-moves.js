@@ -10,6 +10,12 @@ var getPos = function() {
   }
 }
 
+var isFocused = function(pos) {
+  if (_.isUndefined(Dagaz.Controller.app.currPos)) return false;
+  if (Dagaz.Controller.app.currPos == pos) return true;
+  return _.indexOf(Dagaz.Controller.app.currPos, +pos) >= 0;
+}
+
 var showBoard = Dagaz.View.showBoard;
 
 Dagaz.View.showBoard = function(board, ctx) {
@@ -32,21 +38,35 @@ Dagaz.View.showBoard = function(board, ctx) {
               if ((m.actions[0][1] !== null) && (m.actions[0][1][0] != pos)) return;
           }
       }
+      var f = false;
       _.each(m.actions, function(a) {
+          if ((a[0] !== null) && isFocused(a[0][0])) f = true;
+          if ((a[1] !== null) && isFocused(a[1][0])) f = true;
+      });
+      if (f) {
+          ctx.globalAlpha = 1;
+      } else {
+          ctx.globalAlpha = 0.5;
+      }
+      _.each(m.actions, function(a) {
+          var color = 65280;
+          color -= 4096 * (a[3] - 1);
+          color += 32 * (a[3] - 1);
           if (a[0] !== null) {
               var r = view.pos[ a[0][0] ];
               if (!_.isUndefined(r)) {
                   if (a[1] !== null) {
                       var t = view.pos[ a[1][0] ];
                       if (!_.isUndefined(t)) {
+                          ctx.strokeStyle = "#00" + color.toString(16);
                           ctx.beginPath();
                           ctx.moveTo(r.x + r.dx / 2, r.y + r.dy / 2);
                           ctx.lineTo(t.x + t.dx / 2, t.y + t.dy / 2);
                           ctx.arc(t.x + t.dx / 2, t.y + t.dy / 2, 2, 0, 2 * Math.PI);
-                          ctx.fill();
                           ctx.stroke();
                       }
                   } else {
+                      ctx.strokeStyle = "#00" + color.toString(16);
                       ctx.beginPath();
                       ctx.moveTo(r.x, r.y);
                       ctx.lineTo(r.x + r.dx, r.y + r.dy);
@@ -59,6 +79,7 @@ Dagaz.View.showBoard = function(board, ctx) {
               if (a[1] !== null) {
                   var t = view.pos[ a[1][0] ];
                   if (!_.isUndefined(t)) {
+                      ctx.strokeStyle = "#00" + color.toString(16);
                       ctx.beginPath();
                       ctx.arc(t.x + t.dx / 2, t.y + t.dy / 2, Math.min(t.dx, t.dy) / 2, 0, 2 * Math.PI);
                       ctx.stroke();

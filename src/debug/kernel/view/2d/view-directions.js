@@ -20,6 +20,12 @@ var getDir = function() {
   }
 }
 
+var isFocused = function(pos) {
+  if (_.isUndefined(Dagaz.Controller.app.currPos)) return false;
+  if (Dagaz.Controller.app.currPos == pos) return true;
+  return _.indexOf(Dagaz.Controller.app.currPos, +pos) >= 0;
+}
+
 var showBoard = Dagaz.View.showBoard;
 
 Dagaz.View.showBoard = function(board, ctx) {
@@ -36,9 +42,6 @@ Dagaz.View.showBoard = function(board, ctx) {
           dir = design.getDirection(dir);
       }
   }
-  ctx.save();
-  ctx.strokeStyle = "#FFFF00";
-  ctx.fillStyle = "#FFFF00";
   _.each(design.allPositions(), function(p) {
       if ((pos !== null) && (pos != p)) return;
       _.each(design.allDirections(), function(d) {
@@ -48,17 +51,24 @@ Dagaz.View.showBoard = function(board, ctx) {
                if ((dir !== null) && (dir != d)) return;
                var t = view.pos[q];
                if (!_.isUndefined(t)) {
+                   ctx.save();
+                   ctx.strokeStyle = "#FFFF00";
+                   if (isFocused(p) || isFocused(q)) {
+                       ctx.globalAlpha = 1;
+                       ctx.strokeStyle = "#FFFFFF";
+                   } else {
+                       ctx.globalAlpha = 0.8;
+                   }
                    ctx.beginPath();
                    ctx.moveTo(r.x + r.dx / 2, r.y + r.dy / 2);
                    ctx.lineTo(t.x + t.dx / 2, t.y + t.dy / 2);
                    ctx.arc(t.x + t.dx / 2, t.y + t.dy / 2, 2, 0, 2 * Math.PI);
-                   ctx.fill();
                    ctx.stroke();
+                   ctx.restore();
                }
            }
       });
   });
-  ctx.restore();
   if (!_.isUndefined(showBoard)) {
       showBoard(board, ctx);
   }
