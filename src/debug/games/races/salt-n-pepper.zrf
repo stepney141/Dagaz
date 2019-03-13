@@ -40,6 +40,14 @@
               (players North)
               (positions b1 b2 c1 c2)
         )
+        (zone (name locked-zone) 
+              (players South)
+              (positions b5 c5)
+        )
+        (zone (name locked-zone) 
+              (players North)
+              (positions b1 c1)
+        )
    )
 
    (piece

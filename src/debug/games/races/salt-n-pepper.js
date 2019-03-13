@@ -59,6 +59,8 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addZone("goal-zone", 2, [17, 13, 18, 14]);
     design.addZone("goal-zone", 1, [5, 1, 6, 2]);
+    design.addZone("locked-zone", 1, [1, 2]);
+    design.addZone("locked-zone", 2, [17, 18]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
