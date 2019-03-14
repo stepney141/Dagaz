@@ -85,6 +85,7 @@ var collapse = function(design, board, start, move) {
                         if ((pair !== null) && (_.indexOf(group, pair) < 0)) {
                             group.push(pair);
                         }
+                        move.capturePiece(p);
                     }
                }
                p = design.navigate(1, p, 8);

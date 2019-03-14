@@ -234,7 +234,7 @@
   - Three Crowns [todo:ai, family:other]
   - Lines of Action [todo:ai, goal, restrictions, family:connect]
   - Pentago [todo, groups, family:renju]
-  - Quatuum Tic Tac Toe [todo, drops, best, family:renju]
+  - Quatuum Tic Tac Toe [drops, best, family:renju]
   - Quatuum Morris [todo, drops, best, family:morris]
 - Connect games
   - Hex [family:connect, todo:ai]
