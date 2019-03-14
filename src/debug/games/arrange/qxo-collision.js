@@ -64,6 +64,35 @@ var getCollision = function(design, board) {
   return board.collision;
 }
 
+var collapse = function(design, board, start, move) {
+  var group = [start];
+  for (var i = 0; i < group.length; i++) {
+       var pos = design.navigate(1, group[i], 9);
+       if (pos !== null) {
+           if (i > 0) {
+               var piece = board.getPiece(group[i]);
+               if (piece !== null) {
+                   piece = piece.promote(+piece.type - 4);
+                   move.movePiece(group[i], pos, piece);
+               }
+           }
+           var p = design.navigate(1, pos, 8);
+           while (p !== null) {
+               if (p != group[i]) {
+                    var piece = board.getPiece(p);
+                    if (piece !== null) {
+                        var pair = locatePair(design, board, piece, p);
+                        if ((pair !== null) && (_.indexOf(group, pair) < 0)) {
+                            group.push(pair);
+                        }
+                    }
+               }
+               p = design.navigate(1, p, 8);
+           }
+       }
+  }
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
@@ -83,6 +112,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                   }
                   if (piece !== null) {
                       move.actions[0][2] = [piece.promote(+piece.type - 4)];
+                      collapse(design, board, pos, move);
                   }
               } else {
                   move.failed = true;

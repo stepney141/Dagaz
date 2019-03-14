@@ -132,6 +132,7 @@
   - Arimaa [todo, turns, elimination, stalemate, family:breakthrough]
   - Terrace [todo, todo:vectors, family:breakthrough]
 - Races
+  - Salt and Pepper [setups, family:other]
   - Jasir [todo:ai, family:other]
   - Gate [best, family:other]
   - Jeson Mor [todo:ai, family:other]
