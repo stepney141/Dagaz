@@ -1,3 +1,5 @@
+Dagaz.Model.PIECE_CNT = 5;
+
 ZRF = {
     JUMP:          0,
     IF:            1,
@@ -44,11 +46,6 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPlayer("X", [3, 2, 1, 0, 6, 7, 4, 5, 8, 9]);
     design.addPlayer("O", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
-
-    design.addTurn(1);
-    design.addTurn(1);
-    design.addTurn(2);
-    design.addTurn(2);
 
     design.addPosition("a3a3", [0, 0, 0, 0, 0, 0, 0, 0, 3, 81]);
     design.addPosition("b3a3", [0, 0, 0, 0, 0, 0, 0, 0, 3, 80]);
@@ -173,19 +170,25 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPiece("B4", 3);
     design.addDrop(3, 0, [], 3);
 
-    design.addPiece("S1", 4);
-    design.addMove(4, 1, [9], 4);
+    design.addPiece("B5", 4);
+    design.addDrop(4, 0, [], 4);
 
-    design.addPiece("S2", 5);
-    design.addMove(5, 1, [9], 4);
+    design.addPiece("S1", 5);
+    design.addMove(5, 1, [9], 5);
 
-    design.addPiece("S3", 6);
-    design.addMove(6, 1, [9], 4);
+    design.addPiece("S2", 6);
+    design.addMove(6, 1, [9], 5);
 
-    design.addPiece("S4", 7);
-    design.addMove(7, 1, [9], 4);
+    design.addPiece("S3", 7);
+    design.addMove(7, 1, [9], 5);
 
-    design.addPiece("None", 8);
+    design.addPiece("S4", 8);
+    design.addMove(8, 1, [9], 5);
+
+    design.addPiece("S5", 9);
+    design.addMove(9, 1, [9], 5);
+
+    design.addPiece("None", 10);
 
     design.reserve("X", "B1", 2);
     design.reserve("X", "B2", 2);
@@ -207,6 +210,8 @@ Dagaz.View.configure = function(view) {
     view.defPiece("OB3", "O B3");
     view.defPiece("XB4", "X B4");
     view.defPiece("OB4", "O B4");
+    view.defPiece("XB5", "X B5");
+    view.defPiece("OB5", "O B5");
     view.defPiece("XS1", "X S1");
     view.defPiece("OS1", "O S1");
     view.defPiece("XS2", "X S2");
@@ -215,6 +220,8 @@ Dagaz.View.configure = function(view) {
     view.defPiece("OS3", "O S3");
     view.defPiece("XS4", "X S4");
     view.defPiece("OS4", "O S4");
+    view.defPiece("XS5", "X S5");
+    view.defPiece("OS5", "O S5");
     view.defPiece("XNone", "X None");
     view.defPiece("ONone", "O None");
  

@@ -20,7 +20,7 @@ Dagaz.Model.CheckInvariants = function(board) {
   });
   if (mode !== null) {
       _.each(board.moves, function(move) {
-          if ((move.mode > mode) && (move.mode < 4)) {
+          if ((move.mode > mode) && (move.mode < Dagaz.Model.PIECE_CNT)) {
               move.failed = true;
           }
       });

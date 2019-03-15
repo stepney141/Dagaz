@@ -72,7 +72,7 @@ var collapse = function(design, board, start, move) {
            if (i > 0) {
                var piece = board.getPiece(group[i]);
                if (piece !== null) {
-                   piece = piece.promote(+piece.type - 4);
+                   piece = piece.promote(+piece.type - Dagaz.Model.PIECE_CNT);
                    move.movePiece(group[i], pos, piece);
                }
            }
@@ -98,7 +98,7 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
-  if (!_.isUndefined(board.move) && (board.move.mode == 4)) {
+  if (!_.isUndefined(board.move) && (board.move.mode == 5)) {
       board.moves = [];
   } else {
       var collision = getCollision(design, board);
@@ -112,7 +112,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                       return;
                   }
                   if (piece !== null) {
-                      move.actions[0][2] = [piece.promote(+piece.type - 4)];
+                      move.actions[0][2] = [piece.promote(+piece.type - Dagaz.Model.PIECE_CNT)];
                       collapse(design, board, pos, move);
                   }
               } else {
