@@ -224,6 +224,7 @@ Dagaz.View.configure = function(view) {
     view.defPiece("OS5", "O S5");
     view.defPiece("XNone", "X None");
     view.defPiece("ONone", "O None");
+    view.defPiece("Ko", "Ko");
  
     view.defPosition("a3a3", 20, 50, 50, 50);
     view.defPosition("b3a3", 73, 47, 50, 50);

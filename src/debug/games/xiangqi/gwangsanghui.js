@@ -777,12 +777,12 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Red", "Pawn", 120);
     design.setup("Red", "Pawn", 121);
     design.setup("Red", "Pawn", 122);
-    design.setup("Red", "Pawn", 123);
-    design.setup("Red", "Pawn", 124);
-    design.setup("Red", "Pawn", 125);
-    design.setup("Red", "Soldier", 129);
-    design.setup("Red", "Soldier", 130);
-    design.setup("Red", "Soldier", 131);
+    design.setup("Red", "Pawn", 128);
+    design.setup("Red", "Pawn", 129);
+    design.setup("Red", "Pawn", 130);
+    design.setup("Red", "Soldier", 124);
+    design.setup("Red", "Soldier", 125);
+    design.setup("Red", "Soldier", 126);
     design.setup("Red", "Soldier", 132);
     design.setup("Red", "Soldier", 133);
     design.setup("Red", "Soldier", 134);
@@ -817,18 +817,18 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "Killer", 71);
     design.setup("Black", "Forward", 67);
     design.setup("Black", "Backward", 7);
-    design.setup("Black", "Pawn", 84);
-    design.setup("Black", "Pawn", 85);
-    design.setup("Black", "Pawn", 86);
+    design.setup("Black", "Pawn", 79);
+    design.setup("Black", "Pawn", 80);
+    design.setup("Black", "Pawn", 81);
     design.setup("Black", "Pawn", 87);
     design.setup("Black", "Pawn", 88);
     design.setup("Black", "Pawn", 89);
     design.setup("Black", "Soldier", 75);
     design.setup("Black", "Soldier", 76);
     design.setup("Black", "Soldier", 77);
-    design.setup("Black", "Soldier", 78);
-    design.setup("Black", "Soldier", 79);
-    design.setup("Black", "Soldier", 80);
+    design.setup("Black", "Soldier", 83);
+    design.setup("Black", "Soldier", 84);
+    design.setup("Black", "Soldier", 85);
 }
 
 Dagaz.View.configure = function(view) {

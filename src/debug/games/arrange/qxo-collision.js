@@ -1,5 +1,7 @@
 (function() {
 
+Dagaz.View.KO_ALPHA = 0.5;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
@@ -98,6 +100,7 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
+  var ko = [];
   if (!_.isUndefined(board.move) && (board.move.mode == 5)) {
       board.moves = [];
   } else {
@@ -115,6 +118,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                       move.actions[0][2] = [piece.promote(+piece.type - Dagaz.Model.PIECE_CNT)];
                       collapse(design, board, pos, move);
                   }
+                  ko.push(pos);
               } else {
                   move.failed = true;
               }
@@ -126,6 +130,9 @@ Dagaz.Model.CheckInvariants = function(board) {
               }
           });
       }
+  }
+  if (ko.length > 0) {
+      board.ko = ko;
   }
   CheckInvariants(board);
 }
