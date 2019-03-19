@@ -1,3 +1,60 @@
+(define drop (
+  (verify (and (not-in-zone? one) (not-in-zone? two) (not-in-zone? three)))
+  $1 (while (on-board? $2) (if empty? add) $2)
+  (verify empty?)
+  add
+))
+
+(define step-3 (
+  $1 (verify empty?)
+  (add-partial step-2-mode)
+))
+
+(define step-2 (
+  $1 (verify empty?)
+  (add-partial step-1-mode)
+))
+
+(define step-1 (
+  $1 (verify not-friend?)
+  add
+))
+
+(define board-common
+  (grid
+     (start-rectangle 24 23 74 73)
+     (dimensions
+         ("a/b/c/d/e/f" (50 0)) ; files
+         ("7/6/5/4/3/2/1/0" (0 50)) ; ranks
+     )
+     (directions (e 1 0) (w -1 0) (next 1 0))
+  )
+  (links next 
+         (f6 a5) (f5 a4) (f4 a3) (f3 a2) (f2 a1))
+  (links n 
+         (a1 a2) (a2 a3) (a3 a4) (a4 a5) (a5 a6)
+         (b1 b2) (b2 b3) (b3 b4) (b4 b5) (b5 b6)
+         (c1 c2) (c2 c3) (c3 c4) (c4 c5) (c5 c6)
+         (d1 d2) (d2 d3) (d3 d4) (d4 d5) (d5 d6)
+         (e1 e2) (e2 e3) (e3 e4) (e4 e5) (e5 e6)
+         (f1 f2) (f2 f3) (f3 f4) (f4 f5) (f5 f6)
+  )
+  (links s
+         (a2 a1) (a3 a2) (a4 a3) (a5 a4) (a6 a5)
+         (b2 b1) (b3 b2) (b4 b3) (b5 b4) (b6 b5)
+         (c2 c1) (c3 c2) (c4 c3) (c5 c4) (c6 c5)
+         (d2 d1) (d3 d2) (d4 d3) (d5 d4) (d6 d5)
+         (e2 e1) (e3 e2) (e4 e3) (e5 e4) (e6 e5)
+         (f2 f1) (f3 f2) (f4 f3) (f5 f4) (f6 f5)
+  )
+  (zone (name home) (players White)
+        (positions a1 b1 c1 d1 e1 f1 a2 b2 c2 d2 e2 f2)
+  )
+  (zone (name home) (players Black)
+        (positions a6 b6 c6 d6 e6 f6 a5 b5 c5 d5 e5 f5)
+  )
+)
+
 (game
   (title "Mana")
 
@@ -14,14 +71,7 @@
 
   (board
      (image "images/mana/board-sw.bmp")
-     (grid
-        (start-rectangle 24 23 74 73)
-        (dimensions
-            ("a/b/c/d/e/f" (50 0)) ; files
-            ("7/6/5/4/3/2/1/0" (0 50)) ; ranks
-        )
-        (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0))
-     )
+     (board-common)
      (zone (name one) (players White Black)
         (positions a1 a5 b2 b4 c3 c5 d2 d6 e1 e3 e5 f4)
      )
@@ -37,43 +87,75 @@
      (name Ronin)
      (image White "images/mana/ronin-w.bmp"
             Black "images/mana/ronin-b.bmp")
+     (moves
+         (move-type step-1-mode)
+         (step-1 n) (step-1 e) (step-1 w) (step-1 s)
+         (move-type step-2-mode)
+         (step-2 n) (step-2 e) (step-2 w) (step-2 s)
+         (move-type step-3-mode)
+         (step-3 n) (step-3 e) (step-3 w) (step-3 s)
+         (move-type drop-mode)
+         (drop a6 next)
+     )
   )
   (piece
      (name RoninMana)
      (image White "images/mana/ronin-wm.bmp"
             Black "images/mana/ronin-bm.bmp")
+     (moves
+         (move-type step-1-mode)
+         (step-1 n) (step-1 e) (step-1 w) (step-1 s)
+         (move-type step-2-mode)
+         (step-2 n) (step-2 e) (step-2 w) (step-2 s)
+         (move-type step-3-mode)
+         (step-3 n) (step-3 e) (step-3 w) (step-3 s)
+         (move-type drop-mode)
+         (drop a6 next)
+     )
   )
   (piece
      (name Damyo)
      (image White "images/mana/damyo-w.bmp"
             Black "images/mana/damyo-b.bmp")
+     (moves
+         (move-type step-1-mode)
+         (step-1 n) (step-1 e) (step-1 w) (step-1 s)
+         (move-type step-2-mode)
+         (step-2 n) (step-2 e) (step-2 w) (step-2 s)
+         (move-type step-3-mode)
+         (step-3 n) (step-3 e) (step-3 w) (step-3 s)
+         (move-type drop-mode)
+         (drop a6 next)
+     )
   )
   (piece
-     (name Damyomana)
+     (name DamyoMana)
      (image White "images/mana/damyo-wm.bmp"
             Black "images/mana/damyo-bm.bmp")
+     (moves
+         (move-type step-1-mode)
+         (step-1 n) (step-1 e) (step-1 w) (step-1 s)
+         (move-type step-2-mode)
+         (step-2 n) (step-2 e) (step-2 w) (step-2 s)
+         (move-type step-3-mode)
+         (step-3 n) (step-3 e) (step-3 w) (step-3 s)
+         (move-type drop-mode)
+         (drop a6 next)
+     )
   )
 
   (board-setup
-    (White (Ronin a0 b0 c0 d0 e0) (Damyo f0) )
-    (Black (Ronin a7 b7 c7 d7 e7) (Damyo f7) )
+    (White (Ronin a0 b0 c0 d0 e0) (Damyo f0))
+    (Black (Ronin a7 b7 c7 d7 e7) (Damyo f7))
   )
 )
 
 (variant
   (title "Mana")
-  (default)
 
   (board
      (image "images/mana/board-se.bmp")
-     (grid
-        (start-rectangle 24 23 74 73)
-        (dimensions
-            ("a/b/c/d/e/f" (50 0)) ; files
-            ("7/6/5/4/3/2/1/0" (0 50)) ; ranks
-        )
-        (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0))
-     )
+     (board-common)
      (zone (name one) (players White Black)
           (positions a2 a6 b3 b5 c2 c4 d1 d5 e2 e4 e6 f3)
      )

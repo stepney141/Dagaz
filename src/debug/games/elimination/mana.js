@@ -22,63 +22,71 @@ ZRF = {
 Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("smart-moves", "false");
+    design.checkVersion("pass-partial", "false");
+    design.checkVersion("detect-loops", "true");
+    design.checkVersion("advisor-wait", "5");
 
-    design.addDirection("w");
+    design.addDirection("next");
     design.addDirection("e");
-    design.addDirection("s");
+    design.addDirection("w");
     design.addDirection("n");
+    design.addDirection("s");
 
-    design.addPlayer("White", [1, 0, 3, 2]);
-    design.addPlayer("Black", [0, 1, 2, 3]);
+    design.addPlayer("White", [0, 2, 0, 4, 3]);
+    design.addPlayer("Black", [0, 1, 2, 3, 4]);
 
-    design.addPosition("a7", [0, 1, 6, 0]);
-    design.addPosition("b7", [-1, 1, 6, 0]);
-    design.addPosition("c7", [-1, 1, 6, 0]);
-    design.addPosition("d7", [-1, 1, 6, 0]);
-    design.addPosition("e7", [-1, 1, 6, 0]);
-    design.addPosition("f7", [-1, 0, 6, 0]);
-    design.addPosition("a6", [0, 1, 6, -6]);
-    design.addPosition("b6", [-1, 1, 6, -6]);
-    design.addPosition("c6", [-1, 1, 6, -6]);
-    design.addPosition("d6", [-1, 1, 6, -6]);
-    design.addPosition("e6", [-1, 1, 6, -6]);
-    design.addPosition("f6", [-1, 0, 6, -6]);
-    design.addPosition("a5", [0, 1, 6, -6]);
-    design.addPosition("b5", [-1, 1, 6, -6]);
-    design.addPosition("c5", [-1, 1, 6, -6]);
-    design.addPosition("d5", [-1, 1, 6, -6]);
-    design.addPosition("e5", [-1, 1, 6, -6]);
-    design.addPosition("f5", [-1, 0, 6, -6]);
-    design.addPosition("a4", [0, 1, 6, -6]);
-    design.addPosition("b4", [-1, 1, 6, -6]);
-    design.addPosition("c4", [-1, 1, 6, -6]);
-    design.addPosition("d4", [-1, 1, 6, -6]);
-    design.addPosition("e4", [-1, 1, 6, -6]);
-    design.addPosition("f4", [-1, 0, 6, -6]);
-    design.addPosition("a3", [0, 1, 6, -6]);
-    design.addPosition("b3", [-1, 1, 6, -6]);
-    design.addPosition("c3", [-1, 1, 6, -6]);
-    design.addPosition("d3", [-1, 1, 6, -6]);
-    design.addPosition("e3", [-1, 1, 6, -6]);
-    design.addPosition("f3", [-1, 0, 6, -6]);
-    design.addPosition("a2", [0, 1, 6, -6]);
-    design.addPosition("b2", [-1, 1, 6, -6]);
-    design.addPosition("c2", [-1, 1, 6, -6]);
-    design.addPosition("d2", [-1, 1, 6, -6]);
-    design.addPosition("e2", [-1, 1, 6, -6]);
-    design.addPosition("f2", [-1, 0, 6, -6]);
-    design.addPosition("a1", [0, 1, 6, -6]);
-    design.addPosition("b1", [-1, 1, 6, -6]);
-    design.addPosition("c1", [-1, 1, 6, -6]);
-    design.addPosition("d1", [-1, 1, 6, -6]);
-    design.addPosition("e1", [-1, 1, 6, -6]);
-    design.addPosition("f1", [-1, 0, 6, -6]);
-    design.addPosition("a0", [0, 1, 0, -6]);
-    design.addPosition("b0", [-1, 1, 0, -6]);
-    design.addPosition("c0", [-1, 1, 0, -6]);
-    design.addPosition("d0", [-1, 1, 0, -6]);
-    design.addPosition("e0", [-1, 1, 0, -6]);
-    design.addPosition("f0", [-1, 0, 0, -6]);
+
+    design.addPosition("a7", [1, 1, 0, 0, 0]);
+    design.addPosition("b7", [1, 1, -1, 0, 0]);
+    design.addPosition("c7", [1, 1, -1, 0, 0]);
+    design.addPosition("d7", [1, 1, -1, 0, 0]);
+    design.addPosition("e7", [1, 1, -1, 0, 0]);
+    design.addPosition("f7", [0, 0, -1, 0, 0]);
+    design.addPosition("a6", [1, 1, 0, 0, 6]);
+    design.addPosition("b6", [1, 1, -1, 0, 6]);
+    design.addPosition("c6", [1, 1, -1, 0, 6]);
+    design.addPosition("d6", [1, 1, -1, 0, 6]);
+    design.addPosition("e6", [1, 1, -1, 0, 6]);
+    design.addPosition("f6", [1, 0, -1, 0, 6]);
+    design.addPosition("a5", [1, 1, 0, -6, 6]);
+    design.addPosition("b5", [1, 1, -1, -6, 6]);
+    design.addPosition("c5", [1, 1, -1, -6, 6]);
+    design.addPosition("d5", [1, 1, -1, -6, 6]);
+    design.addPosition("e5", [1, 1, -1, -6, 6]);
+    design.addPosition("f5", [1, 0, -1, -6, 6]);
+    design.addPosition("a4", [1, 1, 0, -6, 6]);
+    design.addPosition("b4", [1, 1, -1, -6, 6]);
+    design.addPosition("c4", [1, 1, -1, -6, 6]);
+    design.addPosition("d4", [1, 1, -1, -6, 6]);
+    design.addPosition("e4", [1, 1, -1, -6, 6]);
+    design.addPosition("f4", [1, 0, -1, -6, 6]);
+    design.addPosition("a3", [1, 1, 0, -6, 6]);
+    design.addPosition("b3", [1, 1, -1, -6, 6]);
+    design.addPosition("c3", [1, 1, -1, -6, 6]);
+    design.addPosition("d3", [1, 1, -1, -6, 6]);
+    design.addPosition("e3", [1, 1, -1, -6, 6]);
+    design.addPosition("f3", [1, 0, -1, -6, 6]);
+    design.addPosition("a2", [1, 1, 0, -6, 6]);
+    design.addPosition("b2", [1, 1, -1, -6, 6]);
+    design.addPosition("c2", [1, 1, -1, -6, 6]);
+    design.addPosition("d2", [1, 1, -1, -6, 6]);
+    design.addPosition("e2", [1, 1, -1, -6, 6]);
+    design.addPosition("f2", [1, 0, -1, -6, 6]);
+    design.addPosition("a1", [1, 1, 0, -6, 0]);
+    design.addPosition("b1", [1, 1, -1, -6, 0]);
+    design.addPosition("c1", [1, 1, -1, -6, 0]);
+    design.addPosition("d1", [1, 1, -1, -6, 0]);
+    design.addPosition("e1", [1, 1, -1, -6, 0]);
+    design.addPosition("f1", [0, 0, -1, -6, 0]);
+    design.addPosition("a0", [1, 1, 0, 0, 0]);
+    design.addPosition("b0", [1, 1, -1, 0, 0]);
+    design.addPosition("c0", [1, 1, -1, 0, 0]);
+    design.addPosition("d0", [1, 1, -1, 0, 0]);
+    design.addPosition("e0", [1, 1, -1, 0, 0]);
+    design.addPosition("f0", [0, 0, -1, 0, 0]);
+
+    design.addZone("home", 1, [36, 37, 38, 39, 40, 41, 30, 31, 32, 33, 34, 35]);
+    design.addZone("home", 2, [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]);
 
     design.setupSelector(2);
 
@@ -96,13 +104,123 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addZone("three", 1, [36, 12, 31, 19, 26, 14, 33, 9, 40, 28, 16, 23], 2);
     design.addZone("three", 2, [36, 12, 31, 19, 26, 14, 33, 9, 40, 28, 16, 23], 2);
 
-    design.addPiece("Ronin", 0);
+    design.addCommand(0, ZRF.FUNCTION,	24);	// from
+    design.addCommand(0, ZRF.PARAM,	0);	// $1
+    design.addCommand(0, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(0, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(0, ZRF.FUNCTION,	0);	// not
+    design.addCommand(0, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(0, ZRF.FUNCTION,	25);	// to
+    design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("RoninMana", 1);
+    design.addCommand(1, ZRF.FUNCTION,	24);	// from
+    design.addCommand(1, ZRF.PARAM,	0);	// $1
+    design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(1, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(1, ZRF.MODE,	0);	// step-1-mode
+    design.addCommand(1, ZRF.FUNCTION,	25);	// to
+    design.addCommand(1, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("Damyo", 2);
+    design.addCommand(2, ZRF.FUNCTION,	24);	// from
+    design.addCommand(2, ZRF.PARAM,	0);	// $1
+    design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(2, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(2, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(2, ZRF.MODE,	1);	// step-2-mode
+    design.addCommand(2, ZRF.FUNCTION,	25);	// to
+    design.addCommand(2, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("Damyomana", 3);
+    design.addCommand(3, ZRF.FUNCTION,	24);	// from
+    design.addCommand(3, ZRF.IN_ZONE,	1);	// one
+    design.addCommand(3, ZRF.IF,	7);
+    design.addCommand(3, ZRF.IN_ZONE,	2);	// two
+    design.addCommand(3, ZRF.IF,	5);
+    design.addCommand(3, ZRF.IN_ZONE,	3);	// three
+    design.addCommand(3, ZRF.IF,	3);
+    design.addCommand(3, ZRF.LITERAL,	1);	// true
+    design.addCommand(3, ZRF.JUMP,	2);
+    design.addCommand(3, ZRF.LITERAL,	0);	// false
+    design.addCommand(3, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(3, ZRF.PARAM,	0);	// $1
+    design.addCommand(3, ZRF.FUNCTION,	21);	// position
+    design.addCommand(3, ZRF.ON_BOARD_DIR,	0);	// name
+    design.addCommand(3, ZRF.FUNCTION,	0);	// not
+    design.addCommand(3, ZRF.IF,	10);
+    design.addCommand(3, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(3, ZRF.FUNCTION,	0);	// not
+    design.addCommand(3, ZRF.IF,	4);
+    design.addCommand(3, ZRF.FORK,	3);
+    design.addCommand(3, ZRF.FUNCTION,	25);	// to
+    design.addCommand(3, ZRF.FUNCTION,	28);	// end
+    design.addCommand(3, ZRF.PARAM,	1);	// $2
+    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(3, ZRF.JUMP,	-11);
+    design.addCommand(3, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(3, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(3, ZRF.FUNCTION,	25);	// to
+    design.addCommand(3, ZRF.FUNCTION,	28);	// end
+
+
+    design.addPiece("Ronin", 0, 2);
+    design.addMove(0, 0, [3], 0);
+    design.addMove(0, 0, [1], 0);
+    design.addMove(0, 0, [2], 0);
+    design.addMove(0, 0, [4], 0);
+    design.addMove(0, 1, [3], 1);
+    design.addMove(0, 1, [1], 1);
+    design.addMove(0, 1, [2], 1);
+    design.addMove(0, 1, [4], 1);
+    design.addMove(0, 2, [3], 2);
+    design.addMove(0, 2, [1], 2);
+    design.addMove(0, 2, [2], 2);
+    design.addMove(0, 2, [4], 2);
+    design.addMove(0, 3, [6, 0], 3);
+
+    design.addPiece("RoninMana", 1, 2);
+    design.addMove(1, 0, [3], 0);
+    design.addMove(1, 0, [1], 0);
+    design.addMove(1, 0, [2], 0);
+    design.addMove(1, 0, [4], 0);
+    design.addMove(1, 1, [3], 1);
+    design.addMove(1, 1, [1], 1);
+    design.addMove(1, 1, [2], 1);
+    design.addMove(1, 1, [4], 1);
+    design.addMove(1, 2, [3], 2);
+    design.addMove(1, 2, [1], 2);
+    design.addMove(1, 2, [2], 2);
+    design.addMove(1, 2, [4], 2);
+    design.addMove(1, 3, [6, 0], 3);
+
+    design.addPiece("Damyo", 2, 1000);
+    design.addMove(2, 0, [3], 0);
+    design.addMove(2, 0, [1], 0);
+    design.addMove(2, 0, [2], 0);
+    design.addMove(2, 0, [4], 0);
+    design.addMove(2, 1, [3], 1);
+    design.addMove(2, 1, [1], 1);
+    design.addMove(2, 1, [2], 1);
+    design.addMove(2, 1, [4], 1);
+    design.addMove(2, 2, [3], 2);
+    design.addMove(2, 2, [1], 2);
+    design.addMove(2, 2, [2], 2);
+    design.addMove(2, 2, [4], 2);
+    design.addMove(2, 3, [6, 0], 3);
+
+    design.addPiece("DamyoMana", 3, 1000);
+    design.addMove(3, 0, [3], 0);
+    design.addMove(3, 0, [1], 0);
+    design.addMove(3, 0, [2], 0);
+    design.addMove(3, 0, [4], 0);
+    design.addMove(3, 1, [3], 1);
+    design.addMove(3, 1, [1], 1);
+    design.addMove(3, 1, [2], 1);
+    design.addMove(3, 1, [4], 1);
+    design.addMove(3, 2, [3], 2);
+    design.addMove(3, 2, [1], 2);
+    design.addMove(3, 2, [2], 2);
+    design.addMove(3, 2, [4], 2);
+    design.addMove(3, 3, [6, 0], 3);
 
     design.setup("White", "Ronin", 42);
     design.setup("White", "Ronin", 43);
@@ -127,8 +245,8 @@ Dagaz.View.configure = function(view) {
     view.defPiece("BlackRoninMana", "Black RoninMana");
     view.defPiece("WhiteDamyo", "White Damyo");
     view.defPiece("BlackDamyo", "Black Damyo");
-    view.defPiece("WhiteDamyomana", "White Damyomana");
-    view.defPiece("BlackDamyomana", "Black Damyomana");
+    view.defPiece("WhiteDamyoMana", "White DamyoMana");
+    view.defPiece("BlackDamyoMana", "Black DamyoMana");
  
     view.defPosition("a7", 24, 23, 50, 50);
     view.defPosition("b7", 74, 23, 50, 50);

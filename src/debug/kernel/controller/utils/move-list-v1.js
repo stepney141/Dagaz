@@ -201,6 +201,10 @@ MoveList.prototype.getDrops = function() {
   }, this);
 }
 
+MoveList.prototype.getDropPieces = function(pos) {
+  return null;
+}
+
 MoveList.prototype.filterDrops = function(moves, ix) {
   return moves;
 }
