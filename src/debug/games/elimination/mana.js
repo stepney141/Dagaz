@@ -37,18 +37,18 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPlayer("White", [0, 2, 1, 4, 3, 5, 6]);
     design.addPlayer("Black", [0, 1, 2, 3, 4, 6, 5]);
 
-    design.addTurn(1, [3]);
-    design.addTurn(1, [3]);
-    design.addTurn(1, [3]);
-    design.addTurn(1, [3]);
-    design.addTurn(1, [3]);
-    design.addTurn(1, [3]);
-    design.addTurn(2, [3]);
-    design.addTurn(2, [3]);
-    design.addTurn(2, [3]);
-    design.addTurn(2, [3]);
-    design.addTurn(2, [3]);
-    design.addTurn(2, [3]);
+    design.addTurn(1, [4]);
+    design.addTurn(1, [4]);
+    design.addTurn(1, [4]);
+    design.addTurn(1, [4]);
+    design.addTurn(1, [4]);
+    design.addTurn(1, [4]);
+    design.addTurn(2, [4]);
+    design.addTurn(2, [4]);
+    design.addTurn(2, [4]);
+    design.addTurn(2, [4]);
+    design.addTurn(2, [4]);
+    design.addTurn(2, [4]);
     design.repeatMark();
     design.addTurn(1);
     design.addTurn(2);
@@ -149,11 +149,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(2, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(3, ZRF.FUNCTION,	24);	// from
-    design.addCommand(3, ZRF.IN_ZONE,	1);	// one
+    design.addCommand(3, ZRF.IN_ZONE,	0);	// one
     design.addCommand(3, ZRF.IF,	7);
-    design.addCommand(3, ZRF.IN_ZONE,	2);	// two
+    design.addCommand(3, ZRF.IN_ZONE,	1);	// two
     design.addCommand(3, ZRF.IF,	5);
-    design.addCommand(3, ZRF.IN_ZONE,	3);	// three
+    design.addCommand(3, ZRF.IN_ZONE,	2);	// three
     design.addCommand(3, ZRF.IF,	3);
     design.addCommand(3, ZRF.LITERAL,	1);	// true
     design.addCommand(3, ZRF.JUMP,	2);
@@ -163,8 +163,15 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(3, ZRF.FUNCTION,	21);	// position
     design.addCommand(3, ZRF.ON_BOARD_DIR,	0);	// name
     design.addCommand(3, ZRF.FUNCTION,	0);	// not
-    design.addCommand(3, ZRF.IF,	10);
+    design.addCommand(3, ZRF.IF,	17);
     design.addCommand(3, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(3, ZRF.FUNCTION,	0);	// not
+    design.addCommand(3, ZRF.IF,	5);
+    design.addCommand(3, ZRF.IN_ZONE,	3);	// home
+    design.addCommand(3, ZRF.IF,	3);
+    design.addCommand(3, ZRF.LITERAL,	1);	// true
+    design.addCommand(3, ZRF.JUMP,	2);
+    design.addCommand(3, ZRF.LITERAL,	0);	// false
     design.addCommand(3, ZRF.FUNCTION,	0);	// not
     design.addCommand(3, ZRF.IF,	4);
     design.addCommand(3, ZRF.FORK,	3);
@@ -172,11 +179,54 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(3, ZRF.FUNCTION,	28);	// end
     design.addCommand(3, ZRF.PARAM,	1);	// $2
     design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(3, ZRF.JUMP,	-11);
+    design.addCommand(3, ZRF.JUMP,	-18);
+    design.addCommand(3, ZRF.IN_ZONE,	3);	// home
+    design.addCommand(3, ZRF.FUNCTION,	0);	// not
+    design.addCommand(3, ZRF.FUNCTION,	20);	// verify
     design.addCommand(3, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(3, ZRF.FUNCTION,	20);	// verify
     design.addCommand(3, ZRF.FUNCTION,	25);	// to
     design.addCommand(3, ZRF.FUNCTION,	28);	// end
+
+    design.addCommand(4, ZRF.FUNCTION,	24);	// from
+    design.addCommand(4, ZRF.IN_ZONE,	0);	// one
+    design.addCommand(4, ZRF.IF,	7);
+    design.addCommand(4, ZRF.IN_ZONE,	1);	// two
+    design.addCommand(4, ZRF.IF,	5);
+    design.addCommand(4, ZRF.IN_ZONE,	2);	// three
+    design.addCommand(4, ZRF.IF,	3);
+    design.addCommand(4, ZRF.LITERAL,	1);	// true
+    design.addCommand(4, ZRF.JUMP,	2);
+    design.addCommand(4, ZRF.LITERAL,	0);	// false
+    design.addCommand(4, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(4, ZRF.PARAM,	0);	// $1
+    design.addCommand(4, ZRF.FUNCTION,	21);	// position
+    design.addCommand(4, ZRF.ON_BOARD_DIR,	0);	// name
+    design.addCommand(4, ZRF.FUNCTION,	0);	// not
+    design.addCommand(4, ZRF.IF,	18);
+    design.addCommand(4, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(4, ZRF.FUNCTION,	0);	// not
+    design.addCommand(4, ZRF.IF,	6);
+    design.addCommand(4, ZRF.IN_ZONE,	3);	// home
+    design.addCommand(4, ZRF.FUNCTION,	0);	// not
+    design.addCommand(4, ZRF.IF,	3);
+    design.addCommand(4, ZRF.LITERAL,	1);	// true
+    design.addCommand(4, ZRF.JUMP,	2);
+    design.addCommand(4, ZRF.LITERAL,	0);	// false
+    design.addCommand(4, ZRF.FUNCTION,	0);	// not
+    design.addCommand(4, ZRF.IF,	4);
+    design.addCommand(4, ZRF.FORK,	3);
+    design.addCommand(4, ZRF.FUNCTION,	25);	// to
+    design.addCommand(4, ZRF.FUNCTION,	28);	// end
+    design.addCommand(4, ZRF.PARAM,	1);	// $2
+    design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(4, ZRF.JUMP,	-19);
+    design.addCommand(4, ZRF.IN_ZONE,	3);	// home
+    design.addCommand(4, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(4, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(4, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(4, ZRF.FUNCTION,	25);	// to
+    design.addCommand(4, ZRF.FUNCTION,	28);	// end
 
     design.addPiece("Ronin", 0, 2);
     design.addMove(0, 0, [3], 0);
@@ -192,6 +242,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 2, [2], 2);
     design.addMove(0, 2, [4], 2);
     design.addMove(0, 3, [6, 0], 3);
+    design.addMove(0, 4, [6, 0], 4);
 
     design.addPiece("RoninMana", 1, 2);
     design.addMove(1, 0, [3], 0);
@@ -207,6 +258,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(1, 2, [2], 2);
     design.addMove(1, 2, [4], 2);
     design.addMove(1, 3, [6, 0], 3);
+    design.addMove(1, 4, [6, 0], 4);
 
     design.addPiece("Damyo", 2, 1000);
     design.addMove(2, 0, [3], 0);
@@ -222,6 +274,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(2, 2, [2], 2);
     design.addMove(2, 2, [4], 2);
     design.addMove(2, 3, [6, 0], 3);
+    design.addMove(2, 4, [6, 0], 4);
 
     design.addPiece("DamyoMana", 3, 1000);
     design.addMove(3, 0, [3], 0);
@@ -237,6 +290,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(3, 2, [2], 2);
     design.addMove(3, 2, [4], 2);
     design.addMove(3, 3, [6, 0], 3);
+    design.addMove(3, 4, [6, 0], 4);
 
     design.setup("White", "Ronin", 42);
     design.setup("White", "Ronin", 43);
