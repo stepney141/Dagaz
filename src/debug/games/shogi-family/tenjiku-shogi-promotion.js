@@ -68,6 +68,7 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
   var none   = design.getPieceType("None");
+  var n      = design.getDirection("n");
   _.chain(board.moves)
    .filter(function(move) {
         return move.actions.length > 0;
@@ -91,16 +92,16 @@ Dagaz.Model.CheckInvariants = function(board) {
             var enemy    = board.getPiece(target);
             if ((piece !== null) && promote[piece.type]) {
                 if (piece.type == 0) {
-                    var p = design.navigate(board.player, target, 4);
+                    var p = design.navigate(board.player, target, n);
                     if (p !== null) {
-                        p = design.navigate(board.player, p, 4);
+                        p = design.navigate(board.player, p, n);
                         if (p === null) {
                             isForced = true;
                         }
                     }
                 }
                 if ((piece.type == 2) || (piece.type == 31) || (piece.type == 1)) {
-                    var p = design.navigate(board.player, target, 4);
+                    var p = design.navigate(board.player, target, n);
                     if (p === null) {
                         isForced = true;
                     }

@@ -1331,3 +1331,96 @@
    (loss-condition (White Black)
       (and (pieces-remaining 0 King)(pieces-remaining 0 Prince)))
 )
+
+(variant
+   (title "Nutty Shogi")
+   (default)
+
+   (board 
+	   (image "images/tenjiku/13x13.bmp")
+	   (grid
+	     (start-rectangle 5 5 54 54)
+	     (dimensions
+	         ("a/b/c/d/e/f/g/h/i/j/k/l/m" (36 0))
+	         ("13/12/11/10/9/8/7/6/5/4/3/2/1" (0 36))
+	     )
+	     (directions (n 0 -1) (e 1 0) (s 0 1) (w -1 0)
+		     (ne 1 -1) (nw -1 -1) (se 1 1) (sw -1 1)
+	     )
+	  )
+	  (symmetry White (n s) (s n) (w e) (e w) (nw se) (se nw) (ne sw) (sw ne))
+ 	  (zone
+ 	     (name promotion-zone)				
+ 	     (players Black)
+ 	     (positions a13 b13 c13 d13 e13 f13 g13 h13 i13 j13 k13 l13 m13
+                        a12 b12 c12 d12 e12 f12 g12 h12 i12 j12 k12 l12 m12
+                        a11 b11 c11 d11 e11 f11 g11 h11 i11 j11 k11 l11 m11
+                        a10 b10 c10 d10 e10 f10 g10 h10 i10 j10 k10 l10 m10)
+ 	  )
+ 	  (zone
+ 	     (name promotion-zone)				
+ 	     (players White)
+ 	     (positions a1 b1 c1 d1 e1 f1 g1 h1 i1 j1 k1 l1 m1
+                        a2 b2 c2 d2 e2 f2 g2 h2 i2 j2 k2 l2 m2
+                        a3 b3 c3 d3 e3 f3 g3 h3 i3 j3 k3 l3 m3
+                        a4 b4 c4 d4 e4 f4 g4 h4 i4 j4 k4 l4 m4)
+ 	  )
+   )
+
+   (board-setup
+      (Black
+	(King g1)
+	(Blind-Tiger f1 h1)
+	(Gold-General e1 i1)
+	(Silver-General d1 j1)
+	(Ferocious-Leopard c1 k1)
+	(Knight b1 l1)
+       	(Lance a1 m1)
+	(Fire-Demon g2)
+	(Lion f2)
+	(Queen h2)
+	(Water-Buffalo d2)
+	(Phoenix j2)
+	(Kylin c2)
+	(Chariot-Soldier k2)
+	(Vertical-Mover a2 m2)
+	(Rook-General g3)
+	(Bishop-General f3)
+	(Vice-General h3)
+	(Dragon-King e3 i3)
+	(Dragon-Horse d3 j3)
+	(Rook c3 k3)
+	(Bishop b3 l3)
+	(Vertical-Soldier a3 m3)
+	(Pawn a4 b4 c4 d4 e4 f4 g4 h4 i4 j4 k4 l4 m4)
+	(Dog d5 j5)
+      )
+      (White
+	(King g13)
+	(Blind-Tiger f13 h13)
+	(Gold-General e13 i13)
+	(Silver-General d13 j13)
+	(Ferocious-Leopard c13 k13)
+	(Knight b13 l13)
+       	(Lance a13 m13)
+	(Fire-Demon g12)
+	(Lion h12)
+	(Queen f12)
+	(Water-Buffalo j12)
+	(Phoenix d12)
+	(Kylin k12)
+	(Chariot-Soldier c12)
+	(Vertical-Mover a12 m12)
+	(Rook-General g11)
+	(Bishop-General h11)
+	(Vice-General f11)
+	(Dragon-King e11 i11)
+	(Dragon-Horse d11 j11)
+	(Rook c11 k11)
+	(Bishop b11 l11)
+	(Vertical-Soldier a11 m11)
+	(Pawn a10 b10 c10 d10 e10 f10 g10 h10 i10 j10 k10 l10 m10)
+	(Dog d9 j9)
+      )
+   )
+)
