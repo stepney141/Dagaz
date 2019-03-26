@@ -317,6 +317,7 @@ Dagaz.View.configure = function(view) {
     view.defPiece("BlackDamyo", "Black Damyo");
     view.defPiece("WhiteDamyoMana", "White DamyoMana");
     view.defPiece("BlackDamyoMana", "Black DamyoMana");
+    view.defPiece("Ko", "Ko");
  
     view.defPosition("a7", 24, 23, 50, 50);
     view.defPosition("b7", 74, 23, 50, 50);

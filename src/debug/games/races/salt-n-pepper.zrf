@@ -6,10 +6,10 @@
 (game
     (title "Salt and Pepper")
 
-   (move-sound "Audio\Pickup.wav")
-   (release-sound "Audio\Pickup.wav")
-   (capture-sound "")
-   (drop-sound "")
+    (move-sound "Audio\Pickup.wav")
+    (release-sound "Audio\Pickup.wav")
+    (capture-sound "")
+    (drop-sound "")
 
     (option "smart moves" false)
     (option "pass turn"   forced)
