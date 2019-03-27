@@ -23,6 +23,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("zrf", "3.0");
     design.checkVersion("pass-turn", "forced");
+    design.checkVersion("show-blink", "false");
     design.checkVersion("highlight-goals", "false");
     design.checkVersion("progressive-levels", "true");
     design.checkVersion("kamisado-extension", "true");
@@ -546,6 +547,7 @@ Dagaz.View.configure = function(view) {
     view.defPiece("BlackBrownDragon", "Black BrownDragon");
     view.defPiece("WhiteBrownSumo", "White BrownSumo");
     view.defPiece("BlackBrownSumo", "Black BrownSumo");
+    view.defPiece("Ko", "Ko");
  
     view.defPosition("a8", 5, 5, 48, 48);
     view.defPosition("b8", 54, 5, 48, 48);
