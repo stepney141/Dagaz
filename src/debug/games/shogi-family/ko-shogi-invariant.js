@@ -1,7 +1,5 @@
 (function() {
 
-Dagaz.Model.WIDTH = 19;
-
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
