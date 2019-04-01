@@ -125,7 +125,7 @@ Dagaz.Model.CheckInvariants = function(board) {
           });
       } else {
           _.each(board.moves, function(move) {
-              if (move.isSimpleMove()) {
+              if (move.mode == Dagaz.Model.PIECE_CNT) {
                   move.failed = true;
               }
           });

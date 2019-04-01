@@ -194,41 +194,41 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("B1", 0);
     design.addDrop(0, 0, [], 0);
-    design.addDrop(0, 1, [0, 8, 8], 1);
-    design.addDrop(0, 1, [1, 8, 8], 1);
-    design.addDrop(0, 1, [2, 8, 8], 1);
-    design.addDrop(0, 1, [3, 8, 8], 1);
+    design.addDrop(0, 1, [0, 8, 8], 4);
+    design.addDrop(0, 1, [1, 8, 8], 4);
+    design.addDrop(0, 1, [2, 8, 8], 4);
+    design.addDrop(0, 1, [3, 8, 8], 4);
 
     design.addPiece("B2", 1);
-    design.addDrop(1, 0, [], 2);
-    design.addDrop(1, 1, [0, 8, 8], 1);
-    design.addDrop(1, 1, [1, 8, 8], 1);
-    design.addDrop(1, 1, [2, 8, 8], 1);
-    design.addDrop(1, 1, [3, 8, 8], 1);
+    design.addDrop(1, 0, [], 1);
+    design.addDrop(1, 1, [0, 8, 8], 4);
+    design.addDrop(1, 1, [1, 8, 8], 4);
+    design.addDrop(1, 1, [2, 8, 8], 4);
+    design.addDrop(1, 1, [3, 8, 8], 4);
 
     design.addPiece("B3", 2);
-    design.addDrop(2, 0, [], 3);
-    design.addDrop(2, 1, [0, 8, 8], 1);
-    design.addDrop(2, 1, [1, 8, 8], 1);
-    design.addDrop(2, 1, [2, 8, 8], 1);
-    design.addDrop(2, 1, [3, 8, 8], 1);
+    design.addDrop(2, 0, [], 2);
+    design.addDrop(2, 1, [0, 8, 8], 4);
+    design.addDrop(2, 1, [1, 8, 8], 4);
+    design.addDrop(2, 1, [2, 8, 8], 4);
+    design.addDrop(2, 1, [3, 8, 8], 4);
 
     design.addPiece("S1", 3);
-    design.addMove(3, 2, [9], 4);
+    design.addMove(3, 2, [9], 3);
     design.addMove(3, 3, [9, 0, 8, 8], 5);
     design.addMove(3, 3, [9, 1, 8, 8], 5);
     design.addMove(3, 3, [9, 2, 8, 8], 5);
     design.addMove(3, 3, [9, 3, 8, 8], 5);
 
     design.addPiece("S2", 4);
-    design.addMove(4, 2, [9], 4);
+    design.addMove(4, 2, [9], 3);
     design.addMove(4, 3, [9, 0, 8, 8], 5);
     design.addMove(4, 3, [9, 1, 8, 8], 5);
     design.addMove(4, 3, [9, 2, 8, 8], 5);
     design.addMove(4, 3, [9, 3, 8, 8], 5);
 
     design.addPiece("S3", 5);
-    design.addMove(5, 2, [9], 4);
+    design.addMove(5, 2, [9], 3);
     design.addMove(5, 3, [9, 0, 8, 8], 5);
     design.addMove(5, 3, [9, 1, 8, 8], 5);
     design.addMove(5, 3, [9, 2, 8, 8], 5);
