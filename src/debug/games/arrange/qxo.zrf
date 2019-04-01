@@ -1,3 +1,17 @@
+(define step (
+  (verify friend?)
+  up $1 (verify empty?)
+  dn (while not-empty? dn)
+  add
+))
+
+(define split (
+  (verify friend?)
+  $1 (verify empty?)
+  dn (while not-empty? dn)
+  add
+))
+
 (define drop-piece (
   (verify empty?)
   (verify (in-zone? board-zone))
@@ -237,5 +251,80 @@
   (board-setup
      (X (B1 off 1) (B2 off 1) (B3 off 1) (B4 off 1))
      (O (B1 off 1) (B2 off 1) (B3 off 1) (B4 off 1))
+  )
+)
+
+(variant
+  (title "Quantum Morris")
+  (default)
+  (piece
+     (name  B1)
+     (image X "images/qxo/bigx1.bmp"
+            O "images/qxo/bigo1.bmp")
+     (drops 
+         (move-type type-1)
+         (drop-piece)
+         (move-type split-type)
+         (split n) (split e) (split w) (split s)
+     )
+  )  
+  (piece
+     (name  B2)
+     (image X "images/qxo/bigx2.bmp"
+            O "images/qxo/bigo2.bmp")
+     (drops 
+         (move-type type-2)
+         (drop-piece)
+         (move-type split-type)
+         (split n) (split e) (split w) (split s)
+     )
+  )  
+  (piece
+     (name  B3)
+     (image X "images/qxo/bigx3.bmp"
+            O "images/qxo/bigo3.bmp")
+     (drops 
+         (move-type type-3)
+         (drop-piece)
+         (move-type split-type)
+         (split n) (split e) (split w) (split s)
+     )
+  )  
+  (piece
+     (name  S1)
+     (image X "images/qxo/smallx1.bmp"
+            O "images/qxo/smallo1.bmp")
+     (moves
+         (move-type collision-type)
+         (collapse up)
+         (move-type step-type)
+         (step n) (step e) (step w) (step s)
+     )
+  )  
+  (piece
+     (name  S2)
+     (image X "images/qxo/smallx2.bmp"
+            O "images/qxo/smallo2.bmp")
+     (moves
+         (move-type collision-type)
+         (collapse up)
+         (move-type step-type)
+         (step n) (step e) (step w) (step s)
+     )
+  )  
+  (piece
+     (name  S3)
+     (image X "images/qxo/smallx3.bmp"
+            O "images/qxo/smallo3.bmp")
+     (moves
+         (move-type collision-type)
+         (collapse up)
+         (move-type step-type)
+         (step n) (step e) (step w) (step s)
+     )
+  )  
+  (board-setup
+     (X (B1 off 1) (B2 off 1) (B3 off 1))
+     (O (B1 off 1) (B2 off 1) (B3 off 1))
   )
 )

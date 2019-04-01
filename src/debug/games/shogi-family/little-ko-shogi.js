@@ -32,6 +32,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("ko-shogi-invariant", "true");
     design.checkVersion("ko-shogi-promotion", "true");
     design.checkVersion("ko-shogi-priest", "true");
+    design.checkVersion("ko-shogi-engineer", "true");
 
     design.addDirection("w");
     design.addDirection("e");
