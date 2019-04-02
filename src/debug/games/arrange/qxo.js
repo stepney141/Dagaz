@@ -194,10 +194,12 @@ Dagaz.Model.BuildDesign = function(design) {
     design.reserve("X", "B2", 2);
     design.reserve("X", "B3", 2);
     design.reserve("X", "B4", 2);
+    design.reserve("X", "B5", 2);
     design.reserve("O", "B1", 2);
     design.reserve("O", "B2", 2);
     design.reserve("O", "B3", 2);
     design.reserve("O", "B4", 2);
+    design.reserve("O", "B5", 2);
 }
 
 Dagaz.View.configure = function(view) {

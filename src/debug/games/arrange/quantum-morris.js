@@ -234,6 +234,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(5, 3, [9, 2, 8, 8], 5);
     design.addMove(5, 3, [9, 3, 8, 8], 5);
 
+    design.addPiece("None", 6);
+
     design.reserve("X", "B1", 2);
     design.reserve("X", "B2", 2);
     design.reserve("X", "B3", 2);
