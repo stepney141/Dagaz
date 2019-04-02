@@ -150,6 +150,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
+    design.addCommand(1, ZRF.FUNCTION,	24);	// from
     design.addCommand(1, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(1, ZRF.FUNCTION,	20);	// verify
     design.addCommand(1, ZRF.PARAM,	0);	// $1
@@ -163,6 +164,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(1, ZRF.PARAM,	2);	// $3
     design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(1, ZRF.JUMP,	-4);
+    design.addCommand(1, ZRF.FUNCTION,	25);	// to
     design.addCommand(1, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(2, ZRF.FUNCTION,	24);	// from
@@ -194,24 +196,24 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("B1", 0);
     design.addDrop(0, 0, [], 0);
-    design.addDrop(0, 1, [0, 8, 8], 4);
-    design.addDrop(0, 1, [1, 8, 8], 4);
-    design.addDrop(0, 1, [2, 8, 8], 4);
-    design.addDrop(0, 1, [3, 8, 8], 4);
+    design.addMove(0, 1, [0, 8, 8], 4);
+    design.addMove(0, 1, [1, 8, 8], 4);
+    design.addMove(0, 1, [2, 8, 8], 4);
+    design.addMove(0, 1, [3, 8, 8], 4);
 
     design.addPiece("B2", 1);
     design.addDrop(1, 0, [], 1);
-    design.addDrop(1, 1, [0, 8, 8], 4);
-    design.addDrop(1, 1, [1, 8, 8], 4);
-    design.addDrop(1, 1, [2, 8, 8], 4);
-    design.addDrop(1, 1, [3, 8, 8], 4);
+    design.addMove(1, 1, [0, 8, 8], 4);
+    design.addMove(1, 1, [1, 8, 8], 4);
+    design.addMove(1, 1, [2, 8, 8], 4);
+    design.addMove(1, 1, [3, 8, 8], 4);
 
     design.addPiece("B3", 2);
     design.addDrop(2, 0, [], 2);
-    design.addDrop(2, 1, [0, 8, 8], 4);
-    design.addDrop(2, 1, [1, 8, 8], 4);
-    design.addDrop(2, 1, [2, 8, 8], 4);
-    design.addDrop(2, 1, [3, 8, 8], 4);
+    design.addMove(2, 1, [0, 8, 8], 4);
+    design.addMove(2, 1, [1, 8, 8], 4);
+    design.addMove(2, 1, [2, 8, 8], 4);
+    design.addMove(2, 1, [3, 8, 8], 4);
 
     design.addPiece("S1", 3);
     design.addMove(3, 2, [9], 3);

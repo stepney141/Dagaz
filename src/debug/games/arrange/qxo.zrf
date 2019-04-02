@@ -264,6 +264,8 @@
      (drops 
          (move-type type-1)
          (drop-piece)
+     )
+     (moves
          (move-type split-type)
          (split n) (split e) (split w) (split s)
      )
@@ -275,6 +277,8 @@
      (drops 
          (move-type type-2)
          (drop-piece)
+     )
+     (moves
          (move-type split-type)
          (split n) (split e) (split w) (split s)
      )
@@ -286,6 +290,8 @@
      (drops 
          (move-type type-3)
          (drop-piece)
+     )
+     (moves
          (move-type split-type)
          (split n) (split e) (split w) (split s)
      )
