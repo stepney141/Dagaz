@@ -332,38 +332,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(5, 6, [5, 3, 3], 1);
     design.addMove(5, 7, [5, 14, 14, 14], 1);
 
-    design.setup("White", "Pawn", 71);
-    design.setup("White", "Pawn", 72);
-    design.setup("White", "Pawn", 73);
-    design.setup("White", "Pawn", 74);
-    design.setup("White", "Pawn", 75);
-    design.setup("White", "Pawn", 76);
-    design.setup("White", "Pawn", 77);
-    design.setup("White", "Pawn", 78);
-    design.setup("White", "Rook", 82);
-    design.setup("White", "Rook", 87);
-    design.setup("White", "Knight", 83);
-    design.setup("White", "Knight", 86);
-    design.setup("White", "Bishop", 84);
-    design.setup("White", "Bishop", 85);
-    design.setup("White", "Queen", 94);
-    design.setup("White", "King", 95);
-    design.setup("Black", "Pawn", 21);
-    design.setup("Black", "Pawn", 22);
-    design.setup("Black", "Pawn", 23);
-    design.setup("Black", "Pawn", 24);
-    design.setup("Black", "Pawn", 25);
-    design.setup("Black", "Pawn", 26);
-    design.setup("Black", "Pawn", 27);
-    design.setup("Black", "Pawn", 28);
-    design.setup("Black", "Rook", 12);
-    design.setup("Black", "Rook", 17);
-    design.setup("Black", "Knight", 13);
-    design.setup("Black", "Knight", 16);
-    design.setup("Black", "Bishop", 14);
-    design.setup("Black", "Bishop", 15);
-    design.setup("Black", "Queen", 4);
-    design.setup("Black", "King", 5);
+    design.reserve("White", "Knight", 2);
+    design.reserve("White", "King", 1);
+    design.reserve("Black", "King", 1);
 }
 
 Dagaz.View.configure = function(view) {

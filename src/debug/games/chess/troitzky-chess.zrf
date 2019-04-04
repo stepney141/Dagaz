@@ -40,6 +40,25 @@
   add
 ))
 
+(define O-O (
+  (create Rook)
+  n (verify empty?)
+  e (verify empty?)
+  e (verify friend?)
+  (verify (piece? Rook))
+  add
+))
+
+(define O-O-O (
+  (create Rook)
+  n (verify empty?)
+  w (verify empty?)
+  w (verify empty?)
+  w (verify friend?)
+  (verify (piece? Rook))
+  add
+))
+
 (game
   (title "Troitzky Chess (Byway’s setup)")
   (description "http://mlwi.magix.net/bg/troitzkychess.htm")
@@ -137,6 +156,7 @@
      (moves
          (step n) (step s) (step w) (step e)
          (step nw) (step sw) (step ne) (step se)
+         (O-O) (O-O-O)
      )
   )
 
