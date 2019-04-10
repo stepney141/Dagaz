@@ -59,7 +59,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("d1", [0, 0, 0, 0, -9, 0, 0, -6]);
 
     design.addZone("goal-zone", 1, [4, 0, 5, 1, 2, 7, 3]);
-    design.addZone("last-rank", 2, [12, 8, 13, 14, 10, 15, 11]);
+    design.addZone("goal-zone", 2, [12, 8, 13, 14, 10, 15, 11]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
