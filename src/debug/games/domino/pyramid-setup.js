@@ -33,7 +33,11 @@ Dagaz.Model.setup = function(board) {
        if (pieces.length > 1) {
            ix = _.random(0, pieces.length - 1);
        }
-       board.setPiece(pos, Dagaz.Model.createPiece(pieces[ix], 1));
+       var piece = Dagaz.Model.createPiece(pieces[ix], 1);
+       if (design.inZone(1, 1, pos)) {
+           piece = piece.changeOwner(2);
+       }
+       board.setPiece(pos, piece);
        if (pieces.length > 1) {
            pieces = _.without(pieces, pieces[ix]);
        }
