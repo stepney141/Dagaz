@@ -92,88 +92,88 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("P00", 0, 0);
+    design.addPiece("P00", 0, 1);
     design.addMove(0, 0, [], 0);
 
-    design.addPiece("P01", 1, 1);
+    design.addPiece("P01", 1, 2);
     design.addMove(1, 0, [], 0);
 
-    design.addPiece("P02", 2, 2);
+    design.addPiece("P02", 2, 3);
     design.addMove(2, 0, [], 0);
 
-    design.addPiece("P03", 3, 3);
+    design.addPiece("P03", 3, 4);
     design.addMove(3, 0, [], 0);
 
-    design.addPiece("P04", 4, 4);
+    design.addPiece("P04", 4, 5);
     design.addMove(4, 0, [], 0);
 
-    design.addPiece("P05", 5, 5);
+    design.addPiece("P05", 5, 6);
     design.addMove(5, 0, [], 0);
 
-    design.addPiece("P06", 6, 6);
+    design.addPiece("P06", 6, 7);
     design.addMove(6, 0, [], 0);
 
-    design.addPiece("P11", 7, 2);
+    design.addPiece("P11", 7, 3);
     design.addMove(7, 0, [], 0);
 
-    design.addPiece("P12", 8, 3);
+    design.addPiece("P12", 8, 4);
     design.addMove(8, 0, [], 0);
 
-    design.addPiece("P13", 9, 4);
+    design.addPiece("P13", 9, 5);
     design.addMove(9, 0, [], 0);
 
-    design.addPiece("P14", 10, 5);
+    design.addPiece("P14", 10, 6);
     design.addMove(10, 0, [], 0);
 
-    design.addPiece("P15", 11, 6);
+    design.addPiece("P15", 11, 7);
     design.addMove(11, 0, [], 0);
 
-    design.addPiece("P16", 12, 7);
+    design.addPiece("P16", 12, 8);
     design.addMove(12, 0, [], 0);
 
-    design.addPiece("P22", 13, 4);
+    design.addPiece("P22", 13, 5);
     design.addMove(13, 0, [], 0);
 
-    design.addPiece("P23", 14, 5);
+    design.addPiece("P23", 14, 6);
     design.addMove(14, 0, [], 0);
 
-    design.addPiece("P24", 15, 6);
+    design.addPiece("P24", 15, 7);
     design.addMove(15, 0, [], 0);
 
-    design.addPiece("P25", 16, 7);
+    design.addPiece("P25", 16, 8);
     design.addMove(16, 0, [], 0);
 
-    design.addPiece("P26", 17, 8);
+    design.addPiece("P26", 17, 9);
     design.addMove(17, 0, [], 0);
 
-    design.addPiece("P33", 18, 6);
+    design.addPiece("P33", 18, 7);
     design.addMove(18, 0, [], 0);
 
-    design.addPiece("P34", 19, 7);
+    design.addPiece("P34", 19, 8);
     design.addMove(19, 0, [], 0);
 
-    design.addPiece("P35", 20, 8);
+    design.addPiece("P35", 20, 9);
     design.addMove(20, 0, [], 0);
 
-    design.addPiece("P36", 21, 9);
+    design.addPiece("P36", 21, 10);
     design.addMove(21, 0, [], 0);
 
-    design.addPiece("P44", 22, 8);
+    design.addPiece("P44", 22, 9);
     design.addMove(22, 0, [], 0);
 
-    design.addPiece("P45", 23, 9);
+    design.addPiece("P45", 23, 10);
     design.addMove(23, 0, [], 0);
 
-    design.addPiece("P46", 24, 10);
+    design.addPiece("P46", 24, 11);
     design.addMove(24, 0, [], 0);
 
-    design.addPiece("P55", 25, 10);
+    design.addPiece("P55", 25, 11);
     design.addMove(25, 0, [], 0);
 
-    design.addPiece("P56", 26, 11);
+    design.addPiece("P56", 26, 12);
     design.addMove(26, 0, [], 0);
 
-    design.addPiece("P66", 27, 12);
+    design.addPiece("P66", 27, 13);
     design.addMove(27, 0, [], 0);
 }
 
