@@ -207,18 +207,30 @@
 )
 
 (variant
-  (title "Column Checkers")
-
-  (option "animate captures"           false)
-  (option "smart moves"                true)
-; (option "columns-checkers-extension" deferred)
-)
-
-(variant
-  (title "0001")
+  (title "9x9")
   (default)
+
+  (board
+     (image "images/9x9_1.bmp")
+     (grid
+         (start-rectangle 2 2 52 52)
+         (dimensions
+           ("a/b/c/d/e/f/g/h/i" (50 0)) ; files
+           ("9/8/7/6/5/4/3/2/1" (0 50)) ; ranks
+         )
+         (directions (ne 1 -1) (nw -1 -1) (se 1 1) (sw -1 1))
+     )
+     (symmetry Black (nw se) (se nw) (ne sw) (sw ne))
+     (zone (name promotion) (players White)
+           (positions b9 d9 f9 h9)
+     )
+     (zone (name promotion) (players Black)
+           (positions b1 d1 f1 h1)
+     )
+  )
+
   (board-setup
-    (White (Man b4 c3 c5 d4 g1))
-    (Black (Man a5 a7 e7 f4 g3 g5 g7))
+    (White (Man b1 d1 f1 h1 a2 c2 e2 g2 i2 b3 d3 f3 h3))
+    (Black (Man b9 d9 f9 h9 a8 c8 e8 g8 i8 b7 d7 f7 h7))
   )
 )
