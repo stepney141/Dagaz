@@ -51,6 +51,33 @@
 	     )
         )
         (symmetry North (n s) (s n) (w e) (e w) (nw se) (se nw) (ne sw) (sw ne) (sr nr) (nr sr) (nx nx))
+        (kill-positions M1 M2 M3 M4 M5 M6 M7 M8 M9 M10 M11 N1 N2 N3 N4 N5 N6 N7 N8 N9 N10 N11)
+        (zone (name board-zone) (players South North)
+              (positions a11 b11 c11 d11 e11 f11 g11 h11 i11 j11 k11
+                         a10 b10 c10 d10 e10 f10 g10 h10 i10 j10 k10
+                         a9  b9  c9  d9  e9  f9  g9  h9  i9  j9  k9
+                         a8  b8  c8  d8  e8  f8  g8  h8  i8  j8  k8
+                         a7  b7  c7  d7  e7  f7  g7  h7  i7  j7  k7
+                         a6  b6  c6  d6  e6  f6  g6  h6  i6  j6  k6
+                         a5  b5  c5  d5  e5  f5  g5  h5  i5  j5  k5
+                         a4  b4  c4  d4  e4  f4  g4  h4  i4  j4  k4
+                         a3  b3  c3  d3  e3  f3  g3  h3  i3  j3  k3
+                         a2  b2  c2  d2  e2  f2  g2  h2  i2  j2  k2
+                         a1  b1  c1  d1  e1  f1  g1  h1  i1  j1  k1
+              )
+        )
+        (zone (name promotion-zone) (players South)
+              (positions a11 b11 c11 d11 e11 f11 g11 h11 i11 j11 k11
+                         a10 b10 c10 d10 e10 f10 g10 h10 i10 j10 k10
+                         a9  b9  c9  d9  e9  f9  g9  h9  i9  j9  k9
+              )
+        )
+        (zone (name promotion-zone) (players North)
+              (positions a1 b1 c1 d1 e1 f1 g1 h1 i1 j1 k1
+                         a2 b2 c2 d2 e2 f2 g2 h2 i2 j2 k2 
+                         a3 b3 c3 d3 e3 f3 g3 h3 i3 j3 k3 
+              )
+        )
   )
 
   (piece 
@@ -82,9 +109,27 @@
        )
   )
   (piece 
+       (name ViolentWolfP)
+       (image South "images/wa/svwp.bmp" 
+              North "images/wa/nvwp.bmp")
+       (moves
+           (step n) (step e) (step w) (step s)
+           (step nw) (step ne)
+       )
+  )
+  (piece 
        (name ViolentStag)
        (image South "images/wa/svs.bmp" 
               North "images/wa/nvs.bmp")
+       (moves
+           (step nw) (step ne) (step sw) (step se)
+           (step n) 
+       )
+  )
+  (piece 
+       (name ViolentStagP)
+       (image South "images/wa/svsp.bmp" 
+              North "images/wa/nvsp.bmp")
        (moves
            (step nw) (step ne) (step sw) (step se)
            (step n) 
@@ -171,9 +216,27 @@
        )
   )
   (piece 
+       (name SwallowsWingsP)
+       (image South "images/wa/sswp.bmp" 
+              North "images/wa/nswp.bmp")
+       (moves
+           (slide e) (slide w)
+           (step n) (step s)
+       )
+  )
+  (piece 
        (name FlyingFalcon)
        (image South "images/wa/sff.bmp" 
               North "images/wa/nff.bmp")
+       (moves
+           (slide nw) (slide ne) (slide sw) (slide se)
+           (step n)
+       )
+  )
+  (piece 
+       (name FlyingFalconP)
+       (image South "images/wa/sffp.bmp" 
+              North "images/wa/nffp.bmp")
        (moves
            (slide nw) (slide ne) (slide sw) (slide se)
            (step n)
@@ -190,9 +253,28 @@
        )
   )
   (piece 
+       (name CloudEagleP)
+       (image South "images/wa/scep.bmp" 
+              North "images/wa/ncep.bmp")
+       (moves
+           (slide n) (slide s)
+           (step w) (step e) (step sw) (step se)
+           (step nw) (step ne) (step-2 nw) (step-2 ne) (step-3 nw) (step-3 ne)
+       )
+  )
+  (piece 
        (name TreacherousFox)
        (image South "images/wa/sfox.bmp" 
               North "images/wa/nfox.bmp")
+       (moves
+           (step n) (step s) (step nw) (step sw) (step ne) (step se)
+           (jump n n) (jump s s) (jump nw nw) (jump sw sw) (jump ne ne) (jump se se)
+       )
+  )
+  (piece 
+       (name TreacherousFoxP)
+       (image South "images/wa/sfoxp.bmp" 
+              North "images/wa/nfoxp.bmp")
        (moves
            (step n) (step s) (step nw) (step sw) (step ne) (step se)
            (jump n n) (jump s s) (jump nw nw) (jump sw sw) (jump ne ne) (jump se se)
@@ -205,6 +287,87 @@
        (moves
            (slide n)
            (step s) (step nw) (step ne) (step sw) (step se)
+       )
+  )
+  (piece 
+       (name TenaciousFalcon)
+       (image South "images/wa/sfalcon.bmp" 
+              North "images/wa/nfalcon.bmp")
+       (moves
+           (slide n) (slide s) (slide nw) (slide ne) (slide sw) (slide se)
+           (step w) (step e)
+       )
+  )
+  (piece 
+       (name BearsEyes)
+       (image South "images/wa/sbe.bmp" 
+              North "images/wa/nbe.bmp")
+       (moves
+           (step n) (step nw)
+           (step e) (step ne)
+           (step w) (step sw)
+           (step s) (step se)
+       )
+  )
+  (piece 
+       (name RoamingBoar)
+       (image South "images/wa/srb.bmp" 
+              North "images/wa/nrb.bmp")
+       (moves
+           (step n) (step nw)
+           (step e) (step ne)
+           (step w) (step sw)
+           (step se)
+       )
+  )
+  (piece 
+       (name RaidingFalcon)
+       (image South "images/wa/srf.bmp" 
+              North "images/wa/nrf.bmp")
+       (moves
+           (step w) (step nw)
+           (step e) (step ne)
+           (slide n) (slide s)
+       )
+  )
+  (piece 
+       (name GlidingSwallow)
+       (image South "images/wa/sgs.bmp" 
+              North "images/wa/ngs.bmp")
+       (moves
+           (slide n) (slide s)
+           (slide w) (slide e)
+       )
+  )
+  (piece 
+       (name HeavenlyHorse)
+       (image South "images/wa/shh.bmp" 
+              North "images/wa/nhh.bmp")
+       (moves
+           (jump n nw) (jump n ne)
+           (jump s sw) (jump s se)
+       )
+  )
+  (piece 
+       (name PloddingOx)
+       (image South "images/wa/spo.bmp" 
+              North "images/wa/npo.bmp")
+       (moves
+           (step n) (step nw)
+           (step e) (step ne)
+           (step w) (step sw)
+           (step s) (step se)
+       )
+  )
+  (piece 
+       (name GoldenBird)
+       (image South "images/wa/sgb.bmp" 
+              North "images/wa/ngb.bmp")
+       (moves
+           (step n) (step nw)
+           (step e) (step ne)
+           (step w)
+           (step s)
        )
   )
 
