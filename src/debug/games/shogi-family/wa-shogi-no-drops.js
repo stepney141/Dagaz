@@ -277,6 +277,18 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(3, ZRF.FUNCTION,	24);	// from
     design.addCommand(3, ZRF.PARAM,	0);	// $1
     design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(3, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(3, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(3, ZRF.PARAM,	1);	// $2
+    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(3, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(3, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(3, ZRF.PARAM,	2);	// $3
+    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(3, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(3, ZRF.FUNCTION,	0);	// not
+    design.addCommand(3, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(3, ZRF.FUNCTION,	25);	// to
     design.addCommand(3, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(4, ZRF.FUNCTION,	24);	// from
@@ -413,8 +425,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(18, 0, [5], 0);
     design.addMove(18, 2, [6, 6], 0);
     design.addMove(18, 2, [5, 5], 0);
-    design.addMove(18, 3, [6], 0);
-    design.addMove(18, 3, [5], 0);
+    design.addMove(18, 3, [6, 6, 6], 0);
+    design.addMove(18, 3, [5, 5, 5], 0);
 
     design.addPiece("CloudEagleP", 19, 40);
     design.addMove(19, 1, [7, 7], 0);

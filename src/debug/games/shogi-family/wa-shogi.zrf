@@ -19,6 +19,13 @@
   add
 ))
 
+(define step-3 (
+  $1 (verify empty?)
+  $1 (verify empty?)
+  $1 (verify not-friend?)
+  add
+))
+
 (define jump (
   $1 $2 (verify not-friend?)
   add
