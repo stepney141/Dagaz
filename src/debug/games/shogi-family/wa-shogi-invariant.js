@@ -89,8 +89,8 @@ Dagaz.Model.CheckInvariants = function(board) {
               isAttacked(design, b, board.player, king,  s, [0, 2, 3, 6, 10, 11, 13, 14, 15, 20, 21, 22, 24, 29, 30], [18, 19, 23, 26, 27]) ||
               isAttacked(design, b, board.player, king,  w, [0, 2, 3, 7, 10, 18, 19, 23, 24, 25, 26, 29, 30], [14, 15, 27]) ||
               isAttacked(design, b, board.player, king,  e, [0, 2, 3, 7, 10, 18, 19, 23, 24, 25, 26, 29, 30], [14, 15, 27]) ||
-              isAttacked(design, b, board.player, king, nw, [0, 2, 3, 4, 5, 6, 7, 10, 11, +18, +19, 20, 21, 22, 24, 25, 26, 29, 30], [16, 17, 23]) ||
-              isAttacked(design, b, board.player, king, ne, [0, 2, 3, 4, 5, 6, 7, 10, 11, +18, +19, 20, 21, 22, 24, 25, 26, 29, 30], [16, 17, 23]) ||
+              isAttacked(design, b, board.player, king, nw, [0, 2, 3, 4, 5, 6, 7, 10, 11, 18, 19, 20, 21, 22, 24, 25, 26, 29, 30], [16, 17, 23]) ||
+              isAttacked(design, b, board.player, king, ne, [0, 2, 3, 4, 5, 6, 7, 10, 11, 18, 19, 20, 21, 22, 24, 25, 26, 29, 30], [16, 17, 23]) ||
               isAttacked(design, b, board.player, king, sw, [0, 4, 5, 8, 9, 18, 19, 20, 21, 22, 24, 25, 29], [16, 17, 23]) ||
               isAttacked(design, b, board.player, king, se, [0, 4, 5, 8, 9, 18, 19, 20, 21, 22, 24, 25, 29], [16, 17, 23])) {
               move.failed = true;

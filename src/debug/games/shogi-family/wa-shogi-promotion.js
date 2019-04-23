@@ -36,8 +36,8 @@ Dagaz.Model.CheckInvariants = function(board) {
           if ((design.inZone(1, board.player, pos) || design.inZone(1, board.player, target)) && design.inZone(0, board.player, pos)) {
               var isForced = false;
               var piece = board.getPiece(pos);
-              if ((piece !== null) && !_.isUndefined(promote[piece.type])) {
-                   var promoted = piece.promote(promote[piece.type]);
+              if ((piece !== null) && !_.isUndefined(promote[+piece.type])) {
+                   var promoted = piece.promote(promote[+piece.type]);
                    if ((piece.type == design.getPieceType("Oxcart")) || (piece.type == design.getPieceType("SparrowPawn"))) {
                        if (design.navigate(board.player, target, n) === null) isForced = true;
                    }
@@ -50,7 +50,6 @@ Dagaz.Model.CheckInvariants = function(board) {
           }
       }
   });
-  CheckInvariants(board);
   CheckInvariants(board);
 }
 
