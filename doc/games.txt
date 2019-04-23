@@ -199,6 +199,7 @@
   - Rocket Shogi [checkmate, reserve, family:chess]
   - LeShogi [checkmate, reserve, breakthrough, family:chess]
   - Ikusa Shogi [checkmate, reserve, breakthrough, family:chess]
+  - Wa Shogi [checkmate, reserve, todo:ai, family:chess]
   - Shogi [checkmate, reserve, todo:ai, dialog(promotion), family:chess]
   - Annan Shogi [best, checkmate, reserve, todo:ai, dialog(promotion), family:chess]
   - Yonin Shogi [best, 4-players, reserve, dark, cloack, todo:ai, bug:goal(dark), dialog(promotion), family:chess]
