@@ -44,6 +44,14 @@
   add
 ))
 
+(define shootm (
+  $1 (while empty? $1)
+  (verify not-empty?) $1
+  (while empty? $1)
+  (verify not-friend?)
+  add
+))
+
 (game
    (title "XiangQi")
 
@@ -284,6 +292,42 @@
          (Mandarin c6 e6)
          (Cannon b5 f5)
          (General d6)
+      )
+   )
+)
+
+(variant
+   (title "Yitongqi (Black)")
+   (default)
+
+   (piece
+      (name Manchu)
+      (image Red "images/rchariot.bmp" 
+             Black "images/bchariot.bmp")
+      (moves
+         (slide n) (slide s) (slide w) (slide e)
+         (step-2 n nw) (step-2 n ne) (step-2 s sw) (step-2 s se)
+         (step-2 w nw) (step-2 e ne) (step-2 w sw) (step-2 e se)
+         (shootm n) (shootm s) (shootm w) (shootm e)
+      )
+   )
+
+   (board-setup
+      (Red
+         (Soldier a4 c4 e4 g4 i4)
+         (Horse b1 h1)
+         (Elephant c1 g1)
+         (Chariot a1 i1)
+         (Mandarin d1 f1)
+         (Cannon b3 h3)
+         (General e1)
+      )
+      (Black
+         (Soldier a7 c7 e7 g7 i7)
+         (Elephant c10 g10)
+         (Manchu i10)
+         (Mandarin d10 f10)
+         (General e10)
       )
    )
 )
