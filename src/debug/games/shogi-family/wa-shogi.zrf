@@ -141,6 +141,7 @@
        (image South "images/wa/sck.bmp" 
               North "images/wa/nck.bmp")
        (moves
+           (move-type normal-type)
            (step n) (step nw)
            (step e) (step ne)
            (step w) (step sw)
@@ -152,7 +153,9 @@
        (image South "images/wa/ssp.bmp" 
               North "images/wa/nsp.bmp")
        (moves
+           (move-type normal-type)
            (step n)
+           (move-type drop-type)
            (drop-piece nx)
        )
   )
@@ -161,8 +164,10 @@
        (image South "images/wa/svw.bmp" 
               North "images/wa/nvw.bmp")
        (moves
+           (move-type normal-type)
            (step n) (step e) (step w) (step s)
            (step nw) (step ne)
+           (move-type drop-type)
            (drop-piece nx)
        )
   )
@@ -171,6 +176,7 @@
        (image South "images/wa/svwp.bmp" 
               North "images/wa/nvwp.bmp")
        (moves
+           (move-type normal-type)
            (step n) (step e) (step w) (step s)
            (step nw) (step ne)
        )
@@ -180,8 +186,10 @@
        (image South "images/wa/svs.bmp" 
               North "images/wa/nvs.bmp")
        (moves
+           (move-type normal-type)
            (step nw) (step ne) (step sw) (step se)
            (step n) 
+           (move-type drop-type)
            (drop-piece nx)
        )
   )
@@ -190,6 +198,7 @@
        (image South "images/wa/svsp.bmp" 
               North "images/wa/nvsp.bmp")
        (moves
+           (move-type normal-type)
            (step nw) (step ne) (step sw) (step se)
            (step n) 
        )
@@ -199,8 +208,10 @@
        (image South "images/wa/sfg.bmp" 
               North "images/wa/nfg.bmp")
        (moves
+           (move-type normal-type)
            (step nw) (step ne)
            (step n) (step s)
+           (move-type drop-type)
            (drop-piece nx)
        )
   )
@@ -209,8 +220,10 @@
        (image South "images/wa/sfc.bmp" 
               North "images/wa/nfc.bmp")
        (moves
+           (move-type normal-type)
            (step nw) (step ne)
            (step w) (step e)
+           (move-type drop-type)
            (drop-piece nx)
        )
   )
@@ -219,8 +232,10 @@
        (image South "images/wa/ssc.bmp" 
               North "images/wa/nsc.bmp")
        (moves
+           (move-type normal-type)
            (step sw) (step se)
            (step n)
+           (move-type drop-type)
            (drop-piece nx)
        )
   )
@@ -229,8 +244,10 @@
        (image South "images/wa/sso.bmp" 
               North "images/wa/nso.bmp")
        (moves
+           (move-type normal-type)
            (step sw) (step se)
            (step n)
+           (move-type drop-type)
            (drop-piece nx)
        )
   )
@@ -239,8 +256,10 @@
        (image South "images/wa/sbd.bmp" 
               North "images/wa/nbd.bmp")
        (moves
+           (move-type normal-type)
            (step nw) (step ne)
            (step w) (step e) (step s)
+           (move-type drop-type)
            (drop-piece nx)
        )
   )
@@ -249,8 +268,10 @@
        (image South "images/wa/scm.bmp" 
               North "images/wa/ncm.bmp")
        (moves
+           (move-type normal-type)
            (step nw) (step ne)
            (step n) (step s)
+           (move-type drop-type)
            (drop-piece nx)
        )
   )
@@ -259,7 +280,9 @@
        (image South "images/wa/soc.bmp" 
               North "images/wa/noc.bmp")
        (moves
+           (move-type normal-type)
            (slide n)
+           (move-type drop-type)
            (drop-piece nx)
        )
   )
@@ -268,8 +291,10 @@
        (image South "images/wa/slh.bmp" 
               North "images/wa/nlh.bmp")
        (moves
+           (move-type normal-type)
            (slide n)
            (step s) (step-2 s)
+           (move-type drop-type)
            (drop-piece nx)
        )
   )
@@ -278,8 +303,10 @@
        (image South "images/wa/ssw.bmp" 
               North "images/wa/nsw.bmp")
        (moves
+           (move-type normal-type)
            (slide e) (slide w)
            (step n) (step s)
+           (move-type drop-type)
            (drop-piece nx)
        )
   )
@@ -288,6 +315,7 @@
        (image South "images/wa/sswp.bmp" 
               North "images/wa/nswp.bmp")
        (moves
+           (move-type normal-type)
            (slide e) (slide w)
            (step n) (step s)
        )
@@ -297,8 +325,10 @@
        (image South "images/wa/sff.bmp" 
               North "images/wa/nff.bmp")
        (moves
+           (move-type normal-type)
            (slide nw) (slide ne) (slide sw) (slide se)
            (step n)
+           (move-type drop-type)
            (drop-piece nx)
        )
   )
@@ -307,6 +337,7 @@
        (image South "images/wa/sffp.bmp" 
               North "images/wa/nffp.bmp")
        (moves
+           (move-type normal-type)
            (slide nw) (slide ne) (slide sw) (slide se)
            (step n)
        )
@@ -316,9 +347,11 @@
        (image South "images/wa/sce.bmp" 
               North "images/wa/nce.bmp")
        (moves
+           (move-type normal-type)
            (slide n) (slide s)
            (step w) (step e) (step sw) (step se)
            (step nw) (step ne) (step-2 nw) (step-2 ne) (step-3 nw) (step-3 ne)
+           (move-type drop-type)
            (drop-piece nx)
        )
   )
@@ -327,6 +360,7 @@
        (image South "images/wa/scep.bmp" 
               North "images/wa/ncep.bmp")
        (moves
+           (move-type normal-type)
            (slide n) (slide s)
            (step w) (step e) (step sw) (step se)
            (step nw) (step ne) (step-2 nw) (step-2 ne) (step-3 nw) (step-3 ne)
@@ -337,8 +371,10 @@
        (image South "images/wa/sfox.bmp" 
               North "images/wa/nfox.bmp")
        (moves
+           (move-type normal-type)
            (step n) (step s) (step nw) (step sw) (step ne) (step se)
            (jump n n) (jump s s) (jump nw nw) (jump sw sw) (jump ne ne) (jump se se)
+           (move-type drop-type)
            (drop-piece nx)
        )
   )
@@ -347,6 +383,7 @@
        (image South "images/wa/sfoxp.bmp" 
               North "images/wa/nfoxp.bmp")
        (moves
+           (move-type normal-type)
            (step n) (step s) (step nw) (step sw) (step ne) (step se)
            (jump n n) (jump s s) (jump nw nw) (jump sw sw) (jump ne ne) (jump se se)
        )
@@ -356,8 +393,10 @@
        (image South "images/wa/srr.bmp" 
               North "images/wa/nrr.bmp")
        (moves
+           (move-type normal-type)
            (slide n)
            (step s) (step nw) (step ne) (step sw) (step se)
+           (move-type drop-type)
            (drop-piece nx)
        )
   )
@@ -366,6 +405,7 @@
        (image South "images/wa/sfalcon.bmp" 
               North "images/wa/nfalcon.bmp")
        (moves
+           (move-type normal-type)
            (slide n) (slide s) (slide nw) (slide ne) (slide sw) (slide se)
            (step w) (step e)
        )
@@ -375,6 +415,7 @@
        (image South "images/wa/sbe.bmp" 
               North "images/wa/nbe.bmp")
        (moves
+           (move-type normal-type)
            (step n) (step nw)
            (step e) (step ne)
            (step w) (step sw)
@@ -386,6 +427,7 @@
        (image South "images/wa/srb.bmp" 
               North "images/wa/nrb.bmp")
        (moves
+           (move-type normal-type)
            (step n) (step nw)
            (step e) (step ne)
            (step w) (step sw)
@@ -397,6 +439,7 @@
        (image South "images/wa/srf.bmp" 
               North "images/wa/nrf.bmp")
        (moves
+           (move-type normal-type)
            (step w) (step nw)
            (step e) (step ne)
            (slide n) (slide s)
@@ -407,6 +450,7 @@
        (image South "images/wa/sgs.bmp" 
               North "images/wa/ngs.bmp")
        (moves
+           (move-type normal-type)
            (slide n) (slide s)
            (slide w) (slide e)
        )
@@ -416,6 +460,7 @@
        (image South "images/wa/shh.bmp" 
               North "images/wa/nhh.bmp")
        (moves
+           (move-type normal-type)
            (jump n nw) (jump n ne)
            (jump s sw) (jump s se)
        )
@@ -425,6 +470,7 @@
        (image South "images/wa/spo.bmp" 
               North "images/wa/npo.bmp")
        (moves
+           (move-type normal-type)
            (step n) (step nw)
            (step e) (step ne)
            (step w) (step sw)
@@ -436,6 +482,7 @@
        (image South "images/wa/sgb.bmp" 
               North "images/wa/ngb.bmp")
        (moves
+           (move-type normal-type)
            (step n) (step nw)
            (step e) (step ne)
            (step w)

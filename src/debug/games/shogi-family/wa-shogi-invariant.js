@@ -104,7 +104,7 @@ Dagaz.Model.checkGoals = function(design, board, player) {
   if (board.moves.length == 0) {
       var king = findKing(design, board, board.player);
       if (king === null) return 1;
-      if (isKingAttacked(design, board, design.nextPlayer(board.player), king)) {
+      if (isKingAttacked(design, board, board.player, king)) {
           return 1;
       } else {
           return 0;
