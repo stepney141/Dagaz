@@ -25,6 +25,10 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("smart-moves", "false");
     design.checkVersion("show-blink", "false");
 
+    if (!_.isUndefined(Dagaz.Controller.addSound)) {
+        Dagaz.Controller.addSound(0, "../../sounds/clack.wav");
+    }
+
     design.addDirection("ne");
     design.addDirection("se");
     design.addDirection("sw");

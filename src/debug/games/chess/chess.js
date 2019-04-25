@@ -24,11 +24,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "false");
     design.checkVersion("show-blink", "false");
+    design.checkVersion("show-hints", "false");
+    design.checkVersion("advisor-wait", "5");
     design.checkVersion("chess-invariant", "true");
-
-    if (!_.isUndefined(Dagaz.Controller.addSound)) {
-        Dagaz.Controller.addSound(0, "../../sounds/clack.wav");
-    }
 
     design.addDirection("w");
     design.addDirection("e");
@@ -440,7 +438,7 @@ Dagaz.View.configure = function(view) {
     view.defPosition("g1", 410, 478, 68, 68);
     view.defPosition("h1", 478, 478, 68, 68);
 
-    view.defPopup("Promote", 127, 150);
+    view.defPopup("Promote", 127, 100);
     view.defPopupPosition("X1", 10, 7, 68, 68);
     view.defPopupPosition("X2", 80, 7, 68, 68);
     view.defPopupPosition("X3", 150, 7, 68, 68);

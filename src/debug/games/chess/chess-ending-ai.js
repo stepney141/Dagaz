@@ -25,7 +25,7 @@ var getData = function(design, board) {
       var targets = [];
       var zone = 4;
       _.each(design.allPositions(), function(pos) {
-           data[pos] = 100;
+           board.data[pos] = 100;
            var piece = board.getPiece(pos);
            if (piece !== null) {
                if (piece.type == 2) targets.push(pos);
@@ -55,7 +55,7 @@ var getData = function(design, board) {
            }
            _.each(design.allPositions(), function(pos) {
                 if (!_.isUndefined(level[pos])) {
-                     data[pos] -= level[pos];
+                     board.data[pos] -= level[pos];
                 }
            });
       });
@@ -66,7 +66,7 @@ var getData = function(design, board) {
 Dagaz.AI.heuristic = function(ai, design, board, move) {
   if (move.isSimpleMove()) {
       var pos = move.actions[0][1][0];
-      if (board.getPiece(pos) !== 0) return 1000;
+      if (board.getPiece(pos) !== null) return 1000;
       var data = getData(design, board);
       return data[pos];
   }

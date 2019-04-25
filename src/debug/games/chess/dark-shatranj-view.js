@@ -3,6 +3,8 @@
 Dagaz.Model.invisible    = [];
 Dagaz.Model.invisibleOld = [];
 
+var doneFlag = false;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
@@ -138,9 +140,14 @@ Dagaz.Model.Done = function(design, board) {
   }
 }
 
+Dagaz.Controller.Done = function(board) {
+  board.ko = [];
+  doneFlag = true;
+}
+
 Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y, setup) {
   var isSaved = false;
-  if (_.indexOf(_.union(Dagaz.Model.invisible, Dagaz.Model.invisibleOld), setup.pos) >= 0) {
+  if (!doneFlag && (_.indexOf(_.union(Dagaz.Model.invisible, Dagaz.Model.invisibleOld), setup.pos) >= 0)) {
       ctx.save();
       if (model.player == 1) {
           ctx.globalAlpha = 0.5;

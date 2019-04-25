@@ -8,6 +8,16 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+var getSetup = function() {
+  var str = window.location.search.toString();
+  var result = str.match(/\?setup=([^&]*)/);
+  if (result) {
+      return result[1];
+  } else {
+      return "";
+  }
+}
+
 var isSame = function(a, b) {
   var row = (a / 8) | 0;
   if (row % 2 != 0) {
@@ -40,7 +50,13 @@ var getPosition = function(design, board, piece) {
   return pos;
 }
 
+var setup = Dagaz.Model.setup;
+
 Dagaz.Model.setup = function(board) {
+  if (getSetup()) {
+      setup(board);
+      return;
+  }
   var design = Dagaz.Model.design;
   if (!_.isUndefined(design.reserve)) {
       _.each(_.keys(design.reserve), function(type) {

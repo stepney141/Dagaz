@@ -12,6 +12,10 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+if (!_.isUndefined(Dagaz.Controller.play)) {
+    Dagaz.Controller.addSound(Dagaz.Sounds.win,  "../../sounds/win.wav");
+}
+
 Dagaz.Model.checkGoals = function(design, board, player) {
   var design = Dagaz.Model.design;
   var r = 1;

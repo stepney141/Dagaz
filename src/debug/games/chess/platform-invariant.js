@@ -8,27 +8,6 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var checkGoals = Dagaz.Model.checkGoals;
-
-Dagaz.Model.checkGoals = function(design, board, player) {
-  var design = Dagaz.Model.design;
-  var king   = design.getPieceType("King");
-  var kings  = _.chain(design.allPositions())
-   .filter(function(pos) {
-      var piece = board.getPiece(pos);
-      if (piece === null) return false;
-      return piece.type == king;
-    })
-   .map(function(pos) {
-      var piece = board.getPiece(pos);
-      return piece.player;
-    })
-   .value();
-  if (_.indexOf(kings, player) < 0) return -1;
-  if (kings.length < 2) return 1;
-  return checkGoals(design, board, player);
-}
-
 var findPiece = function(design, board, player, type) {
   var positions = design.allPositions();
   for (var i = 0; i < positions.length; i++) {
@@ -66,7 +45,7 @@ var checkDirection = function(design, board, player, pos, dir, leapers, riders) 
   return _.indexOf(riders, +piece.type) >= 0;
 }
 
-var checkPositions = function(design, board, player, positions) {
+Dagaz.Model.checkPositions = function(design, board, player, positions) {
   var king   = design.getPieceType("King");
   var pawn   = design.getPieceType("Pawn");
   var rook   = design.getPieceType("Rook");
@@ -126,6 +105,24 @@ var changePieces = function(design, board, move) {
   });
 }
 
+var checkGoals = Dagaz.Model.checkGoals;
+
+Dagaz.Model.checkGoals = function(design, board, player) {
+  var design = Dagaz.Model.design;
+  var king   = design.getPieceType("King");
+  board.generate(design);
+  if (board.moves.length == 0) {
+      var pos = Dagaz.Model.findPiece(design, board, board.player, king);
+      if (pos === null) return 1;
+      if (Dagaz.Model.checkPositions(design, board, board.player, [pos])) {
+          return 1;
+      } else {
+          return 0;
+      }
+  }
+  return checkGoals(design, board, player);
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
@@ -151,7 +148,7 @@ Dagaz.Model.CheckInvariants = function(board) {
               list.push(move.actions[1][1][0]);
           }
       }
-      if (checkPositions(design, b, board.player, list)) {
+      if (Dagaz.Model.checkPositions(design, b, board.player, list)) {
           move.failed = true;
           return;
       }

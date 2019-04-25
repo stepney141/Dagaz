@@ -114,6 +114,27 @@ var getPiece = function(board, action) {
   return board.getPiece(action[0][0]);
 }
 
+var checkGoals = Dagaz.Model.checkGoals;
+
+Dagaz.Model.checkGoals = function(design, board, player) {
+  var design = Dagaz.Model.design;
+  var king   = design.getPieceType("King");
+  board.generate(design);
+  if (board.moves.length == 0) {
+      var pos = Dagaz.Model.findPiece(design, board, board.player, king);
+      if (pos === null) return 1;
+      var piece = board.getPiece(pos);
+      if (piece === null) return 1;
+      var mirrored = +piece.type % 2;
+      if (Dagaz.Model.checkPositions(design, board, board.player, [pos], mirrored)) {
+          return 1;
+      } else {
+          return 0;
+      }
+  }
+  return checkGoals(design, board, player);
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {

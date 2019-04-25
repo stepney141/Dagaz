@@ -22,7 +22,10 @@ ZRF = {
 Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-captures", "false");
-    design.checkVersion("smart-moves", "true");
+    design.checkVersion("smart-moves", "false");
+    design.checkVersion("show-hints", "false");
+    design.checkVersion("show-blink", "true");
+    design.checkVersion("advisor-wait", "5");
     design.checkVersion("shabel-invariant", "true");
 
     design.addDirection("w");
@@ -101,6 +104,10 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("f1", [-1, 1, 0, -7, -8, 0, 0, -9]);
     design.addPosition("g1", [-1, 1, 0, -7, -8, 0, 0, -9]);
     design.addPosition("h1", [-1, 0, 0, 0, -8, 0, 0, -9]);
+    design.addPosition("X1", [0, 0, 0, 0, 0, 0, 0, 0]);
+    design.addPosition("X2", [0, 0, 0, 0, 0, 0, 0, 0]);
+    design.addPosition("X3", [0, 0, 0, 0, 0, 0, 0, 0]);
+    design.addPosition("X4", [0, 0, 0, 0, 0, 0, 0, 0]);
 
     design.addZone("promotion", 1, [0, 1, 2, 3, 4, 5, 6, 7]);
     design.addZone("promotion", 2, [56, 57, 58, 59, 60, 61, 62, 63]);
@@ -361,18 +368,18 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 1, [3], 1);
 
     design.addPiece("Dama", 1, 250);
-    design.addMove(1, 2, [7, 7, 7, 7, 7], 0);
-    design.addMove(1, 2, [3, 3, 3, 3, 3], 0);
-    design.addMove(1, 2, [6, 6, 6, 6, 6], 0);
-    design.addMove(1, 2, [5, 5, 5, 5, 5], 0);
-    design.addMove(1, 3, [7, 7, 7, 7, 7], 2);
-    design.addMove(1, 3, [3, 3, 3, 3, 3], 2);
-    design.addMove(1, 3, [6, 6, 6, 6, 6], 2);
-    design.addMove(1, 3, [5, 5, 5, 5, 5], 2);
-    design.addMove(1, 4, [7, 7], 1);
-    design.addMove(1, 4, [3, 3], 1);
-    design.addMove(1, 4, [6, 6], 1);
-    design.addMove(1, 4, [5, 5], 1);
+    design.addMove(1, 2, [7, 7, 7, 7, 7], 0, 10);
+    design.addMove(1, 2, [3, 3, 3, 3, 3], 0, 10);
+    design.addMove(1, 2, [6, 6, 6, 6, 6], 0, 10);
+    design.addMove(1, 2, [5, 5, 5, 5, 5], 0, 10);
+    design.addMove(1, 3, [7, 7, 7, 7, 7], 2, 10);
+    design.addMove(1, 3, [3, 3, 3, 3, 3], 2, 10);
+    design.addMove(1, 3, [6, 6, 6, 6, 6], 2, 10);
+    design.addMove(1, 3, [5, 5, 5, 5, 5], 2, 10);
+    design.addMove(1, 4, [7, 7], 1, 10);
+    design.addMove(1, 4, [3, 3], 1, 10);
+    design.addMove(1, 4, [6, 6], 1, 10);
+    design.addMove(1, 4, [5, 5], 1, 10);
 
     design.addPiece("Pawn", 2, 100);
     design.addMove(2, 5, [4], 1);
@@ -556,4 +563,10 @@ Dagaz.View.configure = function(view) {
     view.defPosition("f1", 342, 478, 68, 68);
     view.defPosition("g1", 410, 478, 68, 68);
     view.defPosition("h1", 478, 478, 68, 68);
+
+    view.defPopup("Promote", 127, 150);
+    view.defPopupPosition("X1", 10, 7, 68, 68);
+    view.defPopupPosition("X2", 80, 7, 68, 68);
+    view.defPopupPosition("X3", 150, 7, 68, 68);
+    view.defPopupPosition("X4", 220, 7, 68, 68);
 }

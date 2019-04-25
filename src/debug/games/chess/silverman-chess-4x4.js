@@ -22,8 +22,10 @@ ZRF = {
 Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-captures", "false");
-    design.checkVersion("smart-moves", "true");
+    design.checkVersion("smart-moves", "false");
     design.checkVersion("show-blink", "false");
+    design.checkVersion("show-hints", "false");
+    design.checkVersion("advisor-wait", "5");
     design.checkVersion("chess-invariant", "true");
 
     design.addDirection("w");
@@ -37,7 +39,6 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPlayer("White", [1, 0, 4, 6, 2, 7, 3, 5]);
     design.addPlayer("Black", [1, 0, 4, 6, 2, 7, 3, 5]);
-
 
     design.addPosition("a4", [0, 1, 4, 0, 0, 5, 0, 0]);
     design.addPosition("b4", [-1, 1, 4, 0, 0, 5, 3, 0]);
