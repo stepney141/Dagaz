@@ -86,6 +86,23 @@ var isAttacked = function(design, board, pos, player) {
   return false;
 }
 
+var checkGoals = Dagaz.Model.checkGoals;
+
+Dagaz.Model.checkGoals = function(design, board, player) {
+  var design = Dagaz.Model.design;
+  board.generate(design);
+  if (board.moves.length == 0) {
+      var pos = findKing(design, board);
+      if (pos === null) return 1;
+      if (isAttacked(design, board, pos)) {
+          return 1;
+      } else {
+          return 0;
+      }
+  }
+  return checkGoals(design, board, player);
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
