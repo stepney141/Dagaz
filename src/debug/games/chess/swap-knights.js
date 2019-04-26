@@ -28,7 +28,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("swap-chess-restrictions", "step");
 
     if (!_.isUndefined(Dagaz.Controller.addSound)) {
-        Dagaz.Controller.addSound(0, "../../sounds/clack.wav");
+        Dagaz.Controller.addSound(0, "../sounds/clack.wav");
     }
 
     design.addDirection("wwn");

@@ -82,8 +82,7 @@ Dagaz.Model.checkPositions = function(design, board, player, positions) {
 var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {
-  var design = Dagaz.Model.design;
-  var king   = design.getPieceType("Khun");
+  var king = design.getPieceType("Khun");
   board.generate(design);
   if (board.moves.length == 0) {
       var pos = Dagaz.Model.findPiece(design, board, board.player, king);

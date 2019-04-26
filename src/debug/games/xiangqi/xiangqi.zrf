@@ -298,7 +298,6 @@
 
 (variant
    (title "Yitongqi (Black)")
-   (default)
 
    (piece
       (name Manchu)
@@ -326,6 +325,40 @@
          (Soldier a7 c7 e7 g7 i7)
          (Elephant c10 g10)
          (Manchu i10)
+         (Mandarin d10 f10)
+         (General e10)
+      )
+   )
+)
+
+(variant
+   (title "5 Tigers (Black)")
+   (default)
+
+   (turn-order Red Black Black)
+
+   (piece
+      (name Tiger)
+      (image Red "images/rsoldier.bmp" 
+             Black "images/bsoldier.bmp")
+      (moves
+         (step-pawn n) (step w enemy) (step e enemy)
+      )
+   )
+
+   (board-setup
+      (Red
+         (Soldier a4 c4 e4 g4 i4)
+         (Horse b1 h1)
+         (Elephant c1 g1)
+         (Chariot a1 i1)
+         (Mandarin d1 f1)
+         (Cannon b3 h3)
+         (General e1)
+      )
+      (Black
+         (Tiger a7 c7 e7 g7 i7)
+         (Elephant c10 g10)
          (Mandarin d10 f10)
          (General e10)
       )

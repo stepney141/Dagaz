@@ -18,9 +18,8 @@ if (!_.isUndefined(Dagaz.Controller.addSound)) {
 var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {
-  var design = Dagaz.Model.design;
-  var king   = design.getPieceType("King");
-  var kings  = _.chain(design.allPositions())
+  var king  = design.getPieceType("King");
+  var kings = _.chain(design.allPositions())
    .filter(function(pos) {
       var piece = board.getPiece(pos);
       if (piece === null) return false;

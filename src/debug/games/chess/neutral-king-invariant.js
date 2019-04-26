@@ -89,7 +89,6 @@ var isAttacked = function(design, board, pos, player) {
 var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {
-  var design = Dagaz.Model.design;
   board.generate(design);
   if (board.moves.length == 0) {
       var pos = findKing(design, board);
