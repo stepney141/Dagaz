@@ -160,9 +160,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("X3", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
     design.addPosition("X4", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
-    design.addZone("full-promotion", 1, [14, 4, 5, 18]);
-    design.addZone("full-promotion", 2, [91, 103, 104, 94]);
-    design.addZone("light-promotion", 1, [14, 4, 5, 18, 24, 30]);
+    design.addZone("full-promotion", 1, [14, 4, 5, 6, 18]);
+    design.addZone("full-promotion", 2, [91, 103, 104, 105, 95]);
+    design.addZone("light-promotion", 1, [24, 30]);
     design.addZone("light-promotion", 2, [79, 85]);
     design.addZone("third-rank", 1, [68, 69, 70, 71, 72, 73, 74]);
     design.addZone("third-rank", 2, [35, 36, 37, 38, 39, 40, 41]);
