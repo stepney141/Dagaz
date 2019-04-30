@@ -184,6 +184,15 @@ View2D.prototype.defPopupPosition = function(name, x, y, dx, dy) {
   }
 }
 
+View2D.prototype.findPopup = function(n) {
+  for (var i = 0; i < this.popups.length; i++) {
+       if (this.popups[i].g.length == n) {
+           return i;
+       }
+  }
+  return 0;
+}
+
 View2D.prototype.openPopup = function(ix, pieces, x, y) {
   if (ix < this.popups.length) {
       this.stack.push({

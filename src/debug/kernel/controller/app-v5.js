@@ -182,7 +182,7 @@ App.prototype.setPosition = function(pos) {
   }
   var pieces = getPieces(this.move);
   if (pieces !== null) {
-     var popup = 0;
+     var popup = this.view.findPopup(pieces.length);
      if (!_.isUndefined(Dagaz.Sounds) && !_.isUndefined(Dagaz.Sounds.popup)) {
          Dagaz.Controller.play(Dagaz.Sounds.popup);
      }
