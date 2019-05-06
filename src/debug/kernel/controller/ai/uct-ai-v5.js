@@ -2,10 +2,10 @@
 
 var MAXVALUE          = 1000000;
 
-Dagaz.AI.AI_FRAME     = 3000;
+Dagaz.AI.AI_FRAME     = 5000;
 Dagaz.AI.KING_TYPE    = 0;
 Dagaz.AI.ONE_KING     = true;
-Dagaz.AI.MIN_DEEP     = 5;
+Dagaz.AI.MIN_DEEP     = 2;
 Dagaz.AI.MAX_DEEP     = 10;
 Dagaz.AI.MAX_MOVES    = 100;
 Dagaz.AI.WIN_EVAL     = 100;
@@ -62,20 +62,22 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
   });
   _.each(move.actions, function(a) {
       if ((a[0] !== null) && (a[1] !== null)) {
-          var piece = board.getPiece(a[1][0]);
-          if (piece !== null) {
-              r += design.price[piece.type];
+          var target = board.getPiece(a[1][0]);
+          if (target !== null) {
+              r += design.price[target.type];
           }
-          piece = board.getPiece(a[0][0]);
+          var piece = board.getPiece(a[0][0]);
           if (price === null) {
               price = design.price[piece.type];
           }
-          if (_.indexOf(captured, a[1][0]) >= 0) {
+          if ((target !== null) && (_.indexOf(captured, a[1][0]) >= 0)) {
               r -= price;
               return;
           }
           if (piece !== null) {
-              r -= (design.price[piece.type] / 2) | 0;
+              if (target !== null) {
+                  r -= (design.price[piece.type] / 2) | 0;
+              }
               if ((a[2] !== null) && (a[2][0].type != piece.type)) {
                  r += design.price[a[2][0].type];
               }
@@ -211,6 +213,7 @@ UctAi.prototype.getMove = function(ctx) {
   }
   var nodes = _.map(moves, function(move) {
       var weight = Dagaz.AI.heuristic(this, ctx.design, ctx.board, move);
+//    console.log("DUMP " + weight + ": " + move.toString());
       if (Dagaz.AI.NOISE_FACTOR > 0) {
           weight = weight * Dagaz.AI.NOISE_FACTOR;
           weight += _.random(0, Dagaz.AI.NOISE_FACTOR - 1);

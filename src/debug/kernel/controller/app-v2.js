@@ -501,7 +501,9 @@ App.prototype.exec = function() {
           if ((moves.length == 1) && (moves[0].isDropMove())) this.move = moves[0];
       }
       if (!this.move.isPass()) {
-          this.view.markPositions(Dagaz.View.markType.KO, []);
+          if (Dagaz.View.CLEAR_KO) {
+              this.view.markPositions(Dagaz.View.markType.KO, []);
+          }
           this.view.markPositions(Dagaz.View.markType.TARGET, []);
           this.view.markPositions(Dagaz.View.markType.CURRENT, []);
           lastPosition = null;
