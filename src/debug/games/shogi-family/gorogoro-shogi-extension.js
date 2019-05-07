@@ -1,8 +1,8 @@
 (function() {
 
-Dagaz.AI.AI_FRAME      = 3000;
-Dagaz.Model.showBlink  = false;
-Dagaz.AI.MIN_DEEP      = 3;
+Dagaz.AI.AI_FRAME     = 3000;
+Dagaz.AI.MIN_DEEP     = 5;
+Dagaz.AI.MAX_DEEP     = 20;
 
 var checkVersion = Dagaz.Model.checkVersion;
 
@@ -10,6 +10,81 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   if (name != "gorogoro-shogi-extension") {
       checkVersion(design, name, value);
   }
+}
+
+var checkKing = function(design, board, player, pos, dir, type, list) {
+  if (_.indexOf(list, +type) < 0) return false;
+  var p = design.navigate(player, pos, dir);
+  if (p === null) return false;
+  var piece = board.getPiece(p);
+  if (piece === null) return false;
+  if (piece.player == player) return false;
+  return piece.type == 0;
+}
+
+var checkPos = function(design, board, player, pos, dir, type, list, acc) {
+  if (_.indexOf(list, +type) < 0) return false;
+  var p = design.navigate(player, pos, dir);
+  if (p === null) return false;
+  var piece = board.getPiece(p);
+  if (piece === null) return false;
+  acc.push(p);
+}
+ 
+var isBadPosition = function(design, board) {
+  var attacked = []; var defended = [];
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if (piece !== null) {
+          if (piece.player == board.player) {
+              checkPos(design, board, piece.player, pos, 1, piece.type, [0, 1, 2, 3, 4, 5], attacked);
+              checkPos(design, board, piece.player, pos, 4, piece.type, [0, 4, 5], attacked);
+              checkPos(design, board, piece.player, pos, 3, piece.type, [0, 4, 5], attacked);
+              checkPos(design, board, piece.player, pos, 2, piece.type, [0, 4, 5], attacked);
+              checkPos(design, board, piece.player, pos, 7, piece.type, [0, 2, 3, 4, 5], attacked);
+              checkPos(design, board, piece.player, pos, 5, piece.type, [0, 2, 3, 4, 5], attacked);
+              checkPos(design, board, piece.player, pos, 6, piece.type, [0, 3], attacked);
+              checkPos(design, board, piece.player, pos, 8, piece.type, [0, 3], attacked);
+          } else {
+              checkPos(design, board, piece.player, pos, 1, piece.type, [0, 1, 2, 3, 4, 5], defended);
+              checkPos(design, board, piece.player, pos, 4, piece.type, [0, 4, 5], defended);
+              checkPos(design, board, piece.player, pos, 3, piece.type, [0, 4, 5], defended);
+              checkPos(design, board, piece.player, pos, 2, piece.type, [0, 4, 5], defended);
+              checkPos(design, board, piece.player, pos, 7, piece.type, [0, 2, 3, 4, 5], defended);
+              checkPos(design, board, piece.player, pos, 5, piece.type, [0, 2, 3, 4, 5], defended);
+              checkPos(design, board, piece.player, pos, 6, piece.type, [0, 3], defended);
+              checkPos(design, board, piece.player, pos, 8, piece.type, [0, 3], defended);
+          }
+      }
+  });
+  return _.difference(defended, defended).length > 0;
+}
+
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  var r = 1;
+  _.each(move.actions, function(a) {
+      if ((a[0] !== null) && (a[1] !== null)) {
+          var target = board.getPiece(a[1][0]);
+          if (target !== null) {
+              r += design.price[+target.type];
+          }
+          var piece = board.getPiece(a[0][0]);
+          if ((piece !== null) && (piece.type != 0)) {
+              if (checkKing(design, board, board.player, a[1][0], 1, piece.type, [1, 2, 3, 4, 5]) ||
+                  checkKing(design, board, board.player, a[1][0], 4, piece.type, [2, 4, 5]) ||
+                  checkKing(design, board, board.player, a[1][0], 3, piece.type, [2, 4, 5]) ||
+                  checkKing(design, board, board.player, a[1][0], 2, piece.type, [2, 4, 5]) ||
+                  checkKing(design, board, board.player, a[1][0], 7, piece.type, [2, 3, 4, 5]) ||
+                  checkKing(design, board, board.player, a[1][0], 5, piece.type, [2, 3, 4, 5]) ||
+                  checkKing(design, board, board.player, a[1][0], 6, piece.type, [3]) ||
+                  checkKing(design, board, board.player, a[1][0], 8, piece.type, [3])) r += 100;
+          }
+          if (isBadPosition(design, board.apply(move))) {
+              return -1;
+          }
+      }
+  });
+  return r;
 }
 
 var checkGoals = Dagaz.Model.checkGoals;
