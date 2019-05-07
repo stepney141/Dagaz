@@ -1,7 +1,9 @@
 (function() {
 
-Dagaz.AI.AI_FRAME      = 5000;
-Dagaz.AI.isForced      = Dagaz.AI.isChessForced;
+Dagaz.AI.AI_FRAME     = 1000;
+Dagaz.AI.MIN_DEEP     = 5;
+Dagaz.AI.MAX_DEEP     = 20;
+Dagaz.AI.CHECK_GOALS  = true;
 
 var checkVersion = Dagaz.Model.checkVersion;
 
@@ -9,6 +11,40 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   if (name != "doubutsu-shogi-extension") {
       checkVersion(design, name, value);
   }
+}
+
+var checkKing = function(design, board, pos, dir, type, list) {
+  if (_.indexOf(list, +type) < 0) return false;
+  var p = design.navigate(board.player, pos, dir);
+  if (p === null) return false;
+  var piece = board.getPiece(p);
+  if (piece === null) return false;
+  if (piece.player == board.player) return false;
+  return piece.type == 0;
+}
+
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  var r = 1;
+  _.each(move.actions, function(a) {
+      if ((a[0] !== null) && (a[1] !== null)) {
+          var target = board.getPiece(a[1][0]);
+          if (target !== null) {
+              r += design.price[+target.type];
+          }
+          var piece = board.getPiece(a[0][0]);
+          if ((piece !== null) && (piece.type != 0)) {
+              if (checkKing(design, board, a[1][0], 1, piece.type, [1, 3, 4]) ||
+                  checkKing(design, board, a[1][0], 4, piece.type, [3, 4]) ||
+                  checkKing(design, board, a[1][0], 3, piece.type, [3, 4]) ||
+                  checkKing(design, board, a[1][0], 2, piece.type, [3, 4]) ||
+                  checkKing(design, board, a[1][0], 7, piece.type, [2, 4]) ||
+                  checkKing(design, board, a[1][0], 5, piece.type, [2, 4]) ||
+                  checkKing(design, board, a[1][0], 6, piece.type, [2]) ||
+                  checkKing(design, board, a[1][0], 8, piece.type, [2])) r += 100;
+          }
+      }
+  });
+  return r;
 }
 
 var checkDirection = function(design, board, player, pos, dir, types, from) {
