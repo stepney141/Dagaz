@@ -7,6 +7,7 @@ Dagaz.AI.MIN_DEEP     = 2;
 Dagaz.AI.MAX_DEEP     = 10;
 Dagaz.AI.WIN_EVAL     = 100;
 Dagaz.AI.DRAW_EVAL    = 50;
+Dagaz.AI.LOSS_EVAL    = 100;
 Dagaz.AI.NOISE_FACTOR = 0;
 Dagaz.AI.UCT_COEFF    = Math.sqrt(2);
 Dagaz.AI.KING_TYPES   = [0];
@@ -88,8 +89,10 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
 }
 
 var uct = function(win, count, all) {
+  var w = win;
+  if (w < 0) w = 0;
   return Math.sqrt(Math.log(all) / count) * Dagaz.AI.UCT_COEFF +
-         win / count;
+         w / count;
 }
 
 UctAi.prototype.simulate = function(ctx, node, player) {
@@ -120,12 +123,12 @@ UctAi.prototype.simulate = function(ctx, node, player) {
           if (goal !== null) {
               if (goal > 0)  return Dagaz.AI.WIN_EVAL;
               if (goal == 0) return Dagaz.AI.DRAW_EVAL;
-              return null;
+              return -Dagaz.AI.LOSS_EVAL;
           }
       }
       if (moves.length == 0) {
           if (board.player != player) return Dagaz.AI.WIN_EVAL;
-          return null;
+          return -Dagaz.AI.LOSS_EVAL;
       }
       if (board.player == player) {
           deep++;
@@ -152,12 +155,12 @@ UctAi.prototype.simulate = function(ctx, node, player) {
                     for (var j = 0; j < moves[i].actions.length; j++) {
                          var a = moves[i].actions[j];
                          if ((a[0] !== null) && (a[1] !== null) && (_.indexOf(positions, a[1][0]) >= 0)) {
-                             if ((last !== null) && (last == a[1][0])) return null;
+                             if ((last !== null) && (last == a[1][0])) return 0;
                              covered.push(a[1][0]);
                              f = false;
                          }
                          if ((a[0] !== null) && (a[1] === null) && (_.indexOf(positions, a[0][0]) >= 0)) {
-                             if ((last !== null) && (last == a[0][0])) return null;
+                             if ((last !== null) && (last == a[0][0])) return 0;
                              covered.push(a[0][0]);
                              f = false;
                          }
@@ -236,6 +239,7 @@ UctAi.prototype.getMove = function(ctx) {
           s:(weight / 2) | 0,
           d: 0,
           w: 0,
+          l: 0,
           c: weight
       };
   });
@@ -261,12 +265,18 @@ UctAi.prototype.getMove = function(ctx) {
           node.b = ctx.board.apply(node.m);
       }
       var result = this.simulate(ctx, node, ctx.board.player);
-      if ((result !== null) && (result > 0)) {
+      if (result > 0) {
           if (result > Dagaz.AI.WIN_EVAL) {
               result = Dagaz.AI.WIN_EVAL;
           }
           node.w += result;
           node.c += result;
+          cnt += result;
+      } else if (result < 0) {
+          node.l++;
+          node.w += result;
+          node.c -= result;
+          cnt -= result;
       } else {
           node.c++;
           cnt++;
@@ -281,10 +291,10 @@ UctAi.prototype.getMove = function(ctx) {
       });
   }
   _.each(nodes, function(n) {
-      console.log("Dump " + n.d + "/" + n.c + "/" + n.w + "/" + n.h + ": " + n.m.toString());
+      console.log("Dump " + n.d + "/" + n.c + "/" + n.w + "/" + n.l + "/" + n.h + ": " + n.m.toString());
   });
   if (best !== null) {
-      console.log("UCT " + all + "/" + cnt + "/" + maxDeep + "/" + best.c + "/" + best.w + "/" + best.h + ": " + best.m.toString());
+      console.log("UCT " + all + "/" + cnt + "/" + maxDeep + "/" + best.c + "/" + best.w + "/" + best.l + "/" + best.h + ": " + best.m.toString());
       return {
            done: true,
            move: best.m,
