@@ -27,8 +27,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-blink", "true");
     design.checkVersion("show-captures", "false");
     design.checkVersion("advisor-wait", "5");
-    design.checkVersion("tenjiku-shogi-extension", "true");
-    design.checkVersion("tenjiku-shogi-promotion", "true");
+    design.checkVersion("gyaku-sama-promotion", "true");
 
     design.addDirection("se");
     design.addDirection("s");
@@ -212,8 +211,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("l1", [0, 0, 0, 1, -1, -12, -14, -13]);
     design.addPosition("m1", [0, 0, 0, 0, -1, 0, -14, -13]);
 
-    design.addZone("promotion-zone", 2, [156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129]);
-    design.addZone("promotion-zone", 1, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51]);
+    design.addZone("promotion-zone", 2, [156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168]);
+    design.addZone("promotion-zone", 1, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
@@ -1129,6 +1128,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPiece("Lance", 31, 6);
     design.addMove(31, 2, [7, 7], 0);
     design.addMove(31, 1, [1], 0);
+    design.addMove(31, 6, [1, 1], 0);
 
     design.addPiece("King", 32, 10000);
     design.addMove(32, 1, [7], 0);
