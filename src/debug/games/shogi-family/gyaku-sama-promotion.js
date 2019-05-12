@@ -6,16 +6,16 @@ var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
   if (name == "gyaku-sama-promotion") {
-      promote[54] = 56; // Water Buffalo -> Fire Demon
-      promote[56] = 54; // Fire Demon -> Water Buffalo
+      promote[54] = 61; // Water Buffalo -> Fire Demon!
+      promote[61] = 54; // Fire Demon! -> Water Buffalo
       promote[17] = 58; // Lion -> Lion Hawk
       promote[58] = 17; // Lion Hawk -> Lion
       promote[ 7] = 57; // Queen -> Free Eagle
       promote[57] =  7; // Free Eagle -> Queen
       promote[46] = 49; // Rook General -> Great General
       promote[49] = 46; // Great General -> Rook General
-      promote[44] = 48; // Bishop General -> Vice General
-      promote[48] = 44; // Vice General -> Bishop General
+      promote[44] = 62; // Bishop General -> Vice General!
+      promote[62] = 44; // Vice General! -> Bishop General
       promote[41] = 59; // Chariot Soldier -> Heavenly Tetrarch
       promote[59] = 41; // Heavenly Tetrarch -> Chariot Soldier
       promote[19] = 13; // Dragon King -> Soaring Eagle
