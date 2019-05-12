@@ -1,103 +1,21 @@
-(define great-general-slide (
-  $1 (while empty? add $1)
-  (if (and enemy?
-           (or (piece? King)
-               (piece? Prince) 
-           )
-      )
-      add
-   else
-      (while (not-piece? King)
-          (if (and enemy?
-                   (not-piece? King)
-                   (not-piece? Prince)
-              )
-              add
-          )
-          (verify (not-piece? King))
-          (verify (not-piece? Prince))
-          (verify (not-piece? Great-General))
-          $1
-      )
-  )
-))
-
-(define vice-general-step 
-  $1 
-  (if not-empty? 
-      (set-flag no-piece false)
-  )
-  (if (and enemy?
-           (or (piece? King)
-               (piece? Prince) 
-           )
-      )
-      add
-  )
-  (verify (not-piece? King))
-  (verify (not-piece? Prince))
-  (verify (not-piece? Great-General))
-)
-
-(define vice-general-slide (
-  (set-flag no-piece true)
-  (vice-general-step $1) (vice-general-step $1) (vice-general-step $1)
-  (if (flag? no-piece)
-      $1 (while empty? add $1)
-  )
-  (if (and enemy?
-           (or (piece? King)
-               (piece? Prince) 
-           )
-      )
-      add
-   else
-      (while (not-piece? King)
-          (if (and enemy?
-                   (not-piece? King)
-                   (not-piece? Prince)
-              )
-              add
-          )
-          (verify (not-piece? King))
-          (verify (not-piece? Prince))
-          (verify (not-piece? Great-General))
-          (verify (not-piece? Vice-General))
-          $1
-      )
-  )
-))
-
 (define general-slide (
+  (set-flag f1 true)
+  (set-flag f2 true)
   $1 (while empty? add $1)
-  (if (and enemy?
-           (or (piece? King)
-               (piece? Prince) 
-           )
-      )
-      add
-   else
-      (while (not-piece? King)
-          (if (and enemy?
-                   (not-piece? King)
-                   (not-piece? Prince)
-              )
-              add
-          )
-          (verify (not-piece? King))
-          (verify (not-piece? Prince))
-          (verify (not-piece? Great-General))
-          (verify (not-piece? Vice-General))
-          (verify (not-piece? Rook-General))
-          (verify (not-piece? Rook-General!))
-          (verify (not-piece? Bishop-General))
-          (verify (not-piece? Bishop-General!))
-          $1
-      )
+  (while (on-board? $1)
+     $1
+     (if (and (or (flag? f1) (flag? f2)) enemy?)
+         (if (flag? f1)
+             (set-flag f1 false)
+          else
+             (set-flag f2 false)
+         )
+         add
+     )
   )
 ))
 
-(define vg-step (
+(define vice-general-step (
   $1 (verify not-friend?)
   (if empty?
      (add-partial $2)
@@ -976,9 +894,9 @@
     	 Black "images/tenjiku/ViceGeneral_B.bmp" )
       (moves
            (move-type normal-type)
-           (vice-general-slide nw) (vice-general-slide se) (vice-general-slide sw) (vice-general-slide ne)
-           (vg-step n left-2-type) (vg-step s left-2-type) (vg-step w left-2-type) (vg-step e left-2-type)
-           (vg-step nw left-2-type) (vg-step se left-2-type) (vg-step sw left-2-type) (vg-step ne left-2-type)
+           (general-slide nw) (general-slide se) (general-slide sw) (general-slide ne)
+           (vice-general-step n left-2-type) (vice-general-step s left-2-type) (vice-general-step w left-2-type) (vice-general-step e left-2-type)
+           (vice-general-step nw left-2-type) (vice-general-step se left-2-type) (vice-general-step sw left-2-type) (vice-general-step ne left-2-type)
            (leap-2-mode n n left-1-type) (leap-2-mode nw nw left-1-type)
            (leap-2-mode s s left-1-type) (leap-2-mode sw sw left-1-type)
            (leap-2-mode e e left-1-type) (leap-2-mode se se left-1-type)
@@ -993,8 +911,8 @@
            (leap-3 e e e) (leap-3 e e ne) (leap-3 e e se) (leap-3 e ne ne) (leap-3 e se se)
            (leap-3-empty nw) (leap-3-empty ne) (leap-3-empty sw) (leap-3-empty se)
            (move-type left-2-type)
-           (vg-step n left-1-type) (vg-step s left-1-type) (vg-step w left-1-type) (vg-step e left-1-type)
-           (vg-step nw left-1-type) (vg-step se left-1-type) (vg-step sw left-1-type) (vg-step ne left-1-type)
+           (vice-general-step n left-1-type) (vice-general-step s left-1-type) (vice-general-step w left-1-type) (vice-general-step e left-1-type)
+           (vice-general-step nw left-1-type) (vice-general-step se left-1-type) (vice-general-step sw left-1-type) (vice-general-step ne left-1-type)
            (shift-2 n n) (shift-2 nw nw)
            (shift-2 s s) (shift-2 sw sw)
            (shift-2 e e) (shift-2 se se)
@@ -1019,8 +937,8 @@
 	  	     Black "images/tenjiku/GreatGeneral_B.bmp" )
       (moves
            (move-type normal-type)
-           (great-general-slide n) (great-general-slide s) (great-general-slide w) (great-general-slide e)
-           (great-general-slide nw) (great-general-slide se) (great-general-slide sw) (great-general-slide ne)
+           (general-slide n) (general-slide s) (general-slide w) (general-slide e)
+           (general-slide nw) (general-slide se) (general-slide sw) (general-slide ne)
       )
    )
 
@@ -1123,8 +1041,12 @@
            (move-type normal-type)
            (slide-2 w) (slide-2 e)
            (slide-2 nw) (slide-2 sw) (slide-2 ne) (slide-2 se)
-           (vg-step n left-2-type) (vg-step s left-2-type) (vg-step w left-2-type) (vg-step e left-2-type)
-           (vg-step nw left-2-type) (vg-step se left-2-type) (vg-step sw left-2-type) (vg-step ne left-2-type)
+           (lion-step nw left-2-nw-type) (lion-step se left-2-nw-type)
+           (lion-step ne left-2-ne-type) (lion-step sw left-2-ne-type)
+           (lion-step n left-2-n-type) (lion-step s left-2-n-type)
+           (lion-step w left-2-w-type) (lion-step e left-2-w-type)
+           (vice-general-step n left-2-type) (vice-general-step s left-2-type) (vice-general-step w left-2-type) (vice-general-step e left-2-type)
+           (vice-general-step nw left-2-type) (vice-general-step se left-2-type) (vice-general-step sw left-2-type) (vice-general-step ne left-2-type)
            (leap-2-mode n n left-1-type)   (leap-2-mode s s left-1-type) 
            (leap-2-mode e e left-1-type)   (leap-2-mode w w left-1-type) 
            (leap-2-mode n ne left-1-type)  (leap-2-mode n nw left-1-type)
@@ -1137,9 +1059,25 @@
            (leap-3 s s s) (leap-3 s s sw) (leap-3 s s se) (leap-3 s sw sw) (leap-3 s se se)
            (leap-3 w w w) (leap-3 w w nw) (leap-3 w w sw) (leap-3 w nw nw) (leap-3 w sw sw)
            (leap-3 e e e) (leap-3 e e ne) (leap-3 e e se) (leap-3 e ne ne) (leap-3 e se se)
+           (move-type left-2-nw-type)
+           (lion-step nw left-1-nw-type) (lion-step se left-1-nw-type)
+           (move-type left-1-nw-type)
+           (step nw) (step se)
+           (move-type left-2-ne-type)
+           (lion-step ne left-1-ne-type) (lion-step sw left-1-ne-type)
+           (move-type left-1-ne-type)
+           (step ne) (step sw)
+           (move-type left-2-n-type)
+           (lion-step n left-1-n-type) (lion-step s left-1-n-type)
+           (move-type left-1-n-type)
+           (step n) (step s)
+           (move-type left-2-w-type)
+           (lion-step w left-1-w-type) (lion-step e left-1-w-type)
+           (move-type left-1-w-type)
+           (step w) (step e)
            (move-type left-2-type)
-           (vg-step n left-1-type) (vg-step s left-1-type) (vg-step w left-1-type) (vg-step e left-1-type)
-           (vg-step nw left-1-type) (vg-step se left-1-type) (vg-step sw left-1-type) (vg-step ne left-1-type)
+           (vice-general-step n left-1-type) (vice-general-step s left-1-type) (vice-general-step w left-1-type) (vice-general-step e left-1-type)
+           (vice-general-step nw left-1-type) (vice-general-step se left-1-type) (vice-general-step sw left-1-type) (vice-general-step ne left-1-type)
            (shift-2 n n) (shift-2 nw nw)
            (shift-2 s s) (shift-2 sw sw)
            (shift-2 e e) (shift-2 se se)
