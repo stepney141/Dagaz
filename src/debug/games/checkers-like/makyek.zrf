@@ -54,3 +54,34 @@
   (loss-condition (White Black) stalemated)
   (loss-condition (White Black) repetition)
 )
+
+(variant
+  (title "Makneeb")
+  (default)
+
+  (board
+     (image "images/makneeb/board.bmp")
+     (grid
+         (start-rectangle 10 10 70 70)
+         (dimensions
+           ("a/b/c/d/e/f/g/h" (76 0)) ; files
+           ("8/7/6/5/4/3/2/1" (0 76)) ; ranks
+         )
+         (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0))
+     )
+  )
+
+  (piece
+     (name  Man)
+     (image White "images/makneeb/green.bmp"
+            Black "images/makneeb/red.bmp")
+     (moves
+        (slide n) (slide s) (slide w) (slide e)
+     )
+  )
+
+  (board-setup
+    (White (Man a1 b1 c1 d1 e1 f1 g1 h1))
+    (Black (Man a8 b8 c8 d8 e8 f8 g8 h8) )
+  )
+)
