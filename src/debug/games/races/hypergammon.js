@@ -60,8 +60,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("c2", [0, 0, 0, 1, -1]);
     design.addPosition("b2", [0, 0, 0, 1, -1]);
     design.addPosition("a2", [0, 0, 0, 2, -1]);
-    design.addPosition("H2", [0, 1, 2, 3, 4]);
-    design.addPosition("H1", [0, 1, 2, 3, 4]);
+    design.addPosition("H2", [0, 0, 0, 0, 0]);
+    design.addPosition("H1", [0, 0, 0, 0, 0]);
     design.addPosition("B8", [0, 0, 1, -15, -3]);
     design.addPosition("B7", [0, -1, 1, -16, -4]);
     design.addPosition("B6", [0, -1, 1, -17, -5]);
@@ -73,7 +73,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("D1", [1, 0, 0, 0, 0]);
     design.addPosition("D2", [1, 0, 0, 0, 0]);
     design.addPosition("D3", [1, 0, 0, 0, 0]);
-    design.addPosition("D4", [0, 1, 2, 3, 4]);
+    design.addPosition("D4", [0, 0, 0, 0, 0]);
 
     design.addZone("home", 1, [23, 22, 21, 20, 19, 18]);
     design.addZone("home", 2, [11, 10, 9, 8, 7, 6]);
@@ -89,7 +89,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(1, ZRF.FUNCTION,	24);	// from
     design.addCommand(1, ZRF.PARAM,	0);	// $1
     design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(1, ZRF.PARAM,	1);	// $2
+    design.addCommand(1, ZRF.PARAM,	0);	// $1
     design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(1, ZRF.FUNCTION,	25);	// to
     design.addCommand(1, ZRF.FUNCTION,	28);	// end
@@ -97,9 +97,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(2, ZRF.FUNCTION,	24);	// from
     design.addCommand(2, ZRF.PARAM,	0);	// $1
     design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(2, ZRF.PARAM,	1);	// $2
+    design.addCommand(2, ZRF.PARAM,	0);	// $1
     design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(2, ZRF.PARAM,	2);	// $3
+    design.addCommand(2, ZRF.PARAM,	0);	// $1
     design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(2, ZRF.FUNCTION,	25);	// to
     design.addCommand(2, ZRF.FUNCTION,	28);	// end
@@ -107,11 +107,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(3, ZRF.FUNCTION,	24);	// from
     design.addCommand(3, ZRF.PARAM,	0);	// $1
     design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(3, ZRF.PARAM,	1);	// $2
+    design.addCommand(3, ZRF.PARAM,	0);	// $1
     design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(3, ZRF.PARAM,	2);	// $3
+    design.addCommand(3, ZRF.PARAM,	0);	// $1
     design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(3, ZRF.PARAM,	3);	// $4
+    design.addCommand(3, ZRF.PARAM,	0);	// $1
     design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(3, ZRF.FUNCTION,	25);	// to
     design.addCommand(3, ZRF.FUNCTION,	28);	// end
@@ -119,13 +119,13 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(4, ZRF.FUNCTION,	24);	// from
     design.addCommand(4, ZRF.PARAM,	0);	// $1
     design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(4, ZRF.PARAM,	1);	// $2
+    design.addCommand(4, ZRF.PARAM,	0);	// $1
     design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(4, ZRF.PARAM,	2);	// $3
+    design.addCommand(4, ZRF.PARAM,	0);	// $1
     design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(4, ZRF.PARAM,	3);	// $4
+    design.addCommand(4, ZRF.PARAM,	0);	// $1
     design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(4, ZRF.PARAM,	4);	// $5
+    design.addCommand(4, ZRF.PARAM,	0);	// $1
     design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(4, ZRF.FUNCTION,	25);	// to
     design.addCommand(4, ZRF.FUNCTION,	28);	// end
@@ -133,26 +133,26 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(5, ZRF.FUNCTION,	24);	// from
     design.addCommand(5, ZRF.PARAM,	0);	// $1
     design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(5, ZRF.PARAM,	1);	// $2
+    design.addCommand(5, ZRF.PARAM,	0);	// $1
     design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(5, ZRF.PARAM,	2);	// $3
+    design.addCommand(5, ZRF.PARAM,	0);	// $1
     design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(5, ZRF.PARAM,	3);	// $4
+    design.addCommand(5, ZRF.PARAM,	0);	// $1
     design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(5, ZRF.PARAM,	4);	// $5
+    design.addCommand(5, ZRF.PARAM,	0);	// $1
     design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(5, ZRF.PARAM,	5);	// $6
+    design.addCommand(5, ZRF.PARAM,	0);	// $1
     design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(5, ZRF.FUNCTION,	25);	// to
     design.addCommand(5, ZRF.FUNCTION,	28);	// end
 
     design.addPiece("Man", 0);
-    design.addMove(0, 0, [3], 0);
-    design.addMove(0, 1, [3, 3], 0);
-    design.addMove(0, 2, [3, 3, 3], 0);
-    design.addMove(0, 3, [3, 3, 3, 3], 0);
-    design.addMove(0, 4, [3, 3, 3, 3, 3], 0);
-    design.addMove(0, 5, [3, 3, 3, 3, 3, 3], 0);
+    design.addMove(0, 0, [3], 0, 1);
+    design.addMove(0, 1, [3], 0, 2);
+    design.addMove(0, 2, [3], 0, 3);
+    design.addMove(0, 3, [3], 0, 4);
+    design.addMove(0, 4, [3], 0, 5);
+    design.addMove(0, 5, [3], 0, 6);
 
     design.addPiece("D1", 1, 1);
     design.addPiece("D2", 2, 2);
