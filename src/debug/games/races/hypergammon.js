@@ -21,17 +21,17 @@ ZRF = {
 
 Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
-    design.checkVersion("smart-moves", "true");
+    design.checkVersion("smart-moves", "from");
     design.checkVersion("pass-turn", "forced");
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-blink", "false");
     design.checkVersion("advisor-wait", "5");
 
-    design.addDirection("nx");
-    design.addDirection("bx");
-    design.addDirection("wx");
-    design.addDirection("wn");
-    design.addDirection("bn");
+    design.addDirection("nx"); // 0
+    design.addDirection("bx"); // 1
+    design.addDirection("wx"); // 2
+    design.addDirection("wn"); // 3
+    design.addDirection("bn"); // 4
 
     design.addPlayer("White", [0, 1, 2, 3, 4]);
     design.addPlayer("Black", [0, 2, 1, 4, 3]);
@@ -75,10 +75,16 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("D3", [1, 0, 0, 0, 0]);
     design.addPosition("D4", [0, 0, 0, 0, 0]);
 
-    design.addZone("home", 1, [23, 22, 21, 20, 19, 18]);
-    design.addZone("home", 2, [11, 10, 9, 8, 7, 6]);
+    design.addZone("home", 1, [23, 22, 21, 20, 19, 18, 25, 24]);
+    design.addZone("home", 2, [11, 10, 9, 8, 7, 6, 25, 24]);
     design.addZone("dice", 1, [36, 37]);
     design.addZone("dice", 2, [34, 35]);
+    design.addZone("bar", 1, [33, 32, 31, 30, 29, 28, 27, 26]);
+    design.addZone("bar", 2, [33, 32, 31, 30, 29, 28, 27, 26]);
+    design.addZone("out", 1, [25, 24]);
+    design.addZone("out", 2, [25, 24]);
+    design.addZone("top", 1, [11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 24]);
+    design.addZone("top", 2, [11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 24]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
