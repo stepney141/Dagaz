@@ -23,8 +23,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "true");
-    design.checkVersion("custodian-extension", "true");
-    design.checkVersion("makyek-extension", "true");
     design.checkVersion("advisor-wait", "5");
 
     design.addDirection("s");
