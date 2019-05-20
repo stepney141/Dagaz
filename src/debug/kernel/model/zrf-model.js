@@ -875,6 +875,18 @@ ZrfDesign.prototype.addTurn = function(player, modes) {
       this.turns = [];
   }
   this.turns.push({
+      random: false,
+      player: player,
+      modes:  modes
+  });
+}
+
+ZrfDesign.prototype.addRandom = function(player, modes) {
+  if (_.isUndefined(this.turns)) {
+      this.turns = [];
+  }
+  this.turns.push({
+      random: true,
       player: player,
       modes:  modes
   });

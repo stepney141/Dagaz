@@ -1,3 +1,9 @@
+(define drop-dice (
+  (verify (in-zone? dice))
+  (verify empty?)
+  add
+))
+
 (define step-1 (
   $1 add
 ))
@@ -27,6 +33,10 @@
      (name D$1)
      (image White "images/backgammon/$1.bmp"
             Black "images/backgammon/$1.bmp")
+     (drops
+        (move-type drop-type)
+        (drop-dice)
+     )
   )
 )
 
@@ -73,14 +83,15 @@
          (H2 456  10 496 160)
          (H1 456 190 496 340)
 
-         (B8 210  40 240  70)
-         (B7 210  70 240 100)
-         (B6 210 100 240 130)
-         (B5 210 130 240 160)
-         (B4 210 160 240 190)
-         (B3 210 190 240 220)
-         (B2 210 220 240 250)
-         (B1 210 250 240 280)
+         (B9 210  40 240  70)
+         (B8 210  70 240 100)
+         (B7 210 100 240 130)
+         (B6 210 130 240 160)
+         (B5 210 160 240 190)
+         (B4 210 190 240 220)
+         (B3 210 220 240 250)
+         (B2 210 250 240 280)
+         (B1 210 280 240 280)
 
          (D1  77 160 111 189) 
          (D2 111 160 145 189)
@@ -91,10 +102,10 @@
          (m1 D1) (D1 D2) (D2 D3) (D3 D4)
      )
      (links bx
-         (m1 B1) (B1 B2) (B2 B3) (B3 B4) (B4 B5) (B5 B6) (B6 B7) (B7 B8)
+         (m1 B1) (B1 B2) (B2 B3) (B3 B4) (B4 B5) (B5 B6) (B6 B7) (B7 B8) (B8 B9)
      )
      (links wx
-         (m1 B8) (B8 B7) (B7 B6) (B6 B5) (B5 B4) (B4 B3) (B3 B2) (B2 B1)
+         (m1 B9) (B9 B8) (B8 B7) (B7 B6) (B6 B5) (B5 B4) (B4 B3) (B3 B2) (B2 B1)
      )
      (links wn
          (a1 b1) (b1 c1) (c1 d1) (d1 e1) (e1 f1) (f1 g1)
@@ -102,7 +113,7 @@
          (m2 l2) (l2 k2) (k2 j2) (j2 h2) (h2 g2) (g2 f2)
          (f2 e2) (e2 d2) (d2 c2) (c2 b2) (b2 a2) (a2 H1)
          (B1 a1) (B2 a1) (B3 a1) (B4 a1) (B5 a1) (B6 a1)
-         (B7 a1) (B8 a1)
+         (B7 a1) (B8 a1) (B9 a1)
      )
      (links bn
          (a2 b2) (b2 c2) (c2 d2) (d2 e2) (e2 f2) (f2 g2)
@@ -110,7 +121,7 @@
          (m1 l1) (l1 k1) (k1 j1) (j1 h1) (h1 g1) (g1 f1)
          (f1 e1) (e1 d1) (d1 c1) (c1 b1) (b1 a1) (a1 H2)
          (B1 a2) (B2 a2) (B3 a2) (B4 a2) (B5 a2) (B6 a2)
-         (B7 a2) (B8 a2)
+         (B7 a2) (B8 a2) (B9 a2)
      )
      (symmetry Black (wn bn) (bn wn) (bx wx) (wx bx) (nx nx))
      (zone (name home) (players Black)
@@ -126,7 +137,7 @@
            (positions D3 D4)
      )
      (zone (name bar) (players White Black)
-           (positions B1 B2 B3 B4 B5 B6 B7 B8)
+           (positions B1 B2 B3 B4 B5 B6 B7 B8 B9)
      )
      (zone (name out) (players White Black)
            (positions H1 H2)
@@ -141,6 +152,7 @@
      (image White "images/backgammon/white.bmp"
             Black "images/backgammon/black.bmp")
      (moves
+         (move-type normal-type)
          (step-1 wn) (step-2 wn)
          (step-3 wn) (step-4 wn)
          (step-5 wn) (step-6 wn)
