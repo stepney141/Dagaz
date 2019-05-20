@@ -26,6 +26,7 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
   }
   for (var i = 0; i < v; i++) {
       ctx.drawImage(piece.h, x, y, piece.dx, piece.dy);
+      if (model.type != 0) break;
       y += s;
   }
 }

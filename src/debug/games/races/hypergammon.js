@@ -39,8 +39,14 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addRandom(1, [0]);
     design.addRandom(1, [0]);
     design.addTurn(1, [1, 2, 3, 4, 5, 6]);
+    design.addTurn(1, [1, 2, 3, 4, 5, 6]);
+    design.addTurn(1, [1, 2, 3, 4, 5, 6]);
+    design.addTurn(1, [1, 2, 3, 4, 5, 6]);
     design.addRandom(2, [0]);
     design.addRandom(2, [0]);
+    design.addTurn(2, [1, 2, 3, 4, 5, 6]);
+    design.addTurn(2, [1, 2, 3, 4, 5, 6]);
+    design.addTurn(2, [1, 2, 3, 4, 5, 6]);
     design.addTurn(2, [1, 2, 3, 4, 5, 6]);
 
     design.addPosition("m1", [35, 34, 26, 12, 1]);
