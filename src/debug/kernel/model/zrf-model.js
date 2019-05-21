@@ -25,6 +25,7 @@ Dagaz.Model.dragNdrop       = true;
 Dagaz.Model.detectLoops     = false;
 Dagaz.Model.advisorWait     = null;
 Dagaz.Model.remapPromote    = false;
+Dagaz.Model.passForcedDraw  = true;
 
 Dagaz.Model.checkVersion = function(design, name, value) {  
   if (name == "z2j") {

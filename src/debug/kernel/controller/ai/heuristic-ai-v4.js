@@ -29,8 +29,13 @@ var simulate = function(ctx, node, player) {
       node.e = Dagaz.AI.eval(ctx.design, node.b, player);
       return node;
   }
+  if ((node.b.moves.length == 1) && node.b.moves[0].isPass()) {
+      node.e = Dagaz.AI.eval(ctx.design, node.b, player);
+      return node;
+  }
   node.n = _.map(node.b.moves, function(move) {
       return {
+           o: node.b.player,
            m: move,
            b: node.b.apply(move),
            p: node
@@ -62,6 +67,7 @@ Ai.prototype.getMove = function(ctx) {
   if (_.isUndefined(ctx.moves) || (ctx.moves.length == 0)) {
       var nodes = _.map(ctx.board.moves, function(move) {
           return {
+             o: ctx.board.player,
              m: move,
              b: ctx.board.apply(move),
              p: null

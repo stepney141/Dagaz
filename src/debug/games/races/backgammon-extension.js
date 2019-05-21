@@ -1,5 +1,7 @@
 (function() {
 
+Dagaz.Model.passForcedDraw = false;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
@@ -42,7 +44,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                   while (p !== null) {
                       if (board.getPiece(p) === null) {
                           move.movePiece(pos, p, target);
-                          return;
+                          break;
                       }
                       p = design.navigate(board.player, p, 1);
                   }

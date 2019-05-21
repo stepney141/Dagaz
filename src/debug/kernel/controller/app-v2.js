@@ -440,7 +440,7 @@ App.prototype.exec = function() {
                  this.view.invalidate();
              }
              if (this.list.isPassForced()) {
-                  if (passForced >= this.design.getPlayersCount()) {
+                  if (Dagaz.Model.passForcedDraw && (passForced >= this.design.getPlayersCount())) {
                       this.state = STATE.DONE;
                       Canvas.style.cursor = "default";
                       if (!_.isUndefined(Dagaz.Controller.play)) {
@@ -494,7 +494,7 @@ App.prototype.exec = function() {
               this.boardApply(result.move);
               Dagaz.Model.Done(this.design, this.board);
               if (result.move.isPass()) {
-                  if (passForced >= this.design.getPlayersCount()) {
+                  if (Dagaz.Model.passForcedDraw && (passForced >= this.design.getPlayersCount())) {
                       this.state = STATE.DONE;
                       Canvas.style.cursor = "default";
                       if (!_.isUndefined(Dagaz.Controller.play)) {
