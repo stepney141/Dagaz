@@ -22,7 +22,7 @@ var simulate = function(ctx, node, player) {
       return node;
   }
   if (node.b.player != player) {
-      if ((node.b.moves == 1) && node.b.moves[0].isPass()) {
+      if ((node.b.moves.length == 1) && node.b.moves[0].isPass()) {
            node.b = node.b.apply(node.b.moves[0]);
            return simulate(ctx, node, player);
       }

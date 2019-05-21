@@ -99,6 +99,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addZone("out", 2, [25, 24]);
     design.addZone("top", 1, [11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 24]);
     design.addZone("top", 2, [11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 24]);
+    design.addZone("board", 1, [11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 34, 33, 32, 31, 30, 29, 28, 27, 26]);
+    design.addZone("board", 2, [11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 34, 33, 32, 31, 30, 29, 28, 27, 26]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1

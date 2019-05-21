@@ -46,6 +46,8 @@ Dagaz.Model.CheckInvariants = function(board) {
                       }
                       p = design.navigate(board.player, p, 1);
                   }
+                  piece = piece.setValue(0, 1);
+                  move.actions[0][2] = [piece];
               }
           } else {
               piece = piece.setValue(0, 1);
