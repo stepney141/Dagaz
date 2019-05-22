@@ -346,7 +346,7 @@ App.prototype.setBoard = function(board) {
 }
 
 App.prototype.isRandom = function() {
-  if (!_.isUndefined(this.design.turns[this.board.turn])) {
+  if (!_.isUndefined(this.design.turns) && !_.isUndefined(this.design.turns[this.board.turn])) {
       return this.design.turns[this.board.turn].random;
   }
   return false;
