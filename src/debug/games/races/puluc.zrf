@@ -1,0 +1,238 @@
+(define step-1 (
+  next
+  (while not-empty? up) add
+))
+
+(define step-2 (
+  next
+  (if (not-in-zone? home) next)
+  (while not-empty? up) add
+))
+
+(define step-3 (
+  next
+  (if (not-in-zone? home) next)
+  (if (not-in-zone? home) next)
+  (while not-empty? up) add
+))
+
+(define step-4 (
+  next
+  (if (not-in-zone? home) next)
+  (if (not-in-zone? home) next)
+  (if (not-in-zone? home) next)
+  (while not-empty? up) add
+))
+
+(define step-5 (
+  next
+  (if (not-in-zone? home) next)
+  (if (not-in-zone? home) next)
+  (if (not-in-zone? home) next)
+  (if (not-in-zone? home) next)
+  (while not-empty? up) add
+))
+
+(define drop-die (
+  (verify (in-zone? dice))
+  (verify not-friend?)
+  add
+))
+
+(game
+  (title "Puluc")
+
+  (option "smart moves" true)
+  (option "pass turn"   forced)
+
+  (players White Black)
+  (turn-order White Black)
+
+  (board
+    (image "images/puluc/board.bmp")
+       (positions
+             (x1  214 105 227 450)
+             (x2  232 105 245 450)
+             (x3  250 105 263 450)
+             (x4  268 105 281 450)
+
+             (a11   0   0  50  50)
+             (b11  38   0  88  50)
+             (c11  76   0 126  50)
+             (d11 114   0 164  50)
+             (e11 152   0 202  50)
+
+             (a1    0 510  50 560)
+             (b1   38 510  88 560)
+             (c1   76 510 126 560)
+             (d1  114 510 164 560)
+             (e1  152 510 202 560)
+
+             (a10  13  54  37 105)
+             (a9   13 104  37 155)
+             (a8   13 154  37 205)
+             (a7   13 204  37 255)
+             (a6   13 254  37 305)
+             (a5   13 304  37 355)
+             (a4   13 354  37 405)
+             (a3   13 404  37 455)
+             (a2   13 454  37 505)
+
+             (b10  38  54  62 105)
+             (b9   38 104  62 155)
+             (b8   38 154  62 205)
+             (b7   38 204  62 255)
+             (b6   38 254  62 305)
+             (b5   38 304  62 355)
+             (b4   38 354  62 405)
+             (b3   38 404  62 455)
+             (b2   38 454  62 505)
+
+             (c10  63  54  87 105)
+             (c9   63 104  87 155)
+             (c8   63 154  87 205)
+             (c7   63 204  87 255)
+             (c6   63 254  87 305)
+             (c5   63 304  87 355)
+             (c4   63 354  87 405)
+             (c3   63 404  87 455)
+             (c2   63 454  87 505)
+
+             (d10  88  54 112 105)
+             (d9   88 104 112 155)
+             (d8   88 154 112 205)
+             (d7   88 204 112 255)
+             (d6   88 254 112 305)
+             (d5   88 304 112 355)
+             (d4   88 354 112 405)
+             (d3   88 404 112 455)
+             (d2   88 454 112 505)
+
+             (e10 113  54 137 105)
+             (e9  113 104 137 155)
+             (e8  113 154 137 205)
+             (e7  113 204 137 255)
+             (e6  113 254 137 305)
+             (e5  113 304 137 355)
+             (e4  113 354 137 405)
+             (e3  113 404 137 455)
+             (e2  113 454 137 505)
+
+             (f10 138  54 162 105)
+             (f9  138 104 162 155)
+             (f8  138 154 162 205)
+             (f7  138 204 162 255)
+             (f6  138 254 162 305)
+             (f5  138 304 162 355)
+             (f4  138 354 162 405)
+             (f3  138 404 162 455)
+             (f2  138 454 162 505)
+
+             (g10 163  54 187 105)
+             (g9  163 104 187 155)
+             (g8  163 154 187 205)
+             (g7  163 204 187 255)
+             (g6  163 254 187 305)
+             (g5  163 304 187 355)
+             (g4  163 354 187 405)
+             (g3  163 404 187 455)
+             (g2  163 454 187 505)
+       )
+       (zone (name dice) (players White Black)
+             (positions x1 x2 x3 x4)
+       )
+       (zone (name home) (players White)
+             (positions a1 b1 c1 d1 e1)
+       )
+       (zone (name home) (players Black)
+             (positions a11 b11 c11 d11 e11)
+       )
+       (links up
+             (a1   b1) (b1   c1) (c1   d1) (d1   e1) 
+             (a2   b2) (b2   c2) (c2   d2) (d2   e2) (e2   f2) (f2   g2)
+             (a3   b3) (b3   c3) (c3   d3) (d3   e3) (e3   f3) (f3   g3)
+             (a4   b4) (b4   c4) (c4   d4) (d4   e4) (e4   f4) (f4   g4)
+             (a5   b5) (b5   c5) (c5   d5) (d5   e5) (e5   f5) (f5   g5)
+             (a6   b6) (b6   c6) (c6   d6) (d6   e6) (e6   f6) (f6   g6)
+             (a7   b7) (b7   c7) (c7   d7) (d7   e7) (e7   f7) (f7   g7)
+             (a8   b8) (b8   c8) (c8   d8) (d8   e8) (e8   f8) (f8   g8)
+             (a9   b9) (b9   c9) (c9   d9) (d9   e9) (e9   f9) (f9   g9)
+             (a10 b10) (b10 c10) (c10 d10) (d10 e10) (e10 f10) (f10 g10)
+             (a11 b11) (b11 c11) (c11 d11) (d11 e11)
+      )
+      (links down
+             (b1   a1) (c1   b1) (d1   c1) (e1   d1) 
+             (b2   a2) (c2   b2) (d2   c2) (e2   d2) (f2   e2) (g2   f2)
+             (b3   a3) (c3   b3) (d3   c3) (e3   d3) (f3   e3) (g3   f3)
+             (b4   a4) (c4   b4) (d4   c4) (e4   d4) (f4   e4) (g4   f4)
+             (b5   a5) (c5   b5) (d5   c5) (e5   d5) (f5   e5) (g5   f5)
+             (b6   a6) (c6   b6) (d6   c6) (e6   d6) (f6   e6) (g6   f6)
+             (b7   a7) (c7   b7) (d7   c7) (e7   d7) (f7   e7) (g7   f7)
+             (b8   a8) (c8   b8) (d8   c8) (e8   d8) (f8   e8) (g8   f8)
+             (b9   a9) (c9   b9) (d9   c9) (e9   d9) (f9   e9) (g9   f9)
+             (b10 a10) (c10 b10) (d10 c10) (e10 d10) (f10 e10) (g10 f10)
+             (b11 a11) (c11 b11) (d11 c11) (e11 d11) 
+      )
+      (links next 
+             (a1   a2) (b1   a2) (c1   a2) (d1   a2) (e1   a2) 
+             (a2   a3) (b2   a3) (c2   a3) (d2   a3) (e2   a3) (f2   a3) (g2   a3)
+             (a3   a4) (b3   a4) (c3   a4) (d3   a4) (e3   a4) (f3   a4) (g3   a4)
+             (a4   a5) (b4   a5) (c4   a5) (d4   a5) (e4   a5) (f4   a5) (g4   a5)
+             (a5   a6) (b5   a6) (c5   a6) (d5   a6) (e5   a6) (f5   a6) (g5   a6)
+             (a6   a7) (b6   a7) (c6   a7) (d6   a7) (e6   a7) (f6   a7) (g6   a7)
+             (a7   a8) (b7   a8) (c7   a8) (d7   a8) (e7   a8) (f7   a8) (g7   a8)
+             (a8   a9) (b8   a9) (c8   a9) (d8   a9) (e8   a9) (f8   a9) (g8   a9)
+             (a9  a10) (b9  a10) (c9  a10) (d9  a10) (e9  a10) (f9  a10) (g9  a10)
+             (a10  a1) (b10  a1) (c10  a1) (d10  a1) (e10  a1) (f10  a1) (g10  a1)
+      )
+      (links next-black
+             (a11 a10) (b11 a10) (c11 a10) (d11 a10) (e11 a10) 
+             (a10  a9) (b10  a9) (c10  a9) (d10  a9) (e10  a9) (f10  a9) (g10  a9)
+             (a9   a8) (b9   a8) (c9   a8) (d9   a8) (e9   a8) (f9   a8) (g9   a8)
+             (a8   a7) (b8   a7) (c8   a7) (d8   a7) (e8   a7) (f8   a7) (g8   a7)
+             (a7   a6) (b7   a6) (c7   a6) (d7   a6) (e7   a6) (f7   a6) (g7   a6)
+             (a6   a5) (b6   a5) (c6   a5) (d6   a5) (e6   a5) (f6   a5) (g6   a5)
+             (a5   a4) (b5   a4) (c5   a4) (d5   a4) (e5   a4) (f5   a4) (g5   a4)
+             (a4   a3) (b4   a3) (c4   a3) (d4   a3) (e4   a3) (f4   a3) (g4   a3)
+             (a3   a2) (b3   a2) (c3   a2) (d3   a2) (e3   a2) (f3   a2) (g3   a2)
+             (a2  a11) (b2  a11) (c2  a11) (d2  a11) (e2  a11) (f2  a11) (g2  a11)
+      )
+      (symmetry Black (next next-black) (up up) (down down))
+  )
+
+  (piece
+     (name Man)
+     (image White "images/puluc/white.bmp"
+            Black "images/puluc/black.bmp")
+     (moves 
+        (move-type normal-type)
+        (step-1) (step-2) (step-3) (step-4) (step-5) 
+     )
+  )
+  (piece
+     (name W)
+     (image White "Images/Puluc/wdice.bmp"
+            Black "Images/Puluc/wdice.bmp")
+     (drops
+        (move-type setup-type)
+        (drop-die) 
+     )
+  )
+  (piece
+     (name B)
+     (image White "Images/Puluc/bdice.bmp"
+            Black "Images/Puluc/bdice.bmp")
+     (drops
+        (move-type setup-type)
+        (drop-die) 
+     )
+  )
+
+  (board-setup
+     (White (Man a1 b1 c1 d1 e1))
+     (Black (Man a11 b11 c11 d11 e11))
+  )
+
+  (loss-condition (White Black) (pieces-remaining 0) )
+  (loss-condition (White Black) stalemated )
+)
