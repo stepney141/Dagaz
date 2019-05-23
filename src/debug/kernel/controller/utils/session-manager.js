@@ -99,13 +99,20 @@ SessionManager.prototype.redo = function(board) {
   return this.current.board;
 }
 
+var isRandom = function(board) {
+  var design = Dagaz.Model.getDesign();
+  if (_.isUndefined(design.turns)) return false;
+  if (_.isUndefined(design.turns[board.turn])) return false;
+  return design.turns[board.turn].random;
+}
+
 Dagaz.Controller.redo = function() {
   var sm = Dagaz.Controller.getSessionManager();
   if (_.isUndefined(sm.current) || _.isUndefined(sm.controller.setBoard) || !sm.controller.isReady()) return;
   var current = sm.current;
   var board   = sm.redo();
   if (board !== null) {
-      while ((sm.aiPresent() && (board.player != current.board.player) && sm.current.current) || noMoves(board)) {
+      while ((sm.aiPresent() && (board.player != current.board.player) && sm.current.current) || noMoves(board) || isRandom(board)) {
          if (_.isUndefined(sm.current.current)) break;
          var b = sm.redo();
          if (b === null) {
@@ -135,7 +142,7 @@ Dagaz.Controller.undo = function() {
   var current = sm.current;
   var board   = sm.undo();
   if (board !== null) {
-      while ((sm.aiPresent() && (board.player != current.board.player) && board.parent) || noMoves(board)) {
+      while ((sm.aiPresent() && (board.player != current.board.player) && board.parent) || noMoves(board) || isRandom(board)) {
          var b = sm.undo();
          if (b === null) {
              sm.current = current;

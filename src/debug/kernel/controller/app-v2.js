@@ -360,22 +360,29 @@ App.prototype.exec = function() {
   }
   if (this.state == STATE.IDLE) {
       var ctx = this.getContext(this.getBoard().player);
-      if (this.isRandom()) {        
-          if (_.isUndefined(this.board.moves)) {
-              this.board.generate(this.design);
-          }
-          var moves = this.board.moves;
-          if (moves.length > 0) {
-              var ix = 0;
-              if (moves.length > 1) {
-                  ix = _.random(0, moves.length - 1);
+      if (this.isRandom()) {
+          this.move = null;
+          while (this.isRandom()) {
+              if (_.isUndefined(this.board.moves)) {
+                  this.board.generate(this.design);
               }
-              var move = moves[ix];
-              this.boardApply(move);
-              this.move = move;
-              this.state = STATE.EXEC;
-              return;
+              var moves = this.board.moves;
+              if (moves.length > 0) {
+                  var ix = 0;
+                  if (moves.length > 1) {
+                      ix = _.random(0, moves.length - 1);
+                  }
+                  var move = moves[ix];
+                  this.boardApply(move);
+                  if (this.move === null) {
+                      this.move = move;
+                  } else {
+                      this.move.join(move);
+                  }
+              }
           }
+          this.state = STATE.EXEC;
+          return;
       }
       var ai  = this.getAI();
       if ((ctx !== null) && (ai !== null)) {

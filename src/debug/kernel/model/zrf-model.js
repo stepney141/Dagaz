@@ -2334,6 +2334,12 @@ ZrfMove.prototype.isDropMove = function() {
   return r;
 }
 
+ZrfMove.prototype.join = function(move) {
+  _.each(move.actions, function(a) {
+     this.actions.push(a);  
+  }, this);
+}
+
 Dagaz.Model.getX = function(pos) {
   return pos % Dagaz.Model.WIDTH;
 }
