@@ -591,8 +591,9 @@ Dagaz.View.showHint = function(view) {
 }
 
 var mouseUpdate = function(event) {
-  mouseX = (event.clientX + document.body.scrollLeft) - (Table.offsetLeft + CanvasCell.offsetLeft + Canvas.offsetLeft);
-  mouseY = (event.clientY + document.body.scrollTop) - (Table.offsetTop + CanvasCell.offsetTop + Canvas.offsetTop);
+  var canvasRect = Canvas.getBoundingClientRect();
+  mouseX = event.clientX - canvasRect.left;
+  mouseY = event.clientY - canvasRect.top;
 }
 
 var mouseMove = function(event) {
