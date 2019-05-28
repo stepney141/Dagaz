@@ -1,31 +1,31 @@
 (define drop-dice (
-  (verify (in-zone? dice))
+  (verify (in-zone? dice-zone))
   (verify empty?)
   add
 ))
 
 (define step-1 (
-  $1 add
+  $1 (while friend? up) add
 ))
 
 (define step-2 (
-  $1 $1 add
+  $1 $1 (while friend? up) add
 ))
 
 (define step-3 (
-  $1 $1 $1 add
+  $1 $1 $1 (while friend? up) add
 ))
 
 (define step-4 (
-  $1 $1 $1 $1 add
+  $1 $1 $1 $1 (while friend? up) add
 ))
 
 (define step-5 (
-  $1 $1 $1 $1 $1 add
+  $1 $1 $1 $1 $1 (while friend? up) add
 ))
 
 (define step-6 (
-  $1 $1 $1 $1 $1 $1 add
+  $1 $1 $1 $1 $1 $1 (while friend? up) add
 ))
 
 (define d
@@ -52,36 +52,109 @@
   (board
      (image "images/backgammon/board.bmp")
      (positions  
-         (m1   9  10  43 160)
-         (l1  43  10  77 160)
-         (k1  77  10 111 160)
-         (j1 111  10 145 160)
-         (h1 145  10 179 160)
-         (g1 179  10 213 160)
+         (m1a   9  10  43 42)
+         (m1b   9  42  43 74)
+         (m1c   9  74  43 106)
 
-         (f1 237  10 271 160)
-         (e1 271  10 305 160)
-         (d1 305  10 339 160)
-         (c1 339  10 373 160)
-         (b1 373  10 407 160)
-         (a1 407  10 441 160)
+         (l1a  43  10  77 42)
+         (l1b  43  42  77 74)
+         (l1c  43  74  77 106)
 
-         (m2   9 190  43 340)
-         (l2  43 190  77 340)
-         (k2  77 190 111 340)
-         (j2 111 190 145 340)
-         (h2 145 190 179 340)
-         (g2 179 190 213 340)
+         (k1a  77  10 111 42)
+         (k1b  77  42 111 74)
+         (k1c  77  74 111 106)
 
-         (f2 237 190 271 340)
-         (e2 271 190 305 340)
-         (d2 305 190 339 340)
-         (c2 339 190 373 340)
-         (b2 373 190 407 340)
-         (a2 407 190 441 340)
+         (j1a 111  10 145 42)
+         (j1b 111  42 145 74)
+         (j1c 111  74 145 106)
 
-         (H2 456  10 496 160)
-         (H1 456 190 496 340)
+         (h1a 145  10 179 42)
+         (h1b 145  42 179 74)
+         (h1c 145  74 179 106)
+
+         (g1a 179  10 213 42)
+         (g1b 179  42 213 74)
+         (g1c 179  74 213 106)
+
+         (f1a 237  10 271 42)
+         (f1b 237  42 271 74)
+         (f1c 237  74 271 106)
+
+         (e1a 271  10 305 42)
+         (e1b 271  42 305 74)
+         (e1c 271  74 305 106)
+
+         (d1a 305  10 339 42)
+         (d1b 305  42 339 74)
+         (d1c 305  74 339 106)
+
+         (c1a 339  10 373 42)
+         (c1b 339  42 373 74)
+         (c1c 339  74 373 106)
+
+         (b1a 373  10 407 42)
+         (b1b 373  42 407 74)
+         (b1c 373  74 407 106)
+
+         (a1a 407  10 441 42)
+         (a1b 407  42 441 74)
+         (a1c 407  74 441 106)
+
+         (m2a   9 308  43 340)
+         (m2b   9 276  43 308)
+         (m2c   9 244  43 276)
+
+         (l2a  43 308  77 340)
+         (l2b  43 276  77 308)
+         (l2c  43 244  77 276)
+
+         (k2a  77 308 111 340)
+         (k2b  77 276 111 308)
+         (k2c  77 244 111 276)
+
+         (j2a 111 308 145 340)
+         (j2b 111 276 145 308)
+         (j2c 111 244 145 276)
+
+         (h2a 145 308 179 340)
+         (h2b 145 276 179 308)
+         (h2c 145 244 179 276)
+
+         (g2a 179 308 213 340)
+         (g2b 179 276 213 308)
+         (g2c 179 244 213 276)
+
+         (f2a 237 308 271 340)
+         (f2b 237 276 271 308)
+         (f2c 237 244 271 276)
+
+         (e2a 271 308 305 340)
+         (e2b 271 276 305 308)
+         (e2c 271 244 305 276)
+
+         (d2a 305 308 339 340)
+         (d2b 305 276 339 308)
+         (d2c 305 244 339 276)
+
+         (c2a 339 308 373 340)
+         (c2b 339 276 373 308)
+         (c2c 339 244 373 276)
+
+         (b2a 373 308 407 340)
+         (b2b 373 276 407 308)
+         (b2c 373 244 407 276)
+
+         (a2a 407 308 441 340)
+         (a2b 407 276 441 308)
+         (a2c 407 244 441 276)
+
+         (H2a 456  10 496 42)
+         (H2b 456  42 496 74)
+         (H2c 456  74 496 106)
+
+         (H1a 456 308 496 340)
+         (H1b 456 276 496 308)
+         (H1c 456 244 496 276)
 
          (B9 210  40 240  70)
          (B8 210  70 240 100)
@@ -91,7 +164,7 @@
          (B4 210 190 240 220)
          (B3 210 220 240 250)
          (B2 210 250 240 280)
-         (B1 210 280 240 280)
+         (B1 210 280 240 310)
 
          (D1  77 160 111 189) 
          (D2 111 160 145 189)
@@ -99,55 +172,90 @@
          (D4 339 160 373 189)
      )
      (links nx
-         (m1 D1) (D1 D2) (D2 D3) (D3 D4)
+         (m1a D1) (D1 D2) (D2 D3) (D3 D4)
      )
      (links bx
-         (m1 B1) (B1 B2) (B2 B3) (B3 B4) (B4 B5) (B5 B6) (B6 B7) (B7 B8) (B8 B9)
+         (m1a B1) (B1 B2) (B2 B3) (B3 B4) (B4 B5) (B5 B6) (B6 B7) (B7 B8) (B8 B9)
      )
      (links wx
-         (m1 B9) (B9 B8) (B8 B7) (B7 B6) (B6 B5) (B5 B4) (B4 B3) (B3 B2) (B2 B1)
+         (m1a B9) (B9 B8) (B8 B7) (B7 B6) (B6 B5) (B5 B4) (B4 B3) (B3 B2) (B2 B1)
      )
      (links wn
-         (a1 b1) (b1 c1) (c1 d1) (d1 e1) (e1 f1) (f1 g1)
-         (g1 h1) (h1 j1) (j1 k1) (k1 l1) (l1 m1) (m1 m2)
-         (m2 l2) (l2 k2) (k2 j2) (j2 h2) (h2 g2) (g2 f2)
-         (f2 e2) (e2 d2) (d2 c2) (c2 b2) (b2 a2) (a2 H1)
-         (B1 a1) (B2 a1) (B3 a1) (B4 a1) (B5 a1) (B6 a1)
-         (B7 a1) (B8 a1) (B9 a1)
+         (a1a b1a) (a1b b1a) (a1c b1a) (b1a c1a) (b1b c1a) (b1c c1a) 
+         (c1a d1a) (c1b d1a) (c1c d1a) (d1a e1a) (d1b e1a) (d1c e1a) 
+         (e1a f1a) (e1b f1a) (e1c f1a) (f1a g1a) (f1b g1a) (f1c g1a)
+         (g1a h1a) (g1b h1a) (g1c h1a) (h1a j1a) (h1b j1a) (h1c j1a) 
+         (j1a k1a) (j1b k1a) (j1c k1a) (k1a l1a) (k1b l1a) (k1c l1a) 
+         (l1a m1a) (l1b m1a) (l1c m1a) (m1a m2a) (m1b m2a) (m1c m2a)
+         (m2a l2a) (m2b l2a) (m2c l2a) (l2a k2a) (l2b k2a) (l2c k2a) 
+         (k2a j2a) (k2b j2a) (k2c j2a) (j2a h2a) (j2b h2a) (j2c h2a) 
+         (h2a g2a) (h2b g2a) (h2c g2a) (g2a f2a) (g2b f2a) (g2c f2a)
+         (f2a e2a) (f2b e2a) (f2c e2a) (e2a d2a) (e2b d2a) (e2c d2a) 
+         (d2a c2a) (d2b c2a) (d2c c2a) (c2a b2a) (c2b b2a) (c2c b2a) 
+         (b2a a2a) (b2b a2a) (b2c a2a) (a2a H1a) (a2b H1a) (a2c H1a)
+         (B1 a1a) (B2 a1a) (B3 a1a) (B4 a1a) (B5 a1a) (B6 a1a)
+         (B7 a1a) (B8 a1a) (B9 a1a)
      )
      (links bn
-         (a2 b2) (b2 c2) (c2 d2) (d2 e2) (e2 f2) (f2 g2)
-         (g2 h2) (h2 j2) (j2 k2) (k2 l2) (l2 m2) (m2 m1)
-         (m1 l1) (l1 k1) (k1 j1) (j1 h1) (h1 g1) (g1 f1)
-         (f1 e1) (e1 d1) (d1 c1) (c1 b1) (b1 a1) (a1 H2)
-         (B1 a2) (B2 a2) (B3 a2) (B4 a2) (B5 a2) (B6 a2)
-         (B7 a2) (B8 a2) (B9 a2)
+         (a2a b2a) (a2b b2a) (a2c b2a) (b2a c2a) (b2b c2a) (b2c c2a) 
+         (c2a d2a) (c2b d2a) (c2c d2a) (d2a e2a) (d2b e2a) (d2c e2a) 
+         (e2a f2a) (e2b f2a) (e2c f2a) (f2a g2a) (f2b g2a) (f2c g2a)
+         (g2a h2a) (g2b h2a) (g2c h2a) (h2a j2a) (h2b j2a) (h2c j2a) 
+         (j2a k2a) (j2b k2a) (j2c k2a) (k2a l2a) (k2b l2a) (k2c l2a) 
+         (l2a m2a) (l2b m2a) (l2c m2a) (m2a m1a) (m2b m1a) (m2c m1a)
+         (m1a l1a) (m1b l1a) (m1c l1a) (l1a k1a) (l1b k1a) (l1c k1a) 
+         (k1a j1a) (k1b j1a) (k1c j1a) (j1a h1a) (j1b h1a) (j1c h1a) 
+         (h1a g1a) (h1b g1a) (h1c g1a) (g1a f1a) (g1b f1a) (g1c f1a)
+         (f1a e1a) (f1b e1a) (f1c e1a) (e1a d1a) (e1b d1a) (e1c d1a) 
+         (d1a c1a) (d1b c1a) (d1c c1a) (c1a b1a) (c1b b1a) (c1c b1a)
+         (b1a a1a) (b1b a1a) (b1c a1a) (a1a H2a) (a1b H2a) (a1c H2a)
+         (B1 a2a) (B2 a2a) (B3 a2a) (B4 a2a) (B5 a2a) (B6 a2a)
+         (B7 a2a) (B8 a2a) (B9 a2a)
      )
-     (symmetry Black (wn bn) (bn wn) (bx wx) (wx bx) (nx nx))
-     (zone (name home) (players Black)
-           (positions a1 b1 c1 d1 e1 f1 H1 H2)
+     (links up
+         (a1a a1b) (a1b a1c) (a2a a2b) (a2b a2c)
+         (b1a b1b) (b1b b1c) (b2a b2b) (b2b b2c)
+         (c1a c1b) (c1b c1c) (c2a c2b) (c2b c2c)
+         (d1a d1b) (d1b d1c) (d2a d2b) (d2b d2c)
+         (e1a e1b) (e1b e1c) (e2a e2b) (e2b e2c)
+         (f1a f1b) (f1b f1c) (f2a f2b) (f2b f2c)
+         (g1a g1b) (g1b g1c) (g2a g2b) (g2b g2c)
+         (h1a h1b) (h1b h1c) (h2a h2b) (h2b h2c)
+         (j1a j1b) (j1b j1c) (j2a j2b) (j2b j2c)
+         (k1a k1b) (k1b k1c) (k2a k2b) (k2b k2c)
+         (l1a l1b) (l1b l1c) (l2a l2b) (l2b l2c)
+         (m1a m1b) (m1b m1c) (m2a m2b) (m2b m2c)
+         (H1a H1b) (H1b H1c) (H2a H2b) (H2b H2c)
      )
-     (zone (name home) (players White)
-           (positions a2 b2 c2 d2 e2 f2 H1 H2)
+     (symmetry Black (wn bn) (bn wn) (bx wx) (wx bx) (nx nx) (up up))
+     (zone (name home-zone) (players Black)
+           (positions a1a b1a c1a d1a e1a f1a H1a H2a a1b b1b c1b d1b e1b f1b H1b H2b a1c b1c c1c d1c e1c f1c H1c H2c)
      )
-     (zone (name dice) (players Black)
+     (zone (name home-zone) (players White)
+           (positions a2a b2a c2a d2a e2a f2a H1a H2a a2b b2b c2b d2b e2b f2b H1b H2b a2c b2c c2c d2c e2c f2c H1c H2c)
+     )
+     (zone (name dice-zone) (players Black)
            (positions D1 D2)
      )
-     (zone (name dice) (players White)
+     (zone (name dice-zone) (players White)
            (positions D3 D4)
      )
-     (zone (name bar) (players White Black)
+     (zone (name bar-zone) (players White Black)
            (positions B1 B2 B3 B4 B5 B6 B7 B8 B9)
      )
-     (zone (name out) (players White Black)
-           (positions H1 H2)
+     (zone (name out-zone) (players White Black)
+           (positions H1a H2a H1b H2b H1c H2c)
      )
-     (zone (name top) (players White Black)
-           (positions a1 b1 c1 d1 e1 f1 g1 h1 j1 k1 l1 m1 H2)
+     (zone (name top-zone) (players White Black)
+           (positions a1a b1a c1a d1a e1a f1a g1a h1a j1a k1a l1a m1a H2a a1b b1b c1b d1b e1b f1b g1b h1b j1b k1b l1b m1b H2b a1c b1c c1c d1c e1c f1c g1c h1c j1c k1c l1c m1c H2c)
      )
-     (zone (name board) (players White Black)
-           (positions a1 b1 c1 d1 e1 f1 g1 h1 j1 k1 l1 m1 
-                      a2 b2 c2 d2 e2 f2 g2 h2 j2 k2 l2 m2
+     (zone (name board-zone) (players White Black)
+           (positions a1a b1a c1a d1a e1a f1a g1a h1a j1a k1a l1a m1a 
+                      a1b b1b c1b d1b e1b f1b g1b h1b j1b k1b l1b m1b 
+                      a1c b1c c1c d1c e1c f1c g1c h1c j1c k1c l1c m1c 
+                      a2a b2a c2a d2a e2a f2a g2a h2a j2a k2a l2a m2a
+                      a2b b2b c2b d2b e2b f2b g2b h2b j2b k2b l2b m2b
+                      a2c b2c c2c d2c e2c f2c g2c h2c j2c k2c l2c m2c
                       B1 B2 B3 B4 B5 B6 B7 B8 B9
            )
      )
@@ -167,7 +275,7 @@
   (d 1) (d 2) (d 3) (d 4) (d 5) (d 6)
 
   (board-setup
-    (White (Man a1 b1 c1))
-    (Black (Man a2 b2 c2))
+    (White (Man a1a b1a c1a))
+    (Black (Man a2a b2a c2a))
   )
 )
