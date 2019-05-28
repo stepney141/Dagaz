@@ -33,6 +33,10 @@ Dagaz.Model.CheckInvariants = function(board) {
           var pos = move.actions[0][1][0];
           var piece = board.getPiece(pos);
           if (piece !== null) {
+              if (isClosed(design, board, pos)) {
+                  move.failed = true;
+                  return;
+              }
               var p = design.navigate(board.player, 0, 1);
               while (p !== null) {
                   if (board.getPiece(p) === null) {
