@@ -155,7 +155,7 @@
   - Tab [todo, dices, family:races]
   - Daldosa [todo, dices, family:races]
   - Nyout [todo, dices, family:races]
-  - Backgammon [best, dices, stacks, todo:view, family:races]
+  - Backgammon [best, dices, stacks, family:races]
 - XiangQi family
   - Qiquo Xiangqi [dark, 7-players, king, family:chess]
   - XiangQi [dark, cloack, best, todo:ai, checkmate, openings, bug:session(dark), family:chess]

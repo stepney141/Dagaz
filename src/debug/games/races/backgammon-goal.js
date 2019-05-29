@@ -26,18 +26,26 @@ var getPenalty = function(state, ix, eb) {
   return r;
 }
 
+var calcPieces = function(design, board, pos) {
+  var r = 0;
+  while (pos !== null) {
+      if (board.getPiece(pos) !== null) r++;
+      pos = design.navigate(1, pos, 5);
+  }
+  return r;
+}
+
 Dagaz.AI.eval = function(design, board, player) {
-  var pos = Dagaz.Model.stringToPos("a1");
+  var pos = Dagaz.Model.stringToPos("a1a");
   if (player > 1) {
-      pos = Dagaz.Model.stringToPos("a2");
+      pos = Dagaz.Model.stringToPos("a2a");
   }
   var inHome = true;
   var state = [];
   while (pos !== null) {
       var piece = board.getPiece(pos);
       if (piece !== null) {
-          var v = piece.getValue(0);
-          if ((v === null) || (v == 0)) v = 1;
+          var v = calcPieces(design, board, pos);
           if (piece.player != player) {
               v = -v;
           } else {
@@ -60,8 +68,7 @@ Dagaz.AI.eval = function(design, board, player) {
       }
       if (design.inZone(3, piece.player, pos)) {
           if (piece.player == player) {
-              fo = piece.getValue(0);
-              if ((fo === null) || (fo == 0)) fo = 1;
+              fo++;
           }
       }
   });
