@@ -197,7 +197,7 @@
              (a3   a2) (b3   a2) (c3   a2) (d3   a2) (e3   a2) (f3   a2) (g3   a2)
              (a2  a11) (b2  a11) (c2  a11) (d2  a11) (e2  a11) (f2  a11) (g2  a11)
       )
-      (symmetry Black (next next-black) (up up) (down down))
+      (symmetry Black (next next-black) (next-black next) (up up) (down down))
   )
 
   (piece
