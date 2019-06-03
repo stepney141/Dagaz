@@ -1,15 +1,4 @@
 (define pawn-step (
-  $1 (verify not-empty?) 
-  add
-))
-
-(define pawn-shift (
-  $1 (verify empty?) 
-  add
-))
-
-(define pawn-jump (
-  $1 (verify empty?)
   $1 add
 ))
 
@@ -17,9 +6,25 @@
   $1 $2 add
 ))
 
+(define check-empty
+  mark
+  (if (on-board? $1) 
+      $1 (verify empty?)
+  )
+  (if (on-board? $1) 
+      $1 (verify empty?)
+  )
+  back
+)
+
 (define slide (
   $1 
-  (while empty? add $1)
+  (while empty?
+     add
+     (check-empty up)
+     (check-empty dn)
+     $1
+  )
   add
 ))
 
@@ -523,7 +528,7 @@
             Silver "images/turnover/bb.bmp")
      (moves
         (move-type pawn-type)
-        (pawn-shift n) (pawn-jump n)
+        (pawn-step n) (leap n n)
         (pawn-step nw) (pawn-step ne)
         (move-type knight-type)
         (leap n nw) (leap n ne) (leap s sw) (leap s se)
