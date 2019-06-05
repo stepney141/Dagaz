@@ -288,13 +288,13 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("White", "Moai", 22);
     design.setup("White", "Ariki", 20);
     design.setup("White", "Ariki", 24);
-//  design.setup("White", "MatoToa", 15);
-//  design.setup("White", "MatoToa", 19);
+    design.setup("White", "MatoToa", 15);
+    design.setup("White", "MatoToa", 19);
     design.setup("Black", "Moai", 2);
     design.setup("Black", "Ariki", 0);
     design.setup("Black", "Ariki", 4);
-//  design.setup("Black", "MatoToa", 5);
-//  design.setup("Black", "MatoToa", 9);
+    design.setup("Black", "MatoToa", 5);
+    design.setup("Black", "MatoToa", 9);
 
     design.goal(0, "Black", "Moai", [20, 21, 22, 23, 24]);
     design.goal(1, "White", "Moai", [0, 1, 2, 3, 4]);

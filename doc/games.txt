@@ -238,7 +238,7 @@
   - Lines of Action [todo:ai, goal, restrictions, family:connect]
   - Pentago [todo, groups, family:renju]
   - Quatuum Tic Tac Toe [drops, best, family:renju]
-  - Quatuum Morris [todo:ai, drops, best, family:morris]
+  - Quatuum Morris [drops, best, family:morris]
 - Connect games
   - Hex [family:connect, todo:ai]
   - Gonnect [todo, family:connect]

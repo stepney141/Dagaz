@@ -176,6 +176,7 @@ View2D.prototype.movePiece = function(move, from, to, piece, phase, steps) {
   if (_.isUndefined(steps)) { steps = Dagaz.View.STEP_CNT; }
   this.queue[phase].push({
       cnt: steps,
+      piece: piece,
       from: from,
       to: to
   });
@@ -219,6 +220,10 @@ View2D.prototype.animate = function() {
                this.setup[i].x += actions[mi[ix]].dx;
                this.setup[i].y += actions[mi[ix]].dy;
                this.setup[i].z = 1;
+               if (actions[mi[ix]].cnt == 1) {
+                   this.setup[i].piece = actions[mi[ix]].piece;
+                   this.setup[i].name = actions[mi[ix]].piece.toString();
+               }
            }
       }
       if (done) {

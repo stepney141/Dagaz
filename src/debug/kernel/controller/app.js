@@ -54,6 +54,7 @@ var gameOver = function(text, self) {
 }
 
 App.prototype.gameOver = function(text) {
+  Dagaz.Controller.Done(this.board);
   if (onceGameOver) {
       _.delay(gameOver, 1000, text, this);
       onceGameOver = false;
