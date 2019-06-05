@@ -14,6 +14,7 @@ var isDrag = false;
 var passForced = 0;
 var once = false;
 var lastPosition = null;
+var onceGameOver = true;
 
 function App(canvas, params) {
   this.design = Dagaz.Model.getDesign();
@@ -37,7 +38,10 @@ function App(canvas, params) {
 }
 
 App.prototype.gameOver = function(text, player) {
-  _.delay(alert, 500, [text]);
+  if (onceGameOver) {
+      _.delay(alert, 1000, [text]);
+      onceGameOver = false;
+  }
   if (this.board) {
      var captured = [];
      _.each(this.design.allPositions(), function(pos) {

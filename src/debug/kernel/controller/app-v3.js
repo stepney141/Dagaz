@@ -1,7 +1,7 @@
 (function() {
 
 var WAIT_FRAME      = 100;
-var GAME_OVER_DELAY = 500;
+var GAME_OVER_DELAY = 1000;
 var AI_WAIT         = 3000;
 
 var STATE = {
@@ -16,6 +16,7 @@ var STATE = {
 
 var isPressed = false;
 var isOnce    = false;
+var onceGameOver = true;
 
 function App(canvas) {
   this.canvas = canvas;
@@ -28,7 +29,10 @@ function App(canvas) {
 App.prototype.gameOver = function(text, player) {
   Dagaz.Controller.Done(this.board);
   this.view.markPositions(Dagaz.View.markType.KO, []);
-  _.delay(alert, GAME_OVER_DELAY, text);
+  if (onceGameOver) {
+      _.delay(alert, GAME_OVER_DELAY, text);
+      onceGameOver = false;
+  }
   if (this.board) {
       var captured = [];
       _.each(this.design.allPositions(), function(pos) {
@@ -121,6 +125,9 @@ App.prototype.mouseWheel = function(view, delta) {}
 
 App.prototype.boardApply = function(move) {
   this.board = this.board.apply(move);
+  if (!_.isUndefined(this.view.sync)) {
+      this.view.sync(this.board);
+  }
   if (!_.isUndefined(Dagaz.Controller.addState)) {
       Dagaz.Controller.addState(move, this.board);
   }

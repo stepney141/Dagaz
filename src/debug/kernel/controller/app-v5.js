@@ -16,6 +16,7 @@ var passForced = 0;
 var once = false;
 var lastPosition = null;
 var dropIndex = 0;
+var onceGameOver = true;
 
 function App(canvas, params) {
   this.design = Dagaz.Model.getDesign();
@@ -57,7 +58,10 @@ var gameOver = function(text, self, player) {
 App.prototype.gameOver = function(text, player) {
   Dagaz.Controller.Done(this.board);
   this.view.markPositions(Dagaz.View.markType.KO, []);
-  _.delay(gameOver, 500, text, this, player);
+  if (onceGameOver) {
+      _.delay(gameOver, 1000, text, this, player);
+      onceGameOver = false;
+  }
   if (this.board) {
      var captured = [];
      _.each(this.design.allPositions(), function(pos) {
@@ -198,6 +202,9 @@ App.prototype.setPosition = function(pos) {
 
 App.prototype.boardApply = function(move) {
   this.board = this.board.apply(move);
+  if (!_.isUndefined(this.view.sync)) {
+      this.view.sync(this.board);
+  }
   if (!_.isUndefined(Dagaz.Controller.addState)) {
       Dagaz.Controller.addState(move, this.board);
   }

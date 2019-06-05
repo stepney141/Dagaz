@@ -13,6 +13,7 @@ var STATE = {
 var isDrag = false;
 var passForced = 0;
 var once = false;
+var onceGameOver = true;
 
 function App(canvas, params) {
   this.design = Dagaz.Model.getDesign();
@@ -53,7 +54,10 @@ var gameOver = function(text, self) {
 }
 
 App.prototype.gameOver = function(text) {
-  _.delay(gameOver, 500, text, this);
+  if (onceGameOver) {
+      _.delay(gameOver, 1000, text, this);
+      onceGameOver = false;
+  }
 }
 
 App.prototype.done = function() {
@@ -124,6 +128,9 @@ App.prototype.mouseLocate = function(view, pos) {
 
 App.prototype.boardApply = function(move) {
   this.board = this.board.apply(move);
+  if (!_.isUndefined(this.view.sync)) {
+      this.view.sync(this.board);
+  }
   if (!_.isUndefined(Dagaz.Controller.addState)) {
       Dagaz.Controller.addState(move, this.board);
   }

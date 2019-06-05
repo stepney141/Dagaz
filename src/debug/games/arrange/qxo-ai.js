@@ -67,15 +67,17 @@ Ai.prototype.getMove = function(ctx) {
               }
               return false;
           });
-          if (moves.length == 1) {
-              return { done: true, move: moves[0], ai: "qm" };
+          if (moves.length > 0) {
+              if (moves.length == 1) {
+                  return { done: true, move: moves[0], ai: "qm" };
+              }
+              var ix = _.random(0, moves.length - 1);
+              return {
+                  done: true,
+                  move: moves[ix],
+                  ai:   "qm"
+              };
           }
-          var ix = _.random(0, moves.length - 1);
-          return {
-              done: true,
-              move: moves[ix],
-              ai:   "qm"
-          };
       }
   }
   if (this.parent) {
