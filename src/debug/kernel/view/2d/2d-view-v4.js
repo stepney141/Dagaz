@@ -183,10 +183,6 @@ View2D.prototype.movePiece = function(move, from, to, piece, phase, steps) {
 }
 
 View2D.prototype.animate = function() {
-/*if ((this.queue.length == 0) && (this.board === null)) {
-       this.controller.done();
-       this.valid = false;
-  }*/
   this.syncSetup();
   if (this.done && (this.queue.length > 0)) {
       var actions = this.queue[0];
@@ -220,7 +216,7 @@ View2D.prototype.animate = function() {
                this.setup[i].x += actions[mi[ix]].dx;
                this.setup[i].y += actions[mi[ix]].dy;
                this.setup[i].z = 1;
-               if (actions[mi[ix]].cnt == 1) {
+               if ((actions[mi[ix]].cnt == 1) && (actions[mi[ix]].piece !== null)) {
                    this.setup[i].piece = actions[mi[ix]].piece;
                    this.setup[i].name = actions[mi[ix]].piece.toString();
                }

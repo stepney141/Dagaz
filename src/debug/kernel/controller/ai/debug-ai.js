@@ -5,17 +5,7 @@ var moves = [];
 function DebugAi(params, parent) {
   this.params = params;
   this.parent = parent;
-  moves.push("a5 - b3");
-  moves.push("b3 - c1");
-  moves.push("c1 - a2");
-  moves.push("e5 - d3");
-  moves.push("a2 - c3");
-  moves.push("c3 - d1");
-  moves.push("e4 - d3");
-  moves.push("d1 - e3");
-  moves.push("e3 - c4");
-  moves.push("c4 - b2");
-  moves.push("d5 - c4");
+  moves.push("b4 - c3 - d3 - d2 - e3 x d2 x e1 x e3 x d1 x c1");
 }
 
 var findBot = Dagaz.AI.findBot;
