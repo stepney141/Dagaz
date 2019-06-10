@@ -77,7 +77,11 @@ Dagaz.Model.CheckInvariants = function(board) {
                    }
                }
                var target = board.getPiece(p);
-               if ((move.actions.length > 1) && (target !== null) && (target.type == 0)) {
+               if ((target !== null) && (target.type == 0)) {
+                   if (move.actions.length < 2) {
+                       move.failed = true;
+                       return;
+                   }
                    move.dropPiece(p, piece, 2);
                    var dx = sign(Dagaz.Model.getX(p) - Dagaz.Model.getX(pos));
                    var dy = sign(Dagaz.Model.getY(p) - Dagaz.Model.getY(pos));

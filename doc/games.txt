@@ -130,6 +130,7 @@
   - Stratego [cloack, drops, limit, family:chess]
   - Game of Generals [todo:ai, cloack, drops, limit, breakthrough, family:chess]
   - Neutron [todo, shared, family:breakthrough]
+  - Chessball [composite, family:breakthrough]
   - Arimaa [todo, turns, elimination, stalemate, family:breakthrough]
   - Terrace [todo, todo:vectors, family:breakthrough]
 - Races
@@ -141,7 +142,7 @@
   - Gala [control, vectors, family:other]
   - Camelot [loops, family:halma]
   - Suffragetto [loops, family:halma]
-  - Hanga Roa [best, todo:ai, family:other]
+  - Hanga Roa [best, composite, todo:ai, family:other]
   - Dodgem [best, family:other]
   - Halma [loops, family:halma]
   - Chinese Checkers [family:halma]
