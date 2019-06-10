@@ -78,7 +78,8 @@ Dagaz.Model.CheckInvariants = function(board) {
                }
                var target = board.getPiece(p);
                if ((target !== null) && (target.type == 0)) {
-                   if (move.actions.length < 2) {
+                   if ((move.actions.length < 2) || 
+                       design.inZone(0, design.nextPlayer(board.player), move.actions[1][1][0])) {
                        move.failed = true;
                        return;
                    }
