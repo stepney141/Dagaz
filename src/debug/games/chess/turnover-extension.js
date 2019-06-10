@@ -21,7 +21,7 @@ var capturePieces = function(design, board, player, pos, dir, move) {
 var changePieces = function(design, board, player, pos, dir, move) {
   var p = design.navigate(player, pos,  dir);
   while (p !== null) {
-      var piece = board.getPiece(pos);
+      var piece = board.getPiece(p);
       if ((piece === null) || (piece.player == player)) break;
       piece = piece.changeOwner(player);
       move.movePiece(p, p, piece);
@@ -34,7 +34,7 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
   _.each(board.moves, function(move) {
-      if (!move.isSimpleMove()) return;
+      if (!move.isSimpleMove() || !_.isUndefined(move.failed)) return;
       var pos = move.actions[0][1][0];
       var piece = board.getPiece(pos);
       if (piece !== null) {

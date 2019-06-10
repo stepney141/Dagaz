@@ -23,17 +23,20 @@ Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
   _.each(board.moves, function(move) {
       if (!move.isSimpleMove()) return;
-      if ((move.mode == 0) || (move.mode == 5)) {
+      if ((move.mode == 0) || (move.mode == 4) || (move.mode == 5)) {
           var pos = design.navigate(board.player, move.actions[0][0][0], 8);
           if (pos !== null) {
-              if ((move.mode == 5) && (board.getPiece(pos) === null)) {
-                   move.failed = true;
-                   return;
-              }
-              pos = design.navigate(board.player, pos, 8);
-              if ((pos !== null) && (board.getPiece(pos) === null)) {
-                   move.failed = true;
-                   return;
+              if (board.getPiece(pos) === null) {
+                  if (move.mode == 5) {
+                      move.failed = true;
+                      return;
+                  }
+              } else {
+                  pos = design.navigate(board.player, pos, 8);
+                  if ((pos !== null) && (board.getPiece(pos) === null)) {
+                       move.failed = true;
+                       return;
+                  }
               }
           }
       }
