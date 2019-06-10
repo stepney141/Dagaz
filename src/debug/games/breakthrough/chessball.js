@@ -37,6 +37,8 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPlayer("White", [6, 7, 5, 4, 3, 2, 0, 1]);
     design.addPlayer("Black", [0, 1, 2, 3, 4, 5, 6, 7]);
+    design.addTurn(1, [0, 1]);
+    design.addTurn(2, [0, 1]);
 
     design.addPosition("a8", [6, 5, 0, 1, 0, 0, 0, 0]);
     design.addPosition("b8", [6, 5, 4, 1, -1, 0, 0, 0]);
@@ -121,8 +123,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(2, ZRF.JUMP,	-9);
     design.addCommand(2, ZRF.FUNCTION,	28);	// end
 
-    design.addPriority(0);			// priority-type
-    design.addPriority(1);			// normal-type
+//  design.addPriority(0);			// priority-type
+//  design.addPriority(1);			// normal-type
 
     design.addPiece("Ball", 0);
 
