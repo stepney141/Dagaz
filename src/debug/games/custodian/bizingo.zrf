@@ -1,0 +1,58 @@
+(define step (
+  $1 (verify empty?)
+  add
+))
+
+(game
+  (title "Bizingo")
+  (history "https://sites.google.com/site/boardandpieces/list-of-games/bizingo")
+
+  (option "animate captures"  false)
+  (option "smart moves"       false)
+
+  (players White Black)
+  (turn-order White Black)
+
+  (board
+     (image "images/bizingo/board.bmp")
+     (grid
+         (start-rectangle 0 30 30 60)
+         (dimensions
+           ("a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v" (26 0)) ; files
+           ("11/10/9/8/7/6/5/4/3/2/1" (0 45)) ; ranks
+         )
+         (directions (ne 1 -1) (nw -1 -1) (se 1 1) (sw -1 1) (ee 2 0) (ww -2 0))
+     )
+     (kill-positions 
+         a11 b11 c11 d11 e11 f11 g11 h11 i11 o11 p11 q11 r11 s11 t11 u11 v11 
+         a10 b10 c10 d10 e10 f10 g10 h10 p10 q10 r10 s10 t10 u10 v10 a9  b9
+         c9  d9  e9  f9  g9  q9  r9  s9  t9  u9  v9  a8  b8  c8  d8  e8  f8 
+         r8  s8  t8  u8  v8  a7  b7  c7  d7  e7  s7  t7  u7  v7  a6  b6  c6  
+         d6  t6  u6  v6  a5  b5  c5  u5  v5  a4  b4  v4  a3  a2  a1  b1  v1
+     )
+  )
+
+  (piece
+     (name Soldier)
+     (image White "images/bizingo/wsmall.bmp"
+            Black "images/bizingo/bsmall.bmp")
+     (moves
+        (step nw) (step ne) (step ee)
+        (step sw) (step se) (step ww)
+     )
+  )
+  (piece
+     (name Captain)
+     (image White "images/bizingo/wbig.bmp"
+            Black "images/bizingo/bbig.bmp")
+     (moves
+        (step nw) (step ne) (step ee)
+        (step sw) (step se) (step ww)
+     )
+  )
+
+  (board-setup
+    (White (Soldier h2 j2 l2 n2 p2 g3 i3 k3 m3 o3 q3 f4 j4 l4 n4 r4) (Captain h4 p4))
+    (Black (Soldier g6 k6 m6 q6 h7 j7 l7 n7 p7 i8 k8 m8 o8 j9 l9 n9) (Captain i6 o6))
+  )
+)
