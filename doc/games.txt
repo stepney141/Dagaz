@@ -65,6 +65,7 @@
   - Swords & Shields [todo:ai, asym, breakthrough, king, family:custodian]
   - Hnefatafl [todo:ai, asym, breakthrough, king, family:custodian]
   - Alea Evangeli [huge, asym, breakthrough, king, family:custodian]
+  - Bizingo [family:custodian]
   - Hasami Shogi [todo:ai, arrange, family:checkers]
   - Watermelon Chess [todo:ai, family:go]
   - Reversi [best, drops, territory, setups, family:custodian]
