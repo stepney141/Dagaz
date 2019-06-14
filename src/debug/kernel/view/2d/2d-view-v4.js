@@ -26,22 +26,22 @@ var blink           = 1;
 Dagaz.View.configure = function(view) {}
 
 function View2D() {
-  this.board  = null;
-  this.queue  = [];
-  this.pos    = [];
-  this.res    = [];
-  this.back   = [];
-  this.piece  = [];
-  this.setup  = [];
-  this.threat = [];
-  this.curr   = [];
-  this.ko     = [];
-  this.target = [];
-  this.goal   = [];
-  this.drops  = [];
-  this.ready  = false;
-  this.done   = false;
-  this.valid  = false;
+  this.board   = null;
+  this.queue   = [];
+  this.pos     = [];
+  this.res     = [];
+  this.back    = [];
+  this.piece   = [];
+  this.setup   = [];
+  this.threat  = [];
+  this.current = [];
+  this.ko      = [];
+  this.target  = [];
+  this.goal    = [];
+  this.drops   = [];
+  this.ready   = false;
+  this.done    = false;
+  this.valid   = false;
 }
 
 Dagaz.View.getView = function() {
@@ -269,7 +269,7 @@ View2D.prototype.markPositions = function(type, positions) {
       this.threat = positions;
   }
   if (type == Dagaz.View.markType.CURRENT) {
-      this.curr = positions;
+      this.current = positions;
   }
   if (type == Dagaz.View.markType.KO) {
       this.ko = positions;
@@ -326,7 +326,7 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
       ctx.globalAlpha = Dagaz.View.THREAT_ALPHA;
       isSaved = true;
   }
-  if (Dagaz.Model.showBlink && (_.indexOf(view.curr, pos) >= 0)) {
+  if (Dagaz.Model.showBlink && (_.indexOf(view.current, pos) >= 0)) {
       dx = blink;
   }
   ctx.drawImage(piece.h, x + dx, y + dy, piece.dx, piece.dy);

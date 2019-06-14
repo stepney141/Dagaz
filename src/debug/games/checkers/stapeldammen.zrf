@@ -1,0 +1,51 @@
+(define checker-shift (
+   $1 (verify empty?)
+   add
+))
+
+(define checker-jump (
+   $1 (verify enemy?) 
+   capture 
+   $1 (verify empty?)
+   (add-partial jump-type)
+))
+
+(game
+  (title "Stapeldammen")
+
+  (option "smart moves"       true)
+
+  (players White Red)
+  (turn-order White Red)
+  (move-priorities jump-type normal-type)
+
+  (board
+     (image "images/stapeldammen/10x10.bmp")
+     (grid
+         (start-rectangle 2 2 70 70)
+         (dimensions
+           ("a/b/c/d/e/f/g/h/i/j" (68 0)) ; files
+           ("10/9/8/7/6/5/4/3/2/1" (0 68)) ; ranks
+         )
+         (directions (ne 1 -1) (nw -1 -1) (se 1 1) (sw -1 1))
+     )
+     (symmetry Red (nw se) (se nw) (ne sw) (sw ne))
+  )
+
+  (piece
+     (name Man)
+     (image White "images/stapeldammen/white.bmp"
+            Red "images/stapeldammen/red.bmp")
+     (moves
+         (move-type jump-type)
+         (checker-jump nw) (checker-jump ne) (checker-jump sw) (checker-jump se)
+         (move-type normal-type)
+         (checker-shift nw) (checker-shift ne)
+     )
+  )
+
+  (board-setup
+    (White (Man a1 c1 e1 g1 i1  b2 d2 f2 h2 j2  a3 c3 e3 g3 i3  b4 d4 f4 h4 j4))
+    (Red (Man b10 d10 f10 h10  j10 a9 c9 e9 g9 i9  b8 d8 f8 h8 j8  a7 c7 e7 g7 i7))
+  )
+)

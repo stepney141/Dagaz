@@ -1189,7 +1189,7 @@ ZrfMoveGenerator.prototype.getPos = function() {
 }
 
 ZrfMoveGenerator.prototype.movePiece = function(from, to, piece) {
-  if (_.isUndefined(this.attrs[to])) {
+  if (!_.isUndefined(this.attrs[to])) {
       for (var name in this.attrs[to]) {
            piece = piece.setValue(name, this.attrs[to][name]);
       }
