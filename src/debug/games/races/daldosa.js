@@ -97,6 +97,8 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addZone("dices", 2, [0, 1]);
     design.addZone("dices", 1, [0, 1]);
+    design.addZone("center", 2, [4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 37, 40, 43, 46, 49]);
+    design.addZone("center", 1, [2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35, 38, 41, 44, 47]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.FUNCTION,	3);	// friend?

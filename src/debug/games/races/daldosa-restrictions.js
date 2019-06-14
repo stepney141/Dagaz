@@ -1,5 +1,7 @@
 (function() {
 
+var bonus = [7, 8, 8, 10, 4, 3, 2, 1];
+
 Dagaz.Model.passForcedDraw = false;
 
 var checkVersion = Dagaz.Model.checkVersion;
@@ -14,6 +16,40 @@ if (!_.isUndefined(Dagaz.Controller.addSound)) {
     Dagaz.Controller.addSound(1, "../../sounds/slide.ogg", true);
     Dagaz.Controller.addSound(10, "../../sounds/dice.wav", true);
 }
+
+Dagaz.AI.eval = function(design, board, player) {
+  var r = 0;
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if (piece === null) return;
+      var v = 0;
+      if (piece.type == 0) v++;
+      if (piece.type == 1) {
+          if (design.inZone(1, piece.player, pos)) {
+              v += 20;
+          } else {
+              v += 10;
+          }
+          for (var i = 0; i < bonus.length; i++) {
+              pos = design.navigate(piece.player, pos, 0);
+              if (pos === null) break;
+              var x = board.getPiece(pos);
+              if (x !== null) {
+                  if (x.player == piece.player) break;
+                  v += bonus[i];
+              }
+          }
+      }
+      if (piece.player == player) {
+          r += v;
+      } else {
+          r -= v;
+      }
+  });
+  console.log("Move: " + board.move.toString() + ", eval = " + r);
+  return r;
+}
+
 
 var checkGoals = Dagaz.Model.checkGoals;
 
