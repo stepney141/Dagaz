@@ -7,7 +7,7 @@
    $1 (verify enemy?) 
    capture 
    $1 (verify empty?)
-   (add-partial jump-type)
+   add
 ))
 
 (game
