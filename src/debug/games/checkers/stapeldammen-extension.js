@@ -28,7 +28,6 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
       dx = blink;
       blink = -blink;
   }
-  var isSaved = false;
   if ((value !== null) && (value > 0)) {
       var stack = [];
       while (value > 0) {
@@ -47,17 +46,8 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
           ctx.drawImage(p.h, x + dx, y, piece.dx, piece.dy);
           y -= 5;
       }
-  } else {
-      if ((model.type == 0) && (_.indexOf(view.strike, pos) >= 0)) {
-          ctx.save();
-          ctx.globalAlpha = 0.5;
-          isSaved = true;
-      }
   }
   ctx.drawImage(piece.h, x + dx, y, piece.dx, piece.dy);
-  if (isSaved) {
-      ctx.restore();
-  }
 }
 
 var pushToBottom = function(piece) {
