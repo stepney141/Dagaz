@@ -41,6 +41,8 @@
   - Reversi
     - Не сохраняет selector
 - extension
+  - Hawalis
+    - Bug: Бот не передаёт управление после первого захвата (hawalis.log)
   - Goro Goro Shogi
     - Проверить навигацию при вычислении инварианта
   - Bahrain Dama 

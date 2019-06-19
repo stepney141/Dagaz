@@ -8,6 +8,27 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+Dagaz.AI.eval = function(design, params, board, player) {
+  var r = 0;
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if ((piece !== null) && (piece.type == 0)) {
+          var v = Math.abs(+piece.getValue(0));
+          if (design.inZone(0, board.player, pos)) {
+              v *= 100;
+          } else if (v > 1) {
+              v *= 10;
+          }
+          if (piece.player == player) {
+              r += v;
+          } else {
+              r -= v;
+          }
+      }
+  });
+  return r;
+}
+
 var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {

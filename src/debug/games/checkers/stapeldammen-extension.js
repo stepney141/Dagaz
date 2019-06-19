@@ -22,17 +22,17 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
   var dx = 0;
   var value = null;
   if (model) {
-      value = +model.getValue(0);
+      value = model.getValue(0);
   }
   if (Dagaz.Model.showBlink && (_.indexOf(view.current, pos) >= 0)) {
       dx = blink;
       blink = -blink;
   }
-  if ((value !== null) && (value > 0)) {
+  if ((value !== null) && (value != "")) {
       var stack = [];
       while (value > 0) {
-          stack.push(value % 10);
-          value = (value / 10) | 0;
+          stack.push(+value.substr(value.length - 1, 1));
+          value = value.substr(0, value.length - 1);
       }
       var s = stack.length * 5;
       if (s > 15) s = 15;
@@ -51,27 +51,22 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
 }
 
 var pushToBottom = function(piece) {
-  var value  = +piece.getValue(0);
+  var value  = piece.getValue(0);
   var player = nextPlayer(piece.player);
   if (value === null) {
-      value = player;
+      value = "" + player;
   } else {
-      var v = value;
-      while (v > 0) {
-          player *= 10;
-          v = (v / 10) | 0;
-      }
-      value += player;
+      value = "" + player + value;
   }
   return piece.setValue(0, value);
 }
 
 var popFromTop = function(piece) {
-  var value = +piece.getValue(0);
-  if ((value === null) || (value == 0)) return null;
-  var player = value % 10;
-  value = (value / 10) | 0;
-  var r = Dagaz.Model.createPiece(0, player);
+  var value = piece.getValue(0);
+  if ((value === null) || (value == "")) return null;
+  var player = value.substr(value.length - 1, 1);
+  value = value.substr(0, value.length - 1);
+  var r = Dagaz.Model.createPiece(0, +player);
   if (value > 0) {
       r = r.setValue(0, value);
   }

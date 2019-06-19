@@ -26,9 +26,9 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
 var getPrice = function(piece) {
   var r = 10;
   var v = piece.getValue(0);
-  while (v != 0) {
-      if (v % 10 != piece.player) break;
-      v = (v / 10) | 0;
+  while ((v !== null) && (v != "")) {
+      if (+v.substr(v.length - 1, 1) != piece.player) break;
+      value = value.substr(0, value.length - 1);
       r += 10;
   }
   return r;

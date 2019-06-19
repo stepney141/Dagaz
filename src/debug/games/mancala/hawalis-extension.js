@@ -3,7 +3,7 @@
 Dagaz.Model.SIZE    = 14;
 Dagaz.View.DX       = 0;
 Dagaz.View.DY       = 0;
-Dagaz.View.MX       = 25;
+Dagaz.View.MX       = 28;
 
 var cache = [];
 

@@ -1,3 +1,5 @@
+Dagaz.View.CLEAR_KO = true;
+
 ZRF = {
     JUMP:          0,
     IF:            1,

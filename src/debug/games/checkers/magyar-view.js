@@ -28,14 +28,14 @@ Dagaz.Model.getMarked = function(self) {
 Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
   var value = null;
   if (model) {
-      value = +model.getValue(0);
+      value = model.getValue(0);
   }
   var isSaved = false;
-  if ((value !== null) && (value > 0)) {
+  if ((value !== null) && (value != "")) {
       var stack = [];
       while (value > 0) {
-          stack.push(value % 10);
-          value = (value / 10) | 0;
+          stack.push(+value.substr(value.length - 1, 1));
+          value = value.substr(0, value.length - 1);
       }
       var s = stack.length * 5;
       if (s > 25) s = 25;

@@ -1,3 +1,4 @@
+Dagaz.View.CLEAR_KO = true;
 Dagaz.Model.WIN_CNT = 36;
 Dagaz.Model.SIZE    = 13;
 Dagaz.Model.HALF    = 6;
