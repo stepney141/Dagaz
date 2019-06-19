@@ -8,8 +8,6 @@ Dagaz.View.DX       = 0;
 Dagaz.View.DY       = 0;
 Dagaz.View.MX       = 25;
 
-var cache = [];
-
 var isMikul    = false;
 var isMatiBela = false;
 var isSimulate = false;
@@ -25,22 +23,6 @@ Dagaz.Model.checkVersion = function(design, name, value) {
       if (value == "simple")    isSimple   = true;
   } else {
       checkVersion(design, name, value);
-  }
-}
-
-var createPiece = function(design, player, value) {
-  if (value != 0) {
-      if (!_.isUndefined(cache[player]) && !_.isUndefined(cache[player][value])) {
-          return cache[player][value];
-      }
-      var r = Dagaz.Model.createPiece(0, player).setValue(0, value);
-      if (_.isUndefined(cache[player])) {
-          cache[player] = [];
-      }
-      cache[player][value] = r;
-      return r;
-  } else {
-      return null;
   }
 }
 
@@ -92,10 +74,6 @@ Dagaz.Model.CheckInvariants = function(board) {
           }
           var piece = board.getPiece(pos);
           var cnt = Math.abs(+piece.getValue(0));
-          if (_.isUndefined(cache[piece.player])) {
-              cache[piece.player] = [];
-              cache[piece.player][cnt] = piece;
-          }
           var positions = [];
           var result = [];
           result.push(0);
@@ -233,7 +211,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                if (!design.inZone(0, board.player, pos) && !design.inZone(1, board.player, pos) && (result[ix] > 0)) {
                    player = design.nextPlayer(player);
                }
-               var piece = createPiece(design, player, result[ix]);
+               var piece = Dagaz.Model.createPiece(0, player).setValue(0, result[ix]);
                if (result[ix] == 0) {
                    if (ix > 0) {
                        move.capturePiece(pos);

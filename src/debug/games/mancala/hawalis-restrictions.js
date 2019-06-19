@@ -25,6 +25,14 @@ Dagaz.Model.CheckInvariants = function(board) {
       var moves = [];
       _.each(board.moves, function(move) {
           if (!_.isUndefined(move.failed)) return;
+          if ((forced !== null) && (forced == board.player)) {
+              var pos = move.actions[0][0][0];
+              var piece = board.getPiece(pos);
+              if (piece === null) return;
+              var v = piece.getValue(0);
+              if (v === null) return;
+              if (v > 0) return;
+          }
           if (move.mode == 0) {
               moves.push(move);
           }

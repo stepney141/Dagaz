@@ -27,7 +27,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-hints", "false");
     design.checkVersion("pass-turn", "forced");
     design.checkVersion("advisor-wait", "5");
-    design.checkVersion("kauri-extension", "strict");
 
     design.addDirection("nx");
     design.addDirection("rv");

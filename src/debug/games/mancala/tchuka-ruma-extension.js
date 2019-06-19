@@ -4,7 +4,6 @@ Dagaz.View.DX       = 0;
 Dagaz.View.DY       = 0;
 Dagaz.View.MX       = 25;
 
-var cache = [];
 var size  = 5;
 
 if (!_.isUndefined(Dagaz.Controller.addSound)) {
@@ -21,22 +20,6 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var createPiece = function(design, player, value) {
-  if (value != 0) {
-      if (!_.isUndefined(cache[player]) && !_.isUndefined(cache[player][value])) {
-          return cache[player][value];
-      }
-      var r = Dagaz.Model.createPiece(0, player).setValue(0, value);
-      if (_.isUndefined(cache[player])) {
-          cache[player] = [];
-      }
-      cache[player][value] = r;
-      return r;
-  } else {
-      return null;
-  }
-}
-
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
@@ -46,10 +29,6 @@ Dagaz.Model.CheckInvariants = function(board) {
           var pos = move.actions[0][0][0];
           var piece = board.getPiece(pos);
           var cnt = Math.abs(+piece.getValue(0));
-          if (_.isUndefined(cache[piece.player])) {
-              cache[piece.player] = [];
-              cache[piece.player][cnt] = piece;
-          }
           var result = [];
           result.push(0);
           for (var ix = 1; cnt > 0; cnt--, ix++) {
@@ -78,7 +57,7 @@ Dagaz.Model.CheckInvariants = function(board) {
           var pos = move.actions[0][0][0];
           for (var ix = 0; ix < result.length; ix++) {
                var player = board.player;
-               var piece  = createPiece(design, player, result[ix]);
+               var piece = Dagaz.Model.createPiece(0, player).setValue(0, result[ix]);
                if (result[ix] == 0) {
                    if (ix > 0) {
                        move.capturePiece(pos);

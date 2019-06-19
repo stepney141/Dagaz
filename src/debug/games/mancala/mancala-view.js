@@ -62,36 +62,29 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
               }
           }
       } else {
-          var sx = x + Dagaz.View.DX - (dx - piece.dx) / 2 | 0;
-          var sy = y + Dagaz.View.DY + (cy - 1) * piece.dy - (dy - piece.dy) / 2 | 0;
-          var ov = 0;
-          if (val > cx * cy) {
-              ov = val - cx * cy;
-              val = cx * cy;
-          }
-          for (var cn = 0; val > 0; val--) {
-              ctx.drawImage(piece.h, sx, sy, piece.dx, piece.dy);
-              if (cn < cx - 1) {
-                  sx += piece.dx;
-                  cn++;
-              } else {
-                  sx -= piece.dx * (cx - 1);
-                  sy -= piece.dy;
-                  cn = 0;
+          var ox = 0;  var oy = 0;
+          var xx = cx; var yy = cy;
+          while (val > 0) {
+              var sx = (x + Dagaz.View.DX - (dx - piece.dx) / 2 + ox) | 0;
+              var sy = (y + Dagaz.View.DY + (cy - 1) * piece.dy - (dy - piece.dy) / 2 - oy) | 0;
+              var vl = val;
+              if (vl > xx * yy) {
+                  vl = xx * yy;
               }
-          }
-          var sx = x + Dagaz.View.DX - (dx - piece.dx) / 2 + (piece.dx / 2) | 0;
-          var sy = y + Dagaz.View.DY + (cy - 1) * piece.dy - (dy - piece.dy) / 2 - (piece.dy / 2) | 0;
-          for (var cn = 0; ov > 0; ov--) {
-              ctx.drawImage(piece.h, sx, sy, piece.dx, piece.dy);
-              if (cn < cx - 2) {
-                  sx += piece.dx;
-                  cn++;
-              } else {
-                  sx -= piece.dx * (cx - 2);
-                  sy -= piece.dy;
-                  cn = 0;
+              val -= vl;
+              for (var cn = 0; vl > 0; vl--) {
+                   ctx.drawImage(piece.h, sx, sy, piece.dx, piece.dy);
+                   if (cn < xx - 1) {
+                       sx += piece.dx;
+                       cn++;
+                   } else {
+                       sx -= piece.dx * (xx - 1);
+                       sy -= piece.dy;
+                       cn = 0;
+                   }
               }
+              ox += piece.dx / 2; xx--;
+              oy += piece.dy / 2; yy--;
           }
       }
   } else {

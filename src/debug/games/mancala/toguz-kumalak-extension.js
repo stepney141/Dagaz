@@ -6,33 +6,12 @@ Dagaz.View.DX       = 5;
 Dagaz.View.DY       = 0;
 Dagaz.View.MX       = 26;
 
-var cache = [];
-
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
   if (name != "toguz-kumalak-extension") {
       checkVersion(design, name, value);
   }
-}
-
-var createPiece = function(design, board, player, value) {
-  if (value > 0) {
-      if (!_.isUndefined(cache[player]) && !_.isUndefined(cache[player][value])) {
-          return cache[player][value];
-      }
-      var r = Dagaz.Model.createPiece(0, player).setValue(0, value);
-      if (_.isUndefined(cache[player])) {
-          cache[player] = [];
-      }
-      cache[player][value] = r;
-      return r;
-  } else {
-      if (value == -1) {
-          return Dagaz.Model.createPiece(1, board.player);
-      }
-  }
-  return null;
 }
 
 var toReserve = function(design, board, player, move, cnt) {
@@ -78,10 +57,6 @@ Dagaz.Model.CheckInvariants = function(board) {
           var pos = move.actions[0][0][0];
           var piece = board.getPiece(pos);
           var cnt = +piece.getValue(0);
-          if (_.isUndefined(cache[piece.player])) {
-              cache[piece.player] = [];
-              cache[piece.player][cnt] = piece;
-          }
           var result = [];
           if (cnt > 1) {
               result.push(1);
@@ -142,7 +117,13 @@ Dagaz.Model.CheckInvariants = function(board) {
                if (!design.inZone(0, board.player, pos)) {
                    player = design.nextPlayer(player);
                }
-               var piece = createPiece(design, board, player, result[ix]);
+               var piece = null;
+               if (result[ix] > 0) {
+                   piece = Dagaz.Model.createPiece(0, player).setValue(0, result[ix]);
+               }
+               if (result[ix] == -1) {
+                   piece = Dagaz.Model.createPiece(1, board.player);
+               }
                if (result[ix] == 0) {
                    if (ix > 0) {
                        move.capturePiece(pos);
