@@ -112,7 +112,7 @@ Dagaz.Controller.redo = function() {
   var current = sm.current;
   var board   = sm.redo();
   if (board === null) return;
-  if (!_.isUndefined(sm.controller.setMove)) {
+  if (!_.isUndefined(sm.controller.setMove) && Dagaz.Model.animateRedo) {
       sm.controller.setMove(board.move);
   } else {
       if (_.isUndefined(sm.controller.setBoard)) return;
