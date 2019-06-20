@@ -108,10 +108,14 @@ var isRandom = function(board) {
 
 Dagaz.Controller.redo = function() {
   var sm = Dagaz.Controller.getSessionManager();
-  if (_.isUndefined(sm.current) || _.isUndefined(sm.controller.setBoard) || !sm.controller.isReady()) return;
+  if (_.isUndefined(sm.current) || !sm.controller.isReady()) return;
   var current = sm.current;
   var board   = sm.redo();
-  if (board !== null) {
+  if (board === null) return;
+  if (!_.isUndefined(sm.controller.setMove)) {
+      sm.controller.setMove(board.move);
+  } else {
+      if (_.isUndefined(sm.controller.setBoard)) return;
       while ((sm.aiPresent() && (board.player != current.board.player) && sm.current.current) || noMoves(board) || isRandom(board)) {
          if (_.isUndefined(sm.current.current)) break;
          var b = sm.redo();
@@ -121,11 +125,11 @@ Dagaz.Controller.redo = function() {
          }
          board = b;
       }
+      if (!_.isUndefined(Dagaz.Controller.play)) {
+          Dagaz.Controller.play(Dagaz.Sounds.page);
+      }
+      sm.controller.setBoard(board);
   }
-  if (!_.isUndefined(Dagaz.Controller.play)) {
-      Dagaz.Controller.play(Dagaz.Sounds.page);
-  }
-  sm.controller.setBoard(board);
   sm.updateButtons();
 }
 

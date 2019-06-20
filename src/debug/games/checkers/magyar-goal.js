@@ -28,7 +28,7 @@ var getPrice = function(piece) {
   var v = piece.getValue(0);
   while ((v !== null) && (v != "")) {
       if (+v.substr(v.length - 1, 1) != piece.player) break;
-      value = value.substr(0, value.length - 1);
+      v = v.substr(0, v.length - 1);
       r += 10;
   }
   return r;

@@ -352,6 +352,16 @@ App.prototype.setBoard = function(board) {
   }
 }
 
+App.prototype.setMove = function(move) {
+  if (this.state == STATE.IDLE) {
+      delete this.list;
+      this.boardApply(move);
+      Dagaz.Model.Done(this.design, this.board);
+      this.move = move;
+      this.state = STATE.EXEC;
+  }
+}
+
 App.prototype.isRandom = function() {
   if (!_.isUndefined(this.design.turns) && !_.isUndefined(this.design.turns[this.board.turn])) {
       return this.design.turns[this.board.turn].random;

@@ -349,6 +349,16 @@ App.prototype.setBoard = function(board) {
   }
 }
 
+App.prototype.setMove = function(move) {
+  if (this.state == STATE.IDLE) {
+      delete this.list;
+      this.boardApply(move);
+      Dagaz.Model.Done(this.design, this.board);
+      this.move = move;
+      this.state = STATE.EXEC;
+  }
+}
+
 App.prototype.exec = function() {
   this.view.draw(this.canvas);
   if (this.state == STATE.STOP) {

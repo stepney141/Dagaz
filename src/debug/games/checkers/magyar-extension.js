@@ -32,7 +32,7 @@ var popFromTop = function(piece) {
   if ((value === null) || (value == "")) return null;
   var player = value.substr(value.length - 1, 1);
   value = value.substr(0, value.length - 1);
-  var r = Dagaz.Model.createPiece(0, +player);
+  var r = Dagaz.Model.createPiece(1, +player);
   if (value > 0) {
       r = r.setValue(0, value);
   }
