@@ -240,31 +240,6 @@
              (h2b 507 440 569 502)
              (h1b 507 509 569 571)
     )
-;    (grid
-;        (start-rectangle 24 26 86 88)
-;        (dimensions
-;          ("a/b/c/d/e/f/g/h" (69 0))
-;          ("8/7/6/5/4/3/2/1" (0 69))
-;        )
-;        (directions 
-;             (n 0 -1) (s 0 1) (e 1 0) (w -1 0)
-;             (nw -1 -1) (sw -1 1) (ne 1 -1) (se 1 1)
-;        )
-;    )
-;    (grid
-;        (start-rectangle 34 36 76 78)
-;        (dimensions
-;          ("A/B/C/D/E/F/G/H" (69 0))
-;          ("8/7/6/5/4/3/2/1" (0 69))
-;        )
-;    )
-;    (grid
-;        (start-rectangle 44 46 66 68)
-;        (dimensions
-;          ("I/J/K/L/M/N/O/P" (69 0))
-;          ("8/7/6/5/4/3/2/1" (0 69))
-;        )
-;    )
      (links n 
          (a1b a2b) (a2b a3b) (a3b a4b) (a4b a5b) (a5b a6b) (a6b a7b) (a7b a8b)
          (b1b b2b) (b2b b3b) (b3b b4b) (b4b b5b) (b5b b6b) (b6b b7b) (b7b b8b)
