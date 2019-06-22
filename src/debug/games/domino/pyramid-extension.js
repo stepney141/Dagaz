@@ -8,6 +8,21 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+Dagaz.Controller.skip = function(board) {
+  var design = Dagaz.Model.design;
+  var r = false;
+  _.each(design.allPositions(), function (pos) {
+      var piece = board.getPiece(pos);
+      if (piece !== null) {
+          var v = piece.getValue(0);
+          if ((v !== null) && (v > 0)) {
+              r = true;
+          }
+      }
+  });
+  return r;
+}
+
 var isOpenedDir = function(design, board, pos, dir) {
   var p = design.navigate(1, pos, dir);
   if (p === null) return true;

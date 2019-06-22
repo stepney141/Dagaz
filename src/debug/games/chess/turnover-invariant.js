@@ -145,9 +145,7 @@ Dagaz.Model.CheckInvariants = function(board) {
           var b = board.apply(move);
           _.each(positions, function(pos) {
                 if (notCastle(design, b, board.player, pos)) return;
-                if (isAttacked(design, b, board.player, pos)) {
-                    move.failed = true;
-                }
+                if (isAttacked(design, b, board.player, pos)) return;
                 f = false;
           });
       }
