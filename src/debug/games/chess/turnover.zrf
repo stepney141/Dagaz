@@ -17,6 +17,13 @@
   back
 )
 
+(define pawn-jump (
+  $1 (verify empty?)
+  (check-empty up)
+  (check-empty dn)
+  $1 add
+))
+
 (define slide (
   $1 
   (while empty?
@@ -503,7 +510,7 @@
             Silver "images/turnover/bb.bmp")
      (moves
         (move-type pawn-type)
-        (pawn-step n) (leap n n)
+        (pawn-step n) (pawn-jump n)
         (pawn-step nw) (pawn-step ne)
         (move-type knight-type)
         (leap n nw) (leap n ne) (leap s sw) (leap s se)

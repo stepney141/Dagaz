@@ -256,7 +256,41 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(1, ZRF.FUNCTION,	24);	// from
     design.addCommand(1, ZRF.PARAM,	0);	// $1
     design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(1, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(1, ZRF.FUNCTION,	6);	// mark
+    design.addCommand(1, ZRF.ON_BOARD_DIR,	8);	// name
+    design.addCommand(1, ZRF.FUNCTION,	0);	// not
+    design.addCommand(1, ZRF.IF,	5);
     design.addCommand(1, ZRF.PARAM,	1);	// $2
+    design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(1, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(1, ZRF.ON_BOARD_DIR,	8);	// name
+    design.addCommand(1, ZRF.FUNCTION,	0);	// not
+    design.addCommand(1, ZRF.IF,	5);
+    design.addCommand(1, ZRF.PARAM,	2);	// $3
+    design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(1, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(1, ZRF.FUNCTION,	7);	// back
+    design.addCommand(1, ZRF.FUNCTION,	6);	// mark
+    design.addCommand(1, ZRF.ON_BOARD_DIR,	9);	// name
+    design.addCommand(1, ZRF.FUNCTION,	0);	// not
+    design.addCommand(1, ZRF.IF,	5);
+    design.addCommand(1, ZRF.PARAM,	3);	// $4
+    design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(1, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(1, ZRF.ON_BOARD_DIR,	9);	// name
+    design.addCommand(1, ZRF.FUNCTION,	0);	// not
+    design.addCommand(1, ZRF.IF,	5);
+    design.addCommand(1, ZRF.PARAM,	4);	// $5
+    design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(1, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(1, ZRF.FUNCTION,	7);	// back
+    design.addCommand(1, ZRF.PARAM,	5);	// $6
     design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(1, ZRF.FUNCTION,	25);	// to
     design.addCommand(1, ZRF.FUNCTION,	28);	// end
@@ -264,79 +298,88 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(2, ZRF.FUNCTION,	24);	// from
     design.addCommand(2, ZRF.PARAM,	0);	// $1
     design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(2, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(2, ZRF.FUNCTION,	0);	// not
-    design.addCommand(2, ZRF.IF,	39);
-    design.addCommand(2, ZRF.FORK,	3);
-    design.addCommand(2, ZRF.FUNCTION,	25);	// to
-    design.addCommand(2, ZRF.FUNCTION,	28);	// end
-    design.addCommand(2, ZRF.FUNCTION,	6);	// mark
-    design.addCommand(2, ZRF.ON_BOARD_DIR,	8);	// name
-    design.addCommand(2, ZRF.FUNCTION,	0);	// not
-    design.addCommand(2, ZRF.IF,	5);
     design.addCommand(2, ZRF.PARAM,	1);	// $2
     design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(2, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(2, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(2, ZRF.ON_BOARD_DIR,	8);	// name
-    design.addCommand(2, ZRF.FUNCTION,	0);	// not
-    design.addCommand(2, ZRF.IF,	5);
-    design.addCommand(2, ZRF.PARAM,	2);	// $3
-    design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(2, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(2, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(2, ZRF.FUNCTION,	7);	// back
-    design.addCommand(2, ZRF.FUNCTION,	6);	// mark
-    design.addCommand(2, ZRF.ON_BOARD_DIR,	9);	// name
-    design.addCommand(2, ZRF.FUNCTION,	0);	// not
-    design.addCommand(2, ZRF.IF,	5);
-    design.addCommand(2, ZRF.PARAM,	3);	// $4
-    design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(2, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(2, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(2, ZRF.ON_BOARD_DIR,	9);	// name
-    design.addCommand(2, ZRF.FUNCTION,	0);	// not
-    design.addCommand(2, ZRF.IF,	5);
-    design.addCommand(2, ZRF.PARAM,	4);	// $5
-    design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(2, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(2, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(2, ZRF.FUNCTION,	7);	// back
-    design.addCommand(2, ZRF.PARAM,	5);	// $6
-    design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(2, ZRF.JUMP,	-40);
     design.addCommand(2, ZRF.FUNCTION,	25);	// to
     design.addCommand(2, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("Pawn", 0);
+    design.addCommand(3, ZRF.FUNCTION,	24);	// from
+    design.addCommand(3, ZRF.PARAM,	0);	// $1
+    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(3, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(3, ZRF.FUNCTION,	0);	// not
+    design.addCommand(3, ZRF.IF,	39);
+    design.addCommand(3, ZRF.FORK,	3);
+    design.addCommand(3, ZRF.FUNCTION,	25);	// to
+    design.addCommand(3, ZRF.FUNCTION,	28);	// end
+    design.addCommand(3, ZRF.FUNCTION,	6);	// mark
+    design.addCommand(3, ZRF.ON_BOARD_DIR,	8);	// name
+    design.addCommand(3, ZRF.FUNCTION,	0);	// not
+    design.addCommand(3, ZRF.IF,	5);
+    design.addCommand(3, ZRF.PARAM,	1);	// $2
+    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(3, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(3, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(3, ZRF.ON_BOARD_DIR,	8);	// name
+    design.addCommand(3, ZRF.FUNCTION,	0);	// not
+    design.addCommand(3, ZRF.IF,	5);
+    design.addCommand(3, ZRF.PARAM,	2);	// $3
+    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(3, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(3, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(3, ZRF.FUNCTION,	7);	// back
+    design.addCommand(3, ZRF.FUNCTION,	6);	// mark
+    design.addCommand(3, ZRF.ON_BOARD_DIR,	9);	// name
+    design.addCommand(3, ZRF.FUNCTION,	0);	// not
+    design.addCommand(3, ZRF.IF,	5);
+    design.addCommand(3, ZRF.PARAM,	3);	// $4
+    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(3, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(3, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(3, ZRF.ON_BOARD_DIR,	9);	// name
+    design.addCommand(3, ZRF.FUNCTION,	0);	// not
+    design.addCommand(3, ZRF.IF,	5);
+    design.addCommand(3, ZRF.PARAM,	4);	// $5
+    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(3, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(3, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(3, ZRF.FUNCTION,	7);	// back
+    design.addCommand(3, ZRF.PARAM,	5);	// $6
+    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(3, ZRF.JUMP,	-40);
+    design.addCommand(3, ZRF.FUNCTION,	25);	// to
+    design.addCommand(3, ZRF.FUNCTION,	28);	// end
+
+
+    design.addPiece("Pawn", 0, 2);
     design.addMove(0, 0, [0], 0, 10);
-    design.addMove(0, 1, [0, 0], 5, 15);
-    design.addMove(0, 0, [4], 4, 10);
-    design.addMove(0, 0, [5], 4, 10);
-    design.addMove(0, 1, [0, 4], 1, 11);
-    design.addMove(0, 1, [0, 5], 1, 11);
-    design.addMove(0, 1, [3, 6], 1, 11);
-    design.addMove(0, 1, [3, 7], 1, 11);
-    design.addMove(0, 1, [1, 5], 1, 11);
-    design.addMove(0, 1, [1, 7], 1, 11);
-    design.addMove(0, 1, [2, 4], 1, 11);
-    design.addMove(0, 1, [2, 6], 1, 11);
+    design.addMove(0, 1, [0, 8, 8, 9, 9, 0], 1, 15);
+    design.addMove(0, 0, [4], 2, 10);
+    design.addMove(0, 0, [5], 2, 10);
+    design.addMove(0, 2, [0, 4], 3, 11);
+    design.addMove(0, 2, [0, 5], 3, 11);
+    design.addMove(0, 2, [3, 6], 3, 11);
+    design.addMove(0, 2, [3, 7], 3, 11);
+    design.addMove(0, 2, [1, 5], 3, 11);
+    design.addMove(0, 2, [1, 7], 3, 11);
+    design.addMove(0, 2, [2, 4], 3, 11);
+    design.addMove(0, 2, [2, 6], 3, 11);
 
-    design.addPiece("Bishop", 1);
-    design.addMove(1, 2, [4, 8, 8, 9, 9, 4], 2, 12);
-    design.addMove(1, 2, [5, 8, 8, 9, 9, 5], 2, 12);
-    design.addMove(1, 2, [6, 8, 8, 9, 9, 6], 2, 12);
-    design.addMove(1, 2, [7, 8, 8, 9, 9, 7], 2, 12);
-    design.addMove(1, 2, [0, 8, 8, 9, 9, 0], 3, 13);
-    design.addMove(1, 2, [1, 8, 8, 9, 9, 1], 3, 13);
-    design.addMove(1, 2, [2, 8, 8, 9, 9, 2], 3, 13);
-    design.addMove(1, 2, [3, 8, 8, 9, 9, 3], 3, 13);
+    design.addPiece("Bishop", 1, 8);
+    design.addMove(1, 3, [4, 8, 8, 9, 9, 4], 4, 12);
+    design.addMove(1, 3, [5, 8, 8, 9, 9, 5], 4, 12);
+    design.addMove(1, 3, [6, 8, 8, 9, 9, 6], 4, 12);
+    design.addMove(1, 3, [7, 8, 8, 9, 9, 7], 4, 12);
+    design.addMove(1, 3, [0, 8, 8, 9, 9, 0], 5, 13);
+    design.addMove(1, 3, [1, 8, 8, 9, 9, 1], 5, 13);
+    design.addMove(1, 3, [2, 8, 8, 9, 9, 2], 5, 13);
+    design.addMove(1, 3, [3, 8, 8, 9, 9, 3], 5, 13);
 
-    design.addPiece("Rook", 2);
-    design.addMove(2, 2, [0, 8, 8, 9, 9, 0], 3, 14);
-    design.addMove(2, 2, [1, 8, 8, 9, 9, 1], 3, 14);
-    design.addMove(2, 2, [2, 8, 8, 9, 9, 2], 3, 14);
-    design.addMove(2, 2, [3, 8, 8, 9, 9, 3], 3, 14);
+    design.addPiece("Rook", 2, 10);
+    design.addMove(2, 3, [0, 8, 8, 9, 9, 0], 6, 14);
+    design.addMove(2, 3, [1, 8, 8, 9, 9, 1], 6, 14);
+    design.addMove(2, 3, [2, 8, 8, 9, 9, 2], 6, 14);
+    design.addMove(2, 3, [3, 8, 8, 9, 9, 3], 6, 14);
 
     design.setup("Gold", "Pawn", 135);
     design.setup("Gold", "Pawn", 143);
