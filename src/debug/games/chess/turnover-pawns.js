@@ -72,7 +72,7 @@ Dagaz.Model.CheckInvariants = function(board) {
            }
            piece = board.getPiece(pos);
            if (piece !== null) {
-               if (f && (move.mode == 1)) {
+               if (f) {
                    move.failed = true;
                    return;
                }
@@ -81,24 +81,22 @@ Dagaz.Model.CheckInvariants = function(board) {
                }
            }
       }
-      var noCapturing = true;
       if (move.mode == 2) {
            if (!notKnight(design, board, move.actions[0][0][0])) {
                move.failed = true;
                return;
            }
+           var isEmpty = true;
            var pos = move.actions[0][1][0];
-           if (pos !== null) {
-               var piece = board.getPiece(pos);
-               if (piece !== null) {
-                   if (piece.player == board.player) {
-                       move.failed = true;
-                       return;
-                   }
-                   noCapturing = false;
+           var piece = board.getPiece(pos);
+           if (piece !== null) {
+               if (piece.player == board.player) {
+                   move.failed = true;
+                   return;
                }
-               pos = design.navigate(board.player, pos, 8);
+               isEmpty = false;
            }
+           pos = design.navigate(board.player, pos, 8);
            while (pos !== null) {
                var piece = board.getPiece(pos);
                if (piece !== null) {
@@ -108,13 +106,13 @@ Dagaz.Model.CheckInvariants = function(board) {
                    } else {
                        move.capturePiece(pos);
                    }
-                   noCapturing = false;
+                   isEmpty = false;
                }
                pos = design.navigate(board.player, pos, 8);
            }
-          if (noCapturing) {
-              move.failed = true;
-          }
+           if (isEmpty) {
+               move.failed = true;
+           }
       }
   });
   CheckInvariants(board);

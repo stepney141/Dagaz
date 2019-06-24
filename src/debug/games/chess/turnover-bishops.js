@@ -28,9 +28,14 @@ Dagaz.Model.CheckInvariants = function(board) {
       }
       if ((move.mode == 4) || (move.mode == 5)) {
           if (isQueen(design, board, move.actions[0][0][0])) {
-              move.sound = 14;
+              move.sound = 13;
           }
-          var pos = move.actions[0][1][0];
+          var pos = design.navigate(board.player, move.actions[0][0][0], 9);
+          if ((pos !== null) && (board.getPiece(pos) !== null)) {
+              move.failed = true;
+              return;
+          }
+          pos = move.actions[0][1][0];
           var piece = board.getPiece(pos);
           var e = true;
           if (piece !== null) {
