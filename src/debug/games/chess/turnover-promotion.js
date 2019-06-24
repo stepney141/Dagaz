@@ -38,7 +38,7 @@ Dagaz.Model.CheckInvariants = function(board) {
            piece = board.getPiece(pos);
            if (piece === null) {
                piece = Dagaz.Model.createPiece(2, board.player);
-               move.dropPiece(pos, pos, piece);
+               move.dropPiece(pos, piece);
            } else {
                if (piece.player == board.player) return;
                piece = piece.changeOwner(board.player);

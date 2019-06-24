@@ -41,7 +41,7 @@ Dagaz.Model.CheckInvariants = function(board) {
               var piece = board.getPiece(p);
               if (piece !== null) {
                   if (piece.player != board.player) {
-                      if (e) {
+                      if (e && !f) {
                           move.movePiece(p, p, piece.changeOwner(board.player));
                       } else {
                           move.capturePiece(p);

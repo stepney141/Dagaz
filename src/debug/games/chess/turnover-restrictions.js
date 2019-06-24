@@ -68,7 +68,7 @@ Dagaz.Model.CheckInvariants = function(board) {
           if (p !== null) {
               var piece = board.getPiece(p);
               if (piece !== null) {
-                  if (piece.player == board.player) {
+                  if (f && (piece.player == board.player)) {
                       move.failed = true;
                       return;
                   }
@@ -110,9 +110,11 @@ Dagaz.Model.CheckInvariants = function(board) {
            }
            var pos = move.actions[0][1][0];        
            var piece = board.getPiece(pos);
-           if ((piece !== null) && (move.mode != 3)) {
-               move.failed = true;
-               return;
+           if (piece !== null) {
+               if ((move.mode != 3) || (piece.player == board.player)) {
+                   move.failed = true;
+                   return;
+               }
            }
            if ((move.mode != 3) && !notKnight(design, board, move.actions[0][0][0])) {
                move.failed = true;
@@ -135,7 +137,7 @@ Dagaz.Model.CheckInvariants = function(board) {
            }
            piece = board.getPiece(pos);
            if (piece !== null) {
-               if (f) {
+               if (f && !design.inZone(0, board.player, move.actions[0][1][0])) {
                    move.failed = true;
                    return;
                }
