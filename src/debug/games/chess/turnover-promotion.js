@@ -27,6 +27,8 @@ Dagaz.Model.CheckInvariants = function(board) {
                move.failed = true;
                return;
            }
+           var x = board.getPiece(pos);
+           if ((x !== null) && (x.player == board.player)) return;
            piece = piece.promote(1);
            move.actions[0][1] = [pos];
            move.actions[0][2] = [piece];
