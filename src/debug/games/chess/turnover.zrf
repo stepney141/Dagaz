@@ -502,6 +502,17 @@
      (zone (name last-rank) (players Silver)
            (positions a1b b1b c1b d1b e1b f1b g1b h1b a1s b1s c1s d1s e1s f1s g1s h1s a1t b1t c1t d1t e1t f1t g1t h1t)
      )
+     (zone (name all-ranks) (players Silver Gold)
+           (positions a1b b1b c1b d1b e1b f1b g1b h1b
+                      a2b b2b c2b d2b e2b f2b g2b h2b
+                      a3b b3b c3b d3b e3b f3b g3b h3b
+                      a4b b4b c4b d4b e4b f4b g4b h4b
+                      a5b b5b c5b d5b e5b f5b g5b h5b
+                      a6b b6b c6b d6b e6b f6b g6b h6b
+                      a7b b7b c7b d7b e7b f7b g7b h7b
+                      a8b b8b c8b d8b e8b f8b g8b h8b
+           )
+     )
   )
 
   (piece
