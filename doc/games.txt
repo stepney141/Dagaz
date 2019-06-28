@@ -175,7 +175,7 @@
   - Sittuyin [dark, setups, drops, best, checkmate, wheel, limit, sparks, family:chess]
   - Courier Chess [dark, checkmate, family:chess]
   - Short Assize [dark, checkmate, dialog(promotion), setups, drops, wheel, limit, sparks, family:chess]
-  - Chess [dark, checkmate, todo:ai, openings, endings, checkmate, dialog(promotion), family:chess]
+  - Chess [dark, checkmate, todo:ai, openings, endings, dialog(promotion), family:chess]
   - Hiashatar [checkmate, todo:goal, todo:invariant, dialog(promotion), family:chess]
   - Genesis Chess [drops, checkmate, todo:ai, wheel, limit, dialog(promotion), family:chess]
   - Omega Chess [checkmate, todo:ai, dialog(promotion), family:chess]
@@ -189,6 +189,7 @@
   - Neutral King Chess [shared, checkmate, dialog(promotion), family:chess]
   - StarChess [drops, todo, family:chess]
   - Oblong Shatranj [todo, dices, family:chess]
+  - Turnover [checkmate, best, dark, family:chess]
 - Shogi family
   - Doubutsu Shogi [best, reserve, king, breakthrough, family:chess]
   - Goro Goro Doubutsu Shogi [reserve, king, todo:ai, dialog(promotion), family:chess]
