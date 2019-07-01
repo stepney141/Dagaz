@@ -31,6 +31,88 @@ SessionManager.prototype.updateButtons = function() {
   }
 }
 
+Dagaz.Model.playerToString = function(player) {
+  if (player == 1) {
+      return "W";
+  } else {
+      return "B";
+  }
+}
+
+Dagaz.Model.moveToString = function(move) {
+  var r = "";
+  for (var i = 0; i < move.actions.length; i++) {
+       if (move.actions[i][1] !== null) {
+           if (r != "") {
+               r = r + "-";
+           }
+           if (move.actions[i][0] !== null) {
+               r = r + Dagaz.Model.posToString(move.actions[i][0][0]);
+           }
+           if (move.actions[i][1] !== null) {
+               r = r + Dagaz.Model.posToString(move.actions[i][1][0]);
+           }
+       }
+  }
+  return r;
+}
+
+SessionManager.prototype.save = function() {
+  if (_.isUndefined(this.current) || _.isUndefined(this.current.board)) return null;
+  var states = [];
+  var board  = this.current.board;
+  while (board.parent !== null) {
+      states.push(board);
+      board = board.parent;
+  }
+  var r = "(";
+  while (states.length > 0) {
+      var board = states.pop();
+      r = r + ";" + Dagaz.Model.playerToString(board.parent.player);
+      r = r + "[" + Dagaz.Model.moveToString(board.move) + "]";
+  }
+  r = r + ")";
+  return r;
+}
+
+SessionManager.prototype.locateMove = function(board, notation) {
+  board.generate(Dagaz.Model.getDesign());
+  for (var i = 0; i < board.moves.length; i++) {
+       if (Dagaz.Model.moveToString(board.moves[i]) == notation) {
+           return board.moves[i];
+       }
+  }
+  return null;
+}
+
+SessionManager.prototype.load = function(sgf) {
+  var res = Dagaz.Model.parseSgf(sgf);
+  this.states = [];
+  delete this.current;
+  var board = Dagaz.Model.getInitBoard();
+  for (var i = 0; i < res.length; i++) {
+       var p = res[i].name;
+       if (p != Dagaz.Model.playerToString(board.player)) return false;
+       if (res[i].arg.length != 1) return false;
+       var move = this.locateMove(board, res[i].arg[0]);
+       if (move === null) return false;
+       board = board.apply(move);
+       this.addState(move, board);
+  }
+  console.log(sgf);
+  this.controller.setBoard(board);
+  return true;
+}
+
+Dagaz.Controller.loadSGF = function() {
+  if (_.isUndefined(SGF)) return;
+  Dagaz.Controller.getSessionManager().load(SGF.value);
+}
+
+Dagaz.Controller.saveSGF = function() {
+  SGF.innerHTML = Dagaz.Controller.getSessionManager().save();
+}
+
 SessionManager.prototype.addState = function(move, board) {
   var current = {
       move:   move,
