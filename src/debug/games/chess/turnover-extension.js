@@ -92,12 +92,16 @@ Dagaz.Model.CheckInvariants = function(board) {
            }
       }
       if (move.mode == 2) {
+           var e = experimental;
            var pos = design.navigate(board.player, move.actions[0][1][0], 8);
+           if (board.getPiece(pos) === null) {
+               e = false;
+           }
            while (pos !== null) {
                var piece = board.getPiece(pos);
                if (piece !== null) {
                    if (piece.player != board.player) {
-                       if (experimental) {
+                       if (e) {
                            move.movePiece(pos, pos, piece.changeOwner(board.player));
                        } else {
                            move.capturePiece(pos);

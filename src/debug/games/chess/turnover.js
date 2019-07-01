@@ -366,7 +366,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 2, [2, 4], 3, 11);
     design.addMove(0, 2, [2, 6], 3, 11);
 
-    design.addPiece("Bishop", 1, 8);
+    design.addPiece("Bishop", 1, 20);
     design.addMove(1, 3, [4, 8, 8, 9, 9, 4], 4, 12);
     design.addMove(1, 3, [5, 8, 8, 9, 9, 5], 4, 12);
     design.addMove(1, 3, [6, 8, 8, 9, 9, 6], 4, 12);
