@@ -1,9 +1,13 @@
 (function() {
 
+var experimental = false;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "turnover-restrictions") {
+  if (name == "turnover-restrictions") {
+     if (value == "experimental") experimental = true;
+  } else {
      checkVersion(design, name, value);
   }
 }
@@ -162,7 +166,7 @@ Dagaz.Model.CheckInvariants = function(board) {
            while (pos !== null) {
                var piece = board.getPiece(pos);
                if (piece !== null) {
-                   if (piece.player == board.player) {
+                   if (!experimental && (piece.player == board.player)) {
                        move.failed = true;
                        return;
                    }

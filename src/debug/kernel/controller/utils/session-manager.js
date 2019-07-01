@@ -110,6 +110,7 @@ Dagaz.Controller.loadSGF = function() {
 }
 
 Dagaz.Controller.saveSGF = function() {
+  if (_.isUndefined(SGF)) return;
   SGF.innerHTML = Dagaz.Controller.getSessionManager().save();
 }
 
@@ -134,6 +135,8 @@ SessionManager.prototype.addState = function(move, board) {
       this.states.push(current);
   }
   this.current = current;
+  // DEBUG:
+//Dagaz.Controller.saveSGF();
 }
 
 Dagaz.Controller.addState = function(move, board) {  

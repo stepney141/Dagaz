@@ -36,6 +36,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
     design.checkVersion("advisor-wait", "5");
+    design.checkVersion("turnover-restrictions", "experimental");
+    design.checkVersion("turnover-extension", "experimental");
 
     design.addDirection("n");  // 0
     design.addDirection("e");  // 1
