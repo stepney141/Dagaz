@@ -75,25 +75,39 @@ Dagaz.Model.CheckInvariants = function(board) {
           });
       }
       if ((move.mode == 0) || (move.mode == 1) || (move.mode == 3)) {
-           var pos = design.navigate(board.player, move.actions[0][1][0], 8);
+           var pos = move.actions[0][1][0];
+           var notEmpty = (board.getPiece(pos) !== null);
+           pos = design.navigate(board.player, pos, 8);
            var piece = board.getPiece(pos);
+           var f = true;
            if (piece !== null) {
                if (piece.player != board.player) {
-                   move.movePiece(pos, pos, piece.changeOwner(board.player));
+                   if (notEmpty) {
+                       move.capturePiece(pos);
+                   } else {
+                       move.movePiece(pos, pos, piece.changeOwner(board.player));
+                   }
                }
+               f = false;
            }
            pos = design.navigate(board.player, pos, 8);
            if (pos === null) return;
            piece = board.getPiece(pos);
            if (piece !== null) {
                if (piece.player != board.player) {
-                   move.movePiece(pos, pos, piece.changeOwner(board.player));
+                   if (notEmpty || f) {
+                       move.capturePiece(pos);
+                   } else {
+                       move.movePiece(pos, pos, piece.changeOwner(board.player));
+                   }
                }
            }
       }
       if (move.mode == 2) {
+           var pos = move.actions[0][1][0];
+           var isEmpty = (board.getPiece(pos) === null);
+           pos = design.navigate(board.player, pos, 8);
            var e = experimental;
-           var pos = design.navigate(board.player, move.actions[0][1][0], 8);
            if (board.getPiece(pos) === null) {
                e = false;
            }
@@ -101,7 +115,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                var piece = board.getPiece(pos);
                if (piece !== null) {
                    if (piece.player != board.player) {
-                       if (e) {
+                       if (isEmpty && e) {
                            move.movePiece(pos, pos, piece.changeOwner(board.player));
                        } else {
                            move.capturePiece(pos);

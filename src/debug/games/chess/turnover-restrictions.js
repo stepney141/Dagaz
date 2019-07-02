@@ -141,6 +141,9 @@ Dagaz.Model.CheckInvariants = function(board) {
            }
            piece = board.getPiece(pos);
            if (piece !== null) {
+               if ((move.mode == 3) && (piece.player != board.player)) {
+                   f = false;
+               }
                if (f && !design.inZone(0, board.player, move.actions[0][1][0])) {
                    move.failed = true;
                    return;
@@ -163,10 +166,11 @@ Dagaz.Model.CheckInvariants = function(board) {
                isEmpty = false;
            }
            pos = design.navigate(board.player, pos, 8);
+           var f = (board.getPiece(pos) === null);
            while (pos !== null) {
                var piece = board.getPiece(pos);
                if (piece !== null) {
-                   if (!experimental && (piece.player == board.player)) {
+                   if ((!experimental || f) && (piece.player == board.player)) {
                        move.failed = true;
                        return;
                    }

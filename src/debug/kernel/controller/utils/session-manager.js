@@ -90,6 +90,7 @@ SessionManager.prototype.load = function(sgf) {
   this.states = [];
   delete this.current;
   var board = Dagaz.Model.getInitBoard();
+  this.addState(Dagaz.Model.createMove(), board);
   for (var i = 0; i < res.length; i++) {
        var p = res[i].name;
        if (p != Dagaz.Model.playerToString(board.player)) return false;
@@ -99,14 +100,15 @@ SessionManager.prototype.load = function(sgf) {
        board = board.apply(move);
        this.addState(move, board);
   }
-  console.log(sgf);
   this.controller.setBoard(board);
   return true;
 }
 
 Dagaz.Controller.loadSGF = function() {
   if (_.isUndefined(SGF)) return;
-  Dagaz.Controller.getSessionManager().load(SGF.value);
+  var sm = Dagaz.Controller.getSessionManager();
+  sm.load(SGF.value);
+  sm.updateButtons();
 }
 
 Dagaz.Controller.saveSGF = function() {
