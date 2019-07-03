@@ -80,7 +80,7 @@
   - Tibetan Go [todo, drops:only, scroring, family:go]
   - WarGo [todo, drops, wheel, family:go]
   - MarGo [todo, drops:only, best, family:go]
-  - Alak [drops:only, todo, family:go]
+  - Alak [drops:only, family:go]
 - Checkers games [composite]
   - Fox and Geese [asym, best, family:checkers]
   - Asalto [asym, zone, control, family:checkers]
