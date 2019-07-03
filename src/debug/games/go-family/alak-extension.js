@@ -28,9 +28,9 @@ var getPlayer = function(design, board, pos) {
   var piece = board.getPiece(pos);
   if (piece !== null) return piece.player;
   var e = getPlayerDir(design, board, pos, 0);
-  if (e === null) return null;
   var w = getPlayerDir(design, board, pos, 1);
-  if (w === null) return null;
+  if (e === null) return w;
+  if (w === null) return e;
   if (e != w) return null;
   return e;
 }
