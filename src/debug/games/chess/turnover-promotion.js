@@ -16,6 +16,23 @@ Dagaz.Model.CheckInvariants = function(board) {
       if (!move.isSimpleMove() || !_.isUndefined(move.failed)) return;
       var pos = move.actions[0][0][0];
       var piece = board.getPiece(pos);
+      if ((piece !== null) && (piece.type == 2)) {
+           pos = move.actions[0][1][0];
+           if (!design.inZone(0, board.player, pos)) return;
+           pos = design.navigate(board.player, pos, 9);
+           if (pos === null) return;
+           piece = board.getPiece(pos);
+           if (piece === null) return;
+           pos = design.navigate(board.player, pos, 9);
+           if (pos === null) return;
+           if (board.getPiece(pos) === null) return;
+           move.capturePiece(pos);
+           if (piece.player != board.player) {
+               pos = design.navigate(board.player, move.actions[0][1][0], 9);
+               move.movePiece(pos, pos, piece.changeOwner(board.player));
+           }
+           return;
+      }
       if ((piece !== null) && (piece.type == 0)) {
            pos = move.actions[0][1][0];
            if (!design.inZone(0, board.player, pos)) return;
