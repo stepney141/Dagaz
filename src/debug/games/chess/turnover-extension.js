@@ -1,13 +1,9 @@
 (function() {
 
-var experimental = false;
-
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name == "turnover-extension") {
-     if (value == "experimental") experimental = true;
-  } else {
+  if (name != "turnover-extension") {
      checkVersion(design, name, value);
   }
 }
@@ -107,7 +103,7 @@ Dagaz.Model.CheckInvariants = function(board) {
            var pos = move.actions[0][1][0];
            var isEmpty = (board.getPiece(pos) === null);
            pos = design.navigate(board.player, pos, 8);
-           var e = experimental;
+           var e = true;
            if (board.getPiece(pos) === null) {
                e = false;
            }
