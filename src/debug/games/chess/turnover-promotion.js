@@ -37,8 +37,8 @@ Dagaz.Model.CheckInvariants = function(board) {
       if ((piece !== null) && (piece.type == 0)) {
            pos = move.actions[0][1][0];
            if (!design.inZone(0, board.player, pos)) return;
-           if ((move.mode == 0) || (move.mode == 1) || (move.mode == 2)) {
-               if ((board.getPiece(pos) !== null) && (move.mode != 2)) {
+           if ((move.mode == 0) || (move.mode == 1) || (move.mode == 2) || (move.mode == 3)) {
+               if ((board.getPiece(pos) !== null) && (move.mode != 2) && (move.mode != 3)) {
                    move.failed = true;
                    return;
                }
@@ -46,7 +46,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                if (p !== null) {
                    if (board.getPiece(p) === null) {
                         p = design.navigate(board.player, p, 8);
-                        if ((p !== null) && (board.getPiece(p) !== null) && (move.mode != 2)) {
+                        if ((p !== null) && (board.getPiece(p) !== null) && (move.mode != 2) && (move.mode != 3)) {
                              move.failed = true;
                              return;
                         }
