@@ -76,7 +76,7 @@
   - Atari Go [best, drops:only, family:go]
   - Three Color Go [todo:ai, drops:only, sparks, family:go]
   - Paper and Pencil Go [todo:ai, drops:only, family:go]
-  - Stoical Go [todo, drops:only, family:go]
+  - Stoical Go [drops:only, family:go]
   - Tibetan Go [todo, drops:only, scroring, family:go]
   - WarGo [todo, drops, wheel, family:go]
   - MarGo [todo, drops:only, best, family:go]
