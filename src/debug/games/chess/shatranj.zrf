@@ -1,3 +1,9 @@
+(define drop-dice (
+  (verify (in-zone? dice-zone))
+  (verify not-friend?)
+  add
+))
+
 (define pawn-shift (
   $1 (verify empty?)
   (if (in-zone? promotion)
@@ -32,6 +38,18 @@
   (verify not-friend?)
   add
 ))
+
+(define d
+  (piece
+     (name D$1)
+     (image White "images/dice/$1.bmp"
+            Black "images/dice/$1.bmp")
+     (drops
+        (move-type drop-type)
+        (drop-dice)
+     )
+  )
+)
 
 (game
   (title "Shatranj")
@@ -347,7 +365,6 @@
 
 (variant
   (title "Shatranj (Pharaon's stones)")
-  (default)
   (board-setup
     (White 
          (Sarbaz a4 b3 c4 d2 e2 f4 g3 h4)
@@ -452,6 +469,403 @@
          (Alfil c8 f8)
          (Fers c6)
          (Shah d8)
+    )
+  )
+)
+
+(variant
+  (title "-")
+)
+
+(variant
+  (title "Oblong Shatranj")
+  (default)
+
+  (players White Black)
+  (turn-order White Black)
+
+  (board
+     (image "images/oblong.bmp")
+     (positions
+         (DICE 820 86 848 114)
+     )
+     (grid
+         (start-rectangle 1 2 51 52)
+         (dimensions
+           ("d/b/c/a" (0 50))
+           ("16/15/14/13/12/11/10/9/8/7/6/5/4/3/2/1" (50 0))
+         )
+         (directions 
+              (n 0 -1) (s 0 1) (e -1 0) (w 1 0)
+              (nw 1 -1) (sw 1 1) (ne -1 -1) (se -1 1)
+         )
+     )
+     (symmetry Black (n s) (s n) (nw sw) (sw nw) (ne se) (se ne) (w w) (e e))
+     (zone (name promotion) (players White)
+           (positions a16 b16 c16 d16)
+     )
+     (zone (name promotion) (players Black)
+           (positions a1 b1 c1 d1)
+     )
+     (zone (name dice-zone) (players White Black)
+           (positions DICE)
+     )
+  )
+
+  (d 1) (d 2) (d 3) (d 4) (d 5) (d 6)
+
+  (board-setup
+    (White 
+         (Sarbaz a5 b5 c5 d5 a7 b7 c7 d7)
+         (Rokh a3 d3)
+         (Asb b2 c2)
+         (Alfil a1 d1)
+         (Fers c1)
+         (Shah b1)
+    )
+    (Black 
+         (Sarbaz a10 b10 c10 d10 a12 b12 c12 d12)
+         (Rokh a14 d14)
+         (Asb b15 c15)
+         (Alfil a16 d16)
+         (Fers c16)
+         (Shah b16)
+    )
+  )
+)
+
+(variant
+  (title "Oblong Shatranj")
+
+  (players White Black)
+  (turn-order White Black)
+
+  (board
+     (image "images/oblong.bmp")
+     (positions
+         (DICE 820 86 848 114)
+     )
+     (grid
+         (start-rectangle 1 2 51 52)
+         (dimensions
+           ("d/b/c/a" (0 50))
+           ("16/15/14/13/12/11/10/9/8/7/6/5/4/3/2/1" (50 0))
+         )
+         (directions 
+              (n 0 -1) (s 0 1) (e -1 0) (w 1 0)
+              (nw 1 -1) (sw 1 1) (ne -1 -1) (se -1 1)
+         )
+     )
+     (symmetry Black (n s) (s n) (nw sw) (sw nw) (ne se) (se ne) (w w) (e e))
+     (zone (name promotion) (players White)
+           (positions a16 b16 c16 d16)
+     )
+     (zone (name promotion) (players Black)
+           (positions a1 b1 c1 d1)
+     )
+     (zone (name dice-zone) (players White Black)
+           (positions DICE)
+     )
+  )
+
+  (d 1) (d 2) (d 3) (d 4) (d 5) (d 6)
+
+  (board-setup
+    (White 
+         (Sarbaz a5 b5 c5 d5 a6 b6 c6 d6)
+         (Rokh a3 d3)
+         (Asb b2 c2)
+         (Alfil a1 d1)
+         (Fers c1)
+         (Shah b1)
+    )
+    (Black 
+         (Sarbaz a11 b11 c11 d11 a12 b12 c12 d12)
+         (Rokh a14 d14)
+         (Asb b15 c15)
+         (Alfil a16 d16)
+         (Fers b16)
+         (Shah c16)
+    )
+  )
+)
+
+(variant
+  (title "Oblong Shatranj")
+
+  (players White Black)
+  (turn-order White Black)
+
+  (board
+     (image "images/oblong.bmp")
+     (positions
+         (DICE 820 86 848 114)
+     )
+     (grid
+         (start-rectangle 1 2 51 52)
+         (dimensions
+           ("d/b/c/a" (0 50))
+           ("16/15/14/13/12/11/10/9/8/7/6/5/4/3/2/1" (50 0))
+         )
+         (directions 
+              (n 0 -1) (s 0 1) (e -1 0) (w 1 0)
+              (nw 1 -1) (sw 1 1) (ne -1 -1) (se -1 1)
+         )
+     )
+     (symmetry Black (n s) (s n) (nw sw) (sw nw) (ne se) (se ne) (w w) (e e))
+     (zone (name promotion) (players White)
+           (positions a16 b16 c16 d16)
+     )
+     (zone (name promotion) (players Black)
+           (positions a1 b1 c1 d1)
+     )
+     (zone (name dice-zone) (players White Black)
+           (positions DICE)
+     )
+  )
+
+  (d 1) (d 2) (d 3) (d 4) (d 5) (d 6)
+
+  (board-setup
+    (White 
+         (Sarbaz a2 b2 c2 d2 a4 b4 c4 d4)
+         (Rokh a3 d3)
+         (Asb b3 c3)
+         (Alfil a1 d1)
+         (Fers b1)
+         (Shah c1)
+    )
+    (Black 
+         (Sarbaz a15 b15 c15 d15 a13 b13 c13 d13)
+         (Rokh a14 d14)
+         (Asb b14 c14)
+         (Alfil a16 d16)
+         (Fers b16)
+         (Shah c16)
+    )
+  )
+)
+
+(variant
+  (title "Oblong Shatranj")
+
+  (players White Black)
+  (turn-order White Black)
+
+  (board
+     (image "images/oblong.bmp")
+     (positions
+         (DICE 820 86 848 114)
+     )
+     (grid
+         (start-rectangle 1 2 51 52)
+         (dimensions
+           ("d/b/c/a" (0 50))
+           ("16/15/14/13/12/11/10/9/8/7/6/5/4/3/2/1" (50 0))
+         )
+         (directions 
+              (n 0 -1) (s 0 1) (e -1 0) (w 1 0)
+              (nw 1 -1) (sw 1 1) (ne -1 -1) (se -1 1)
+         )
+     )
+     (symmetry Black (n s) (s n) (nw sw) (sw nw) (ne se) (se ne) (w w) (e e))
+     (zone (name promotion) (players White)
+           (positions a16 b16 c16 d16)
+     )
+     (zone (name promotion) (players Black)
+           (positions a1 b1 c1 d1)
+     )
+     (zone (name dice-zone) (players White Black)
+           (positions DICE)
+     )
+  )
+
+  (d 1) (d 2) (d 3) (d 4) (d 5) (d 6)
+
+  (board-setup
+    (White 
+         (Sarbaz a3 b3 c3 d3 a4 b4 c4 d4)
+         (Rokh a1 d1)
+         (Asb b1 c1)
+         (Alfil a2 d2)
+         (Fers c2)
+         (Shah b2)
+    )
+    (Black 
+         (Sarbaz a14 b14 c14 d14 a13 b13 c13 d13)
+         (Rokh a16 d16)
+         (Asb b16 c16)
+         (Alfil a15 d15)
+         (Fers c15)
+         (Shah b15)
+    )
+  )
+)
+
+(variant
+  (title "Oblong Shatranj")
+
+  (players White Black)
+  (turn-order White Black)
+
+  (board
+     (image "images/oblong.bmp")
+     (positions
+         (DICE 820 86 848 114)
+     )
+     (grid
+         (start-rectangle 1 2 51 52)
+         (dimensions
+           ("d/b/c/a" (0 50))
+           ("16/15/14/13/12/11/10/9/8/7/6/5/4/3/2/1" (50 0))
+         )
+         (directions 
+              (n 0 -1) (s 0 1) (e -1 0) (w 1 0)
+              (nw 1 -1) (sw 1 1) (ne -1 -1) (se -1 1)
+         )
+     )
+     (symmetry Black (n s) (s n) (nw sw) (sw nw) (ne se) (se ne) (w w) (e e))
+     (zone (name promotion) (players White)
+           (positions a16 b16 c16 d16)
+     )
+     (zone (name promotion) (players Black)
+           (positions a1 b1 c1 d1)
+     )
+     (zone (name dice-zone) (players White Black)
+           (positions DICE)
+     )
+  )
+
+  (d 1) (d 2) (d 3) (d 4) (d 5) (d 6)
+
+  (board-setup
+    (White 
+         (Sarbaz a5 b5 c5 d5 a6 b6 c6 d6)
+         (Rokh a1 d1)
+         (Asb b2 c2)
+         (Alfil b3 c3)
+         (Fers c1)
+         (Shah b1)
+    )
+    (Black 
+         (Sarbaz a12 b12 c12 d12 a11 b11 c11 d11)
+         (Rokh a16 d16)
+         (Asb b15 c15)
+         (Alfil b14 c14)
+         (Fers c16)
+         (Shah b16)
+    )
+  )
+)
+
+(variant
+  (title "Oblong Shatranj")
+
+  (players White Black)
+  (turn-order White Black)
+
+  (board
+     (image "images/oblong.bmp")
+     (positions
+         (DICE 820 86 848 114)
+     )
+     (grid
+         (start-rectangle 1 2 51 52)
+         (dimensions
+           ("d/b/c/a" (0 50))
+           ("16/15/14/13/12/11/10/9/8/7/6/5/4/3/2/1" (50 0))
+         )
+         (directions 
+              (n 0 -1) (s 0 1) (e -1 0) (w 1 0)
+              (nw 1 -1) (sw 1 1) (ne -1 -1) (se -1 1)
+         )
+     )
+     (symmetry Black (n s) (s n) (nw sw) (sw nw) (ne se) (se ne) (w w) (e e))
+     (zone (name promotion) (players White)
+           (positions a16 b16 c16 d16)
+     )
+     (zone (name promotion) (players Black)
+           (positions a1 b1 c1 d1)
+     )
+     (zone (name dice-zone) (players White Black)
+           (positions DICE)
+     )
+  )
+
+  (d 1) (d 2) (d 3) (d 4) (d 5) (d 6)
+
+  (board-setup
+    (White 
+         (Sarbaz a5 b5 c5 d5 a6 b6 c6 d6)
+         (Rokh a1 d1)
+         (Asb b2 c2)
+         (Alfil b3 c3)
+         (Fers b1)
+         (Shah c1)
+    )
+    (Black 
+         (Sarbaz a12 b12 c12 d12 a11 b11 c11 d11)
+         (Rokh a16 d16)
+         (Asb b15 c15)
+         (Alfil b14 c14)
+         (Fers c16)
+         (Shah b16)
+    )
+  )
+)
+
+(variant
+  (title "Oblong Shatranj")
+
+  (players White Black)
+  (turn-order White Black)
+
+  (board
+     (image "images/oblong.bmp")
+     (positions
+         (DICE 820 86 848 114)
+     )
+     (grid
+         (start-rectangle 1 2 51 52)
+         (dimensions
+           ("d/b/c/a" (0 50))
+           ("16/15/14/13/12/11/10/9/8/7/6/5/4/3/2/1" (50 0))
+         )
+         (directions 
+              (n 0 -1) (s 0 1) (e -1 0) (w 1 0)
+              (nw 1 -1) (sw 1 1) (ne -1 -1) (se -1 1)
+         )
+     )
+     (symmetry Black (n s) (s n) (nw sw) (sw nw) (ne se) (se ne) (w w) (e e))
+     (zone (name promotion) (players White)
+           (positions a16 b16 c16 d16)
+     )
+     (zone (name promotion) (players Black)
+           (positions a1 b1 c1 d1)
+     )
+     (zone (name dice-zone) (players White Black)
+           (positions DICE)
+     )
+  )
+
+  (d 1) (d 2) (d 3) (d 4) (d 5) (d 6)
+
+  (board-setup
+    (White 
+         (Sarbaz a5 b5 c5 d5 a4 b4 c4 d4)
+         (Rokh a1 d1)
+         (Asb b2 c2)
+         (Alfil b3 c3)
+         (Fers c1)
+         (Shah b1)
+    )
+    (Black 
+         (Sarbaz a12 b12 c12 d12 a13 b13 c13 d13)
+         (Rokh a16 d16)
+         (Asb b15 c15)
+         (Alfil b14 c14)
+         (Fers b16)
+         (Shah c16)
     )
   )
 )
