@@ -153,7 +153,7 @@
   - Sahkku [todo, dices, family:races]
   - Puluc [best, dices, groups, family:races]
   - Ur [todo, best, dices, vectors, smart, family:races]
-  - Hounds contra Jackals [dices, family:races]
+  - Shen [dices, family:races]
   - Senet [todo, dices, family:races]
   - Tab [todo, dices, family:races]
   - Daldosa [dices, family:races]
@@ -188,7 +188,7 @@
   - Anti King Chess [invariant, dialog(promotion), family:chess]
   - Neutral King Chess [shared, checkmate, dialog(promotion), family:chess]
   - StarChess [drops, todo, family:chess]
-  - Oblong Shatranj [todo, dices, family:chess]
+  - Oblong Shatranj [setups, dices, family:chess]
   - Turnover [checkmate, best, dark, family:chess]
 - Shogi family
   - Doubutsu Shogi [best, reserve, king, breakthrough, family:chess]

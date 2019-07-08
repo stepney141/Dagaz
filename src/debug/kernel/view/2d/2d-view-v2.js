@@ -707,6 +707,11 @@ var mouseWheel = function(event) {
   } else {
       self.controller.mouseWheel(self, 1);
   }
+  mouseUpdate(event);
+  var pos = self.pointToPositions(mouseX, mouseY);
+  if (pos && pos.length > 0) {
+	event.preventDefault();
+  }
 }
 
 View2D.prototype.init = function(canvas, controller) {
