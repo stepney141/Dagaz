@@ -40,6 +40,10 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPlayer("White", [6, 7, 5, 4, 3, 2, 0, 1]);
     design.addPlayer("Black", [5, 7, 6, 3, 4, 0, 2, 1]);
+    design.addRandom(1, [0]);
+    design.addTurn(1, [1, 2, 3, 4, 5, 6, 7]);
+    design.addRandom(2, [0]);
+    design.addTurn(2, [1, 2, 3, 4, 5, 6, 7]);
 
     design.addPosition("d16", [0, 4, 5, 0, 1, 0, 0, 0]);
     design.addPosition("b16", [3, 4, 5, -1, 1, 0, 0, 0]);
@@ -186,66 +190,71 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(5, ZRF.FUNCTION,	25);	// to
     design.addCommand(5, ZRF.FUNCTION,	28);	// end
 
+    design.addCommand(6, ZRF.FUNCTION,	24);	// from
+    design.addCommand(6, ZRF.FUNCTION,	25);	// to
+    design.addCommand(6, ZRF.FUNCTION,	28);	// end
+
     design.addPiece("D1", 0, 1);
-    design.addDrop(0, 0, [], 0, 0);
+    design.addDrop(0, 0, [], 0, 10);
 
     design.addPiece("D2", 1, 2);
-    design.addDrop(1, 0, [], 0, 0);
+    design.addDrop(1, 0, [], 0, 10);
 
     design.addPiece("D3", 2, 3);
-    design.addDrop(2, 0, [], 0, 0);
+    design.addDrop(2, 0, [], 0, 10);
 
     design.addPiece("D4", 3, 4);
-    design.addDrop(3, 0, [], 0, 0);
+    design.addDrop(3, 0, [], 0, 10);
 
     design.addPiece("D5", 4, 5);
-    design.addDrop(4, 0, [], 0, 0);
+    design.addDrop(4, 0, [], 0, 10);
 
     design.addPiece("D6", 5, 6);
-    design.addDrop(5, 0, [], 0, 0);
+    design.addDrop(5, 0, [], 0, 10);
 
     design.addPiece("Shah", 6, 6000);
-    design.addMove(6, 1, [7], 1, 6);
-    design.addMove(6, 1, [1], 1, 6);
-    design.addMove(6, 1, [4], 1, 6);
-    design.addMove(6, 1, [3], 1, 6);
-    design.addMove(6, 1, [6], 1, 6);
-    design.addMove(6, 1, [2], 1, 6);
-    design.addMove(6, 1, [5], 1, 6);
-    design.addMove(6, 1, [0], 1, 6);
+    design.addMove(6, 1, [7], 6);
+    design.addMove(6, 1, [1], 6);
+    design.addMove(6, 1, [4], 6);
+    design.addMove(6, 1, [3], 6);
+    design.addMove(6, 1, [6], 6);
+    design.addMove(6, 1, [2], 6);
+    design.addMove(6, 1, [5], 6);
+    design.addMove(6, 1, [0], 6);
+    design.addMove(6, 6, [], 7);
 
     design.addPiece("Fers", 7, 24);
-    design.addMove(7, 1, [6], 1, 5);
-    design.addMove(7, 1, [2], 1, 5);
-    design.addMove(7, 1, [5], 1, 5);
-    design.addMove(7, 1, [0], 1, 5);
+    design.addMove(7, 1, [6], 5);
+    design.addMove(7, 1, [2], 5);
+    design.addMove(7, 1, [5], 5);
+    design.addMove(7, 1, [0], 5);
 
     design.addPiece("Rokh", 8, 120);
-    design.addMove(8, 2, [7, 7], 1, 2);
-    design.addMove(8, 2, [1, 1], 1, 2);
-    design.addMove(8, 2, [4, 4], 1, 2);
-    design.addMove(8, 2, [3, 3], 1, 2);
+    design.addMove(8, 2, [7, 7], 2);
+    design.addMove(8, 2, [1, 1], 2);
+    design.addMove(8, 2, [4, 4], 2);
+    design.addMove(8, 2, [3, 3], 2);
 
     design.addPiece("Alfil", 9, 12);
-    design.addMove(9, 3, [6, 6], 1, 4);
-    design.addMove(9, 3, [5, 5], 1, 4);
-    design.addMove(9, 3, [2, 2], 1, 4);
-    design.addMove(9, 3, [0, 0], 1, 4);
+    design.addMove(9, 3, [6, 6], 4);
+    design.addMove(9, 3, [5, 5], 4);
+    design.addMove(9, 3, [2, 2], 4);
+    design.addMove(9, 3, [0, 0], 4);
 
     design.addPiece("Asb", 10, 48);
-    design.addMove(10, 3, [7, 6], 1, 3);
-    design.addMove(10, 3, [7, 5], 1, 3);
-    design.addMove(10, 3, [1, 2], 1, 3);
-    design.addMove(10, 3, [1, 0], 1, 3);
-    design.addMove(10, 3, [4, 6], 1, 3);
-    design.addMove(10, 3, [4, 2], 1, 3);
-    design.addMove(10, 3, [3, 5], 1, 3);
-    design.addMove(10, 3, [3, 0], 1, 3);
+    design.addMove(10, 3, [7, 6], 3);
+    design.addMove(10, 3, [7, 5], 3);
+    design.addMove(10, 3, [1, 2], 3);
+    design.addMove(10, 3, [1, 0], 3);
+    design.addMove(10, 3, [4, 6], 3);
+    design.addMove(10, 3, [4, 2], 3);
+    design.addMove(10, 3, [3, 5], 3);
+    design.addMove(10, 3, [3, 0], 3);
 
     design.addPiece("Sarbaz", 11, 6);
-    design.addMove(11, 4, [7], 1, 1);
-    design.addMove(11, 5, [6], 1, 1);
-    design.addMove(11, 5, [5], 1, 1);
+    design.addMove(11, 4, [7], 1);
+    design.addMove(11, 5, [6], 1);
+    design.addMove(11, 5, [5], 1);
 
     design.setupSelector(7);
 
@@ -507,6 +516,7 @@ Dagaz.View.configure = function(view) {
     view.defPiece("BlackAsb", "Black Asb");
     view.defPiece("WhiteSarbaz", "White Sarbaz");
     view.defPiece("BlackSarbaz", "Black Sarbaz");
+    view.defPiece("Ko", "Ko");
  
     view.defPosition("d16", 1, 2, 50, 50);
     view.defPosition("b16", 1, 52, 50, 50);
@@ -572,5 +582,5 @@ Dagaz.View.configure = function(view) {
     view.defPosition("b1", 751, 52, 50, 50);
     view.defPosition("c1", 751, 102, 50, 50);
     view.defPosition("a1", 751, 152, 50, 50);
-    view.defPosition("DICE", 820, 86, 28, 28);
+    view.defPosition("DICE", 811, 86, 28, 28);
 }

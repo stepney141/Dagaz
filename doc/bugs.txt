@@ -26,6 +26,8 @@
   - Selus
     - piece.promote и changeOwner не сохраняют значения атрибутов
 - session-manager
+  - Oblong Shantranj
+    - При откате и накате с повторным выпадении других очков, новые ходы недоступны
   - При откате хода с превращением и повторном его выполнении, promotion-dialog не запрашивается
 - deferred-captures
   - Russian Checkers
