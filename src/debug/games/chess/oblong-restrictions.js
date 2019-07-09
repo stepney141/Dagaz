@@ -29,7 +29,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                move.failed = true;
                return;
           }
-          if (move.isSimpleMove()) {
+          if (move.isSimpleMove() && (move.mode != 7)) {
                var p = move.actions[0][0][0];
                if (_.indexOf(ko, p) < 0) {
                    ko.push(p);

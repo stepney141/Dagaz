@@ -481,9 +481,9 @@ View2D.prototype.init = function(canvas, controller) {
   canvas.onmouseup   = mouseUp;
   canvas.onmousedown = mouseDown;
   if ('onwheel' in document) {
-      document.onwheel = mouseWheel;
+      document.addEventListener('wheel', mouseWheel, { passive: false });
   } else if ('onmousewheel' in document) {
-      document.onmousewheel = mouseWheel;
+      document.addEventListener('mousewheel', mouseWheel, { passive: false });
   } else {
       document.MozMousePixelScroll = mouseWheel;
   }
