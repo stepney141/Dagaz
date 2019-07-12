@@ -27,7 +27,7 @@ var getDice = function(design, board, player) {
 
 var clearDices = function(design, board, player, move) {
   _.each(design.allPositions(), function(pos) {
-      if (design.inZone(3, player, pos) && (board.getPiece(pos) !== null)) {
+      if ((design.inZone(3, 1, pos) || design.inZone(3, 2, pos)) && (board.getPiece(pos) !== null)) {
           move.capturePiece(pos);
       }
   });

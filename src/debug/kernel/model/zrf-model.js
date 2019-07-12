@@ -27,6 +27,7 @@ Dagaz.Model.advisorWait     = null;
 Dagaz.Model.remapPromote    = false;
 Dagaz.Model.passForcedDraw  = true;
 Dagaz.Model.animateRedo     = true;
+Dagaz.Model.completePartial = false;
 
 Dagaz.Model.checkVersion = function(design, name, value) {  
   if (name == "z2j") {
@@ -58,9 +59,13 @@ Dagaz.Model.checkVersion = function(design, name, value) {
          (name != "detect-loops")       &&
          (name != "advisor-wait")       &&
          (name != "promote-dialog")     &&
+         (name != "complete-partial")   &&
          (name != "animate-redo")       &&
          (name != "silent-?-moves")) {
          design.failed = true;
+     }
+     if (name == "complete-partial") {
+         if (value == "true") Dagaz.Model.completePartial = true;
      }
      if (name == "animate-redo") {
          if (value == "false") Dagaz.Model.animateRedo = false;
@@ -1932,9 +1937,9 @@ ZrfBoard.prototype.apply = function(move) {
   if (!_.isUndefined(move.result)) return move.result;
   var design = Dagaz.Model.design;
   var r = this.copy();
-  move.applyAll(r);
   r.turn = design.nextTurn(this);
   r.player = design.currPlayer(r.turn);
+  move.applyAll(r);
   r.move = move;
   return r;
 }
@@ -2276,6 +2281,19 @@ ZrfMove.prototype.setValue = function(name, value, part) {
       exec: function(obj) {
           if (obj.setValue) {
               obj.setValue(name, value);
+          }
+      }
+  }], part]);
+}
+
+ZrfMove.prototype.goTo = function(turn, part) {
+  if (!part) part = 1;
+  this.actions.push([ null, null, [{
+      exec: function(obj) {
+          var design = Dagaz.Model.design;
+          if (!_.isUndefined(obj.turn) && !_.isUndefined(obj.player)) {
+              obj.turn = turn;
+              obj.player = design.currPlayer(turn);
           }
       }
   }], part]);

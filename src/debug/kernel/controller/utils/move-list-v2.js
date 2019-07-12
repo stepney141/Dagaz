@@ -230,6 +230,19 @@ MoveList.prototype.copyActions = function(move, actions, mode, sound) {
 }
 
 MoveList.prototype.setPosition = function(pos) {
+  if (Dagaz.Model.completePartial && Dagaz.Model.smartFrom) {
+      var r = null;
+      _.each(this.moves, function(move) {
+          _.each(move.actions, function(a) {
+               if ((a[0] !== null) && (a[1] !== null) && (a[3] == 1) && (a[0][0] == pos)) {
+                   r = move;
+               }
+          });
+      });
+      if (r !== null) {
+          return r;
+      }
+  }
   var result = Dagaz.Model.createMove();
   if (_.indexOf(this.getStops(), pos) >= 0) {
       var moves = _.filter(this.moves, function(move) {

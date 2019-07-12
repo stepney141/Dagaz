@@ -566,21 +566,22 @@ App.prototype.exec = function() {
           this.state = STATE.WAIT;
       }
       if (!_.isUndefined(this.list)) {
-          if (this.list.isDone()) {
+          if (this.list.isDone() || (Dagaz.Model.completePartial && !this.move.isPass())) {
               this.view.markPositions(Dagaz.View.markType.CURRENT, []);
               var moves = this.list.filterDrops(this.list.getMoves(), dropIndex);
               delete this.list;
               this.view.clearDrops();
-              if ((moves.length > 0) || (determinated !== null)) {
-                  var m = moves[0];
+              var m = this.move;
+              if (!Dagaz.Model.completePartial && ((moves.length > 0) || (determinated !== null))) {
+                  m = moves[0];
                   if (determinated !== null) {
                       m.clarify(determinated);
                       determinated = null;
                   }
-                  this.boardApply(m);
-                  Dagaz.Model.Done(this.design, this.board);
-                  console.log("Debug: " + m.toString());
               }
+              this.boardApply(m);
+              Dagaz.Model.Done(this.design, this.board);
+              console.log("Debug: " + m.toString());
           }
       }
       if (!this.move.isPass()) {

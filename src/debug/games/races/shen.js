@@ -20,7 +20,7 @@ ZRF = {
 };
 
 if (!_.isUndefined(Dagaz.Controller.addSound)) {
-    Dagaz.Controller.addSound(0, "../sounds/slide.ogg", true);
+    Dagaz.Controller.addSound(0, "../../sounds/slide.ogg", true);
     Dagaz.Controller.addSound(10, "../../sounds/dice.wav", true);
 }
 
@@ -33,6 +33,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-captures", "false");
     design.checkVersion("show-drops", "false");
+    design.checkVersion("complete-partial", "true");
     design.checkVersion("advisor-wait", "5");
 
     design.addDirection("nx");
@@ -40,16 +41,21 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPlayer("White", [0, 1]);
     design.addPlayer("Black", [0, 1]);
-    design.addRandom(1, [0]);
-    design.addRandom(1, [0]);
-    design.addRandom(1, [0]);
-    design.addRandom(1, [0]);
-    design.addTurn(1, [1, 2, 3, 4, 5]);
-    design.addRandom(2, [0]);
-    design.addRandom(2, [0]);
-    design.addRandom(2, [0]);
-    design.addRandom(2, [0]);
-    design.addTurn(2, [1, 2, 3, 4, 5]);
+    design.addRandom(2, [0]); // 0
+    design.addRandom(2, [0]); // 1
+    design.addRandom(2, [0]); // 2
+    design.addRandom(2, [0]); // 3
+    design.repeatMark();
+    design.addRandom(1, [0]); // 4
+    design.addRandom(1, [0]); // 5
+    design.addRandom(1, [0]); // 6
+    design.addRandom(1, [7]); // 7
+    design.addTurn(1, [1, 2, 3, 4, 5]); // 8
+    design.addRandom(2, [0]); // 9
+    design.addRandom(2, [0]); // 10
+    design.addRandom(2, [0]); // 11
+    design.addRandom(2, [0]); // 12
+    design.addTurn(2, [1, 2, 3, 4, 5]); // 13
 
     design.addPosition("x1", [0, 1]);
     design.addPosition("x2", [0, 1]);
@@ -255,9 +261,11 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("D0", 0);
     design.addDrop(0, 0, [], 0, 10);
+    design.addDrop(0, 0, [], 7, 10);
 
     design.addPiece("D1", 1);
     design.addDrop(1, 0, [], 0, 10);
+    design.addDrop(1, 0, [], 7, 10);
 
     design.addPiece("Man", 2);
     design.addMove(2, 1, [0], 1);
