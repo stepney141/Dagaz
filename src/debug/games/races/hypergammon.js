@@ -40,18 +40,21 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPlayer("White", [0, 1, 2, 3, 4, 5, 6, 7]);
     design.addPlayer("Black", [0, 2, 1, 4, 3, 5, 7, 6]);
-    design.addRandom(1, [0]);
-    design.addRandom(1, [0]);
-    design.addTurn(1, [1, 2, 3, 4, 5, 6]);
-    design.addTurn(1, [1, 2, 3, 4, 5, 6]);
-    design.addTurn(1, [1, 2, 3, 4, 5, 6]);
-    design.addTurn(1, [1, 2, 3, 4, 5, 6]);
-    design.addRandom(2, [0]);
-    design.addRandom(2, [0]);
-    design.addTurn(2, [1, 2, 3, 4, 5, 6]);
-    design.addTurn(2, [1, 2, 3, 4, 5, 6]);
-    design.addTurn(2, [1, 2, 3, 4, 5, 6]);
-    design.addTurn(2, [1, 2, 3, 4, 5, 6]);
+    design.addRandom(1, [7]); // 0
+    design.addRandom(2, [7]); // 1
+    design.repeatMark();
+    design.addRandom(1, [0]); // 3
+    design.addRandom(1, [0]); // 4
+    design.addTurn(1, [1, 2, 3, 4, 5, 6]); // 5
+    design.addTurn(1, [1, 2, 3, 4, 5, 6]); // 6
+    design.addTurn(1, [1, 2, 3, 4, 5, 6]); // 7
+    design.addTurn(1, [1, 2, 3, 4, 5, 6]); // 8
+    design.addRandom(2, [0]); // 9
+    design.addRandom(2, [0]); // 10
+    design.addTurn(2, [1, 2, 3, 4, 5, 6]); // 11
+    design.addTurn(2, [1, 2, 3, 4, 5, 6]); // 12
+    design.addTurn(2, [1, 2, 3, 4, 5, 6]); // 13
+    design.addTurn(2, [1, 2, 3, 4, 5, 6]); // 14
 
     design.addPosition("m1a", [87, 86, 78, 36, 3, 1, 69, 33]);
     design.addPosition("m1b", [0, 0, 0, 35, 2, 1, 0, 0]);
@@ -157,6 +160,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addZone("top-zone", 2, [33, 30, 27, 24, 21, 18, 15, 12, 9, 6, 3, 0, 72, 34, 31, 28, 25, 22, 19, 16, 13, 10, 7, 4, 1, 73, 35, 32, 29, 26, 23, 20, 17, 14, 11, 8, 5, 2, 74]);
     design.addZone("board-zone", 1, [33, 30, 27, 24, 21, 18, 15, 12, 9, 6, 3, 0, 34, 31, 28, 25, 22, 19, 16, 13, 10, 7, 4, 1, 35, 32, 29, 26, 23, 20, 17, 14, 11, 8, 5, 2, 69, 66, 63, 60, 57, 54, 51, 48, 45, 42, 39, 36, 70, 67, 64, 61, 58, 55, 52, 49, 46, 43, 40, 37, 71, 68, 65, 62, 59, 56, 53, 50, 47, 44, 41, 38, 86, 85, 84, 83, 82, 81, 80, 79, 78]);
     design.addZone("board-zone", 2, [33, 30, 27, 24, 21, 18, 15, 12, 9, 6, 3, 0, 34, 31, 28, 25, 22, 19, 16, 13, 10, 7, 4, 1, 35, 32, 29, 26, 23, 20, 17, 14, 11, 8, 5, 2, 69, 66, 63, 60, 57, 54, 51, 48, 45, 42, 39, 36, 70, 67, 64, 61, 58, 55, 52, 49, 46, 43, 40, 37, 71, 68, 65, 62, 59, 56, 53, 50, 47, 44, 41, 38, 86, 85, 84, 83, 82, 81, 80, 79, 78]);
+    design.addZone("init-zone", 1, [90]);
+    design.addZone("init-zone", 2, [87]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
@@ -267,6 +272,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(6, ZRF.FUNCTION,	25);	// to
     design.addCommand(6, ZRF.FUNCTION,	28);	// end
 
+    design.addCommand(7, ZRF.IN_ZONE,	6);	// init-zone
+    design.addCommand(7, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(7, ZRF.FUNCTION,	25);	// to
+    design.addCommand(7, ZRF.FUNCTION,	28);	// end
+
     design.addPiece("Man", 0);
     design.addMove(0, 0, [3, 5], 1);
     design.addMove(0, 1, [3, 3, 5], 2);
@@ -277,16 +287,22 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("D1", 1, 1);
     design.addDrop(1, 6, [], 0);
+    design.addDrop(1, 7, [], 7);
     design.addPiece("D2", 2, 2);
     design.addDrop(2, 6, [], 0);
+    design.addDrop(2, 7, [], 7);
     design.addPiece("D3", 3, 3);
     design.addDrop(3, 6, [], 0);
+    design.addDrop(3, 7, [], 7);
     design.addPiece("D4", 4, 4);
     design.addDrop(4, 6, [], 0);
+    design.addDrop(4, 7, [], 7);
     design.addPiece("D5", 5, 5);
     design.addDrop(5, 6, [], 0);
+    design.addDrop(5, 7, [], 7);
     design.addPiece("D6", 6, 6);
     design.addDrop(6, 6, [], 0);
+    design.addDrop(6, 7, [], 7);
 
     design.setup("White", "Man", 33);
     design.setup("White", "Man", 30);

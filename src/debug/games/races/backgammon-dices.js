@@ -41,11 +41,10 @@ Dagaz.Model.CheckInvariants = function(board) {
       }
   }
   _.each(board.moves, function(move) {
-      if (move.mode > 0) {
+      if ((move.mode > 0) && (move.mode < 7)) {
           for (var pos = design.navigate(board.player, 0, 0); pos !== null; pos = design.navigate(board.player, pos, 0)) {
                var piece = board.getPiece(pos);
-               if ((piece !== null) && (piece.player == board.player) && 
-                   isPermited(design, board, move, piece.type, alt)) {
+               if ((piece !== null) && isPermited(design, board, move, piece.type, alt)) {
                    var v = piece.getValue(0);
                    if ((v !== null) && (v > 1)) {
                         piece = piece.setValue(0, v - 1);

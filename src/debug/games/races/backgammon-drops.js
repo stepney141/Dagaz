@@ -13,7 +13,7 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
   _.each(board.moves, function(move) {
-      if (move.isDropMove()) {
+      if (move.isDropMove() && (move.mode == 0)) {
           var val = null;
           for (var pos = design.navigate(board.player, 0, 0); pos !== null; pos = design.navigate(board.player, pos, 0)) {
                var piece = board.getPiece(pos);
