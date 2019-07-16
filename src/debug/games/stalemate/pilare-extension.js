@@ -10,17 +10,31 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+var getValue = function(piece, ix) {
+  var r = null;
+  var v = piece.getValue(ix);
+  if (v !== null) {
+      r = [];
+      _.each(v, function(x) {
+          if (x > 0) {
+              r.push(x);
+          }
+      });
+  }
+  return r;
+}
+
 Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
   var dx = 0;
   var value = [];
   if (model) {      
-      var v = model.getValue(0);
+      var v = getValue(model, 0);
       if (v !== null) {
           _.each(v, function(x) {
                value.push(x);
           });
       }
-      v = model.getValue(1);
+      v = getValue(model, 1);
       if (v !== null) {
           value.push(0);
           value.push(0);
@@ -35,7 +49,7 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
       blink = -blink;
   }
   if (value !== null) {
-      var s = value.length * 5;
+      var s = value.length * 7;
       if (s > 15) s = 15;
       y += s;
       while (value.length > 0) {
@@ -49,21 +63,9 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
               }
               ctx.drawImage(p.h, x + dx, y, piece.dx, piece.dy);
           }
-          y -= 5;
+          y -= 7;
       }
   }
-}
-
-var getValue = function(piece, ix) {
-  var r = null;
-  var v = piece.getValue(ix);
-  if (v !== null) {
-      r = [];
-      _.each(v, function(x) {
-          r.push(x);
-      });
-  }
-  return r;
 }
 
 var CheckInvariants = Dagaz.Model.CheckInvariants;
