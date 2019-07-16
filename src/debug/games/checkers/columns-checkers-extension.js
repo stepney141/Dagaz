@@ -6,6 +6,7 @@ Dagaz.AI.MIN_DEEP      = 6;
 var MAX_FORCED_FACTOR  = 2;
 
 var inversed = false;
+var blink = 1;
 
 var checkVersion = Dagaz.Model.checkVersion;
 
@@ -108,75 +109,61 @@ Dagaz.AI.eval = function(design, params, board, player) {
   return r;
 }
 
-var drawBar = function(ctx, x, y, height, val) {
-  var h = (height / val.length) | 0;
-  var w = 2;
-  if (h < 2) {
-      h = 2;
-      w = 1;
+var getValue = function(piece, ix) {
+  var r = [];
+  var v = piece.getValue(ix);
+  if (v !== null) {
+      _.each(v, function(x) {
+          r.unshift(x);
+      });
   }
-  var last = null;
-  var offset = 0;
-  for (var i = 0; i < val.length; i++) {
-       var isWhite = ((val[i] % 2) == 0);
-       if (inversed) isWhite = !isWhite;
-       if ((last !== null) && (last == val[i])) {
-           ctx.fillStyle = "#000000";
-           ctx.fillRect(x, y + offset - 1, 3 + 2, w);
-       }
-       if (((val[i] / 2) | 0) == 0) {
-           if (isWhite) {
-               ctx.fillStyle = "#FFFFFF";
-           } else {
-               ctx.fillStyle = "#888888";
-           }
-       } else {
-           if (isWhite) {
-               ctx.fillStyle = "#FFFF00";
-           } else {
-               ctx.fillStyle = "#0000FF";
-           }
-       }
-       ctx.fillRect(x, y + offset, 3, h);
-       offset += h; height -= h;
-       if (height < h) break;
-       last = val[i];
-  }
+  return r;
 }
 
 Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
-  var val = null;
+  var dx = 0;
+  var value = [];
   if (model) {
-      val = model.getValue(0);
+      value = getValue(model, 0);
   }
-  if (!val) {
-      val = null;
+  var p = +model.type * 2;
+  p += +model.player - 1;
+  value.push(p);
+  if (Dagaz.Model.showBlink && (_.indexOf(view.current, pos) >= 0)) {
+      dx = blink;
+      blink = -blink;
   }
-  if ((val !== null) && (val.length > 0)) {
-      var t = val.substr(0, 1);
-      var back = null;
-      var f = ((t % 2) == 0);
-      if (inversed) {
-          f = !f;
-      }
-      if (f) {
-          back = view.piece["White Man"];
-      } else {
-          back = view.piece["Black Man"];
-      }
-      if (back !== null) {
-          ctx.save();
-          ctx.translate(x + frame.dx / 2, y + frame.dy / 2); 
-          ctx.scale(0.95, 0.95);
-          ctx.translate(-x - frame.dx /2, -y - frame.dy /2);
-          ctx.drawImage(back.h, x + 1, y + 2, piece.dx, piece.dy);
-          drawBar(ctx, x + 42, y - 2, 46, val);
-          ctx.restore();
-          x -= 5;
+  if (value !== null) {
+      var s = value.length * 5;
+      if (s > 15) s = 15;
+      y += s;
+      while (value.length > 0) {
+          var p = null;
+          var t = value.shift();
+          var f = ((t % 2) == 0);
+          if (inversed) {
+              f = !f;
+          }
+          t = (t / 2) | 0;
+          if (t == 0) {
+              if (f) {
+                  p = view.piece["White Man"];
+              } else {
+                  p = view.piece["Black Man"];
+              }
+          } else {
+              if (f) {
+                  p = view.piece["White King"];
+              } else {
+                  p = view.piece["Black King"];
+              }
+          }
+          if (p !== null) {
+              ctx.drawImage(p.h, x + dx, y, piece.dx, piece.dy);
+          }
           y -= 5;
       }
   }
-  ctx.drawImage(piece.h, x, y, piece.dx, piece.dy);
 }
 
 var CheckInvariants = Dagaz.Model.CheckInvariants;
