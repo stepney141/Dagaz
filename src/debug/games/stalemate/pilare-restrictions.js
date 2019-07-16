@@ -21,6 +21,7 @@ Dagaz.Model.CheckInvariants = function(board) {
       pos = p;
   });
   if (pos !== null) {
+      Dagaz.View.getView().current = [pos];
       _.each(board.moves, function(m) {
           if (m.actions.length > 0) {
                if (m.actions[0][0][0] != pos) {
