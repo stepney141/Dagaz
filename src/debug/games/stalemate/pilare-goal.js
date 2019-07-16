@@ -14,7 +14,7 @@ Dagaz.Model.checkGoals = function(design, board, player) {
   var e = 0; var f = 0; var p = false;
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
-      if (piece !== null) {
+      if ((piece !== null) && (piece.player < 3)) {
           if (piece.player != player) {
               e++;
           } else {
