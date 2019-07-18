@@ -144,6 +144,14 @@
          (a29 263  24 289  50)
          (b29 339  24 365  50)
          (end 300  18 328  44)
+         (z1  198 292 224 318)
+         (t1  404 292 430 318)
+         (z2  198 330 224 356)
+         (t2  404 330 430 356)
+         (z3  198 368 224 394)
+         (t3  404 368 430 394)
+         (z4  198 406 224 432)
+         (t4  404 406 430 432)
      )
      (links nx
          (a1 a2) (a2 a3) (a3 a4) (a4 a5) (a5 a6) (a6 a7) (a7 a8) (a8 a9) (a9 a10) (a10 a11) (a11 a12) (a12 a13) (a13 a14) (a14 a15) (a15 a16)
@@ -152,9 +160,12 @@
          (b16 b17) (b17 b18) (b18 b19) (b19 b20) (b20 b21) (b21 b22) (b22 b23) (b23 b24) (b24 b25) (b25 b26) (b26 b27) (b27 b28) (b28 b29) (b29 end)
      )
      (links fk
-         (a6 a20) (a20 a6) (a8 a10) (a10 a8)
-         (b6 b20) (b20 b6) (b8 b10) (b10 b8)
+         (b6 b20) (b20 b6) (b8 b10) (b10 b8) (end b1) (t1 b1) (t2 b1) (t3 b1) (t4 b1) (x1 t1)
      )
+     (links fb
+         (a6 a20) (a20 a6) (a8 a10) (a10 a8) (end a1) (z1 a1) (z2 a1) (z3 a1) (z4 a1) (x1 z1)
+     )
+     (symmetry Black (nx nx) (fk fb) (fb fk))
      (zone
          (name start)
          (players White)
@@ -226,7 +237,7 @@
   )
 
   (board-setup
-     (White (Man b1))
-     (Black (Man a1))
+     (White (Man b1 t1 t2 t3 t4))
+     (Black (Man a1 z1 z2 z3 z4))
   )
 )
