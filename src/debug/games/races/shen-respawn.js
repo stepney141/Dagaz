@@ -39,7 +39,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                         if (board.getPiece(p) !== null) break;
                         p = design.navigate(board.player, p, 3);
                     }
-                    if (p !== null) {
+                    if ((p !== null) && (board.getPiece(pos) === null)) {
                         move.movePiece(p, pos, board.getPiece(p));
                     }
                 }
