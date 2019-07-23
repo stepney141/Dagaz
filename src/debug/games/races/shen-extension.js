@@ -66,7 +66,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                        }
                    }
                } else {
-                   if (board.getPiece(pos) !== null) {
+                   if ((board.getPiece(pos) !== null) && (pos != move.actions[0][0][0])) {
                        move.failed = true;
                        return;
                    }
