@@ -1,5 +1,6 @@
 (function() {
 
+Dagaz.AI.AI_FRAME = 3000;
 
 function Ai(parent) {
   this.parent = parent;
@@ -74,6 +75,7 @@ Ai.prototype.getMove = function(ctx) {
              p: null
           };
       });
+      ctx.timestamp = Date.now();
       var best = null;
       _.each(nodes, function(node) {
           var r = simulate(ctx, node, ctx.board.player);
@@ -82,6 +84,7 @@ Ai.prototype.getMove = function(ctx) {
                    best = r;
                }
           }
+          if (Date.now() - ctx.timestamp > Dagaz.AI.AI_FRAME) return;
       });
       ctx.moves = [];
       while (best !== null) {
