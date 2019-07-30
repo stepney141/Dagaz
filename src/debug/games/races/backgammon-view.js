@@ -10,25 +10,38 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+var getRank = function(design, board, pos) {
+  var x = 0; var y = 0;
+  var p = design.navigate(board.player, pos, 5);
+  while (p !== null) {
+      if (board.getPiece(p) === null) y++;
+      x++;
+      p = design.navigate(board.player, p, 5);
+  }
+  return {
+      size: 17 - y,
+      pos:  16 - x
+  };
+}
+
 Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
   var design = Dagaz.Model.design;
-  var s = 30;
-  if (design.inZone(4, 1, pos)) {
-      y -= (frame.dy - piece.dy) / 2 | 0;
-  } else {
-      y += (frame.dy - piece.dy) / 2 | 0;
-      s = -s;
+  var board = Dagaz.Controller.app.board;
+  var dy = 0;
+  if (!_.isUndefined(board) && (model.type == 0)) {
+      var r = getRank(design, board, pos);
+      if (r.size > 5) {
+          dy = 38 - ((2 * r.size) | 0);
+      } else {
+          dy = 32;
+      }
+      dy -= 10;
+      if (!design.inZone(4, board.player, pos)) {
+          dy = -dy;
+      }
+      dy *= r.pos;
   }
-  var v = 1;
-  if (model) {
-      v = model.getValue(0);
-      if ((v === null) || (v == 0)) v = 1;
-  }
-  for (var i = 0; i < v; i++) {
-      ctx.drawImage(piece.h, x, y, piece.dx, piece.dy);
-      if (model.type != 0) break;
-      y += s;
-  }
+  ctx.drawImage(piece.h, x, y + dy, piece.dx, piece.dy);
 }
 
 })();
