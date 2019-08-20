@@ -77,7 +77,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("f1a", [0, 0, 0, -3, 3, 1, 0, 0]);
     design.addPosition("f1b", [0, 0, 0, -4, 2, 1, 0, 0]);
     design.addPosition("f1c", [0, 0, 0, -5, 1, 0, 0, 0]);
-    design.addPosition("e1a", [0, 0, 0, -3, 3, 1, 0, 0]);
+    design.addPosition("e1a", [0, 0, 0, -3, 3, 1, 0, -3]);
     design.addPosition("e1b", [0, 0, 0, -4, 2, 1, 0, 0]);
     design.addPosition("e1c", [0, 0, 0, -5, 1, 0, 0, 0]);
     design.addPosition("d1a", [0, 0, 0, -3, 3, 1, 0, -3]);
@@ -113,7 +113,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("f2a", [0, 0, 0, 3, -3, 1, 0, 0]);
     design.addPosition("f2b", [0, 0, 0, 2, -4, 1, 0, 0]);
     design.addPosition("f2c", [0, 0, 0, 1, -5, 0, 0, 0]);
-    design.addPosition("e2a", [0, 0, 0, 3, -3, 1, 0, 0]);
+    design.addPosition("e2a", [0, 0, 0, 3, -3, 1, -3, 0]);
     design.addPosition("e2b", [0, 0, 0, 2, -4, 1, 0, 0]);
     design.addPosition("e2c", [0, 0, 0, 1, -5, 0, 0, 0]);
     design.addPosition("d2a", [0, 0, 0, 3, -3, 1, -3, 0]);

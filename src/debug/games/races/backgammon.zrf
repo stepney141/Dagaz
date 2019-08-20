@@ -627,10 +627,10 @@
          (H2a H2b) (H2b H2c) (H2c H2d) (H2d H2e) (H2e H2f) (H2f H2g) (H2g H2h) (H2h H2i) (H2i H2j) (H2j H2k) (H2k H2l) (H2l H2m) (H2m H2n) (H2n H2o) (H2o H2p) (H2p H2q)
      )
      (links wh
-         (m1a a2a) (a2a b2a) (b2a c2a) (c2a d2a) (d2a e2a)
+         (m1a a2a) (a2a b2a) (b2a c2a) (c2a d2a) (d2a e2a) (e2a f2a)
      )
      (links bh
-         (m1a a1a) (a1a b1a) (b1a c1a) (c1a d1a) (d1a e1a)
+         (m1a a1a) (a1a b1a) (b1a c1a) (c1a d1a) (d1a e1a) (e1a f1a)
      )
      (symmetry Black (wn bn) (bn wn) (bx wx) (wx bx) (nx nx) (up up) (wh bh) (bh wh))
      (zone (name home-zone) (players Black)

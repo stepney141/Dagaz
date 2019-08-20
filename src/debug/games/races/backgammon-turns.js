@@ -24,7 +24,7 @@ Dagaz.Model.CheckInvariants = function(board) {
           if (dice !== null) {
                var piece = move.actions[0][2][0];
                if (piece.type == dice.type) {
-                   move.goTo(0);
+                   move.goTo(1);
                    return;
                }
                if (piece.type > dice.type) {
