@@ -885,6 +885,9 @@ ZrfDesign.prototype.addTurn = function(player, modes) {
   if (_.isUndefined(this.turns)) {
       this.turns = [];
   }
+  if (!_.isUndefined(modes) && !_.isArray(modes)) {
+      modes = [modes];
+  }
   this.turns.push({
       random: false,
       player: player,
