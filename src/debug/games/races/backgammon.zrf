@@ -760,6 +760,11 @@
                       B1 B2 B3 B4 B5 B6 B7 B8 B9
            )
      )
+     (zone (name first-rank) (players White Black)
+           (positions a1a b1a c1a d1a e1a f1a g1a h1a j1a k1a l1a m1a 
+                      a2a b2a c2a d2a e2a f2a g2a h2a j2a k2a l2a m2a
+           )
+     )
   )
 
   (piece

@@ -3,6 +3,7 @@
 Dagaz.AI.NOISE_FACTOR = 10;
 
 var PIECE_COUNT = 15;
+var FIRST_RANK  = [187, 170, 153, 136, 119, 102, 85, 68, 51, 34, 17, 0, 391, 374, 357, 340, 323, 306, 289, 272, 255, 238, 221, 204];
 
 function Ai(parent) {
   this.parent = parent;
@@ -18,17 +19,9 @@ Dagaz.AI.findBot = function(type, params, parent) {
   }
 }
 
-Ai.prototype.setContext = function(ctx, board) {
-  if (this.parent) {
-      this.parent.setContext(ctx, board);
-  }
-  ctx.board = board;
-  ctx.timestamp = Date.now();
-}
-
 var getDices = function(design, board) {
   var r = [];
-  var pos = design.navigate(board.player, Dagaz.Model.stringToPos("m1a"), 6);
+  var pos = design.navigate(board.player, Dagaz.Model.stringToPos("m1a"), 0);
   while (pos !== null) {
       var piece = board.getPiece(pos);
       if (piece !== null) {
@@ -38,22 +31,7 @@ var getDices = function(design, board) {
               r.push(+piece.type);
           }
       }
-      pos = design.navigate(board.player, pos, 6);
-  }
-  return r;
-}
-
-var getPiece = function(design, board, player, pos) {
-  var piece = board.getPiece(pos);
-  if (piece === null) return 0;
-  var r = 0;
-  while (pos !== null) {
-      if (board.getPiece(pos) === null) break;
-      pos = design.navigate(player, pos, 5);
-      r++;
-  }
-  if (piece.player != player) {
-      r = -r;
+      pos = design.navigate(board.player, pos, 0);
   }
   return r;
 }
@@ -66,16 +44,26 @@ var getSetup = function(design, board, player, setup, positions) {
   }
   var cnt = 0;
   for (var ix = 1; pos !== null; ix++) {
-      positions.push(pos);
-      var v = getPiece(design, board, player, pos);
-      positions.push(v);     
-      if (v > 0) {
-          cnt += v;
-          if (r === null) {
-              r = ix;
-          }
-      }
-      pos = design.navigate(player, pos, 3);
+       positions.push(pos);
+       var p = pos; var v = 0;
+       while (p !== null) {
+           var piece = board.getPiece(p);
+           if (piece === null) break;
+           if (piece.player == player) {
+               v++;
+           } else {
+               v--;
+           }
+           p = design.navigate(player, p, 5);
+       } 
+       setup.push(v);     
+       if (v > 0) {
+           cnt += v;
+           if (r === null) {
+               r = ix;
+           }
+       }
+       pos = design.navigate(player, pos, 3);
   }
   if (cnt < PIECE_COUNT) return null;
   return r;
@@ -142,8 +130,26 @@ var simulate = function(ctx, setup, positions, dices, queue, ix) {
       if ((ctx.best === null) || (ctx.best < est)) {
            ctx.queue = copy(queue);
            ctx.best = est;
+//         console.log("Queue = " + _.map(ctx.queue, function(pos) { return Dagaz.Model.posToString(pos); }) + ", estimate = " + ctx.best);
       }
   }
+}
+
+var eq = function(ctx, pos, target) {
+  var r = false;
+  while (pos !== null) {
+      if (pos == target) r = true;
+      pos = ctx.design.navigate(ctx.board.player, pos, 5);
+  }
+  return r;
+}
+
+Ai.prototype.setContext = function(ctx, board) {
+  if (this.parent) {
+      this.parent.setContext(ctx, board);
+  }
+  ctx.board = board;
+  ctx.timestamp = Date.now();
 }
 
 Ai.prototype.getMove = function(ctx) {
@@ -151,7 +157,7 @@ Ai.prototype.getMove = function(ctx) {
   if (ctx.board.moves.length == 0) {
       return { done: true, ai: "nothing" };
   }
-  if (ctx.board.moves.length > 1) {
+  if (_.filter(ctx.board.moves, function(m) {return (m.mode >= 1) && (m.mode <= 6)}).length > 1) {
       if (_.isUndefined(ctx.queue) || (ctx.queue.length == 0)) {
           ctx.queue = [];
           ctx.best  = null;
@@ -160,15 +166,24 @@ Ai.prototype.getMove = function(ctx) {
               var positions = [];
               ctx.setup = [];
               ctx.first = getSetup(ctx.design, ctx.board, ctx.board.player, ctx.setup, positions);
+/*            console.log("Dices = " + dices);
+              console.log("Setup = " + ctx.setup);
+              console.log("Positions = " + positions);
+              console.log("First = " + ctx.first); */
               if (ctx.first !== null) {
                   simulate(ctx, ctx.setup, positions, dices, [], 0);
+                  if ((dices.length == 2) && (dices[0] != dices[1])) {
+                      simulate(ctx, ctx.setup, positions, [dices[1], dices[0]], [], 0);
+                  }
               }
           }
       }
+//    console.log("Queue = " + _.map(ctx.queue, function(pos) { return Dagaz.Model.posToString(pos); }) + ", estimate = " + ctx.best);
       if (ctx.queue.length > 0) {
           var pos = ctx.queue.shift();
           for (var i = 0; i < ctx.board.moves.length; i++) {
-               if ((ctx.board.moves[i].actions.length > 0) && (ctx.board.moves[i].actions[0][0][0] == pos)) {
+               if ((ctx.board.moves[i].actions.length > 0) && eq(ctx, pos, ctx.board.moves[i].actions[0][0][0])) {
+//                  console.log("*** " + ctx.board.moves[i].toString());
                     return {
                         done: true,
                         move: ctx.board.moves[i],
@@ -182,8 +197,9 @@ Ai.prototype.getMove = function(ctx) {
   delete ctx.queue;
   for (var i = 0; i < ctx.board.moves.length; i++) {
        if (ctx.board.moves[i].actions.length > 0) {
-           var piece = ctx.board.getPiece(ctx.board.moves[i].actions[0][1][0]);
-           if (piece !== null) {
+           var pos = ctx.board.moves[i].actions[0][1][0];
+           var piece = ctx.board.getPiece(pos);
+           if ((piece !== null) || (_.indexOf(FIRST_RANK, pos) < 0)){
                return {
                    done: true,
                    move: ctx.board.moves[i],
