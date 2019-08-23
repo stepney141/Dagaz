@@ -37,8 +37,10 @@ Dagaz.View.deltaY = function(pos) {
       var dy = 0;
       var r = getRank(design, board, pos);
       if (r !== null) {
-          if (r.size > 5) {
+          if (r.size > 7) {
               dy = (-r.size * 1.2 + 19) | 0;
+          } else if (r.size > 5) {
+              dy = (-r.size * 2.7 + 32) | 0;
           } else {
               dy = 22;
           }

@@ -96,6 +96,12 @@ var estimate = function(setup, state) {
         _.filter(state, function(n) { return n < 0; }).length) * 100;
   r += (_.filter(setup, function(n) { return n == 1; }).length - 
         _.filter(state, function(n) { return n == 1; }).length) * 10;
+  for (var i = 19; i < state.length - 1; i++) {
+       if (state[i] == 1) r -= 100;
+       if (i < 23) {
+           if (state[i] > 0) r += state[i] * 10;
+       }
+  }
   return r;
 }
 
