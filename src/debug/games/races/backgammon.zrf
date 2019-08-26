@@ -785,3 +785,20 @@
     (Black (Man a2a a2b m2a m2b m2c m2d m2e f1a f1b f1c f1d f1e h1a h1b h1c))
   )
 )
+
+(variant
+  (title "Nackgammon")
+  (default)
+  (board-setup
+    (White (Man a1a a1b b1a b1b m1a m1b m1c m1d f2a f2b f2c f2d h2a h2b h2c))
+    (Black (Man a2a a2b b2a b2b m2a m2b m2c m2d f1a f1b f1c f1d h1a h1b h1c))
+  )
+)
+
+(variant
+  (title "Longgammon")
+  (board-setup
+    (White (Man a1a a1b a1c a1d a1e a1f a1g a1h a1i a1j a1k a1l a1m a1n a1o))
+    (Black (Man a2a a2b a2c a2d a2e a2f a2g a2h a2i a2j a2k a2l a2m a2n a2o))
+  )
+)

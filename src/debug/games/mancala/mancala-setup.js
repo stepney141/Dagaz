@@ -21,6 +21,16 @@ var getSetup = function() {
   }
 }
 
+var getTurn = function() {
+  var str = window.location.search.toString();
+  var result = str.match(/&turn=(\d+)/);
+  if (result) {
+      return result[1];
+  } else {
+      return "";
+  }
+}
+
 function Pattern(exec) {
     this.exec = exec;
     this.then = function (transform) {
@@ -117,6 +127,11 @@ Dagaz.Model.setup = function(board) {
               }
               board.setPiece(pos, piece);
           });
+          var turn = getTurn();
+          if (turn) {
+              board.turn   = +turn;
+              board.player = design.currPlayer(board.turn);
+          }
       }
       board.noInitial = true;
   } else {
@@ -144,6 +159,7 @@ Dagaz.Model.getSetup = function(design, board) {
       }
       str = str + ";";
   });
+  str = str + ";&turn=" + board.turn;
   return "?setup=" + str;
 }
 
