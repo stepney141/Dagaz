@@ -190,7 +190,7 @@ MoveList.prototype.getDropPieces = function(pos) {
   var result = null;
   _.each(this.moves, function(move) {
       _.each(move.actions, function(action) {
-          if ((action[0] === null) && (action[1] !== null) && (action[1][0] == pos)) {
+          if ((result === null) && (action[0] === null) && (action[1] !== null) && (action[1][0] == pos)) {
               result = action[2];
           }
       });
@@ -235,6 +235,9 @@ MoveList.prototype.setPosition = function(pos) {
       _.each(this.moves, function(move) {
           _.each(move.actions, function(a) {
                if ((a[0] !== null) && (a[1] !== null) && (a[3] == 1) && (a[0][0] == pos)) {
+                   r = move;
+               }
+               if ((a[0] === null) && (a[1] !== null) && (a[3] == 1) && (a[1][0] == pos)) {
                    r = move;
                }
           });
