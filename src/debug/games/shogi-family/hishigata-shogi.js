@@ -409,6 +409,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("q1", [0, 1, -17, 0, -20, -39, 0, -19, -37, 0, 0, 0, 0, -1, -18, -21]);
     design.addPosition("r1", [0, 1, 0, 0, -20, -39, 0, -19, -37, 0, 0, 0, 0, -1, -18, -21]);
     design.addPosition("s1", [0, 0, 0, 0, -20, -39, 0, -19, 0, 0, 0, 0, 0, -1, 0, -21]);
+    design.addPosition("T1", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    design.addPosition("T2", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
@@ -2364,4 +2366,8 @@ Dagaz.View.configure = function(view) {
     view.defPosition("q1", 713, 799, 38, 38);
     view.defPosition("r1", 756, 799, 38, 38);
     view.defPosition("s1", 799, 799, 38, 38);
+
+    view.defPopup("Promote", 380, 100);
+    view.defPopupPosition("T1", 12, 15, 39, 39);
+    view.defPopupPosition("T2", 52, 15, 39, 39);
 }

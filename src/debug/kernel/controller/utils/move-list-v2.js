@@ -230,18 +230,29 @@ MoveList.prototype.copyActions = function(move, actions, mode, sound) {
 }
 
 MoveList.prototype.setPosition = function(pos) {
-  if (Dagaz.Model.completePartial && Dagaz.Model.smartFrom) {
+  if (Dagaz.Model.completePartial) {
       var r = null;
-      _.each(this.moves, function(move) {
-          _.each(move.actions, function(a) {
-               if ((a[0] !== null) && (a[1] !== null) && (a[3] == 1) && (a[0][0] == pos)) {
-                   r = move;
-               }
-               if ((a[0] === null) && (a[1] !== null) && (a[3] == 1) && (a[1][0] == pos)) {
-                   r = move;
-               }
+      if (Dagaz.Model.smartFrom) {
+          _.each(this.moves, function(move) {
+              _.each(move.actions, function(a) {
+                   if ((a[0] !== null) && (a[1] !== null) && (a[3] == 1) && (a[0][0] == pos)) {
+                       r = move;
+                   }
+                   if ((a[0] === null) && (a[1] !== null) && (a[3] == 1) && (a[1][0] == pos)) {
+                       r = move;
+                   }
+              });
           });
-      });
+      }
+      if (this.position !== null) {
+          _.each(this.moves, function(move) {
+              _.each(move.actions, function(a) {
+                   if ((a[0] !== null) && (a[1] !== null) && (a[3] == 1) && (a[1][0] == pos) && (a[0][0] == this.position)) {
+                       r = move;
+                   }
+              }, this);
+          }, this);
+      }
       if (r !== null) {
           return r;
       }

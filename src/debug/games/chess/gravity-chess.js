@@ -25,7 +25,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("smart-moves", "false");
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
-//  design.checkVersion("complete-partial", "true");
+    design.checkVersion("complete-partial", "true");
     design.checkVersion("advisor-wait", "5");
 
     design.addDirection("se"); // 0
@@ -189,13 +189,14 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(5, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(5, ZRF.FUNCTION,	0);	// not
-    design.addCommand(5, ZRF.IF,	7);
-    design.addCommand(5, ZRF.FORK,	3);
+    design.addCommand(5, ZRF.IF,	8);
+    design.addCommand(5, ZRF.FORK,	4);
+    design.addCommand(5, ZRF.MODE,	1);	// continue-type
     design.addCommand(5, ZRF.FUNCTION,	25);	// to
     design.addCommand(5, ZRF.FUNCTION,	28);	// end
     design.addCommand(5, ZRF.PARAM,	1);	// $2
     design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(5, ZRF.JUMP,	-8);
+    design.addCommand(5, ZRF.JUMP,	-9);
     design.addCommand(5, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(5, ZRF.FUNCTION,	0);	// not
     design.addCommand(5, ZRF.FUNCTION,	20);	// verify

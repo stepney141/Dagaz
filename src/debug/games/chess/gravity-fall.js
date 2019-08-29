@@ -21,8 +21,12 @@ Dagaz.Model.CheckInvariants = function(board) {
           last = pos;
           pos = design.navigate(board.player, pos, 4);
       }
-      if (last !== null) {
+      if ((last !== null) && (last != move.actions[1][0][0])) {
           move.actions[1][1] = [last];
+      } else {
+          var actions = [];
+          actions.push(move.actions[0]);
+          move.actions = actions;
       }
   });
   CheckInvariants(board);

@@ -52,7 +52,7 @@
 
 (define slide (
   $1 
-  (while empty? add $1)
+  (while empty? (add-partial continue-type) $1)
   (verify not-friend?)
   (add-partial continue-type)
 ))
