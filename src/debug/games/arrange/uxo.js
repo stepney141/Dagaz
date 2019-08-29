@@ -1,4 +1,5 @@
 Dagaz.View.CLEAR_KO = true;
+Dagaz.Controller.AI_DELAY = 500;
 
 if (!_.isUndefined(Dagaz.Controller.addSound)) {
     Dagaz.Controller.addSound(0, "../../sounds/step.ogg");
