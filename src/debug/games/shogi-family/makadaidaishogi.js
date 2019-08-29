@@ -26,6 +26,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-blink", "true");
     design.checkVersion("show-captures", "false");
+    design.checkVersion("promote-dialog", "remap");
     design.checkVersion("makadaidaishogi-promotion", "true");
 
     design.addDirection("sw");  // 0
@@ -409,6 +410,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("q1", [0, 1, -17, 0, -20, -39, 0, -19, -37, 0, 0, 0, 0, -1, -18, -21]);
     design.addPosition("r1", [0, 1, 0, 0, -20, -39, 0, -19, -37, 0, 0, 0, 0, -1, -18, -21]);
     design.addPosition("s1", [0, 0, 0, 0, -20, -39, 0, -19, 0, 0, 0, 0, 0, -1, 0, -21]);
+    design.addPosition("T1", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    design.addPosition("T2", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
@@ -1876,7 +1879,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("White", "Violent-Ox", 61);
     design.setup("White", "Violent-Ox", 71);
     design.setup("White", "Wrestler", 67);
-    design.setup("Black", "Angry-Boar", 307);
+/*  design.setup("Black", "Angry-Boar", 307);
     design.setup("Black", "Angry-Boar", 319);
     design.setup("Black", "Bishop", 271);
     design.setup("Black", "Bishop", 279);
@@ -1884,9 +1887,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "Blind-Bear", 317);
     design.setup("Black", "Blind-Tiger", 331);
     design.setup("Black", "Blind-Tiger", 333);
-    design.setup("Black", "Buddhist-Devil", 292);
+    design.setup("Black", "Buddhist-Devil", 292); */
     design.setup("Black", "Capricorn", 274);
-    design.setup("Black", "Cat-Sword", 325);
+/*  design.setup("Black", "Cat-Sword", 325);
     design.setup("Black", "Cat-Sword", 339);
     design.setup("Black", "Chinese-Cock", 327);
     design.setup("Black", "Coiled-Serpent", 329);
@@ -1971,7 +1974,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "Vertical-Mover", 280);
     design.setup("Black", "Violent-Ox", 289);
     design.setup("Black", "Violent-Ox", 299);
-    design.setup("Black", "Wrestler", 293);
+    design.setup("Black", "Wrestler", 293);*/
 }
 
 Dagaz.View.configure = function(view) {
@@ -2494,4 +2497,8 @@ Dagaz.View.configure = function(view) {
     view.defPosition("q1", 713, 799, 38, 38);
     view.defPosition("r1", 756, 799, 38, 38);
     view.defPosition("s1", 799, 799, 38, 38);
+
+    view.defPopup("Promote", 380, 100);
+    view.defPopupPosition("T1", 12, 15, 39, 39);
+    view.defPopupPosition("T2", 52, 15, 39, 39);
 }
