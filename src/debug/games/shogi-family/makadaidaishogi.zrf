@@ -893,8 +893,6 @@
            Black "makadaidai43/Svobodnyj_kaban_piece_B_prom.bmp")
     (moves
       (move-type normal) 
-      (leapPP  ne)
-      (leapPP  nw)
       (slidePP e)  
       (slidePP w)  
       (slidePP nw)

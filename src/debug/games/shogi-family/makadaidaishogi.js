@@ -1243,8 +1243,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(28, 0, [11], 0);
 
     design.addPiece("Free-Boar", 29, 366);
-    design.addMove(29, 4, [14, 14], 0);
-    design.addMove(29, 4, [4, 4], 0);
     design.addMove(29, 1, [1, 1], 0);
     design.addMove(29, 1, [13, 13], 0);
     design.addMove(29, 1, [4, 4], 0);
