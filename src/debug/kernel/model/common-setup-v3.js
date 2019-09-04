@@ -10,6 +10,16 @@ var getSetup = function() {
   }
 }
 
+var getTurn = function() {
+  var str = window.location.search.toString();
+  var result = str.match(/&turn=(\d+)/);
+  if (result) {
+      return result[1];
+  } else {
+      return "";
+  }
+}
+
 var getNum = function(c) {
   if ((c >= "0".charCodeAt(0)) && (c <= "9".charCodeAt(0))) {
       return c - "0".charCodeAt(0);
@@ -53,6 +63,11 @@ Dagaz.Model.setup = function(board) {
                pos = pos + setup[i];
            }
       }
+      var turn = getTurn();
+      if (turn) {
+          board.turn   = +turn;
+          board.player = design.currPlayer(board.turn);
+      }
   }
 }
 
@@ -77,6 +92,7 @@ Dagaz.Model.getSetup = function(design, board) {
             }
       });
   }
+  str = str + ";&turn=" + board.turn;
   return "?setup=" + str;
 }
 
