@@ -2,7 +2,7 @@
 
 var promote  = [];
 var promoted = [1, 3, 5, 27, 29, 31, 33, 35, 37, 39, 42, 44, 46, 48, 50, 52, 54, 56, 59, 61, 63, 65, 67, 69, 71, 73, 75, 77];
-var kings    = [56, 76, 77];
+var kings    = [55, 56, 76, 77];
 
 var checkVersion = Dagaz.Model.checkVersion;
 

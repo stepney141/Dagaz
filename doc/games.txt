@@ -19,6 +19,7 @@
   - Mancala Knights [todo, family:mancala]
 - Elimination [elimination]
   - Four Lines Kono [best, cooperative, family:kono]
+  - Cinc Camins [best, cooperative, family:kono]
   - GESS [king, groups, shared, todo:ai, family:other]
   - Spock [todo:ai, best, family:other]
   - Apocalypse [sync, best, kings, family:chess]
