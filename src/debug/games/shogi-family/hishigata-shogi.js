@@ -26,6 +26,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-blink", "true");
     design.checkVersion("show-captures", "false");
+    design.checkVersion("promote-dialog", "remap");
     design.checkVersion("makadaidaishogi-promotion", "true");
 
     design.addDirection("sw");  // 0
@@ -2365,7 +2366,7 @@ Dagaz.View.configure = function(view) {
     view.defPosition("r1", 756, 799, 38, 38);
     view.defPosition("s1", 799, 799, 38, 38);
 
-    view.defPopup("Promote", 380, 100);
+    view.defPopup("Promote", 378, 100);
     view.defPopupPosition("T1", 12, 15, 39, 39);
     view.defPopupPosition("T2", 52, 15, 39, 39);
 }

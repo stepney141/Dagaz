@@ -14,23 +14,9 @@ var addPos = function(list, pos) {
   }
 }
 
-var copy = function(list) {
-  var r = [];
-  for (var i = 0; i < list.length; i++) {
-      r.push(list[i]);
-  }
-  return r;
-}
-
 var checkStep = function(cover, design, board, player, pos, dir) {
   var p = design.navigate(player, pos, dir);
   if (p === null) return;
-  var list = [];
-  if (_.isUndefined(cover.positions[pos])) {
-      cover.positions[pos] = [];
-  }
-  cover.positions[pos].push(list);
-  list.push(p);
   if (board.player != player) {
       addPos(cover.attacked, p);
   } else {
@@ -43,12 +29,6 @@ var checkLeap2 = function(cover, design, board, player, pos, dir) {
   if (p === null) return;
   p = design.navigate(player, p, dir);
   if (p === null) return;
-  var list = [];
-  if (_.isUndefined(cover.positions[pos])) {
-      cover.positions[pos] = [];
-  }
-  cover.positions[pos].push(list);
-  list.push(p);
   if (board.player != player) {
       addPos(cover.attacked, p);
   } else {
@@ -63,12 +43,6 @@ var checkLeap3 = function(cover, design, board, player, pos, dir) {
   if (p === null) return;
   p = design.navigate(player, p, dir);
   if (p === null) return;
-  var list = [];
-  if (_.isUndefined(cover.positions[pos])) {
-      cover.positions[pos] = [];
-  }
-  cover.positions[pos].push(list);
-  list.push(p);
   if (board.player != player) {
       addPos(cover.attacked, p);
   } else {
@@ -76,22 +50,14 @@ var checkLeap3 = function(cover, design, board, player, pos, dir) {
   }
 }
 
-var checkSlide = function(cover, design, board, player, pos, dir, cnt, list) {
+var checkSlide = function(cover, design, board, player, pos, dir, cnt) {
   var p = design.navigate(player, pos, dir);
   if (p === null) return;
-  if (_.isUndefined(list)) {
-      list = [];
-      if (_.isUndefined(cover.positions[pos])) {
-          cover.positions[pos] = [];
-      }
-      cover.positions[pos].push(list);
-  }
   while (p !== null) {
       if (!_.isUndefined(cnt)) {
           if (cnt <= 0) break;
           cnt--;
       }
-      list.push(p);
       if (board.player != player) {
           addPos(cover.attacked, p);
       } else {
@@ -105,26 +71,14 @@ var checkSlide = function(cover, design, board, player, pos, dir, cnt, list) {
 var checkHook = function(cover, design, board, player, pos, dir, alt) {
   var p = design.navigate(player, pos, dir);
   if (p === null) return;
-  var list = [];
-  if (_.isUndefined(cover.positions[pos])) {
-      cover.positions[pos] = [];
-  }
-  cover.positions[pos].push(list);
   while (p !== null) {
-      if (!_.isUndefined(cnt)) {
-          if (cnt <= 0) break;
-          cnt--;
-      }
-      list.push(p);
       if (board.player != player) {
           addPos(cover.attacked, p);
       } else {
           addPos(cover.defended, p);
       }
       if (board.getPiece(p) !== null) break;
-      var l = copy(list);
-      cover.positions[pos].push(l);
-      checkSlide(cover, design, board, player, p, alt, undefined, l);
+      checkSlide(cover, design, board, player, p, alt);
       p = design.navigate(player, p, dir);
   }
 }
@@ -222,21 +176,20 @@ var checkPiece = function(design, board, piece, pos, cover) {
   }
 }
 
-var createCover() {
-  var c = [];
-  c.attacked  = [];
-  c.defended  = [];
-  c.positions = [];
-  return c;
+var createCover = function() {
+  return {
+     attacked:  [],
+     defended:  []
+  }
 }
 
-Dagaz.Model.getCover = function(design, board, both) {
+Dagaz.Model.getCover = function(design, board, player) {
   if (_.isUndefined(board.cover)) {
       board.cover = createCover();
       for (var pos = 0; pos < design.positions.length; pos++) {
            var piece = board.getPiece(pos);
            if (piece !== null) {
-               if (both || (piece.player == board.player)) {
+               if ((player === null) || (piece.player == player)) {
                    checkPiece(design, board, piece, pos, board.cover);
                }
            }
@@ -249,8 +202,44 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
-  // TODO:
-
+  var prince = null; var king = null;
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if (piece !== null) {
+          if (+piece.type == 56) prince = pos;
+          if (+piece.type >= 76) king = pos;
+      }
+  });
+  _.each(board.moves, function(move) {
+      if (!_.isUndefined(Dagaz.AI.IN_PROGRESS)) return;
+      if (move.isSimpleMove()) {
+          var pos = move.actions[0][0][0];
+          var piece = board.getPiece(pos);
+          if (piece === null) return;
+          if (+piece.type == 77) {
+              var b = board.copy();
+              b.setPiece(pos, null);
+              var player = board.player;
+              if ((prince === null) || (king === null)) {
+                  player = null;
+              }
+              var c = Dagaz.Model.getCover(design, b, player);
+              if ((_.indexOf(c.defended, move.actions[0][1][0]) < 0) ||
+                  (_.indexOf(c.attacked, move.actions[0][1][0]) >= 0)) {
+                  move.failed = true;
+              }
+          }
+          if ((+piece.type == 56) || (+piece.type == 76)) {
+              if ((prince !== null) && (king !== null)) return;
+              var b = board.copy();
+              b.setPiece(pos, null);
+              var c = Dagaz.Model.getCover(design, b, design.nextPlayer(board.player));
+              if (_.indexOf(c.attacked, move.actions[0][1][0]) >= 0) {
+                  move.failed = true;
+              }
+          }
+      }
+  });
   CheckInvariants(board);
 }
 

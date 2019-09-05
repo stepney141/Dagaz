@@ -1877,7 +1877,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("White", "Violent-Ox", 61);
     design.setup("White", "Violent-Ox", 71);
     design.setup("White", "Wrestler", 67);
-/*  design.setup("Black", "Angry-Boar", 307);
+    design.setup("Black", "Angry-Boar", 307);
     design.setup("Black", "Angry-Boar", 319);
     design.setup("Black", "Bishop", 271);
     design.setup("Black", "Bishop", 279);
@@ -1885,9 +1885,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "Blind-Bear", 317);
     design.setup("Black", "Blind-Tiger", 331);
     design.setup("Black", "Blind-Tiger", 333);
-    design.setup("Black", "Buddhist-Devil", 292); */
+    design.setup("Black", "Buddhist-Devil", 292);
     design.setup("Black", "Capricorn", 274);
-/*  design.setup("Black", "Cat-Sword", 325);
+    design.setup("Black", "Cat-Sword", 325);
     design.setup("Black", "Cat-Sword", 339);
     design.setup("Black", "Chinese-Cock", 327);
     design.setup("Black", "Coiled-Serpent", 329);
@@ -1972,7 +1972,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "Vertical-Mover", 280);
     design.setup("Black", "Violent-Ox", 289);
     design.setup("Black", "Violent-Ox", 299);
-    design.setup("Black", "Wrestler", 293);*/
+    design.setup("Black", "Wrestler", 293);
 }
 
 Dagaz.View.configure = function(view) {
