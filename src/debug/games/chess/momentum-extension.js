@@ -16,7 +16,7 @@ Dagaz.Model.CheckInvariants = function(board) {
       if (move.isSimpleMove()) {
           var pos = move.actions[0][0][0];
           var piece = board.getPiece(pos);
-          if (piece.type == 2) return;
+          if (+piece.type == 2) return;
           pos = design.navigate(board.player, move.actions[0][1][0], move.mode);
           var last = null;
           while (pos !== null) {
@@ -26,8 +26,11 @@ Dagaz.Model.CheckInvariants = function(board) {
           }
           if (last !== null) {
               move.sound = 10;
+              if ((+piece.type == 0) && design.inZone(0, piece.player, last)) {
+                  piece = piece.promote(4);
+              }
               move.movePiece(move.actions[0][1][0], last, piece, 2);
-          }
+          }         
       }
   });
   CheckInvariants(board);
