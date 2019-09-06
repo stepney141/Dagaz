@@ -210,15 +210,25 @@ Dagaz.Model.CheckInvariants = function(board) {
           if (+piece.type >= 76) king = pos;
       }
   });
+  var p = prince;
+  if (king !== null) {
+      p = king;
+  }
+  var b = null;
+  if (p !== null) {
+      b = board.copy();
+      b.setPiece(p, null);
+  }
+  if ((king !== null) && (prince !== null)) {
+      p = null;
+  }
   _.each(board.moves, function(move) {
       if (!_.isUndefined(Dagaz.AI.IN_PROGRESS)) return;
-      if (move.isSimpleMove()) {
+      if (move.isSimpleMove() && (b !== null)) {
           var pos = move.actions[0][0][0];
           var piece = board.getPiece(pos);
           if (piece === null) return;
           if (+piece.type == 77) {
-              var b = board.copy();
-              b.setPiece(pos, null);
               var player = board.player;
               if ((prince === null) || (king === null)) {
                   player = null;
@@ -231,12 +241,18 @@ Dagaz.Model.CheckInvariants = function(board) {
           }
           if ((+piece.type == 56) || (+piece.type == 76)) {
               if ((prince !== null) && (king !== null)) return;
-              var b = board.copy();
-              b.setPiece(pos, null);
               var c = Dagaz.Model.getCover(design, b, design.nextPlayer(board.player));
               if (_.indexOf(c.attacked, move.actions[0][1][0]) >= 0) {
                   move.failed = true;
               }
+          }
+      }
+      if ((move.actions.length > 0) && (move.actions[0][0] !== null) && (p !== null)) {
+          if (p === move.actions[0][0][0]) return;
+          var x = board.apply(move);
+          var c = Dagaz.Model.getCover(design, x, x.player);
+          if (_.indexOf(c.defended, p) >= 0) {
+              move.failed = true;
           }
       }
   });

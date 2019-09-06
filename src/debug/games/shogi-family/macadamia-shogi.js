@@ -388,11 +388,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(10, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(10, ZRF.PARAM,	1);	// $2
     design.addCommand(10, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(10, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(10, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(10, ZRF.FUNCTION,	0);	// not
-    design.addCommand(10, ZRF.IF,	2);
-    design.addCommand(10, ZRF.FUNCTION,	25);	// to
-    design.addCommand(10, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(10, ZRF.FUNCTION,	20);	// verify
     design.addCommand(10, ZRF.MODE,	3);	// move-twice-n
     design.addCommand(10, ZRF.FUNCTION,	25);	// to
@@ -403,11 +400,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(11, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(11, ZRF.PARAM,	1);	// $2
     design.addCommand(11, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(11, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(11, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(11, ZRF.FUNCTION,	0);	// not
-    design.addCommand(11, ZRF.IF,	2);
-    design.addCommand(11, ZRF.FUNCTION,	25);	// to
-    design.addCommand(11, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(11, ZRF.FUNCTION,	20);	// verify
     design.addCommand(11, ZRF.MODE,	4);	// move-twice-s
     design.addCommand(11, ZRF.FUNCTION,	25);	// to
@@ -418,11 +412,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(12, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(12, ZRF.PARAM,	1);	// $2
     design.addCommand(12, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(12, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(12, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(12, ZRF.FUNCTION,	0);	// not
-    design.addCommand(12, ZRF.IF,	2);
-    design.addCommand(12, ZRF.FUNCTION,	25);	// to
-    design.addCommand(12, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(12, ZRF.FUNCTION,	20);	// verify
     design.addCommand(12, ZRF.MODE,	5);	// move-twice-w
     design.addCommand(12, ZRF.FUNCTION,	25);	// to
@@ -433,11 +424,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(13, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(13, ZRF.PARAM,	1);	// $2
     design.addCommand(13, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(13, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(13, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(13, ZRF.FUNCTION,	0);	// not
-    design.addCommand(13, ZRF.IF,	2);
-    design.addCommand(13, ZRF.FUNCTION,	25);	// to
-    design.addCommand(13, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(13, ZRF.FUNCTION,	20);	// verify
     design.addCommand(13, ZRF.MODE,	6);	// move-twice-e
     design.addCommand(13, ZRF.FUNCTION,	25);	// to
@@ -448,11 +436,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(14, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(14, ZRF.PARAM,	1);	// $2
     design.addCommand(14, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(14, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(14, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(14, ZRF.FUNCTION,	0);	// not
-    design.addCommand(14, ZRF.IF,	2);
-    design.addCommand(14, ZRF.FUNCTION,	25);	// to
-    design.addCommand(14, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(14, ZRF.FUNCTION,	20);	// verify
     design.addCommand(14, ZRF.MODE,	7);	// move-twice-ne
     design.addCommand(14, ZRF.FUNCTION,	25);	// to
@@ -463,11 +448,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(15, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(15, ZRF.PARAM,	1);	// $2
     design.addCommand(15, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(15, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(15, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(15, ZRF.FUNCTION,	0);	// not
-    design.addCommand(15, ZRF.IF,	2);
-    design.addCommand(15, ZRF.FUNCTION,	25);	// to
-    design.addCommand(15, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(15, ZRF.FUNCTION,	20);	// verify
     design.addCommand(15, ZRF.MODE,	8);	// move-twice-nw
     design.addCommand(15, ZRF.FUNCTION,	25);	// to
@@ -478,11 +460,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(16, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(16, ZRF.PARAM,	1);	// $2
     design.addCommand(16, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(16, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(16, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(16, ZRF.FUNCTION,	0);	// not
-    design.addCommand(16, ZRF.IF,	2);
-    design.addCommand(16, ZRF.FUNCTION,	25);	// to
-    design.addCommand(16, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(16, ZRF.FUNCTION,	20);	// verify
     design.addCommand(16, ZRF.MODE,	9);	// move-twice-se
     design.addCommand(16, ZRF.FUNCTION,	25);	// to
@@ -493,11 +472,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(17, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(17, ZRF.PARAM,	1);	// $2
     design.addCommand(17, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(17, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(17, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(17, ZRF.FUNCTION,	0);	// not
-    design.addCommand(17, ZRF.IF,	2);
-    design.addCommand(17, ZRF.FUNCTION,	25);	// to
-    design.addCommand(17, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(17, ZRF.FUNCTION,	20);	// verify
     design.addCommand(17, ZRF.MODE,	10);	// move-twice-sw
     design.addCommand(17, ZRF.FUNCTION,	25);	// to
@@ -506,11 +482,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(18, ZRF.FUNCTION,	24);	// from
     design.addCommand(18, ZRF.PARAM,	0);	// $1
     design.addCommand(18, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(18, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(18, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(18, ZRF.FUNCTION,	0);	// not
-    design.addCommand(18, ZRF.IF,	2);
-    design.addCommand(18, ZRF.FUNCTION,	25);	// to
-    design.addCommand(18, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(18, ZRF.FUNCTION,	20);	// verify
     design.addCommand(18, ZRF.MODE,	11);	// move-trice-n
     design.addCommand(18, ZRF.FUNCTION,	25);	// to
@@ -519,11 +492,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(19, ZRF.FUNCTION,	24);	// from
     design.addCommand(19, ZRF.PARAM,	0);	// $1
     design.addCommand(19, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(19, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(19, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(19, ZRF.FUNCTION,	0);	// not
-    design.addCommand(19, ZRF.IF,	2);
-    design.addCommand(19, ZRF.FUNCTION,	25);	// to
-    design.addCommand(19, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(19, ZRF.FUNCTION,	20);	// verify
     design.addCommand(19, ZRF.MODE,	12);	// move-trice-s
     design.addCommand(19, ZRF.FUNCTION,	25);	// to
@@ -532,11 +502,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(20, ZRF.FUNCTION,	24);	// from
     design.addCommand(20, ZRF.PARAM,	0);	// $1
     design.addCommand(20, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(20, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(20, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(20, ZRF.FUNCTION,	0);	// not
-    design.addCommand(20, ZRF.IF,	2);
-    design.addCommand(20, ZRF.FUNCTION,	25);	// to
-    design.addCommand(20, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(20, ZRF.FUNCTION,	20);	// verify
     design.addCommand(20, ZRF.MODE,	13);	// move-trice-w
     design.addCommand(20, ZRF.FUNCTION,	25);	// to
@@ -545,11 +512,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(21, ZRF.FUNCTION,	24);	// from
     design.addCommand(21, ZRF.PARAM,	0);	// $1
     design.addCommand(21, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(21, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(21, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(21, ZRF.FUNCTION,	0);	// not
-    design.addCommand(21, ZRF.IF,	2);
-    design.addCommand(21, ZRF.FUNCTION,	25);	// to
-    design.addCommand(21, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(21, ZRF.FUNCTION,	20);	// verify
     design.addCommand(21, ZRF.MODE,	14);	// move-trice-e
     design.addCommand(21, ZRF.FUNCTION,	25);	// to
@@ -558,11 +522,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(22, ZRF.FUNCTION,	24);	// from
     design.addCommand(22, ZRF.PARAM,	0);	// $1
     design.addCommand(22, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(22, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(22, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(22, ZRF.FUNCTION,	0);	// not
-    design.addCommand(22, ZRF.IF,	2);
-    design.addCommand(22, ZRF.FUNCTION,	25);	// to
-    design.addCommand(22, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(22, ZRF.FUNCTION,	20);	// verify
     design.addCommand(22, ZRF.MODE,	15);	// move-trice-ne
     design.addCommand(22, ZRF.FUNCTION,	25);	// to
@@ -571,11 +532,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(23, ZRF.FUNCTION,	24);	// from
     design.addCommand(23, ZRF.PARAM,	0);	// $1
     design.addCommand(23, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(23, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(23, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(23, ZRF.FUNCTION,	0);	// not
-    design.addCommand(23, ZRF.IF,	2);
-    design.addCommand(23, ZRF.FUNCTION,	25);	// to
-    design.addCommand(23, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(23, ZRF.FUNCTION,	20);	// verify
     design.addCommand(23, ZRF.MODE,	16);	// move-trice-nw
     design.addCommand(23, ZRF.FUNCTION,	25);	// to
@@ -584,11 +542,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(24, ZRF.FUNCTION,	24);	// from
     design.addCommand(24, ZRF.PARAM,	0);	// $1
     design.addCommand(24, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(24, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(24, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(24, ZRF.FUNCTION,	0);	// not
-    design.addCommand(24, ZRF.IF,	2);
-    design.addCommand(24, ZRF.FUNCTION,	25);	// to
-    design.addCommand(24, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(24, ZRF.FUNCTION,	20);	// verify
     design.addCommand(24, ZRF.MODE,	17);	// move-trice-se
     design.addCommand(24, ZRF.FUNCTION,	25);	// to
@@ -597,11 +552,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(25, ZRF.FUNCTION,	24);	// from
     design.addCommand(25, ZRF.PARAM,	0);	// $1
     design.addCommand(25, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(25, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(25, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(25, ZRF.FUNCTION,	0);	// not
-    design.addCommand(25, ZRF.IF,	2);
-    design.addCommand(25, ZRF.FUNCTION,	25);	// to
-    design.addCommand(25, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(25, ZRF.FUNCTION,	20);	// verify
     design.addCommand(25, ZRF.MODE,	18);	// move-trice-sw
     design.addCommand(25, ZRF.FUNCTION,	25);	// to
@@ -610,11 +562,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(26, ZRF.FUNCTION,	24);	// from
     design.addCommand(26, ZRF.PARAM,	0);	// $1
     design.addCommand(26, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(26, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(26, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(26, ZRF.FUNCTION,	0);	// not
-    design.addCommand(26, ZRF.IF,	2);
-    design.addCommand(26, ZRF.FUNCTION,	25);	// to
-    design.addCommand(26, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(26, ZRF.FUNCTION,	20);	// verify
     design.addCommand(26, ZRF.MODE,	19);	// move-fourfold-n
     design.addCommand(26, ZRF.FUNCTION,	25);	// to
@@ -623,11 +572,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(27, ZRF.FUNCTION,	24);	// from
     design.addCommand(27, ZRF.PARAM,	0);	// $1
     design.addCommand(27, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(27, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(27, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(27, ZRF.FUNCTION,	0);	// not
-    design.addCommand(27, ZRF.IF,	2);
-    design.addCommand(27, ZRF.FUNCTION,	25);	// to
-    design.addCommand(27, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(27, ZRF.FUNCTION,	20);	// verify
     design.addCommand(27, ZRF.MODE,	20);	// move-fourfold-s
     design.addCommand(27, ZRF.FUNCTION,	25);	// to
@@ -636,11 +582,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(28, ZRF.FUNCTION,	24);	// from
     design.addCommand(28, ZRF.PARAM,	0);	// $1
     design.addCommand(28, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(28, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(28, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(28, ZRF.FUNCTION,	0);	// not
-    design.addCommand(28, ZRF.IF,	2);
-    design.addCommand(28, ZRF.FUNCTION,	25);	// to
-    design.addCommand(28, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(28, ZRF.FUNCTION,	20);	// verify
     design.addCommand(28, ZRF.MODE,	21);	// move-fourfold-w
     design.addCommand(28, ZRF.FUNCTION,	25);	// to
@@ -649,11 +592,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(29, ZRF.FUNCTION,	24);	// from
     design.addCommand(29, ZRF.PARAM,	0);	// $1
     design.addCommand(29, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(29, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(29, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(29, ZRF.FUNCTION,	0);	// not
-    design.addCommand(29, ZRF.IF,	2);
-    design.addCommand(29, ZRF.FUNCTION,	25);	// to
-    design.addCommand(29, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(29, ZRF.FUNCTION,	20);	// verify
     design.addCommand(29, ZRF.MODE,	22);	// move-fourfold-e
     design.addCommand(29, ZRF.FUNCTION,	25);	// to
@@ -662,11 +602,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(30, ZRF.FUNCTION,	24);	// from
     design.addCommand(30, ZRF.PARAM,	0);	// $1
     design.addCommand(30, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(30, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(30, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(30, ZRF.FUNCTION,	0);	// not
-    design.addCommand(30, ZRF.IF,	2);
-    design.addCommand(30, ZRF.FUNCTION,	25);	// to
-    design.addCommand(30, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(30, ZRF.FUNCTION,	20);	// verify
     design.addCommand(30, ZRF.MODE,	23);	// move-fourfold-ne
     design.addCommand(30, ZRF.FUNCTION,	25);	// to
@@ -675,11 +612,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(31, ZRF.FUNCTION,	24);	// from
     design.addCommand(31, ZRF.PARAM,	0);	// $1
     design.addCommand(31, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(31, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(31, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(31, ZRF.FUNCTION,	0);	// not
-    design.addCommand(31, ZRF.IF,	2);
-    design.addCommand(31, ZRF.FUNCTION,	25);	// to
-    design.addCommand(31, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(31, ZRF.FUNCTION,	20);	// verify
     design.addCommand(31, ZRF.MODE,	24);	// move-fourfold-nw
     design.addCommand(31, ZRF.FUNCTION,	25);	// to
@@ -688,11 +622,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(32, ZRF.FUNCTION,	24);	// from
     design.addCommand(32, ZRF.PARAM,	0);	// $1
     design.addCommand(32, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(32, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(32, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(32, ZRF.FUNCTION,	0);	// not
-    design.addCommand(32, ZRF.IF,	2);
-    design.addCommand(32, ZRF.FUNCTION,	25);	// to
-    design.addCommand(32, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(32, ZRF.FUNCTION,	20);	// verify
     design.addCommand(32, ZRF.MODE,	25);	// move-fourfold-se
     design.addCommand(32, ZRF.FUNCTION,	25);	// to
@@ -701,11 +632,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(33, ZRF.FUNCTION,	24);	// from
     design.addCommand(33, ZRF.PARAM,	0);	// $1
     design.addCommand(33, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(33, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(33, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(33, ZRF.FUNCTION,	0);	// not
-    design.addCommand(33, ZRF.IF,	2);
-    design.addCommand(33, ZRF.FUNCTION,	25);	// to
-    design.addCommand(33, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(33, ZRF.FUNCTION,	20);	// verify
     design.addCommand(33, ZRF.MODE,	26);	// move-fourfold-sw
     design.addCommand(33, ZRF.FUNCTION,	25);	// to
@@ -714,11 +642,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(34, ZRF.FUNCTION,	24);	// from
     design.addCommand(34, ZRF.PARAM,	0);	// $1
     design.addCommand(34, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(34, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(34, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(34, ZRF.FUNCTION,	0);	// not
-    design.addCommand(34, ZRF.IF,	2);
-    design.addCommand(34, ZRF.FUNCTION,	25);	// to
-    design.addCommand(34, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(34, ZRF.FUNCTION,	20);	// verify
     design.addCommand(34, ZRF.MODE,	27);	// move-twice
     design.addCommand(34, ZRF.FUNCTION,	25);	// to

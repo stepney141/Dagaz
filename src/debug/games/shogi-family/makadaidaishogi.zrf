@@ -1,15 +1,9 @@
-(define shiftEMP (
-  (verify friend?) a19
-  (while (on-board? $1) add $1)
-  add
-))
-
 (define shiftPP (
   $1 (verify not-friend?) add
 ))
 
 (define slidePP (
-  $1  (while empty? add $1) 
+  $1 (while empty? add $1) 
   (verify enemy?) add
 )) 
 
@@ -66,176 +60,151 @@
 
 (define shift2LDn (
   $1 $1
-  (if empty? add)
-  (verify enemy?)
+  (verify not-friend?)
   (add-partial move-twice-n)
 ))
 
 (define shift2LDe (
   $1 $1
-  (if empty? add)
-  (verify enemy?)
+  (verify not-friend?)
   (add-partial move-twice-e)
 ))
 
 (define shift2LDw (
   $1 $1
-  (if empty? add)
-  (verify enemy?)
+  (verify not-friend?)
   (add-partial move-twice-w)
 ))
 
 (define shift2LDs (
   $1 $1
-  (if empty? add)
-  (verify enemy?)
+  (verify not-friend?)
   (add-partial move-twice-s)
 ))
 
 (define shift2LDne (
   $1 $1
-  (if empty? add)
-  (verify enemy?)
+  (verify not-friend?)
   (add-partial move-twice-ne)
 ))
 
 (define shift2LDnw (
   $1 $1
-  (if empty? add)
-  (verify enemy?)
+  (verify not-friend?)
   (add-partial move-twice-nw)
 ))
 
 (define shift2LDse (
   $1 $1
-  (if empty? add)
-  (verify enemy?)
+  (verify not-friend?)
   (add-partial move-twice-se)
 ))
 
 (define shift2LDsw (
   $1 $1
-  (if empty? add)
-  (verify enemy?)
+  (verify not-friend?)
   (add-partial move-twice-sw)
 ))
 
 (define shift1LDn (
   $1
-  (if empty? add)
-  (verify enemy?)
+  (verify not-friend?)
   (add-partial move-trice-n)
 ))
 
 (define shift1LDe (
   $1
-  (if empty? add)
-  (verify enemy?)
+  (verify not-friend?)
   (add-partial move-trice-e)
 ))
 
 (define shift1LDw (
   $1
-  (if empty? add)
-  (verify enemy?)
+  (verify not-friend?)
   (add-partial move-trice-w)
 ))
 
 (define shift1LDs (
   $1
-  (if empty? add)
-  (verify enemy?)
+  (verify not-friend?)
   (add-partial move-trice-s)
 ))
 
 (define shift1LDne (
   $1
-  (if empty? add)
-  (verify enemy?)
+  (verify not-friend?)
   (add-partial move-trice-ne)
 ))
 
 (define shift1LDnw (
   $1
-  (if empty? add)
-  (verify enemy?)
+  (verify not-friend?)
   (add-partial move-trice-nw)
 ))
 
 (define shift1LDse (
   $1
-  (if empty? add)
-  (verify enemy?)
+  (verify not-friend?)
   (add-partial move-trice-se)
 ))
 
 (define shift1LDsw (
   $1
-  (if empty? add)
-  (verify enemy?)
+  (verify not-friend?)
   (add-partial move-trice-sw)
 ))
 
 (define shift1xLDn (
   $1
-  (if empty? add)
-  (verify enemy?)
+  (verify not-friend?)
   (add-partial move-fourfold-n)
 ))
 
 (define shift1xLDe (
   $1
-  (if empty? add)
-  (verify enemy?)
+  (verify not-friend?)
   (add-partial move-fourfold-e)
 ))
 
 (define shift1xLDw (
   $1
-  (if empty? add)
-  (verify enemy?)
+  (verify not-friend?)
   (add-partial move-fourfold-w)
 ))
 
 (define shift1xLDs (
   $1
-  (if empty? add)
-  (verify enemy?)
+  (verify not-friend?)
   (add-partial move-fourfold-s)
 ))
 
 (define shift1xLDne (
   $1
-  (if empty? add)
-  (verify enemy?)
+  (verify not-friend?)
   (add-partial move-fourfold-ne)
 ))
 
 (define shift1xLDnw (
   $1
-  (if empty? add)
-  (verify enemy?)
+  (verify not-friend?)
   (add-partial move-fourfold-nw)
 ))
 
 (define shift1xLDse (
   $1
-  (if empty? add)
-  (verify enemy?)
+  (verify not-friend?)
   (add-partial move-fourfold-se)
 ))
 
 (define shift1xLDsw (
   $1
-  (if empty? add)
-  (verify enemy?)
+  (verify not-friend?)
   (add-partial move-fourfold-sw)
 ))
 
 (define shiftPL (
   $1 
-  (if empty? add)
-  (verify enemy?)
+  (verify not-friend?)
   (add-partial move-twice)
 ))
 
@@ -1992,7 +1961,6 @@
 
 (variant
   (title "Macadamia Shogi")
-  (default)
   (board 
     (image "makadaidai43/13x13.bmp")
     (grid
