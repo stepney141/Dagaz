@@ -205,7 +205,7 @@ Dagaz.Model.CheckInvariants = function(board) {
   var prince = null; var king = null;
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
-      if (piece !== null) {
+      if ((piece !== null) && (piece.player == board.player)) {
           if (+piece.type == 56) prince = pos;
           if (+piece.type >= 76) king = pos;
       }

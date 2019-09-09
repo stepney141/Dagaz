@@ -10,6 +10,8 @@ var STATE = {
     STOP: 6
 };
 
+Dagaz.Controller.AI_DELAY = 500;
+
 var isDrag = false;
 var passForced = 0;
 var once = false;

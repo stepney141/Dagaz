@@ -11,6 +11,8 @@ var STATE = {
     STOP: 7
 };
 
+Dagaz.Controller.AI_DELAY = 500;
+
 var isDrag = false;
 var passForced = 0;
 var once = false;
@@ -282,6 +284,24 @@ App.prototype.mouseDown = function(view, pos) {
       if (positions.length > 0) {
           Canvas.style.cursor = "move";
           this.setPosition(positions[0]);
+          if (this.move && this.move.isPass() && (lastPosition == positions[0])) {
+              if (this.list && this.list.canPass()) {
+                  var moves = this.list.getMoves();
+                  if (moves.length == 1) {
+                      this.boardApply(moves[0]);
+                      this.state = STATE.IDLE;
+                      delete this.list;
+                      this.view.clearDrops();
+                      lastPosition = null;
+                      if (_.isUndefined(Dagaz.Model.getMarked)) {
+                          this.view.markPositions(Dagaz.View.markType.ATTACKING, []);
+                      }
+                      this.view.markPositions(Dagaz.View.markType.CURRENT, []);
+                      this.view.markPositions(Dagaz.View.markType.TARGET, []);
+                      return;
+                  }
+              }
+          }
           lastPosition = positions[0];
           isDrag = true;
       }
@@ -371,6 +391,9 @@ App.prototype.exec = function() {
       if ((ctx !== null) && (ai !== null)) {
          ai.setContext(ctx, this.board);
          this.state = STATE.BUZY;
+         if (!_.isUndefined(Dagaz.Controller.AI_DELAY)) {
+             Dagaz.Controller.delayTimestamp = Date.now();
+         }
          Canvas.style.cursor = "wait";
          this.timestamp = Date.now();
          once = true;
@@ -460,6 +483,10 @@ App.prototype.exec = function() {
       }
   }
   if (this.state == STATE.BUZY) {
+      if (!_.isUndefined(Dagaz.Controller.delayTimestamp)) {
+          if (Date.now() - Dagaz.Controller.delayTimestamp < Dagaz.Controller.AI_DELAY) return;
+          delete Dagaz.Controller.delayTimestamp;
+      }
       var ctx = this.getContext(this.board.player);
       var player = this.design.playerNames[this.board.player];
       var result = this.getAI().getMove(ctx);
