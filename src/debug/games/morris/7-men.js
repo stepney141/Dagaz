@@ -34,36 +34,35 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("morris-check", "true");
     design.checkVersion("morris-goal", "true");
 
-    design.addDirection("n");
     design.addDirection("e");
     design.addDirection("w");
-    design.addDirection("s");
+    design.addDirection("ne");
+    design.addDirection("sw");
+    design.addDirection("nw");
+    design.addDirection("se");
     design.addDirection("x");
 
-    design.addPlayer("Blue", [3, 2, 1, 0, 4]);
-    design.addPlayer("Red", [0, 1, 2, 3, 4]);
+    design.addPlayer("Blue", [1, 0, 3, 2, 5, 4, 6]);
+    design.addPlayer("Red", [0, 1, 2, 3, 4, 5, 6]);
 
-    design.addPosition("B7", [0, 1, 0, 9, 1]);
-    design.addPosition("C7", [0, 1, -1, 3, 1]);
-    design.addPosition("D7", [0, 0, -1, 5, 1]);
-    design.addPosition("A6", [0, 1, 0, 3, 1]);
-    design.addPosition("C6", [-3, 1, -1, 14, 1]);
-    design.addPosition("E6", [0, 0, -1, 8, 1]);
-    design.addPosition("A5", [-3, 1, 0, 6, 1]);
-    design.addPosition("D5", [-5, 1, -1, 3, 1]);
-    design.addPosition("G5", [0, 0, -1, 6, 1]);
-    design.addPosition("B4", [-9, 1, 0, 6, 1]);
-    design.addPosition("D4", [-3, 1, -1, 0, 1]);
-    design.addPosition("F4", [0, 0, -1, 6, 1]);
-    design.addPosition("A3", [-6, 1, 0, 0, 1]);
-    design.addPosition("E3", [-8, 1, -1, 3, 1]);
-    design.addPosition("G3", [-6, 0, -1, 6, 1]);
-    design.addPosition("B2", [-6, 1, 0, 0, 1]);
-    design.addPosition("E2", [-3, 1, -1, 0, 1]);
-    design.addPosition("F2", [-6, 0, -1, 2, 1]);
-    design.addPosition("C1", [-14, 1, 0, 0, 1]);
-    design.addPosition("F1", [-2, 1, -1, 0, 1]);
-    design.addPosition("G1", [-6, 0, -1, 0, 0]);
+    design.addPosition("C5", [1, 0, 0, 3, 0, 0, 1]);
+    design.addPosition("E5", [1, -1, 0, 3, 0, 0, 1]);
+    design.addPosition("G5", [0, -1, 0, 0, 0, 4, 1]);
+    design.addPosition("B4", [0, 0, -3, 4, 0, 5, 1]);
+    design.addPosition("D4", [1, 0, -3, 4, 0, 0, 1]);
+    design.addPosition("F4", [1, -1, 0, 0, 0, 4, 1]);
+    design.addPosition("H4", [0, -1, 0, 0, -4, 4, 1]);
+    design.addPosition("A3", [0, 0, -4, 0, 0, 4, 1]);
+    design.addPosition("C3", [0, 0, -4, 0, -5, 4, 1]);
+    design.addPosition("G3", [0, 0, 0, 4, -4, 5, 1]);
+    design.addPosition("I3", [0, 0, 0, 4, -4, 0, 1]);
+    design.addPosition("B2", [1, 0, 0, 0, -4, 4, 1]);
+    design.addPosition("D2", [1, -1, 0, 0, -4, 0, 1]);
+    design.addPosition("F2", [0, -1, -4, 3, 0, 0, 1]);
+    design.addPosition("H2", [0, 0, -4, 3, -5, 0, 1]);
+    design.addPosition("C1", [1, 0, 0, 0, -4, 0, 1]);
+    design.addPosition("E1", [1, -1, -3, 0, 0, 0, 1]);
+    design.addPosition("G1", [0, -1, -3, 0, 0, 0, 0]);
 
     design.addCommand(0, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(0, ZRF.FUNCTION,	20);	// verify
@@ -92,7 +91,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(3, ZRF.FUNCTION,	20);	// verify
     design.addCommand(3, ZRF.PARAM,	0);	// $1
     design.addCommand(3, ZRF.FUNCTION,	21);	// position
-    design.addCommand(3, ZRF.ON_BOARD_DIR,	4);	// name
+    design.addCommand(3, ZRF.ON_BOARD_DIR,	6);	// name
     design.addCommand(3, ZRF.FUNCTION,	0);	// not
     design.addCommand(3, ZRF.IF,	10);
     design.addCommand(3, ZRF.FUNCTION,	1);	// empty?
@@ -111,16 +110,17 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("Stone", 0);
     design.addDrop(0, 0, [], 0);
-    design.addMove(0, 1, [0], 0);
-    design.addMove(0, 1, [3], 0);
-    design.addMove(0, 1, [2], 0);
     design.addMove(0, 1, [1], 0);
+    design.addMove(0, 1, [0], 0);
+    design.addMove(0, 1, [4], 0);
+    design.addMove(0, 1, [2], 0);
+    design.addMove(0, 1, [3], 0);
+    design.addMove(0, 1, [5], 0);
     design.addMove(0, 2, [], 0);
-    design.addMove(0, 3, [0, 4], 1);
+    design.addMove(0, 3, [0, 6], 1);
 
-    design.reserve("Blue", "Stone", 8);
-    design.reserve("Red", "Stone", 8);
-
+    design.reserve("Blue", "Stone", 7);
+    design.reserve("Red", "Stone", 7);
 }
 
 Dagaz.View.configure = function(view) {
@@ -129,25 +129,22 @@ Dagaz.View.configure = function(view) {
     view.defPiece("RedStone", "Red Stone");
     view.defPiece("Ko", "Ko");
  
-    view.defPosition("B7", 80, 20, 38, 38);
-    view.defPosition("C7", 141, 20, 38, 38);
-    view.defPosition("D7", 200, 20, 38, 38);
-    view.defPosition("A6", 20, 80, 38, 38);
-    view.defPosition("C6", 141, 80, 38, 38);
-    view.defPosition("E6", 259, 80, 38, 38);
-    view.defPosition("A5", 20, 140, 38, 38);
-    view.defPosition("D5", 200, 140, 38, 38);
-    view.defPosition("G5", 380, 140, 38, 38);
-    view.defPosition("B4", 80, 200, 38, 38);
-    view.defPosition("D4", 200, 200, 38, 38);
-    view.defPosition("F4", 318, 200, 38, 38);
-    view.defPosition("A3", 20, 260, 38, 38);
-    view.defPosition("E3", 259, 260, 38, 38);
-    view.defPosition("G3", 380, 260, 38, 38);
-    view.defPosition("B2", 80, 320, 38, 38);
-    view.defPosition("E2", 259, 320, 38, 38);
-    view.defPosition("F2", 318, 320, 38, 38);
-    view.defPosition("C1", 141, 380, 38, 38);
-    view.defPosition("F1", 318, 380, 38, 38);
-    view.defPosition("G1", 380, 380, 38, 38);
+    view.defPosition("C5", 93, 19, 38, 38);
+    view.defPosition("E5", 167, 19, 38, 38);
+    view.defPosition("G5", 241, 19, 38, 38);
+    view.defPosition("B4", 56, 79, 38, 38);
+    view.defPosition("D4", 130, 79, 38, 38);
+    view.defPosition("F4", 204, 79, 38, 38);
+    view.defPosition("H4", 278, 79, 38, 38);
+    view.defPosition("A3", 19, 139, 38, 38);
+    view.defPosition("C3", 93, 138, 38, 38);
+    view.defPosition("G3", 241, 139, 38, 38);
+    view.defPosition("I3", 315, 139, 38, 38);
+    view.defPosition("B2", 56, 199, 38, 38);
+    view.defPosition("D2", 130, 199, 38, 38);
+    view.defPosition("F2", 204, 199, 38, 38);
+    view.defPosition("H2", 278, 199, 38, 38);
+    view.defPosition("C1", 93, 259, 38, 38);
+    view.defPosition("E1", 167, 259, 38, 38);
+    view.defPosition("G1", 241, 259, 38, 38);
 }
