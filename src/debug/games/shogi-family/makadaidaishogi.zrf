@@ -741,6 +741,9 @@
       (shiftPP     n)
       (shiftPP     e)
       (shiftPP     w)
+      (shiftPP     s)
+      (shiftPP     sw)
+      (shiftPP     se)
 
       (move-type move-trice-s)
       (leapPP      s)
@@ -748,6 +751,9 @@
       (shiftPP     s)
       (shiftPP     e)
       (shiftPP     w)
+      (shiftPP     n)
+      (shiftPP     nw)
+      (shiftPP     ne)
 
       (move-type move-trice-w)
       (leapPP      w)
@@ -755,6 +761,9 @@
       (shiftPP     w)
       (shiftPP     n)
       (shiftPP     s)
+      (shiftPP     e)
+      (shiftPP     ne)
+      (shiftPP     se)
 
       (move-type move-trice-e)
       (leapPP      e)
@@ -762,6 +771,9 @@
       (shiftPP     e)
       (shiftPP     n)
       (shiftPP     s)
+      (shiftPP     w)
+      (shiftPP     nw)
+      (shiftPP     sw)
 
       (move-type move-trice-ne)
       (leapPP      ne)
@@ -769,6 +781,7 @@
       (shiftPP     ne)
       (shiftPP     w)
       (shiftPP     s)
+      (shiftPP     sw)
 
       (move-type move-trice-nw)
       (leapPP      nw)
@@ -776,6 +789,7 @@
       (shiftPP     nw)
       (shiftPP     e)
       (shiftPP     s)
+      (shiftPP     se)
 
       (move-type move-trice-se)
       (leapPP      se)
@@ -783,6 +797,7 @@
       (shiftPP     se)
       (shiftPP     w)
       (shiftPP     n)
+      (shiftPP     nw)
 
       (move-type move-trice-sw)
       (leapPP      sw)
@@ -790,6 +805,7 @@
       (shiftPP     sw)
       (shiftPP     e)
       (shiftPP     n)
+      (shiftPP     ne)
 
       (move-type move-fourfold-n)
       (shiftPP n)
@@ -1633,6 +1649,9 @@
       (shiftPP     n)
       (shiftPP     e)
       (shiftPP     w)
+      (shiftPP     s)
+      (shiftPP     sw)
+      (shiftPP     se)
 
       (move-type move-trice-s)
       (leapPP      s)
@@ -1640,6 +1659,9 @@
       (shiftPP     s)
       (shiftPP     e)
       (shiftPP     w)
+      (shiftPP     n)
+      (shiftPP     nw)
+      (shiftPP     ne)
 
       (move-type move-trice-w)
       (leapPP      w)
@@ -1647,6 +1669,9 @@
       (shiftPP     w)
       (shiftPP     n)
       (shiftPP     s)
+      (shiftPP     e)
+      (shiftPP     ne)
+      (shiftPP     se)
 
       (move-type move-trice-e)
       (leapPP      e)
@@ -1654,6 +1679,9 @@
       (shiftPP     e)
       (shiftPP     n)
       (shiftPP     s)
+      (shiftPP     w)
+      (shiftPP     nw)
+      (shiftPP     sw)
 
       (move-type move-trice-ne)
       (leapPP      ne)
@@ -1661,6 +1689,7 @@
       (shiftPP     ne)
       (shiftPP     w)
       (shiftPP     s)
+      (shiftPP     sw)
 
       (move-type move-trice-nw)
       (leapPP      nw)
@@ -1668,6 +1697,7 @@
       (shiftPP     nw)
       (shiftPP     e)
       (shiftPP     s)
+      (shiftPP     se)
 
       (move-type move-trice-se)
       (leapPP      se)
@@ -1675,6 +1705,7 @@
       (shiftPP     se)
       (shiftPP     w)
       (shiftPP     n)
+      (shiftPP     nw)
 
       (move-type move-trice-sw)
       (leapPP      sw)
@@ -1682,6 +1713,7 @@
       (shiftPP     sw)
       (shiftPP     e)
       (shiftPP     n)
+      (shiftPP     ne)
 
       (move-type move-fourfold-n)
       (shiftPP n)
