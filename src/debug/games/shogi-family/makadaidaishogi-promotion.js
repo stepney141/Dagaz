@@ -60,6 +60,28 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+Dagaz.Controller.SelectPiece = function(move, piece, part) {
+  var f = false;
+  var actions = [];
+  _.each(move.actions, function(a) {
+      if (f) return;
+      if ((a[3] != part) || (a[2] === null)) return;
+      for (var i = 0; i < a[2].length; i++) {
+           if (a[2][i].type == piece.type) {
+               a[2] = [piece];
+               if (i > 0) {
+                   f = true;
+               }
+           }
+      }
+      actions.push(a);
+  });
+  if (f) {
+      move.actions = actions;
+  }
+  return f;
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
@@ -73,7 +95,7 @@ Dagaz.Model.CheckInvariants = function(board) {
          }
          if (piece === null) return;
          var enemy = board.getPiece(a[1][0]);
-         if (enemy === null) return;
+         if ((enemy === null) || (a[1][0] == move.actions[0][0][0])) return;
          if (_.indexOf(promoted, +enemy.type) < 0) {
              prom.push(piece);
          }

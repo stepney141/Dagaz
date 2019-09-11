@@ -166,7 +166,7 @@ var getPieces = function(move) {
 }
 
 App.prototype.clarify = function(move) {
-  if (!_.isUndefined(this.selected)) {
+  if (!_.isUndefined(this.selected) && _.isUndefined(Dagaz.Controller.SelectPiece)) {
       for (var i = 0; i < move.actions.length; i++) {
           if ((move.actions[i][0] !== null) && (move.actions[i][2] !== null) && (move.actions[i][2].length > 1)) {
                move.actions[i][2] = [ this.selected.changeOwner(this.board.player) ];
@@ -265,6 +265,9 @@ App.prototype.mouseDown = function(view, pos) {
       var positions = _.intersection(this.getStops(), pos);
       if (positions.length > 0) {
           this.selected = this.view.getSelected(positions[0]);
+          if (!_.isUndefined(this.list) && !_.isUndefined(Dagaz.Controller.SelectPiece)) {
+              this.move = this.list.setPiece(this.selected.changeOwner(this.board.player));
+          }
           if (this.selected === null) {
               delete this.selected;
           }
