@@ -65,6 +65,7 @@ Dagaz.Controller.SelectPiece = function(move, piece, part) {
   var actions = [];
   _.each(move.actions, function(a) {
       if (f) return;
+      actions.push(a);
       if ((a[3] != part) || (a[2] === null)) return;
       for (var i = 0; i < a[2].length; i++) {
            if (a[2][i].type == piece.type) {
@@ -74,7 +75,6 @@ Dagaz.Controller.SelectPiece = function(move, piece, part) {
                }
            }
       }
-      actions.push(a);
   });
   if (f) {
       move.actions = actions;
@@ -88,7 +88,10 @@ Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
   _.each(board.moves, function(move) {
       var piece = null;
+      var f = false; var actions = [];
       _.each(move.actions, function(a) {
+         if (f) return;
+         actions.push(a);
          var prom = [];
          if (piece === null) {
              piece = board.getPiece(a[0][0]);
@@ -113,7 +116,11 @@ Dagaz.Model.CheckInvariants = function(board) {
          if (prom.length > 0) {
              a[2] = prom;
          }
+         if (prom.length == 1) f = true;
       });
+      if (f) {
+         move.actions = actions;
+      }
   });
   CheckInvariants(board);
 }
