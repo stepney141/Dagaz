@@ -60,6 +60,26 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+Dagaz.Model.Determinate = function(moves) {
+  var r = [];
+  _.each(moves, function(move) {
+      var m = Dagaz.Model.createMove(move.mode);
+      var f = false;
+      _.each(move.actions, function(a) {
+          if (f) return;
+          if ((a[2] !== null) && (a[2].length == 2)) {
+              m.actions.push([a[0], a[1], [a[2][1]], a[3]]);
+              a[2] = [a[2][0]];
+              f = true;
+              return;
+          }
+          m.actions.push(a);
+      });
+      r.push(move);
+  });
+  return r;
+}
+
 Dagaz.Controller.SelectPiece = function(move, piece, part) {
   var f = false;
   var actions = [];

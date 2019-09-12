@@ -215,6 +215,7 @@
   - Kantorai [priorities, family:chess]
   - Chu Shogi [kings, huge, composite, dialog(promotion), drops, wheel, limit, sparks, family:chess]
   - Tenjiku Shogi [kings, huge, composite, todo:dialog(promotion), family:chess]
+  - Maka Dai Dai Shogi [checkmate, huge, composite, dialog(promotion), family:chess]
   - Nutty Shogi [huge, composite, todo:dialog(promotion), family:chess]
   - Ko Shogi [kings, huge, composite, family:chess]
   - Hishigata Shogi [todo, huge, family:chess]
