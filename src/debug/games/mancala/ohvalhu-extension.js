@@ -1,6 +1,6 @@
 (function() {
 
-Dagaz.Model.WIN_CNT = 64;
+Dagaz.Model.WIN_CNT = 128;
 Dagaz.Model.SIZE    = 17;
 
 Dagaz.View.DX       = 0;
@@ -13,6 +13,55 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   if (name != "ohvalhu-extension") {
       checkVersion(design, name, value);
   }
+}
+
+var calcSeeds = function(design, board, player) {
+  var r = 0;
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if ((piece !== null) && (+piece.type == 0) && (piece.player == player)) {
+          var v = Math.abs(+piece.getValue(0));
+          if (v !== null) r += v;
+      }
+  });
+  return r;
+}
+
+Dagaz.Model.continue = function(design, board, text) {
+  var x1 = calcSeeds(design, board, 1); 
+  var x2 = calcSeeds(design, board, 2);
+  var t = 0;
+  if (x2 < x1) {
+      t = 1;
+  }
+  if ((x1 < 8) || (x2 < 8)) return null;
+  var str = "?setup=";
+  var c = (x2 / 8) | 0;
+  if (c > 8) c = 8;
+  x2 -= c * 8;
+  for (var i = 0; i < 8 - c; i++) {
+     str = str + "2:2;";
+  }
+  for (var i = 0; i < c; i++) {
+     str = str + "0:2=8;";
+  }
+  c = (x1 / 8) | 0;
+  if (c > 8) c = 8;
+  x1 -= c * 8;
+  for (var i = 0; i < c; i++) {
+     str = str + "0:1=8;";
+  }
+  for (var i = 0; i < 8 - c; i++) {
+     str = str + "2:1;";
+  }
+  if (x1 > 0) {
+      str = str + "0:1=" + x1 + ";";
+  }
+  if (x2 > 0) {
+      str = str + "0:2=" + x2 + ";";
+  }
+  str = str + ";&turn=" + t;
+  return str;
 }
 
 var addReserve = function(x, y) {
@@ -117,6 +166,15 @@ Dagaz.Model.CheckInvariants = function(board) {
                    captured = _.without(captured, pos);                   
                }
                pos = design.navigate(board.player, pos, dir);
+               piece = board.getPiece(pos);
+               while ((piece !== null) && (+piece.type == 2)) {
+                   pos = design.navigate(board.player, pos, dir);
+                   if (pos === null) {
+                       move.failed = true;
+                       return;
+                   }
+                   piece = board.getPiece(pos);
+               }
           }
           _.each(captured, function(pos) {
                piece = board.getPiece(pos);
@@ -127,11 +185,6 @@ Dagaz.Model.CheckInvariants = function(board) {
           });
           var pos = move.actions[0][0][0];
           for (var ix = 0; ix < result.length; ix++) {
-               piece = board.getPiece(pos);
-               while ((piece !== null) && (+piece.type == 2)) {
-                   pos = design.navigate(board.player, pos, dir);
-                   piece = board.getPiece(pos);
-               }
                if (design.inZone(1, board.player, pos)) {
                    result[ix] = addReserve(result[ix], fr);
                    fr = 0;
@@ -162,6 +215,11 @@ Dagaz.Model.CheckInvariants = function(board) {
                    }
                }
                pos = design.navigate(board.player, pos, dir);
+               piece = board.getPiece(pos);
+               while ((piece !== null) && (+piece.type == 2)) {
+                   pos = design.navigate(board.player, pos, dir);
+                   piece = board.getPiece(pos);
+               }
           }
           if (!isPool && (fr == 0)) {
                _.each(design.allPositions(), function(pos) {

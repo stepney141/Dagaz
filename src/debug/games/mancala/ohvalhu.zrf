@@ -1,5 +1,6 @@
 (define step (
-  $1 add
+  $1 (while (piece? Dead) $1)
+  add
 ))
 
 (game

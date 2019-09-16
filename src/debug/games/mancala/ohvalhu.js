@@ -71,11 +71,18 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
     design.addCommand(0, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(0, ZRF.LITERAL,	2);	// Dead
+    design.addCommand(0, ZRF.FUNCTION,	10);	// piece?
+    design.addCommand(0, ZRF.FUNCTION,	0);	// not
+    design.addCommand(0, ZRF.IF,	4);
+    design.addCommand(0, ZRF.PARAM,	1);	// $2
+    design.addCommand(0, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(0, ZRF.JUMP,	-6);
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
     design.addPiece("Seed", 0);
-    design.addMove(0, 0, [0], 0);
+    design.addMove(0, 0, [0, 0], 0);
 
     design.addPiece("None", 1);
     design.addPiece("Dead", 2);
