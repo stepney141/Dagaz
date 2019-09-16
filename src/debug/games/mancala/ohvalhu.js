@@ -30,6 +30,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("pass-turn", "forced");
     design.checkVersion("mancala-setup", "8");
     design.checkVersion("mancala-view", "true");
+    design.checkVersion("dakon-restrictions", "extended");
     design.checkVersion("progressive-levels", "true");
     design.checkVersion("advisor-wait", "5");
 
