@@ -651,7 +651,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPriority(0);			// normal
 
-    design.addPiece("Go-Between", 0);
+    design.addPiece("Go-Between", 0, 12);
     design.addMove(0, 0, [7], 0);
     design.addMove(0, 0, [11], 0);
 
