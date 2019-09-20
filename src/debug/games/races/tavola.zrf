@@ -1,6 +1,6 @@
 (define drop-dice (
   (verify (in-zone? dice-zone))
-  (verify empty?)
+  (verify not-friend?)
   add
 ))
 
@@ -32,6 +32,8 @@
   (piece
      (name D$1)
      (image White "images/backgammon/$1.bmp"
+            Green "images/backgammon/$1.bmp"
+            Red   "images/backgammon/$1.bmp"
             Black "images/backgammon/$1.bmp")
      (drops
         (move-type drop-type)
@@ -47,7 +49,7 @@
   (option "pass turn"   forced)
 
   (players White Green Red Black)
-  (turn-order White Black Red Green)
+  (turn-order White Green Red Black)
 
   (board
      (image "images/backgammon/tavola.bmp")
@@ -846,17 +848,8 @@
      (zone (name bar-zone) (players Black)
            (positions B1a B1b B1c B1d B1e B1f B1g B1h B1j B1k B1l B1m)
      )
-     (zone (name out-zone) (players White)
-           (positions W2a W2b W2c W2d W2e W2f W2g W2h W2i W2j W2k W2l W2m W2n W2o W2p W2q)
-     )
-     (zone (name out-zone) (players Green)
-           (positions G2a G2b G2c G2d G2e G2f G2g G2h G2i G2j G2k G2l G2m G2n G2o G2p G2q)
-     )
-     (zone (name out-zone) (players Red)
-           (positions R2a R2b R2c R2d R2e R2f R2g R2h R2i R2j R2k R2l R2m R2n R2o R2p R2q)
-     )
-     (zone (name out-zone) (players Black)
-           (positions B2a B2b B2c B2d B2e B2f B2g B2h B2i B2j B2k B2l B2m B2n B2o B2p B2q)
+     (zone (name out-zone) (players White Green Red Black)
+           (positions W2a W2b W2c W2d W2e W2f W2g W2h W2i W2j W2k W2l W2m W2n W2o W2p W2q G2a G2b G2c G2d G2e G2f G2g G2h G2i G2j G2k G2l G2m G2n G2o G2p G2q R2a R2b R2c R2d R2e R2f R2g R2h R2i R2j R2k R2l R2m R2n R2o R2p R2q B2a B2b B2c B2d B2e B2f B2g B2h B2i B2j B2k B2l B2m B2n B2o B2p B2q)
      )
      (zone (name top-zone) (players White Green Red Black)
            (positions a1a b1a c1a d1a e1a f1a g1a h1a j1a k1a l1a m1a G2a R2a
