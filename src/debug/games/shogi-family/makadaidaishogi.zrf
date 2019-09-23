@@ -53,159 +53,9 @@
   (verify enemy?) add
 ))    
 
-(define shift3LD (
-  $1 $1 $1 
-  (verify not-friend?) add
-))
-
-(define shift2LDn (
-  $1 $1
-  (verify not-friend?)
-  (add-partial move-twice-n)
-))
-
-(define shift2LDe (
-  $1 $1
-  (verify not-friend?)
-  (add-partial move-twice-e)
-))
-
-(define shift2LDw (
-  $1 $1
-  (verify not-friend?)
-  (add-partial move-twice-w)
-))
-
-(define shift2LDs (
-  $1 $1
-  (verify not-friend?)
-  (add-partial move-twice-s)
-))
-
-(define shift2LDne (
-  $1 $1
-  (verify not-friend?)
-  (add-partial move-twice-ne)
-))
-
-(define shift2LDnw (
-  $1 $1
-  (verify not-friend?)
-  (add-partial move-twice-nw)
-))
-
-(define shift2LDse (
-  $1 $1
-  (verify not-friend?)
-  (add-partial move-twice-se)
-))
-
-(define shift2LDsw (
-  $1 $1
-  (verify not-friend?)
-  (add-partial move-twice-sw)
-))
-
-(define shift1LDn (
-  $1
-  (verify not-friend?)
-  (add-partial move-trice-n)
-))
-
-(define shift1LDe (
-  $1
-  (verify not-friend?)
-  (add-partial move-trice-e)
-))
-
-(define shift1LDw (
-  $1
-  (verify not-friend?)
-  (add-partial move-trice-w)
-))
-
-(define shift1LDs (
-  $1
-  (verify not-friend?)
-  (add-partial move-trice-s)
-))
-
-(define shift1LDne (
-  $1
-  (verify not-friend?)
-  (add-partial move-trice-ne)
-))
-
-(define shift1LDnw (
-  $1
-  (verify not-friend?)
-  (add-partial move-trice-nw)
-))
-
-(define shift1LDse (
-  $1
-  (verify not-friend?)
-  (add-partial move-trice-se)
-))
-
-(define shift1LDsw (
-  $1
-  (verify not-friend?)
-  (add-partial move-trice-sw)
-))
-
-(define shift1xLDn (
-  $1
-  (verify not-friend?)
-  (add-partial move-fourfold-n)
-))
-
-(define shift1xLDe (
-  $1
-  (verify not-friend?)
-  (add-partial move-fourfold-e)
-))
-
-(define shift1xLDw (
-  $1
-  (verify not-friend?)
-  (add-partial move-fourfold-w)
-))
-
-(define shift1xLDs (
-  $1
-  (verify not-friend?)
-  (add-partial move-fourfold-s)
-))
-
-(define shift1xLDne (
-  $1
-  (verify not-friend?)
-  (add-partial move-fourfold-ne)
-))
-
-(define shift1xLDnw (
-  $1
-  (verify not-friend?)
-  (add-partial move-fourfold-nw)
-))
-
-(define shift1xLDse (
-  $1
-  (verify not-friend?)
-  (add-partial move-fourfold-se)
-))
-
-(define shift1xLDsw (
-  $1
-  (verify not-friend?)
-  (add-partial move-fourfold-sw)
-))
-
-(define shiftPL (
-  $1 
-  (verify not-friend?)
-  (add-partial move-twice)
+(define shiftLD (
+  $1 (verify not-friend?)
+  (add-partial $2)
 ))
 
 (define shiftPK (
@@ -683,153 +533,46 @@
     (moves
 
       (move-type normal)
+      (shiftLD  n move-twice-v)
+      (shiftLD  s move-twice-v)
+      (shiftLD  w move-twice-h)
+      (shiftLD  e move-twice-h)
+      (shiftLD se move-twice-l)
+      (shiftLD nw move-twice-l)
+      (shiftLD ne move-twice-r)
+      (shiftLD sw move-twice-r)
 
-      (shift3LD n)
-      (shift3LD s)
-      (shift3LD w)
-      (shift3LD e)    
-      (shift3LD ne)
-      (shift3LD nw)
-      (shift3LD se)
-      (shift3LD sw)   
+      (move-type move-twice-v)
+      (shiftLD n move-trice-v)
+      (shiftLD s move-trice-v)
 
-      (shift2LDn  n)
-      (shift2LDs  s)
-      (shift2LDw  w)
-      (shift2LDe  e)    
-      (shift2LDne ne)
-      (shift2LDnw nw)
-      (shift2LDse se)
-      (shift2LDsw sw)   
+      (move-type move-twice-h)
+      (shiftLD w move-trice-h)
+      (shiftLD e move-trice-h)
 
-      (shift1LDn  n)
-      (shift1LDs  s)
-      (shift1LDw  w)
-      (shift1LDe  e)    
-      (shift1LDne ne)
-      (shift1LDnw nw)
-      (shift1LDse se)
-      (shift1LDsw sw)   
+      (move-type move-twice-l)
+      (shiftLD se move-trice-l)
+      (shiftLD nw move-trice-l)
 
-      (move-type move-twice-n)
-      (shiftPP n)
+      (move-type move-twice-r)
+      (shiftLD ne move-trice-r)
+      (shiftLD sw move-trice-r)
 
-      (move-type move-twice-s)
-      (shiftPP s)
+      (move-type move-trice-v)
+      (shiftPP  n)
+      (shiftPP  s)
 
-      (move-type move-twice-w)
-      (shiftPP w)
+      (move-type move-trice-h)
+      (shiftPP  w)
+      (shiftPP  e)
 
-      (move-type move-twice-e)
-      (shiftPP e)
+      (move-type move-trice-l)
+      (shiftPP  se)
+      (shiftPP  nw)
 
-      (move-type move-twice-ne)
-      (shiftPP ne)
-
-      (move-type move-twice-nw)
-      (shiftPP nw)
-
-      (move-type move-twice-se)
-      (shiftPP se)
-
-      (move-type move-twice-sw)
-      (shiftPP sw)
-
-      (move-type move-trice-n)
-      (leapPP      n)
-      (shift1xLDn  n)
-      (shiftPP     n)
-      (shiftPP     e)
-      (shiftPP     w)
-      (shiftPP     s)
-      (shiftPP     sw)
-      (shiftPP     se)
-
-      (move-type move-trice-s)
-      (leapPP      s)
-      (shift1xLDs  s)
-      (shiftPP     s)
-      (shiftPP     e)
-      (shiftPP     w)
-      (shiftPP     n)
-      (shiftPP     nw)
-      (shiftPP     ne)
-
-      (move-type move-trice-w)
-      (leapPP      w)
-      (shift1xLDw  w)
-      (shiftPP     w)
-      (shiftPP     n)
-      (shiftPP     s)
-      (shiftPP     e)
-      (shiftPP     ne)
-      (shiftPP     se)
-
-      (move-type move-trice-e)
-      (leapPP      e)
-      (shift1xLDe  e)
-      (shiftPP     e)
-      (shiftPP     n)
-      (shiftPP     s)
-      (shiftPP     w)
-      (shiftPP     nw)
-      (shiftPP     sw)
-
-      (move-type move-trice-ne)
-      (leapPP      ne)
-      (shift1xLDne ne)
-      (shiftPP     ne)
-      (shiftPP     w)
-      (shiftPP     s)
-      (shiftPP     sw)
-
-      (move-type move-trice-nw)
-      (leapPP      nw)
-      (shift1xLDnw nw)
-      (shiftPP     nw)
-      (shiftPP     e)
-      (shiftPP     s)
-      (shiftPP     se)
-
-      (move-type move-trice-se)
-      (leapPP      se)
-      (shift1xLDse se)
-      (shiftPP     se)
-      (shiftPP     w)
-      (shiftPP     n)
-      (shiftPP     nw)
-
-      (move-type move-trice-sw)
-      (leapPP      sw)
-      (shift1xLDsw sw)
-      (shiftPP     sw)
-      (shiftPP     e)
-      (shiftPP     n)
-      (shiftPP     ne)
-
-      (move-type move-fourfold-n)
-      (shiftPP n)
-
-      (move-type move-fourfold-s)
-      (shiftPP s)
-
-      (move-type move-fourfold-w)
-      (shiftPP w)
-
-      (move-type move-fourfold-e)
-      (shiftPP e)
-
-      (move-type move-fourfold-ne)
-      (shiftPP ne)
-
-      (move-type move-fourfold-nw)
-      (shiftPP nw)
-
-      (move-type move-fourfold-se)
-      (shiftPP se)
-
-      (move-type move-fourfold-sw)
-      (shiftPP sw)
+      (move-type move-trice-r)
+      (shiftPP  ne)
+      (shiftPP  sw)
     )
   )
 
@@ -1040,31 +783,14 @@
            Black "makadaidai43/Lev_piece_B_norm.bmp")
     (moves
       (move-type normal)
-
-      (leapPP n)
-      (leapPP s)
-      (leapPP w)
-      (leapPP e)    
-      (leapPP ne)
-      (leapPP nw)
-      (leapPP se)
-      (leapPP sw)    
-      (shiftPP n2L)
-      (shiftPP n2R)
-      (shiftPP s2L)
-      (shiftPP s2R)
-      (shiftPP e2B)
-      (shiftPP e2T)
-      (shiftPP w2B)
-      (shiftPP w2T)
-      (shiftPL n) 
-      (shiftPL s)
-      (shiftPL e) 
-      (shiftPL w)
-      (shiftPL ne) 
-      (shiftPL nw)
-      (shiftPL se) 
-      (shiftPL sw) 
+      (shiftLD n move-twice)
+      (shiftLD s move-twice)
+      (shiftLD w move-twice)
+      (shiftLD e move-twice)
+      (shiftLD se move-twice)
+      (shiftLD nw move-twice)
+      (shiftLD ne move-twice)
+      (shiftLD sw move-twice)
 
       (move-type move-twice)
       (shiftPP n)  
@@ -1092,30 +818,14 @@
       (shift3PP nw)
       (shift3PP se)
       (shift3PP sw) 
-      (leapPP n)
-      (leapPP s)
-      (leapPP w)
-      (leapPP e)    
-      (leapPP ne)
-      (leapPP nw)
-      (leapPP se)
-      (leapPP sw)    
-      (shiftPP n2L)
-      (shiftPP n2R)
-      (shiftPP s2L)
-      (shiftPP s2R)
-      (shiftPP e2B)
-      (shiftPP e2T)
-      (shiftPP w2B)
-      (shiftPP w2T)
-      (shiftPL n) 
-      (shiftPL s)
-      (shiftPL e) 
-      (shiftPL w)
-      (shiftPL ne) 
-      (shiftPL nw)
-      (shiftPL se) 
-      (shiftPL sw) 
+      (shiftLD n move-twice)
+      (shiftLD s move-twice)
+      (shiftLD w move-twice)
+      (shiftLD e move-twice)
+      (shiftLD se move-twice)
+      (shiftLD nw move-twice)
+      (shiftLD ne move-twice)
+      (shiftLD sw move-twice)
 
       (move-type move-twice)
       (shiftPP n)  
@@ -1582,7 +1292,6 @@
     (moves
 
       (move-type normal)
-
       (slidePP n)  
       (slidePP e)
       (slidePP s)  
@@ -1592,152 +1301,47 @@
       (slidePP se) 
       (slidePP sw)
 
-      (shift3LD n)
-      (shift3LD s)
-      (shift3LD w)
-      (shift3LD e)    
-      (shift3LD ne)
-      (shift3LD nw)
-      (shift3LD se)
-      (shift3LD sw)   
+      (shiftLD  n move-twice-v)
+      (shiftLD  s move-twice-v)
+      (shiftLD  w move-twice-h)
+      (shiftLD  e move-twice-h)
+      (shiftLD se move-twice-l)
+      (shiftLD nw move-twice-l)
+      (shiftLD ne move-twice-r)
+      (shiftLD sw move-twice-r)
 
-      (shift2LDn  n)
-      (shift2LDs  s)
-      (shift2LDw  w)
-      (shift2LDe  e )    
-      (shift2LDne ne)
-      (shift2LDnw nw)
-      (shift2LDse se)
-      (shift2LDsw sw)   
 
-      (shift1LDn  n)
-      (shift1LDs  s)
-      (shift1LDw  w)
-      (shift1LDe  e)    
-      (shift1LDne ne)
-      (shift1LDnw nw)
-      (shift1LDse se)
-      (shift1LDsw sw)   
+      (move-type move-twice-v)
+      (shiftLD n move-trice-v)
+      (shiftLD s move-trice-v)
 
-      (move-type move-twice-n)
-      (shiftPP n)
+      (move-type move-twice-h)
+      (shiftLD w move-trice-h)
+      (shiftLD e move-trice-h)
 
-      (move-type move-twice-s)
-      (shiftPP s)
+      (move-type move-twice-l)
+      (shiftLD se move-trice-l)
+      (shiftLD nw move-trice-l)
 
-      (move-type move-twice-w)
-      (shiftPP w)
+      (move-type move-twice-r)
+      (shiftLD ne move-trice-r)
+      (shiftLD sw move-trice-r)
 
-      (move-type move-twice-e)
-      (shiftPP e)
+      (move-type move-trice-v)
+      (shiftPP  n)
+      (shiftPP  s)
 
-      (move-type move-twice-ne)
-      (shiftPP ne)
+      (move-type move-trice-h)
+      (shiftPP  w)
+      (shiftPP  e)
 
-      (move-type move-twice-nw)
-      (shiftPP nw)
+      (move-type move-trice-l)
+      (shiftPP  se)
+      (shiftPP  nw)
 
-      (move-type move-twice-se)
-      (shiftPP se)
-
-      (move-type move-twice-sw)
-      (shiftPP sw)
-
-      (move-type move-trice-n)
-      (leapPP      n)
-      (shift1xLDn  n)
-      (shiftPP     n)
-      (shiftPP     e)
-      (shiftPP     w)
-      (shiftPP     s)
-      (shiftPP     sw)
-      (shiftPP     se)
-
-      (move-type move-trice-s)
-      (leapPP      s)
-      (shift1xLDs  s)
-      (shiftPP     s)
-      (shiftPP     e)
-      (shiftPP     w)
-      (shiftPP     n)
-      (shiftPP     nw)
-      (shiftPP     ne)
-
-      (move-type move-trice-w)
-      (leapPP      w)
-      (shift1xLDw  w)
-      (shiftPP     w)
-      (shiftPP     n)
-      (shiftPP     s)
-      (shiftPP     e)
-      (shiftPP     ne)
-      (shiftPP     se)
-
-      (move-type move-trice-e)
-      (leapPP      e)
-      (shift1xLDe  e)
-      (shiftPP     e)
-      (shiftPP     n)
-      (shiftPP     s)
-      (shiftPP     w)
-      (shiftPP     nw)
-      (shiftPP     sw)
-
-      (move-type move-trice-ne)
-      (leapPP      ne)
-      (shift1xLDne ne)
-      (shiftPP     ne)
-      (shiftPP     w)
-      (shiftPP     s)
-      (shiftPP     sw)
-
-      (move-type move-trice-nw)
-      (leapPP      nw)
-      (shift1xLDnw nw)
-      (shiftPP     nw)
-      (shiftPP     e)
-      (shiftPP     s)
-      (shiftPP     se)
-
-      (move-type move-trice-se)
-      (leapPP      se)
-      (shift1xLDse se)
-      (shiftPP     se)
-      (shiftPP     w)
-      (shiftPP     n)
-      (shiftPP     nw)
-
-      (move-type move-trice-sw)
-      (leapPP      sw)
-      (shift1xLDsw sw)
-      (shiftPP     sw)
-      (shiftPP     e)
-      (shiftPP     n)
-      (shiftPP     ne)
-
-      (move-type move-fourfold-n)
-      (shiftPP n)
-
-      (move-type move-fourfold-s)
-      (shiftPP s)
-
-      (move-type move-fourfold-w)
-      (shiftPP w)
-
-      (move-type move-fourfold-e)
-      (shiftPP e)
-
-      (move-type move-fourfold-ne)
-      (shiftPP ne)
-
-      (move-type move-fourfold-nw)
-      (shiftPP nw)
-
-      (move-type move-fourfold-se)
-      (shiftPP se)
-
-      (move-type move-fourfold-sw)
-      (shiftPP sw )
+      (move-type move-trice-r)
+      (shiftPP  ne)
+      (shiftPP  sw)
     )
   )
   
@@ -1768,30 +1372,14 @@
       (slidePP nw)
       (slidePP se)
       (slidePP sw) 
-      (leapPP n)
-      (leapPP s)
-      (leapPP w)
-      (leapPP e)    
-      (leapPP ne)
-      (leapPP nw)
-      (leapPP se)
-      (leapPP sw)    
-      (shiftPP n2L)
-      (shiftPP n2R)
-      (shiftPP s2L)
-      (shiftPP s2R)
-      (shiftPP e2B)
-      (shiftPP e2T)
-      (shiftPP w2B)
-      (shiftPP w2T)
-      (shiftPL n) 
-      (shiftPL s)
-      (shiftPL e) 
-      (shiftPL w)
-      (shiftPL ne) 
-      (shiftPL nw)
-      (shiftPL se) 
-      (shiftPL sw) 
+      (shiftLD n move-twice)
+      (shiftLD s move-twice)
+      (shiftLD w move-twice)
+      (shiftLD e move-twice)
+      (shiftLD se move-twice)
+      (shiftLD nw move-twice)
+      (shiftLD ne move-twice)
+      (shiftLD sw move-twice)
 
       (move-type move-twice)
       (shiftPP n)  
@@ -1993,6 +1581,7 @@
 
 (variant
   (title "Macadamia Shogi")
+  (default)
   (board 
     (image "makadaidai43/13x13.bmp")
     (grid

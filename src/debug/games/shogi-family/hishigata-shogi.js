@@ -565,281 +565,92 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(9, ZRF.FUNCTION,	24);	// from
     design.addCommand(9, ZRF.PARAM,	0);	// $1
     design.addCommand(9, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(9, ZRF.PARAM,	1);	// $2
-    design.addCommand(9, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(9, ZRF.PARAM,	2);	// $3
-    design.addCommand(9, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(9, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(9, ZRF.FUNCTION,	0);	// not
     design.addCommand(9, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(9, ZRF.MODE,	1);	// move-twice-v
     design.addCommand(9, ZRF.FUNCTION,	25);	// to
     design.addCommand(9, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(10, ZRF.FUNCTION,	24);	// from
     design.addCommand(10, ZRF.PARAM,	0);	// $1
     design.addCommand(10, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(10, ZRF.PARAM,	1);	// $2
-    design.addCommand(10, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(10, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(10, ZRF.FUNCTION,	0);	// not
     design.addCommand(10, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(10, ZRF.MODE,	3);	// move-twice-n
+    design.addCommand(10, ZRF.MODE,	2);	// move-twice-h
     design.addCommand(10, ZRF.FUNCTION,	25);	// to
     design.addCommand(10, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(11, ZRF.FUNCTION,	24);	// from
     design.addCommand(11, ZRF.PARAM,	0);	// $1
     design.addCommand(11, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(11, ZRF.PARAM,	1);	// $2
-    design.addCommand(11, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(11, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(11, ZRF.FUNCTION,	0);	// not
     design.addCommand(11, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(11, ZRF.MODE,	4);	// move-twice-s
+    design.addCommand(11, ZRF.MODE,	3);	// move-twice-l
     design.addCommand(11, ZRF.FUNCTION,	25);	// to
     design.addCommand(11, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(12, ZRF.FUNCTION,	24);	// from
     design.addCommand(12, ZRF.PARAM,	0);	// $1
     design.addCommand(12, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(12, ZRF.PARAM,	1);	// $2
-    design.addCommand(12, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(12, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(12, ZRF.FUNCTION,	0);	// not
     design.addCommand(12, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(12, ZRF.MODE,	5);	// move-twice-w
+    design.addCommand(12, ZRF.MODE,	4);	// move-twice-r
     design.addCommand(12, ZRF.FUNCTION,	25);	// to
     design.addCommand(12, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(13, ZRF.FUNCTION,	24);	// from
     design.addCommand(13, ZRF.PARAM,	0);	// $1
     design.addCommand(13, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(13, ZRF.PARAM,	1);	// $2
-    design.addCommand(13, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(13, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(13, ZRF.FUNCTION,	0);	// not
     design.addCommand(13, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(13, ZRF.MODE,	6);	// move-twice-e
+    design.addCommand(13, ZRF.MODE,	5);	// move-trice-v
     design.addCommand(13, ZRF.FUNCTION,	25);	// to
     design.addCommand(13, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(14, ZRF.FUNCTION,	24);	// from
     design.addCommand(14, ZRF.PARAM,	0);	// $1
     design.addCommand(14, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(14, ZRF.PARAM,	1);	// $2
-    design.addCommand(14, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(14, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(14, ZRF.FUNCTION,	0);	// not
     design.addCommand(14, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(14, ZRF.MODE,	7);	// move-twice-ne
+    design.addCommand(14, ZRF.MODE,	6);	// move-trice-h
     design.addCommand(14, ZRF.FUNCTION,	25);	// to
     design.addCommand(14, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(15, ZRF.FUNCTION,	24);	// from
     design.addCommand(15, ZRF.PARAM,	0);	// $1
     design.addCommand(15, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(15, ZRF.PARAM,	1);	// $2
-    design.addCommand(15, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(15, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(15, ZRF.FUNCTION,	0);	// not
     design.addCommand(15, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(15, ZRF.MODE,	8);	// move-twice-nw
+    design.addCommand(15, ZRF.MODE,	7);	// move-trice-l
     design.addCommand(15, ZRF.FUNCTION,	25);	// to
     design.addCommand(15, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(16, ZRF.FUNCTION,	24);	// from
     design.addCommand(16, ZRF.PARAM,	0);	// $1
     design.addCommand(16, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(16, ZRF.PARAM,	1);	// $2
-    design.addCommand(16, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(16, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(16, ZRF.FUNCTION,	0);	// not
     design.addCommand(16, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(16, ZRF.MODE,	9);	// move-twice-se
+    design.addCommand(16, ZRF.MODE,	8);	// move-trice-r
     design.addCommand(16, ZRF.FUNCTION,	25);	// to
     design.addCommand(16, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(17, ZRF.FUNCTION,	24);	// from
     design.addCommand(17, ZRF.PARAM,	0);	// $1
     design.addCommand(17, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(17, ZRF.PARAM,	1);	// $2
-    design.addCommand(17, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(17, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(17, ZRF.FUNCTION,	0);	// not
     design.addCommand(17, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(17, ZRF.MODE,	10);	// move-twice-sw
+    design.addCommand(17, ZRF.MODE,	9);	// move-twice
     design.addCommand(17, ZRF.FUNCTION,	25);	// to
     design.addCommand(17, ZRF.FUNCTION,	28);	// end
-
-    design.addCommand(18, ZRF.FUNCTION,	24);	// from
-    design.addCommand(18, ZRF.PARAM,	0);	// $1
-    design.addCommand(18, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(18, ZRF.FUNCTION,	3);	// friend?
-    design.addCommand(18, ZRF.FUNCTION,	0);	// not
-    design.addCommand(18, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(18, ZRF.MODE,	11);	// move-trice-n
-    design.addCommand(18, ZRF.FUNCTION,	25);	// to
-    design.addCommand(18, ZRF.FUNCTION,	28);	// end
-
-    design.addCommand(19, ZRF.FUNCTION,	24);	// from
-    design.addCommand(19, ZRF.PARAM,	0);	// $1
-    design.addCommand(19, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(19, ZRF.FUNCTION,	3);	// friend?
-    design.addCommand(19, ZRF.FUNCTION,	0);	// not
-    design.addCommand(19, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(19, ZRF.MODE,	12);	// move-trice-s
-    design.addCommand(19, ZRF.FUNCTION,	25);	// to
-    design.addCommand(19, ZRF.FUNCTION,	28);	// end
-
-    design.addCommand(20, ZRF.FUNCTION,	24);	// from
-    design.addCommand(20, ZRF.PARAM,	0);	// $1
-    design.addCommand(20, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(20, ZRF.FUNCTION,	3);	// friend?
-    design.addCommand(20, ZRF.FUNCTION,	0);	// not
-    design.addCommand(20, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(20, ZRF.MODE,	13);	// move-trice-w
-    design.addCommand(20, ZRF.FUNCTION,	25);	// to
-    design.addCommand(20, ZRF.FUNCTION,	28);	// end
-
-    design.addCommand(21, ZRF.FUNCTION,	24);	// from
-    design.addCommand(21, ZRF.PARAM,	0);	// $1
-    design.addCommand(21, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(21, ZRF.FUNCTION,	3);	// friend?
-    design.addCommand(21, ZRF.FUNCTION,	0);	// not
-    design.addCommand(21, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(21, ZRF.MODE,	14);	// move-trice-e
-    design.addCommand(21, ZRF.FUNCTION,	25);	// to
-    design.addCommand(21, ZRF.FUNCTION,	28);	// end
-
-    design.addCommand(22, ZRF.FUNCTION,	24);	// from
-    design.addCommand(22, ZRF.PARAM,	0);	// $1
-    design.addCommand(22, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(22, ZRF.FUNCTION,	3);	// friend?
-    design.addCommand(22, ZRF.FUNCTION,	0);	// not
-    design.addCommand(22, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(22, ZRF.MODE,	15);	// move-trice-ne
-    design.addCommand(22, ZRF.FUNCTION,	25);	// to
-    design.addCommand(22, ZRF.FUNCTION,	28);	// end
-
-    design.addCommand(23, ZRF.FUNCTION,	24);	// from
-    design.addCommand(23, ZRF.PARAM,	0);	// $1
-    design.addCommand(23, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(23, ZRF.FUNCTION,	3);	// friend?
-    design.addCommand(23, ZRF.FUNCTION,	0);	// not
-    design.addCommand(23, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(23, ZRF.MODE,	16);	// move-trice-nw
-    design.addCommand(23, ZRF.FUNCTION,	25);	// to
-    design.addCommand(23, ZRF.FUNCTION,	28);	// end
-
-    design.addCommand(24, ZRF.FUNCTION,	24);	// from
-    design.addCommand(24, ZRF.PARAM,	0);	// $1
-    design.addCommand(24, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(24, ZRF.FUNCTION,	3);	// friend?
-    design.addCommand(24, ZRF.FUNCTION,	0);	// not
-    design.addCommand(24, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(24, ZRF.MODE,	17);	// move-trice-se
-    design.addCommand(24, ZRF.FUNCTION,	25);	// to
-    design.addCommand(24, ZRF.FUNCTION,	28);	// end
-
-    design.addCommand(25, ZRF.FUNCTION,	24);	// from
-    design.addCommand(25, ZRF.PARAM,	0);	// $1
-    design.addCommand(25, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(25, ZRF.FUNCTION,	3);	// friend?
-    design.addCommand(25, ZRF.FUNCTION,	0);	// not
-    design.addCommand(25, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(25, ZRF.MODE,	18);	// move-trice-sw
-    design.addCommand(25, ZRF.FUNCTION,	25);	// to
-    design.addCommand(25, ZRF.FUNCTION,	28);	// end
-
-    design.addCommand(26, ZRF.FUNCTION,	24);	// from
-    design.addCommand(26, ZRF.PARAM,	0);	// $1
-    design.addCommand(26, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(26, ZRF.FUNCTION,	3);	// friend?
-    design.addCommand(26, ZRF.FUNCTION,	0);	// not
-    design.addCommand(26, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(26, ZRF.MODE,	19);	// move-fourfold-n
-    design.addCommand(26, ZRF.FUNCTION,	25);	// to
-    design.addCommand(26, ZRF.FUNCTION,	28);	// end
-
-    design.addCommand(27, ZRF.FUNCTION,	24);	// from
-    design.addCommand(27, ZRF.PARAM,	0);	// $1
-    design.addCommand(27, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(27, ZRF.FUNCTION,	3);	// friend?
-    design.addCommand(27, ZRF.FUNCTION,	0);	// not
-    design.addCommand(27, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(27, ZRF.MODE,	20);	// move-fourfold-s
-    design.addCommand(27, ZRF.FUNCTION,	25);	// to
-    design.addCommand(27, ZRF.FUNCTION,	28);	// end
-
-    design.addCommand(28, ZRF.FUNCTION,	24);	// from
-    design.addCommand(28, ZRF.PARAM,	0);	// $1
-    design.addCommand(28, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(28, ZRF.FUNCTION,	3);	// friend?
-    design.addCommand(28, ZRF.FUNCTION,	0);	// not
-    design.addCommand(28, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(28, ZRF.MODE,	21);	// move-fourfold-w
-    design.addCommand(28, ZRF.FUNCTION,	25);	// to
-    design.addCommand(28, ZRF.FUNCTION,	28);	// end
-
-    design.addCommand(29, ZRF.FUNCTION,	24);	// from
-    design.addCommand(29, ZRF.PARAM,	0);	// $1
-    design.addCommand(29, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(29, ZRF.FUNCTION,	3);	// friend?
-    design.addCommand(29, ZRF.FUNCTION,	0);	// not
-    design.addCommand(29, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(29, ZRF.MODE,	22);	// move-fourfold-e
-    design.addCommand(29, ZRF.FUNCTION,	25);	// to
-    design.addCommand(29, ZRF.FUNCTION,	28);	// end
-
-    design.addCommand(30, ZRF.FUNCTION,	24);	// from
-    design.addCommand(30, ZRF.PARAM,	0);	// $1
-    design.addCommand(30, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(30, ZRF.FUNCTION,	3);	// friend?
-    design.addCommand(30, ZRF.FUNCTION,	0);	// not
-    design.addCommand(30, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(30, ZRF.MODE,	23);	// move-fourfold-ne
-    design.addCommand(30, ZRF.FUNCTION,	25);	// to
-    design.addCommand(30, ZRF.FUNCTION,	28);	// end
-
-    design.addCommand(31, ZRF.FUNCTION,	24);	// from
-    design.addCommand(31, ZRF.PARAM,	0);	// $1
-    design.addCommand(31, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(31, ZRF.FUNCTION,	3);	// friend?
-    design.addCommand(31, ZRF.FUNCTION,	0);	// not
-    design.addCommand(31, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(31, ZRF.MODE,	24);	// move-fourfold-nw
-    design.addCommand(31, ZRF.FUNCTION,	25);	// to
-    design.addCommand(31, ZRF.FUNCTION,	28);	// end
-
-    design.addCommand(32, ZRF.FUNCTION,	24);	// from
-    design.addCommand(32, ZRF.PARAM,	0);	// $1
-    design.addCommand(32, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(32, ZRF.FUNCTION,	3);	// friend?
-    design.addCommand(32, ZRF.FUNCTION,	0);	// not
-    design.addCommand(32, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(32, ZRF.MODE,	25);	// move-fourfold-se
-    design.addCommand(32, ZRF.FUNCTION,	25);	// to
-    design.addCommand(32, ZRF.FUNCTION,	28);	// end
-
-    design.addCommand(33, ZRF.FUNCTION,	24);	// from
-    design.addCommand(33, ZRF.PARAM,	0);	// $1
-    design.addCommand(33, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(33, ZRF.FUNCTION,	3);	// friend?
-    design.addCommand(33, ZRF.FUNCTION,	0);	// not
-    design.addCommand(33, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(33, ZRF.MODE,	26);	// move-fourfold-sw
-    design.addCommand(33, ZRF.FUNCTION,	25);	// to
-    design.addCommand(33, ZRF.FUNCTION,	28);	// end
-
-    design.addCommand(34, ZRF.FUNCTION,	24);	// from
-    design.addCommand(34, ZRF.PARAM,	0);	// $1
-    design.addCommand(34, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(34, ZRF.FUNCTION,	3);	// friend?
-    design.addCommand(34, ZRF.FUNCTION,	0);	// not
-    design.addCommand(34, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(34, ZRF.MODE,	27);	// move-twice
-    design.addCommand(34, ZRF.FUNCTION,	25);	// to
-    design.addCommand(34, ZRF.FUNCTION,	28);	// end
 
     design.addPriority(0);			// normal
 
@@ -1069,103 +880,31 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(24, 5, [13, 13], 0);
     design.addMove(24, 6, [13, 13, 13], 0);
 
-    design.addPiece("Lion-Dog", 25, 1476);
-    design.addMove(25, 9, [7, 7, 7], 0);
-    design.addMove(25, 9, [11, 11, 11], 0);
-    design.addMove(25, 9, [13, 13, 13], 0);
-    design.addMove(25, 9, [1, 1, 1], 0);
-    design.addMove(25, 9, [14, 14, 14], 0);
-    design.addMove(25, 9, [4, 4, 4], 0);
-    design.addMove(25, 9, [9, 9, 9], 0);
-    design.addMove(25, 9, [0, 0, 0], 0);
-    design.addMove(25, 10, [7, 7], 0);
-    design.addMove(25, 11, [11, 11], 0);
-    design.addMove(25, 12, [13, 13], 0);
-    design.addMove(25, 13, [1, 1], 0);
-    design.addMove(25, 14, [14, 14], 0);
-    design.addMove(25, 15, [4, 4], 0);
-    design.addMove(25, 16, [9, 9], 0);
-    design.addMove(25, 17, [0, 0], 0);
-    design.addMove(25, 18, [7], 0);
-    design.addMove(25, 19, [11], 0);
-    design.addMove(25, 20, [13], 0);
-    design.addMove(25, 21, [1], 0);
-    design.addMove(25, 22, [14], 0);
-    design.addMove(25, 23, [4], 0);
-    design.addMove(25, 24, [9], 0);
-    design.addMove(25, 25, [0], 0);
-    design.addMove(25, 0, [7], 3);
-    design.addMove(25, 0, [11], 4);
-    design.addMove(25, 0, [13], 5);
+    design.addPiece("Lion-Dog", 25, 860);
+    design.addMove(25, 9, [7], 0);
+    design.addMove(25, 9, [11], 0);
+    design.addMove(25, 10, [13], 0);
+    design.addMove(25, 10, [1], 0);
+    design.addMove(25, 11, [9], 0);
+    design.addMove(25, 11, [4], 0);
+    design.addMove(25, 12, [14], 0);
+    design.addMove(25, 12, [0], 0);
+    design.addMove(25, 13, [7], 1);
+    design.addMove(25, 13, [11], 1);
+    design.addMove(25, 14, [13], 2);
+    design.addMove(25, 14, [1], 2);
+    design.addMove(25, 15, [9], 3);
+    design.addMove(25, 15, [4], 3);
+    design.addMove(25, 16, [14], 4);
+    design.addMove(25, 16, [0], 4);
+    design.addMove(25, 0, [7], 5);
+    design.addMove(25, 0, [11], 5);
+    design.addMove(25, 0, [13], 6);
     design.addMove(25, 0, [1], 6);
-    design.addMove(25, 0, [14], 7);
-    design.addMove(25, 0, [4], 8);
-    design.addMove(25, 0, [9], 9);
-    design.addMove(25, 0, [0], 10);
-    design.addMove(25, 4, [7, 7], 11);
-    design.addMove(25, 26, [7], 11);
-    design.addMove(25, 0, [7], 11);
-    design.addMove(25, 0, [1], 11);
-    design.addMove(25, 0, [13], 11);
-    design.addMove(25, 0, [11], 11);
-    design.addMove(25, 0, [0], 11);
-    design.addMove(25, 0, [9], 11);
-    design.addMove(25, 4, [11, 11], 12);
-    design.addMove(25, 27, [11], 12);
-    design.addMove(25, 0, [11], 12);
-    design.addMove(25, 0, [1], 12);
-    design.addMove(25, 0, [13], 12);
-    design.addMove(25, 0, [7], 12);
-    design.addMove(25, 0, [4], 12);
-    design.addMove(25, 0, [14], 12);
-    design.addMove(25, 4, [13, 13], 13);
-    design.addMove(25, 28, [13], 13);
-    design.addMove(25, 0, [13], 13);
-    design.addMove(25, 0, [7], 13);
-    design.addMove(25, 0, [11], 13);
-    design.addMove(25, 0, [1], 13);
-    design.addMove(25, 0, [14], 13);
-    design.addMove(25, 0, [9], 13);
-    design.addMove(25, 4, [1, 1], 14);
-    design.addMove(25, 29, [1], 14);
-    design.addMove(25, 0, [1], 14);
-    design.addMove(25, 0, [7], 14);
-    design.addMove(25, 0, [11], 14);
-    design.addMove(25, 0, [13], 14);
-    design.addMove(25, 0, [4], 14);
-    design.addMove(25, 0, [0], 14);
-    design.addMove(25, 4, [14, 14], 15);
-    design.addMove(25, 30, [14], 15);
-    design.addMove(25, 0, [14], 15);
-    design.addMove(25, 0, [13], 15);
-    design.addMove(25, 0, [11], 15);
-    design.addMove(25, 0, [0], 15);
-    design.addMove(25, 4, [4, 4], 16);
-    design.addMove(25, 31, [4], 16);
-    design.addMove(25, 0, [4], 16);
-    design.addMove(25, 0, [1], 16);
-    design.addMove(25, 0, [11], 16);
-    design.addMove(25, 0, [9], 16);
-    design.addMove(25, 4, [9, 9], 17);
-    design.addMove(25, 32, [9], 17);
-    design.addMove(25, 0, [9], 17);
-    design.addMove(25, 0, [13], 17);
-    design.addMove(25, 0, [7], 17);
-    design.addMove(25, 0, [4], 17);
-    design.addMove(25, 4, [0, 0], 18);
-    design.addMove(25, 33, [0], 18);
-    design.addMove(25, 0, [0], 18);
-    design.addMove(25, 0, [1], 18);
-    design.addMove(25, 0, [7], 18);
-    design.addMove(25, 0, [14], 18);
-    design.addMove(25, 0, [7], 19);
-    design.addMove(25, 0, [11], 20);
-    design.addMove(25, 0, [13], 21);
-    design.addMove(25, 0, [1], 22);
-    design.addMove(25, 0, [14], 23);
-    design.addMove(25, 0, [4], 24);
-    design.addMove(25, 0, [9], 25);
-    design.addMove(25, 0, [0], 26);
+    design.addMove(25, 0, [9], 7);
+    design.addMove(25, 0, [4], 7);
+    design.addMove(25, 0, [14], 8);
+    design.addMove(25, 0, [0], 8);
 
     design.addPiece("Old-Rat", 26, 60);
     design.addMove(26, 0, [7], 0);
@@ -1282,41 +1021,25 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(37, 5, [4, 4], 0);
     design.addMove(37, 6, [4, 4, 4], 0);
 
-    design.addPiece("Lion", 38, 920);
-    design.addMove(38, 4, [7, 7], 0);
-    design.addMove(38, 4, [11, 11], 0);
-    design.addMove(38, 4, [13, 13], 0);
-    design.addMove(38, 4, [1, 1], 0);
-    design.addMove(38, 4, [14, 14], 0);
-    design.addMove(38, 4, [4, 4], 0);
-    design.addMove(38, 4, [9, 9], 0);
-    design.addMove(38, 4, [0, 0], 0);
-    design.addMove(38, 0, [5], 0);
-    design.addMove(38, 0, [8], 0);
-    design.addMove(38, 0, [6], 0);
-    design.addMove(38, 0, [10], 0);
-    design.addMove(38, 0, [12], 0);
-    design.addMove(38, 0, [2], 0);
-    design.addMove(38, 0, [3], 0);
-    design.addMove(38, 0, [15], 0);
-    design.addMove(38, 34, [7], 0);
-    design.addMove(38, 34, [11], 0);
-    design.addMove(38, 34, [1], 0);
-    design.addMove(38, 34, [13], 0);
-    design.addMove(38, 34, [14], 0);
-    design.addMove(38, 34, [4], 0);
-    design.addMove(38, 34, [9], 0);
-    design.addMove(38, 34, [0], 0);
-    design.addMove(38, 0, [7], 27);
-    design.addMove(38, 0, [1], 27);
-    design.addMove(38, 0, [11], 27);
-    design.addMove(38, 0, [13], 27);
-    design.addMove(38, 0, [14], 27);
-    design.addMove(38, 0, [4], 27);
-    design.addMove(38, 0, [9], 27);
-    design.addMove(38, 0, [0], 27);
+    design.addPiece("Lion", 38, 732);
+    design.addMove(38, 17, [7], 0);
+    design.addMove(38, 17, [11], 0);
+    design.addMove(38, 17, [13], 0);
+    design.addMove(38, 17, [1], 0);
+    design.addMove(38, 17, [9], 0);
+    design.addMove(38, 17, [4], 0);
+    design.addMove(38, 17, [14], 0);
+    design.addMove(38, 17, [0], 0);
+    design.addMove(38, 0, [7], 9);
+    design.addMove(38, 0, [1], 9);
+    design.addMove(38, 0, [11], 9);
+    design.addMove(38, 0, [13], 9);
+    design.addMove(38, 0, [14], 9);
+    design.addMove(38, 0, [4], 9);
+    design.addMove(38, 0, [9], 9);
+    design.addMove(38, 0, [0], 9);
 
-    design.addPiece("Furious-Fiend", 39, 1040);
+    design.addPiece("Furious-Fiend", 39, 850);
     design.addMove(39, 6, [7, 7, 7], 0);
     design.addMove(39, 6, [11, 11, 11], 0);
     design.addMove(39, 6, [13, 13, 13], 0);
@@ -1325,38 +1048,22 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(39, 6, [4, 4, 4], 0);
     design.addMove(39, 6, [9, 9, 9], 0);
     design.addMove(39, 6, [0, 0, 0], 0);
-    design.addMove(39, 4, [7, 7], 0);
-    design.addMove(39, 4, [11, 11], 0);
-    design.addMove(39, 4, [13, 13], 0);
-    design.addMove(39, 4, [1, 1], 0);
-    design.addMove(39, 4, [14, 14], 0);
-    design.addMove(39, 4, [4, 4], 0);
-    design.addMove(39, 4, [9, 9], 0);
-    design.addMove(39, 4, [0, 0], 0);
-    design.addMove(39, 0, [5], 0);
-    design.addMove(39, 0, [8], 0);
-    design.addMove(39, 0, [6], 0);
-    design.addMove(39, 0, [10], 0);
-    design.addMove(39, 0, [12], 0);
-    design.addMove(39, 0, [2], 0);
-    design.addMove(39, 0, [3], 0);
-    design.addMove(39, 0, [15], 0);
-    design.addMove(39, 34, [7], 0);
-    design.addMove(39, 34, [11], 0);
-    design.addMove(39, 34, [1], 0);
-    design.addMove(39, 34, [13], 0);
-    design.addMove(39, 34, [14], 0);
-    design.addMove(39, 34, [4], 0);
-    design.addMove(39, 34, [9], 0);
-    design.addMove(39, 34, [0], 0);
-    design.addMove(39, 0, [7], 27);
-    design.addMove(39, 0, [1], 27);
-    design.addMove(39, 0, [11], 27);
-    design.addMove(39, 0, [13], 27);
-    design.addMove(39, 0, [14], 27);
-    design.addMove(39, 0, [4], 27);
-    design.addMove(39, 0, [9], 27);
-    design.addMove(39, 0, [0], 27);
+    design.addMove(39, 17, [7], 0);
+    design.addMove(39, 17, [11], 0);
+    design.addMove(39, 17, [13], 0);
+    design.addMove(39, 17, [1], 0);
+    design.addMove(39, 17, [9], 0);
+    design.addMove(39, 17, [4], 0);
+    design.addMove(39, 17, [14], 0);
+    design.addMove(39, 17, [0], 0);
+    design.addMove(39, 0, [7], 9);
+    design.addMove(39, 0, [1], 9);
+    design.addMove(39, 0, [11], 9);
+    design.addMove(39, 0, [13], 9);
+    design.addMove(39, 0, [14], 9);
+    design.addMove(39, 0, [4], 9);
+    design.addMove(39, 0, [9], 9);
+    design.addMove(39, 0, [0], 9);
 
     design.addPiece("Reverse-Chariot", 40, 150);
     design.addMove(40, 1, [7, 7], 0);
@@ -1572,7 +1279,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(72, 0, [13], 0);
     design.addMove(72, 0, [9], 0);
 
-    design.addPiece("Teaching-King", 73, 1506);
+    design.addPiece("Teaching-King", 73, 1090);
     design.addMove(73, 1, [7, 7], 0);
     design.addMove(73, 1, [1, 1], 0);
     design.addMove(73, 1, [11, 11], 0);
@@ -1581,102 +1288,30 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(73, 1, [14, 14], 0);
     design.addMove(73, 1, [9, 9], 0);
     design.addMove(73, 1, [0, 0], 0);
-    design.addMove(73, 9, [7, 7, 7], 0);
-    design.addMove(73, 9, [11, 11, 11], 0);
-    design.addMove(73, 9, [13, 13, 13], 0);
-    design.addMove(73, 9, [1, 1, 1], 0);
-    design.addMove(73, 9, [14, 14, 14], 0);
-    design.addMove(73, 9, [4, 4, 4], 0);
-    design.addMove(73, 9, [9, 9, 9], 0);
-    design.addMove(73, 9, [0, 0, 0], 0);
-    design.addMove(73, 10, [7, 7], 0);
-    design.addMove(73, 11, [11, 11], 0);
-    design.addMove(73, 12, [13, 13], 0);
-    design.addMove(73, 13, [1, 1], 0);
-    design.addMove(73, 14, [14, 14], 0);
-    design.addMove(73, 15, [4, 4], 0);
-    design.addMove(73, 16, [9, 9], 0);
-    design.addMove(73, 17, [0, 0], 0);
-    design.addMove(73, 18, [7], 0);
-    design.addMove(73, 19, [11], 0);
-    design.addMove(73, 20, [13], 0);
-    design.addMove(73, 21, [1], 0);
-    design.addMove(73, 22, [14], 0);
-    design.addMove(73, 23, [4], 0);
-    design.addMove(73, 24, [9], 0);
-    design.addMove(73, 25, [0], 0);
-    design.addMove(73, 0, [7], 3);
-    design.addMove(73, 0, [11], 4);
-    design.addMove(73, 0, [13], 5);
+    design.addMove(73, 9, [7], 0);
+    design.addMove(73, 9, [11], 0);
+    design.addMove(73, 10, [13], 0);
+    design.addMove(73, 10, [1], 0);
+    design.addMove(73, 11, [9], 0);
+    design.addMove(73, 11, [4], 0);
+    design.addMove(73, 12, [14], 0);
+    design.addMove(73, 12, [0], 0);
+    design.addMove(73, 13, [7], 1);
+    design.addMove(73, 13, [11], 1);
+    design.addMove(73, 14, [13], 2);
+    design.addMove(73, 14, [1], 2);
+    design.addMove(73, 15, [9], 3);
+    design.addMove(73, 15, [4], 3);
+    design.addMove(73, 16, [14], 4);
+    design.addMove(73, 16, [0], 4);
+    design.addMove(73, 0, [7], 5);
+    design.addMove(73, 0, [11], 5);
+    design.addMove(73, 0, [13], 6);
     design.addMove(73, 0, [1], 6);
-    design.addMove(73, 0, [14], 7);
-    design.addMove(73, 0, [4], 8);
-    design.addMove(73, 0, [9], 9);
-    design.addMove(73, 0, [0], 10);
-    design.addMove(73, 4, [7, 7], 11);
-    design.addMove(73, 26, [7], 11);
-    design.addMove(73, 0, [7], 11);
-    design.addMove(73, 0, [1], 11);
-    design.addMove(73, 0, [13], 11);
-    design.addMove(73, 0, [11], 11);
-    design.addMove(73, 0, [0], 11);
-    design.addMove(73, 0, [9], 11);
-    design.addMove(73, 4, [11, 11], 12);
-    design.addMove(73, 27, [11], 12);
-    design.addMove(73, 0, [11], 12);
-    design.addMove(73, 0, [1], 12);
-    design.addMove(73, 0, [13], 12);
-    design.addMove(73, 0, [7], 12);
-    design.addMove(73, 0, [4], 12);
-    design.addMove(73, 0, [14], 12);
-    design.addMove(73, 4, [13, 13], 13);
-    design.addMove(73, 28, [13], 13);
-    design.addMove(73, 0, [13], 13);
-    design.addMove(73, 0, [7], 13);
-    design.addMove(73, 0, [11], 13);
-    design.addMove(73, 0, [1], 13);
-    design.addMove(73, 0, [14], 13);
-    design.addMove(73, 0, [9], 13);
-    design.addMove(73, 4, [1, 1], 14);
-    design.addMove(73, 29, [1], 14);
-    design.addMove(73, 0, [1], 14);
-    design.addMove(73, 0, [7], 14);
-    design.addMove(73, 0, [11], 14);
-    design.addMove(73, 0, [13], 14);
-    design.addMove(73, 0, [4], 14);
-    design.addMove(73, 0, [0], 14);
-    design.addMove(73, 4, [14, 14], 15);
-    design.addMove(73, 30, [14], 15);
-    design.addMove(73, 0, [14], 15);
-    design.addMove(73, 0, [13], 15);
-    design.addMove(73, 0, [11], 15);
-    design.addMove(73, 0, [0], 15);
-    design.addMove(73, 4, [4, 4], 16);
-    design.addMove(73, 31, [4], 16);
-    design.addMove(73, 0, [4], 16);
-    design.addMove(73, 0, [1], 16);
-    design.addMove(73, 0, [11], 16);
-    design.addMove(73, 0, [9], 16);
-    design.addMove(73, 4, [9, 9], 17);
-    design.addMove(73, 32, [9], 17);
-    design.addMove(73, 0, [9], 17);
-    design.addMove(73, 0, [13], 17);
-    design.addMove(73, 0, [7], 17);
-    design.addMove(73, 0, [4], 17);
-    design.addMove(73, 4, [0, 0], 18);
-    design.addMove(73, 33, [0], 18);
-    design.addMove(73, 0, [0], 18);
-    design.addMove(73, 0, [1], 18);
-    design.addMove(73, 0, [7], 18);
-    design.addMove(73, 0, [14], 18);
-    design.addMove(73, 0, [7], 19);
-    design.addMove(73, 0, [11], 20);
-    design.addMove(73, 0, [13], 21);
-    design.addMove(73, 0, [1], 22);
-    design.addMove(73, 0, [14], 23);
-    design.addMove(73, 0, [4], 24);
-    design.addMove(73, 0, [9], 25);
-    design.addMove(73, 0, [0], 26);
+    design.addMove(73, 0, [9], 7);
+    design.addMove(73, 0, [4], 7);
+    design.addMove(73, 0, [14], 8);
+    design.addMove(73, 0, [0], 8);
 
     design.addPiece("Dark-Spirit", 74, 70);
     design.addMove(74, 0, [4], 0);
@@ -1684,7 +1319,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(74, 0, [0], 0);
     design.addMove(74, 0, [1], 0);
 
-    design.addPiece("Buddhist-Spirit", 75, 1200);
+    design.addPiece("Buddhist-Spirit", 75, 984);
     design.addMove(75, 1, [7, 7], 0);
     design.addMove(75, 1, [11, 11], 0);
     design.addMove(75, 1, [13, 13], 0);
@@ -1693,38 +1328,22 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(75, 1, [4, 4], 0);
     design.addMove(75, 1, [9, 9], 0);
     design.addMove(75, 1, [0, 0], 0);
-    design.addMove(75, 4, [7, 7], 0);
-    design.addMove(75, 4, [11, 11], 0);
-    design.addMove(75, 4, [13, 13], 0);
-    design.addMove(75, 4, [1, 1], 0);
-    design.addMove(75, 4, [14, 14], 0);
-    design.addMove(75, 4, [4, 4], 0);
-    design.addMove(75, 4, [9, 9], 0);
-    design.addMove(75, 4, [0, 0], 0);
-    design.addMove(75, 0, [5], 0);
-    design.addMove(75, 0, [8], 0);
-    design.addMove(75, 0, [6], 0);
-    design.addMove(75, 0, [10], 0);
-    design.addMove(75, 0, [12], 0);
-    design.addMove(75, 0, [2], 0);
-    design.addMove(75, 0, [3], 0);
-    design.addMove(75, 0, [15], 0);
-    design.addMove(75, 34, [7], 0);
-    design.addMove(75, 34, [11], 0);
-    design.addMove(75, 34, [1], 0);
-    design.addMove(75, 34, [13], 0);
-    design.addMove(75, 34, [14], 0);
-    design.addMove(75, 34, [4], 0);
-    design.addMove(75, 34, [9], 0);
-    design.addMove(75, 34, [0], 0);
-    design.addMove(75, 0, [7], 27);
-    design.addMove(75, 0, [1], 27);
-    design.addMove(75, 0, [11], 27);
-    design.addMove(75, 0, [13], 27);
-    design.addMove(75, 0, [14], 27);
-    design.addMove(75, 0, [4], 27);
-    design.addMove(75, 0, [9], 27);
-    design.addMove(75, 0, [0], 27);
+    design.addMove(75, 17, [7], 0);
+    design.addMove(75, 17, [11], 0);
+    design.addMove(75, 17, [13], 0);
+    design.addMove(75, 17, [1], 0);
+    design.addMove(75, 17, [9], 0);
+    design.addMove(75, 17, [4], 0);
+    design.addMove(75, 17, [14], 0);
+    design.addMove(75, 17, [0], 0);
+    design.addMove(75, 0, [7], 9);
+    design.addMove(75, 0, [1], 9);
+    design.addMove(75, 0, [11], 9);
+    design.addMove(75, 0, [13], 9);
+    design.addMove(75, 0, [14], 9);
+    design.addMove(75, 0, [4], 9);
+    design.addMove(75, 0, [9], 9);
+    design.addMove(75, 0, [0], 9);
 
     design.addPiece("King", 76, 3500);
     design.addMove(76, 0, [7], 0);
@@ -2323,7 +1942,7 @@ Dagaz.View.configure = function(view) {
     view.defPosition("r1", 756, 799, 38, 38);
     view.defPosition("s1", 799, 799, 38, 38);
 
-    view.defPopup("Promote", 378, 100);
-    view.defPopupPosition("T1", 12, 15, 39, 39);
-    view.defPopupPosition("T2", 52, 15, 39, 39);
+    view.defPopup("Promote", 377, 2);
+    view.defPopupPosition("T1", 36, 120, 39, 39);
+    view.defPopupPosition("T2", 36, 165, 39, 39);
 }
