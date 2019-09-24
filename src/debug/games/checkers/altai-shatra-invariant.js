@@ -43,7 +43,7 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
-  var moves = [];
+  var moves = []; var kings = [];
   _.each(board.moves, function(move) {
       if (!_.isUndefined(move.failed)) return;
       var r = checkMove(move);
@@ -52,9 +52,15 @@ Dagaz.Model.CheckInvariants = function(board) {
           _.each(move.actions, function(a) {
               if ((a[0] === null) || (a[1] === null)) return;
               if (isKing(design, board, a[1][0], r.p)) {
-                  moves.push(prefix(move, a[3]));
+                  var m = prefix(move, a[3]);
+                  if (!m.isPass()) {
+                      moves.push(m);
+                  }
               }
           });
+          if (isKing(design, board, r.p, r.p)) {
+              kings.push(r.p);
+          }
       }
   });
   if (moves.length > 0) {
@@ -62,7 +68,7 @@ Dagaz.Model.CheckInvariants = function(board) {
           if (!_.isUndefined(move.failed)) return;
           var r = checkMove(move);
           if (r.c || (r.p === null)) return;
-          if (isKing(design, board, r.p, r.p)) {
+          if (_.indexOf(kings, r.p) >= 0) {
               moves.push(move);
           }
       });

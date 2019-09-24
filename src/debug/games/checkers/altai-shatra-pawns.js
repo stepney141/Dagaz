@@ -3,7 +3,7 @@
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "altai-shatra-restrictions") {
+  if (name != "altai-shatra-pawns") {
      checkVersion(design, name, value);
   }
 }
@@ -21,22 +21,17 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
-  var isFound = false;
-  _.each(design.allPositions(), function(pos) {
-      if (!design.inZone(1, board.player, pos)) return;
-      var piece = board.getPiece(pos);
-      if (piece === null) return;
-      if (piece.player != board.player) return;
-      if (piece.type > 0) return;
-      isFound = true;
-  });
   var moves = [];
-  if (isFound) {
-      _.each(board.moves, function(move) {
-          if (!_.isUndefined(move.failed)) return;
-          _.each(move.actions, function(a) {
-              if ((a[0] === null) || (a[1] === null)) return;
-              if (!design.inZone(1, board.player, a[1][0])) return;
+  _.each(board.moves, function(move) {
+      var start = null;
+      _.each(move.actions, function(a) {
+          if ((a[0] === null) || (a[1] === null)) return;
+          if (start === null) {
+              start = a[0][0];
+              var piece = board.getPiece(start);
+              if ((piece === null) || (piece.type != 0)) return;
+          }
+          if (design.inZone(1, board.player, pos) || design.inZone(2, board.player, pos)) {
               move.failed = true;
               if (a[3] > 1) {
                   var m = prefix(move, a[3] - 1);
@@ -44,9 +39,9 @@ Dagaz.Model.CheckInvariants = function(board) {
                       moves.push(m);
                   }
               }
-          });
+          }
       });
-  }
+  });
   _.each(moves, function(move) {
       board.moves.push(move);
   });

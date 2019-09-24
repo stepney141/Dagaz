@@ -67,7 +67,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("a11", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
     design.addPosition("b11", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
     design.addPosition("c11", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-    design.addPosition("d11", [8, 7, 6, 0, 0, -6, -8, -7, 0, 0]);
+    design.addPosition("d11", [8, 7, 6, 0, 0, -6, -8, -7, 10, 0]);
     design.addPosition("e11", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
     design.addPosition("f11", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
     design.addPosition("g11", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
@@ -116,7 +116,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("a4", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
     design.addPosition("b4", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
     design.addPosition("c4", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-    design.addPosition("d4", [8, 7, 6, 0, 0, -6, -8, -7, 0, 0]);
+    design.addPosition("d4", [8, 7, 6, 0, 0, -6, -8, -7, -10, 0]);
     design.addPosition("e4", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
     design.addPosition("f4", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
     design.addPosition("g4", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
@@ -160,12 +160,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.PARAM,	1);	// $2
     design.addCommand(0, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(0, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(0, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(0, ZRF.IN_ZONE,	2);	// gate
-    design.addCommand(0, ZRF.FUNCTION,	0);	// not
-    design.addCommand(0, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(0, ZRF.IN_ZONE,	1);	// home
-    design.addCommand(0, ZRF.FUNCTION,	0);	// not
     design.addCommand(0, ZRF.FUNCTION,	20);	// verify
     design.addCommand(0, ZRF.IN_ZONE,	3);	// promotion
     design.addCommand(0, ZRF.FUNCTION,	0);	// not
