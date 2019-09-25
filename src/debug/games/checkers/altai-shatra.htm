@@ -5,7 +5,8 @@
 </head>
 <body>
 
-<img id="Board" style="display:none" src="images/shatra.png">
+<img id="WhiteBoard" style="display:none" src="images/shatraw.png">
+<img id="BlackBoard" style="display:none" src="images/shatrab.png">
 <img id="WhiteMan" style="display:none" src="images/cheskers/wpawn.png">
 <img id="BlackMan" style="display:none" src="images/cheskers/bpawn.png">
 <img id="WhiteKing" style="display:none" src="images/cheskers/wking.png">
@@ -42,10 +43,10 @@
 <script src="../../kernel/model/zrf-model.js"></script>
 <script src="../../kernel/model/zobrist.js"></script>
 <script src="../../kernel/model/common-setup-v2.js"></script>
-<script src="../../kernel/view/2d/2d-view-v2.js"></script>
+<script src="../../kernel/view/2d/2d-view-v3.js"></script>
 <script src="../../kernel/controller/utils/move-list-v1.js"></script>
 <script src="../../kernel/controller/ai/random-ai.js"></script>
-<script src="../../kernel/controller/ai/maxmin-ai-v2.js"></script>
+<script src="../../kernel/controller/ai/uct-ai-v4.js"></script>
 <script src="../../kernel/controller/ai/forced-ai.js"></script>
 <script src="deferred-captures.js"></script>
 <script src="altai-shatra-goal.js"></script>

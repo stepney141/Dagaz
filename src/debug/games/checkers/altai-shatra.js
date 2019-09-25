@@ -450,7 +450,8 @@ Dagaz.Model.BuildDesign = function(design) {
 }
 
 Dagaz.View.configure = function(view) {
-    view.defBoard("Board");
+    view.defBoard("WhiteBoard", 0, 0, undefined, [0]);
+    view.defBoard("BlackBoard", 0, 0, undefined, [1]);
     view.defPiece("WhiteMan", "White Man");
     view.defPiece("BlackMan", "Black Man");
     view.defPiece("WhiteKing", "White King");
