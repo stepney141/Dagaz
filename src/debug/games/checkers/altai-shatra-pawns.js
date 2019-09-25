@@ -31,7 +31,7 @@ Dagaz.Model.CheckInvariants = function(board) {
               var piece = board.getPiece(start);
               if ((piece === null) || (piece.type != 0)) return;
           }
-          if (design.inZone(1, board.player, pos) || design.inZone(2, board.player, pos)) {
+          if (design.inZone(1, board.player, a[1][0]) || design.inZone(2, board.player, a[1][0])) {
               move.failed = true;
               if (a[3] > 1) {
                   var m = prefix(move, a[3] - 1);

@@ -1,8 +1,8 @@
 (function() {
 
 Dagaz.AI.AI_FRAME      = 2000;
-Dagaz.AI.MIN_DEEP      = 1;
-Dagaz.AI.MAX_DEEP      = 2;
+Dagaz.AI.MIN_DEEP      = 2;
+Dagaz.AI.MAX_DEEP      = 3;
 
 var MAX_FORCED_FACTOR  = 1;
 
@@ -23,7 +23,7 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
               piece = board.getPiece(a[0][0]);
           }
           if (a[1] !== null) {
-              if ((piece.type == 0) && design.inZone(2, board.player, a[1][0])) r += 1000;
+              if ((piece.type == 0) && design.inZone(3, board.player, a[1][0])) r += 1000;
           } else {
               var target = board.getPiece(a[0][0]);
               if (target !== null) {
@@ -36,8 +36,6 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
 }
 
 var getDirs = function(type) {
-  if (type == 2) return [3, 5, 6, 7];
-  if (type == 3) return [0, 1, 2, 4];
   return [0, 1, 2, 3, 4, 5, 6, 7];
 }
 
@@ -80,7 +78,7 @@ Dagaz.AI.getEval = function(design, board) {
       board.eval = 0;
       _.each(design.allPositions(), function(pos) {
           var piece = board.getPiece(pos);
-          if ((piece !== null) && !design.inZone(0, board.player, pos)) {
+          if (piece !== null) {
               var v = design.price[piece.type];
               if (!Dagaz.AI.isFriend(board.player, piece.player)) {
                   v = -v;
