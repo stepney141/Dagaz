@@ -61,6 +61,7 @@ Dagaz.Model.CheckInvariants = function(board) {
   }
   _.each(board.moves, function(move) {
       var isPool = false;
+      var isPoolChanged = false;
       var fr  = 0;
       var dir = 0;
       if (move.mode != 0) {
@@ -232,9 +233,12 @@ Dagaz.Model.CheckInvariants = function(board) {
                        }
                    }
                }
+               if (design.inZone(1, board.player, pos)) {
+                   isPoolChanged = true;
+               }
                pos = design.navigate(board.player, pos, dir);
           }
-          if (!isPool && (fr == 0)) {
+          if (!isPool && !isPoolChanged && (fr == 0)) {
                _.each(design.allPositions(), function(pos) {
                     if (design.inZone(1, board.player, pos)) {
                         var piece = board.getPiece(pos);

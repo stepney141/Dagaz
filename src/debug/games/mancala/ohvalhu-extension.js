@@ -95,6 +95,7 @@ Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
   _.each(board.moves, function(move) {
       var isPool = false;
+      var isPoolChanged = false;
       var fr  = 0;
       var dir = 0;
       if (move.isSimpleMove()) {
@@ -150,9 +151,11 @@ Dagaz.Model.CheckInvariants = function(board) {
                        if (pos !== null) {
                            piece = board.getPiece(pos);
                            if ((piece !== null) || (result.length == Dagaz.Model.SIZE) || (_.indexOf(positions, pos) >= 0)) {
-                               captured.push(pos);
-                               fr++;
-                               result[ix] = 0;
+                               if ((piece === null) || (piece.type == 0)) {
+                                   captured.push(pos);
+                                   fr++;
+                                   result[ix] = 0;
+                               }
                            }
                        }
                    }
@@ -214,6 +217,9 @@ Dagaz.Model.CheckInvariants = function(board) {
                        }
                    }
                }
+               if (design.inZone(1, board.player, pos)) {
+                   isPoolChanged = true;
+               }
                pos = design.navigate(board.player, pos, dir);
                piece = board.getPiece(pos);
                while ((piece !== null) && (+piece.type == 2)) {
@@ -221,7 +227,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                    piece = board.getPiece(pos);
                }
           }
-          if (!isPool && (fr == 0)) {
+          if (!isPool && !isPoolChanged && (fr == 0)) {
                _.each(design.allPositions(), function(pos) {
                     if (design.inZone(1, board.player, pos)) {
                         var piece = board.getPiece(pos);
