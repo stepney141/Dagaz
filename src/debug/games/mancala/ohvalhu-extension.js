@@ -54,11 +54,11 @@ Dagaz.Model.continue = function(design, board, text) {
   for (var i = 0; i < 8 - c; i++) {
      str = str + "2:1;";
   }
-  if (x1 > 0) {
-      str = str + "0:1=" + x1 + ";";
-  }
   if (x2 > 0) {
       str = str + "0:2=" + x2 + ";";
+  }
+  if (x1 > 0) {
+      str = str + "0:1=" + x1 + ";";
   }
   str = str + ";&turn=" + t;
   return str;
