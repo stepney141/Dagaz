@@ -276,7 +276,7 @@
 
   (piece
       (name FieldMarshal)
-      (image South "images/luzhanqi/kanji/p1bb.bmp"
+      (image South "images/luzhanqi/p1bb.bmp"
              North "images/Luzhanqi/pbh.bmp")
       (drops
          (move-type droptype)
@@ -291,7 +291,7 @@
   )
   (piece
       (name General)
-      (image South "images/luzhanqi/kanji/p2bb.bmp"
+      (image South "images/luzhanqi/p2bb.bmp"
              North "images/Luzhanqi/pbh.bmp")
       (drops
          (move-type droptype)
@@ -306,7 +306,7 @@
   )
   (piece
       (name MajorGeneral)
-      (image South "images/luzhanqi/kanji/p3bb.bmp"
+      (image South "images/luzhanqi/p3bb.bmp"
              North "images/Luzhanqi/pbh.bmp")
       (drops
          (move-type droptype)
@@ -321,7 +321,7 @@
   )
   (piece
       (name BrigadierGeneral)
-      (image South "images/luzhanqi/kanji/p4bb.bmp"
+      (image South "images/luzhanqi/p4bb.bmp"
              North "images/Luzhanqi/pbh.bmp")
       (drops
          (move-type droptype)
@@ -336,7 +336,7 @@
   )
   (piece
       (name Colonel)
-      (image South "images/luzhanqi/kanji/p5bb.bmp"
+      (image South "images/luzhanqi/p5bb.bmp"
              North "images/Luzhanqi/pbh.bmp")
       (drops
          (move-type droptype)
@@ -351,7 +351,7 @@
   )
   (piece
       (name Major)
-      (image South "images/luzhanqi/kanji/p6bb.bmp"
+      (image South "images/luzhanqi/p6bb.bmp"
              North "images/Luzhanqi/pbh.bmp")
       (drops
          (move-type droptype)
@@ -366,7 +366,7 @@
   )
   (piece
       (name Captain)
-      (image South "images/luzhanqi/kanji/p7bb.bmp"
+      (image South "images/luzhanqi/p7bb.bmp"
              North "images/Luzhanqi/pbh.bmp")
       (drops
          (move-type droptype)
@@ -381,7 +381,7 @@
   )
   (piece
       (name Lieutenant)
-      (image South "images/luzhanqi/kanji/p8bb.bmp"
+      (image South "images/luzhanqi/p8bb.bmp"
              North "images/Luzhanqi/pbh.bmp")
       (drops
          (move-type droptype)
@@ -396,7 +396,7 @@
   )
   (piece
       (name Engineer)
-      (image South "images/luzhanqi/kanji/p9bb.bmp"
+      (image South "images/luzhanqi/p9bb.bmp"
              North "images/Luzhanqi/pbh.bmp")
       (drops
          (move-type droptype)
@@ -405,7 +405,7 @@
   )
   (piece
       (name Bomb)
-      (image South "images/luzhanqi/kanji/pgbb.bmp"
+      (image South "images/luzhanqi/pgbb.bmp"
              North "images/Luzhanqi/pbh.bmp")
       (drops
          (move-type droptype)
@@ -414,7 +414,7 @@
   )
   (piece
       (name Landmine)
-      (image South "images/luzhanqi/kanji/pmbb.bmp"
+      (image South "images/luzhanqi/pmbb.bmp"
              North "images/Luzhanqi/pbh.bmp")
       (drops
          (move-type bombtype)
@@ -423,7 +423,7 @@
   )
   (piece
       (name Flag)
-      (image South "images/luzhanqi/kanji/pfbb.bmp"
+      (image South "images/luzhanqi/pfbb.bmp"
              North "images/Luzhanqi/pbh.bmp")
       (drops
          (move-type flagtype)
@@ -443,8 +443,8 @@
          (Lieutenant off 0)
          (Engineer off 0)
          (Bomb off 0)
-         (Landmine off 0)
-         (Flag off 0)
+         (Landmine b12 d13 d12)
+         (Flag b13)
       )
       (South
          (FieldMarshal off 1)

@@ -1,3 +1,5 @@
+Dagaz.View.MARK_R = 12;
+
 ZRF = {
     JUMP:          0,
     IF:            1,
@@ -213,7 +215,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPriority(2);			// droptype
     design.addPriority(3);			// normaltype
 
-    design.addPiece("FieldMarshal", 0);
+    design.addPiece("FieldMarshal", 0, 350);
     design.addDrop(0, 0, [], 2);
     design.addMove(0, 1, [4], 3);
     design.addMove(0, 1, [5], 3);
@@ -228,7 +230,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 2, [3, 3], 3);
     design.addMove(0, 2, [2, 2], 3);
 
-    design.addPiece("General", 1);
+    design.addPiece("General", 1, 260);
     design.addDrop(1, 0, [], 2);
     design.addMove(1, 1, [4], 3);
     design.addMove(1, 1, [5], 3);
@@ -243,7 +245,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(1, 2, [3, 3], 3);
     design.addMove(1, 2, [2, 2], 3);
 
-    design.addPiece("MajorGeneral", 2);
+    design.addPiece("MajorGeneral", 2, 170);
     design.addDrop(2, 0, [], 2);
     design.addMove(2, 1, [4], 3);
     design.addMove(2, 1, [5], 3);
@@ -258,7 +260,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(2, 2, [3, 3], 3);
     design.addMove(2, 2, [2, 2], 3);
 
-    design.addPiece("BrigadierGeneral", 3);
+    design.addPiece("BrigadierGeneral", 3, 120);
     design.addDrop(3, 0, [], 2);
     design.addMove(3, 1, [4], 3);
     design.addMove(3, 1, [5], 3);
@@ -273,7 +275,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(3, 2, [3, 3], 3);
     design.addMove(3, 2, [2, 2], 3);
 
-    design.addPiece("Colonel", 4);
+    design.addPiece("Colonel", 4, 90);
     design.addDrop(4, 0, [], 2);
     design.addMove(4, 1, [4], 3);
     design.addMove(4, 1, [5], 3);
@@ -288,7 +290,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(4, 2, [3, 3], 3);
     design.addMove(4, 2, [2, 2], 3);
 
-    design.addPiece("Major", 5);
+    design.addPiece("Major", 5, 70);
     design.addDrop(5, 0, [], 2);
     design.addMove(5, 1, [4], 3);
     design.addMove(5, 1, [5], 3);
@@ -303,7 +305,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(5, 2, [3, 3], 3);
     design.addMove(5, 2, [2, 2], 3);
 
-    design.addPiece("Captain", 6);
+    design.addPiece("Captain", 6, 40);
     design.addDrop(6, 0, [], 2);
     design.addMove(6, 1, [4], 3);
     design.addMove(6, 1, [5], 3);
@@ -318,7 +320,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(6, 2, [3, 3], 3);
     design.addMove(6, 2, [2, 2], 3);
 
-    design.addPiece("Lieutenant", 7);
+    design.addPiece("Lieutenant", 7, 20);
     design.addDrop(7, 0, [], 2);
     design.addMove(7, 1, [4], 3);
     design.addMove(7, 1, [5], 3);
@@ -333,16 +335,16 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(7, 2, [3, 3], 3);
     design.addMove(7, 2, [2, 2], 3);
 
-    design.addPiece("Engineer", 8);
+    design.addPiece("Engineer", 8, 60);
     design.addDrop(8, 0, [], 2);
 
-    design.addPiece("Bomb", 9);
+    design.addPiece("Bomb", 9, 130);
     design.addDrop(9, 3, [], 2);
 
-    design.addPiece("Landmine", 10);
+    design.addPiece("Landmine", 10, 35);
     design.addDrop(10, 4, [], 1);
 
-    design.addPiece("Flag", 11);
+    design.addPiece("Flag", 11, 1000000);
     design.addDrop(11, 5, [], 0);
 
     design.reserve("North", "FieldMarshal", 0);
@@ -369,6 +371,28 @@ Dagaz.Model.BuildDesign = function(design) {
     design.reserve("South", "Bomb", 2);
     design.reserve("South", "Landmine", 3);
     design.reserve("South", "Flag", 1);
+
+    design.setupSelector(4);
+
+    design.setup("North", "Landmine", 7, 1);
+    design.setup("North", "Landmine", 18, 1);
+    design.setup("North", "Landmine", 19, 1);
+    design.setup("North", "Flag", 6, 1);
+
+    design.setup("North", "Landmine", 19, 2);
+    design.setup("North", "Landmine", 12, 2);
+    design.setup("North", "Landmine", 24, 2);
+    design.setup("North", "Flag", 18, 2);
+
+    design.setup("North", "Landmine", 7, 3);
+    design.setup("North", "Landmine", 12, 3);
+    design.setup("North", "Landmine", 0, 3);
+    design.setup("North", "Flag", 6, 3);
+
+    design.setup("North", "Landmine", 6, 4);
+    design.setup("North", "Landmine", 7, 4);
+    design.setup("North", "Landmine", 19, 4);
+    design.setup("North", "Flag", 18, 4);
 }
 
 Dagaz.View.configure = function(view) {
@@ -397,6 +421,7 @@ Dagaz.View.configure = function(view) {
     view.defPiece("NorthLandmine", "North Landmine");
     view.defPiece("SouthFlag", "South Flag");
     view.defPiece("NorthFlag", "North Flag");
+    view.defPiece("Ko", "Ko");
  
     view.defPosition("a13", 0, 8, 91, 43);
     view.defPosition("a12", 0, 50, 91, 43);
