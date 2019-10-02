@@ -31,6 +31,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-drops", "true");
     design.checkVersion("show-captures", "false");
+    design.checkVersion("detect-loops", "true");
+    design.checkVersion("advisor-wait", "5");
 
     design.addDirection("N");
     design.addDirection("S");
@@ -150,8 +152,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addZone("hqe", 1, [6, 18]);
     design.addZone("home", 2, [5, 4, 3, 2, 1, 0, 11, 9, 7, 6, 17, 16, 14, 13, 12, 23, 21, 19, 18, 29, 28, 27, 26, 25, 24]);
     design.addZone("home", 1, [38, 37, 36, 35, 34, 33, 44, 43, 41, 39, 50, 49, 48, 46, 45, 56, 55, 53, 51, 62, 61, 60, 59, 58, 57]);
-    design.addZone("front", 2, [1, 7, 13, 19, 25, 2, 14, 26, 3, 9, 21, 27, 4, 16, 28, 5, 11, 17, 23, 29]);
-    design.addZone("front", 1, [37, 43, 49, 55, 61, 36, 48, 60, 35, 41, 53, 59, 34, 46, 58, 33, 39, 45, 51, 57]);
+    design.addZone("front", 2, [1, 7, 13, 19, 25, 2, 14, 26, 3, 9, 21, 27, 4, 16, 28, 0, 6, 12, 18, 24]);
+    design.addZone("front", 1, [37, 43, 49, 55, 61, 36, 48, 60, 35, 41, 53, 59, 34, 46, 58, 38, 44, 50, 56, 62]);
     design.addZone("rear", 2, [0, 6, 12, 18, 24, 1, 7, 13, 19, 25]);
     design.addZone("rear", 1, [38, 44, 50, 56, 62, 37, 43, 49, 55, 61]);
 
@@ -163,6 +165,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(1, ZRF.FUNCTION,	24);	// from
+    design.addCommand(1, ZRF.IN_ZONE,	3);	// hqe
+    design.addCommand(1, ZRF.FUNCTION,	0);	// not
+    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
     design.addCommand(1, ZRF.PARAM,	0);	// $1
     design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(1, ZRF.FUNCTION,	3);	// friend?
@@ -172,6 +177,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(1, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(2, ZRF.FUNCTION,	24);	// from
+    design.addCommand(2, ZRF.IN_ZONE,	3);	// hqe
+    design.addCommand(2, ZRF.FUNCTION,	0);	// not
+    design.addCommand(2, ZRF.FUNCTION,	20);	// verify
     design.addCommand(2, ZRF.PARAM,	0);	// $1
     design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(2, ZRF.FUNCTION,	1);	// empty?
@@ -183,32 +191,73 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(2, ZRF.PARAM,	1);	// $2
     design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(2, ZRF.JUMP,	-8);
-    design.addCommand(2, ZRF.FUNCTION,	3);	// friend?
-    design.addCommand(2, ZRF.FUNCTION,	0);	// not
+    design.addCommand(2, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(2, ZRF.FUNCTION,	20);	// verify
     design.addCommand(2, ZRF.FUNCTION,	25);	// to
     design.addCommand(2, ZRF.FUNCTION,	28);	// end
 
-    design.addCommand(3, ZRF.IN_ZONE,	5);	// front
+    design.addCommand(3, ZRF.FUNCTION,	24);	// from
+    design.addCommand(3, ZRF.IN_ZONE,	3);	// hqe
+    design.addCommand(3, ZRF.FUNCTION,	0);	// not
     design.addCommand(3, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(3, ZRF.PARAM,	0);	// $1
+    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(3, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(3, ZRF.FUNCTION,	0);	// not
+    design.addCommand(3, ZRF.IF,	8);
+    design.addCommand(3, ZRF.FORK,	4);
+    design.addCommand(3, ZRF.MODE,	4);	// cont-h
+    design.addCommand(3, ZRF.FUNCTION,	25);	// to
+    design.addCommand(3, ZRF.FUNCTION,	28);	// end
+    design.addCommand(3, ZRF.PARAM,	1);	// $2
+    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(3, ZRF.JUMP,	-9);
+    design.addCommand(3, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(3, ZRF.FUNCTION,	20);	// verify
     design.addCommand(3, ZRF.FUNCTION,	25);	// to
     design.addCommand(3, ZRF.FUNCTION,	28);	// end
 
-    design.addCommand(4, ZRF.IN_ZONE,	6);	// rear
+    design.addCommand(4, ZRF.FUNCTION,	24);	// from
+    design.addCommand(4, ZRF.IN_ZONE,	3);	// hqe
+    design.addCommand(4, ZRF.FUNCTION,	0);	// not
     design.addCommand(4, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(4, ZRF.PARAM,	0);	// $1
+    design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(4, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(4, ZRF.FUNCTION,	0);	// not
+    design.addCommand(4, ZRF.IF,	8);
+    design.addCommand(4, ZRF.FORK,	4);
+    design.addCommand(4, ZRF.MODE,	5);	// cont-v
+    design.addCommand(4, ZRF.FUNCTION,	25);	// to
+    design.addCommand(4, ZRF.FUNCTION,	28);	// end
+    design.addCommand(4, ZRF.PARAM,	1);	// $2
+    design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(4, ZRF.JUMP,	-9);
+    design.addCommand(4, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(4, ZRF.FUNCTION,	20);	// verify
     design.addCommand(4, ZRF.FUNCTION,	25);	// to
     design.addCommand(4, ZRF.FUNCTION,	28);	// end
 
-    design.addCommand(5, ZRF.IN_ZONE,	2);	// hqf
+    design.addCommand(5, ZRF.IN_ZONE,	5);	// front
     design.addCommand(5, ZRF.FUNCTION,	20);	// verify
     design.addCommand(5, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(5, ZRF.FUNCTION,	20);	// verify
     design.addCommand(5, ZRF.FUNCTION,	25);	// to
     design.addCommand(5, ZRF.FUNCTION,	28);	// end
+
+    design.addCommand(6, ZRF.IN_ZONE,	6);	// rear
+    design.addCommand(6, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(6, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(6, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(6, ZRF.FUNCTION,	25);	// to
+    design.addCommand(6, ZRF.FUNCTION,	28);	// end
+
+    design.addCommand(7, ZRF.IN_ZONE,	2);	// hqf
+    design.addCommand(7, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(7, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(7, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(7, ZRF.FUNCTION,	25);	// to
+    design.addCommand(7, ZRF.FUNCTION,	28);	// end
 
     design.addPriority(0);			// flagtype
     design.addPriority(1);			// bombtype
@@ -337,15 +386,45 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("Engineer", 8, 60);
     design.addDrop(8, 0, [], 2);
+    design.addMove(8, 1, [4], 3);
+    design.addMove(8, 1, [5], 3);
+    design.addMove(8, 1, [7], 3);
+    design.addMove(8, 1, [6], 3);
+    design.addMove(8, 1, [8], 3);
+    design.addMove(8, 1, [11], 3);
+    design.addMove(8, 1, [10], 3);
+    design.addMove(8, 1, [9], 3);
+    design.addMove(8, 3, [0, 0], 3);
+    design.addMove(8, 3, [1, 1], 3);
+    design.addMove(8, 4, [3, 3], 3);
+    design.addMove(8, 4, [2, 2], 3);
+    design.addMove(8, 4, [3, 3], 4);
+    design.addMove(8, 4, [2, 2], 4);
+    design.addMove(8, 3, [0, 0], 5);
+    design.addMove(8, 3, [1, 1], 5);
 
     design.addPiece("Bomb", 9, 130);
-    design.addDrop(9, 3, [], 2);
+    design.addDrop(9, 5, [], 2);
+    design.addMove(9, 1, [4], 3);
+    design.addMove(9, 1, [5], 3);
+    design.addMove(9, 1, [7], 3);
+    design.addMove(9, 1, [6], 3);
+    design.addMove(9, 1, [8], 3);
+    design.addMove(9, 1, [11], 3);
+    design.addMove(9, 1, [10], 3);
+    design.addMove(9, 1, [9], 3);
+    design.addMove(9, 2, [0, 0], 3);
+    design.addMove(9, 2, [1, 1], 3);
+    design.addMove(9, 2, [3, 3], 3);
+    design.addMove(9, 2, [2, 2], 3);
 
     design.addPiece("Landmine", 10, 35);
-    design.addDrop(10, 4, [], 1);
+    design.addDrop(10, 6, [], 1);
 
     design.addPiece("Flag", 11, 1000000);
-    design.addDrop(11, 5, [], 0);
+    design.addDrop(11, 7, [], 0);
+
+    design.addPiece("OpenedFlag", 12, 1000000);
 
     design.reserve("North", "FieldMarshal", 0);
     design.reserve("North", "General", 0);
@@ -359,6 +438,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.reserve("North", "Bomb", 0);
     design.reserve("North", "Landmine", 0);
     design.reserve("North", "Flag", 0);
+    design.reserve("North", "OpenedFlag", 0);
     design.reserve("South", "FieldMarshal", 1);
     design.reserve("South", "General", 1);
     design.reserve("South", "MajorGeneral", 2);
@@ -371,6 +451,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.reserve("South", "Bomb", 2);
     design.reserve("South", "Landmine", 3);
     design.reserve("South", "Flag", 1);
+    design.reserve("South", "OpenedFlag", 0);
 
     design.setupSelector(4);
 
@@ -421,37 +502,39 @@ Dagaz.View.configure = function(view) {
     view.defPiece("NorthLandmine", "North Landmine");
     view.defPiece("SouthFlag", "South Flag");
     view.defPiece("NorthFlag", "North Flag");
+    view.defPiece("SouthOpenedFlag", "South OpenedFlag");
+    view.defPiece("NorthOpenedFlag", "North OpenedFlag");
     view.defPiece("Ko", "Ko");
  
-    view.defPosition("a13", 0, 8, 91, 43);
+    view.defPosition("a13", 0, 10, 91, 43);
     view.defPosition("a12", 0, 50, 91, 43);
     view.defPosition("a11", 0, 90, 91, 43);
     view.defPosition("a10", 0, 133, 91, 43);
     view.defPosition("a9", 0, 176, 91, 43);
     view.defPosition("a8", 0, 219, 91, 43);
-    view.defPosition("b13", 84, 8, 91, 43);
+    view.defPosition("b13", 84, 10, 91, 43);
     view.defPosition("b12", 84, 50, 91, 43);
     view.defPosition("b11", 84, 90, 91, 43);
     view.defPosition("b10", 84, 133, 91, 43);
     view.defPosition("b9", 84, 176, 91, 43);
     view.defPosition("b8", 84, 219, 91, 43);
-    view.defPosition("c13", 180, 8, 91, 43);
+    view.defPosition("c13", 180, 10, 91, 43);
     view.defPosition("c12", 180, 50, 91, 43);
     view.defPosition("c11", 180, 90, 91, 43);
     view.defPosition("c10", 180, 133, 91, 43);
     view.defPosition("c9", 180, 176, 91, 43);
     view.defPosition("c8", 180, 219, 91, 43);
-    view.defPosition("d13", 273, 8, 91, 43);
+    view.defPosition("d13", 273, 10, 91, 43);
     view.defPosition("d12", 273, 50, 91, 43);
     view.defPosition("d11", 273, 90, 91, 43);
     view.defPosition("d10", 273, 133, 91, 43);
     view.defPosition("d9", 273, 176, 91, 43);
     view.defPosition("d8", 273, 219, 91, 43);
-    view.defPosition("e13", 359, 8, 91, 43);
+    view.defPosition("e13", 359, 10, 91, 43);
     view.defPosition("e12", 359, 50, 91, 43);
     view.defPosition("e11", 359, 90, 91, 43);
     view.defPosition("e10", 359, 133, 91, 43);
-    view.defPosition("e9", 359, 176, 91, 36);
+    view.defPosition("e9", 359, 178, 91, 36);
     view.defPosition("e8", 359, 219, 91, 43);
     view.defPosition("a7", 0, 282, 91, 43);
     view.defPosition("c7", 180, 282, 91, 43);

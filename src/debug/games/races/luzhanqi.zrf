@@ -23,14 +23,22 @@
 ))
 
 (define common-step (
+   (verify (not-in-zone? hqe))
    $1 (verify not-friend?)
    add
 ))
 
 (define common-slide (
-  $1 
-  (while empty? add $1)
-  (verify not-friend?)
+  (verify (not-in-zone? hqe))
+  $1 (while empty? add $1)
+  (verify enemy?)
+  add
+))
+
+(define eng-slide (
+  (verify (not-in-zone? hqe))
+  $1 (while empty? (add-partial $2) $1)
+  (verify enemy?)
   add
 ))
 
@@ -254,13 +262,13 @@
          (name front)
          (players South)
          (positions a2 b2 c2 d2 e2 a3 c3 e3 a4 b4 d4 e4
-                    a5 c5 e5 a6 b6 c6 d6 e6)
+                    a5 c5 e5 a1 b1 c1 d1 e1)
       )
       (zone
          (name front)
          (players North)
          (positions a12 b12 c12 d12 e12 a11 c11 e11 a10 b10 d10 e10
-                    a9  c9  e9  a8 b8 c8 d8 e8)
+                    a9 c9 e9 a13 b13 c13 d13 e13)
       )
       (zone
          (name rear)
@@ -277,7 +285,7 @@
   (piece
       (name FieldMarshal)
       (image South "images/luzhanqi/p1bb.bmp"
-             North "images/Luzhanqi/pbh.bmp")
+             North "images/Luzhanqi/prh.bmp")
       (drops
          (move-type droptype)
          (drop-other)
@@ -292,7 +300,7 @@
   (piece
       (name General)
       (image South "images/luzhanqi/p2bb.bmp"
-             North "images/Luzhanqi/pbh.bmp")
+             North "images/Luzhanqi/prh.bmp")
       (drops
          (move-type droptype)
          (drop-other)
@@ -307,7 +315,7 @@
   (piece
       (name MajorGeneral)
       (image South "images/luzhanqi/p3bb.bmp"
-             North "images/Luzhanqi/pbh.bmp")
+             North "images/Luzhanqi/prh.bmp")
       (drops
          (move-type droptype)
          (drop-other)
@@ -322,7 +330,7 @@
   (piece
       (name BrigadierGeneral)
       (image South "images/luzhanqi/p4bb.bmp"
-             North "images/Luzhanqi/pbh.bmp")
+             North "images/Luzhanqi/prh.bmp")
       (drops
          (move-type droptype)
          (drop-other)
@@ -337,7 +345,7 @@
   (piece
       (name Colonel)
       (image South "images/luzhanqi/p5bb.bmp"
-             North "images/Luzhanqi/pbh.bmp")
+             North "images/Luzhanqi/prh.bmp")
       (drops
          (move-type droptype)
          (drop-other)
@@ -352,7 +360,7 @@
   (piece
       (name Major)
       (image South "images/luzhanqi/p6bb.bmp"
-             North "images/Luzhanqi/pbh.bmp")
+             North "images/Luzhanqi/prh.bmp")
       (drops
          (move-type droptype)
          (drop-other)
@@ -367,7 +375,7 @@
   (piece
       (name Captain)
       (image South "images/luzhanqi/p7bb.bmp"
-             North "images/Luzhanqi/pbh.bmp")
+             North "images/Luzhanqi/prh.bmp")
       (drops
          (move-type droptype)
          (drop-other)
@@ -382,7 +390,7 @@
   (piece
       (name Lieutenant)
       (image South "images/luzhanqi/p8bb.bmp"
-             North "images/Luzhanqi/pbh.bmp")
+             North "images/Luzhanqi/prh.bmp")
       (drops
          (move-type droptype)
          (drop-other)
@@ -397,25 +405,41 @@
   (piece
       (name Engineer)
       (image South "images/luzhanqi/p9bb.bmp"
-             North "images/Luzhanqi/pbh.bmp")
+             North "images/Luzhanqi/prh.bmp")
       (drops
          (move-type droptype)
          (drop-other)
+      )
+      (moves
+         (move-type normaltype)
+         (common-step  n) (common-step  s) (common-step  w) (common-step  e)
+         (common-step nw) (common-step sw) (common-step ne) (common-step se)
+         (eng-slide N cont-h) (eng-slide S cont-h) (eng-slide W cont-v) (eng-slide E cont-v)
+         (move-type cont-h)
+         (eng-slide W cont-v) (eng-slide E cont-v)
+         (move-type cont-v)
+         (eng-slide N cont-h) (eng-slide S cont-h)
       )
   )
   (piece
       (name Bomb)
       (image South "images/luzhanqi/pgbb.bmp"
-             North "images/Luzhanqi/pbh.bmp")
+             North "images/Luzhanqi/prh.bmp")
       (drops
          (move-type droptype)
          (drop-bomb)
+      )
+      (moves
+         (move-type normaltype)
+         (common-step  n) (common-step  s) (common-step  w) (common-step  e)
+         (common-step nw) (common-step sw) (common-step ne) (common-step se)
+         (common-slide N) (common-slide S) (common-slide W) (common-slide E)
       )
   )
   (piece
       (name Landmine)
       (image South "images/luzhanqi/pmbb.bmp"
-             North "images/Luzhanqi/pbh.bmp")
+             North "images/Luzhanqi/prh.bmp")
       (drops
          (move-type bombtype)
          (drop-landmine)
@@ -424,11 +448,16 @@
   (piece
       (name Flag)
       (image South "images/luzhanqi/pfbb.bmp"
-             North "images/Luzhanqi/pbh.bmp")
+             North "images/Luzhanqi/prh.bmp")
       (drops
          (move-type flagtype)
          (drop-flag)
       )
+  )
+  (piece
+      (name OpenedFlag)
+      (image South "images/luzhanqi/pfbb.bmp"
+             North "images/Luzhanqi/pfbr.bmp")
   )
 
   (board-setup
@@ -445,6 +474,7 @@
          (Bomb off 0)
          (Landmine b12 d13 d12)
          (Flag b13)
+         (OpenedFlag off 0)
       )
       (South
          (FieldMarshal off 1)
@@ -459,6 +489,7 @@
          (Bomb off 2)
          (Landmine off 3)
          (Flag off 1)
+         (OpenedFlag off 0)
       )
   )
 )
