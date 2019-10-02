@@ -206,7 +206,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(3, ZRF.FUNCTION,	0);	// not
     design.addCommand(3, ZRF.IF,	8);
     design.addCommand(3, ZRF.FORK,	4);
-    design.addCommand(3, ZRF.MODE,	4);	// cont-h
+    design.addCommand(3, ZRF.MODE,	4);	// cont-h1
     design.addCommand(3, ZRF.FUNCTION,	25);	// to
     design.addCommand(3, ZRF.FUNCTION,	28);	// end
     design.addCommand(3, ZRF.PARAM,	1);	// $2
@@ -227,7 +227,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(4, ZRF.FUNCTION,	0);	// not
     design.addCommand(4, ZRF.IF,	8);
     design.addCommand(4, ZRF.FORK,	4);
-    design.addCommand(4, ZRF.MODE,	5);	// cont-v
+    design.addCommand(4, ZRF.MODE,	5);	// cont-v1
     design.addCommand(4, ZRF.FUNCTION,	25);	// to
     design.addCommand(4, ZRF.FUNCTION,	28);	// end
     design.addCommand(4, ZRF.PARAM,	1);	// $2
@@ -238,26 +238,110 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(4, ZRF.FUNCTION,	25);	// to
     design.addCommand(4, ZRF.FUNCTION,	28);	// end
 
-    design.addCommand(5, ZRF.IN_ZONE,	5);	// front
+    design.addCommand(5, ZRF.FUNCTION,	24);	// from
+    design.addCommand(5, ZRF.IN_ZONE,	3);	// hqe
+    design.addCommand(5, ZRF.FUNCTION,	0);	// not
     design.addCommand(5, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(5, ZRF.PARAM,	0);	// $1
+    design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(5, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(5, ZRF.FUNCTION,	0);	// not
+    design.addCommand(5, ZRF.IF,	8);
+    design.addCommand(5, ZRF.FORK,	4);
+    design.addCommand(5, ZRF.MODE,	7);	// cont-v2
+    design.addCommand(5, ZRF.FUNCTION,	25);	// to
+    design.addCommand(5, ZRF.FUNCTION,	28);	// end
+    design.addCommand(5, ZRF.PARAM,	1);	// $2
+    design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(5, ZRF.JUMP,	-9);
+    design.addCommand(5, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(5, ZRF.FUNCTION,	20);	// verify
     design.addCommand(5, ZRF.FUNCTION,	25);	// to
     design.addCommand(5, ZRF.FUNCTION,	28);	// end
 
-    design.addCommand(6, ZRF.IN_ZONE,	6);	// rear
+    design.addCommand(6, ZRF.FUNCTION,	24);	// from
+    design.addCommand(6, ZRF.IN_ZONE,	3);	// hqe
+    design.addCommand(6, ZRF.FUNCTION,	0);	// not
     design.addCommand(6, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(6, ZRF.PARAM,	0);	// $1
+    design.addCommand(6, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(6, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(6, ZRF.FUNCTION,	0);	// not
+    design.addCommand(6, ZRF.IF,	8);
+    design.addCommand(6, ZRF.FORK,	4);
+    design.addCommand(6, ZRF.MODE,	6);	// cont-h2
+    design.addCommand(6, ZRF.FUNCTION,	25);	// to
+    design.addCommand(6, ZRF.FUNCTION,	28);	// end
+    design.addCommand(6, ZRF.PARAM,	1);	// $2
+    design.addCommand(6, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(6, ZRF.JUMP,	-9);
+    design.addCommand(6, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(6, ZRF.FUNCTION,	20);	// verify
     design.addCommand(6, ZRF.FUNCTION,	25);	// to
     design.addCommand(6, ZRF.FUNCTION,	28);	// end
 
-    design.addCommand(7, ZRF.IN_ZONE,	2);	// hqf
+    design.addCommand(7, ZRF.FUNCTION,	24);	// from
+    design.addCommand(7, ZRF.IN_ZONE,	3);	// hqe
+    design.addCommand(7, ZRF.FUNCTION,	0);	// not
     design.addCommand(7, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(7, ZRF.PARAM,	0);	// $1
+    design.addCommand(7, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(7, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(7, ZRF.FUNCTION,	0);	// not
+    design.addCommand(7, ZRF.IF,	8);
+    design.addCommand(7, ZRF.FORK,	4);
+    design.addCommand(7, ZRF.MODE,	9);	// cont-v3
+    design.addCommand(7, ZRF.FUNCTION,	25);	// to
+    design.addCommand(7, ZRF.FUNCTION,	28);	// end
+    design.addCommand(7, ZRF.PARAM,	1);	// $2
+    design.addCommand(7, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(7, ZRF.JUMP,	-9);
+    design.addCommand(7, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(7, ZRF.FUNCTION,	20);	// verify
     design.addCommand(7, ZRF.FUNCTION,	25);	// to
     design.addCommand(7, ZRF.FUNCTION,	28);	// end
+
+    design.addCommand(8, ZRF.FUNCTION,	24);	// from
+    design.addCommand(8, ZRF.IN_ZONE,	3);	// hqe
+    design.addCommand(8, ZRF.FUNCTION,	0);	// not
+    design.addCommand(8, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(8, ZRF.PARAM,	0);	// $1
+    design.addCommand(8, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(8, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(8, ZRF.FUNCTION,	0);	// not
+    design.addCommand(8, ZRF.IF,	8);
+    design.addCommand(8, ZRF.FORK,	4);
+    design.addCommand(8, ZRF.MODE,	8);	// cont-h3
+    design.addCommand(8, ZRF.FUNCTION,	25);	// to
+    design.addCommand(8, ZRF.FUNCTION,	28);	// end
+    design.addCommand(8, ZRF.PARAM,	1);	// $2
+    design.addCommand(8, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(8, ZRF.JUMP,	-9);
+    design.addCommand(8, ZRF.FUNCTION,	2);	// enemy?
+    design.addCommand(8, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(8, ZRF.FUNCTION,	25);	// to
+    design.addCommand(8, ZRF.FUNCTION,	28);	// end
+
+    design.addCommand(9, ZRF.IN_ZONE,	5);	// front
+    design.addCommand(9, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(9, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(9, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(9, ZRF.FUNCTION,	25);	// to
+    design.addCommand(9, ZRF.FUNCTION,	28);	// end
+
+    design.addCommand(10, ZRF.IN_ZONE,	6);	// rear
+    design.addCommand(10, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(10, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(10, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(10, ZRF.FUNCTION,	25);	// to
+    design.addCommand(10, ZRF.FUNCTION,	28);	// end
+
+    design.addCommand(11, ZRF.IN_ZONE,	2);	// hqf
+    design.addCommand(11, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(11, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(11, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(11, ZRF.FUNCTION,	25);	// to
+    design.addCommand(11, ZRF.FUNCTION,	28);	// end
 
     design.addPriority(0);			// flagtype
     design.addPriority(1);			// bombtype
@@ -398,13 +482,21 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(8, 3, [1, 1], 3);
     design.addMove(8, 4, [3, 3], 3);
     design.addMove(8, 4, [2, 2], 3);
-    design.addMove(8, 4, [3, 3], 4);
-    design.addMove(8, 4, [2, 2], 4);
-    design.addMove(8, 3, [0, 0], 5);
-    design.addMove(8, 3, [1, 1], 5);
+    design.addMove(8, 5, [3, 3], 4);
+    design.addMove(8, 5, [2, 2], 4);
+    design.addMove(8, 6, [0, 0], 5);
+    design.addMove(8, 6, [1, 1], 5);
+    design.addMove(8, 7, [3, 3], 6);
+    design.addMove(8, 7, [2, 2], 6);
+    design.addMove(8, 8, [0, 0], 7);
+    design.addMove(8, 8, [1, 1], 7);
+    design.addMove(8, 2, [3, 3], 8);
+    design.addMove(8, 2, [2, 2], 8);
+    design.addMove(8, 2, [0, 0], 9);
+    design.addMove(8, 2, [1, 1], 9);
 
     design.addPiece("Bomb", 9, 130);
-    design.addDrop(9, 5, [], 2);
+    design.addDrop(9, 9, [], 2);
     design.addMove(9, 1, [4], 3);
     design.addMove(9, 1, [5], 3);
     design.addMove(9, 1, [7], 3);
@@ -419,12 +511,12 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(9, 2, [2, 2], 3);
 
     design.addPiece("Landmine", 10, 35);
-    design.addDrop(10, 6, [], 1);
+    design.addDrop(10, 10, [], 1);
 
     design.addPiece("Flag", 11, 1000000);
-    design.addDrop(11, 7, [], 0);
+    design.addDrop(11, 11, [], 0);
 
-    design.addPiece("OpenedFlag", 12, 1000000);
+    design.addPiece("OpenedFlag", 12, 10000);
 
     design.reserve("North", "FieldMarshal", 0);
     design.reserve("North", "General", 0);
