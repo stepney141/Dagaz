@@ -130,7 +130,7 @@
   - Ordo [best, groups, family:breakthrough]
   - Nubia [todo, family:checkers]
   - HiQue [todo, family:custodian]
-  - Luzhanqi [todo, flag, cloack, drops, limit, family:chess]
+  - Luzhanqi [cloack, setups, drops, limit, sparks, family:chess]
   - Stratego [cloack, drops, limit, sparks, family:chess]
   - Game of Generals [todo:ai, cloack, drops, limit, breakthrough, sparks, family:chess]
   - Neutron [todo, shared, family:breakthrough]
