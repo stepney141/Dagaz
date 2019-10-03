@@ -27,7 +27,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-drops", "false");
     design.checkVersion("pass-partial", "true");
     design.checkVersion("smart-moves", "false");
-    design.checkVersion("show-blink", "false");
+    design.checkVersion("show-blink", "true");
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-drops", "true");
     design.checkVersion("show-captures", "false");

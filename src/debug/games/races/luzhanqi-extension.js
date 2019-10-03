@@ -2,6 +2,9 @@
 
 var bombOnce = false;
 
+var left  = [38, 37, 36, 35, 34, 33, 30, 5, 4, 3, 2, 1, 0];
+var right = [62, 61, 60, 59, 58, 57, 32, 29, 28, 27, 26, 25, 24];
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
@@ -10,6 +13,12 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   } else {
       checkVersion(design, name, value);
   }
+}
+
+Dagaz.View.shiftX = function(pos) {
+  if (_.indexOf(left, +pos) >= 0) return -6;
+  if (_.indexOf(right, +pos) >= 0) return 6;
+  return 0;
 }
 
 var checkAttack = function(attacker, attacking) {

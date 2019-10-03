@@ -355,6 +355,14 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
   }
 }
 
+Dagaz.View.shiftX = function(pos) {
+  return Dagaz.View.SHIFT_X;
+}
+
+Dagaz.View.shiftY = function(pos) {
+  return Dagaz.View.SHIFT_Y;
+}
+
 var drawMarks = function(ctx, view, list, color) {
    _.each(list, function(p) {
         var pos = this.pos[p];
@@ -375,7 +383,7 @@ var drawMarks = function(ctx, view, list, color) {
         }
         ctx.beginPath();
         ctx.fillStyle = color;
-        ctx.arc(x + Dagaz.View.SHIFT_X, y + Dagaz.View.SHIFT_Y, r, 0, 2 * Math.PI);
+        ctx.arc(x + Dagaz.View.shiftX(p), y + Dagaz.View.shiftY(p), r, 0, 2 * Math.PI);
         ctx.fill();
         ctx.stroke();
    }, view);
