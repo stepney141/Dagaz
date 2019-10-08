@@ -276,22 +276,27 @@ var checkGoals = Dagaz.Model.checkGoals;
 Dagaz.Model.checkGoals = function(design, board, player) {
   board.generate(design);
   if (board.moves.length > 0) return checkGoals(design, board, player);
-  var f = []; e = [];
+  var f = []; var e = []; 
+  var fc = 0; var ec = 0;
   _.each(positions, function(pos) {
       var piece = board.getPiece(pos);
       if (piece === null) return;
       if (notCastle(design, board, piece.player, pos)) return;
       var r = getAttacking(design, board, piece.player, pos);
-      if (r.length > 0) {
-          if (piece.player != player) {
+      if (piece.player != player) {
+          if (r.length > 0) {
               return e.push(r);
-          } else {
+              ec++;
+          }
+      } else {
+          if (r.length > 0) {
               return f.push(r);
+              fc++;
           }
       }
   });
-  if (isCheckmated(e)) return 1;
-  if (isCheckmated(f)) return -1;
+  if ((e.length == ec) && isCheckmated(e)) return 1;
+  if ((f.length == fc) && isCheckmated(f)) return -1;
   return r;
 }
 
@@ -311,7 +316,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                 }
                 cnt++;
           });
-          if ((cnt == 0) || isCheckmated(castles)) {
+          if ((cnt == 0) || ((castles.length == cnt) && isCheckmated(castles))) {
               move.failed = true;
           }
       }
