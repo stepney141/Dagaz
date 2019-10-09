@@ -297,7 +297,7 @@ Dagaz.Model.checkGoals = function(design, board, player) {
   });
   if ((e.length == ec) && isCheckmated(e)) return 1;
   if ((f.length == fc) && isCheckmated(f)) return -1;
-  return r;
+  return checkGoals(design, board, player);
 }
 
 var CheckInvariants = Dagaz.Model.CheckInvariants;
