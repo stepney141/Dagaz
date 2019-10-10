@@ -23,18 +23,20 @@ var navigate = function(design, pos, dirs) {
 var tryMove = function(design, board, pos, v, h) {
   var m = Dagaz.Model.createMove(0);
   m.hints = []; var dirs = { dir: v, alt: h};
+  var f = true;
   var p = navigate(design, pos, dirs);
   while ((p !== null) && (p != pos)) {
       if (_.indexOf(horde, p) >= 0) {
-          m.hints.push(p);
+          f = false;
       }
       var piece = board.getPiece(p);
       if (piece !== null) {
           if (piece.player == board.player) return null;
-          if (m.hints.length == 0) return null;
+          if (f) return null;
           m.movePiece(pos, p, board.getPiece(pos));
           return m;
       }
+      m.hints.push(p);
       var p = navigate(design, p, dirs);
   }
   return null;

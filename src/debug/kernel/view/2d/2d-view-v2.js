@@ -294,6 +294,13 @@ View2D.prototype.movePiece = function(move, from, to, piece, phase, steps) {
   if (!steps) { steps = Dagaz.View.STEP_CNT; }
   var ix = posToIx(this, from);
   if (!this.vectorFound(ix, from, to, piece, move.mode)) {
+      if (!_.isUndefined(move.hints)) {
+          _.each(move.hints, function(p) {
+               this.addPhase(ix, from, p, piece, phase, 1);
+               from = p;
+               phase++;
+          }, this);
+      }
       this.addPhase(ix, from, to, piece, phase, steps);
   }
 }
