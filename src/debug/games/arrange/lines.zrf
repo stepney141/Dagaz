@@ -1,0 +1,46 @@
+(define step (
+  $1 (verify empty?)
+  add
+))
+
+(define p
+  (piece
+     (name $1)
+     (image You "images/lines/$2.bmp")
+     (moves
+         (step n) (step e) (step w) (step s)
+     )
+  )
+)
+
+(game
+  (title "Lines")
+
+  (option "animate captures" true)
+  (option "animate drops"    true)
+  (option "smart moves"      false)
+
+  (players You)
+  (turn-order You)
+
+  (board
+      (image "images/lines/board.bmp")
+      (grid
+         (start-rectangle 7 57 32 84)
+         (dimensions
+             ("a/b/c/d/e/f/g/h/i" (34 0)) ; files         
+             ("9/8/7/6/5/4/3/2/1" (0 33)) ; ranks
+         )
+         (directions 
+            (n 0 -1) (s 0 1) (e 1 0) (w -1 0)
+            (nw -1 -1) (ne 1 -1) (sw -1 1) (se 1 1)
+         )
+      )
+  )
+
+  (p Dark dark) (p Light light) (p Green green) (p Red red) (p Yellow yellow) (p Purple purple)
+
+  (board-setup
+      (You (Dark a1) (Light b2) (Green c3) (Red g7) (Yellow h8) (Purple i9))
+  )
+)

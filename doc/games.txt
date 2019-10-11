@@ -36,7 +36,7 @@
   - Liberian Queah [reserve, family:checkers]
   - Choko [bonus, capture, sparks, family:checkers]
   - Mana [best, setups, sparks, king, family:other]
-  - Surakarta [todo, todo:autocomplete, family:checkers]
+  - Surakarta [best, hints, family:checkers]
   - Splut! [todo, turns, king, 4-players, family:other]
   - Rithmomachy [todo, heaps, arrange, cooperative, family:other]
   - Banqi [cloack, shared, best, todo:mindsports, family:chess]
