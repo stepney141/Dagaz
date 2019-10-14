@@ -60,6 +60,17 @@ Dagaz.Model.CheckInvariants = function(board) {
           }
           board.moves.push(b);
       }
+      a = tryMove(design, board, pos, 9, 8);
+      b = tryMove(design, board, pos, 11, 10);
+      if (a !== null) {
+          board.moves.push(a);
+      }
+      if (b !== null) {
+          if (a !== null) {
+              if (a.actions[0][1][0] == b.actions[0][1][0]) return;
+          }
+          board.moves.push(b);
+      }
   });
   CheckInvariants(board);
 }

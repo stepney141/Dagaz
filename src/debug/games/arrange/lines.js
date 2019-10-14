@@ -120,55 +120,18 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("h1", [0, 0, 0, 1, -1, -8, -10, -9]);
     design.addPosition("i1", [0, 0, 0, 0, -1, 0, -10, -9]);
 
-    design.addCommand(0, ZRF.FUNCTION,	24);	// from
-    design.addCommand(0, ZRF.PARAM,	0);	// $1
-    design.addCommand(0, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(0, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(0, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(0, ZRF.FUNCTION,	25);	// to
-    design.addCommand(0, ZRF.FUNCTION,	28);	// end
-
     design.addPiece("Dark", 0);
-    design.addMove(0, 0, [7], 0);
-    design.addMove(0, 0, [3], 0);
-    design.addMove(0, 0, [4], 0);
-    design.addMove(0, 0, [1], 0);
-
     design.addPiece("Light", 1);
-    design.addMove(1, 0, [7], 0);
-    design.addMove(1, 0, [3], 0);
-    design.addMove(1, 0, [4], 0);
-    design.addMove(1, 0, [1], 0);
-
     design.addPiece("Green", 2);
-    design.addMove(2, 0, [7], 0);
-    design.addMove(2, 0, [3], 0);
-    design.addMove(2, 0, [4], 0);
-    design.addMove(2, 0, [1], 0);
-
     design.addPiece("Red", 3);
-    design.addMove(3, 0, [7], 0);
-    design.addMove(3, 0, [3], 0);
-    design.addMove(3, 0, [4], 0);
-    design.addMove(3, 0, [1], 0);
-
     design.addPiece("Yellow", 4);
-    design.addMove(4, 0, [7], 0);
-    design.addMove(4, 0, [3], 0);
-    design.addMove(4, 0, [4], 0);
-    design.addMove(4, 0, [1], 0);
-
     design.addPiece("Purple", 5);
-    design.addMove(5, 0, [7], 0);
-    design.addMove(5, 0, [3], 0);
-    design.addMove(5, 0, [4], 0);
-    design.addMove(5, 0, [1], 0);
 
-    design.setup("You", "Dark", 72);
-    design.setup("You", "Light", 64);
-    design.setup("You", "Green", 56);
-    design.setup("You", "Red", 24);
-    design.setup("You", "Yellow", 16);
+    design.setup("You", "Purple", 72);
+    design.setup("You", "Purple", 64);
+    design.setup("You", "Purple", 56);
+    design.setup("You", "Purple", 24);
+    design.setup("You", "Purple", 16);
     design.setup("You", "Purple", 8);
 }
 
