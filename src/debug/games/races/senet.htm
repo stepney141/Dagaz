@@ -1,22 +1,18 @@
 <html>
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Lines</title>
+<title>Senet</title>
 </head>
 <body>
 
-<img id="Board" style="display:none" src="images/lines/board.png">
-<img id="YouDark" style="display:none" src="images/lines/dark.png">
-<img id="YouLight" style="display:none" src="images/lines/light.png">
-<img id="YouGreen" style="display:none" src="images/lines/green.png">
-<img id="YouRed" style="display:none" src="images/lines/red.png">
-<img id="YouYellow" style="display:none" src="images/lines/yellow.png">
-<img id="YouPurple" style="display:none" src="images/lines/purple.png">
+<img id="Board" style="display:none" src="images/senet/board.png">
+<img id="BlueStone" style="display:none" src="images/senet/blue.png">
+<img id="GreenStone" style="display:none" src="images/senet/green.png">
 
 <table style="margin:auto; font-family:sans-serif; font-size:14px" id="Table">
-<tr style="height:405px; vertical-align:top">
-<td id="CanvasCell" style="width:311px">
-<canvas id="Canvas" width="311" height="405" style="cursor:default">Broken canvas...</canvas>
+<tr style="height:185px; vertical-align:top">
+<td id="CanvasCell" style="width:601px">
+<canvas id="Canvas" width="601" height="185" style="cursor:default">Broken canvas...</canvas>
 </td><td style="width:300px;">
 <div style="height:510px; overflow:auto" id="ScrollDiv">
 <img id="GlyphImage"><p id="HelpText"></p>
@@ -37,17 +33,15 @@
 </tr>
 </table>
 
-<script src="../../../underscore/underscore-min.js"></script>
+<script src="http://underscorejs.ru/underscore-min.js"></script>
 <script src="../../kernel/dagaz.js"></script>
 <script src="../../kernel/model/zrf-model.js"></script>
 <script src="../../kernel/model/zobrist.js"></script>
 <script src="../../kernel/model/common-setup-v2.js"></script>
 <script src="../../kernel/view/2d/2d-view-v2.js"></script>
 <script src="../../kernel/controller/utils/move-list-v2.js"></script>
-<script src="lines-captures.js"></script>
-<script src="lines-extension.js"></script>
-<script src="lines.js"></script>
-<script src="../../kernel/controller/app-v4.js"></script>
+<script src="senet.js"></script>
+<script src="../../kernel/controller/app-v2.js"></script>
 
 </body>
 </html>
