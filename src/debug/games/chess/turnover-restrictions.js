@@ -140,7 +140,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                if ((move.mode == 3) && (piece.player != board.player)) {
                    f = false;
                }
-               if (f && !design.inZone(0, board.player, move.actions[0][1][0])) {
+               if (f) {
                    move.failed = true;
                    return;
                }

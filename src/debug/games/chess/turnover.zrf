@@ -565,7 +565,6 @@
 
 (variant
   (title "Turnover (debug)")
-  (default)
   (board-setup
      (Gold
          (Pawn b4b c4b d1b d2b e3b f4b h3b)
@@ -576,6 +575,23 @@
          (Pawn a6b b8b c8b f5b f6b g7b h8b)
          (Bishop b8s c7s c8s e2s g7s h8s)
          (Rook a8t b8t c8t d8t e5t g8t h4t h8t)
+     )
+  )
+)
+
+(variant
+  (title "Turnover (debug)")
+  (default)
+  (board-setup
+     (Gold
+         (Pawn a3b b1b d1b e1b e6b)
+         (Bishop b1s c5s d1s e1s e6s)
+         (Rook a1t b1t c1t d1t d8t e1t)
+     )
+     (Silver
+         (Pawn a8b b8b c8b g8b h8b)
+         (Bishop a8s b8s c8s f6s g8s h8s)
+         (Rook a8t b8t c8t f6t g8t h8t)
      )
   )
 )
