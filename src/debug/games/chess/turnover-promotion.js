@@ -8,6 +8,18 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+var isQueen = function(design, board, pos) {
+  var p = design.navigate(board.player, pos, 8);
+  if (p === null) return false;
+  var piece = board.getPiece(p);
+  if ((piece === null) || (piece.player != board.player)) return false;
+  p = design.navigate(board.player, p, 8);
+  if (p === null) return false;
+  piece = board.getPiece(p);
+  if ((piece === null) || (piece.player != board.player)) return false;
+  return true;
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
@@ -56,7 +68,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                    }
                }
            }
-           if (board.getPiece(pos) !== null) {
+           if ((board.getPiece(pos) !== null) || isQueen(design, board, pos)) {
                move.capturePiece(pos);
            }
            pos = design.navigate(board.player, pos, 8);
