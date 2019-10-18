@@ -1,0 +1,39 @@
+(define touch (
+  (add $1)
+))
+
+(define p
+  (piece
+     (name $1)
+     (image You "images/netwalk/$1.bmp")
+     (moves
+         (touch $2)
+     )
+  )
+)
+
+(game
+  (title "NetWalk")
+
+  (option "pass turn" true)
+
+  (players You)
+  (turn-order You)
+
+  (board
+      (image "images/netwalk/board.bmp")
+      (grid
+         (start-rectangle 0 0 50 50)
+         (dimensions
+             ("a/b/c/d/e/f/g/h/i" (50 0)) ; files         
+             ("9/8/7/6/5/4/3/2/1" (0 50)) ; ranks
+         )
+         (directions 
+            (n 0 -1) (s 0 1) (e 1 0) (w -1 0)
+         )
+      )
+  )
+
+  (p b1n b1n) (p b2ne b2se) (p b2se b2sw) (p b2sw b2nw) (p b2nw b2ne) (p b3n b3e) (p b3e b3s) (p b3s b3w) (p b3w b3n)
+  (p g1n g1n) (p g2ne g2se) (p g2se g2sw) (p g2sw g2nw) (p g2nw g2ne) (p g3n g3e) (p g3e g3s) (p g3s g3w) (p g3w g3n)
+)
