@@ -84,22 +84,44 @@
          (step nw) (step ne)
       )
   )
-
+  (piece 
+      (name RookOther)
+      (image You "images/puzzles/rb.bmp")
+      (moves
+         (slide n) (slide e) (slide w) (slide s)
+      )
+  )
+  (piece 
+      (name BishopOther)
+      (image You "images/puzzles/bb.bmp")
+      (moves
+         (slide nw) (slide ne) (slide sw) (slide se)
+      )
+  )
+  (piece 
+      (name King)
+      (image You "images/puzzles/kl.bmp")
+      (moves
+         (step n) (step e) (step w) (step s)
+         (step nw) (step ne) (step sw) (step se)
+      )
+  )
 
   (board-setup
       (You
-          (Rook   a2)
-          (Bishop c2)
-          (Pawn   b2)
-          (Silver b3)
-          (Gold   b1)
+          (Rook        a3)
+          (RookOther   c3)
+          (Bishop      a1)
+          (BishopOther c1)
+          (Pawn     a2 c2)
+          (King        b2)
       )
   )
 
   (win-condition (You) (and
-     (absolute-config Rook   (b3))
-     (absolute-config Bishop (b1))
-     (absolute-config Gold   (a2))
-     (absolute-config Silver (c2))
+     (absolute-config Rook        (a1))
+     (absolute-config RookOther   (c1))
+     (absolute-config Bishop      (c3))
+     (absolute-config BishopOther (a3))
   ))
 )

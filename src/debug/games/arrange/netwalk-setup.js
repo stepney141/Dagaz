@@ -190,7 +190,6 @@ var isSolved = function(design, board) {
 var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {
-  var design = Dagaz.Model.design;
   if (isSolved(design, board)) return 1;
   return checkGoals(design, board, player);
 }
