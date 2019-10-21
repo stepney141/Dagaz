@@ -114,136 +114,165 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("h1", [0, 1, -1, -9]);
     design.addPosition("i1", [0, 0, -1, -9]);
 
-    design.addCommand(0, ZRF.FUNCTION,	24);	// from
-    design.addCommand(0, ZRF.PROMOTE,	0);	// b1n
-    design.addCommand(0, ZRF.FUNCTION,	25);	// to
-    design.addCommand(0, ZRF.FUNCTION,	28);	// end
-
     design.addCommand(1, ZRF.FUNCTION,	24);	// from
-    design.addCommand(1, ZRF.PROMOTE,	2);	// b2se
+    design.addCommand(1, ZRF.PROMOTE,	2);	// b2ns
     design.addCommand(1, ZRF.FUNCTION,	25);	// to
     design.addCommand(1, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(2, ZRF.FUNCTION,	24);	// from
-    design.addCommand(2, ZRF.PROMOTE,	3);	// b2sw
+    design.addCommand(2, ZRF.PROMOTE,	3);	// b2ew
     design.addCommand(2, ZRF.FUNCTION,	25);	// to
     design.addCommand(2, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(3, ZRF.FUNCTION,	24);	// from
-    design.addCommand(3, ZRF.PROMOTE,	4);	// b2nw
+    design.addCommand(3, ZRF.PROMOTE,	4);	// b2sn
     design.addCommand(3, ZRF.FUNCTION,	25);	// to
     design.addCommand(3, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(4, ZRF.FUNCTION,	24);	// from
-    design.addCommand(4, ZRF.PROMOTE,	1);	// b2ne
+    design.addCommand(4, ZRF.PROMOTE,	1);	// b2we
     design.addCommand(4, ZRF.FUNCTION,	25);	// to
     design.addCommand(4, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(5, ZRF.FUNCTION,	24);	// from
-    design.addCommand(5, ZRF.PROMOTE,	6);	// b3e
+    design.addCommand(5, ZRF.PROMOTE,	6);	// b2se
     design.addCommand(5, ZRF.FUNCTION,	25);	// to
     design.addCommand(5, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(6, ZRF.FUNCTION,	24);	// from
-    design.addCommand(6, ZRF.PROMOTE,	7);	// b3s
+    design.addCommand(6, ZRF.PROMOTE,	7);	// b2sw
     design.addCommand(6, ZRF.FUNCTION,	25);	// to
     design.addCommand(6, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(7, ZRF.FUNCTION,	24);	// from
-    design.addCommand(7, ZRF.PROMOTE,	8);	// b3w
+    design.addCommand(7, ZRF.PROMOTE,	8);	// b2nw
     design.addCommand(7, ZRF.FUNCTION,	25);	// to
     design.addCommand(7, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(8, ZRF.FUNCTION,	24);	// from
-    design.addCommand(8, ZRF.PROMOTE,	5);	// b3n
+    design.addCommand(8, ZRF.PROMOTE,	5);	// b2ne
     design.addCommand(8, ZRF.FUNCTION,	25);	// to
     design.addCommand(8, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(9, ZRF.FUNCTION,	24);	// from
-    design.addCommand(9, ZRF.PROMOTE,	9);	// g1n
+    design.addCommand(9, ZRF.PROMOTE,	10);	// b3e
     design.addCommand(9, ZRF.FUNCTION,	25);	// to
     design.addCommand(9, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(10, ZRF.FUNCTION,	24);	// from
-    design.addCommand(10, ZRF.PROMOTE,	11);	// g2se
+    design.addCommand(10, ZRF.PROMOTE,	11);	// b3s
     design.addCommand(10, ZRF.FUNCTION,	25);	// to
     design.addCommand(10, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(11, ZRF.FUNCTION,	24);	// from
-    design.addCommand(11, ZRF.PROMOTE,	12);	// g2sw
+    design.addCommand(11, ZRF.PROMOTE,	12);	// b3w
     design.addCommand(11, ZRF.FUNCTION,	25);	// to
     design.addCommand(11, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(12, ZRF.FUNCTION,	24);	// from
-    design.addCommand(12, ZRF.PROMOTE,	13);	// g2nw
+    design.addCommand(12, ZRF.PROMOTE,	9);	// b3n
     design.addCommand(12, ZRF.FUNCTION,	25);	// to
     design.addCommand(12, ZRF.FUNCTION,	28);	// end
 
-    design.addCommand(13, ZRF.FUNCTION,	24);	// from
-    design.addCommand(13, ZRF.PROMOTE,	10);	// g2ne
-    design.addCommand(13, ZRF.FUNCTION,	25);	// to
-    design.addCommand(13, ZRF.FUNCTION,	28);	// end
-
     design.addCommand(14, ZRF.FUNCTION,	24);	// from
-    design.addCommand(14, ZRF.PROMOTE,	15);	// g3e
+    design.addCommand(14, ZRF.PROMOTE,	15);	// b1e
     design.addCommand(14, ZRF.FUNCTION,	25);	// to
     design.addCommand(14, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(15, ZRF.FUNCTION,	24);	// from
-    design.addCommand(15, ZRF.PROMOTE,	16);	// g3s
+    design.addCommand(15, ZRF.PROMOTE,	16);	// b1s
     design.addCommand(15, ZRF.FUNCTION,	25);	// to
     design.addCommand(15, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(16, ZRF.FUNCTION,	24);	// from
-    design.addCommand(16, ZRF.PROMOTE,	17);	// g3w
+    design.addCommand(16, ZRF.PROMOTE,	17);	// b1w
     design.addCommand(16, ZRF.FUNCTION,	25);	// to
     design.addCommand(16, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(17, ZRF.FUNCTION,	24);	// from
-    design.addCommand(17, ZRF.PROMOTE,	14);	// g3n
+    design.addCommand(17, ZRF.PROMOTE,	14);	// b1n
     design.addCommand(17, ZRF.FUNCTION,	25);	// to
     design.addCommand(17, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("b1n", 0, 8);
+    design.addPiece("b1", 0, 8);     // 1000
 
-    design.addPiece("b2ne", 1, 12);
+    design.addPiece("b2we", 1, 5);   // 0101
     design.addMove(1, 1, [], 0);
 
-    design.addPiece("b2se", 2, 6);
+    design.addPiece("b2ns", 2, 10);  // 1010
     design.addMove(2, 2, [], 0);
 
-    design.addPiece("b2sw", 3, 3);
+    design.addPiece("b2ew", 3, 5);   // 0101
     design.addMove(3, 3, [], 0);
 
-    design.addPiece("b2nw", 4, 9);
+    design.addPiece("b2sn", 4, 10);  // 1010
     design.addMove(4, 4, [], 0);
 
-    design.addPiece("b3n", 5, 13);
+    design.addPiece("b2ne", 5, 12);  // 1100
     design.addMove(5, 5, [], 0);
 
-    design.addPiece("b3e", 6, 14);
+    design.addPiece("b2se", 6, 6);   // 0110
     design.addMove(6, 6, [], 0);
 
-    design.addPiece("b3s", 7, 7);
+    design.addPiece("b2sw", 7, 3);   // 0011
     design.addMove(7, 7, [], 0);
 
-    design.addPiece("b3w", 8, 11);
+    design.addPiece("b2nw", 8, 9);   // 1001
     design.addMove(8, 8, [], 0);
 
-    design.addPiece("g1n", 9, 8);
-    design.addPiece("g2ne", 10, 12);
-    design.addPiece("g2se", 11, 6);
-    design.addPiece("g2sw", 12, 3);
-    design.addPiece("g2nw", 13, 9);
-    design.addPiece("g3n", 14, 13);
-    design.addPiece("g3e", 15, 14);
-    design.addPiece("g3s", 16, 7);
-    design.addPiece("g3w", 17, 11);
+    design.addPiece("b3n", 9, 13);   // 1101
+    design.addMove(9, 9, [], 0);
+
+    design.addPiece("b3e", 10, 14);  // 1110
+    design.addMove(10, 10, [], 0);
+
+    design.addPiece("b3s", 11, 7);   // 0111
+    design.addMove(11, 11, [], 0);
+
+    design.addPiece("b3w", 12, 11);  // 1011
+    design.addMove(12, 12, [], 0);
+
+    design.addPiece("b4", 13, 15);   // 1111
+
+    design.addPiece("b1n", 14, 8);   // 1000
+    design.addMove(14, 14, [], 0);
+
+    design.addPiece("b1e", 15, 4);   // 0100
+    design.addMove(15, 15, [], 0);
+
+    design.addPiece("b1s", 16, 2);   // 0010
+    design.addMove(16, 16, [], 0);
+
+    design.addPiece("b1w", 17, 1);   // 0001
+    design.addMove(17, 17, [], 0);
+
+    design.addPiece("g1", 18, 8);    // 1000
+    design.addPiece("g2we", 19, 5);  // 0101
+    design.addPiece("g2ns", 20, 10); // 1010
+    design.addPiece("g2ew", 21, 5);  // 0101
+    design.addPiece("g2sn", 22, 10); // 1010
+    design.addPiece("g2ne", 23, 12); // 1100
+    design.addPiece("g2se", 24, 6);  // 0110
+    design.addPiece("g2sw", 25, 3);  // 0011
+    design.addPiece("g2nw", 26, 9);  // 1001
+    design.addPiece("g3n", 27, 13);  // 1101
+    design.addPiece("g3e", 28, 14);  // 1110
+    design.addPiece("g3s", 29, 7);   // 0111
+    design.addPiece("g3w", 30, 11);  // 1011
+    design.addPiece("g4", 31, 15);   // 1111
+    design.addPiece("g1n", 32, 8);   // 1000
+    design.addPiece("g1e", 33, 4);   // 0100
+    design.addPiece("g1s", 34, 2);   // 0010
+    design.addPiece("g1w", 35, 1);   // 0001
 }
 
 Dagaz.View.configure = function(view) {
     view.defBoard("Board");
-    view.defPiece("Youb1n", "You b1n");
+    view.defPiece("Youb1", "You b1");
+    view.defPiece("Youb2we", "You b2we");
+    view.defPiece("Youb2ns", "You b2ns");
+    view.defPiece("Youb2ew", "You b2ew");
+    view.defPiece("Youb2sn", "You b2sn");
     view.defPiece("Youb2ne", "You b2ne");
     view.defPiece("Youb2se", "You b2se");
     view.defPiece("Youb2sw", "You b2sw");
@@ -252,7 +281,16 @@ Dagaz.View.configure = function(view) {
     view.defPiece("Youb3e", "You b3e");
     view.defPiece("Youb3s", "You b3s");
     view.defPiece("Youb3w", "You b3w");
-    view.defPiece("Youg1n", "You g1n");
+    view.defPiece("Youb4", "You b4");
+    view.defPiece("Youb1n", "You b1n");
+    view.defPiece("Youb1e", "You b1e");
+    view.defPiece("Youb1s", "You b1s");
+    view.defPiece("Youb1w", "You b1w");
+    view.defPiece("Youg1", "You g1");
+    view.defPiece("Youg2we", "You g2we");
+    view.defPiece("Youg2ns", "You g2ns");
+    view.defPiece("Youg2ew", "You g2ew");
+    view.defPiece("Youg2sn", "You g2sn");
     view.defPiece("Youg2ne", "You g2ne");
     view.defPiece("Youg2se", "You g2se");
     view.defPiece("Youg2sw", "You g2sw");
@@ -261,6 +299,11 @@ Dagaz.View.configure = function(view) {
     view.defPiece("Youg3e", "You g3e");
     view.defPiece("Youg3s", "You g3s");
     view.defPiece("Youg3w", "You g3w");
+    view.defPiece("Youg4", "You g4");
+    view.defPiece("Youg1n", "You g1n");
+    view.defPiece("Youg1e", "You g1e");
+    view.defPiece("Youg1s", "You g1s");
+    view.defPiece("Youg1w", "You g1w");
  
     view.defPosition("a9", 0, 0, 50, 50);
     view.defPosition("b9", 50, 0, 50, 50);

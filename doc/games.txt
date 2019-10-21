@@ -265,3 +265,4 @@
   - Mine Sweeper [best, sparks, masquerade, family:other]
   - Klondike [best, family:other]
   - Mahjong solitaire [best]
+  - Netwalk
