@@ -378,7 +378,9 @@ App.prototype.exec = function() {
               if (_.isUndefined(this.board.moves)) {
                   this.board.generate(this.design);
               }
-              var moves = this.board.moves;
+              var moves = _.filter(this.board.moves, function(move) {
+                  return _.indexOf(this.design.turns[this.board.turn].modes, move.mode) >= 0;
+              }, this);
               if (moves.length > 0) {
                   var ix = 0;
                   if (moves.length > 1) {

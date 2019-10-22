@@ -43,13 +43,13 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addRandom(1, [5]);
     design.addRandom(1, [5]);
     design.repeatMark();
-//  design.addRandom(1, [1]);
-//  design.addRandom(1, [2]);
-//  design.addRandom(1, [3]);
+    design.addRandom(1, [1]);
+    design.addRandom(1, [2]);
+    design.addRandom(1, [3]);
     design.addTurn(1, [0]);
-//  design.addRandom(1, [4]);
-//  design.addRandom(1, [4]);
-//  design.addRandom(1, [4]);
+    design.addRandom(1, [4]);
+    design.addRandom(1, [4]);
+    design.addRandom(1, [4]);
 
     design.addPosition("X1", [1, 0, 0, 0, 0, 0, 0, 0, 0]);
     design.addPosition("Y1", [1, 0, 0, 0, 0, 0, 0, 0, 0]);
