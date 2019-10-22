@@ -24,13 +24,14 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 Dagaz.Model.CheckInvariants = function(board) {
   var design = board.game.design;  
   _.each(board.moves, function(move) {
-      if (!move.isSimpleMove()) return;
+      if (!move.isSimpleMove() || (move.mode > 0)) return;
       var b = board.apply(move);
       var pos = move.actions[0][1][0];
       var piece = b.getPiece(pos);
       if (piece === null) return;
       var captures = [];
       _.each(design.allDirections(), function(dir) {
+          if (dir == 0) return;
           var group = [pos];
           tryDir(design, b, 1, pos, dir, piece.type, group);
           tryDir(design, b, 0, pos, dir, piece.type, group);

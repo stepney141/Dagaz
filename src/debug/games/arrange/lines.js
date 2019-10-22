@@ -27,112 +27,184 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-blink", "true");
 
-    design.addDirection("se"); // 0
-    design.addDirection("s");  // 1
-    design.addDirection("sw"); // 2
-    design.addDirection("e");  // 3
-    design.addDirection("w");  // 4
-    design.addDirection("ne"); // 5
-    design.addDirection("nw"); // 6
-    design.addDirection("n");  // 7
+    design.addDirection("nx"); // 0
+    design.addDirection("se"); // 1
+    design.addDirection("s");  // 2
+    design.addDirection("sw"); // 3
+    design.addDirection("e");  // 4
+    design.addDirection("w");  // 5
+    design.addDirection("ne"); // 6
+    design.addDirection("nw"); // 7
+    design.addDirection("n");  // 8
 
-    design.addPlayer("You", [6, 7, 5, 4, 3, 2, 0, 1]);
+    design.addPlayer("You", [0, 7, 8, 6, 5, 4, 3, 1, 2]);
 
-    design.addPosition("a9", [10, 9, 0, 1, 0, 0, 0, 0]);
-    design.addPosition("b9", [10, 9, 8, 1, -1, 0, 0, 0]);
-    design.addPosition("c9", [10, 9, 8, 1, -1, 0, 0, 0]);
-    design.addPosition("d9", [10, 9, 8, 1, -1, 0, 0, 0]);
-    design.addPosition("e9", [10, 9, 8, 1, -1, 0, 0, 0]);
-    design.addPosition("f9", [10, 9, 8, 1, -1, 0, 0, 0]);
-    design.addPosition("g9", [10, 9, 8, 1, -1, 0, 0, 0]);
-    design.addPosition("h9", [10, 9, 8, 1, -1, 0, 0, 0]);
-    design.addPosition("i9", [0, 9, 8, 0, -1, 0, 0, 0]);
-    design.addPosition("a8", [10, 9, 0, 1, 0, -8, 0, -9]);
-    design.addPosition("b8", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("c8", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("d8", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("e8", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("f8", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("g8", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("h8", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("i8", [0, 9, 8, 0, -1, 0, -10, -9]);
-    design.addPosition("a7", [10, 9, 0, 1, 0, -8, 0, -9]);
-    design.addPosition("b7", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("c7", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("d7", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("e7", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("f7", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("g7", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("h7", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("i7", [0, 9, 8, 0, -1, 0, -10, -9]);
-    design.addPosition("a6", [10, 9, 0, 1, 0, -8, 0, -9]);
-    design.addPosition("b6", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("c6", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("d6", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("e6", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("f6", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("g6", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("h6", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("i6", [0, 9, 8, 0, -1, 0, -10, -9]);
-    design.addPosition("a5", [10, 9, 0, 1, 0, -8, 0, -9]);
-    design.addPosition("b5", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("c5", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("d5", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("e5", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("f5", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("g5", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("h5", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("i5", [0, 9, 8, 0, -1, 0, -10, -9]);
-    design.addPosition("a4", [10, 9, 0, 1, 0, -8, 0, -9]);
-    design.addPosition("b4", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("c4", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("d4", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("e4", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("f4", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("g4", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("h4", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("i4", [0, 9, 8, 0, -1, 0, -10, -9]);
-    design.addPosition("a3", [10, 9, 0, 1, 0, -8, 0, -9]);
-    design.addPosition("b3", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("c3", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("d3", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("e3", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("f3", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("g3", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("h3", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("i3", [0, 9, 8, 0, -1, 0, -10, -9]);
-    design.addPosition("a2", [10, 9, 0, 1, 0, -8, 0, -9]);
-    design.addPosition("b2", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("c2", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("d2", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("e2", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("f2", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("g2", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("h2", [10, 9, 8, 1, -1, -8, -10, -9]);
-    design.addPosition("i2", [0, 9, 8, 0, -1, 0, -10, -9]);
-    design.addPosition("a1", [0, 0, 0, 1, 0, -8, 0, -9]);
-    design.addPosition("b1", [0, 0, 0, 1, -1, -8, -10, -9]);
-    design.addPosition("c1", [0, 0, 0, 1, -1, -8, -10, -9]);
-    design.addPosition("d1", [0, 0, 0, 1, -1, -8, -10, -9]);
-    design.addPosition("e1", [0, 0, 0, 1, -1, -8, -10, -9]);
-    design.addPosition("f1", [0, 0, 0, 1, -1, -8, -10, -9]);
-    design.addPosition("g1", [0, 0, 0, 1, -1, -8, -10, -9]);
-    design.addPosition("h1", [0, 0, 0, 1, -1, -8, -10, -9]);
-    design.addPosition("i1", [0, 0, 0, 0, -1, 0, -10, -9]);
+    design.addRandom(1, [5]);
+    design.addRandom(1, [5]);
+    design.addRandom(1, [5]);
+    design.repeatMark();
+//  design.addRandom(1, [1]);
+//  design.addRandom(1, [2]);
+//  design.addRandom(1, [3]);
+    design.addTurn(1, [0]);
+//  design.addRandom(1, [4]);
+//  design.addRandom(1, [4]);
+//  design.addRandom(1, [4]);
+
+    design.addPosition("X1", [1, 0, 0, 0, 0, 0, 0, 0, 0]);
+    design.addPosition("Y1", [1, 0, 0, 0, 0, 0, 0, 0, 0]);
+    design.addPosition("Z1", [0, 1, 2, 3, 4, 5, 6, 7, 8]);
+    design.addPosition("a9", [0, 10, 9, 0, 1, 0, 0, 0, 0]);
+    design.addPosition("b9", [0, 10, 9, 8, 1, -1, 0, 0, 0]);
+    design.addPosition("c9", [0, 10, 9, 8, 1, -1, 0, 0, 0]);
+    design.addPosition("d9", [0, 10, 9, 8, 1, -1, 0, 0, 0]);
+    design.addPosition("e9", [0, 10, 9, 8, 1, -1, 0, 0, 0]);
+    design.addPosition("f9", [0, 10, 9, 8, 1, -1, 0, 0, 0]);
+    design.addPosition("g9", [0, 10, 9, 8, 1, -1, 0, 0, 0]);
+    design.addPosition("h9", [0, 10, 9, 8, 1, -1, 0, 0, 0]);
+    design.addPosition("i9", [0, 0, 9, 8, 0, -1, 0, 0, 0]);
+    design.addPosition("a8", [0, 10, 9, 0, 1, 0, -8, 0, -9]);
+    design.addPosition("b8", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("c8", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("d8", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("e8", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("f8", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("g8", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("h8", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("i8", [0, 0, 9, 8, 0, -1, 0, -10, -9]);
+    design.addPosition("a7", [0, 10, 9, 0, 1, 0, -8, 0, -9]);
+    design.addPosition("b7", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("c7", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("d7", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("e7", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("f7", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("g7", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("h7", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("i7", [0, 0, 9, 8, 0, -1, 0, -10, -9]);
+    design.addPosition("a6", [0, 10, 9, 0, 1, 0, -8, 0, -9]);
+    design.addPosition("b6", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("c6", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("d6", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("e6", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("f6", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("g6", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("h6", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("i6", [0, 0, 9, 8, 0, -1, 0, -10, -9]);
+    design.addPosition("a5", [0, 10, 9, 0, 1, 0, -8, 0, -9]);
+    design.addPosition("b5", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("c5", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("d5", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("e5", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("f5", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("g5", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("h5", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("i5", [0, 0, 9, 8, 0, -1, 0, -10, -9]);
+    design.addPosition("a4", [0, 10, 9, 0, 1, 0, -8, 0, -9]);
+    design.addPosition("b4", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("c4", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("d4", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("e4", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("f4", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("g4", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("h4", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("i4", [0, 0, 9, 8, 0, -1, 0, -10, -9]);
+    design.addPosition("a3", [0, 10, 9, 0, 1, 0, -8, 0, -9]);
+    design.addPosition("b3", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("c3", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("d3", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("e3", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("f3", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("g3", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("h3", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("i3", [0, 0, 9, 8, 0, -1, 0, -10, -9]);
+    design.addPosition("a2", [0, 10, 9, 0, 1, 0, -8, 0, -9]);
+    design.addPosition("b2", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("c2", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("d2", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("e2", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("f2", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("g2", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("h2", [0, 10, 9, 8, 1, -1, -8, -10, -9]);
+    design.addPosition("i2", [0, 0, 9, 8, 0, -1, 0, -10, -9]);
+    design.addPosition("a1", [0, 0, 0, 0, 1, 0, -8, 0, -9]);
+    design.addPosition("b1", [0, 0, 0, 0, 1, -1, -8, -10, -9]);
+    design.addPosition("c1", [0, 0, 0, 0, 1, -1, -8, -10, -9]);
+    design.addPosition("d1", [0, 0, 0, 0, 1, -1, -8, -10, -9]);
+    design.addPosition("e1", [0, 0, 0, 0, 1, -1, -8, -10, -9]);
+    design.addPosition("f1", [0, 0, 0, 0, 1, -1, -8, -10, -9]);
+    design.addPosition("g1", [0, 0, 0, 0, 1, -1, -8, -10, -9]);
+    design.addPosition("h1", [0, 0, 0, 0, 1, -1, -8, -10, -9]);
+    design.addPosition("i1", [0, 0, 0, 0, 0, -1, 0, -10, -9]);
+
+    design.addZone("preview-zone", 1, [0, 1, 2]);
+    design.addZone("preview-1", 1, [0]);
+    design.addZone("preview-2", 1, [1]);
+    design.addZone("preview-3", 1, [2]);
+
+    design.addCommand(1, ZRF.IN_ZONE,	1);	// preview-1
+    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(1, ZRF.FUNCTION,	25);	// to
+    design.addCommand(1, ZRF.FUNCTION,	28);	// end
+
+    design.addCommand(2, ZRF.IN_ZONE,	2);	// preview-2
+    design.addCommand(2, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(2, ZRF.FUNCTION,	25);	// to
+    design.addCommand(2, ZRF.FUNCTION,	28);	// end
+
+    design.addCommand(3, ZRF.IN_ZONE,	3);	// preview-3
+    design.addCommand(3, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(3, ZRF.FUNCTION,	25);	// to
+    design.addCommand(3, ZRF.FUNCTION,	28);	// end
+
+    design.addCommand(4, ZRF.IN_ZONE,	0);	// preview-zone
+    design.addCommand(4, ZRF.FUNCTION,	0);	// not
+    design.addCommand(4, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(4, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(4, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(4, ZRF.FUNCTION,	25);	// to
+    design.addCommand(4, ZRF.FUNCTION,	28);	// end
 
     design.addPiece("Dark", 0);
-    design.addPiece("Light", 1);
-    design.addPiece("Green", 2);
-    design.addPiece("Red", 3);
-    design.addPiece("Yellow", 4);
-    design.addPiece("Purple", 5);
+    design.addDrop(0, 1, [], 1);
+    design.addDrop(0, 2, [], 2);
+    design.addDrop(0, 3, [], 3);
+    design.addDrop(0, 4, [], 4);
+    design.addDrop(0, 4, [], 5);
 
-    design.setup("You", "Purple", 72);
-    design.setup("You", "Purple", 64);
-    design.setup("You", "Purple", 56);
-    design.setup("You", "Purple", 24);
-    design.setup("You", "Purple", 16);
-    design.setup("You", "Purple", 8);
+    design.addPiece("Light", 1);
+    design.addDrop(1, 1, [], 1);
+    design.addDrop(1, 2, [], 2);
+    design.addDrop(1, 3, [], 3);
+    design.addDrop(1, 4, [], 4);
+    design.addDrop(1, 4, [], 5);
+
+    design.addPiece("Green", 2);
+    design.addDrop(2, 1, [], 1);
+    design.addDrop(2, 2, [], 2);
+    design.addDrop(2, 3, [], 3);
+    design.addDrop(2, 4, [], 4);
+    design.addDrop(2, 4, [], 5);
+
+    design.addPiece("Red", 3);
+    design.addDrop(3, 1, [], 1);
+    design.addDrop(3, 2, [], 2);
+    design.addDrop(3, 3, [], 3);
+    design.addDrop(3, 4, [], 4);
+    design.addDrop(3, 4, [], 5);
+
+    design.addPiece("Yellow", 4);
+    design.addDrop(4, 1, [], 1);
+    design.addDrop(4, 2, [], 2);
+    design.addDrop(4, 3, [], 3);
+    design.addDrop(4, 4, [], 4);
+    design.addDrop(4, 4, [], 5);
+
+    design.addPiece("Purple", 5);
+    design.addDrop(5, 1, [], 1);
+    design.addDrop(5, 2, [], 2);
+    design.addDrop(5, 3, [], 3);
+    design.addDrop(5, 4, [], 4);
+    design.addDrop(5, 4, [], 5);
 }
 
 Dagaz.View.configure = function(view) {
@@ -144,6 +216,9 @@ Dagaz.View.configure = function(view) {
     view.defPiece("YouYellow", "You Yellow");
     view.defPiece("YouPurple", "You Purple");
  
+    view.defPosition("X1", 108, 5, 25, 27);
+    view.defPosition("Y1", 142, 5, 25, 27);
+    view.defPosition("Z1", 176, 5, 25, 27);
     view.defPosition("a9", 7, 57, 25, 27);
     view.defPosition("b9", 41, 57, 25, 27);
     view.defPosition("c9", 75, 57, 25, 27);

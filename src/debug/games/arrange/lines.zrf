@@ -3,12 +3,34 @@
   add
 ))
 
+(define preview (
+  (verify (in-zone? $1))
+  add
+))
+
+(define drop (
+  (verify (not-in-zone? preview-zone))
+  (verify empty?)
+  add
+))
+
 (define p
   (piece
      (name $1)
      (image You "images/lines/$2.bmp")
      (moves
+         (move-type normal-type)
          (step n) (step e) (step w) (step s)
+     )
+     (drops
+         (move-type preview-1-type)
+         (preview preview-1)
+         (move-type preview-2-type)
+         (preview preview-2)
+         (move-type preview-3-type)
+         (preview preview-3)
+         (move-type drop-type)
+         (drop)
      )
   )
 )
@@ -26,6 +48,16 @@
   (board
       (image "images/lines/board.bmp")
       (grid
+         (start-rectangle 108 5 133 32)
+         (dimensions
+             ("X/Y/Z" (34 0)) ; files         
+             ("1" (0 33)) ; ranks
+         )
+         (directions 
+            (nx 1 0)
+         )
+      )
+      (grid
          (start-rectangle 7 57 32 84)
          (dimensions
              ("a/b/c/d/e/f/g/h/i" (34 0)) ; files         
@@ -36,11 +68,19 @@
             (nw -1 -1) (ne 1 -1) (sw -1 1) (se 1 1)
          )
       )
+      (zone (name preview-zone) (players You)
+            (positions X1 Y1 Z1)
+      )
+      (zone (name preview-1) (players You)
+            (positions X1)
+      )
+      (zone (name preview-2) (players You)
+            (positions Y1)
+      )
+      (zone (name preview-3) (players You)
+            (positions Z1)
+      )
   )
 
   (p Dark dark) (p Light light) (p Green green) (p Red red) (p Yellow yellow) (p Purple purple)
-
-  (board-setup
-      (You (Dark a1) (Light b2) (Green c3) (Red g7) (Yellow h8) (Purple i9))
-  )
 )

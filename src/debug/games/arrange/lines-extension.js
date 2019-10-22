@@ -1,7 +1,7 @@
 (function() {
 
-var size = 81;
-var dirs = [1, 3, 4, 7];
+var size = 84;
+var dirs = [2, 4, 5, 8];
 
 var checkVersion = Dagaz.Model.checkVersion;
 
@@ -15,7 +15,7 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = board.game.design;  
-  for (var pos = 0; pos < size; pos++) {
+  for (var pos = 3; pos < size; pos++) {
        var piece = board.getPiece(pos);
        if (piece !== null) {
            var group = [pos];
@@ -49,6 +49,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                 }
                 move.hints.shift();
                 move.movePiece(pos, group[i], piece);
+                move.mode = 0;
                 board.moves.push(move);
            }
        }
