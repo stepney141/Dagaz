@@ -28,9 +28,9 @@ Dagaz.Model.CheckInvariants = function(board) {
                    return;
                }
                if (piece.type > dice.type) {
-                   move.goTo(11);
+                   move.goTo(10);
                } else {
-                   move.goTo(5);
+                   move.goTo(4);
                }
           }
       }

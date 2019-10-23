@@ -39,17 +39,17 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPlayer("You", [0, 7, 8, 6, 5, 4, 3, 1, 2]);
 
-    design.addRandom(1, [5]);
-    design.addRandom(1, [5]);
-    design.addRandom(1, [5]);
+    design.addRandom(1, [5]); // 0
+    design.addRandom(1, [5]); // 1
+    design.addRandom(1, [5]); // 2
     design.repeatMark();
-    design.addRandom(1, [1]);
-    design.addRandom(1, [2]);
-    design.addRandom(1, [3]);
-    design.addTurn(1, [0]);
-    design.addRandom(1, [4]);
-    design.addRandom(1, [4]);
-    design.addRandom(1, [4]);
+    design.addRandom(1, [1]); // 3
+    design.addRandom(1, [2]); // 4
+    design.addRandom(1, [3]); // 5
+    design.addTurn(1, [0]);   // 6
+    design.addRandom(1, [4]); // 7
+    design.addRandom(1, [4]); // 8
+    design.addRandom(1, [4]); // 9
 
     design.addPosition("X1", [1, 0, 0, 0, 0, 0, 0, 0, 0]);
     design.addPosition("Y1", [1, 0, 0, 0, 0, 0, 0, 0, 0]);
