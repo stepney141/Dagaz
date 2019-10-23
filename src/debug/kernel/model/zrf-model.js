@@ -2374,7 +2374,8 @@ Dagaz.Model.getY = function(pos) {
   return (pos / Dagaz.Model.WIDTH) | 0;
 }
 
-Dagaz.Model.continue = function(design, board, str) {
+Dagaz.Model.continue = function(design, board, str, result) {
+  if (!_.isUndefined(result) && (result < 1)) return str;
   var re  = /^(\D*)(\d+)(.*)$/;
   var num = str.replace(re, "$2");
   if (num) {

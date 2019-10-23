@@ -1,15 +1,15 @@
 (define step (
-  $1 (verify empty?)
-  add
+  $1 (verify not-empty?) add
 ))
 
 (define leap (
-  $1 $2 (verify empty?)
-  add
+  $1 $2 (verify not-empty?) add
 ))
 
 (define slide (
-  $1 (while empty? add $1)
+  $1 (while empty? $1)
+  (verify not-empty?)
+  add
 ))
 
 (game
@@ -36,6 +36,10 @@
   (piece 
       (name Pawn)
       (image You "images/puzzles/pl.bmp")
+  )
+  (piece 
+      (name PawnBold)
+      (image You "images/puzzles/pb.bmp")
       (moves
          (step n)
       )
@@ -43,6 +47,10 @@
   (piece 
       (name Knight)
       (image You "images/puzzles/nl.bmp")
+  )
+  (piece 
+      (name KnightBold)
+      (image You "images/puzzles/nb.bmp")
       (moves
          (leap n nw) (leap n ne)
       )
@@ -50,12 +58,20 @@
   (piece 
       (name Lance)
       (image You "images/puzzles/ll.bmp")
+  )
+  (piece 
+      (name LanceBold)
+      (image You "images/puzzles/lb.bmp")
       (moves
          (slide n)
       )
   )
   (piece 
       (name Rook)
+      (image You "images/puzzles/rl.bmp")
+  )
+  (piece 
+      (name RookBold)
       (image You "images/puzzles/rb.bmp")
       (moves
          (slide n) (slide e) (slide w) (slide s)
@@ -64,6 +80,10 @@
   (piece 
       (name Bishop)
       (image You "images/puzzles/bl.bmp")
+  )
+  (piece 
+      (name BishopBold)
+      (image You "images/puzzles/bb.bmp")
       (moves
          (slide nw) (slide ne) (slide sw) (slide se)
       )
@@ -71,6 +91,10 @@
   (piece 
       (name Silver)
       (image You "images/puzzles/sl.bmp")
+  )
+  (piece 
+      (name SilverBold)
+      (image You "images/puzzles/sb.bmp")
       (moves
          (step n)
          (step nw) (step ne) (step sw) (step se)
@@ -79,28 +103,22 @@
   (piece 
       (name Gold)
       (image You "images/puzzles/gl.bmp")
+  )
+  (piece 
+      (name GoldBold)
+      (image You "images/puzzles/gb.bmp")
       (moves
          (step n) (step e) (step w) (step s)
          (step nw) (step ne)
       )
   )
   (piece 
-      (name RookOther)
-      (image You "images/puzzles/rb.bmp")
-      (moves
-         (slide n) (slide e) (slide w) (slide s)
-      )
-  )
-  (piece 
-      (name BishopOther)
-      (image You "images/puzzles/bb.bmp")
-      (moves
-         (slide nw) (slide ne) (slide sw) (slide se)
-      )
-  )
-  (piece 
       (name King)
       (image You "images/puzzles/kl.bmp")
+  )
+  (piece 
+      (name KingBold)
+      (image You "images/puzzles/kb.bmp")
       (moves
          (step n) (step e) (step w) (step s)
          (step nw) (step ne) (step sw) (step se)
@@ -109,19 +127,12 @@
 
   (board-setup
       (You
-          (Rook        a3)
-          (RookOther   c3)
-          (Bishop      a1)
-          (BishopOther c1)
-          (Pawn     a2 c2)
+          (RookBold    c1)
+          (Silver      b1 c2)
+          (Rook        a1)
+          (Gold        a2 a3)
+          (Knight      c3 b3)
           (King        b2)
       )
   )
-
-  (win-condition (You) (and
-     (absolute-config Rook        (a1))
-     (absolute-config RookOther   (c1))
-     (absolute-config Bishop      (c3))
-     (absolute-config BishopOther (a3))
-  ))
 )
