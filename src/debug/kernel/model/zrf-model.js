@@ -502,6 +502,10 @@ Dagaz.Model.functions[Dagaz.Model.ZRF_IS_EMPTY] = function(gen) {
    if (gen.pos === null) {
        return null;
    }
+   if (isCaptured(gen.move, gen.pos)) {
+       gen.stack.push(false);
+       return 0;
+   }
    var piece = gen.getPiece(gen.pos);
    gen.stack.push(piece === null);
    return 0;
@@ -1221,31 +1225,19 @@ ZrfMoveGenerator.prototype.dropPiece = function(pos, piece) {
   this.setPiece(pos, piece);
 }
 
-ZrfMoveGenerator.prototype.isCaptured = function(pos, level) {
-  if (this.parent) {
-      return this.parent.isCaptured(pos, level);
+var isCaptured = function(move, pos) {
+  if (!Dagaz.Model.deferredStrike) return false;
+  for (var i = 0; i < move.actions.length; i++) {
+       var a = move.actions[i];
+       if ((a[0] !== null) && (a[1] === null) && (a[0] == pos)) return true;
   }
-  if (_.isUndefined(this.captured)) {
-      this.captured = [];
-  }
-  if (this.captured[pos] && (this.captured[pos] < level)) return true;
-  _.each(Dagaz.Model.getDesign().allPositions(), function(p) {
-      if (this.captured[p] && (this.captured[p] >= level)) {
-          delete this.captured[p];
-      }
-  }, this);
-  this.captured[pos] = level;
   return false;
 }
 
 ZrfMoveGenerator.prototype.capturePiece = function(pos) {
-  if (Dagaz.Model.deferredStrike) {
-      if (this.isCaptured(pos, this.level)) return false;
-  }
+  if (isCaptured(this.move, pos)) return false;
   this.move.capturePiece(pos, this.level);
-  if (!Dagaz.Model.deferredStrike) {
-      this.setPiece(pos, null);
-  }
+  this.setPiece(pos, null);
   return true;
 }
 
