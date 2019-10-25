@@ -266,3 +266,4 @@
   - Klondike [best, family:other]
   - Mahjong solitaire [best]
   - Netwalk
+  - Lines [best, dices, goto, hints]
