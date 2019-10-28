@@ -135,8 +135,14 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("g1", [0, 0, 0, 0, 1, -1, -8, -10, -9]);
     design.addPosition("h1", [0, 0, 0, 0, 1, -1, -8, -10, -9]);
     design.addPosition("i1", [0, 0, 0, 0, 0, -1, 0, -10, -9]);
+    design.addPosition("D6", [0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    design.addPosition("D5", [0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    design.addPosition("D4", [0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    design.addPosition("D3", [0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    design.addPosition("D2", [0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    design.addPosition("D1", [0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
-    design.addZone("preview-zone", 1, [0, 1, 2]);
+    design.addZone("preview-zone", 1, [0, 1, 2, 84, 85, 86, 87, 88, 89]);
     design.addZone("preview-1", 1, [0]);
     design.addZone("preview-2", 1, [1]);
     design.addZone("preview-3", 1, [2]);
@@ -165,46 +171,57 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(4, ZRF.FUNCTION,	28);	// end
 
     design.addPiece("Dark", 0);
-    design.addDrop(0, 1, [], 1);
-    design.addDrop(0, 2, [], 2);
-    design.addDrop(0, 3, [], 3);
-    design.addDrop(0, 4, [], 4);
-    design.addDrop(0, 4, [], 5);
+    design.addDrop(0, 1, [], 1, 100);
+    design.addDrop(0, 2, [], 2, 100);
+    design.addDrop(0, 3, [], 3, 100);
+    design.addDrop(0, 4, [], 4, 100);
+    design.addDrop(0, 4, [], 5, 100);
 
     design.addPiece("Light", 1);
-    design.addDrop(1, 1, [], 1);
-    design.addDrop(1, 2, [], 2);
-    design.addDrop(1, 3, [], 3);
-    design.addDrop(1, 4, [], 4);
-    design.addDrop(1, 4, [], 5);
+    design.addDrop(1, 1, [], 1, 100);
+    design.addDrop(1, 2, [], 2, 100);
+    design.addDrop(1, 3, [], 3, 100);
+    design.addDrop(1, 4, [], 4, 100);
+    design.addDrop(1, 4, [], 5, 100);
 
     design.addPiece("Green", 2);
-    design.addDrop(2, 1, [], 1);
-    design.addDrop(2, 2, [], 2);
-    design.addDrop(2, 3, [], 3);
-    design.addDrop(2, 4, [], 4);
-    design.addDrop(2, 4, [], 5);
+    design.addDrop(2, 1, [], 1, 100);
+    design.addDrop(2, 2, [], 2, 100);
+    design.addDrop(2, 3, [], 3, 100);
+    design.addDrop(2, 4, [], 4, 100);
+    design.addDrop(2, 4, [], 5, 100);
 
     design.addPiece("Red", 3);
-    design.addDrop(3, 1, [], 1);
-    design.addDrop(3, 2, [], 2);
-    design.addDrop(3, 3, [], 3);
-    design.addDrop(3, 4, [], 4);
-    design.addDrop(3, 4, [], 5);
+    design.addDrop(3, 1, [], 1, 100);
+    design.addDrop(3, 2, [], 2, 100);
+    design.addDrop(3, 3, [], 3, 100);
+    design.addDrop(3, 4, [], 4, 100);
+    design.addDrop(3, 4, [], 5, 100);
 
     design.addPiece("Yellow", 4);
-    design.addDrop(4, 1, [], 1);
-    design.addDrop(4, 2, [], 2);
-    design.addDrop(4, 3, [], 3);
-    design.addDrop(4, 4, [], 4);
-    design.addDrop(4, 4, [], 5);
+    design.addDrop(4, 1, [], 1, 100);
+    design.addDrop(4, 2, [], 2, 100);
+    design.addDrop(4, 3, [], 3, 100);
+    design.addDrop(4, 4, [], 4, 100);
+    design.addDrop(4, 4, [], 5, 100);
 
     design.addPiece("Purple", 5);
-    design.addDrop(5, 1, [], 1);
-    design.addDrop(5, 2, [], 2);
-    design.addDrop(5, 3, [], 3);
-    design.addDrop(5, 4, [], 4);
-    design.addDrop(5, 4, [], 5);
+    design.addDrop(5, 1, [], 1, 100);
+    design.addDrop(5, 2, [], 2, 100);
+    design.addDrop(5, 3, [], 3, 100);
+    design.addDrop(5, 4, [], 4, 100);
+    design.addDrop(5, 4, [], 5, 100);
+
+    design.addPiece("N0", 6);
+    design.addPiece("N1", 7);
+    design.addPiece("N2", 8);
+    design.addPiece("N3", 9);
+    design.addPiece("N4", 10);
+    design.addPiece("N5", 11);
+    design.addPiece("N6", 12);
+    design.addPiece("N7", 13);
+    design.addPiece("N8", 14);
+    design.addPiece("N9", 15);
 }
 
 Dagaz.View.configure = function(view) {
@@ -215,10 +232,20 @@ Dagaz.View.configure = function(view) {
     view.defPiece("YouRed", "You Red");
     view.defPiece("YouYellow", "You Yellow");
     view.defPiece("YouPurple", "You Purple");
+    view.defPiece("YouN0", "You N0");
+    view.defPiece("YouN1", "You N1");
+    view.defPiece("YouN2", "You N2");
+    view.defPiece("YouN3", "You N3");
+    view.defPiece("YouN4", "You N4");
+    view.defPiece("YouN5", "You N5");
+    view.defPiece("YouN6", "You N6");
+    view.defPiece("YouN7", "You N7");
+    view.defPiece("YouN8", "You N8");
+    view.defPiece("YouN9", "You N9");
  
-    view.defPosition("X1", 108, 5, 25, 27);
-    view.defPosition("Y1", 142, 5, 25, 27);
-    view.defPosition("Z1", 176, 5, 25, 27);
+    view.defPosition("X1", 60, 5, 25, 27);
+    view.defPosition("Y1", 94, 5, 25, 27);
+    view.defPosition("Z1", 128, 5, 25, 27);
     view.defPosition("a9", 7, 57, 25, 27);
     view.defPosition("b9", 41, 57, 25, 27);
     view.defPosition("c9", 75, 57, 25, 27);
@@ -300,4 +327,10 @@ Dagaz.View.configure = function(view) {
     view.defPosition("g1", 211, 321, 25, 27);
     view.defPosition("h1", 245, 321, 25, 27);
     view.defPosition("i1", 279, 321, 25, 27);
+    view.defPosition("D6", 235, 11, 10, 17);
+    view.defPosition("D5", 246, 11, 10, 17);
+    view.defPosition("D4", 257, 11, 10, 17);
+    view.defPosition("D3", 268, 11, 10, 17);
+    view.defPosition("D2", 279, 11, 10, 17);
+    view.defPosition("D1", 290, 11, 10, 17);
 }

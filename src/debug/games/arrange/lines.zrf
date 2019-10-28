@@ -35,6 +35,13 @@
   )
 )
 
+(define num
+  (piece
+     (name N$1)
+     (image You "images/lines/$1.bmp")
+  )
+)
+
 (game
   (title "Lines")
 
@@ -68,6 +75,16 @@
             (nw -1 -1) (ne 1 -1) (sw -1 1) (se 1 1)
          )
       )
+      (grid
+         (start-rectangle 235 12 245 29)
+         (dimensions
+             ("D" (0 17))
+             ("6/5/4/3/2/1" (11 0))
+         )
+         (directions 
+             (nx 0 -1)
+         )
+      )
       (zone (name preview-zone) (players You)
             (positions X1 Y1 Z1)
       )
@@ -83,4 +100,9 @@
   )
 
   (p Dark dark) (p Light light) (p Green green) (p Red red) (p Yellow yellow) (p Purple purple)
+  (num 0) (num 1) (num 2) (num 3) (num 4) (num 5) (num 6) (num 7) (num 8) (num 9)
+  
+  (board-setup
+    (You (N9 D1 D2 D3 D4 D5 D6))
+  )
 )

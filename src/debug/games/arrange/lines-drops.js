@@ -8,6 +8,26 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+if (!_.isUndefined(Dagaz.Controller.addSound)) {
+    Dagaz.Controller.addSound(1, "../../sounds/steps.ogg", true);
+    Dagaz.Controller.addSound(2, "../../sounds/open.ogg", true);
+}
+
+Dagaz.View.showBoard = function(board, ctx) {
+  var view = Dagaz.Controller.app.view;
+  var score = board.getValue(0);
+  if (score === null) {
+      score = 0;
+  }
+  for (var pos = 89; pos >= 84; pos--) {
+       var t = score % 10;
+       var r = view.piece["You N" + t];
+       var p = view.pos[pos];
+       ctx.drawImage(r.h, p.x, p.y, r.dx, r.dy);
+       score = (score / 10) | 0;
+  }
+}
+
 var tryDir = function(design, board, player, pos, dir, type, group) {
   var p = design.navigate(player, pos, dir);
   while (p !== null) {
@@ -61,6 +81,8 @@ Dagaz.Model.CheckInvariants = function(board) {
                  move.capturePiece(pos, 1);
               });
               move.goTo(6);
+              move.addValue(0, captures.length * (captures.length - 4));
+              move.sound = 2;
           }
       }
   });

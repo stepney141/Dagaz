@@ -50,6 +50,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                 move.hints.shift();
                 move.movePiece(pos, group[i], piece);
                 move.mode = 0;
+                move.sound = 1;
                 board.moves.push(move);
            }
        }
