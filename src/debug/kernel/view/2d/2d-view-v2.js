@@ -26,7 +26,9 @@ var mousePressed    = false;
 var hintedPiece     = null;
 var fromPos         = null;
 var deferred        = [];
-var blink           = 1;
+var blink           = 0;
+
+Dagaz.View.blink = [1, 0, -1, 0];
 
 Dagaz.View.configure = function(view) {}
 
@@ -562,7 +564,8 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
       isSaved = true;
   }
   if (Dagaz.Model.showBlink && (_.indexOf(view.current, pos) >= 0)) {
-      dx = blink;
+      dx = Dagaz.View.blink[blink];
+      dy = Dagaz.View.blink[blink + 1];
   }
   ctx.drawImage(piece.h, x + dx, y + dy, piece.dx, piece.dy);
   if (isSaved) {
@@ -626,7 +629,10 @@ View2D.prototype.draw = function(canvas) {
                Dagaz.View.showPiece(this, ctx, pos, p.pos, piece, p.model, x, y, p);
            }
         }, this);
-      blink = -blink;
+      blink += 2;
+      if (blink >= Dagaz.View.blink.length) {
+          blink = 0;
+      }
       this.drawKo(ctx);
       Dagaz.View.showMarks(this, ctx);
       this.showDrops(ctx);

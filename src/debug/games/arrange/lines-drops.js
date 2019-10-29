@@ -1,5 +1,7 @@
 (function() {
 
+Dagaz.View.blink = [0, 1, 0, 0, 0, -1, 0, -1, 0, 0];
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
