@@ -230,7 +230,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Orange", "Queen", 0);
     design.setup("Orange", "Queen", 4);
     design.setup("Orange", "Queen", 1);
-
 }
 
 Dagaz.View.configure = function(view) {

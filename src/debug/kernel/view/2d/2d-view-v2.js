@@ -35,6 +35,7 @@ Dagaz.View.configure = function(view) {}
 function View2D() {
   this.pos     = [];
   this.res     = [];
+  this.back    = [];
   this.piece   = [];
   this.board   = [];
   this.setup   = [];
@@ -133,15 +134,16 @@ View2D.prototype.defPosition = function(name, x, y, dx, dy) {
   });
 }
 
-View2D.prototype.defBoard = function(img, x, y, selector) {
+View2D.prototype.defBoard = function(img, x, y, selector, turns) {
   if (!_.isUndefined(selector) && (selector != Dagaz.Model.getResourceSelector())) return;
   var board = {
      h: document.getElementById(img),
+     t: turns,
      x: x ? x : 0,
      y: y ? y : 0
   };
   this.res.push(board);
-  this.board.push(board);
+  this.back.push(board);
 }
 
 View2D.prototype.defPiece = function(img, name, help, glyph) {
@@ -604,7 +606,11 @@ View2D.prototype.draw = function(canvas) {
   if (this.allResLoaded() && !isValid) {
       var ctx = canvas.getContext("2d");
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      _.each(this.board, function(b) {
+      _.each(this.back, function(b) {
+           if (!_.isUndefined(b.t)) {
+               var board = Dagaz.Controller.app.board;
+               if (_.indexOf(b.t, board.turn) < 0) return;
+           }
            ctx.drawImage(b.h, b.x, b.y);
       });
       _.chain(_.range(this.setup.length))
