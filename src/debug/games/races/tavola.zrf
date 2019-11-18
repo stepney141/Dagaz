@@ -747,9 +747,19 @@
      (links bc
          (m1a B1a) (B1a B1b) (B1b B1c) (B1c B1d) (B1d B1e) (B1e B1f) (B1f B1g) (B1g B1h) (B1h B1j) (B1j B1k) (B1k B1l) (B1l B1m)
      )
-     (symmetry Green (nx nx) (wx gx) (gx wx) (rx rx) (bx bx) (wc gc) (gc wc) (rc rc) (bc bc) (up up))
-     (symmetry Red   (nx nx) (wx rx) (rx wx) (gx gx) (bx bx) (wc rc) (rc wc) (gc gc) (bc bc) (up up))
-     (symmetry Black (nx nx) (wx bx) (bx wx) (rx rx) (gx gx) (wc bc) (bc wc) (rc rc) (gc gc) (up up))
+     (links wh (m1a f2a))
+     (links gh (m1a a1a))
+     (links rh (m1a g1a))
+     (links bh (m1a m2a))
+     (links ch
+         (f2a e2a) (e2a d2a) (d2a c2a) (c2a b2a) (b2a a2a)
+         (a1a b1a) (b1a c1a) (c1a d1a) (d1a e1a) (e1a f1a)
+         (g1a h1a) (h1a j1a) (j1a k1a) (k1a l1a) (l1a m1a)
+         (m2a l2a) (l2a k2a) (k2a j2a) (j2a h2a) (h2a g2a)
+     )
+     (symmetry Green (nx nx) (wx gx) (gx wx) (rx rx) (bx bx) (wc gc) (gc wc) (rc rc) (bc bc) (up up) (wh gh) (gh wh) (rh rh) (bh bh) (ch ch))
+     (symmetry Red   (nx nx) (wx rx) (rx wx) (gx gx) (bx bx) (wc rc) (rc wc) (gc gc) (bc bc) (up up) (wh rh) (gh gh) (rh wh) (bh bh) (ch ch))
+     (symmetry Black (nx nx) (wx bx) (bx wx) (rx rx) (gx gx) (wc bc) (bc wc) (rc rc) (gc gc) (up up) (wh bh) (gh gh) (rh rh) (bh wh) (ch ch))
      (zone (name home-zone) (players White)
            (positions a2a b2a c2a d2a e2a f2a
                       a2b b2b c2b d2b e2b f2b
