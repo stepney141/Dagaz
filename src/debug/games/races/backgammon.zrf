@@ -41,7 +41,7 @@
 )
 
 (game
-  (title "Hypergammon")
+  (title "Backgammon")
 
   (option "smart moves" true)
   (option "pass turn"   forced)

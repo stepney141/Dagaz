@@ -27,6 +27,7 @@
 (define king-jump (
    $1 (while empty? $1)
    (verify enemy?)
+   $1 (verify empty?) $2
    (add-partial jump-type)
 ))
 
@@ -76,7 +77,7 @@
             Black "images/bdamone.bmp")
      (moves
          (move-type jump-type)
-         (king-jump nw) (king-jump ne) (king-jump sw) (king-jump se)
+         (king-jump nw se) (king-jump ne sw) (king-jump sw ne) (king-jump se nw)
          (move-type normal-type)
          (king-shift nw) (king-shift ne) (king-shift sw) (king-shift se)
      )

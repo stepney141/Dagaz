@@ -149,6 +149,12 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(2, ZRF.JUMP,	-5);
     design.addCommand(2, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(2, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(2, ZRF.PARAM,	2);	// $3
+    design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(2, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(2, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(2, ZRF.PARAM,	3);	// $4
+    design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(2, ZRF.MODE,	0);	// jump-type
     design.addCommand(2, ZRF.FUNCTION,	25);	// to
     design.addCommand(2, ZRF.FUNCTION,	28);	// end
@@ -179,10 +185,10 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 1, [2], 1);
 
     design.addPiece("King", 1, 100);
-    design.addMove(1, 2, [3, 3], 0);
-    design.addMove(1, 2, [2, 2], 0);
-    design.addMove(1, 2, [1, 1], 0);
-    design.addMove(1, 2, [0, 0], 0);
+    design.addMove(1, 2, [3, 3, 3, 0], 0);
+    design.addMove(1, 2, [2, 2, 2, 1], 0);
+    design.addMove(1, 2, [1, 1, 1, 2], 0);
+    design.addMove(1, 2, [0, 0, 0, 3], 0);
     design.addMove(1, 3, [3, 3], 1);
     design.addMove(1, 3, [2, 2], 1);
     design.addMove(1, 3, [1, 1], 1);
