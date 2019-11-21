@@ -1,11 +1,14 @@
 (function() {
 
 var isFuzzy = true;
+var isBonus = false;
 
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "backgammon-dices") {
+  if (name == "backgammon-dices") {
+      if (value == "bonus") isBonus = true;
+  } else {
       checkVersion(design, name, value);
   }
 }
@@ -44,13 +47,34 @@ Dagaz.Model.CheckInvariants = function(board) {
       if ((move.mode > 0) && (move.mode < 7)) {
           for (var pos = design.navigate(board.player, 0, 0); pos !== null; pos = design.navigate(board.player, pos, 0)) {
                var piece = board.getPiece(pos);
-               if ((piece !== null) && isPermited(design, board, move, piece.type, alt)) {
+               if ((piece !== null) && isPermited(design, board, move, design.price[piece.type], alt)) {
                    var v = piece.getValue(0);
                    if ((v !== null) && (v > 1)) {
                         piece = piece.setValue(0, v - 1);
                         move.movePiece(pos, pos, piece);
                    } else {
-                        move.capturePiece(pos);
+                        if (isBonus && ((board.turn == 7) || (board.turn == 13))) {
+                            if (piece.type < 7) {
+                                var dice = Dagaz.Model.createPiece(design.price[piece.type] + 6, board.player).setValue(0, 2);
+                                _.each(design.allPositions(), function(pos) {
+                                    if (!design.inZone(1, board.player, pos)) return;
+                                    move.dropPiece(pos, dice);
+                                });
+                                if (board.turn == 7) {
+                                    move.goTo(4);
+                                } else {
+                                    move.goTo(10);
+                                }
+                            } else {
+                                if (board.turn == 7) {
+                                    move.goTo(2);
+                                } else {
+                                    move.goTo(8);
+                                }
+                            }
+                        } else {
+                            move.capturePiece(pos);
+                        }
                    }
                    return;
                }
