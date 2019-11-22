@@ -46,7 +46,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.repeatMark();
     design.addRandom(1, [0]); // 2
     design.addRandom(1, [0]); // 3
-    design.addTurn(1, [1, 2, 3, 4, 5, 6]); // 4
+    design.addTurn(1, [1, 2, 3, 4, 5, 6, 8]); // 4
     design.addTurn(1, [1, 2, 3, 4, 5, 6]); // 5
     design.addTurn(1, [1, 2, 3, 4, 5, 6]); // 6
     design.addTurn(1, [1, 2, 3, 4, 5, 6]); // 7
@@ -672,6 +672,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(7, ZRF.FUNCTION,	25);	// to
     design.addCommand(7, ZRF.FUNCTION,	28);	// end
 
+    design.addCommand(8, ZRF.FUNCTION,	24);	// from
+    design.addCommand(8, ZRF.FUNCTION,	26);	// capture
+    design.addCommand(8, ZRF.FUNCTION,	25);	// to
+    design.addCommand(8, ZRF.FUNCTION,	28);	// end
+
     design.addPiece("Man", 0);
     design.addMove(0, 0, [3, 5], 1, 1);
     design.addMove(0, 1, [3, 3, 5], 2, 1);
@@ -683,21 +688,27 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPiece("D1", 1, 1);
     design.addDrop(1, 6, [], 0, 10);
     design.addDrop(1, 7, [], 7, 10);
+    design.addMove(1, 8, [], 8);
     design.addPiece("D2", 2, 2);
     design.addDrop(2, 6, [], 0, 10);
     design.addDrop(2, 7, [], 7, 10);
+    design.addMove(2, 8, [], 8);
     design.addPiece("D3", 3, 3);
     design.addDrop(3, 6, [], 0, 10);
     design.addDrop(3, 7, [], 7, 10);
+    design.addMove(3, 8, [], 8);
     design.addPiece("D4", 4, 4);
     design.addDrop(4, 6, [], 0, 10);
     design.addDrop(4, 7, [], 7, 10);
+    design.addMove(4, 8, [], 8);
     design.addPiece("D5", 5, 5);
     design.addDrop(5, 6, [], 0, 10);
     design.addDrop(5, 7, [], 7, 10);
+    design.addMove(5, 8, [], 8);
     design.addPiece("D6", 6, 6);
     design.addDrop(6, 6, [], 0, 10);
     design.addDrop(6, 7, [], 7, 10);
+    design.addMove(6, 8, [], 8);
 
     design.addPiece("B6", 7, 6);
     design.addPiece("B5", 8, 5);
