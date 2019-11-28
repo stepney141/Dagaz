@@ -3,7 +3,8 @@
 Dagaz.View.markType = {
    TARGET:    0,
    ATTACKING: 1,
-   GOAL:      2
+   GOAL:      2,
+   KO:        4
 };
 
 var STEP_CNT     = 3;
@@ -31,6 +32,7 @@ function View2D() {
   this.goal    = [];
   this.changes = [];
   this.vectors = [];
+  this.ko      = [];
 }
 
 Dagaz.View.getView = function() {
@@ -161,6 +163,9 @@ View2D.prototype.markPositions = function(type, positions) {
   }
   if (type == Dagaz.View.markType.GOAL) {
       this.goal   = positions;
+  }
+  if (type == Dagaz.View.markType.KO) {
+      this.ko     = positions;
   }
   this.invalidate();
 }
@@ -319,6 +324,25 @@ var drawMarks = function(ctx, view, list, color) {
         ctx.fill();
         ctx.stroke();
    }, view);
+}
+
+View2D.prototype.drawKo = function(ctx) {
+   if (!_.isUndefined(this.piece["Ko"]) && (this.ko.length > 0)) {
+       var piece = this.piece["Ko"];
+       _.each(this.ko, function(pos) {
+          var p = this.pos[pos];
+          var x = ( p.x + (p.dx - piece.dx) / 2) | 0;
+          var y = ( p.y + (p.dy - piece.dy) / 2) | 0;
+          if (!_.isUndefined(Dagaz.View.KO_ALPHA)) {
+              ctx.save();
+              ctx.globalAlpha = Dagaz.View.KO_ALPHA;
+          }
+          ctx.drawImage(piece.h, x, y, piece.dx, piece.dy);
+          if (!_.isUndefined(Dagaz.View.KO_ALPHA)) {
+              ctx.restore();
+          }
+       }, this);
+   }
 }
 
 View2D.prototype.invalidate = function() {
@@ -523,6 +547,7 @@ View2D.prototype.draw = function(canvas) {
            y += (pos.dy - piece.dy) / 2 | 0;
            Dagaz.View.showPiece(this, ctx, pos, p.pos, piece, p.model, x, y);
         }, this);
+      this.drawKo(ctx);
       Dagaz.View.showMarks(this, ctx);
       this.animate();
       if (!_.isUndefined(Dagaz.View.showBoard)) {

@@ -55,6 +55,7 @@ var gameOver = function(text, self, result) {
 
 App.prototype.gameOver = function(text, result) {
   Dagaz.Controller.Done(this.board);
+  this.view.markPositions(Dagaz.View.markType.KO, []);
   if (onceGameOver) {
       _.delay(gameOver, 1000, text, this, result);
       onceGameOver = false;
@@ -240,6 +241,11 @@ App.prototype.exec = function() {
                  console.log("Setup: " + Dagaz.Model.getSetup(this.design, this.board));
              }
              this.list  = Dagaz.Model.getMoveList(this.board);
+             var ko = [];
+             if (!_.isUndefined(this.board.ko)) {
+                 ko = this.board.ko;
+             }
+             this.view.markPositions(Dagaz.View.markType.KO, ko);
              if (!_.isUndefined(this.move)) {
                  this.list.setLastMove(this.move);
              }
@@ -319,6 +325,9 @@ App.prototype.exec = function() {
   }
   if (this.state == STATE.EXEC) {
       this.view.markPositions(Dagaz.View.markType.TARGET, []);
+      if (Dagaz.View.CLEAR_KO) {
+          this.view.markPositions(Dagaz.View.markType.KO, []);
+      }
       if (!_.isUndefined(this.list)) {
           this.list.done();
           this.view.markPositions(Dagaz.View.markType.ATTACKING, []);

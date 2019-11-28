@@ -23,7 +23,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-captures", "false");
     design.checkVersion("animate-drops", "false");
-    design.checkVersion("smart-moves", "false");
+    design.checkVersion("smart-moves", "from");
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-blink", "false");
 
@@ -189,15 +189,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Green", "Stone", 16);
     design.setup("Green", "Stone", 22);
     design.setup("Green", "Stone", 28);
-    design.setup("Green", "Stone", 32);
-    design.setup("Green", "Stone", 26);
     design.setup("Blue", "Stone", 7);
     design.setup("Blue", "Stone", 13);
     design.setup("Blue", "Stone", 19);
     design.setup("Blue", "Stone", 25);
     design.setup("Blue", "Stone", 31);
-    design.setup("Blue", "Stone", 29);
-    design.setup("Blue", "Stone", 23);
 }
 
 Dagaz.View.configure = function(view) {
