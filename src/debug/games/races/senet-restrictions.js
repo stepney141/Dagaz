@@ -1,5 +1,7 @@
 (function() {
 
+Dagaz.Model.passForcedDraw = false;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
@@ -13,58 +15,88 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
   _.each(board.moves, function(move) {
-      if (move.mode == 0) return;
+      if (!_.isUndefined(move.failed) || (move.mode == 0)) return;
       if (move.isSimpleMove()) {
-          var pos = design.navigate(1, move.actions[0][0][0], 0);;
-          var dst = move.actions[0][1][0];
-          var f = false; var p = false; var e = true;
+          var pos = design.navigate(board.player, move.actions[0][0][0], 0);
+          var stop = null; var prev = null; var piece = null;
           while (pos !== null) {
-              var piece = board.getPiece(pos);
-              if (!f && (pos == dst)) {
-                  pos = design.navigate(1, pos, 0);
-                  if (pos !== null) {
-                      piece = board.getPiece(pos);
-                      if ((piece !== null) && (piece.player != board.player)) {
-                           move.failed = true;
+              piece = board.getPiece(pos);
+              if (design.inZone(2, board.player, pos) && (stop === null)) {
+                  if (piece === null) {
+                      move.actions[0][1] = [pos];
+                      move.capturePiece(0);
+                      move.capturePiece(1);
+                      move.capturePiece(2);
+                      move.capturePiece(3);
+                      move.goTo(board.turn - 4);
+                      return;
+                  } else {
+                      stop = pos;
+                      break;
+                  }
+              }
+              if ((piece !== null) && (piece.player != board.player)) {
+                  if ((stop === null) && (prev !== null)) {
+                     stop = prev;
+                  }
+                  prev = pos;
+              } else {
+                  prev = null;
+              }
+              if (pos == move.actions[0][1][0]) break;
+              pos = design.navigate(board.player, pos, 0);
+          }
+          if (piece !== null) {
+              var f = true;
+              if (stop === null) {
+                  if (design.inZone(2, board.player, pos)) {
+                      stop = pos;
+                  } else {
+                      var p = design.navigate(board.player, pos, 0);
+                      if (p !== null) {
+                          piece = board.getPiece(p);
+                          if ((piece !== null) && (piece.player != board.player)) {
+                              stop = pos;
+                              f = false;
+                          }
                       }
                   }
               }
-              if (piece !== null) e = false;
-              if ((piece !== null) && (piece.player != board.player)) {
-                  if (f) {
-                      p = true;
+              if (f && (prev !== null)) {
+                  pos = design.navigate(board.player, pos, 0);
+                  if (pos !== null) {
+                      piece = board.getPiece(pos);
+                      if ((piece !== null) && (piece.player != board.player)) {
+                          pos = design.navigate(board.player, pos, 0);
+                          if (pos !== null) {
+                              piece = board.getPiece(pos);
+                              if ((piece === null) || (piece.player == board.player)) return;
+                          }
+                      }
                   }
-                  f = true;
-              } else {
-                  f = false;
               }
-              if ((pos == dst) || (pos === null)) break;
-              pos = design.navigate(1, pos, 0);
           }
-          if (e) return;
-          piece = board.getPiece(dst);
-          if (p) {
-              if (piece === null) {
-                  move.failed = true;
-                  return;
+          if (stop !== null) {
+              var dir = 0;
+              pos = move.actions[0][0][0];
+              for (var i = 0; i < move.mode; i++) {
+                   var prev = pos;
+                   pos = design.navigate(board.player, pos, dir);
+                   if (pos == stop) {
+                       dir = 1;
+                       pos = design.navigate(board.player, prev, dir);
+                   }
+                   if (pos === null) {
+                       move.failed = true;
+                       return;
+                   }
               }
-              pos = design.navigate(1, dst, 0);
-              if (pos === null) {
-                  move.failed = true;
-                  return;
-              }
+              move.mode = 6;
+              move.actions[0][1] = [pos];
               piece = board.getPiece(pos);
-              if ((piece === null) || (piece.player == board.player)) {
-                  move.failed = true;
-                  return;
-              }
-              pos = design.navigate(1, pos, 0);
-              if (pos !== null) {
-                  piece = board.getPiece(pos);
-                  if ((piece !== null) && (piece.player != board.player)) {
-                      move.failed = true;
-                      return;
-                  }
+              if ((piece !== null) && (piece.player == board.player)) {
+                   move.failed = true;
+                   return;
               }
           }
       }

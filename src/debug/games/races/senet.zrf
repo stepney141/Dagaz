@@ -144,6 +144,11 @@
          (players Blue Green)
          (positions k1)
       )
+      (zone
+         (name safe)
+         (players Blue Green)
+         (positions f1 g1 h1 i1 j1)
+      )
    )
 
    (piece

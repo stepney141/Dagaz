@@ -26,10 +26,12 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("smart-moves", "from");
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-blink", "false");
+    design.checkVersion("pass-turn", "forced");
+    design.checkVersion("advisor-wait", "5");
 
-    design.addDirection("next");
-    design.addDirection("prev");
-    design.addDirection("back");
+    design.addDirection("next"); // 0
+    design.addDirection("prev"); // 1
+    design.addDirection("back"); // 2
 
     design.addPlayer("Blue", [0, 0, 2]);
     design.addPlayer("Green", [0, 1, 2]);
@@ -97,6 +99,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addZone("ra", 2, [33]);
     design.addZone("end", 1, [34]);
     design.addZone("end", 2, [34]);
+    design.addZone("safe", 1, [21, 24, 27, 30, 33]);
+    design.addZone("safe", 2, [21, 24, 27, 30, 33]);
 
     design.addCommand(0, ZRF.IN_ZONE,	0);	// dices
     design.addCommand(0, ZRF.FUNCTION,	20);	// verify
