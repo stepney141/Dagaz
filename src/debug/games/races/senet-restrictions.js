@@ -17,12 +17,15 @@ Dagaz.Model.CheckInvariants = function(board) {
   _.each(board.moves, function(move) {
       if (!_.isUndefined(move.failed) || (move.mode == 0)) return;
       if (move.isSimpleMove()) {
+          if (design.inZone(8, board.player, move.actions[0][0][0])) return;
           var pos = design.navigate(board.player, move.actions[0][0][0], 0);
           var stop = null; var prev = null; var piece = null;
           while (pos !== null) {
               piece = board.getPiece(pos);
               if (design.inZone(2, board.player, pos) && (stop === null)) {
                   if (piece === null) {
+                      var piece = move.actions[0][2][0].setValue(0, 1);
+                      move.actions[0][2] = [piece];
                       move.actions[0][1] = [pos];
                       move.capturePiece(0);
                       move.capturePiece(1);

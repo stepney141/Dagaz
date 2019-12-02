@@ -19,6 +19,11 @@ ZRF = {
     VERIFY:        20
 };
 
+if (!_.isUndefined(Dagaz.Controller.addSound)) {
+    Dagaz.Controller.addSound(0, "../../sounds/slide.ogg", true);
+    Dagaz.Controller.addSound(10, "../../sounds/dice.wav", true);
+}
+
 Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-captures", "false");
@@ -176,10 +181,10 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(5, ZRF.FUNCTION,	28);	// end
 
     design.addPiece("Zero", 0);
-    design.addDrop(0, 0, [], 0);
+    design.addDrop(0, 0, [], 0, 10);
 
     design.addPiece("One", 1);
-    design.addDrop(1, 0, [], 0);
+    design.addDrop(1, 0, [], 0, 10);
 
     design.addPiece("Stone", 2);
     design.addMove(2, 1, [0], 1);
