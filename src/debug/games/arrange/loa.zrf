@@ -8,6 +8,16 @@
   add
 ))
 
+(define rook-slide (
+  $1
+  (while empty?
+     add
+     $1
+  )
+  (verify enemy?)
+  add
+))
+
 (game
   (title "Lines of Action")
   (history "Copyright (c) Claude Soucie.")
@@ -61,5 +71,32 @@
   (board-setup
     (White (Man a2 a4 a6 b8 c1 d8 e1 f8 g1 h3 h5 h7))
     (Black (Man a3 a5 a7 b1 c8 d1 e8 f1 g8 h2 h4 h6))
+  )
+)
+
+(variant
+  (title "Rook Chain")
+  (default)
+
+  (board
+    (image "images/loa/board.bmp")
+    (grid
+      (start-rectangle 2 2 82 82)
+      (dimensions
+        ("a/b/c/d/e/f/g/h" (80 0)) ; files
+        ("8/7/6/5/4/3/2/1" (0 80)) ; ranks
+      )
+      (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0))
+    )
+  )
+
+  (piece
+     (name Man)
+     (image White "images/loa/white.bmp"
+            Black "images/loa/black.bmp")
+     (moves
+         (rook-slide n) (rook-slide s)
+         (rook-slide w) (rook-slide e)
+     )
   )
 )
