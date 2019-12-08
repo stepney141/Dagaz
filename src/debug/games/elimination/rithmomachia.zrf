@@ -1,0 +1,258 @@
+(define step (
+  $1 (verify empty?)
+  add
+))
+
+(define step-2 (
+  $1 (verify empty?)
+  $1 (verify empty?)
+  add
+))
+
+(define step-3 (
+  $1 (verify empty?)
+  $1 (verify empty?)
+  $1 (verify empty?)
+  add
+))
+
+(define jump-2 (
+  $1 $2 (verify empty?)
+  add
+))
+
+(define jump-3 (
+  $1 $1 $2 (verify empty?)
+  add
+))
+
+(define c
+  (piece
+     (name C$1)
+     (image White "images/rithmomachia/wr$1.bmp"
+            Black "images/rithmomachia/br$1.bmp")
+     (moves
+         (move-type c-type)
+         (step nw) (step ne)
+         (step sw) (step se)
+     )
+  )
+)
+
+(define cw
+  (piece
+     (name C$1)
+     (image White "images/rithmomachia/wr$1.bmp")
+     (moves
+         (move-type c-type)
+         (step nw) (step ne)
+         (step sw) (step se)
+     )
+  )
+)
+
+(define cb
+  (piece
+     (name C$1)
+     (image Black "images/rithmomachia/br$1.bmp")
+     (moves
+         (move-type c-type)
+         (step nw) (step ne)
+         (step sw) (step se)
+     )
+  )
+)
+
+(define t
+  (piece
+     (name T$1)
+     (image White "images/rithmomachia/wt$1.bmp"
+            Black "images/rithmomachia/bt$1.bmp")
+     (moves
+         (move-type t-type)
+         (step-2 n) (step-2 e) (step-2 w) (step-2 s)
+         (jump-2 n nw) (jump-2 n ne) (jump-2 s sw) (jump-2 s se)
+         (jump-2 w nw) (jump-2 w sw) (jump-2 e ne) (jump-2 e se)
+     )
+  )
+)
+
+(define tw
+  (piece
+     (name T$1)
+     (image White "images/rithmomachia/wt$1.bmp")
+     (moves
+         (move-type t-type)
+         (step-2 n) (step-2 e) (step-2 w) (step-2 s)
+         (jump-2 n nw) (jump-2 n ne) (jump-2 s sw) (jump-2 s se)
+         (jump-2 w nw) (jump-2 w sw) (jump-2 e ne) (jump-2 e se)
+     )
+  )
+)
+
+(define tb
+  (piece
+     (name T$1)
+     (image Black "images/rithmomachia/bt$1.bmp")
+     (moves
+         (move-type t-type)
+         (step-2 n) (step-2 e) (step-2 w) (step-2 s)
+         (jump-2 n nw) (jump-2 n ne) (jump-2 s sw) (jump-2 s se)
+         (jump-2 w nw) (jump-2 w sw) (jump-2 e ne) (jump-2 e se)
+     )
+  )
+)
+
+(define r
+  (piece
+     (name S$1)
+     (image White "images/rithmomachia/ws$1.bmp"
+            Black "images/rithmomachia/bs$1.bmp")
+     (moves
+         (move-type s-type)
+         (step-3 n) (step-3 e) (step-3 w) (step-3 s)
+         (jump-3 n nw) (jump-3 n ne) (jump-3 s sw) (jump-3 s se)
+         (jump-3 w nw) (jump-3 w sw) (jump-3 e ne) (jump-3 e se)
+     )
+  )
+)
+
+(define rw
+  (piece
+     (name S$1)
+     (image White "images/rithmomachia/ws$1.bmp")
+     (moves
+         (move-type s-type)
+         (step-3 n) (step-3 e) (step-3 w) (step-3 s)
+         (jump-3 n nw) (jump-3 n ne) (jump-3 s sw) (jump-3 s se)
+         (jump-3 w nw) (jump-3 w sw) (jump-3 e ne) (jump-3 e se)
+     )
+  )
+)
+
+(define rb
+  (piece
+     (name S$1)
+     (image Black "images/rithmomachia/bs$1.bmp")
+     (moves
+         (move-type s-type)
+         (step-3 n) (step-3 e) (step-3 w) (step-3 s)
+         (jump-3 n nw) (jump-3 n ne) (jump-3 s sw) (jump-3 s se)
+         (jump-3 w nw) (jump-3 w sw) (jump-3 e ne) (jump-3 e se)
+     )
+  )
+)
+
+(define p
+  (piece
+     (name P$1)
+     (image White "images/rithmomachia/wp$1.bmp"
+            Black "images/rithmomachia/bp$1.bmp")
+     (moves
+         (move-type c-type)
+         (step nw) (step ne)
+         (step sw) (step se)
+         (move-type t-type)
+         (step-2 n) (step-2 e) (step-2 w) (step-2 s)
+         (jump-2 n nw) (jump-2 n ne) (jump-2 s sw) (jump-2 s se)
+         (jump-2 w nw) (jump-2 w sw) (jump-2 e ne) (jump-2 e se)
+         (move-type s-type)
+         (step-3 n) (step-3 e) (step-3 w) (step-3 s)
+         (jump-3 n nw) (jump-3 n ne) (jump-3 s sw) (jump-3 s se)
+         (jump-3 w nw) (jump-3 w sw) (jump-3 e ne) (jump-3 e se)
+     )
+  )
+)
+
+(define pw
+  (piece
+     (name P$1)
+     (image White "images/rithmomachia/wp$1.bmp")
+     (moves
+         (move-type c-type)
+         (step nw) (step ne)
+         (step sw) (step se)
+         (move-type t-type)
+         (step-2 n) (step-2 e) (step-2 w) (step-2 s)
+         (jump-2 n nw) (jump-2 n ne) (jump-2 s sw) (jump-2 s se)
+         (jump-2 w nw) (jump-2 w sw) (jump-2 e ne) (jump-2 e se)
+         (move-type s-type)
+         (step-3 n) (step-3 e) (step-3 w) (step-3 s)
+         (jump-3 n nw) (jump-3 n ne) (jump-3 s sw) (jump-3 s se)
+         (jump-3 w nw) (jump-3 w sw) (jump-3 e ne) (jump-3 e se)
+     )
+  )
+)
+
+(define p
+  (piece
+     (name P$1)
+     (image Black "images/rithmomachia/bp$1.bmp")
+     (moves
+         (move-type c-type)
+         (step nw) (step ne)
+         (step sw) (step se)
+         (move-type t-type)
+         (step-2 n) (step-2 e) (step-2 w) (step-2 s)
+         (jump-2 n nw) (jump-2 n ne) (jump-2 s sw) (jump-2 s se)
+         (jump-2 w nw) (jump-2 w sw) (jump-2 e ne) (jump-2 e se)
+         (move-type s-type)
+         (step-3 n) (step-3 e) (step-3 w) (step-3 s)
+         (jump-3 n nw) (jump-3 n ne) (jump-3 s sw) (jump-3 s se)
+         (jump-3 w nw) (jump-3 w sw) (jump-3 e ne) (jump-3 e se)
+     )
+  )
+)
+
+(game
+  (title "Rithmomachia")
+
+  (players White Black)
+  (turn-order White Black)
+
+  (board
+     (image "images/rithmomachia/8x16.bmp")
+     (grid
+         (start-rectangle 4 4 36 36)
+         (dimensions
+           ("a/b/c/d/e/f/g/h" (35 0)) ; files
+           ("16/15/14/13/12/11/10/9/8/7/6/5/4/3/2/1" (0 35)) ; ranks
+         )
+         (directions 
+              (n 0 -1) (s 0 1) (e 1 0) (w -1 0)
+              (nw -1 -1) (sw -1 1) (ne 1 -1) (se 1 1)
+         )
+     )
+  )
+
+  (cw 1) (cw 2) (cw 4) (cw 6) (cw 8) (c 16) (cw 36) (cw 64)
+  (cb 3) (cb 5) (cb 7) (cb 9) (cb 25) (cb 49) (cb 81)
+  (tw 6) (tw 9) (t 16) (tw 20) (t 25) (tw 42) (tw 49) (tw 72) (tw 81)
+  (tb 12) (tb 16) (tb 30) (tb 36) (tb 56) (tb 64) (tb 90) (tb 100)
+  (rw 15) (rw 25) (rw 36) (rw 45) (rw 81) (rw 153) (rw 169) (rw 289)
+  (rb 28) (rb 49) (rb 64) (rb 66) (rb 120) (rb 121) (rb 225) (rb 361)
+  (pw 5) (pw 10) (pw 13) (pw 14) (pw 17) (pw 20) (pw 21) (pw 25)
+  (pw 26) (pw 29) (pw 30) (pw 34) (pw 35) (pw 37) (pw 38) (pw 39)
+  (pw 40) (p 41) (pw 42) (pw 45) (pw 46) (pw 49) (pw 50) (pw 51)
+  (p 52) (pw 53) (pw 54) (pw 55) (pw 56) (pw 57) (p 61) (pw 62)
+  (p 65) (pw 66) (pw 70) (pw 71) (p 74) (pw 75) (p 77) (pw 78)
+  (pw 81) (pw 82) (pw 86) (pw 87) (p 90) (pw 91)
+  (pb 73) (pb 80) (pb 85) (pb 89) (pb 98) (pb 100) (pb 101) (pb 105)
+  (pb 110) (pb 114) (pb 116) (pb 125) (pb 126) (pb 141) (pb 149)
+  (pb 165) (pb 174) (pb 190)
+
+  (board-setup
+    (White 
+       (C2 c6) (C4 c5 d6) (C6 e6) (C8 f6) (C16 d5) (C36 e5) (C64 f5)
+       (T6 b5) (T9 a5) (T20 d4) (T25 c4) (T42 e4) (T49 f4) (T72 g5) (T81 h5)
+       (S15 a4) (S25 a3) (S45 b4) (S81 b3) (S153 h4) (S169 g3) (S289 h3)
+       (P91 g4)
+    )
+    (Black 
+       (C3 f11) (C5 e11) (C7 d11) (C9 c11 f12) (C25 e12) (C49 d12) (C81 c12)
+       (T12 g12) (T12 h12) (T30 e13) (T36 f13) (T56 d13) (T64 c13) (T90 b12) (T100 a12)
+       (S28 h13) (S49 h14) (S66 g13) (S120 b13) (S121 g14) (S225 b14) (S361 a14)
+       (P190 a13)
+    )
+  )
+)
