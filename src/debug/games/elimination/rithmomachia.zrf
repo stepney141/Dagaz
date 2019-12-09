@@ -184,7 +184,7 @@
   )
 )
 
-(define p
+(define pb
   (piece
      (name P$1)
      (image Black "images/rithmomachia/bp$1.bmp")

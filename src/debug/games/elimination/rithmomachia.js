@@ -225,97 +225,97 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(4, ZRF.FUNCTION,	25);	// to
     design.addCommand(4, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("C1", 0);
+    design.addPiece("C1", 0, 1);
     design.addMove(0, 0, [6], 0);
     design.addMove(0, 0, [5], 0);
     design.addMove(0, 0, [2], 0);
     design.addMove(0, 0, [0], 0);
 
-    design.addPiece("C2", 1);
+    design.addPiece("C2", 1, 2);
     design.addMove(1, 0, [6], 0);
     design.addMove(1, 0, [5], 0);
     design.addMove(1, 0, [2], 0);
     design.addMove(1, 0, [0], 0);
 
-    design.addPiece("C4", 2);
+    design.addPiece("C4", 2, 4);
     design.addMove(2, 0, [6], 0);
     design.addMove(2, 0, [5], 0);
     design.addMove(2, 0, [2], 0);
     design.addMove(2, 0, [0], 0);
 
-    design.addPiece("C6", 3);
+    design.addPiece("C6", 3, 6);
     design.addMove(3, 0, [6], 0);
     design.addMove(3, 0, [5], 0);
     design.addMove(3, 0, [2], 0);
     design.addMove(3, 0, [0], 0);
 
-    design.addPiece("C8", 4);
+    design.addPiece("C8", 4, 8);
     design.addMove(4, 0, [6], 0);
     design.addMove(4, 0, [5], 0);
     design.addMove(4, 0, [2], 0);
     design.addMove(4, 0, [0], 0);
 
-    design.addPiece("C16", 5);
+    design.addPiece("C16", 5, 16);
     design.addMove(5, 0, [6], 0);
     design.addMove(5, 0, [5], 0);
     design.addMove(5, 0, [2], 0);
     design.addMove(5, 0, [0], 0);
 
-    design.addPiece("C36", 6);
+    design.addPiece("C36", 6, 36);
     design.addMove(6, 0, [6], 0);
     design.addMove(6, 0, [5], 0);
     design.addMove(6, 0, [2], 0);
     design.addMove(6, 0, [0], 0);
 
-    design.addPiece("C64", 7);
+    design.addPiece("C64", 7, 64);
     design.addMove(7, 0, [6], 0);
     design.addMove(7, 0, [5], 0);
     design.addMove(7, 0, [2], 0);
     design.addMove(7, 0, [0], 0);
 
-    design.addPiece("C3", 8);
+    design.addPiece("C3", 8, 3);
     design.addMove(8, 0, [6], 0);
     design.addMove(8, 0, [5], 0);
     design.addMove(8, 0, [2], 0);
     design.addMove(8, 0, [0], 0);
 
-    design.addPiece("C5", 9);
+    design.addPiece("C5", 9, 5);
     design.addMove(9, 0, [6], 0);
     design.addMove(9, 0, [5], 0);
     design.addMove(9, 0, [2], 0);
     design.addMove(9, 0, [0], 0);
 
-    design.addPiece("C7", 10);
+    design.addPiece("C7", 10, 7);
     design.addMove(10, 0, [6], 0);
     design.addMove(10, 0, [5], 0);
     design.addMove(10, 0, [2], 0);
     design.addMove(10, 0, [0], 0);
 
-    design.addPiece("C9", 11);
+    design.addPiece("C9", 11, 9);
     design.addMove(11, 0, [6], 0);
     design.addMove(11, 0, [5], 0);
     design.addMove(11, 0, [2], 0);
     design.addMove(11, 0, [0], 0);
 
-    design.addPiece("C25", 12);
+    design.addPiece("C25", 12, 25);
     design.addMove(12, 0, [6], 0);
     design.addMove(12, 0, [5], 0);
     design.addMove(12, 0, [2], 0);
     design.addMove(12, 0, [0], 0);
 
-    design.addPiece("C49", 13);
+    design.addPiece("C49", 13, 49);
     design.addMove(13, 0, [6], 0);
     design.addMove(13, 0, [5], 0);
     design.addMove(13, 0, [2], 0);
     design.addMove(13, 0, [0], 0);
 
-    design.addPiece("C81", 14);
+    design.addPiece("C81", 14, 81);
     design.addMove(14, 0, [6], 0);
     design.addMove(14, 0, [5], 0);
     design.addMove(14, 0, [2], 0);
     design.addMove(14, 0, [0], 0);
 
-    design.addPiece("T6", 15);
+    design.addPiece("T6", 15, 6);
     design.addMove(15, 1, [7, 7], 1);
     design.addMove(15, 1, [3, 3], 1);
     design.addMove(15, 1, [4, 4], 1);
@@ -329,7 +329,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(15, 2, [3, 5], 1);
     design.addMove(15, 2, [3, 0], 1);
 
-    design.addPiece("T9", 16);
+    design.addPiece("T9", 16, 9);
     design.addMove(16, 1, [7, 7], 1);
     design.addMove(16, 1, [3, 3], 1);
     design.addMove(16, 1, [4, 4], 1);
@@ -343,7 +343,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(16, 2, [3, 5], 1);
     design.addMove(16, 2, [3, 0], 1);
 
-    design.addPiece("T16", 17);
+    design.addPiece("T16", 17, 16);
     design.addMove(17, 1, [7, 7], 1);
     design.addMove(17, 1, [3, 3], 1);
     design.addMove(17, 1, [4, 4], 1);
@@ -357,7 +357,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(17, 2, [3, 5], 1);
     design.addMove(17, 2, [3, 0], 1);
 
-    design.addPiece("T20", 18);
+    design.addPiece("T20", 18, 20);
     design.addMove(18, 1, [7, 7], 1);
     design.addMove(18, 1, [3, 3], 1);
     design.addMove(18, 1, [4, 4], 1);
@@ -371,7 +371,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(18, 2, [3, 5], 1);
     design.addMove(18, 2, [3, 0], 1);
 
-    design.addPiece("T25", 19);
+    design.addPiece("T25", 19, 25);
     design.addMove(19, 1, [7, 7], 1);
     design.addMove(19, 1, [3, 3], 1);
     design.addMove(19, 1, [4, 4], 1);
@@ -385,7 +385,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(19, 2, [3, 5], 1);
     design.addMove(19, 2, [3, 0], 1);
 
-    design.addPiece("T42", 20);
+    design.addPiece("T42", 20, 42);
     design.addMove(20, 1, [7, 7], 1);
     design.addMove(20, 1, [3, 3], 1);
     design.addMove(20, 1, [4, 4], 1);
@@ -399,7 +399,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(20, 2, [3, 5], 1);
     design.addMove(20, 2, [3, 0], 1);
 
-    design.addPiece("T49", 21);
+    design.addPiece("T49", 21, 49);
     design.addMove(21, 1, [7, 7], 1);
     design.addMove(21, 1, [3, 3], 1);
     design.addMove(21, 1, [4, 4], 1);
@@ -413,7 +413,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(21, 2, [3, 5], 1);
     design.addMove(21, 2, [3, 0], 1);
 
-    design.addPiece("T72", 22);
+    design.addPiece("T72", 22, 72);
     design.addMove(22, 1, [7, 7], 1);
     design.addMove(22, 1, [3, 3], 1);
     design.addMove(22, 1, [4, 4], 1);
@@ -427,7 +427,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(22, 2, [3, 5], 1);
     design.addMove(22, 2, [3, 0], 1);
 
-    design.addPiece("T81", 23);
+    design.addPiece("T81", 23, 81);
     design.addMove(23, 1, [7, 7], 1);
     design.addMove(23, 1, [3, 3], 1);
     design.addMove(23, 1, [4, 4], 1);
@@ -441,7 +441,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(23, 2, [3, 5], 1);
     design.addMove(23, 2, [3, 0], 1);
 
-    design.addPiece("T12", 24);
+    design.addPiece("T12", 24, 12);
     design.addMove(24, 1, [7, 7], 1);
     design.addMove(24, 1, [3, 3], 1);
     design.addMove(24, 1, [4, 4], 1);
@@ -455,7 +455,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(24, 2, [3, 5], 1);
     design.addMove(24, 2, [3, 0], 1);
 
-    design.addPiece("T16", 25);
+    design.addPiece("T16", 25, 16);
     design.addMove(25, 1, [7, 7], 1);
     design.addMove(25, 1, [3, 3], 1);
     design.addMove(25, 1, [4, 4], 1);
@@ -469,7 +469,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(25, 2, [3, 5], 1);
     design.addMove(25, 2, [3, 0], 1);
 
-    design.addPiece("T30", 26);
+    design.addPiece("T30", 26, 30);
     design.addMove(26, 1, [7, 7], 1);
     design.addMove(26, 1, [3, 3], 1);
     design.addMove(26, 1, [4, 4], 1);
@@ -483,7 +483,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(26, 2, [3, 5], 1);
     design.addMove(26, 2, [3, 0], 1);
 
-    design.addPiece("T36", 27);
+    design.addPiece("T36", 27, 36);
     design.addMove(27, 1, [7, 7], 1);
     design.addMove(27, 1, [3, 3], 1);
     design.addMove(27, 1, [4, 4], 1);
@@ -497,7 +497,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(27, 2, [3, 5], 1);
     design.addMove(27, 2, [3, 0], 1);
 
-    design.addPiece("T56", 28);
+    design.addPiece("T56", 28, 56);
     design.addMove(28, 1, [7, 7], 1);
     design.addMove(28, 1, [3, 3], 1);
     design.addMove(28, 1, [4, 4], 1);
@@ -511,7 +511,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(28, 2, [3, 5], 1);
     design.addMove(28, 2, [3, 0], 1);
 
-    design.addPiece("T64", 29);
+    design.addPiece("T64", 29, 64);
     design.addMove(29, 1, [7, 7], 1);
     design.addMove(29, 1, [3, 3], 1);
     design.addMove(29, 1, [4, 4], 1);
@@ -525,7 +525,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(29, 2, [3, 5], 1);
     design.addMove(29, 2, [3, 0], 1);
 
-    design.addPiece("T90", 30);
+    design.addPiece("T90", 30, 90);
     design.addMove(30, 1, [7, 7], 1);
     design.addMove(30, 1, [3, 3], 1);
     design.addMove(30, 1, [4, 4], 1);
@@ -539,7 +539,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(30, 2, [3, 5], 1);
     design.addMove(30, 2, [3, 0], 1);
 
-    design.addPiece("T100", 31);
+    design.addPiece("T100", 31, 100);
     design.addMove(31, 1, [7, 7], 1);
     design.addMove(31, 1, [3, 3], 1);
     design.addMove(31, 1, [4, 4], 1);
@@ -553,7 +553,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(31, 2, [3, 5], 1);
     design.addMove(31, 2, [3, 0], 1);
 
-    design.addPiece("S15", 32);
+    design.addPiece("S15", 32, 15);
     design.addMove(32, 3, [7, 7, 7], 2);
     design.addMove(32, 3, [3, 3, 3], 2);
     design.addMove(32, 3, [4, 4, 4], 2);
@@ -567,7 +567,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(32, 4, [3, 3, 5], 2);
     design.addMove(32, 4, [3, 3, 0], 2);
 
-    design.addPiece("S25", 33);
+    design.addPiece("S25", 33, 25);
     design.addMove(33, 3, [7, 7, 7], 2);
     design.addMove(33, 3, [3, 3, 3], 2);
     design.addMove(33, 3, [4, 4, 4], 2);
@@ -581,7 +581,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(33, 4, [3, 3, 5], 2);
     design.addMove(33, 4, [3, 3, 0], 2);
 
-    design.addPiece("S36", 34);
+    design.addPiece("S36", 34, 36);
     design.addMove(34, 3, [7, 7, 7], 2);
     design.addMove(34, 3, [3, 3, 3], 2);
     design.addMove(34, 3, [4, 4, 4], 2);
@@ -595,7 +595,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(34, 4, [3, 3, 5], 2);
     design.addMove(34, 4, [3, 3, 0], 2);
 
-    design.addPiece("S45", 35);
+    design.addPiece("S45", 35, 45);
     design.addMove(35, 3, [7, 7, 7], 2);
     design.addMove(35, 3, [3, 3, 3], 2);
     design.addMove(35, 3, [4, 4, 4], 2);
@@ -609,7 +609,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(35, 4, [3, 3, 5], 2);
     design.addMove(35, 4, [3, 3, 0], 2);
 
-    design.addPiece("S81", 36);
+    design.addPiece("S81", 36, 81);
     design.addMove(36, 3, [7, 7, 7], 2);
     design.addMove(36, 3, [3, 3, 3], 2);
     design.addMove(36, 3, [4, 4, 4], 2);
@@ -623,7 +623,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(36, 4, [3, 3, 5], 2);
     design.addMove(36, 4, [3, 3, 0], 2);
 
-    design.addPiece("S153", 37);
+    design.addPiece("S153", 37, 153);
     design.addMove(37, 3, [7, 7, 7], 2);
     design.addMove(37, 3, [3, 3, 3], 2);
     design.addMove(37, 3, [4, 4, 4], 2);
@@ -637,7 +637,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(37, 4, [3, 3, 5], 2);
     design.addMove(37, 4, [3, 3, 0], 2);
 
-    design.addPiece("S169", 38);
+    design.addPiece("S169", 38, 169);
     design.addMove(38, 3, [7, 7, 7], 2);
     design.addMove(38, 3, [3, 3, 3], 2);
     design.addMove(38, 3, [4, 4, 4], 2);
@@ -651,7 +651,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(38, 4, [3, 3, 5], 2);
     design.addMove(38, 4, [3, 3, 0], 2);
 
-    design.addPiece("S289", 39);
+    design.addPiece("S289", 39, 289);
     design.addMove(39, 3, [7, 7, 7], 2);
     design.addMove(39, 3, [3, 3, 3], 2);
     design.addMove(39, 3, [4, 4, 4], 2);
@@ -665,7 +665,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(39, 4, [3, 3, 5], 2);
     design.addMove(39, 4, [3, 3, 0], 2);
 
-    design.addPiece("S28", 40);
+    design.addPiece("S28", 40, 28);
     design.addMove(40, 3, [7, 7, 7], 2);
     design.addMove(40, 3, [3, 3, 3], 2);
     design.addMove(40, 3, [4, 4, 4], 2);
@@ -679,7 +679,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(40, 4, [3, 3, 5], 2);
     design.addMove(40, 4, [3, 3, 0], 2);
 
-    design.addPiece("S49", 41);
+    design.addPiece("S49", 41, 49);
     design.addMove(41, 3, [7, 7, 7], 2);
     design.addMove(41, 3, [3, 3, 3], 2);
     design.addMove(41, 3, [4, 4, 4], 2);
@@ -693,7 +693,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(41, 4, [3, 3, 5], 2);
     design.addMove(41, 4, [3, 3, 0], 2);
 
-    design.addPiece("S64", 42);
+    design.addPiece("S64", 42, 64);
     design.addMove(42, 3, [7, 7, 7], 2);
     design.addMove(42, 3, [3, 3, 3], 2);
     design.addMove(42, 3, [4, 4, 4], 2);
@@ -707,7 +707,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(42, 4, [3, 3, 5], 2);
     design.addMove(42, 4, [3, 3, 0], 2);
 
-    design.addPiece("S66", 43);
+    design.addPiece("S66", 43, 66);
     design.addMove(43, 3, [7, 7, 7], 2);
     design.addMove(43, 3, [3, 3, 3], 2);
     design.addMove(43, 3, [4, 4, 4], 2);
@@ -721,7 +721,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(43, 4, [3, 3, 5], 2);
     design.addMove(43, 4, [3, 3, 0], 2);
 
-    design.addPiece("S120", 44);
+    design.addPiece("S120", 44, 120);
     design.addMove(44, 3, [7, 7, 7], 2);
     design.addMove(44, 3, [3, 3, 3], 2);
     design.addMove(44, 3, [4, 4, 4], 2);
@@ -735,7 +735,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(44, 4, [3, 3, 5], 2);
     design.addMove(44, 4, [3, 3, 0], 2);
 
-    design.addPiece("S121", 45);
+    design.addPiece("S121", 45, 121);
     design.addMove(45, 3, [7, 7, 7], 2);
     design.addMove(45, 3, [3, 3, 3], 2);
     design.addMove(45, 3, [4, 4, 4], 2);
@@ -749,7 +749,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(45, 4, [3, 3, 5], 2);
     design.addMove(45, 4, [3, 3, 0], 2);
 
-    design.addPiece("S225", 46);
+    design.addPiece("S225", 46, 225);
     design.addMove(46, 3, [7, 7, 7], 2);
     design.addMove(46, 3, [3, 3, 3], 2);
     design.addMove(46, 3, [4, 4, 4], 2);
@@ -763,7 +763,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(46, 4, [3, 3, 5], 2);
     design.addMove(46, 4, [3, 3, 0], 2);
 
-    design.addPiece("S361", 47);
+    design.addPiece("S361", 47, 361);
     design.addMove(47, 3, [7, 7, 7], 2);
     design.addMove(47, 3, [3, 3, 3], 2);
     design.addMove(47, 3, [4, 4, 4], 2);
@@ -777,7 +777,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(47, 4, [3, 3, 5], 2);
     design.addMove(47, 4, [3, 3, 0], 2);
 
-    design.addPiece("P5", 48);
+    design.addPiece("P5", 48, 5);
     design.addMove(48, 0, [6], 0);
     design.addMove(48, 0, [5], 0);
     design.addMove(48, 0, [2], 0);
@@ -807,7 +807,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(48, 4, [3, 3, 5], 2);
     design.addMove(48, 4, [3, 3, 0], 2);
 
-    design.addPiece("P10", 49);
+    design.addPiece("P10", 49, 10);
     design.addMove(49, 0, [6], 0);
     design.addMove(49, 0, [5], 0);
     design.addMove(49, 0, [2], 0);
@@ -837,7 +837,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(49, 4, [3, 3, 5], 2);
     design.addMove(49, 4, [3, 3, 0], 2);
 
-    design.addPiece("P13", 50);
+    design.addPiece("P13", 50, 13);
     design.addMove(50, 0, [6], 0);
     design.addMove(50, 0, [5], 0);
     design.addMove(50, 0, [2], 0);
@@ -867,7 +867,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(50, 4, [3, 3, 5], 2);
     design.addMove(50, 4, [3, 3, 0], 2);
 
-    design.addPiece("P14", 51);
+    design.addPiece("P14", 51, 14);
     design.addMove(51, 0, [6], 0);
     design.addMove(51, 0, [5], 0);
     design.addMove(51, 0, [2], 0);
@@ -897,7 +897,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(51, 4, [3, 3, 5], 2);
     design.addMove(51, 4, [3, 3, 0], 2);
 
-    design.addPiece("P17", 52);
+    design.addPiece("P17", 52, 17);
     design.addMove(52, 0, [6], 0);
     design.addMove(52, 0, [5], 0);
     design.addMove(52, 0, [2], 0);
@@ -927,7 +927,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(52, 4, [3, 3, 5], 2);
     design.addMove(52, 4, [3, 3, 0], 2);
 
-    design.addPiece("P20", 53);
+    design.addPiece("P20", 53, 20);
     design.addMove(53, 0, [6], 0);
     design.addMove(53, 0, [5], 0);
     design.addMove(53, 0, [2], 0);
@@ -957,7 +957,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(53, 4, [3, 3, 5], 2);
     design.addMove(53, 4, [3, 3, 0], 2);
 
-    design.addPiece("P21", 54);
+    design.addPiece("P21", 54, 21);
     design.addMove(54, 0, [6], 0);
     design.addMove(54, 0, [5], 0);
     design.addMove(54, 0, [2], 0);
@@ -987,7 +987,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(54, 4, [3, 3, 5], 2);
     design.addMove(54, 4, [3, 3, 0], 2);
 
-    design.addPiece("P25", 55);
+    design.addPiece("P25", 55, 25);
     design.addMove(55, 0, [6], 0);
     design.addMove(55, 0, [5], 0);
     design.addMove(55, 0, [2], 0);
@@ -1017,7 +1017,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(55, 4, [3, 3, 5], 2);
     design.addMove(55, 4, [3, 3, 0], 2);
 
-    design.addPiece("P26", 56);
+    design.addPiece("P26", 56, 26);
     design.addMove(56, 0, [6], 0);
     design.addMove(56, 0, [5], 0);
     design.addMove(56, 0, [2], 0);
@@ -1047,7 +1047,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(56, 4, [3, 3, 5], 2);
     design.addMove(56, 4, [3, 3, 0], 2);
 
-    design.addPiece("P29", 57);
+    design.addPiece("P29", 57, 29);
     design.addMove(57, 0, [6], 0);
     design.addMove(57, 0, [5], 0);
     design.addMove(57, 0, [2], 0);
@@ -1077,7 +1077,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(57, 4, [3, 3, 5], 2);
     design.addMove(57, 4, [3, 3, 0], 2);
 
-    design.addPiece("P30", 58);
+    design.addPiece("P30", 58, 30);
     design.addMove(58, 0, [6], 0);
     design.addMove(58, 0, [5], 0);
     design.addMove(58, 0, [2], 0);
@@ -1107,7 +1107,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(58, 4, [3, 3, 5], 2);
     design.addMove(58, 4, [3, 3, 0], 2);
 
-    design.addPiece("P34", 59);
+    design.addPiece("P34", 59, 34);
     design.addMove(59, 0, [6], 0);
     design.addMove(59, 0, [5], 0);
     design.addMove(59, 0, [2], 0);
@@ -1137,7 +1137,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(59, 4, [3, 3, 5], 2);
     design.addMove(59, 4, [3, 3, 0], 2);
 
-    design.addPiece("P35", 60);
+    design.addPiece("P35", 60, 35);
     design.addMove(60, 0, [6], 0);
     design.addMove(60, 0, [5], 0);
     design.addMove(60, 0, [2], 0);
@@ -1167,7 +1167,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(60, 4, [3, 3, 5], 2);
     design.addMove(60, 4, [3, 3, 0], 2);
 
-    design.addPiece("P37", 61);
+    design.addPiece("P37", 61, 37);
     design.addMove(61, 0, [6], 0);
     design.addMove(61, 0, [5], 0);
     design.addMove(61, 0, [2], 0);
@@ -1197,7 +1197,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(61, 4, [3, 3, 5], 2);
     design.addMove(61, 4, [3, 3, 0], 2);
 
-    design.addPiece("P38", 62);
+    design.addPiece("P38", 62, 38);
     design.addMove(62, 0, [6], 0);
     design.addMove(62, 0, [5], 0);
     design.addMove(62, 0, [2], 0);
@@ -1227,7 +1227,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(62, 4, [3, 3, 5], 2);
     design.addMove(62, 4, [3, 3, 0], 2);
 
-    design.addPiece("P39", 63);
+    design.addPiece("P39", 63, 39);
     design.addMove(63, 0, [6], 0);
     design.addMove(63, 0, [5], 0);
     design.addMove(63, 0, [2], 0);
@@ -1257,7 +1257,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(63, 4, [3, 3, 5], 2);
     design.addMove(63, 4, [3, 3, 0], 2);
 
-    design.addPiece("P40", 64);
+    design.addPiece("P40", 64, 40);
     design.addMove(64, 0, [6], 0);
     design.addMove(64, 0, [5], 0);
     design.addMove(64, 0, [2], 0);
@@ -1287,7 +1287,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(64, 4, [3, 3, 5], 2);
     design.addMove(64, 4, [3, 3, 0], 2);
 
-    design.addPiece("P41", 65);
+    design.addPiece("P41", 65, 41);
     design.addMove(65, 0, [6], 0);
     design.addMove(65, 0, [5], 0);
     design.addMove(65, 0, [2], 0);
@@ -1317,7 +1317,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(65, 4, [3, 3, 5], 2);
     design.addMove(65, 4, [3, 3, 0], 2);
 
-    design.addPiece("P42", 66);
+    design.addPiece("P42", 66, 42);
     design.addMove(66, 0, [6], 0);
     design.addMove(66, 0, [5], 0);
     design.addMove(66, 0, [2], 0);
@@ -1347,7 +1347,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(66, 4, [3, 3, 5], 2);
     design.addMove(66, 4, [3, 3, 0], 2);
 
-    design.addPiece("P45", 67);
+    design.addPiece("P45", 67, 45);
     design.addMove(67, 0, [6], 0);
     design.addMove(67, 0, [5], 0);
     design.addMove(67, 0, [2], 0);
@@ -1377,7 +1377,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(67, 4, [3, 3, 5], 2);
     design.addMove(67, 4, [3, 3, 0], 2);
 
-    design.addPiece("P46", 68);
+    design.addPiece("P46", 68, 46);
     design.addMove(68, 0, [6], 0);
     design.addMove(68, 0, [5], 0);
     design.addMove(68, 0, [2], 0);
@@ -1407,7 +1407,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(68, 4, [3, 3, 5], 2);
     design.addMove(68, 4, [3, 3, 0], 2);
 
-    design.addPiece("P49", 69);
+    design.addPiece("P49", 69, 49);
     design.addMove(69, 0, [6], 0);
     design.addMove(69, 0, [5], 0);
     design.addMove(69, 0, [2], 0);
@@ -1437,7 +1437,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(69, 4, [3, 3, 5], 2);
     design.addMove(69, 4, [3, 3, 0], 2);
 
-    design.addPiece("P50", 70);
+    design.addPiece("P50", 70, 50);
     design.addMove(70, 0, [6], 0);
     design.addMove(70, 0, [5], 0);
     design.addMove(70, 0, [2], 0);
@@ -1467,7 +1467,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(70, 4, [3, 3, 5], 2);
     design.addMove(70, 4, [3, 3, 0], 2);
 
-    design.addPiece("P51", 71);
+    design.addPiece("P51", 71, 51);
     design.addMove(71, 0, [6], 0);
     design.addMove(71, 0, [5], 0);
     design.addMove(71, 0, [2], 0);
@@ -1497,7 +1497,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(71, 4, [3, 3, 5], 2);
     design.addMove(71, 4, [3, 3, 0], 2);
 
-    design.addPiece("P52", 72);
+    design.addPiece("P52", 72, 52);
     design.addMove(72, 0, [6], 0);
     design.addMove(72, 0, [5], 0);
     design.addMove(72, 0, [2], 0);
@@ -1527,7 +1527,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(72, 4, [3, 3, 5], 2);
     design.addMove(72, 4, [3, 3, 0], 2);
 
-    design.addPiece("P53", 73);
+    design.addPiece("P53", 73, 53);
     design.addMove(73, 0, [6], 0);
     design.addMove(73, 0, [5], 0);
     design.addMove(73, 0, [2], 0);
@@ -1557,7 +1557,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(73, 4, [3, 3, 5], 2);
     design.addMove(73, 4, [3, 3, 0], 2);
 
-    design.addPiece("P54", 74);
+    design.addPiece("P54", 74, 54);
     design.addMove(74, 0, [6], 0);
     design.addMove(74, 0, [5], 0);
     design.addMove(74, 0, [2], 0);
@@ -1587,7 +1587,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(74, 4, [3, 3, 5], 2);
     design.addMove(74, 4, [3, 3, 0], 2);
 
-    design.addPiece("P55", 75);
+    design.addPiece("P55", 75, 55);
     design.addMove(75, 0, [6], 0);
     design.addMove(75, 0, [5], 0);
     design.addMove(75, 0, [2], 0);
@@ -1617,7 +1617,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(75, 4, [3, 3, 5], 2);
     design.addMove(75, 4, [3, 3, 0], 2);
 
-    design.addPiece("P56", 76);
+    design.addPiece("P56", 76, 56);
     design.addMove(76, 0, [6], 0);
     design.addMove(76, 0, [5], 0);
     design.addMove(76, 0, [2], 0);
@@ -1647,7 +1647,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(76, 4, [3, 3, 5], 2);
     design.addMove(76, 4, [3, 3, 0], 2);
 
-    design.addPiece("P57", 77);
+    design.addPiece("P57", 77, 57);
     design.addMove(77, 0, [6], 0);
     design.addMove(77, 0, [5], 0);
     design.addMove(77, 0, [2], 0);
@@ -1677,7 +1677,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(77, 4, [3, 3, 5], 2);
     design.addMove(77, 4, [3, 3, 0], 2);
 
-    design.addPiece("P61", 78);
+    design.addPiece("P61", 78, 61);
     design.addMove(78, 0, [6], 0);
     design.addMove(78, 0, [5], 0);
     design.addMove(78, 0, [2], 0);
@@ -1707,7 +1707,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(78, 4, [3, 3, 5], 2);
     design.addMove(78, 4, [3, 3, 0], 2);
 
-    design.addPiece("P62", 79);
+    design.addPiece("P62", 79, 62);
     design.addMove(79, 0, [6], 0);
     design.addMove(79, 0, [5], 0);
     design.addMove(79, 0, [2], 0);
@@ -1737,7 +1737,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(79, 4, [3, 3, 5], 2);
     design.addMove(79, 4, [3, 3, 0], 2);
 
-    design.addPiece("P65", 80);
+    design.addPiece("P65", 80, 65);
     design.addMove(80, 0, [6], 0);
     design.addMove(80, 0, [5], 0);
     design.addMove(80, 0, [2], 0);
@@ -1767,7 +1767,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(80, 4, [3, 3, 5], 2);
     design.addMove(80, 4, [3, 3, 0], 2);
 
-    design.addPiece("P66", 81);
+    design.addPiece("P66", 81, 66);
     design.addMove(81, 0, [6], 0);
     design.addMove(81, 0, [5], 0);
     design.addMove(81, 0, [2], 0);
@@ -1797,7 +1797,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(81, 4, [3, 3, 5], 2);
     design.addMove(81, 4, [3, 3, 0], 2);
 
-    design.addPiece("P70", 82);
+    design.addPiece("P70", 82, 70);
     design.addMove(82, 0, [6], 0);
     design.addMove(82, 0, [5], 0);
     design.addMove(82, 0, [2], 0);
@@ -1827,7 +1827,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(82, 4, [3, 3, 5], 2);
     design.addMove(82, 4, [3, 3, 0], 2);
 
-    design.addPiece("P71", 83);
+    design.addPiece("P71", 83, 71);
     design.addMove(83, 0, [6], 0);
     design.addMove(83, 0, [5], 0);
     design.addMove(83, 0, [2], 0);
@@ -1857,7 +1857,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(83, 4, [3, 3, 5], 2);
     design.addMove(83, 4, [3, 3, 0], 2);
 
-    design.addPiece("P74", 84);
+    design.addPiece("P74", 84, 74);
     design.addMove(84, 0, [6], 0);
     design.addMove(84, 0, [5], 0);
     design.addMove(84, 0, [2], 0);
@@ -1887,7 +1887,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(84, 4, [3, 3, 5], 2);
     design.addMove(84, 4, [3, 3, 0], 2);
 
-    design.addPiece("P75", 85);
+    design.addPiece("P75", 85, 75);
     design.addMove(85, 0, [6], 0);
     design.addMove(85, 0, [5], 0);
     design.addMove(85, 0, [2], 0);
@@ -1917,7 +1917,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(85, 4, [3, 3, 5], 2);
     design.addMove(85, 4, [3, 3, 0], 2);
 
-    design.addPiece("P77", 86);
+    design.addPiece("P77", 86, 77);
     design.addMove(86, 0, [6], 0);
     design.addMove(86, 0, [5], 0);
     design.addMove(86, 0, [2], 0);
@@ -1947,7 +1947,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(86, 4, [3, 3, 5], 2);
     design.addMove(86, 4, [3, 3, 0], 2);
 
-    design.addPiece("P78", 87);
+    design.addPiece("P78", 87, 78);
     design.addMove(87, 0, [6], 0);
     design.addMove(87, 0, [5], 0);
     design.addMove(87, 0, [2], 0);
@@ -1977,7 +1977,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(87, 4, [3, 3, 5], 2);
     design.addMove(87, 4, [3, 3, 0], 2);
 
-    design.addPiece("P81", 88);
+    design.addPiece("P81", 88, 81);
     design.addMove(88, 0, [6], 0);
     design.addMove(88, 0, [5], 0);
     design.addMove(88, 0, [2], 0);
@@ -2007,7 +2007,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(88, 4, [3, 3, 5], 2);
     design.addMove(88, 4, [3, 3, 0], 2);
 
-    design.addPiece("P82", 89);
+    design.addPiece("P82", 89, 82);
     design.addMove(89, 0, [6], 0);
     design.addMove(89, 0, [5], 0);
     design.addMove(89, 0, [2], 0);
@@ -2037,7 +2037,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(89, 4, [3, 3, 5], 2);
     design.addMove(89, 4, [3, 3, 0], 2);
 
-    design.addPiece("P86", 90);
+    design.addPiece("P86", 90, 86);
     design.addMove(90, 0, [6], 0);
     design.addMove(90, 0, [5], 0);
     design.addMove(90, 0, [2], 0);
@@ -2067,7 +2067,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(90, 4, [3, 3, 5], 2);
     design.addMove(90, 4, [3, 3, 0], 2);
 
-    design.addPiece("P87", 91);
+    design.addPiece("P87", 91, 87);
     design.addMove(91, 0, [6], 0);
     design.addMove(91, 0, [5], 0);
     design.addMove(91, 0, [2], 0);
@@ -2097,7 +2097,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(91, 4, [3, 3, 5], 2);
     design.addMove(91, 4, [3, 3, 0], 2);
 
-    design.addPiece("P90", 92);
+    design.addPiece("P90", 92, 90);
     design.addMove(92, 0, [6], 0);
     design.addMove(92, 0, [5], 0);
     design.addMove(92, 0, [2], 0);
@@ -2127,7 +2127,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(92, 4, [3, 3, 5], 2);
     design.addMove(92, 4, [3, 3, 0], 2);
 
-    design.addPiece("P91", 93);
+    design.addPiece("P91", 93, 91);
     design.addMove(93, 0, [6], 0);
     design.addMove(93, 0, [5], 0);
     design.addMove(93, 0, [2], 0);
@@ -2157,7 +2157,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(93, 4, [3, 3, 5], 2);
     design.addMove(93, 4, [3, 3, 0], 2);
 
-    design.addPiece("P190", 94);
+    design.addPiece("P73", 94, 73);
     design.addMove(94, 0, [6], 0);
     design.addMove(94, 0, [5], 0);
     design.addMove(94, 0, [2], 0);
@@ -2186,6 +2186,516 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(94, 4, [4, 4, 2], 2);
     design.addMove(94, 4, [3, 3, 5], 2);
     design.addMove(94, 4, [3, 3, 0], 2);
+
+    design.addPiece("P80", 95, 80);
+    design.addMove(95, 0, [6], 0);
+    design.addMove(95, 0, [5], 0);
+    design.addMove(95, 0, [2], 0);
+    design.addMove(95, 0, [0], 0);
+    design.addMove(95, 1, [7, 7], 1);
+    design.addMove(95, 1, [3, 3], 1);
+    design.addMove(95, 1, [4, 4], 1);
+    design.addMove(95, 1, [1, 1], 1);
+    design.addMove(95, 2, [7, 6], 1);
+    design.addMove(95, 2, [7, 5], 1);
+    design.addMove(95, 2, [1, 2], 1);
+    design.addMove(95, 2, [1, 0], 1);
+    design.addMove(95, 2, [4, 6], 1);
+    design.addMove(95, 2, [4, 2], 1);
+    design.addMove(95, 2, [3, 5], 1);
+    design.addMove(95, 2, [3, 0], 1);
+    design.addMove(95, 3, [7, 7, 7], 2);
+    design.addMove(95, 3, [3, 3, 3], 2);
+    design.addMove(95, 3, [4, 4, 4], 2);
+    design.addMove(95, 3, [1, 1, 1], 2);
+    design.addMove(95, 4, [7, 7, 6], 2);
+    design.addMove(95, 4, [7, 7, 5], 2);
+    design.addMove(95, 4, [1, 1, 2], 2);
+    design.addMove(95, 4, [1, 1, 0], 2);
+    design.addMove(95, 4, [4, 4, 6], 2);
+    design.addMove(95, 4, [4, 4, 2], 2);
+    design.addMove(95, 4, [3, 3, 5], 2);
+    design.addMove(95, 4, [3, 3, 0], 2);
+
+    design.addPiece("P85", 96, 85);
+    design.addMove(96, 0, [6], 0);
+    design.addMove(96, 0, [5], 0);
+    design.addMove(96, 0, [2], 0);
+    design.addMove(96, 0, [0], 0);
+    design.addMove(96, 1, [7, 7], 1);
+    design.addMove(96, 1, [3, 3], 1);
+    design.addMove(96, 1, [4, 4], 1);
+    design.addMove(96, 1, [1, 1], 1);
+    design.addMove(96, 2, [7, 6], 1);
+    design.addMove(96, 2, [7, 5], 1);
+    design.addMove(96, 2, [1, 2], 1);
+    design.addMove(96, 2, [1, 0], 1);
+    design.addMove(96, 2, [4, 6], 1);
+    design.addMove(96, 2, [4, 2], 1);
+    design.addMove(96, 2, [3, 5], 1);
+    design.addMove(96, 2, [3, 0], 1);
+    design.addMove(96, 3, [7, 7, 7], 2);
+    design.addMove(96, 3, [3, 3, 3], 2);
+    design.addMove(96, 3, [4, 4, 4], 2);
+    design.addMove(96, 3, [1, 1, 1], 2);
+    design.addMove(96, 4, [7, 7, 6], 2);
+    design.addMove(96, 4, [7, 7, 5], 2);
+    design.addMove(96, 4, [1, 1, 2], 2);
+    design.addMove(96, 4, [1, 1, 0], 2);
+    design.addMove(96, 4, [4, 4, 6], 2);
+    design.addMove(96, 4, [4, 4, 2], 2);
+    design.addMove(96, 4, [3, 3, 5], 2);
+    design.addMove(96, 4, [3, 3, 0], 2);
+
+    design.addPiece("P89", 97, 89);
+    design.addMove(97, 0, [6], 0);
+    design.addMove(97, 0, [5], 0);
+    design.addMove(97, 0, [2], 0);
+    design.addMove(97, 0, [0], 0);
+    design.addMove(97, 1, [7, 7], 1);
+    design.addMove(97, 1, [3, 3], 1);
+    design.addMove(97, 1, [4, 4], 1);
+    design.addMove(97, 1, [1, 1], 1);
+    design.addMove(97, 2, [7, 6], 1);
+    design.addMove(97, 2, [7, 5], 1);
+    design.addMove(97, 2, [1, 2], 1);
+    design.addMove(97, 2, [1, 0], 1);
+    design.addMove(97, 2, [4, 6], 1);
+    design.addMove(97, 2, [4, 2], 1);
+    design.addMove(97, 2, [3, 5], 1);
+    design.addMove(97, 2, [3, 0], 1);
+    design.addMove(97, 3, [7, 7, 7], 2);
+    design.addMove(97, 3, [3, 3, 3], 2);
+    design.addMove(97, 3, [4, 4, 4], 2);
+    design.addMove(97, 3, [1, 1, 1], 2);
+    design.addMove(97, 4, [7, 7, 6], 2);
+    design.addMove(97, 4, [7, 7, 5], 2);
+    design.addMove(97, 4, [1, 1, 2], 2);
+    design.addMove(97, 4, [1, 1, 0], 2);
+    design.addMove(97, 4, [4, 4, 6], 2);
+    design.addMove(97, 4, [4, 4, 2], 2);
+    design.addMove(97, 4, [3, 3, 5], 2);
+    design.addMove(97, 4, [3, 3, 0], 2);
+
+    design.addPiece("P98", 98, 98);
+    design.addMove(98, 0, [6], 0);
+    design.addMove(98, 0, [5], 0);
+    design.addMove(98, 0, [2], 0);
+    design.addMove(98, 0, [0], 0);
+    design.addMove(98, 1, [7, 7], 1);
+    design.addMove(98, 1, [3, 3], 1);
+    design.addMove(98, 1, [4, 4], 1);
+    design.addMove(98, 1, [1, 1], 1);
+    design.addMove(98, 2, [7, 6], 1);
+    design.addMove(98, 2, [7, 5], 1);
+    design.addMove(98, 2, [1, 2], 1);
+    design.addMove(98, 2, [1, 0], 1);
+    design.addMove(98, 2, [4, 6], 1);
+    design.addMove(98, 2, [4, 2], 1);
+    design.addMove(98, 2, [3, 5], 1);
+    design.addMove(98, 2, [3, 0], 1);
+    design.addMove(98, 3, [7, 7, 7], 2);
+    design.addMove(98, 3, [3, 3, 3], 2);
+    design.addMove(98, 3, [4, 4, 4], 2);
+    design.addMove(98, 3, [1, 1, 1], 2);
+    design.addMove(98, 4, [7, 7, 6], 2);
+    design.addMove(98, 4, [7, 7, 5], 2);
+    design.addMove(98, 4, [1, 1, 2], 2);
+    design.addMove(98, 4, [1, 1, 0], 2);
+    design.addMove(98, 4, [4, 4, 6], 2);
+    design.addMove(98, 4, [4, 4, 2], 2);
+    design.addMove(98, 4, [3, 3, 5], 2);
+    design.addMove(98, 4, [3, 3, 0], 2);
+
+    design.addPiece("P100", 99, 100);
+    design.addMove(99, 0, [6], 0);
+    design.addMove(99, 0, [5], 0);
+    design.addMove(99, 0, [2], 0);
+    design.addMove(99, 0, [0], 0);
+    design.addMove(99, 1, [7, 7], 1);
+    design.addMove(99, 1, [3, 3], 1);
+    design.addMove(99, 1, [4, 4], 1);
+    design.addMove(99, 1, [1, 1], 1);
+    design.addMove(99, 2, [7, 6], 1);
+    design.addMove(99, 2, [7, 5], 1);
+    design.addMove(99, 2, [1, 2], 1);
+    design.addMove(99, 2, [1, 0], 1);
+    design.addMove(99, 2, [4, 6], 1);
+    design.addMove(99, 2, [4, 2], 1);
+    design.addMove(99, 2, [3, 5], 1);
+    design.addMove(99, 2, [3, 0], 1);
+    design.addMove(99, 3, [7, 7, 7], 2);
+    design.addMove(99, 3, [3, 3, 3], 2);
+    design.addMove(99, 3, [4, 4, 4], 2);
+    design.addMove(99, 3, [1, 1, 1], 2);
+    design.addMove(99, 4, [7, 7, 6], 2);
+    design.addMove(99, 4, [7, 7, 5], 2);
+    design.addMove(99, 4, [1, 1, 2], 2);
+    design.addMove(99, 4, [1, 1, 0], 2);
+    design.addMove(99, 4, [4, 4, 6], 2);
+    design.addMove(99, 4, [4, 4, 2], 2);
+    design.addMove(99, 4, [3, 3, 5], 2);
+    design.addMove(99, 4, [3, 3, 0], 2);
+
+    design.addPiece("P101", 100, 101);
+    design.addMove(100, 0, [6], 0);
+    design.addMove(100, 0, [5], 0);
+    design.addMove(100, 0, [2], 0);
+    design.addMove(100, 0, [0], 0);
+    design.addMove(100, 1, [7, 7], 1);
+    design.addMove(100, 1, [3, 3], 1);
+    design.addMove(100, 1, [4, 4], 1);
+    design.addMove(100, 1, [1, 1], 1);
+    design.addMove(100, 2, [7, 6], 1);
+    design.addMove(100, 2, [7, 5], 1);
+    design.addMove(100, 2, [1, 2], 1);
+    design.addMove(100, 2, [1, 0], 1);
+    design.addMove(100, 2, [4, 6], 1);
+    design.addMove(100, 2, [4, 2], 1);
+    design.addMove(100, 2, [3, 5], 1);
+    design.addMove(100, 2, [3, 0], 1);
+    design.addMove(100, 3, [7, 7, 7], 2);
+    design.addMove(100, 3, [3, 3, 3], 2);
+    design.addMove(100, 3, [4, 4, 4], 2);
+    design.addMove(100, 3, [1, 1, 1], 2);
+    design.addMove(100, 4, [7, 7, 6], 2);
+    design.addMove(100, 4, [7, 7, 5], 2);
+    design.addMove(100, 4, [1, 1, 2], 2);
+    design.addMove(100, 4, [1, 1, 0], 2);
+    design.addMove(100, 4, [4, 4, 6], 2);
+    design.addMove(100, 4, [4, 4, 2], 2);
+    design.addMove(100, 4, [3, 3, 5], 2);
+    design.addMove(100, 4, [3, 3, 0], 2);
+
+    design.addPiece("P105", 101, 105);
+    design.addMove(101, 0, [6], 0);
+    design.addMove(101, 0, [5], 0);
+    design.addMove(101, 0, [2], 0);
+    design.addMove(101, 0, [0], 0);
+    design.addMove(101, 1, [7, 7], 1);
+    design.addMove(101, 1, [3, 3], 1);
+    design.addMove(101, 1, [4, 4], 1);
+    design.addMove(101, 1, [1, 1], 1);
+    design.addMove(101, 2, [7, 6], 1);
+    design.addMove(101, 2, [7, 5], 1);
+    design.addMove(101, 2, [1, 2], 1);
+    design.addMove(101, 2, [1, 0], 1);
+    design.addMove(101, 2, [4, 6], 1);
+    design.addMove(101, 2, [4, 2], 1);
+    design.addMove(101, 2, [3, 5], 1);
+    design.addMove(101, 2, [3, 0], 1);
+    design.addMove(101, 3, [7, 7, 7], 2);
+    design.addMove(101, 3, [3, 3, 3], 2);
+    design.addMove(101, 3, [4, 4, 4], 2);
+    design.addMove(101, 3, [1, 1, 1], 2);
+    design.addMove(101, 4, [7, 7, 6], 2);
+    design.addMove(101, 4, [7, 7, 5], 2);
+    design.addMove(101, 4, [1, 1, 2], 2);
+    design.addMove(101, 4, [1, 1, 0], 2);
+    design.addMove(101, 4, [4, 4, 6], 2);
+    design.addMove(101, 4, [4, 4, 2], 2);
+    design.addMove(101, 4, [3, 3, 5], 2);
+    design.addMove(101, 4, [3, 3, 0], 2);
+
+    design.addPiece("P110", 102, 110);
+    design.addMove(102, 0, [6], 0);
+    design.addMove(102, 0, [5], 0);
+    design.addMove(102, 0, [2], 0);
+    design.addMove(102, 0, [0], 0);
+    design.addMove(102, 1, [7, 7], 1);
+    design.addMove(102, 1, [3, 3], 1);
+    design.addMove(102, 1, [4, 4], 1);
+    design.addMove(102, 1, [1, 1], 1);
+    design.addMove(102, 2, [7, 6], 1);
+    design.addMove(102, 2, [7, 5], 1);
+    design.addMove(102, 2, [1, 2], 1);
+    design.addMove(102, 2, [1, 0], 1);
+    design.addMove(102, 2, [4, 6], 1);
+    design.addMove(102, 2, [4, 2], 1);
+    design.addMove(102, 2, [3, 5], 1);
+    design.addMove(102, 2, [3, 0], 1);
+    design.addMove(102, 3, [7, 7, 7], 2);
+    design.addMove(102, 3, [3, 3, 3], 2);
+    design.addMove(102, 3, [4, 4, 4], 2);
+    design.addMove(102, 3, [1, 1, 1], 2);
+    design.addMove(102, 4, [7, 7, 6], 2);
+    design.addMove(102, 4, [7, 7, 5], 2);
+    design.addMove(102, 4, [1, 1, 2], 2);
+    design.addMove(102, 4, [1, 1, 0], 2);
+    design.addMove(102, 4, [4, 4, 6], 2);
+    design.addMove(102, 4, [4, 4, 2], 2);
+    design.addMove(102, 4, [3, 3, 5], 2);
+    design.addMove(102, 4, [3, 3, 0], 2);
+
+    design.addPiece("P114", 103, 114);
+    design.addMove(103, 0, [6], 0);
+    design.addMove(103, 0, [5], 0);
+    design.addMove(103, 0, [2], 0);
+    design.addMove(103, 0, [0], 0);
+    design.addMove(103, 1, [7, 7], 1);
+    design.addMove(103, 1, [3, 3], 1);
+    design.addMove(103, 1, [4, 4], 1);
+    design.addMove(103, 1, [1, 1], 1);
+    design.addMove(103, 2, [7, 6], 1);
+    design.addMove(103, 2, [7, 5], 1);
+    design.addMove(103, 2, [1, 2], 1);
+    design.addMove(103, 2, [1, 0], 1);
+    design.addMove(103, 2, [4, 6], 1);
+    design.addMove(103, 2, [4, 2], 1);
+    design.addMove(103, 2, [3, 5], 1);
+    design.addMove(103, 2, [3, 0], 1);
+    design.addMove(103, 3, [7, 7, 7], 2);
+    design.addMove(103, 3, [3, 3, 3], 2);
+    design.addMove(103, 3, [4, 4, 4], 2);
+    design.addMove(103, 3, [1, 1, 1], 2);
+    design.addMove(103, 4, [7, 7, 6], 2);
+    design.addMove(103, 4, [7, 7, 5], 2);
+    design.addMove(103, 4, [1, 1, 2], 2);
+    design.addMove(103, 4, [1, 1, 0], 2);
+    design.addMove(103, 4, [4, 4, 6], 2);
+    design.addMove(103, 4, [4, 4, 2], 2);
+    design.addMove(103, 4, [3, 3, 5], 2);
+    design.addMove(103, 4, [3, 3, 0], 2);
+
+    design.addPiece("P116", 104, 116);
+    design.addMove(104, 0, [6], 0);
+    design.addMove(104, 0, [5], 0);
+    design.addMove(104, 0, [2], 0);
+    design.addMove(104, 0, [0], 0);
+    design.addMove(104, 1, [7, 7], 1);
+    design.addMove(104, 1, [3, 3], 1);
+    design.addMove(104, 1, [4, 4], 1);
+    design.addMove(104, 1, [1, 1], 1);
+    design.addMove(104, 2, [7, 6], 1);
+    design.addMove(104, 2, [7, 5], 1);
+    design.addMove(104, 2, [1, 2], 1);
+    design.addMove(104, 2, [1, 0], 1);
+    design.addMove(104, 2, [4, 6], 1);
+    design.addMove(104, 2, [4, 2], 1);
+    design.addMove(104, 2, [3, 5], 1);
+    design.addMove(104, 2, [3, 0], 1);
+    design.addMove(104, 3, [7, 7, 7], 2);
+    design.addMove(104, 3, [3, 3, 3], 2);
+    design.addMove(104, 3, [4, 4, 4], 2);
+    design.addMove(104, 3, [1, 1, 1], 2);
+    design.addMove(104, 4, [7, 7, 6], 2);
+    design.addMove(104, 4, [7, 7, 5], 2);
+    design.addMove(104, 4, [1, 1, 2], 2);
+    design.addMove(104, 4, [1, 1, 0], 2);
+    design.addMove(104, 4, [4, 4, 6], 2);
+    design.addMove(104, 4, [4, 4, 2], 2);
+    design.addMove(104, 4, [3, 3, 5], 2);
+    design.addMove(104, 4, [3, 3, 0], 2);
+
+    design.addPiece("P125", 105, 125);
+    design.addMove(105, 0, [6], 0);
+    design.addMove(105, 0, [5], 0);
+    design.addMove(105, 0, [2], 0);
+    design.addMove(105, 0, [0], 0);
+    design.addMove(105, 1, [7, 7], 1);
+    design.addMove(105, 1, [3, 3], 1);
+    design.addMove(105, 1, [4, 4], 1);
+    design.addMove(105, 1, [1, 1], 1);
+    design.addMove(105, 2, [7, 6], 1);
+    design.addMove(105, 2, [7, 5], 1);
+    design.addMove(105, 2, [1, 2], 1);
+    design.addMove(105, 2, [1, 0], 1);
+    design.addMove(105, 2, [4, 6], 1);
+    design.addMove(105, 2, [4, 2], 1);
+    design.addMove(105, 2, [3, 5], 1);
+    design.addMove(105, 2, [3, 0], 1);
+    design.addMove(105, 3, [7, 7, 7], 2);
+    design.addMove(105, 3, [3, 3, 3], 2);
+    design.addMove(105, 3, [4, 4, 4], 2);
+    design.addMove(105, 3, [1, 1, 1], 2);
+    design.addMove(105, 4, [7, 7, 6], 2);
+    design.addMove(105, 4, [7, 7, 5], 2);
+    design.addMove(105, 4, [1, 1, 2], 2);
+    design.addMove(105, 4, [1, 1, 0], 2);
+    design.addMove(105, 4, [4, 4, 6], 2);
+    design.addMove(105, 4, [4, 4, 2], 2);
+    design.addMove(105, 4, [3, 3, 5], 2);
+    design.addMove(105, 4, [3, 3, 0], 2);
+
+    design.addPiece("P126", 106, 126);
+    design.addMove(106, 0, [6], 0);
+    design.addMove(106, 0, [5], 0);
+    design.addMove(106, 0, [2], 0);
+    design.addMove(106, 0, [0], 0);
+    design.addMove(106, 1, [7, 7], 1);
+    design.addMove(106, 1, [3, 3], 1);
+    design.addMove(106, 1, [4, 4], 1);
+    design.addMove(106, 1, [1, 1], 1);
+    design.addMove(106, 2, [7, 6], 1);
+    design.addMove(106, 2, [7, 5], 1);
+    design.addMove(106, 2, [1, 2], 1);
+    design.addMove(106, 2, [1, 0], 1);
+    design.addMove(106, 2, [4, 6], 1);
+    design.addMove(106, 2, [4, 2], 1);
+    design.addMove(106, 2, [3, 5], 1);
+    design.addMove(106, 2, [3, 0], 1);
+    design.addMove(106, 3, [7, 7, 7], 2);
+    design.addMove(106, 3, [3, 3, 3], 2);
+    design.addMove(106, 3, [4, 4, 4], 2);
+    design.addMove(106, 3, [1, 1, 1], 2);
+    design.addMove(106, 4, [7, 7, 6], 2);
+    design.addMove(106, 4, [7, 7, 5], 2);
+    design.addMove(106, 4, [1, 1, 2], 2);
+    design.addMove(106, 4, [1, 1, 0], 2);
+    design.addMove(106, 4, [4, 4, 6], 2);
+    design.addMove(106, 4, [4, 4, 2], 2);
+    design.addMove(106, 4, [3, 3, 5], 2);
+    design.addMove(106, 4, [3, 3, 0], 2);
+
+    design.addPiece("P141", 107, 141);
+    design.addMove(107, 0, [6], 0);
+    design.addMove(107, 0, [5], 0);
+    design.addMove(107, 0, [2], 0);
+    design.addMove(107, 0, [0], 0);
+    design.addMove(107, 1, [7, 7], 1);
+    design.addMove(107, 1, [3, 3], 1);
+    design.addMove(107, 1, [4, 4], 1);
+    design.addMove(107, 1, [1, 1], 1);
+    design.addMove(107, 2, [7, 6], 1);
+    design.addMove(107, 2, [7, 5], 1);
+    design.addMove(107, 2, [1, 2], 1);
+    design.addMove(107, 2, [1, 0], 1);
+    design.addMove(107, 2, [4, 6], 1);
+    design.addMove(107, 2, [4, 2], 1);
+    design.addMove(107, 2, [3, 5], 1);
+    design.addMove(107, 2, [3, 0], 1);
+    design.addMove(107, 3, [7, 7, 7], 2);
+    design.addMove(107, 3, [3, 3, 3], 2);
+    design.addMove(107, 3, [4, 4, 4], 2);
+    design.addMove(107, 3, [1, 1, 1], 2);
+    design.addMove(107, 4, [7, 7, 6], 2);
+    design.addMove(107, 4, [7, 7, 5], 2);
+    design.addMove(107, 4, [1, 1, 2], 2);
+    design.addMove(107, 4, [1, 1, 0], 2);
+    design.addMove(107, 4, [4, 4, 6], 2);
+    design.addMove(107, 4, [4, 4, 2], 2);
+    design.addMove(107, 4, [3, 3, 5], 2);
+    design.addMove(107, 4, [3, 3, 0], 2);
+
+    design.addPiece("P149", 108, 149);
+    design.addMove(108, 0, [6], 0);
+    design.addMove(108, 0, [5], 0);
+    design.addMove(108, 0, [2], 0);
+    design.addMove(108, 0, [0], 0);
+    design.addMove(108, 1, [7, 7], 1);
+    design.addMove(108, 1, [3, 3], 1);
+    design.addMove(108, 1, [4, 4], 1);
+    design.addMove(108, 1, [1, 1], 1);
+    design.addMove(108, 2, [7, 6], 1);
+    design.addMove(108, 2, [7, 5], 1);
+    design.addMove(108, 2, [1, 2], 1);
+    design.addMove(108, 2, [1, 0], 1);
+    design.addMove(108, 2, [4, 6], 1);
+    design.addMove(108, 2, [4, 2], 1);
+    design.addMove(108, 2, [3, 5], 1);
+    design.addMove(108, 2, [3, 0], 1);
+    design.addMove(108, 3, [7, 7, 7], 2);
+    design.addMove(108, 3, [3, 3, 3], 2);
+    design.addMove(108, 3, [4, 4, 4], 2);
+    design.addMove(108, 3, [1, 1, 1], 2);
+    design.addMove(108, 4, [7, 7, 6], 2);
+    design.addMove(108, 4, [7, 7, 5], 2);
+    design.addMove(108, 4, [1, 1, 2], 2);
+    design.addMove(108, 4, [1, 1, 0], 2);
+    design.addMove(108, 4, [4, 4, 6], 2);
+    design.addMove(108, 4, [4, 4, 2], 2);
+    design.addMove(108, 4, [3, 3, 5], 2);
+    design.addMove(108, 4, [3, 3, 0], 2);
+
+    design.addPiece("P165", 109, 165);
+    design.addMove(109, 0, [6], 0);
+    design.addMove(109, 0, [5], 0);
+    design.addMove(109, 0, [2], 0);
+    design.addMove(109, 0, [0], 0);
+    design.addMove(109, 1, [7, 7], 1);
+    design.addMove(109, 1, [3, 3], 1);
+    design.addMove(109, 1, [4, 4], 1);
+    design.addMove(109, 1, [1, 1], 1);
+    design.addMove(109, 2, [7, 6], 1);
+    design.addMove(109, 2, [7, 5], 1);
+    design.addMove(109, 2, [1, 2], 1);
+    design.addMove(109, 2, [1, 0], 1);
+    design.addMove(109, 2, [4, 6], 1);
+    design.addMove(109, 2, [4, 2], 1);
+    design.addMove(109, 2, [3, 5], 1);
+    design.addMove(109, 2, [3, 0], 1);
+    design.addMove(109, 3, [7, 7, 7], 2);
+    design.addMove(109, 3, [3, 3, 3], 2);
+    design.addMove(109, 3, [4, 4, 4], 2);
+    design.addMove(109, 3, [1, 1, 1], 2);
+    design.addMove(109, 4, [7, 7, 6], 2);
+    design.addMove(109, 4, [7, 7, 5], 2);
+    design.addMove(109, 4, [1, 1, 2], 2);
+    design.addMove(109, 4, [1, 1, 0], 2);
+    design.addMove(109, 4, [4, 4, 6], 2);
+    design.addMove(109, 4, [4, 4, 2], 2);
+    design.addMove(109, 4, [3, 3, 5], 2);
+    design.addMove(109, 4, [3, 3, 0], 2);
+
+    design.addPiece("P174", 110, 174);
+    design.addMove(110, 0, [6], 0);
+    design.addMove(110, 0, [5], 0);
+    design.addMove(110, 0, [2], 0);
+    design.addMove(110, 0, [0], 0);
+    design.addMove(110, 1, [7, 7], 1);
+    design.addMove(110, 1, [3, 3], 1);
+    design.addMove(110, 1, [4, 4], 1);
+    design.addMove(110, 1, [1, 1], 1);
+    design.addMove(110, 2, [7, 6], 1);
+    design.addMove(110, 2, [7, 5], 1);
+    design.addMove(110, 2, [1, 2], 1);
+    design.addMove(110, 2, [1, 0], 1);
+    design.addMove(110, 2, [4, 6], 1);
+    design.addMove(110, 2, [4, 2], 1);
+    design.addMove(110, 2, [3, 5], 1);
+    design.addMove(110, 2, [3, 0], 1);
+    design.addMove(110, 3, [7, 7, 7], 2);
+    design.addMove(110, 3, [3, 3, 3], 2);
+    design.addMove(110, 3, [4, 4, 4], 2);
+    design.addMove(110, 3, [1, 1, 1], 2);
+    design.addMove(110, 4, [7, 7, 6], 2);
+    design.addMove(110, 4, [7, 7, 5], 2);
+    design.addMove(110, 4, [1, 1, 2], 2);
+    design.addMove(110, 4, [1, 1, 0], 2);
+    design.addMove(110, 4, [4, 4, 6], 2);
+    design.addMove(110, 4, [4, 4, 2], 2);
+    design.addMove(110, 4, [3, 3, 5], 2);
+    design.addMove(110, 4, [3, 3, 0], 2);
+
+    design.addPiece("P190", 111, 190);
+    design.addMove(111, 0, [6], 0);
+    design.addMove(111, 0, [5], 0);
+    design.addMove(111, 0, [2], 0);
+    design.addMove(111, 0, [0], 0);
+    design.addMove(111, 1, [7, 7], 1);
+    design.addMove(111, 1, [3, 3], 1);
+    design.addMove(111, 1, [4, 4], 1);
+    design.addMove(111, 1, [1, 1], 1);
+    design.addMove(111, 2, [7, 6], 1);
+    design.addMove(111, 2, [7, 5], 1);
+    design.addMove(111, 2, [1, 2], 1);
+    design.addMove(111, 2, [1, 0], 1);
+    design.addMove(111, 2, [4, 6], 1);
+    design.addMove(111, 2, [4, 2], 1);
+    design.addMove(111, 2, [3, 5], 1);
+    design.addMove(111, 2, [3, 0], 1);
+    design.addMove(111, 3, [7, 7, 7], 2);
+    design.addMove(111, 3, [3, 3, 3], 2);
+    design.addMove(111, 3, [4, 4, 4], 2);
+    design.addMove(111, 3, [1, 1, 1], 2);
+    design.addMove(111, 4, [7, 7, 6], 2);
+    design.addMove(111, 4, [7, 7, 5], 2);
+    design.addMove(111, 4, [1, 1, 2], 2);
+    design.addMove(111, 4, [1, 1, 0], 2);
+    design.addMove(111, 4, [4, 4, 6], 2);
+    design.addMove(111, 4, [4, 4, 2], 2);
+    design.addMove(111, 4, [3, 3, 5], 2);
+    design.addMove(111, 4, [3, 3, 0], 2);
 
     design.setup("White", "C2", 82);
     design.setup("White", "C4", 90);
@@ -2307,6 +2817,7 @@ Dagaz.View.configure = function(view) {
     view.defPiece("WhiteP38", "White P38");
     view.defPiece("WhiteP39", "White P39");
     view.defPiece("WhiteP40", "White P40");
+    view.defPiece("WhiteP41", "White P41");
     view.defPiece("BlackP41", "Black P41");
     view.defPiece("WhiteP42", "White P42");
     view.defPiece("WhiteP45", "White P45");
@@ -2314,28 +2825,51 @@ Dagaz.View.configure = function(view) {
     view.defPiece("WhiteP49", "White P49");
     view.defPiece("WhiteP50", "White P50");
     view.defPiece("WhiteP51", "White P51");
+    view.defPiece("WhiteP52", "White P52");
     view.defPiece("BlackP52", "Black P52");
     view.defPiece("WhiteP53", "White P53");
     view.defPiece("WhiteP54", "White P54");
     view.defPiece("WhiteP55", "White P55");
     view.defPiece("WhiteP56", "White P56");
     view.defPiece("WhiteP57", "White P57");
+    view.defPiece("WhiteP61", "White P61");
     view.defPiece("BlackP61", "Black P61");
     view.defPiece("WhiteP62", "White P62");
+    view.defPiece("WhiteP65", "White P65");
     view.defPiece("BlackP65", "Black P65");
     view.defPiece("WhiteP66", "White P66");
     view.defPiece("WhiteP70", "White P70");
     view.defPiece("WhiteP71", "White P71");
+    view.defPiece("WhiteP74", "White P74");
     view.defPiece("BlackP74", "Black P74");
     view.defPiece("WhiteP75", "White P75");
+    view.defPiece("WhiteP77", "White P77");
     view.defPiece("BlackP77", "Black P77");
     view.defPiece("WhiteP78", "White P78");
     view.defPiece("WhiteP81", "White P81");
     view.defPiece("WhiteP82", "White P82");
     view.defPiece("WhiteP86", "White P86");
     view.defPiece("WhiteP87", "White P87");
+    view.defPiece("WhiteP90", "White P90");
     view.defPiece("BlackP90", "Black P90");
     view.defPiece("WhiteP91", "White P91");
+    view.defPiece("BlackP73", "Black P73");
+    view.defPiece("BlackP80", "Black P80");
+    view.defPiece("BlackP85", "Black P85");
+    view.defPiece("BlackP89", "Black P89");
+    view.defPiece("BlackP98", "Black P98");
+    view.defPiece("BlackP100", "Black P100");
+    view.defPiece("BlackP101", "Black P101");
+    view.defPiece("BlackP105", "Black P105");
+    view.defPiece("BlackP110", "Black P110");
+    view.defPiece("BlackP114", "Black P114");
+    view.defPiece("BlackP116", "Black P116");
+    view.defPiece("BlackP125", "Black P125");
+    view.defPiece("BlackP126", "Black P126");
+    view.defPiece("BlackP141", "Black P141");
+    view.defPiece("BlackP149", "Black P149");
+    view.defPiece("BlackP165", "Black P165");
+    view.defPiece("BlackP174", "Black P174");
     view.defPiece("BlackP190", "Black P190");
  
     view.defPosition("a16", 4, 4, 32, 32);
