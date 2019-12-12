@@ -10,7 +10,7 @@ function ZobristHash() {
 
 ZobristHash.prototype.getRandomValue = function() {
   var r = getRandomByte();
-  for (i = 0; i < 3; i++) {
+  for (var i = 0; i < 3; i++) {
       r = r << 8;
       r = r | getRandomByte();
   }
