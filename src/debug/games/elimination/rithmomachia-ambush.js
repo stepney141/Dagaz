@@ -83,7 +83,7 @@ var getTargets = function(design, board, pos, piece) {
           var p = design.navigate(1, pos, o);
           if (p === null) return;
           if (board.getPiece(p) !== null) return;
-          p = design.navigate(1, pos, o);
+          p = design.navigate(1, p, o);
           if (p === null) return;
           if (board.getPiece(p) !== null) return;
           _.each(getDirs(o), function(d) {
@@ -245,7 +245,7 @@ Dagaz.Model.CheckInvariants = function(board) {
           if ((target === null) || (target.player == board.player)) return;
           var c = [];
           getEqual(design, piece, target, c);
-          if (_.indexOf(c, +target.type) >= 0) {
+          if (_.indexOf(c, target.type) >= 0) {
               move.capturePiece(p);
               return;
           }
@@ -257,7 +257,7 @@ Dagaz.Model.CheckInvariants = function(board) {
               if (_.indexOf(getTargets(design, b, q, x), p) < 0) return;
               getAmbush(design, target, piece, x, ambush);
           });
-          if (_.indexOf(ambush, +target.type) >= 0) {
+          if (_.indexOf(ambush, target.type) >= 0) {
               move.capturePiece(p);
               return;
           }
@@ -266,7 +266,7 @@ Dagaz.Model.CheckInvariants = function(board) {
           });
           var erruption = [];
           getErruption(design, b, dst, p, piece, target, erruption);
-          if (_.indexOf(erruption, +target.type) >= 0) {
+          if (_.indexOf(erruption, target.type) >= 0) {
               move.capturePiece(p);
               return;
           }
@@ -274,24 +274,24 @@ Dagaz.Model.CheckInvariants = function(board) {
               c.push(p);
           });
           if (c.length > 0) {
-              var s = 0; var c = 0; var v = 0;
+              var s = 0; var cn = 0; var v = 0;
               for (var ix = 0; ix < 6; ix++) {
                    var t = target.getValue(ix);
                    if (t !== null) {
-                       if (_.indexOf(c, +t) >= 0) {
+                       if (_.indexOf(c, t) >= 0) {
                            target = target.setValue(ix, null);
                        } else {               
                            s += design.price[t];
                            v += t;
-                           c++;
+                           cn++;
                        }
                    }
               }
-              if (c == 0) {
+              if (cn == 0) {
                   move.capturePiece(p);
                   return;
               }
-              if (c > 1) {
+              if (cn > 1) {
                   var x = target.promote(design.getPieceType("P" + s));
                   var ix = 0;
                   for (var i = 0; i < 6; i++) {

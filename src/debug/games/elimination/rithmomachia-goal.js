@@ -31,7 +31,7 @@ Dagaz.AI.getEval = function(design, board) {
   return board.eval;
 }
 
-Dagaz.AI.eval = function(design, params, board, player) {
+Dagaz.AI.eval = function(ai, design, board, player) {
   var r = Dagaz.AI.getEval(design, board);
   if (board.player != player) {
       r = -r;
