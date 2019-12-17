@@ -1,6 +1,7 @@
 (function() {
 
-Dagaz.Model.WIDTH = 8;
+Dagaz.Model.WIDTH             = 8;
+Dagaz.Model.VIEW_MOVES_LENGTH = 2;
 
 var checkVersion = Dagaz.Model.checkVersion;
 

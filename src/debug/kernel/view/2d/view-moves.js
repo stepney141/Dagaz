@@ -30,7 +30,8 @@ Dagaz.View.showBoard = function(board, ctx) {
   ctx.save();
   ctx.strokeStyle = "#00FF00";
   _.each(board.moves, function(m) {
-      if (m.actions == 0) return;
+      if (m.actions.length == 0) return;
+      if (!_.isUndefined(Dagaz.Model.VIEW_MOVES_LENGTH) && (m.actions.length < Dagaz.Model.VIEW_MOVES_LENGTH)) return;
       if (pos !== null) {
           if (m.actions[0][0] !== null) {
               if (m.actions[0][0][0] != pos) return;
