@@ -213,7 +213,7 @@
   (board
      (image "images/rithmomachia/8x16.bmp")
      (grid
-         (start-rectangle 4 4 36 36)
+         (start-rectangle 44 4 76 36)
          (dimensions
            ("a/b/c/d/e/f/g/h" (35 0)) ; files
            ("16/15/14/13/12/11/10/9/8/7/6/5/4/3/2/1" (0 35)) ; ranks
@@ -222,6 +222,27 @@
               (n 0 -1) (s 0 1) (e 1 0) (w -1 0)
               (nw -1 -1) (sw -1 1) (ne 1 -1) (se 1 1)
          )
+     )
+     (positions
+             (y1   3   4  35  36)
+             (y2   3  39  35  71)
+             (y3   3  74  35 106)
+             (y4   3 109  35 141)
+             (y5   3 144  35 176)
+             (x1 330 529 362 561)
+             (x2 330 494 362 526)
+             (x3 330 459 362 491)
+             (x4 330 424 362 456)
+             (x5 330 389 362 421)
+             (x6 330 354 362 386)
+     )
+     (zone (name off-board)  
+         (players White) 
+         (positions x1 x2 x3 x4 x5 x6)
+     )
+     (zone (name off-board)  
+         (players Black) 
+         (positions y1 y2 y3 y4 y5)
      )
   )
 
@@ -243,15 +264,15 @@
 
   (board-setup
     (White 
-       (C2 c6) (C4 c5 d6) (C6 e6) (C8 f6) (C16 d5) (C36 e5) (C64 f5)
-       (T6 b5) (T9 a5) (T20 d4) (T25 c4) (T42 e4) (T49 f4) (T72 g5) (T81 h5)
-       (S15 a4) (S25 a3) (S45 b4) (S81 b3) (S153 h4) (S169 g3) (S289 h3)
+       (C2 c6) (C4 c5 d6 x5) (C6 e6) (C8 f6) (C16 d5) (C36 e5) (C64 f5)  (C1 x6)
+       (T6 b5) (T9 a5 x4) (T20 d4) (T25 c4) (T42 e4) (T49 f4) (T72 g5) (T81 h5) (T16 x3)
+       (S15 a4) (S25 a3 x2) (S45 b4) (S81 b3) (S153 h4) (S169 g3) (S289 h3) (S36 x1)
        (P91 g4)
     )
     (Black 
-       (C3 f11) (C5 e11) (C7 d11) (C9 c11 f12) (C25 e12) (C49 d12) (C81 c12)
-       (T12 g12) (T12 h12) (T30 e13) (T36 f13) (T56 d13) (T64 c13) (T90 b12) (T100 a12)
-       (S28 h13) (S49 h14) (S66 g13) (S120 b13) (S121 g14) (S225 b14) (S361 a14)
+       (C3 f11) (C5 e11) (C7 d11) (C9 c11 f12) (C25 e12) (C49 d12) (C81 c12) (C16 y5)
+       (T12 g12) (T16 h12) (T30 e13) (T36 f13 y3) (T56 d13) (T64 c13) (T90 b12) (T100 a12) (T25 y4)
+       (S28 h13) (S49 h14 y2) (S66 g13) (S120 b13) (S121 g14) (S225 b14) (S361 a14) (S64 y1)
        (P190 a13)
     )
   )

@@ -288,6 +288,15 @@ Dagaz.Model.CheckInvariants = function(board) {
                        }
                    }
               }
+              var player = design.nextPlayer(board.player);
+              _.each(design.allPositions(), function(p) {
+                  if (!design.inZone(0, player, p)) return;
+                  var piece = board.getPiece(p);
+                  if (piece === null) return;
+                  if ((cn < 2) || (_.indexOf(c, piece.type) >= 0))  {
+                      move.capturePiece(p);
+                  }
+              });
               if (cn == 0) {
                   move.capturePiece(p);
                   return;

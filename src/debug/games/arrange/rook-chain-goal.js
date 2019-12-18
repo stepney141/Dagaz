@@ -58,6 +58,59 @@ var checkGroups = function(groups, player) {
   return cnt == 1;
 }
 
+var getArity = function(design, board, player, pos) {
+  var r = 0;
+  _.each(design.allDirections(), function(dir) {
+      var p = design.navigate(player, pos, dir);
+      if (p === null) return;
+      var piece = board.getPiece(p);
+      if (piece === null) return;
+      if (piece.player != player) return;
+      r++;
+  });
+  return r;
+}
+
+var getStat = function(design, board) {
+  if (_.isUndefined(board.stat)) {
+      board.stat = {
+         one: [], two: [], cnt: 0
+      };
+      _.each(design.allPositions(), function(pos) {
+          var n = getArity(design, board, board.player, pos);
+          var piece = board.getPiece(pos);
+          if (piece !== null) {
+              if ((piece.player == board.player) && (n == 1)) board.stat.cnt++;
+              return;
+          }
+          if (n == 1) board.stat.one.push(pos);
+          if (n == 2) board.stat.two.push(pos);
+     });
+  }
+  return board.stat;
+}
+
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  var s = getStat(design, board);
+  var pos = move.actions[0][1][0];
+  var ix = _.indexOf(s.two, pos);
+  if ((s.cnt <= 2) && (ix >= 0)) return -1;
+  if ((ix < 0) && (_.indexOf(s.one, pos) < 0)) return 0;
+  var r = 100;
+  _.each(design.allDirections(), function(dir) {
+      var p = design.navigate(board.player, pos, dir);
+      while (p !== null) {
+          var piece = board.getPiece(p);
+          if (piece !== null) {
+              if (piece.player == board.player) break;
+              r -= 10;
+          }
+          p = design.navigate(board.player, p, dir);
+      }
+  });
+  return r;
+}
+
 var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {

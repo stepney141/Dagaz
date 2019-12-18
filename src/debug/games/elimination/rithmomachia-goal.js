@@ -20,6 +20,7 @@ Dagaz.AI.getEval = function(design, board) {
       _.each(design.allPositions(), function(pos) {
           var piece = board.getPiece(pos);
           if (piece !== null) {
+              if (Dagaz.Model.isP(piece.type)) return;
               var v = design.price[piece.type];
               if (board.player != piece.player) {
                   v = -v;
@@ -46,6 +47,7 @@ Dagaz.Model.checkGoals = function(design, board, player) {
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
       if (piece === null) return;
+      if (Dagaz.Model.isP(piece.type)) return;
       if (player == piece.player) {
           fs += design.price[piece.type];
           fc++;

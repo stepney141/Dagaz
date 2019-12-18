@@ -22,6 +22,14 @@ var checkDirection = function(design, board, player, pos, dir, dirs, move) {
            if (x.player != player) return;
        }
   }
+  if (Dagaz.Model.isP(piece.type)) {
+      var player = piece.player;
+     _.each(design.allPositions(), function(p) {
+          if (!design.inZone(0, player, p)) return;
+          if (board.getPiece(p) === null) return;
+          move.capturePiece(p);
+     });
+  }
   move.capturePiece(p);
 }
 
