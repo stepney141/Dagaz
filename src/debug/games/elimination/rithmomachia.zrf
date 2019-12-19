@@ -277,3 +277,22 @@
     )
   )
 )
+
+(variant
+  (title "Rithmomachia")
+  (default)
+  (board-setup
+    (White 
+       (C4 x5) (C1 x6) (C2 c6) (C4 d6 c5) (C6 e6) (C8 f6) (C16 d5) (C36 e5) (C64 f5)
+       (T9 x4) (T16 x3) (T6 c4) (T20 d4) (T42 e4) (T72 f4) (T9 c3) (T25 d3) (T49 e3) (T81 f3)
+       (S25 x2 c1) (S36 x1) (S15 c2) (S45 d2) (S153 f2) (S81 d1) (S169 e1) (S289 f1)
+       (P91 e2)
+    )
+    (Black 
+       (C16 y5) (C9 c11 f12) (C7 d11) (C5 e11) (C3 f11) (C81 c12) (C49 d12) (C25 e12)
+       (T36 y3 e14) (T25 y4) (T90 c13) (T56 d13) (T30 e13) (T12 f13) (T100 c14) (T64 d14) (T16 f14)
+       (S49 y2) (S64 y1) (S120 d15) (S66 e15) (S28 f15) (S361 c16) (S225 d16) (S121 e16) (S49 f16)
+       (P190 c15)
+    )
+  )
+)
