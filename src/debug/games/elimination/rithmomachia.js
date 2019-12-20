@@ -2725,6 +2725,36 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(111, 4, [3, 3, 5], 2);
     design.addMove(111, 4, [3, 3, 0], 2);
 
+    design.addPiece("P113", 112, 113);
+    design.addMove(112, 0, [6], 0);
+    design.addMove(112, 0, [5], 0);
+    design.addMove(112, 0, [2], 0);
+    design.addMove(112, 0, [0], 0);
+    design.addMove(112, 1, [7, 7], 1);
+    design.addMove(112, 1, [3, 3], 1);
+    design.addMove(112, 1, [4, 4], 1);
+    design.addMove(112, 1, [1, 1], 1);
+    design.addMove(112, 2, [7, 6], 1);
+    design.addMove(112, 2, [7, 5], 1);
+    design.addMove(112, 2, [1, 2], 1);
+    design.addMove(112, 2, [1, 0], 1);
+    design.addMove(112, 2, [4, 6], 1);
+    design.addMove(112, 2, [4, 2], 1);
+    design.addMove(112, 2, [3, 5], 1);
+    design.addMove(112, 2, [3, 0], 1);
+    design.addMove(112, 3, [7, 7, 7], 2);
+    design.addMove(112, 3, [3, 3, 3], 2);
+    design.addMove(112, 3, [4, 4, 4], 2);
+    design.addMove(112, 3, [1, 1, 1], 2);
+    design.addMove(112, 4, [7, 7, 6], 2);
+    design.addMove(112, 4, [7, 7, 5], 2);
+    design.addMove(112, 4, [1, 1, 2], 2);
+    design.addMove(112, 4, [1, 1, 0], 2);
+    design.addMove(112, 4, [4, 4, 6], 2);
+    design.addMove(112, 4, [4, 4, 2], 2);
+    design.addMove(112, 4, [3, 3, 5], 2);
+    design.addMove(112, 4, [3, 3, 0], 2);
+
     design.setup("White", "C2", 82, 1);
     design.setup("White", "C4", 90, 1);
     design.setup("White", "C4", 83, 1);
@@ -3081,6 +3111,7 @@ Dagaz.View.configure = function(view) {
     view.defPiece("BlackP101", "Black P101");
     view.defPiece("BlackP105", "Black P105");
     view.defPiece("BlackP110", "Black P110");
+    view.defPiece("BlackP113", "Black P113");
     view.defPiece("BlackP114", "Black P114");
     view.defPiece("BlackP116", "Black P116");
     view.defPiece("BlackP125", "Black P125");
