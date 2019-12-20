@@ -26,6 +26,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-blink", "false");
     design.checkVersion("advisor-wait", "5");
 
+    design.setupSelector(4);
+
     design.addDirection("se"); // 0
     design.addDirection("s");  // 1
     design.addDirection("sw"); // 2
@@ -35,8 +37,19 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addDirection("nw"); // 6
     design.addDirection("n");  // 7
 
-    design.addPlayer("White", [6, 7, 5, 4, 3, 2, 0, 1]);
-    design.addPlayer("Black", [0, 1, 2, 3, 4, 5, 6, 7]);
+    design.addPlayer("White", [6, 7, 5, 4, 3, 2, 0, 1], 1);
+    design.addPlayer("Black", [0, 1, 2, 3, 4, 5, 6, 7], 1);
+    design.addPlayer("White", [6, 7, 5, 4, 3, 2, 0, 1], 2);
+    design.addPlayer("Black", [0, 1, 2, 3, 4, 5, 6, 7], 2);
+    design.addPlayer("Black", [6, 7, 5, 4, 3, 2, 0, 1], 3);
+    design.addPlayer("White", [0, 1, 2, 3, 4, 5, 6, 7], 3);
+    design.addPlayer("Black", [6, 7, 5, 4, 3, 2, 0, 1], 4);
+    design.addPlayer("White", [0, 1, 2, 3, 4, 5, 6, 7], 4);
+
+    design.addTurn(2, undefined, 3);
+    design.addTurn(1, undefined, 3);
+    design.addTurn(2, undefined, 4);
+    design.addTurn(1, undefined, 4);
 
     design.addPosition("a16", [9, 8, 0, 1, 0, 0, 0, 0]);
     design.addPosition("b16", [9, 8, 7, 1, -1, 0, 0, 0]);
@@ -171,6 +184,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("y3", [0, 0, 0, 0, 0, 0, 0, 0]);
     design.addPosition("y4", [0, 0, 0, 0, 0, 0, 0, 0]);
     design.addPosition("y5", [0, 0, 0, 0, 0, 0, 0, 0]);
+    design.addPosition("y6", [0, 0, 0, 0, 0, 0, 0, 0]);
     design.addPosition("x1", [0, 0, 0, 0, 0, 0, 0, 0]);
     design.addPosition("x2", [0, 0, 0, 0, 0, 0, 0, 0]);
     design.addPosition("x3", [0, 0, 0, 0, 0, 0, 0, 0]);
@@ -178,8 +192,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("x5", [0, 0, 0, 0, 0, 0, 0, 0]);
     design.addPosition("x6", [0, 0, 0, 0, 0, 0, 0, 0]);
 
-    design.addZone("off-board", 1, [133, 134, 135, 136, 137, 138]);
-    design.addZone("off-board", 2, [128, 129, 130, 131, 132]);
+    design.addZone("off-board", 1, [134, 135, 136, 137, 138, 139]);
+    design.addZone("off-board", 2, [128, 129, 130, 131, 132, 133]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
@@ -2711,37 +2725,35 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(111, 4, [3, 3, 5], 2);
     design.addMove(111, 4, [3, 3, 0], 2);
 
-    design.setupSelector(2);
-
     design.setup("White", "C2", 82, 1);
     design.setup("White", "C4", 90, 1);
     design.setup("White", "C4", 83, 1);
-    design.setup("White", "C4", 137, 1);
+    design.setup("White", "C4", 138, 1);
     design.setup("White", "C6", 84, 1);
     design.setup("White", "C8", 85, 1);
     design.setup("White", "C16", 91, 1);
     design.setup("White", "C36", 92, 1);
     design.setup("White", "C64", 93, 1);
-    design.setup("White", "C1", 138, 1);
+    design.setup("White", "C1", 139, 1);
     design.setup("White", "T6", 89, 1);
     design.setup("White", "T9", 88, 1);
-    design.setup("White", "T9", 136, 1);
+    design.setup("White", "T9", 137, 1);
     design.setup("White", "T20", 99, 1);
     design.setup("White", "T25", 98, 1);
     design.setup("White", "T42", 100, 1);
     design.setup("White", "T49", 101, 1);
     design.setup("White", "T72", 94, 1);
     design.setup("White", "T81", 95, 1);
-    design.setup("White", "T16", 135, 1);
+    design.setup("White", "T16", 136, 1);
     design.setup("White", "S15", 96, 1);
     design.setup("White", "S25", 104, 1);
-    design.setup("White", "S25", 134, 1);
+    design.setup("White", "S25", 135, 1);
     design.setup("White", "S45", 97, 1);
     design.setup("White", "S81", 105, 1);
     design.setup("White", "S153", 103, 1);
     design.setup("White", "S169", 110, 1);
     design.setup("White", "S289", 111, 1);
-    design.setup("White", "S36", 133, 1);
+    design.setup("White", "S36", 134, 1);
     design.setup("White", "P91", 102, 1);
     design.setup("Black", "C3", 45, 1);
     design.setup("Black", "C5", 44, 1);
@@ -2773,8 +2785,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "S64", 128, 1);
     design.setup("Black", "P190", 24, 1);
 
-    design.setup("White", "C4", 137, 2);
-    design.setup("White", "C1", 138, 2);
+    design.setup("White", "C4", 138, 2);
+    design.setup("White", "C1", 139, 2);
     design.setup("White", "C2", 82, 2);
     design.setup("White", "C4", 83, 2);
     design.setup("White", "C4", 90, 2);
@@ -2783,8 +2795,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("White", "C16", 91, 2);
     design.setup("White", "C36", 92, 2);
     design.setup("White", "C64", 93, 2);
-    design.setup("White", "T9", 136, 2);
-    design.setup("White", "T16", 135, 2);
+    design.setup("White", "T9", 137, 2);
+    design.setup("White", "T16", 136, 2);
     design.setup("White", "T6", 98, 2);
     design.setup("White", "T20", 99, 2);
     design.setup("White", "T42", 100, 2);
@@ -2793,9 +2805,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("White", "T25", 107, 2);
     design.setup("White", "T49", 108, 2);
     design.setup("White", "T81", 109, 2);
-    design.setup("White", "S25", 134, 2);
+    design.setup("White", "S25", 135, 2);
     design.setup("White", "S25", 122, 2);
-    design.setup("White", "S36", 133, 2);
+    design.setup("White", "S36", 134, 2);
     design.setup("White", "S15", 114, 2);
     design.setup("White", "S45", 115, 2);
     design.setup("White", "S153", 117, 2);
@@ -2832,6 +2844,126 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "S121", 4, 2);
     design.setup("Black", "S49", 5, 2);
     design.setup("Black", "P190", 10, 2);
+
+    design.setup("White", "C2", 42, 3);
+    design.setup("White", "C4", 34, 3);
+    design.setup("White", "C4", 43, 3);
+    design.setup("White", "C4", 132, 3);
+    design.setup("White", "C6", 44, 3);
+    design.setup("White", "C8", 45, 3);
+    design.setup("White", "C16", 35, 3);
+    design.setup("White", "C36", 36, 3);
+    design.setup("White", "C64", 37, 3);
+    design.setup("White", "C1", 133, 3);
+    design.setup("White", "T6", 33, 3);
+    design.setup("White", "T9", 32, 3);
+    design.setup("White", "T9", 131, 3);
+    design.setup("White", "T20", 27, 3);
+    design.setup("White", "T25", 26, 3);
+    design.setup("White", "T42", 28, 3);
+    design.setup("White", "T49", 29, 3);
+    design.setup("White", "T72", 38, 3);
+    design.setup("White", "T81", 39, 3);
+    design.setup("White", "T16", 130, 3);
+    design.setup("White", "S15", 24, 3);
+    design.setup("White", "S25", 16, 3);
+    design.setup("White", "S25", 129, 3);
+    design.setup("White", "S45", 25, 3);
+    design.setup("White", "S81", 17, 3);
+    design.setup("White", "S153", 31, 3);
+    design.setup("White", "S169", 22, 3);
+    design.setup("White", "S289", 23, 3);
+    design.setup("White", "S36", 128, 3);
+    design.setup("White", "P91", 30, 3);
+    design.setup("Black", "C3", 85, 3);
+    design.setup("Black", "C5", 84, 3);
+    design.setup("Black", "C7", 83, 3);
+    design.setup("Black", "C9", 82, 3);
+    design.setup("Black", "C9", 93, 3);
+    design.setup("Black", "C25", 92, 3);
+    design.setup("Black", "C49", 91, 3);
+    design.setup("Black", "C81", 90, 3);
+    design.setup("Black", "C16", 138, 3);
+    design.setup("Black", "T12", 94, 3);
+    design.setup("Black", "T16", 95, 3);
+    design.setup("Black", "T30", 100, 3);
+    design.setup("Black", "T36", 101, 3);
+    design.setup("Black", "T36", 136, 3);
+    design.setup("Black", "T56", 99, 3);
+    design.setup("Black", "T64", 98, 3);
+    design.setup("Black", "T90", 89, 3);
+    design.setup("Black", "T100", 88, 3);
+    design.setup("Black", "T25", 137, 3);
+    design.setup("Black", "S28", 103, 3);
+    design.setup("Black", "S49", 111, 3);
+    design.setup("Black", "S49", 135, 3);
+    design.setup("Black", "S66", 102, 3);
+    design.setup("Black", "S120", 97, 3);
+    design.setup("Black", "S121", 110, 3);
+    design.setup("Black", "S225", 105, 3);
+    design.setup("Black", "S361", 104, 3);
+    design.setup("Black", "S64", 134, 3);
+    design.setup("Black", "P190", 96, 3);
+
+    design.setup("White", "C4", 132, 4);
+    design.setup("White", "C1", 133, 4);
+    design.setup("White", "C2", 42, 4);
+    design.setup("White", "C4", 43, 4);
+    design.setup("White", "C4", 34, 4);
+    design.setup("White", "C6", 44, 4);
+    design.setup("White", "C8", 45, 4);
+    design.setup("White", "C16", 35, 4);
+    design.setup("White", "C36", 36, 4);
+    design.setup("White", "C64", 37, 4);
+    design.setup("White", "T9", 131, 4);
+    design.setup("White", "T16", 130, 4);
+    design.setup("White", "T6", 26, 4);
+    design.setup("White", "T20", 27, 4);
+    design.setup("White", "T42", 28, 4);
+    design.setup("White", "T72", 29, 4);
+    design.setup("White", "T9", 18, 4);
+    design.setup("White", "T25", 19, 4);
+    design.setup("White", "T49", 20, 4);
+    design.setup("White", "T81", 21, 4);
+    design.setup("White", "S25", 129, 4);
+    design.setup("White", "S25", 2, 4);
+    design.setup("White", "S36", 128, 4);
+    design.setup("White", "S15", 10, 4);
+    design.setup("White", "S45", 11, 4);
+    design.setup("White", "S153", 13, 4);
+    design.setup("White", "S81", 3, 4);
+    design.setup("White", "S169", 4, 4);
+    design.setup("White", "S289", 5, 4);
+    design.setup("White", "P91", 12, 4);
+    design.setup("Black", "C16", 138, 4);
+    design.setup("Black", "C9", 82, 4);
+    design.setup("Black", "C9", 93, 4);
+    design.setup("Black", "C7", 83, 4);
+    design.setup("Black", "C5", 84, 4);
+    design.setup("Black", "C3", 85, 4);
+    design.setup("Black", "C81", 90, 4);
+    design.setup("Black", "C49", 91, 4);
+    design.setup("Black", "C25", 92, 4);
+    design.setup("Black", "T36", 136, 4);
+    design.setup("Black", "T36", 108, 4);
+    design.setup("Black", "T25", 137, 4);
+    design.setup("Black", "T90", 98, 4);
+    design.setup("Black", "T56", 99, 4);
+    design.setup("Black", "T30", 100, 4);
+    design.setup("Black", "T12", 101, 4);
+    design.setup("Black", "T100", 106, 4);
+    design.setup("Black", "T64", 107, 4);
+    design.setup("Black", "T16", 109, 4);
+    design.setup("Black", "S49", 135, 4);
+    design.setup("Black", "S64", 134, 4);
+    design.setup("Black", "S120", 115, 4);
+    design.setup("Black", "S66", 116, 4);
+    design.setup("Black", "S28", 117, 4);
+    design.setup("Black", "S361", 122, 4);
+    design.setup("Black", "S225", 123, 4);
+    design.setup("Black", "S121", 124, 4);
+    design.setup("Black", "S49", 125, 4);
+    design.setup("Black", "P190", 114, 4);
 }
 
 Dagaz.View.configure = function(view) {
@@ -3092,6 +3224,7 @@ Dagaz.View.configure = function(view) {
     view.defPosition("y3", 3, 74, 32, 32);
     view.defPosition("y4", 3, 109, 32, 32);
     view.defPosition("y5", 3, 144, 32, 32);
+    view.defPosition("y6", 3, 179, 32, 32);
     view.defPosition("x1", 330, 529, 32, 32);
     view.defPosition("x2", 330, 494, 32, 32);
     view.defPosition("x3", 330, 459, 32, 32);

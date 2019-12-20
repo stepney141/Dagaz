@@ -39,7 +39,7 @@
   - Mana [best, setups, sparks, king, family:other]
   - Surakarta [best, hints, family:checkers]
   - Splut! [todo, turns, king, 4-players, family:other]
-  - Rithmomachia [heaps, arrange, cooperative, family:other]
+  - Rithmomachia [heaps, arrange, setups, cooperative, family:other]
   - Banqi [cloack, attributes, shared, best, todo:mindsports, family:chess]
   - Martian Chess [ko, 4-players(cooperative), scoring]
   - Dejarik [todo, family:other]

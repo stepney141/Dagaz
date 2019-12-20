@@ -229,6 +229,7 @@
              (y3   3  74  35 106)
              (y4   3 109  35 141)
              (y5   3 144  35 176)
+             (y6   3 179  35 211)
              (x1 330 529 362 561)
              (x2 330 494 362 526)
              (x3 330 459 362 491)
@@ -242,7 +243,7 @@
      )
      (zone (name off-board)  
          (players Black) 
-         (positions y1 y2 y3 y4 y5)
+         (positions y1 y2 y3 y4 y5 y6)
      )
   )
 
@@ -264,7 +265,7 @@
 
   (board-setup
     (White 
-       (C2 c6) (C4 c5 d6 x5) (C6 e6) (C8 f6) (C16 d5) (C36 e5) (C64 f5)  (C1 x6)
+       (C2 c6) (C4 c5 d6 x5) (C6 e6) (C8 f6) (C16 d5) (C36 e5) (C64 f5) (C1 x6)
        (T6 b5) (T9 a5 x4) (T20 d4) (T25 c4) (T42 e4) (T49 f4) (T72 g5) (T81 h5) (T16 x3)
        (S15 a4) (S25 a3 x2) (S45 b4) (S81 b3) (S153 h4) (S169 g3) (S289 h3) (S36 x1)
        (P91 g4)
@@ -280,7 +281,6 @@
 
 (variant
   (title "Rithmomachia")
-  (default)
   (board-setup
     (White 
        (C4 x5) (C1 x6) (C2 c6) (C4 d6 c5) (C6 e6) (C8 f6) (C16 d5) (C36 e5) (C64 f5)
@@ -293,6 +293,43 @@
        (T36 y3 e14) (T25 y4) (T90 c13) (T56 d13) (T30 e13) (T12 f13) (T100 c14) (T64 d14) (T16 f14)
        (S49 y2) (S64 y1) (S120 d15) (S66 e15) (S28 f15) (S361 c16) (S225 d16) (S121 e16) (S49 f16)
        (P190 c15)
+    )
+  )
+)
+
+(variant
+  (title "Rithmomachia")
+  (board-setup
+    (White 
+       (C2 c11) (C4 c12 d11 y5) (C6 e11) (C8 f11) (C16 d12) (C36 e12) (C64 f12) (C1 y6)
+       (T6 b12) (T9 a12 y4) (T20 d13) (T25 c13) (T42 e13) (T49 f13) (T72 g12) (T81 h12) (T16 y3)
+       (S15 a13) (S25 a14 y2) (S45 b13) (S81 b14) (S153 h13) (S169 g14) (S289 h14) (S36 y1)
+       (P91 g13)
+    )
+    (Black 
+       (C3 f6) (C5 e6) (C7 d6) (C9 c6 f5) (C25 e5) (C49 d5) (C81 c5) (C16 x5)
+       (T12 g5) (T16 h5) (T30 e4) (T36 f4 x3) (T56 d4) (T64 c4) (T90 b5) (T100 a5) (T25 x4)
+       (S28 h4) (S49 h3 x2) (S66 g4) (S120 b4) (S121 g3) (S225 b3) (S361 a3) (S64 x1)
+       (P190 a4)
+    )
+  )
+)
+
+(variant
+  (title "Rithmomachia")
+  (default)
+  (board-setup
+    (White 
+       (C4 y5) (C1 y6) (C2 c11) (C4 d11 c12) (C6 e11) (C8 f11) (C16 d12) (C36 e12) (C64 f12)
+       (T9 y4) (T16 y3) (T6 c13) (T20 d13) (T42 e13) (T72 f13) (T9 c14) (T25 d14) (T49 e14) (T81 f14)
+       (S25 y2 c16) (S36 y1) (S15 c15) (S45 d15) (S153 f15) (S81 d16) (S169 e16) (S289 f16)
+       (P91 e15)
+    )
+    (Black 
+       (C16 x5) (C9 c6 f5) (C7 d6) (C5 e6) (C3 f6) (C81 c5) (C49 d5) (C25 e5)
+       (T36 x3 e3) (T25 x4) (T90 c4) (T56 d4) (T30 e4) (T12 f4) (T100 c3) (T64 d3) (T16 f3)
+       (S49 x2) (S64 x1) (S120 d2) (S66 e2) (S28 f2) (S361 c1) (S225 d1) (S121 e1) (S49 f1)
+       (P190 c2)
     )
   )
 )

@@ -871,7 +871,8 @@ ZrfDesign.prototype.addDirection = function(name) {
   this.dirs.push(name);
 }
 
-ZrfDesign.prototype.addPlayer = function(player, symmetries) {
+ZrfDesign.prototype.addPlayer = function(player, symmetries, selector) {
+  if (!_.isUndefined(selector) && (selector != Dagaz.Model.getResourceSelector())) return;
   var ix = this.playerNames.length;
   if (this.playerNames.length == 0) {
       ix = 0;
@@ -885,7 +886,8 @@ ZrfDesign.prototype.getPlayersCount = function() {
   return this.playerNames.length - 1;
 }
 
-ZrfDesign.prototype.addTurn = function(player, modes) {
+ZrfDesign.prototype.addTurn = function(player, modes, selector) {
+  if (!_.isUndefined(selector) && (selector != Dagaz.Model.getResourceSelector())) return;
   if (_.isUndefined(this.turns)) {
       this.turns = [];
   }
