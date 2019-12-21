@@ -230,6 +230,10 @@ var getErruption = function(design, board, p, q, piece, target, r) {
   }
 }
 
+var indexOf = function(arr, x) {
+  return _.indexOf(_.map(arr, function(a) {return +a;}), +x);
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
@@ -246,7 +250,7 @@ Dagaz.Model.CheckInvariants = function(board) {
           if ((target === null) || (target.player == board.player)) return;
           var c = [];
           getEqual(design, piece, target, c);
-          if (_.indexOf(c, target.type) >= 0) {
+          if (indexOf(c, target.type) >= 0) {
               move.capturePiece(p);
               return;
           }
@@ -255,10 +259,10 @@ Dagaz.Model.CheckInvariants = function(board) {
               if (q == dst) return;
               var x = b.getPiece(q);
               if ((x === null) || (x.player != board.player)) return;
-              if (_.indexOf(getTargets(design, b, q, x), p) < 0) return;
+              if (indexOf(getTargets(design, b, q, x), p) < 0) return;
               getAmbush(design, target, piece, x, ambush);
           });
-          if (_.indexOf(ambush, target.type) >= 0) {
+          if (indexOf(ambush, target.type) >= 0) {
               move.capturePiece(p);
               return;
           }
@@ -267,7 +271,7 @@ Dagaz.Model.CheckInvariants = function(board) {
           });
           var erruption = [];
           getErruption(design, b, dst, p, piece, target, erruption);
-          if (_.indexOf(erruption, target.type) >= 0) {
+          if (indexOf(erruption, target.type) >= 0) {
               move.capturePiece(p);
               return;
           }
@@ -279,7 +283,7 @@ Dagaz.Model.CheckInvariants = function(board) {
               for (var ix = 0; ix < 6; ix++) {
                    var t = target.getValue(ix);
                    if (t !== null) {
-                       if (_.indexOf(c, t) >= 0) {
+                       if (indexOf(c, t) >= 0) {
                            target = target.setValue(ix, null);
                        } else {               
                            s += design.price[t];
@@ -293,7 +297,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                   if (!design.inZone(0, player, p)) return;
                   var piece = board.getPiece(p);
                   if (piece === null) return;
-                  if ((cn < 2) || (_.indexOf(c, piece.type) >= 0))  {
+                  if ((cn < 2) || (indexOf(c, piece.type) >= 0))  {
                       move.capturePiece(p);
                   }
               });

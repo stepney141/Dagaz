@@ -58,7 +58,7 @@ Dagaz.Model.checkGoals = function(design, board, player) {
   });
   if (fc <= 9) return -1;
   if (ec <= 9) return 1;
-  if (player == 1) {
+  if (design.playerNames[player] == "White") {
       if (fs <= 328) return -1;
       if (es <= 433) return 1;
   } else {
