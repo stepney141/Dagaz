@@ -796,7 +796,7 @@
 )
 
 (variant
-  (title "Longgammon")
+  (title "Long Backgammon")
   (board-setup
     (White (Man a1a a1b a1c a1d a1e a1f a1g a1h a1i a1j a1k a1l a1m a1n a1o))
     (Black (Man a2a a2b a2c a2d a2e a2f a2g a2h a2i a2j a2k a2l a2m a2n a2o))

@@ -1,12 +1,12 @@
 <html>
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Longgammon</title>
+<title>Long Backgammon</title>
 </head>
 <body>
 
-<img id="WhiteBoard" style="display:none" src="images/backgammon/slong.png">
-<img id="BlackBoard" style="display:none" src="images/backgammon/nlong.png">
+<img id="WhiteBoard" style="display:none" src="images/backgammon/sboard.png">
+<img id="BlackBoard" style="display:none" src="images/backgammon/nboard.png">
 <img id="WhiteMan" style="display:none" src="images/backgammon/white.png">
 <img id="BlackMan" style="display:none" src="images/backgammon/black.png">
 <img id="WhiteD1" style="display:none" src="images/backgammon/1.png">
@@ -24,8 +24,8 @@
 
 <table style="margin:auto; font-family:sans-serif; font-size:14px" id="Table">
 <tr style="height:350px; vertical-align:top">
-<td id="CanvasCell" style="width:552px">
-<canvas id="Canvas" width="552" height="350" style="cursor:default">Broken canvas...</canvas>
+<td id="CanvasCell" style="width:502px">
+<canvas id="Canvas" width="502" height="350" style="cursor:default">Broken canvas...</canvas>
 </td><td style="width:300px;">
 <div style="height:510px; overflow:auto" id="ScrollDiv">
 <img id="GlyphImage"><p id="HelpText"></p>
@@ -53,7 +53,16 @@
 <script src="../../kernel/model/common-setup-v2.js"></script>
 <script src="../../kernel/view/2d/2d-view-v4.js"></script>
 <script src="../../kernel/controller/utils/move-list-v2.js"></script>
-<script src="longgammon.js"></script>
+<script src="../../kernel/controller/ai/random-ai.js"></script>
+<script src="backgammon-ai.js"></script>
+<script src="backgammon-view.js"></script>
+<script src="backgammon-goal.js"></script>
+<script src="backgammon-dices.js"></script>
+<script src="backgammon-drops.js"></script>
+<script src="backgammon-extension.js"></script>
+<script src="backgammon-restriction.js"></script>
+<script src="backgammon-turns.js"></script>
+<script src="long-backgammon.js"></script>
 <script src="../../kernel/controller/app-v2.js"></script>
 
 </body>
