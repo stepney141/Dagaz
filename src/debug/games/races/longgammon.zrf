@@ -533,6 +533,8 @@
      )
      (links nx
          (m1a D1) (D1 D2) (D2 D3) (D3 D4)
+         (f2a e2a) (e2a d2a) (d2a c2a) (c2a b2a) (b2a a2a)
+         (g1a h1a) (h1a j1a) (j1a k1a) (k1a l1a) (l1a m1a)
      )
      (links wn
          (a1a b1a) (a1b b1a) (a1c b1a) (a1d b1a) (a1e b1a) (a1f b1a) (a1g b1a) (a1h b1a) (a1i b1a) (a1j b1a) (a1k b1a) (a1l b1a) (a1m b1a) (a1n b1a) (a1o b1a) (a1p b1a) (a1q b1a) 
@@ -614,7 +616,9 @@
          (H1a H1b) (H1b H1c) (H1c H1d) (H1d H1e) (H1e H1f) (H1f H1g) (H1g H1h) (H1h H1i) (H1i H1j) (H1j H1k) (H1k H1l) (H1l H1m) (H1m H1n) (H1n H1o) (H1o H1p) (H1p H1q) 
          (H2a H2b) (H2b H2c) (H2c H2d) (H2d H2e) (H2e H2f) (H2f H2g) (H2g H2h) (H2h H2i) (H2i H2j) (H2j H2k) (H2k H2l) (H2l H2m) (H2m H2n) (H2n H2o) (H2o H2p) (H2p H2q)
      )
-     (symmetry Black (nx nx) (wn bn) (bn wn) (up up))
+     (links wh (m1a f2a))
+     (links bh (m1a g1a))
+     (symmetry Black (nx nx) (wn bn) (bn wn) (up up) (wh bh) (bh wh))
      (zone (name home-zone) (players Black)
            (positions m1a l1a k1a j1a h1a g1a H1a H2a 
                       m1b l1b k1b j1b h1b g1b H1b H2b 
