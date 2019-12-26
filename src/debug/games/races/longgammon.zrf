@@ -490,23 +490,23 @@
          (a2p 457 188 491 220)
          (a2q 457 180 491 212)
 
-         (H2a  10  10  50 42)
-         (H2b  10  26  50 58)
-         (H2c  10  42  50 74)
-         (H2d  10  58  50 90)
-         (H2e  10  74  50 106)
-         (H2f  10  90  50 122)
-         (H2g  10 106  50 138)
-         (H2h  10 122  50 154)
-         (H2i  10 138  50 170)
-         (H2j  10 154  50 186)
-         (H2k  10 170  50 202)
-         (H2l  10 186  50 218)
-         (H2m  10 202  50 234)
-         (H2n  10 218  50 250)
-         (H2o  10 234  50 266)
-         (H2p  10 250  50 282)
-         (H2q  10 266  50 298)
+         (H2a   5  10  45 42)
+         (H2b   5  26  45 58)
+         (H2c   5  42  45 74)
+         (H2d   5  58  45 90)
+         (H2e   5  74  45 106)
+         (H2f   5  90  45 122)
+         (H2g   5 106  45 138)
+         (H2h   5 122  45 154)
+         (H2i   5 138  45 170)
+         (H2j   5 154  45 186)
+         (H2k   5 170  45 202)
+         (H2l   5 186  45 218)
+         (H2m   5 202  45 234)
+         (H2n   5 218  45 250)
+         (H2o   5 234  45 266)
+         (H2p   5 250  45 282)
+         (H2q   5 266  45 298)
 
          (H1a 506 308 546 340)
          (H1b 506 292 546 324)
@@ -742,9 +742,9 @@
                       a2q b2q c2q d2q e2q f2q g2q h2q j2q k2q l2q m2q
            )
      )
-     (zone (name first-rank) (players White Black)
-           (positions a1a b1a c1a d1a e1a f1a g1a h1a j1a k1a l1a m1a 
-                      a2a b2a c2a d2a e2a f2a g2a h2a j2a k2a l2a m2a
+     (zone (name head-zone) (players White Black)
+           (positions a1a a1b a1c a1d a1e a1f a1g a1h a1i a1j a1k a1l a1m a1n a1o
+                      m2a m2b m2c m2d m2e m2f m2g m2h m2i m2j m2k m2l m2m m2n m2o
            )
      )
   )
@@ -763,7 +763,7 @@
   (d 1) (d 2) (d 3) (d 4) (d 5) (d 6)
 
   (board-setup
-    (White (Man a1a a1b a1c a1d a1e a1f a1g a1h a1i a1j a1k a1l a1m a1n a1o))
-    (Black (Man m2a m2b m2c m2d m2e m2f m2g m2h m2i m2j m2k m2l m2m m2n m2o))
+    (White (Man a1a a1b a1c a1d a1e a1f a1g a1h a1i a1j a1k a1l a1m a1n a1o H1a H1b H1c))
+    (Black (Man m2a m2b m2c m2d m2e m2f m2g m2h m2i m2j m2k m2l m2m m2n m2o H2a H2b H2c))
   )
 )

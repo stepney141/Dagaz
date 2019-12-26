@@ -12,6 +12,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
 }
 
 var getRank = function(design, board, pos) {
+  if (design.inZone(2, board.player, +pos)) return null;
   var x = 0; var y = 0;
   var p = design.navigate(board.player, pos, 3);
   if (p === null) return null;
