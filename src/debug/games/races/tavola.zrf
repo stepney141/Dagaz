@@ -761,83 +761,83 @@
      (symmetry Red   (nx nx) (wx rx) (rx wx) (gx gx) (bx bx) (wc rc) (rc wc) (gc gc) (bc bc) (up up) (wh rh) (gh gh) (rh wh) (bh bh) (ch ch))
      (symmetry Black (nx nx) (wx bx) (bx wx) (rx rx) (gx gx) (wc bc) (bc wc) (rc rc) (gc gc) (up up) (wh bh) (gh gh) (rh rh) (bh wh) (ch ch))
      (zone (name home-zone) (players White)
-           (positions a2a b2a c2a d2a e2a f2a
-                      a2b b2b c2b d2b e2b f2b
-                      a2c b2c c2c d2c e2c f2c
-                      a2d b2d c2d d2d e2d f2d
-                      a2e b2e c2e d2e e2e f2e
-                      a2f b2f c2f d2f e2f f2f
-                      a2g b2g c2g d2g e2g f2g
-                      a2h b2h c2h d2h e2h f2h
-                      a2i b2i c2i d2i e2i f2i
-                      a2j b2j c2j d2j e2j f2j
-                      a2k b2k c2k d2k e2k f2k
-                      a2l b2l c2l d2l e2l f2l
-                      a2m b2m c2m d2m e2m f2m
-                      a2n b2n c2n d2n e2n f2n
-                      a2o b2o c2o d2o e2o f2o
-                      a2p b2p c2p d2p e2p f2p
-                      a2q b2q c2q d2q e2q f2q
+           (positions a2a b2a c2a d2a e2a f2a W2a
+                      a2b b2b c2b d2b e2b f2b W2b
+                      a2c b2c c2c d2c e2c f2c W2c
+                      a2d b2d c2d d2d e2d f2d W2d
+                      a2e b2e c2e d2e e2e f2e W2e
+                      a2f b2f c2f d2f e2f f2f W2f
+                      a2g b2g c2g d2g e2g f2g W2g
+                      a2h b2h c2h d2h e2h f2h W2h
+                      a2i b2i c2i d2i e2i f2i W2i
+                      a2j b2j c2j d2j e2j f2j W2j
+                      a2k b2k c2k d2k e2k f2k W2k
+                      a2l b2l c2l d2l e2l f2l W2l
+                      a2m b2m c2m d2m e2m f2m W2m
+                      a2n b2n c2n d2n e2n f2n W2n
+                      a2o b2o c2o d2o e2o f2o W2o
+                      a2p b2p c2p d2p e2p f2p W2p
+                      a2q b2q c2q d2q e2q f2q W2q
            )
      )
      (zone (name home-zone) (players Green)
-           (positions a1a b1a c1a d1a e1a f1a
-                      a1b b1b c1b d1b e1b f1b
-                      a1c b1c c1c d1c e1c f1c
-                      a1d b1d c1d d1d e1d f1d
-                      a1e b1e c1e d1e e1e f1e
-                      a1f b1f c1f d1f e1f f1f
-                      a1g b1g c1g d1g e1g f1g
-                      a1h b1h c1h d1h e1h f1h
-                      a1i b1i c1i d1i e1i f1i
-                      a1j b1j c1j d1j e1j f1j
-                      a1k b1k c1k d1k e1k f1k
-                      a1l b1l c1l d1l e1l f1l
-                      a1m b1m c1m d1m e1m f1m
-                      a1n b1n c1n d1n e1n f1n
-                      a1o b1o c1o d1o e1o f1o
-                      a1p b1p c1p d1p e1p f1p
-                      a1q b1q c1q d1q e1q f1q
+           (positions a1a b1a c1a d1a e1a f1a G2a
+                      a1b b1b c1b d1b e1b f1b G2b
+                      a1c b1c c1c d1c e1c f1c G2c
+                      a1d b1d c1d d1d e1d f1d G2d
+                      a1e b1e c1e d1e e1e f1e G2e
+                      a1f b1f c1f d1f e1f f1f G2f
+                      a1g b1g c1g d1g e1g f1g G2g
+                      a1h b1h c1h d1h e1h f1h G2h
+                      a1i b1i c1i d1i e1i f1i G2i
+                      a1j b1j c1j d1j e1j f1j G2j
+                      a1k b1k c1k d1k e1k f1k G2k
+                      a1l b1l c1l d1l e1l f1l G2l
+                      a1m b1m c1m d1m e1m f1m G2m
+                      a1n b1n c1n d1n e1n f1n G2n
+                      a1o b1o c1o d1o e1o f1o G2o
+                      a1p b1p c1p d1p e1p f1p G2p
+                      a1q b1q c1q d1q e1q f1q G2q
            )
      )
      (zone (name home-zone) (players Red)
-           (positions g1a h1a j1a k1a l1a m1a
-                      g1b h1b j1b k1b l1b m1b
-                      g1c h1c j1c k1c l1c m1c
-                      g1d h1d j1d k1d l1d m1d
-                      g1e h1e j1e k1e l1e m1e
-                      g1f h1f j1f k1f l1f m1f
-                      g1g h1g j1g k1g l1g m1g
-                      g1h h1h j1h k1h l1h m1h
-                      g1i h1i j1i k1i l1i m1i
-                      g1j h1j j1j k1j l1j m1j
-                      g1k h1k j1k k1k l1k m1k
-                      g1l h1l j1l k1l l1l m1l
-                      g1m h1m j1m k1m l1m m1m
-                      g1n h1n j1n k1n l1n m1n
-                      g1o h1o j1o k1o l1o m1o
-                      g1p h1p j1p k1p l1p m1p
-                      g1q h1q j1q k1q l1q m1q
+           (positions g1a h1a j1a k1a l1a m1a R2a
+                      g1b h1b j1b k1b l1b m1b R2b
+                      g1c h1c j1c k1c l1c m1c R2c
+                      g1d h1d j1d k1d l1d m1d R2d
+                      g1e h1e j1e k1e l1e m1e R2e
+                      g1f h1f j1f k1f l1f m1f R2f
+                      g1g h1g j1g k1g l1g m1g R2g
+                      g1h h1h j1h k1h l1h m1h R2h
+                      g1i h1i j1i k1i l1i m1i R2i
+                      g1j h1j j1j k1j l1j m1j R2j
+                      g1k h1k j1k k1k l1k m1k R2k
+                      g1l h1l j1l k1l l1l m1l R2l
+                      g1m h1m j1m k1m l1m m1m R2m
+                      g1n h1n j1n k1n l1n m1n R2n
+                      g1o h1o j1o k1o l1o m1o R2o
+                      g1p h1p j1p k1p l1p m1p R2p
+                      g1q h1q j1q k1q l1q m1q R2q
            )
      )
      (zone (name home-zone) (players Black)
-           (positions g2a h2a j2a k2a l2a m2a
-                      g2b h2b j2b k2b l2b m2b
-                      g2c h2c j2c k2c l2c m2c
-                      g2d h2d j2d k2d l2d m2d
-                      g2e h2e j2e k2e l2e m2e
-                      g2f h2f j2f k2f l2f m2f
-                      g2g h2g j2g k2g l2g m2g
-                      g2h h2h j2h k2h l2h m2h
-                      g2i h2i j2i k2i l2i m2i
-                      g2j h2j j2j k2j l2j m2j
-                      g2k h2k j2k k2k l2k m2k
-                      g2l h2l j2l k2l l2l m2l
-                      g2m h2m j2m k2m l2m m2m
-                      g2n h2n j2n k2n l2n m2n
-                      g2o h2o j2o k2o l2o m2o
-                      g2p h2p j2p k2p l2p m2p
-                      g2q h2q j2q k2q l2q m2q
+           (positions g2a h2a j2a k2a l2a m2a B2a
+                      g2b h2b j2b k2b l2b m2b B2b
+                      g2c h2c j2c k2c l2c m2c B2c
+                      g2d h2d j2d k2d l2d m2d B2d
+                      g2e h2e j2e k2e l2e m2e B2e
+                      g2f h2f j2f k2f l2f m2f B2f
+                      g2g h2g j2g k2g l2g m2g B2g
+                      g2h h2h j2h k2h l2h m2h B2h
+                      g2i h2i j2i k2i l2i m2i B2i
+                      g2j h2j j2j k2j l2j m2j B2j
+                      g2k h2k j2k k2k l2k m2k B2k
+                      g2l h2l j2l k2l l2l m2l B2l
+                      g2m h2m j2m k2m l2m m2m B2m
+                      g2n h2n j2n k2n l2n m2n B2n
+                      g2o h2o j2o k2o l2o m2o B2o
+                      g2p h2p j2p k2p l2p m2p B2p
+                      g2q h2q j2q k2q l2q m2q B2q
            )
      )
      (zone (name dice-zone) (players Black Green)
