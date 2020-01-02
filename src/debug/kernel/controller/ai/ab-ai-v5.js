@@ -1,4 +1,4 @@
-(function() {
+я╗┐(function() {
 
 Dagaz.AI.inProgress = false;
 Dagaz.AI.AI_FRAME   = 5000;
@@ -44,7 +44,7 @@ Dagaz.AI.isCapture = function(board, move) {
   return false;
 }
 
-// TODO: В cache сохраняется только доска, а не все поля как в ab
+// TODO: ╨Т cache ╤Б╨╛╤Е╤А╨░╨╜╤П╨╡╤В╤Б╤П ╤В╨╛╨╗╤М╨║╨╛ ╨┤╨╛╤Б╨║╨░, ╨░ ╨╜╨╡ ╨▓╤Б╨╡ ╨┐╨╛╨╗╤П ╨║╨░╨║ ╨▓ ab
 Ai.prototype.applyMove = function(ctx, board, move) {
   var b = board.apply(move);
   var node = ctx.cache[b.zSign & HASH_MASK];
@@ -58,13 +58,13 @@ Ai.prototype.applyMove = function(ctx, board, move) {
   return b;
 }
 
-// TODO: Возвращает список порождённых позиций, связанных по next
+// TODO: ╨Т╨╛╨╖╨▓╤А╨░╤Й╨░╨╡╤В ╤Б╨┐╨╕╤Б╨╛╨║ ╨┐╨╛╤А╨╛╨╢╨┤╤С╨╜╨╜╤Л╤Е ╨┐╨╛╨╖╨╕╤Ж╨╕╨╣, ╤Б╨▓╤П╨╖╨░╨╜╨╜╤Л╤Е ╨┐╨╛ next
 Ai.prototype.getSortedMoves = function(ctx, board, best, level) {
   // TODO:
 
 }
 
-// TODO: Сохраняется доска, а не ход (ход доступен в board.move)
+// TODO: ╨б╨╛╤Е╤А╨░╨╜╤П╨╡╤В╤Б╤П ╨┤╨╛╤Б╨║╨░, ╨░ ╨╜╨╡ ╤Е╨╛╨┤ (╤Е╨╛╨┤ ╨┤╨╛╤Б╤В╤Г╨┐╨╡╨╜ ╨▓ board.move)
 Ai.prototype.store = function(ctx, board, value, flag, maxLevel, best, level) {
   // TODO:
 
@@ -80,8 +80,8 @@ Ai.prototype.acn = function(ctx, board, maxLevel, level, beta, allowNull) {
 
 }
 
-// TODO: От какого player вычислять eval?
-// TODO: Для inCheck генерировать все ходы (на уровне режимов), иначе только взятия !!!
+// TODO: ╨Ю╤В ╨║╨░╨║╨╛╨│╨╛ player ╨▓╤Л╤З╨╕╤Б╨╗╤П╤В╤М eval?
+// TODO: ╨Ф╨╗╤П inCheck ╨│╨╡╨╜╨╡╤А╨╕╤А╨╛╨▓╨░╤В╤М ╨▓╤Б╨╡ ╤Е╨╛╨┤╤Л (╨╜╨░ ╤Г╤А╨╛╨▓╨╜╨╡ ╤А╨╡╨╢╨╕╨╝╨╛╨▓), ╨╕╨╜╨░╤З╨╡ ╤В╨╛╨╗╤М╨║╨╛ ╨▓╨╖╤П╤В╨╕╤П !!!
 Ai.prototype.qs = function(ctx, board, alpha, beta, maxLevel) {
   ctx.qNodeCount++;
   var inCheck = Dagaz.AI.inCheck(board);
