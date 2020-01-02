@@ -1,4 +1,4 @@
-﻿(function() {
+(function() {
 
 Dagaz.AI.inProgress = false;
 Dagaz.AI.AI_FRAME   = 5000;
@@ -44,7 +44,7 @@ Dagaz.AI.isCapture = function(board, move) {
   return false;
 }
 
-// TODO: В cache сохраняется только доска, а не все поля как в ab
+// TODO: � cache ��࠭���� ⮫쪮 ��᪠, � �� �� ���� ��� � ab
 Ai.prototype.applyMove = function(ctx, board, move) {
   var b = board.apply(move);
   var node = ctx.cache[b.zSign & HASH_MASK];
@@ -58,14 +58,14 @@ Ai.prototype.applyMove = function(ctx, board, move) {
   return b;
 }
 
-// TODO: Возвращает список порождённых позиций, связанных по next
+// TODO: �����頥� ᯨ᮪ ��஦���� ����権, �易���� �� next
 Ai.prototype.getSortedMoves = function(ctx, board, best, level) {
   // TODO:
 
 }
 
-// TODO: Сохраняется доска, а не ход (ход доступен в board.move)
-Ai.prototype.store = function(value, flag, maxLevel, board, level) {
+// TODO: ���࠭���� ��᪠, � �� 室 (室 ����㯥� � board.move)
+Ai.prototype.store = function(ctx, board, value, flag, maxLevel, best, level) {
   // TODO:
 
 }
@@ -80,8 +80,8 @@ Ai.prototype.acn = function(ctx, board, maxLevel, level, beta, allowNull) {
 
 }
 
-// TODO: От какого player вычислять eval?
-// TODO: Для inCheck генерировать все ходы (на уровне режимов), иначе только взятия !!!
+// TODO: �� ������ player ������� eval?
+// TODO: ��� inCheck �����஢��� �� 室� (�� �஢�� ०����), ���� ⮫쪮 ����� !!!
 Ai.prototype.qs = function(ctx, board, alpha, beta, maxLevel) {
   ctx.qNodeCount++;
   var inCheck = Dagaz.AI.inCheck(board);
@@ -110,6 +110,7 @@ Ai.prototype.qs = function(ctx, board, alpha, beta, maxLevel) {
          e = v;
      }
   }
+  return e;
 }
 
 Ai.prototype.ab = function(ctx, board, maxLevel, level, alpha, beta) {
@@ -145,7 +146,7 @@ Ai.prototype.ab = function(ctx, board, maxLevel, level, alpha, beta) {
        if (!Dagaz.AI.inProgress) return alpha;
        if (v > e) {
            if (v >= beta) {
-               this.store(v, BETA_FLAG, maxLevel, b, level);
+               this.store(ctx, board, v, BETA_FLAG, maxLevel, b, level);
                return v;
            }
            if (v > oa) {
@@ -160,7 +161,7 @@ Ai.prototype.ab = function(ctx, board, maxLevel, level, alpha, beta) {
        if (inCheck) return -MAX_VALUE + level;
            else return 0;
   }
-  this.store(e, flag, maxLevel, best, level);
+  this.store(ctx, board, e, flag, maxLevel, best, level);
   return e;
 }
 
@@ -174,7 +175,6 @@ Ai.prototype.setContext = function(ctx, board) {
   }
 }
 
-// TODO: Присваивать ctx.best
 Ai.prototype.getMove = function(ctx) {
   ctx.board.moves = Dagaz.AI.generate(ctx, ctx.board);
   if (ctx.board.moves.length == 0) {
@@ -205,6 +205,10 @@ Ai.prototype.getMove = function(ctx) {
            alpha = -MAX_VALUE;
            beta = MAX_VALUE;
            i--;
+       }
+       var node = ctx.cache[board.zSign & HASH_MASK];
+       if (!_.isUndefined(node)) {
+           ctx.best = node.best.move;
        }
   }
   Dagaz.AI.inProgress = false;
