@@ -1,4 +1,4 @@
-(function() {
+п»ї(function() {
 
 Dagaz.AI.inProgress = false;
 Dagaz.AI.AI_FRAME   = 5000;
@@ -79,7 +79,7 @@ Dagaz.AI.isCapture = function(board, move) {
   return false;
 }
 
-// TODO: В cache сохраняется только доска, а не все поля как в ab
+// TODO: Р’ cache СЃРѕС…СЂР°РЅСЏРµС‚СЃСЏ С‚РѕР»СЊРєРѕ РґРѕСЃРєР°, Р° РЅРµ РІСЃРµ РїРѕР»СЏ РєР°Рє РІ ab
 Ai.prototype.applyMove = function(ctx, board, move) {
   var b = board.apply(move);
   var node = ctx.cache[b.zSign & HASH_MASK];
@@ -93,13 +93,13 @@ Ai.prototype.applyMove = function(ctx, board, move) {
   return b;
 }
 
-// TODO: Возвращает список порождённых позиций, связанных по next
+// TODO: Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РїРѕСЂРѕР¶РґС‘РЅРЅС‹С… РїРѕР·РёС†РёР№, СЃРІСЏР·Р°РЅРЅС‹С… РїРѕ next
 Ai.prototype.getSortedMoves = function(ctx, board, best, level) {
   // TODO:
 
 }
 
-// TODO: Сохраняется доска, а не ход (ход доступен в board.move)
+// TODO: РЎРѕС…СЂР°РЅСЏРµС‚СЃСЏ РґРѕСЃРєР°, Р° РЅРµ С…РѕРґ (С…РѕРґ РґРѕСЃС‚СѓРїРµРЅ РІ board.move)
 Ai.prototype.store = function(ctx, value, flag, maxLevel, board, level) {
   // TODO:
 
@@ -199,7 +199,7 @@ Ai.prototype.acn = function(ctx, board, maxLevel, level, beta, allowNull) {
   return e;
 }
 
-// TODO: Для inCheck генерировать все ходы (на уровне режимов), иначе только взятия !!!
+// TODO: Р”Р»СЏ inCheck РіРµРЅРµСЂРёСЂРѕРІР°С‚СЊ РІСЃРµ С…РѕРґС‹ (РЅР° СѓСЂРѕРІРЅРµ СЂРµР¶РёРјРѕРІ), РёРЅР°С‡Рµ С‚РѕР»СЊРєРѕ РІР·СЏС‚РёСЏ !!!
 Ai.prototype.qs = function(ctx, board, alpha, beta, maxLevel) {
   ctx.qNodeCount++;
   var inCheck = Dagaz.AI.inCheck(board);
