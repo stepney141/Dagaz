@@ -670,7 +670,11 @@ Dagaz.Model.stringToPos = function(name, design) {
 }
 
 Dagaz.Model.zupdate = function(value, piece, pos) {
-  return 0;
+  return value;
+}
+
+Dagaz.Model.zplayer = function(value, player) {
+  return value;
 }
 
 function ZrfDesign() {
@@ -1480,7 +1484,6 @@ Dagaz.Model.InitGame = function() {
 
 function ZrfBoard(game) {
   this.game     = game;
-  this.zSign    = 0;
   this.pieces   = [];
   this.forks    = [];
   this.turn     = 0;
@@ -1488,6 +1491,7 @@ function ZrfBoard(game) {
   this.changed  = [];
   this.parent   = null;
   this.values   = [];
+  this.zSign    = Dagaz.Model.zplayer(0, this.player);
 }
 
 ZrfBoard.prototype.assign = function(board) {
@@ -1935,7 +1939,9 @@ ZrfBoard.prototype.apply = function(move) {
   var design = Dagaz.Model.design;
   var r = this.copy();
   r.turn = design.nextTurn(this);
+  r.zSign = Dagaz.Model.zplayer(r.zSign, this.player);
   r.player = design.currPlayer(r.turn);
+  r.zSign = Dagaz.Model.zplayer(r.zSign, r.player);
   move.applyAll(r);
   r.move = move;
   return r;

@@ -29,6 +29,13 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+var zplayer = Dagaz.Model.zplayer;
+
+Dagaz.Model.zplayer = function(value, player) {
+  if (superKo == 1) return value;
+  return zplayer(value, player);
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {

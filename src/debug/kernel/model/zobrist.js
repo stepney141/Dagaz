@@ -6,6 +6,7 @@ getRandomByte = function() {
 
 function ZobristHash() {
   this.hash = [];
+  this.player = [];
 }
 
 ZobristHash.prototype.getRandomValue = function() {
@@ -29,6 +30,13 @@ ZobristHash.prototype.update = function(value, player, piece, pos) {
   }
   return value ^ this.hash[piece][player][pos];
 }
+
+ZobristHash.prototype.zplayer = function(value, player) {
+  if (_.isUndefined(this.player[player])) {
+      this.player[player] = this.getRandomValue();
+  }
+  return value ^ this.player[player];
+}
  
 Dagaz.Model.getZobristHash = function() {
   if (_.isUndefined(Dagaz.Model.zobrist)) {
@@ -44,6 +52,11 @@ Dagaz.Model.getPieceType = function(piece) {
 Dagaz.Model.zupdate = function(value, piece, pos) {
   var z = Dagaz.Model.getZobristHash();
   return z.update(value, piece.player, Dagaz.Model.getPieceType(piece), pos);
+}
+
+Dagaz.Model.zplayer = function(value, player) {
+  var z = Dagaz.Model.getZobristHash();
+  return z.zplayer(value, player);
 }
 
 })();
