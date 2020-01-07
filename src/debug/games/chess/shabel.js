@@ -26,16 +26,15 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-blink", "true");
     design.checkVersion("advisor-wait", "5");
-    design.checkVersion("shabel-invariant", "true");
 
-    design.addDirection("w");
-    design.addDirection("e");
-    design.addDirection("s");
-    design.addDirection("ne");
-    design.addDirection("n");
-    design.addDirection("se");
-    design.addDirection("sw");
-    design.addDirection("nw");
+    design.addDirection("w");  // 0
+    design.addDirection("e");  // 1
+    design.addDirection("s");  // 2
+    design.addDirection("ne"); // 3
+    design.addDirection("n");  // 4
+    design.addDirection("se"); // 5
+    design.addDirection("sw"); // 6
+    design.addDirection("nw"); // 7
 
     design.addPlayer("White", [1, 0, 4, 6, 2, 7, 3, 5]);
     design.addPlayer("Black", [0, 1, 4, 5, 2, 3, 7, 6]);
@@ -564,9 +563,9 @@ Dagaz.View.configure = function(view) {
     view.defPosition("g1", 410, 478, 68, 68);
     view.defPosition("h1", 478, 478, 68, 68);
 
-    view.defPopup("Promote", 127, 150);
+/*  view.defPopup("Promote", 127, 150);
     view.defPopupPosition("X1", 10, 7, 68, 68);
     view.defPopupPosition("X2", 80, 7, 68, 68);
     view.defPopupPosition("X3", 150, 7, 68, 68);
-    view.defPopupPosition("X4", 220, 7, 68, 68);
+    view.defPopupPosition("X4", 220, 7, 68, 68);*/
 }

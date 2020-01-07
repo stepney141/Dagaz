@@ -1,85 +1,100 @@
 (function() {
 
-Dagaz.AI.inProgress = false;
-Dagaz.AI.AI_FRAME   = 5000;
+Dagaz.AI.REP_DEEP = 10;
 
-var MAX_VALUE = 2000000;
+var penalty = [
+  [   0,   0,   0,   0,   0,   0,   0,   0,
+    -25, 105, 135, 270, 270, 135, 105, -25,
+    -80,   0,  30, 176, 176,  30,   0, -80,
+    -85,  -5,  25, 175, 175,  25,  -5, -85,
+    -90, -10,  20, 125, 125,  20, -10, -90,
+    -95, -15,  15,  75,  75,  15, -15, -95, 
+   -100, -20,  10,  70,  70,  10, -20,-100, 
+      0,   0,   0,   0,   0,   0,   0,   0 ],
+  [ -60, -30, -10,  20,  20, -10, -30, -60,
+     40,  70,  90, 120, 120,  90,  70,  40,
+    -60, -30, -10,  20,  20, -10, -30, -60,
+    -60, -30, -10,  20,  20, -10, -30, -60,
+    -60, -30, -10,  20,  20, -10, -30, -60,
+    -60, -30, -10,  20,  20, -10, -30, -60,
+    -60, -30, -10,  20,  20, -10, -30, -60,
+    -60, -30, -10,  20,  20, -10, -30, -60 ],
+  [-200,-100, -50, -50, -50, -50,-100,-200,
+   -100,   0,   0,   0,   0,   0,   0,-100,
+    -50,   0,  60,  60,  60,  60,   0, -50,
+    -50,   0,  30,  60,  60,  30,   0, -50,
+    -50,   0,  30,  60,  60,  30,   0, -50,
+    -50,   0,  30,  30,  30,  30,   0, -50,
+   -100,   0,   0,   0,   0,   0,   0,-100,
+   -200, -50, -25, -25, -25, -25, -50,-200 ],
+  [ -50, -50, -25, -10, -10, -25, -50, -50,
+    -50, -25, -10,   0,   0, -10, -25, -50,
+    -25, -10,   0,  25,  25,   0, -10, -25,
+    -10,   0,  25,  40,  40,  25,   0, -10,
+    -10,   0,  25,  40,  40,  25,   0, -10,
+    -25, -10,   0,  25,  25,   0, -10, -25,
+    -50, -25, -10,   0,   0, -10, -25, -50,
+    -50, -50, -25, -10, -10, -25, -50, -50 ],
+  [ -50, -50, -25, -10, -10, -25, -50, -50,
+    -50, -25, -10,   0,   0, -10, -25, -50,
+    -25, -10,   0,  25,  25,   0, -10, -25,
+    -10,   0,  25,  40,  40,  25,   0, -10,
+    -10,   0,  25,  40,  40,  25,   0, -10,
+    -25, -10,   0,  25,  25,   0, -10, -25,
+    -50, -25, -10,   0,   0, -10, -25, -50,
+    -50, -50, -25, -10, -10, -25, -50, -50 ],
+  [  50, 150, -25,-125,-125, -25, 150,  50,
+     50, 150, -25,-125,-125, -25, 150,  50,
+     50, 150, -25,-125,-125, -25, 150,  50,
+     50, 150, -25,-125,-125, -25, 150,  50,
+     50, 150, -25,-125,-125, -25, 150,  50,
+     50, 150, -25,-125,-125, -25, 150,  50,
+     50, 150, -25,-125,-125, -25, 150,  50,
+    150, 250,  75, -25, -25,  75, 250, 150 ]
+];
 
-function Ai(parent) {
-  this.parent = parent;
+Dagaz.AI.getPrice = function(design, piece, pos) {
+  var r = design.price[piece.type];
+  if (piece.player == 1) {
+      r += penalty[piece.type][pos];
+  } else {
+      r += penalty[piece.type][63 - pos];
+  }
+  return r;
 }
 
-var AlphaBeta = function(ctx, board, move, level, alpha, beta) {
+Dagaz.AI.isMajorPiece = function(type) {
+  if (type == 0) return 0;
+  if (type == 5) return 0;
+  return 1;
+}
+
+Dagaz.AI.isRepDraw = function(board) {
+  for (var i = 0; i < Dagaz.AI.REP_DEEP; i++) {
+       if (board === null) return false;
+       var pos = board.move.actions[0][1][0];
+       board = board.parent;
+       if (board.getPiece(pos) !== null) return false;
+  }
+  return true;
+}
+
+Dagaz.AI.inCheck = function(design, board) {
+  if (_.isUndefined(board.inCheck)) {
+      // TODO:
+
+  }
+  return board.inCheck;
+}
+
+Dagaz.AI.heuristic = function(ai, design, board, move) {
   // TODO:
 
 }
 
-Ai.prototype.setContext = function(ctx, board) {
-  ctx.board = board;
-  ctx.timestamp = Date.now();
-}
+Dagaz.AI.eval = function(design, params, board, player) {
+  // TODO:
 
-Ai.prototype.getMove = function(ctx) {
-  var moves = Dagaz.AI.generate(ctx, ctx.board);
-  if (moves.length == 0) {
-      return { done: true, ai: "nothing" };
-  }
-  if (moves.length == 1) {
-      return {
-           done: true,
-           move: moves[0],
-           time: Date.now() - ctx.timestamp,
-           ai:  "once"
-      };
-  }
-  if (!_.isUndefined(Dagaz.AI.heuristic)) {
-      moves = _.chain(moves)
-       .map(function(move) {
-            return {
-               move: move,
-               weight: Dagaz.AI.heuristic(this, ctx.design, board, move)
-            };
-        }, this)
-       .filter(function(node) {
-           return node.weight >= 0;
-        })
-       .sortBy(function(node) {
-           return -node.weight;
-        })
-       .map(function(node) {
-           return node.move;
-        }).value();
-  }
-  Dagaz.AI.inProgress = true;
-  ctx.timestamp = Date.now();
-  var best = null; var alpha = -MAX_VALUE; var beta = MAX_VALUE;
-  for (var i = 0; i < moves.length; i++) {
-       if ((best !== null) && (Date.now() - ctx.timestamp > Dagaz.AI.AI_FRAME)) break;
-       var value = AlphaBeta(ctx, ctx.board, moves[i], 0, alpha, beta);
-       if (value > alpha && value < beta) {
-           alpha = value - 500;
-           beta = value + 500;
-           if (alpha < -MAX_VALUE) alpha = -MAX_VALUE;
-           if (beta > MAX_VALUE) beta = MAX_VALUE;
-       } else if (alpha != -MAX_VALUE) {
-           alpha = -MAX_VALUE;
-           beta = MAX_VALUE;
-       }
-       // TODO: best?
-
-  }
-  Dagaz.AI.inProgress = false;
-  if (best !== null) {
-      return {
-           done: true,
-           move: best,
-           time: Date.now() - ctx.timestamp,
-           ai:  "ab"
-      };
-  }
-  if (this.parent) {
-      return this.parent.getMove(ctx);
-  }
 }
 
 })();

@@ -15,23 +15,57 @@ if (!_.isUndefined(Dagaz.Controller.addSound)) {
     Dagaz.Controller.addSound(10, "../../sounds/wind.wav");
 }
 
+var canEatMan = function(design, board, pos, dir) {
+  var p = design.navigate(board.player, pos, dir);
+  if (p === null) return false;
+  var piece = board.getPiece(p);
+  if (piece === null) return false;
+  if (piece.player == board.player) return false;
+  p = design.navigate(board.player, p, dir);
+  if (p === null) return false;
+  return board.getPiece(p) === null;
+}
+
+var canEatDama = function(design, board, pos, dir) {
+  var p = design.navigate(board.player, pos, dir);
+  while (p !== null) {
+      if (board.getPiece(p) !== null) break;
+      p = design.navigate(board.player, p, dir);
+  }
+  var piece = board.getPiece(p);
+  if (piece === null) return false;
+  if (piece.player == board.player) return false;
+  p = design.navigate(board.player, p, dir);
+  if (p === null) return false;
+  return board.getPiece(p) === null;
+}
+
+var canEat = function(design, board, pos) {
+  var piece = board.getPiece(pos);
+  if (piece === null) return false;
+  if (piece.type == 0) {
+      return canEatMan(design, board, pos, 3) || 
+             canEatMan(design, board, pos, 7);
+  } else {
+      return canEatDama(design, board, pos, 3) || 
+             canEatDama(design, board, pos, 5) ||
+             canEatDama(design, board, pos, 6) ||
+             canEatDama(design, board, pos, 7);
+  }
+}
+
 var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {
-  var king  = design.getPieceType("King");
-  var kings = _.chain(design.allPositions())
-   .filter(function(pos) {
-      var piece = board.getPiece(pos);
-      if (piece === null) return false;
-      return piece.type == king;
-    })
-   .map(function(pos) {
-      var piece = board.getPiece(pos);
-      return piece.player;
-    })
-   .value();
-  if (_.indexOf(kings, player) < 0) return -1;
-  if (kings.length < 2) return 1;
+  board.generate(design);
+  if (board.moves.length == 0) {
+      for (var pos = 0; pos < 64; pos++) {
+           var piece = board.getPiece(pos);
+           if ((piece !== null) && (piece.player == board.player) && (piece.type < 2)) {
+               if (canEat(design, board, pos)) return 1;
+           }
+      }
+  }
   return checkGoals(design, board, player);
 }
 
