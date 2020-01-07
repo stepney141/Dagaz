@@ -1,4 +1,4 @@
-(function() {
+п»ї(function() {
 
 Dagaz.AI.inProgress = false;
 Dagaz.AI.AI_FRAME   = 5000;
@@ -86,7 +86,8 @@ Dagaz.AI.isCapture = function(board, move) {
   return false;
 }
 
-// TODO: В cache сохраняется только доска, а не все поля как в ab
+// TODO: Р’В cache СЃРѕС…СЂР°РЅСЏРµС‚СЃСЏ С‚РѕР»СЊРєРѕ РґРѕСЃРєР°, Р° РЅРµ РІСЃРµ РїРѕР»СЏ РєР°Рє РІ ab
+// TODO: РћС‚РґРµР»РёС‚СЊ РєСЌС€РёСЂРѕРІР°РЅРёРµ РґРѕСЃРѕРє РѕС‚ РєСЌС€РёСЂРѕРІР°РЅРёСЏ СѓР·Р»РѕРІ
 Ai.prototype.applyMove = function(ctx, board, move) {
   var b = board.apply(move);
   var node = ctx.cache[b.zSign & HASH_MASK];
@@ -100,31 +101,27 @@ Ai.prototype.applyMove = function(ctx, board, move) {
   return b;
 }
 
-// TODO: Возвращает список порождённых позиций, связанных по next
+// TODO: Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РїРѕСЂРѕР¶РґС‘РЅРЅС‹С… РїРѕР·РёС†РёР№, СЃРІСЏР·Р°РЅРЅС‹С… РїРѕ next
 Ai.prototype.getSortedMoves = function(ctx, board, best, level) {
-  // TODO:
+  // TODO: Most important inside an iterative deepening framework is to try the principal variation of the previous iteration as the leftmost path for the next iteration
+  // TODO: For captures, heuristic is capturing the last moved piece with the least valuable attacker
 
 }
 
-// TODO: Сохраняется доска, а не ход (ход доступен в board.move)
+// TODO: РЎРѕС…СЂР°РЅСЏРµС‚СЃСЏ РґРѕСЃРєР°, Р° РЅРµ С…РѕРґ (С…РѕРґ РґРѕСЃС‚СѓРїРµРЅ РІ board.move)
 Ai.prototype.store = function(ctx, value, flag, maxLevel, board, level) {
   // TODO:
 
 }
 
 Ai.prototype.see = function(ctx, board, move) {
-  // TODO:
+  // TODO: РџСЂРѕРІРµСЂРєР° РІС‹РіРѕРґРЅРѕСЃС‚Рё СЂР°Р·РјРµРЅР°
 
 }
 
 Ai.prototype.acn = function(ctx, board, maxLevel, level, beta, allowNull) {
   if (maxLevel <= 0) return this.qs(ctx, board, beta - 1, beta, 0);
-  if ((ctx.nodeCount & 127) == 127) {
-      if (Date.now() - ctx.timestamp > Dagaz.AI.AI_FRAME) {
-          Dagaz.AI.inProgress = false;
-          return beta - 1;
-      }
-  }
+  if (!Dagaz.AI.inProgress) return beta - 1;
   ctx.nodeCount++;
   if (Dagaz.AI.isRepDraw(board)) return 0;
   if (-MAX_VALUE + level >= beta) return beta;
@@ -206,7 +203,7 @@ Ai.prototype.acn = function(ctx, board, maxLevel, level, beta, allowNull) {
   return e;
 }
 
-// TODO: Для inCheck генерировать все ходы (на уровне режимов), иначе только взятия !!!
+// TODO: Р”Р»СЏ inCheck РіРµРЅРµСЂРёСЂРѕРІР°С‚СЊ РІСЃРµ С…РѕРґС‹ (РЅР° СѓСЂРѕРІРЅРµ СЂРµР¶РёРјРѕРІ), РёРЅР°С‡Рµ С‚РѕР»СЊРєРѕ РІР·СЏС‚РёСЏ !!!
 Ai.prototype.qs = function(ctx, board, alpha, beta, maxLevel) {
   ctx.qNodeCount++;
   var inCheck = Dagaz.AI.inCheck(ctx.design, board);
@@ -260,10 +257,15 @@ Ai.prototype.ab = function(ctx, board, maxLevel, level, alpha, beta) {
        if (Dagaz.AI.inCheck(ctx.design, b)) ltos++;
        var v = null;
        if (f) {
-           v = -this.acn(ctx, b, ltos, level + 1, -alpha, true);
-           if (v > alpha) {
-               v = -this.ab(ctx, b, ltos, level + 1, -beta, -alpha);
+           if ((ctx.nodeCount & 127) == 127) {
+               if (Date.now() - ctx.timestamp > Dagaz.AI.AI_FRAME) {
+                   Dagaz.AI.inProgress = false;
+               }
            }
+//         v = -this.acn(ctx, b, ltos, level + 1, -alpha, true);
+//         if (v > alpha) {
+               v = -this.ab(ctx, b, ltos, level + 1, -beta, -alpha);
+//         }
        } else {
            v = -this.ab(ctx, b, ltos, level + 1, -beta, -alpha);
        }
