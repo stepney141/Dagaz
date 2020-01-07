@@ -1,4 +1,4 @@
-п»ї(function() {
+(function() {
 
 Dagaz.AI.inProgress = false;
 Dagaz.AI.AI_FRAME   = 5000;
@@ -25,6 +25,14 @@ Dagaz.AI.findBot = function(type, params, parent) {
   }
 }
 
+Dagaz.AI.getPrice = function(design, piece, pos) {
+  return design.price[piece.type];
+}
+
+Dagaz.AI.isMajorPiece = function(type) {
+  return type > 0;
+}
+
 Ai.prototype.getBaseEval = function(ctx, board) {
   if (!_.isUndefined(board.baseEval)) {
       board.baseEval = 0;
@@ -32,8 +40,8 @@ Ai.prototype.getBaseEval = function(ctx, board) {
       _.each(ctx.design.allPositions(), function(pos) {
            var piece = board.getPiece(pos);
            if (piece === null) return;
-           var v = ctx.design.price[piece.type];
-           if (Dagaz.AI.inMajorPiece(piece.type)) {
+           var v = Dagaz.AI.getPrice(ctx.design, piece, pos);
+           if (Dagaz.AI.isMajorPiece(piece.type)) {
                board.isZugzwang = false;
            }
            if (piece.player == ctx.player) {
@@ -60,11 +68,10 @@ Ai.prototype.getMoveScore = function(ctx, board, move) {
 }
 
 Dagaz.AI.isRepDraw = function(board) {
-  // TODO:
   return false;
 }
 
-Dagaz.AI.inCheck = function(board) {
+Dagaz.AI.inCheck = function(design, board) {
   return false;
 }
 
@@ -79,7 +86,7 @@ Dagaz.AI.isCapture = function(board, move) {
   return false;
 }
 
-// TODO: Р’ cache СЃРѕС…СЂР°РЅСЏРµС‚СЃСЏ С‚РѕР»СЊРєРѕ РґРѕСЃРєР°, Р° РЅРµ РІСЃРµ РїРѕР»СЏ РєР°Рє РІ ab
+// TODO: В cache сохраняется только доска, а не все поля как в ab
 Ai.prototype.applyMove = function(ctx, board, move) {
   var b = board.apply(move);
   var node = ctx.cache[b.zSign & HASH_MASK];
@@ -93,13 +100,13 @@ Ai.prototype.applyMove = function(ctx, board, move) {
   return b;
 }
 
-// TODO: Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РїРѕСЂРѕР¶РґС‘РЅРЅС‹С… РїРѕР·РёС†РёР№, СЃРІСЏР·Р°РЅРЅС‹С… РїРѕ next
+// TODO: Возвращает список порождённых позиций, связанных по next
 Ai.prototype.getSortedMoves = function(ctx, board, best, level) {
   // TODO:
 
 }
 
-// TODO: РЎРѕС…СЂР°РЅСЏРµС‚СЃСЏ РґРѕСЃРєР°, Р° РЅРµ С…РѕРґ (С…РѕРґ РґРѕСЃС‚СѓРїРµРЅ РІ board.move)
+// TODO: Сохраняется доска, а не ход (ход доступен в board.move)
 Ai.prototype.store = function(ctx, value, flag, maxLevel, board, level) {
   // TODO:
 
@@ -135,7 +142,7 @@ Ai.prototype.acn = function(ctx, board, maxLevel, level, beta, allowNull) {
           if ((node.flag == BETA_FLAG) && (value >= beta)) return value;
       }
   }
-  if (!Dagaz.AI.inCheck(board) && allowNull && (beta > -MAX_VALUE + 2000) && (beta < MAX_VALUE - 2000)) {
+  if (!Dagaz.AI.inCheck(ctx.design, board) && allowNull && (beta > -MAX_VALUE + 2000) && (beta < MAX_VALUE - 2000)) {
       // Razoring: https://www.chessprogramming.org/Razoring
       if ((best === null) && (maxLevel < 4)) {
           var razorMargin = 2500 + 200 * maxLevel;
@@ -158,7 +165,7 @@ Ai.prototype.acn = function(ctx, board, maxLevel, level, beta, allowNull) {
   }
   var f = false;
   var e = -MAX_VALUE - 1;
-  var inCheck = Dagaz.AI.inCheck(board);
+  var inCheck = Dagaz.AI.inCheck(ctx.design, board);
   for (var b = this.getSortedMoves(ctx, board, best, level); !_.isUndefined(b); b = b.next) {
        var ltos = maxLevel - 1;
        var v = null;
@@ -199,10 +206,10 @@ Ai.prototype.acn = function(ctx, board, maxLevel, level, beta, allowNull) {
   return e;
 }
 
-// TODO: Р”Р»СЏ inCheck РіРµРЅРµСЂРёСЂРѕРІР°С‚СЊ РІСЃРµ С…РѕРґС‹ (РЅР° СѓСЂРѕРІРЅРµ СЂРµР¶РёРјРѕРІ), РёРЅР°С‡Рµ С‚РѕР»СЊРєРѕ РІР·СЏС‚РёСЏ !!!
+// TODO: Для inCheck генерировать все ходы (на уровне режимов), иначе только взятия !!!
 Ai.prototype.qs = function(ctx, board, alpha, beta, maxLevel) {
   ctx.qNodeCount++;
-  var inCheck = Dagaz.AI.inCheck(board);
+  var inCheck = Dagaz.AI.inCheck(ctx.design, board);
   var e = inCheck ? (-MAX_VALUE + 1) : this.getCompleteEval(ctx, board);
   if (e >= beta) return e;
   if (e > alpha) alpha = e;
@@ -245,12 +252,12 @@ Ai.prototype.ab = function(ctx, board, maxLevel, level, alpha, beta) {
   if (!_.isUndefined(node) && (node.lock == board.zSign)) {
       best = node.best;
   }
-  var inCheck = Dagaz.AI.inCheck(board);
+  var inCheck = Dagaz.AI.inCheck(ctx.design, board);
   var f = false;
   var e = -MAX_VALUE;
   for (var b = this.getSortedMoves(ctx, board, best, level); !_.isUndefined(b); b = b.next) {
        var ltos = maxLevel - 1;
-       if (Dagaz.AI.inCheck(b)) ltos++;
+       if (Dagaz.AI.inCheck(ctx.design, b)) ltos++;
        var v = null;
        if (f) {
            v = -this.acn(ctx, b, ltos, level + 1, -alpha, true);
