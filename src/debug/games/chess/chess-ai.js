@@ -79,6 +79,12 @@ Dagaz.AI.isRepDraw = function(board) {
   return true;
 }
 
+Dagaz.AI.see = function(design, board, move) {
+  // TODO:
+
+  return true;
+}
+
 Dagaz.AI.inCheck = function(design, board) {
   if (_.isUndefined(board.inCheck)) {
       // TODO:
