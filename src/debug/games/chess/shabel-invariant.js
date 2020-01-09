@@ -45,6 +45,8 @@ var canEat = function(design, board, pos) {
   if (piece === null) return false;
   if (piece.type == 0) {
       return canEatMan(design, board, pos, 3) || 
+             canEatMan(design, board, pos, 5) ||
+             canEatMan(design, board, pos, 6) ||
              canEatMan(design, board, pos, 7);
   } else {
       return canEatDama(design, board, pos, 3) || 

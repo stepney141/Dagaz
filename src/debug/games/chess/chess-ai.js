@@ -1,6 +1,6 @@
 (function() {
 
-Dagaz.AI.REP_DEEP = 10;
+Dagaz.AI.REP_DEEP = 30;
 
 var penalty = [
   [   0,   0,   0,   0,   0,   0,   0,   0,
@@ -71,7 +71,7 @@ Dagaz.AI.isMajorPiece = function(type) {
 
 Dagaz.AI.isRepDraw = function(board) {
   for (var i = 0; i < Dagaz.AI.REP_DEEP; i++) {
-       if (board === null) return false;
+       if (board.parent === null) return false;
        var pos = board.move.actions[0][1][0];
        board = board.parent;
        if (board.getPiece(pos) !== null) return false;

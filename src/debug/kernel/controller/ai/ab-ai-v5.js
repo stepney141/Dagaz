@@ -130,20 +130,20 @@ function MovePicker(ctx, board, best) {
           if (!move.isSimpleMove()) return;
           if (move.actions[0][1][0] != pos) return;
           var b = applyMove(ctx, board, move);
-          if (b.zSign == best.zSign) return;
+          if ((best !== null) && (b.zSign == best.zSign)) return;
           this.list.push(b);
           done.push(b.zSign);
-      });
+      }, this);
   }
   _.each(board.moves, function(move) {
       var b = applyMove(ctx, board, move);
       if (_.indexOf(done, b.zSign) >= 0) return;
       this.list.push(b);
-  });
+  }, this);
 }
 
 Ai.prototype.acn = function(ctx, board, maxLevel, level, beta, allowNull) {
-  if (maxLevel <= 0) return this.qs(ctx, board, beta - 1, beta, 0);
+  if (maxLevel <= 0) return this.qs(ctx, board, beta - 1, beta, 0, level);
   if (!Dagaz.AI.inProgress) return beta - 1;
   ctx.nodeCount++;
   if (Dagaz.AI.isRepDraw(board)) return 0;
@@ -168,7 +168,7 @@ Ai.prototype.acn = function(ctx, board, maxLevel, level, beta, allowNull) {
           var razorMargin = 2500 + 200 * maxLevel;
           if (this.getBaseEval(ctx, board) < beta - razorMargin) {
               var razorBeta = beta - razorMargin;
-              var v = this.qs(ctx, board, razorBeta - 1, razorBeta, 0);
+              var v = this.qs(ctx, board, razorBeta - 1, razorBeta, 0, level);
               if (v < razorBeta) return v;
           }
       }
@@ -228,8 +228,9 @@ Ai.prototype.acn = function(ctx, board, maxLevel, level, beta, allowNull) {
   return e;
 }
 
-Ai.prototype.qs = function(ctx, board, alpha, beta, maxLevel) {
+Ai.prototype.qs = function(ctx, board, alpha, beta, maxLevel, level) {
   ctx.qNodeCount++;
+  if (level > ctx.qLevel) ctx.qLevel = level;
   var inCheck = Dagaz.AI.inCheck(ctx.design, board);
   var e = inCheck ? (-MAX_VALUE + 1) : this.getCompleteEval(ctx, board);
   if (e >= beta) return e;
@@ -249,7 +250,7 @@ Ai.prototype.qs = function(ctx, board, alpha, beta, maxLevel) {
   for (var i = 0; i < moves.length; i++) {
      if (!inCheck && !Dagaz.AI.see(ctx.design, board, moves[i])) continue;
      var b = applyMove(ctx, board, moves[i]);
-     var v = -this.qs(ctx, b, -beta, -alpha, maxLevel - 1);
+     var v = -this.qs(ctx, b, -beta, -alpha, maxLevel - 1, level + 1);
      if (v > e) {
          if (v >= beta) return v;
          if (v > alpha) alpha = v;
@@ -260,8 +261,12 @@ Ai.prototype.qs = function(ctx, board, alpha, beta, maxLevel) {
 }
 
 Ai.prototype.ab = function(ctx, board, maxLevel, level, alpha, beta) {
-  if (maxLevel <= 0) return this.qs(ctx, board, alpha, beta, 0);
+  if (maxLevel <= 0) {
+      ctx.tNodeCount++;
+      return this.qs(ctx, board, alpha, beta, 0, level);
+  }
   ctx.nodeCount++;
+  if (level > ctx.mLevel) ctx.mLevel = level;
   if ((level > 0) && Dagaz.AI.isRepDraw(board)) return 0;
   // Mate distance pruning
   var oa = alpha;
@@ -328,6 +333,9 @@ Ai.prototype.setContext = function(ctx, board) {
   ctx.timestamp  = Date.now();
   ctx.nodeCount  = 0;
   ctx.qNodeCount = 0;
+  ctx.tNodeCount = 0;
+  ctx.mLevel     = 0;
+  ctx.qLevel     = 0;
   if (_.isUndefined(ctx.cache)) {
       ctx.cache = [];
   }
@@ -364,13 +372,14 @@ Ai.prototype.getMove = function(ctx) {
            beta = MAX_VALUE;
            i--;
        }
-       var node = ctx.cache[board.zSign & HASH_MASK];
-       if (!_.isUndefined(node) && (node.lock == board.zSign)) {
+       var node = ctx.cache[ctx.board.zSign & HASH_MASK];
+       if (!_.isUndefined(node) && (node.lock == ctx.board.zSign)) {
            ctx.best = node.best.move;
        }
   }
   Dagaz.AI.inProgress = false;
   if (ctx.best !== null) {
+      console.log("AB: " + ctx.best.toString() + ", A=" + alpha + ", B=" + beta + ", N=" + ctx.nodeCount + ", Q=" + ctx.qNodeCount + ", T=" + ctx.tNodeCount + ", L=" + ctx.mLevel + ", D=" + ctx.qLevel);
       return {
            done: true,
            move: ctx.best,
