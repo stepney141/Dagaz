@@ -33,6 +33,24 @@ Dagaz.AI.isMajorPiece = function(type) {
   return type > 0;
 }
 
+var checkGoal = function(ctx, board) {
+  if (_.isUndefined(board.goal)) {
+      board.goal = Dagaz.Model.checkGoals(ctx.design, board, board.player);
+  }
+  return board.goal;
+}
+
+var generate = function(ctx, board) {
+  if (_.isUndefined(board.moves)) {
+      if (checkGoal(ctx, board) === null) {
+         board.moves = Dagaz.AI.generate(ctx, board);
+      } else {
+         board.moves = [];
+      }
+  }
+  return board.moves;
+}
+
 Ai.prototype.getBaseEval = function(ctx, board) {
   if (!_.isUndefined(board.baseEval)) {
       board.baseEval = 0;
@@ -117,9 +135,8 @@ Ai.prototype.store = function(ctx, board, value, flag, maxLevel, best) {
 }
 
 function MovePicker(ctx, board, best) {
-  this.list = [];
-  board.moves = Dagaz.AI.generate(ctx, board);
-  var done = [];
+  this.list = []; var done = [];
+  board.moves = generate(ctx, board); 
   if (best !== null) {
       this.list.push(best);
       done.push(best.zSign);
@@ -235,7 +252,7 @@ Ai.prototype.qs = function(ctx, board, alpha, beta, maxLevel, level) {
   var e = inCheck ? (-MAX_VALUE + 1) : this.getCompleteEval(ctx, board);
   if (e >= beta) return e;
   if (e > alpha) alpha = e;
-  board.moves = Dagaz.AI.generate(ctx, board);
+  board.moves = generate(ctx, board); 
   var moves = [];
   _.each(board.moves, function(move) {
       if (inCheck || Dagaz.AI.isCapture(board, move)) moves.push(move);
@@ -266,6 +283,11 @@ Ai.prototype.ab = function(ctx, board, maxLevel, level, alpha, beta) {
       return this.qs(ctx, board, alpha, beta, 0, level);
   }
   ctx.nodeCount++;
+  var g = checkGoal(ctx, board);
+  if (g !== null) {
+      ctx.tNodeCount++;
+      return this.qs(ctx, board, alpha, beta, 0, level);
+  }
   if (level > ctx.mLevel) ctx.mLevel = level;
   if ((level > 0) && Dagaz.AI.isRepDraw(board)) return 0;
   // Mate distance pruning
@@ -336,9 +358,9 @@ Ai.prototype.setContext = function(ctx, board) {
   ctx.tNodeCount = 0;
   ctx.mLevel     = 0;
   ctx.qLevel     = 0;
-  if (_.isUndefined(ctx.cache)) {
+//if (_.isUndefined(ctx.cache)) {
       ctx.cache = [];
-  }
+//}
 }
 
 Ai.prototype.getMove = function(ctx) {
@@ -353,6 +375,16 @@ Ai.prototype.getMove = function(ctx) {
            time: Date.now() - ctx.timestamp,
            ai:  "once"
       };
+  }
+  for (var i = 0; i < ctx.board.moves.length; i++) {
+       var b = ctx.board.apply(ctx.board.moves[i]);
+       if (Dagaz.Model.checkGoals(ctx.design, b, ctx.board.player) > 0)
+           return {
+               done: true,
+               move: ctx.board.moves[i],
+               time: Date.now() - ctx.timestamp,
+               ai:  "goal"
+           };
   }
   ctx.timestamp = Date.now();
   ctx.best = null;
