@@ -51,12 +51,11 @@ var attackerPenalty = function(design, board, pos, player, dir, n) {
   p = design.navigate(player, p, n);
   if (p === null) return 0;
   var piece = board.getPiece(p);
-  while (piece === null) {
+  while ((piece === null) || (piece.player == player))  {
       p = design.navigate(player, p, n);
       if (p === null) return 0;
       piece = board.getPiece(p);
   }
-  if (piece.player == player) return 0;
   return 200;
 }
 
@@ -84,6 +83,7 @@ Dagaz.AI.eval = function(design, params, board, player) {
       v -= lockedPenalty(design, board, pos, piece.player, 4);
       v -= attackerPenalty(design, board, pos, piece.player, 0, 4);
       v -= attackerPenalty(design, board, pos, piece.player, 1, 4);
+      if (v == Dagaz.AI.getPrice(design, piece, pos)) v += 10000;
       v += defenderBonus(design, board, pos, piece.player, 0, 2);
       v += defenderBonus(design, board, pos, piece.player, 1, 2);
       if (piece.player == player) {

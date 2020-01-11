@@ -15,10 +15,7 @@ Dagaz.Model.checkGoals = function(design, board, player) {
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
       if (piece === null) return;
-      if (piece.type == 0) {
-          if (piece.player != player) c++;
-          return;
-      }
+      if (piece.type == 0) return;
       if (piece.player == player) {
           f++;
       } else {
@@ -27,11 +24,6 @@ Dagaz.Model.checkGoals = function(design, board, player) {
   });
   if (e > 0) return -1;
   if (f > 0) return 1;
-  board.generate(design);
-  if (board.moves.length == 0) {
-      if (c > 0) return 0;
-      return 1;
-  }
   return checkGoals(design, board, player);
 }
 

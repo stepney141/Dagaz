@@ -4,6 +4,7 @@ Dagaz.AI.inProgress = false;
 Dagaz.AI.AI_FRAME   = 5000;
 Dagaz.AI.IDLE_FRAME = 1000;
 
+var MAX_LEVEL = 25;
 var MAX_VALUE = 2000000;
 var HASH_MASK = (1 << 22) - 1;
 
@@ -18,7 +19,7 @@ function Ai(parent) {
 var findBot = Dagaz.AI.findBot;
 
 Dagaz.AI.findBot = function(type, params, parent) {
-  if ((type == "ab") || (type == "common") || (type == "1") || (type == "2")) {
+  if ((type == "ab") || (type == "common") || (type == "1") /*|| (type == "2")*/) {
       return new Ai(parent);
   } else {
       return findBot(type, params, parent);
@@ -121,7 +122,7 @@ var applyMove = function(ctx, board, move) {
   return b;
 }
 
-Ai.prototype.store = function(ctx, board, value, flag, maxLevel, best) {
+Ai.prototype.store = function(ctx, board, value, flag, maxLevel, best, level) {
   if (value >= MAX_VALUE - 2000) value += level;
   else if (value <= -MAX_VALUE + 2000) value -= level;
   ctx.cache[board.zSign & HASH_MASK] = {
@@ -203,6 +204,8 @@ Ai.prototype.acn = function(ctx, board, maxLevel, level, beta, allowNull) {
   var f = false;
   var e = -MAX_VALUE - 1;
   var inCheck = Dagaz.AI.inCheck(ctx.design, board);
+  var g = checkGoal(ctx, board);
+  if ((g !== null) && (g < 0)) inCheck = true;
   var m = new MovePicker(ctx, board, best);
   for (var i = 0; i < m.list.length; i++) {
        var b = m.list[i];
@@ -226,7 +229,7 @@ Ai.prototype.acn = function(ctx, board, maxLevel, level, beta, allowNull) {
        if (!Dagaz.AI.inProgress) return beta - 1;
        if (v > e) {
            if (v >= beta) {
-               this.store(ctx, board, v, BETA_FLAG, maxLevel, b);
+               this.store(ctx, board, v, BETA_FLAG, maxLevel, b, level);
                return v;
            }
            e = v;
@@ -241,14 +244,17 @@ Ai.prototype.acn = function(ctx, board, maxLevel, level, beta, allowNull) {
           // Stalemate
           return 0;
   }
-  this.store(ctx, board, e, ALPHA_FLAG, maxLevel, best);
+  this.store(ctx, board, e, ALPHA_FLAG, maxLevel, best, level);
   return e;
 }
 
 Ai.prototype.qs = function(ctx, board, alpha, beta, maxLevel, level) {
+  if (level > MAX_LEVEL) return 0;
   ctx.qNodeCount++;
   if (level > ctx.qLevel) ctx.qLevel = level;
   var inCheck = Dagaz.AI.inCheck(ctx.design, board);
+  var g = checkGoal(ctx, board);
+  if ((g !== null) && (g < 0)) inCheck = true;
   var e = inCheck ? (-MAX_VALUE + 1) : this.getCompleteEval(ctx, board);
   if (e >= beta) return e;
   if (e > alpha) alpha = e;
@@ -283,11 +289,11 @@ Ai.prototype.ab = function(ctx, board, maxLevel, level, alpha, beta) {
       return this.qs(ctx, board, alpha, beta, 0, level);
   }
   ctx.nodeCount++;
-  var g = checkGoal(ctx, board);
+/*var g = checkGoal(ctx, board);
   if (g !== null) {
       ctx.tNodeCount++;
       return this.qs(ctx, board, alpha, beta, 0, level);
-  }
+  }*/
   if (level > ctx.mLevel) ctx.mLevel = level;
   if ((level > 0) && Dagaz.AI.isRepDraw(board)) return 0;
   // Mate distance pruning
@@ -302,6 +308,8 @@ Ai.prototype.ab = function(ctx, board, maxLevel, level, alpha, beta) {
       best = node.best;
   }
   var inCheck = Dagaz.AI.inCheck(ctx.design, board);
+  var g = checkGoal(ctx, board);
+  if ((g !== null) && (g < 0)) inCheck = true;
   var f = false;
   var e = -MAX_VALUE;
   var m = new MovePicker(ctx, board, best);
@@ -327,7 +335,7 @@ Ai.prototype.ab = function(ctx, board, maxLevel, level, alpha, beta) {
        if (!Dagaz.AI.inProgress) return alpha;
        if (v > e) {
            if (v >= beta) {
-               this.store(ctx, board, v, BETA_FLAG, maxLevel, b);
+               this.store(ctx, board, v, BETA_FLAG, maxLevel, b, level);
                return v;
            }
            if (v > oa) {
@@ -346,7 +354,7 @@ Ai.prototype.ab = function(ctx, board, maxLevel, level, alpha, beta) {
            // Stalemate
            return 0;
   }
-  this.store(ctx, board, e, flag, maxLevel, best);
+  this.store(ctx, board, e, flag, maxLevel, best, level);
   return e;
 }
 
