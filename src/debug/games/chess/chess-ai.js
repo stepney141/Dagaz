@@ -1,5 +1,6 @@
 (function() {
 
+Dagaz.AI.AI_FRAME = 5000;
 Dagaz.AI.REP_DEEP = 30;
 
 var penalty = [
@@ -69,7 +70,8 @@ Dagaz.AI.isMajorPiece = function(type) {
   return 1;
 }
 
-Dagaz.AI.isRepDraw = function(board) {
+// TODO: Ko
+/*Dagaz.AI.isRepDraw = function(board) {
   for (var i = 0; i < Dagaz.AI.REP_DEEP; i++) {
        if (board.parent === null) return false;
        var pos = board.move.actions[0][1][0];
@@ -77,30 +79,104 @@ Dagaz.AI.isRepDraw = function(board) {
        if (board.getPiece(pos) !== null) return false;
   }
   return true;
-}
+}*/
 
 Dagaz.AI.see = function(design, board, move) {
   // TODO:
-
   return true;
 }
 
-Dagaz.AI.inCheck = function(design, board) {
-  if (_.isUndefined(board.inCheck)) {
-      // TODO:
+var checkStep = function(design, board, player, pos, dir) {
+  var p = design.navigate(player, pos, dir);
+  if  (p === null) return false;
+  var piece = board.getPiece(p);
+  if (piece === null) return false;
+  if (piece.player == player) return false;
+  if (piece.type != 0) return false;
+  return true;
+}
 
+var checkSlide = function(design, board, player, pos, dir) {
+  var p = design.navigate(player, pos, dir);
+  if  (p === null) return false;
+  var piece = board.getPiece(p);
+  while (piece === null) {
+      p = design.navigate(player, p, dir);
+      if  (p === null) return false;
+      piece = board.getPiece(p);
+  }
+  if (piece.player == player) return false;
+  if (piece.type != 4) return false;
+  return true;
+}
+
+// TODO: cover
+// TODO: X-Ray атаки
+/*Dagaz.AI.inCheck = function(design, board) {
+  if (_.isUndefined(board.inCheck)) {
+      board.inCheck = false;
+      var king = null;
+      for (var pos = 0; pos < design.positions.length; pos++) {
+          var piece = board.getPiece(pos);
+          if ((piece !== null) && (piece.player == board.player) && (piece.type == 5)) {
+              if (king !== null) return false;
+              king = pos;
+          }
+      }
+      if (king === null) return false;
+      board.inCheck = checkStep(design, board, board.player, king, 3) ||
+                      checkStep(design, board, board.player, king, 7) ||
+                      checkSlide(design, board, board.player, king, 0) ||
+                      checkSlide(design, board, board.player, king, 1) ||
+                      checkSlide(design, board, board.player, king, 2) ||
+                      checkSlide(design, board, board.player, king, 3) ||
+                      checkSlide(design, board, board.player, king, 4) ||
+                      checkSlide(design, board, board.player, king, 5) ||
+                      checkSlide(design, board, board.player, king, 6) ||
+                      checkSlide(design, board, board.player, king, 7);
   }
   return board.inCheck;
-}
+}*/
 
 Dagaz.AI.heuristic = function(ai, design, board, move) {
-  // TODO:
-
+  var r = 1;
+  if (move.isSimpleMove()) {
+      var pos = move.actions[0][1][0];
+      var piece = board.getPiece(pos);
+      if (piece !== null) {
+          r += Dagaz.AI.getPrice(design, piece, pos);
+          piece = move.actions[0][2][0];
+          r += (Dagaz.AI.getPrice(design, piece, pos) / 2) | 0;
+          pos = move.actions[0][0][0];
+          piece = board.getPiece(pos);
+          if (piece !== null) {
+              r -= Dagaz.AI.getPrice(design, piece, pos);
+          }
+      }
+  }
+  return r;
 }
 
+// TODO: Mobility
 Dagaz.AI.eval = function(design, params, board, player) {
-  // TODO:
-
+  if (!_.isUndefined(board.completeEval)) {
+      board.completeEval = 0;
+      _.each(ctx.design.allPositions(), function(pos) {
+           var piece = board.getPiece(pos);
+           if (piece === null) return;
+           var v = Dagaz.AI.getPrice(design, piece, pos);
+           if (piece.player == board.player) {
+               board.baseEval += v;
+           } else {
+               board.baseEval -= v;
+           }
+      });
+  }
+  if (board.player == player) {
+      return board.completeEval;
+  } else {
+      return -board.completeEval;
+  }
 }
 
 })();
