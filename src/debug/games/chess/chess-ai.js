@@ -1,6 +1,6 @@
 (function() {
 
-Dagaz.AI.AI_FRAME = 5000;
+Dagaz.AI.AI_FRAME = 3000;
 Dagaz.AI.REP_DEEP = 30;
 
 var penalty = [
@@ -65,9 +65,9 @@ Dagaz.AI.getPrice = function(design, piece, pos) {
 }
 
 Dagaz.AI.isMajorPiece = function(type) {
-  if (type == 0) return 0;
-  if (type == 5) return 0;
-  return 1;
+  if (type == 0) return false;
+  if (type == 5) return false;
+  return true;
 }
 
 // TODO: Ko
@@ -159,16 +159,16 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
 
 // TODO: Mobility
 Dagaz.AI.eval = function(design, params, board, player) {
-  if (!_.isUndefined(board.completeEval)) {
+  if (_.isUndefined(board.completeEval)) {
       board.completeEval = 0;
-      _.each(ctx.design.allPositions(), function(pos) {
+      _.each(design.allPositions(), function(pos) {
            var piece = board.getPiece(pos);
            if (piece === null) return;
            var v = Dagaz.AI.getPrice(design, piece, pos);
            if (piece.player == board.player) {
-               board.baseEval += v;
+               board.completeEval += v;
            } else {
-               board.baseEval -= v;
+               board.completeEval -= v;
            }
       });
   }
