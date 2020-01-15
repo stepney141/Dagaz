@@ -1,8 +1,10 @@
 (function() {
 
-Dagaz.AI.inProgress = false;
-Dagaz.AI.AI_FRAME   = 5000;
-Dagaz.AI.IDLE_FRAME = 1000;
+Dagaz.AI.inProgress   = false;
+Dagaz.AI.AI_FRAME     = 5000;
+Dagaz.AI.IDLE_FRAME   = 1000;
+Dagaz.AI.START_DEEP   = 1;
+Dagaz.AI.NOISE_FACTOR = 10;
 
 var MAX_LEVEL = 25;
 var MAX_VALUE = 2000000;
@@ -125,6 +127,7 @@ var applyMove = function(ctx, board, move) {
 Ai.prototype.store = function(ctx, board, value, flag, maxLevel, best, level) {
   if (value >= MAX_VALUE - 2000) value += level;
   else if (value <= -MAX_VALUE + 2000) value -= level;
+//board.move.weight = value;
   ctx.cache[board.zSign & HASH_MASK] = {
       lock:  board.zSign,
       board: board,
@@ -384,7 +387,7 @@ Ai.prototype.getMove = function(ctx) {
            ai:  "once"
       };
   }
-/*for (var i = 0; i < ctx.board.moves.length; i++) {
+  for (var i = 0; i < ctx.board.moves.length; i++) {
        var b = ctx.board.apply(ctx.board.moves[i]);
        if (Dagaz.Model.checkGoals(ctx.design, b, ctx.board.player) > 0)
            return {
@@ -393,13 +396,13 @@ Ai.prototype.getMove = function(ctx) {
                time: Date.now() - ctx.timestamp,
                ai:  "goal"
            };
-  }*/
+  }
   ctx.timestamp = Date.now();
   ctx.best = null;
   Dagaz.AI.inProgress = true;
   var alpha = -MAX_VALUE;
   var beta = MAX_VALUE;
-  for (var i = 1; (i < 100) && Dagaz.AI.inProgress; i++) {
+  for (var i = Dagaz.AI.START_DEEP; (i < 100) && Dagaz.AI.inProgress; i++) {
        var v = this.ab(ctx, ctx.board, i, 0, alpha, beta);
        if (!Dagaz.AI.inProgress) break;
        if ((v > alpha) && (v < beta)) {
@@ -418,6 +421,28 @@ Ai.prototype.getMove = function(ctx) {
        }
   }
   Dagaz.AI.inProgress = false;
+/*var best = null; var mx = null;
+  for (var i = 0; i < ctx.board.moves.length; i++) {
+      if (_.isUndefined(ctx.board.moves[i].weight)) continue;
+      console.log("AB: " + ctx.board.moves[i].toString() + ", W=" + ctx.board.moves[i].weight);
+      var w = ctx.board.moves[i].weight;
+      if (Dagaz.AI.NOISE_FACTOR > 1) {
+          w *= Dagaz.AI.NOISE_FACTOR;
+          w += _.random(0, Dagaz.AI.NOISE_FACTOR - 1);
+      }
+      if ((best === null) || (w < mx)) {
+          best = ctx.board.moves[i];
+          mx = w;
+      }
+  }
+  if (best !== null) {
+      return {
+           done: true,
+           move: best,
+           time: Date.now() - ctx.timestamp,
+           ai:  "ab"
+      };
+  }*/
   if (ctx.best !== null) {
       console.log("AB: " + ctx.best.toString() + ", A=" + alpha + ", B=" + beta + ", N=" + ctx.nodeCount + ", Q=" + ctx.qNodeCount + ", T=" + ctx.tNodeCount + ", L=" + ctx.mLevel + ", D=" + ctx.qLevel);
       return {

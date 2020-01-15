@@ -1,22 +1,20 @@
 (function() {
 
-Dagaz.AI.AI_FRAME   = 3000;
-Dagaz.AI.REP_DEEP   = 10;
+Dagaz.AI.AI_FRAME = 2000;
+Dagaz.AI.REP_DEEP = 10;
 
 var penalty = 
-  [   0,   0,   0,   0,   0,   0,
-    -25, 105, 135, 135, 105, -25,
-    -80,   0,  30,  30,   0, -80,
-    -85,  -5,  25,  25,  -5, -85,
-    -90, -10,  20,  20, -10, -90,
-    -95, -15,  15,  15, -15, -95 ];
+  [   0,   0,   0,   0,   0,
+    -25, 105, 135, 105, -25,
+    -80,   0,  30,   0, -80,
+    -85,  -5,  25,  -5, -85 ];
 
 Dagaz.AI.getPrice = function(design, piece, pos) {
   var r = design.price[piece.type];
   if (piece.player == 1) {
       r += penalty[pos];
   } else {
-      r += penalty[35 - pos];
+      r += penalty[19 - pos];
   }
   return r;
 }

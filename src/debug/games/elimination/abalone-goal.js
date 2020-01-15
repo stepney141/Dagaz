@@ -64,11 +64,10 @@ Dagaz.AI.eval = function(design, params, board, player) {
 var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {
-  var enemies = 0;
-  var friends = 0;
+  var enemies = 0; var friends = 0;
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
-      if ((piece !== null) && (piece.type == 0)) {
+      if ((piece !== null) && (piece.type == 1)) {
           if (piece.player != player) {
               enemies++;
           } else {
@@ -76,11 +75,11 @@ Dagaz.Model.checkGoals = function(design, board, player) {
           }
       }
   });
-  if (enemies < 9) {
-      return 1;
-  }
-  if (friends < 9) {
+  if (enemies > 5) {
       return -1;
+  }
+  if (friends > 5) {
+      return 1;
   }
   return checkGoals(design, board, player);
 }

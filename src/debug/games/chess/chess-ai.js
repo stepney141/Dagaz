@@ -1,6 +1,6 @@
 (function() {
 
-Dagaz.AI.AI_FRAME = 3000;
+Dagaz.AI.AI_FRAME = 2000;
 Dagaz.AI.REP_DEEP = 30;
 
 var penalty = [
@@ -70,19 +70,27 @@ Dagaz.AI.isMajorPiece = function(type) {
   return true;
 }
 
-// TODO: Ko
-/*Dagaz.AI.isRepDraw = function(board) {
+var getTarget = function(move) {
+  for (var i = 0; i < move.actions.length; i++) {
+       if (move.actions[i][0] !== null) {
+           var pos = move.actions[i][0][0];
+           if (move.actions[i][1] === null) return pos;
+           return move.actions[i][1][0];
+       }
+  }
+  return null;
+}
+
+Dagaz.AI.isRepDraw = function(board) {
+  var z = board.zSign;
   for (var i = 0; i < Dagaz.AI.REP_DEEP; i++) {
        if (board.parent === null) return false;
-       var pos = board.move.actions[0][1][0];
+       var pos = getTarget(board.move);
        board = board.parent;
+       if (board.zSign == z) return true;
+       if (pos === null) continue;
        if (board.getPiece(pos) !== null) return false;
   }
-  return true;
-}*/
-
-Dagaz.AI.see = function(design, board, move) {
-  // TODO:
   return true;
 }
 
@@ -110,8 +118,31 @@ var checkSlide = function(design, board, player, pos, dir) {
   return true;
 }
 
+Dagaz.AI.see = function(design, board, move) {
+  if (!move.isSimpleMove()) return false;
+  var pos = move.actions[0][0][0];
+  var piece = board.getPiece(pos);
+  if (piece === null) return false;
+  if (piece.type == 0) return true;
+  pos = move.actions[0][1][0];
+  piece = board.getPiece(pos);
+  if (piece === null) return false;
+  if (checkStep(design, board, board.player, pos, 3)) return false;
+  if (checkStep(design, board, board.player, pos, 7)) return false;
+  if (checkSlide(design, board, board.player, pos, 0)) return false;
+  if (checkSlide(design, board, board.player, pos, 1)) return false;
+  if (checkSlide(design, board, board.player, pos, 2)) return false;
+  if (checkSlide(design, board, board.player, pos, 3)) return false;
+  if (checkSlide(design, board, board.player, pos, 4)) return false;
+  if (checkSlide(design, board, board.player, pos, 5)) return false;
+  if (checkSlide(design, board, board.player, pos, 6)) return false;
+  if (checkSlide(design, board, board.player, pos, 7)) return false;
+  return true;
+}
+
 // TODO: cover
 // TODO: X-Ray атаки
+// Dunsany's Chess зависает в qs при возможной атаке на короля
 /*Dagaz.AI.inCheck = function(design, board) {
   if (_.isUndefined(board.inCheck)) {
       board.inCheck = false;
