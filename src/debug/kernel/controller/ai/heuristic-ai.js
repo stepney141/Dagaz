@@ -13,7 +13,7 @@ function Ai(params, parent) {
 var findBot = Dagaz.AI.findBot;
 
 Dagaz.AI.findBot = function(type, params, parent) {
-  if ((type == "heuristic") || (type == "common") || (type == "1") || (type == "2")) {
+  if ((type == "heuristic") || (type == "common") || (type == "1") /*|| (type == "2")*/) {
       return new Ai(params, parent);
   } else {
       return findBot(type, params, parent);
