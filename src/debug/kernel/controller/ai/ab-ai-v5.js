@@ -5,6 +5,7 @@ Dagaz.AI.AI_FRAME     = 5000;
 Dagaz.AI.IDLE_FRAME   = 1000;
 Dagaz.AI.START_DEEP   = 1;
 Dagaz.AI.NOISE_FACTOR = 0;
+Dagaz.AI.MAX_QS_LEVEL = 1;
 
 var MAX_LEVEL = 25;
 var MAX_VALUE = 2000000;
@@ -21,7 +22,7 @@ function Ai(parent) {
 var findBot = Dagaz.AI.findBot;
 
 Dagaz.AI.findBot = function(type, params, parent) {
-  if ((type == "ab") || (type == "common") /*|| (type == "1")*/ || (type == "2")) {
+  if ((type == "ab") || (type == "common") || (type == "1") /*|| (type == "2")*/) {
       return new Ai(parent);
   } else {
       return findBot(type, params, parent);
@@ -127,7 +128,6 @@ var applyMove = function(ctx, board, move) {
 Ai.prototype.store = function(ctx, board, value, flag, maxLevel, best, level) {
   if (value >= MAX_VALUE - 2000) value += level;
   else if (value <= -MAX_VALUE + 2000) value -= level;
-//board.move.weight = value;
   ctx.cache[board.zSign & HASH_MASK] = {
       lock:  board.zSign,
       board: board,
@@ -285,6 +285,7 @@ Ai.prototype.qs = function(ctx, board, alpha, beta, maxLevel, level) {
   var e = inCheck ? (-MAX_VALUE + 1) : this.getCompleteEval(ctx, board);
   if (e >= beta) return e;
   if (e > alpha) alpha = e;
+  if (maxLevel < -Dagaz.AI.MAX_QS_LEVEL) return e;
   board.moves = generate(ctx, board); 
   var moves = [];
   _.each(board.moves, function(move) {
@@ -311,16 +312,11 @@ Ai.prototype.qs = function(ctx, board, alpha, beta, maxLevel, level) {
 }
 
 Ai.prototype.ab = function(ctx, board, maxLevel, level, alpha, beta) {
-  if (maxLevel <= 0) {
+  if ((maxLevel <= 0) || (level > MAX_LEVEL - 2)) {
       ctx.tNodeCount++;
       return this.qs(ctx, board, alpha, beta, 0, level);
   }
   ctx.nodeCount++;
-/*var g = checkGoal(ctx, board);
-  if (g !== null) {
-      ctx.tNodeCount++;
-      return this.qs(ctx, board, alpha, beta, 0, level);
-  }*/
   if (level > ctx.mLevel) ctx.mLevel = level;
   if ((level > 0) && Dagaz.AI.isRepDraw(board)) return 0;
   // Mate distance pruning
@@ -445,28 +441,6 @@ Ai.prototype.getMove = function(ctx) {
        }
   }
   Dagaz.AI.inProgress = false;
-/*var best = null; var mx = null;
-  for (var i = 0; i < ctx.board.moves.length; i++) {
-      if (_.isUndefined(ctx.board.moves[i].weight)) continue;
-      console.log("AB: " + ctx.board.moves[i].toString() + ", W=" + ctx.board.moves[i].weight);
-      var w = ctx.board.moves[i].weight;
-      if (Dagaz.AI.NOISE_FACTOR > 1) {
-          w *= Dagaz.AI.NOISE_FACTOR;
-          w += _.random(0, Dagaz.AI.NOISE_FACTOR - 1);
-      }
-      if ((best === null) || (w < mx)) {
-          best = ctx.board.moves[i];
-          mx = w;
-      }
-  }
-  if (best !== null) {
-      return {
-           done: true,
-           move: best,
-           time: Date.now() - ctx.timestamp,
-           ai:  "ab"
-      };
-  }*/
   if (ctx.best !== null) {
       console.log("AB: " + ctx.best.toString() + ", A=" + alpha + ", B=" + beta + ", N=" + ctx.nodeCount + ", Q=" + ctx.qNodeCount + ", T=" + ctx.tNodeCount + ", L=" + ctx.mLevel + ", D=" + ctx.qLevel);
       return {

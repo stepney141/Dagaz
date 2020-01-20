@@ -21,20 +21,20 @@ ZRF = {
 
 Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
-    design.checkVersion("smart-moves", "true");
+    design.checkVersion("smart-moves", "false");
     design.checkVersion("animate-captures", "false");
     design.checkVersion("show-hints", "false");
+    design.checkVersion("show-blink", "false");
     design.checkVersion("ko", "situation");
-    design.checkVersion("xiangqi-extension", "true");
 
-    design.addDirection("w");
-    design.addDirection("e");
-    design.addDirection("s");
-    design.addDirection("ne");
-    design.addDirection("n");
-    design.addDirection("se");
-    design.addDirection("sw");
-    design.addDirection("nw");
+    design.addDirection("w");  // 0
+    design.addDirection("e");  // 1
+    design.addDirection("s");  // 2
+    design.addDirection("ne"); // 3
+    design.addDirection("n");  // 4
+    design.addDirection("se"); // 5
+    design.addDirection("sw"); // 6
+    design.addDirection("nw"); // 7
 
     design.addPlayer("Red", [1, 0, 4, 6, 2, 7, 3, 5]);
     design.addPlayer("Black", [1, 0, 4, 6, 2, 7, 3, 5]);
@@ -195,12 +195,12 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(6, ZRF.FUNCTION,	25);	// to
     design.addCommand(6, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("Soldier", 0, 1);
+    design.addPiece("Soldier", 0, 800);
     design.addMove(0, 0, [4], 0);
     design.addMove(0, 1, [0], 0);
     design.addMove(0, 1, [1], 0);
 
-    design.addPiece("Horse", 1, 4);
+    design.addPiece("Horse", 1, 3000);
     design.addMove(1, 2, [4, 7], 0);
     design.addMove(1, 2, [4, 3], 0);
     design.addMove(1, 2, [2, 6], 0);
@@ -210,25 +210,25 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(1, 2, [0, 6], 0);
     design.addMove(1, 2, [1, 5], 0);
 
-    design.addPiece("Chariot", 3, 10);
+    design.addPiece("Chariot", 3, 5000);
     design.addMove(3, 4, [4, 4], 0);
     design.addMove(3, 4, [2, 2], 0);
     design.addMove(3, 4, [0, 0], 0);
     design.addMove(3, 4, [1, 1], 0);
 
-    design.addPiece("Cannon", 4, 7);
+    design.addPiece("Cannon", 4, 5500);
     design.addMove(4, 5, [4, 4, 4, 4], 0);
     design.addMove(4, 5, [2, 2, 2, 2], 0);
     design.addMove(4, 5, [0, 0, 0, 0], 0);
     design.addMove(4, 5, [1, 1, 1, 1], 0);
 
-    design.addPiece("Mandarin", 5, 2);
+    design.addPiece("Mandarin", 5, 1000);
     design.addMove(5, 6, [7], 0);
     design.addMove(5, 6, [6], 0);
     design.addMove(5, 6, [3], 0);
     design.addMove(5, 6, [5], 0);
 
-    design.addPiece("General", 6, 0);
+    design.addPiece("General", 6, 600000);
     design.addMove(6, 6, [4], 0);
     design.addMove(6, 6, [2], 0);
     design.addMove(6, 6, [0], 0);

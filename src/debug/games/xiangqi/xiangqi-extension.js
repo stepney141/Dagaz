@@ -2,6 +2,7 @@
 
 Dagaz.AI.AI_FRAME      = 3000;
 Dagaz.AI.getForcedMove = Dagaz.AI.getChessForcedMove;
+Dagaz.AI.inProgress    = false;
 
 var checkVersion = Dagaz.Model.checkVersion;
 
@@ -98,25 +99,27 @@ Dagaz.Model.CheckInvariants = function(board) {
   var s  = design.getDirection("s");  var e  = design.getDirection("e");
   var nw = design.getDirection("nw"); var sw = design.getDirection("sw");
   var ne = design.getDirection("ne"); var se = design.getDirection("se");
-  _.each(board.moves, function(move) {
-      var b = board.apply(move);
-      var pos = findGeneral(design, b, board.player);
-      if ((pos === null) ||
-          checkDirection(design, b, board.player, pos, n, soldier, chariot, general, cannon) ||
-          checkDirection(design, b, board.player, pos, w, soldier, chariot, general, cannon) ||
-          checkDirection(design, b, board.player, pos, e, soldier, chariot, general, cannon) ||
-          checkDirection(design, b, board.player, pos, s, null, chariot, general, cannon) ||
-          checkHorse(design, b, board.player, pos, nw, n, horse) ||
-          checkHorse(design, b, board.player, pos, nw, w, horse) ||
-          checkHorse(design, b, board.player, pos, ne, n, horse) ||
-          checkHorse(design, b, board.player, pos, ne, e, horse) ||
-          checkHorse(design, b, board.player, pos, se, s, horse) ||
-          checkHorse(design, b, board.player, pos, se, e, horse) ||
-          checkHorse(design, b, board.player, pos, sw, s, horse) ||
-          checkHorse(design, b, board.player, pos, sw, w, horse)) {
-          move.failed = true;
-      }
-  });
+  if (_.isUndefined(Dagaz.AI.inProgress) || !Dagaz.AI.inProgress) {
+      _.each(board.moves, function(move) {
+          var b = board.apply(move);
+          var pos = findGeneral(design, b, board.player);
+          if ((pos === null) ||
+              checkDirection(design, b, board.player, pos, n, soldier, chariot, general, cannon) ||
+              checkDirection(design, b, board.player, pos, w, soldier, chariot, general, cannon) ||
+              checkDirection(design, b, board.player, pos, e, soldier, chariot, general, cannon) ||
+              checkDirection(design, b, board.player, pos, s, null, chariot, general, cannon) ||
+              checkHorse(design, b, board.player, pos, nw, n, horse) ||
+              checkHorse(design, b, board.player, pos, nw, w, horse) ||
+              checkHorse(design, b, board.player, pos, ne, n, horse) ||
+              checkHorse(design, b, board.player, pos, ne, e, horse) ||
+              checkHorse(design, b, board.player, pos, se, s, horse) ||
+              checkHorse(design, b, board.player, pos, se, e, horse) ||
+              checkHorse(design, b, board.player, pos, sw, s, horse) ||
+              checkHorse(design, b, board.player, pos, sw, w, horse)) {
+              move.failed = true;
+          }
+      });
+  }
   CheckInvariants(board);
 }
 
