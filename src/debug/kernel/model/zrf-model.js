@@ -673,7 +673,15 @@ Dagaz.Model.zupdate = function(value, piece, pos) {
   return value;
 }
 
+Dagaz.Model.hupdate = function(value, piece, pos) {
+  return value;
+}
+
 Dagaz.Model.zplayer = function(value, player) {
+  return value;
+}
+
+Dagaz.Model.hplayer = function(value, player) {
   return value;
 }
 
@@ -1492,10 +1500,12 @@ function ZrfBoard(game) {
   this.parent   = null;
   this.values   = [];
   this.zSign    = Dagaz.Model.zplayer(0, this.player);
+  this.hSign    = Dagaz.Model.hplayer(0, this.player);
 }
 
 ZrfBoard.prototype.assign = function(board) {
   this.zSign    = board.zSign;
+  this.hSign    = board.hSign;
   this.pieces   = board.pieces;
   delete this.moves;
 }
@@ -1596,6 +1606,7 @@ ZrfBoard.prototype.copy = function() {
   r.parent  = this;
   r.player  = this.player;
   r.zSign   = this.zSign;
+  r.hSign   = this.hSign;
   r.lastf   = this.lastf;
   r.lastt   = this.lastt;
   r.reserve = [];
@@ -1625,6 +1636,7 @@ Dagaz.Model.getInitBoard = function() {
 
 ZrfBoard.prototype.clear = function() {
   this.zSign    = 0;
+  this.hSign    = 0;
   this.pieces   = [];
 }
 
@@ -1650,12 +1662,14 @@ ZrfBoard.prototype.setPiece = function(pos, piece) {
   if (!_.isUndefined(this.pieces[pos])) {
       var op = this.pieces[pos];
       this.zSign = Dagaz.Model.zupdate(this.zSign, op, pos);
+      this.hSign = Dagaz.Model.hupdate(this.hSign, op, pos);
   }
   if (piece === null) {
      delete this.pieces[pos];
   } else {
      this.pieces[pos] = piece;
      this.zSign = Dagaz.Model.zupdate(this.zSign, piece, pos);
+     this.hSign = Dagaz.Model.hupdate(this.hSign, piece, pos);
   }
 }
 
@@ -1940,8 +1954,10 @@ ZrfBoard.prototype.apply = function(move) {
   var r = this.copy();
   r.turn = design.nextTurn(this);
   r.zSign = Dagaz.Model.zplayer(r.zSign, this.player);
+  r.hSign = Dagaz.Model.hplayer(r.hSign, this.player);
   r.player = design.currPlayer(r.turn);
   r.zSign = Dagaz.Model.zplayer(r.zSign, r.player);
+  r.hSign = Dagaz.Model.hplayer(r.hSign, r.player);
   move.applyAll(r);
   r.move = move;
   return r;

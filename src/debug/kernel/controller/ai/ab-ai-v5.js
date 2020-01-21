@@ -114,14 +114,14 @@ Dagaz.AI.isCapture = function(board, move) {
 
 var applyMove = function(ctx, board, move) {
   var b = board.apply(move);
-  var node = ctx.cache[b.zSign & HASH_MASK];
+/*var node = ctx.cache[b.zSign & HASH_MASK];
   if (!_.isUndefined(node)) {
       return node.board;
   }
   ctx.cache[b.zSign & HASH_MASK] = {
       lock:  0,
       board: b
-  };
+  };*/
   return b;
 }
 
@@ -129,7 +129,7 @@ Ai.prototype.store = function(ctx, board, value, flag, maxLevel, best, level) {
   if (value >= MAX_VALUE - 2000) value += level;
   else if (value <= -MAX_VALUE + 2000) value -= level;
   ctx.cache[board.zSign & HASH_MASK] = {
-      lock:  board.zSign,
+      lock:  board.hSign,
       board: board,
       value: value,
       flag:  flag,
@@ -196,7 +196,7 @@ Ai.prototype.acn = function(ctx, board, maxLevel, level, beta, allowNull) {
   if (MAX_VALUE - (level + 1) < beta) return beta - 1;
   var best = null;
   var node = ctx.cache[board.zSign & HASH_MASK];
-  if (!_.isUndefined(node) && (node.lock == board.zSign)) {
+  if (!_.isUndefined(node) && (node.lock == board.hSign)) {
       best = node.best;
       if (node.level >= maxLevel) {
           var value = node.value;
@@ -327,7 +327,7 @@ Ai.prototype.ab = function(ctx, board, maxLevel, level, alpha, beta) {
   var best = null;
   var flag = ALPHA_FLAG;
   var node = ctx.cache[board.zSign & HASH_MASK];
-  if (!_.isUndefined(node) && (node.lock == board.zSign)) {
+  if (!_.isUndefined(node) && (node.lock == board.hSign)) {
       best = node.best;
   }
   var inCheck = Dagaz.AI.inCheck(ctx.design, board);
@@ -389,13 +389,14 @@ Ai.prototype.setContext = function(ctx, board) {
   ctx.tNodeCount = 0;
   ctx.mLevel     = 0;
   ctx.qLevel     = 0;
-//if (_.isUndefined(ctx.cache)) {
+  if (_.isUndefined(ctx.cache)) {
       ctx.cache = [];
-//}
+  }
 }
 
 Ai.prototype.getMove = function(ctx) {
   ctx.board.moves = Dagaz.AI.generate(ctx, ctx.board);
+  console.log("z =" + ctx.board.zSign + ", h = " + ctx.board.hSign);
   if (ctx.board.moves.length == 0) {
       return { done: true, ai: "nothing" };
   }
@@ -436,7 +437,7 @@ Ai.prototype.getMove = function(ctx) {
            i--;
        }
        var node = ctx.cache[ctx.board.zSign & HASH_MASK];
-       if (!_.isUndefined(node) && (node.lock == ctx.board.zSign)) {
+       if (!_.isUndefined(node) && (node.lock == ctx.board.hSign)) {
            ctx.best = node.best.move;
        }
   }
