@@ -115,6 +115,17 @@ var isAtari = function(design, board, pos, player) {
   return r;
 }
 
+var checkAdjust = function(design, board, player, pos, a, b) {
+  var p = design.navigate(player, pos, a);
+  if (p === null) return false;
+  var piece = board.getPiece(p);
+  if ((piece !== null) && (piece.player != player)) return true;
+  p = design.navigate(player, p, b);
+  if (p === null) return false;
+  var piece = board.getPiece(p);
+  return (piece !== null) && (piece.player != player);
+}
+
 Ai.prototype.setContext = function(ctx, board) {
   if (this.parent) {
       this.parent.setContext(ctx, board);
@@ -153,6 +164,22 @@ Ai.prototype.getMove = function(ctx) {
                    };
                }
            }
+      }
+  }
+  if ((ctx.board.parent !== null) && (ctx.board.parent.parent === null)) {
+      var moves = [];
+      _.each(ctx.board.moves, function(move) {
+          if (!move.isDropMove()) return;
+          var pos = move.actions[0][1][0];
+          if (checkAdjust(ctx.design, ctx.board, ctx.board.player, pos, 0, 3) || // w, n
+              checkAdjust(ctx.design, ctx.board, ctx.board.player, pos, 3, 1) || // n, e
+              checkAdjust(ctx.design, ctx.board, ctx.board.player, pos, 1, 2) || // n, s
+              checkAdjust(ctx.design, ctx.board, ctx.board.player, pos, 2, 0)) { // s, w
+              moves.push(move);
+          }
+      });
+      if (moves.length > 0) {
+          ctx.board.moves = moves;
       }
   }
   if (this.parent) {

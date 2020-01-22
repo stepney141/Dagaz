@@ -111,7 +111,7 @@ Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
   var king   = design.getPieceType("King");
   var rook   = design.getPieceType("Rook");
-  if (_.isUndefined(Dagaz.AI.inProgress) || !Dagaz.AI.inProgress) {
+//if (_.isUndefined(Dagaz.AI.inProgress) || !Dagaz.AI.inProgress) {
       _.each(board.moves, function(move) {
           var b = board.apply(move);
           var list = [];
@@ -137,7 +137,7 @@ Dagaz.Model.CheckInvariants = function(board) {
           }
           changePieces(design, board, move);
       });
-  }
+//}
   CheckInvariants(board);
 }
 

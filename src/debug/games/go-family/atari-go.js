@@ -35,15 +35,15 @@ Dagaz.Model.BuildDesign = function(design) {
         Dagaz.Controller.addSound(0, "../../sounds/clack.wav");
     }
 
-    design.addDirection("w");
-    design.addDirection("e");
-    design.addDirection("s");
-    design.addDirection("n");
+    design.addDirection("w"); // 0
+    design.addDirection("e"); // 1
+    design.addDirection("s"); // 2
+    design.addDirection("n"); // 3
 
     design.addPlayer("White", [1, 0, 3, 2]);
     design.addPlayer("Black", [0, 1, 2, 3]);
-//  design.addTurn(2);
-//  design.addTurn(1);
+    design.addTurn(2);
+    design.addTurn(1);
 
     design.addPosition("a9", [0, 1, 9, 0]);
     design.addPosition("b9", [-1, 1, 9, 0]);

@@ -4,7 +4,7 @@ Dagaz.AI.inProgress   = false;
 Dagaz.AI.AI_FRAME     = 5000;
 Dagaz.AI.IDLE_FRAME   = 1000;
 Dagaz.AI.START_DEEP   = 1;
-Dagaz.AI.NOISE_FACTOR = 0;
+Dagaz.AI.NOISE_FACTOR = 100;
 Dagaz.AI.MAX_QS_LEVEL = 1;
 Dagaz.AI.STALEMATE    = 0;
 
@@ -153,19 +153,19 @@ function MovePicker(ctx, board, best) {
           if (!move.isSimpleMove()) return;
           if (move.actions[0][1][0] != pos) return;
           var b = applyMove(ctx, board, move);
-          if (Dagaz.AI.NOISE_FACTOR > 0) {
+/*        if ((best === null) && (Dagaz.AI.NOISE_FACTOR > 0)) {
               b.weight = _.random(0, Dagaz.AI.NOISE_FACTOR);
-          }
+          }*/
           if (!_.isUndefined(best) && (best !== null) && (b.zSign == best.zSign)) return;
           list.push(b);
           done.push(b.zSign);
       });
   }
-  if (Dagaz.AI.NOISE_FACTOR > 0) {
-      list = _.sortBy(list, function(b) {
+/*if ((best === null) && (Dagaz.AI.NOISE_FACTOR > 0)) {
+     list = _.sortBy(list, function(b) {
          return b.weight;
      });
-  }
+  }*/
   _.each(list, function(b) {
       this.list.push(b);
   }, this);
@@ -173,16 +173,16 @@ function MovePicker(ctx, board, best) {
   _.each(board.moves, function(move) {
       var b = applyMove(ctx, board, move);
       if (_.indexOf(done, b.zSign) >= 0) return;
-      if (Dagaz.AI.NOISE_FACTOR > 0) {
+/*    if ((best === null) && (Dagaz.AI.NOISE_FACTOR > 0)) {
           b.weight = _.random(0, Dagaz.AI.NOISE_FACTOR);
-      }
+      }*/
       list.push(b);
   });
-  if (Dagaz.AI.NOISE_FACTOR > 0) {
-      list = _.sortBy(list, function(b) {
+/*if ((best === null) && (Dagaz.AI.NOISE_FACTOR > 0)) {
+     list = _.sortBy(list, function(b) {
          return b.weight;
      });
-  }
+  }*/
   _.each(list, function(b) {
       this.list.push(b);
   }, this);
@@ -421,6 +421,11 @@ Ai.prototype.getMove = function(ctx) {
                time: Date.now() - ctx.timestamp,
                ai:  "goal"
            };
+  }
+  if (Dagaz.AI.NOISE_FACTOR > 0) {
+      ctx.board.moves = _.sortBy(ctx.board.moves, function(m) {
+          return _.random(0, Dagaz.AI.NOISE_FACTOR);
+      });
   }
   ctx.timestamp = Date.now();
   ctx.best = null;
