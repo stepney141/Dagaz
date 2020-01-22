@@ -86,6 +86,14 @@ var checkHorse = function(design, board, player, pos, d, o, horse) {
   return (piece.player != player) && (piece.type == horse);
 }
 
+var checkGoals = Dagaz.Model.checkGoals;
+
+Dagaz.Model.checkGoals = function(design, board, player) {
+  board.generate(design);
+  if (board.moves.length == 0) return 1;
+  return checkGoals(design, board, player);
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
@@ -99,7 +107,6 @@ Dagaz.Model.CheckInvariants = function(board) {
   var s  = design.getDirection("s");  var e  = design.getDirection("e");
   var nw = design.getDirection("nw"); var sw = design.getDirection("sw");
   var ne = design.getDirection("ne"); var se = design.getDirection("se");
-  if (_.isUndefined(Dagaz.AI.inProgress) || !Dagaz.AI.inProgress) {
       _.each(board.moves, function(move) {
           var b = board.apply(move);
           var pos = findGeneral(design, b, board.player);
@@ -119,7 +126,6 @@ Dagaz.Model.CheckInvariants = function(board) {
               move.failed = true;
           }
       });
-  }
   CheckInvariants(board);
 }
 

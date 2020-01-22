@@ -6,6 +6,7 @@ Dagaz.AI.IDLE_FRAME   = 1000;
 Dagaz.AI.START_DEEP   = 1;
 Dagaz.AI.NOISE_FACTOR = 0;
 Dagaz.AI.MAX_QS_LEVEL = 1;
+Dagaz.AI.STALEMATE    = 0;
 
 var MAX_LEVEL = 25;
 var MAX_VALUE = 2000000;
@@ -114,12 +115,12 @@ Dagaz.AI.isCapture = function(board, move) {
 
 var applyMove = function(ctx, board, move) {
   var b = board.apply(move);
-/*var node = ctx.cache[b.zSign & HASH_MASK];
-  if (!_.isUndefined(node)) {
+/*var node = ctx.heap[b.zSign & HASH_MASK];
+  if (!_.isUndefined(node) && (node.lock == b.hSign)) {
       return node.board;
   }
   ctx.cache[b.zSign & HASH_MASK] = {
-      lock:  0,
+      lock:  b.hSign,
       board: b
   };*/
   return b;
@@ -141,7 +142,7 @@ Ai.prototype.store = function(ctx, board, value, flag, maxLevel, best, level) {
 function MovePicker(ctx, board, best) {
   this.list = []; var done = [];
   board.moves = generate(ctx, board); 
-  if (best !== null) {
+  if (!_.isUndefined(best) && (best !== null)) {
       this.list.push(best);
       done.push(best.zSign);
   }
@@ -155,7 +156,7 @@ function MovePicker(ctx, board, best) {
           if (Dagaz.AI.NOISE_FACTOR > 0) {
               b.weight = _.random(0, Dagaz.AI.NOISE_FACTOR);
           }
-          if ((best !== null) && (b.zSign == best.zSign)) return;
+          if (!_.isUndefined(best) && (best !== null) && (b.zSign == best.zSign)) return;
           list.push(b);
           done.push(b.zSign);
       });
@@ -269,7 +270,7 @@ Ai.prototype.acn = function(ctx, board, maxLevel, level, beta, allowNull) {
           return -MAX_VALUE + level;
       else
           // Stalemate
-          return 0;
+          return Dagaz.AI.STALEMATE * (MAX_VALUE - level);
   }
   this.store(ctx, board, e, ALPHA_FLAG, maxLevel, best, level);
   return e;
@@ -375,7 +376,7 @@ Ai.prototype.ab = function(ctx, board, maxLevel, level, alpha, beta) {
            return -MAX_VALUE + level;
        else 
            // Stalemate
-           return 0;
+           return Dagaz.AI.STALEMATE * (MAX_VALUE - level);
   }
   this.store(ctx, board, e, flag, maxLevel, best, level);
   return e;
@@ -390,8 +391,11 @@ Ai.prototype.setContext = function(ctx, board) {
   ctx.mLevel     = 0;
   ctx.qLevel     = 0;
   if (_.isUndefined(ctx.cache)) {
-      ctx.cache = [];
+      ctx.cache = [];     
   }
+/*if (_.isUndefined(ctx.heap)) {
+      ctx.heap = [];     
+  }*/
 }
 
 Ai.prototype.getMove = function(ctx) {

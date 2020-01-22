@@ -1,7 +1,9 @@
 (function() {
 
-Dagaz.AI.AI_FRAME = 3000;
-Dagaz.AI.REP_DEEP = 30;
+Dagaz.AI.AI_FRAME     = 3000;
+Dagaz.AI.REP_DEEP     = 30;
+Dagaz.AI.MAX_QS_LEVEL = 5;
+Dagaz.AI.STALEMATE    = -1;
 
 var penalty = [
   [   0,   0,   0,   0,   0,   0,   0,
@@ -132,10 +134,34 @@ var checkJump = function(design, board, player, pos, d, o) {
   return true;
 }
 
-Dagaz.AI.see = function(design, board, move) {
-  // TODO:
+var isAttacked = function(design, board, player, pos) {
+  return checkStep(design, board, player, pos, 4)    || // n
+         checkStep(design, board, player, pos, 0)    || // w
+         checkStep(design, board, player, pos, 1)    || // e
+         checkSlide(design, board, player, pos, 0)   || // w
+         checkSlide(design, board, player, pos, 1)   || // e
+         checkSlide(design, board, player, pos, 2)   || // s
+         checkSlide(design, board, player, pos, 4)   || // n
+         checkJump(design, board, player, pos, 3, 4) || // ne, n
+         checkJump(design, board, player, pos, 3, 1) || // ne, e
+         checkJump(design, board, player, pos, 5, 2) || // se, s
+         checkJump(design, board, player, pos, 5, 1) || // se, e
+         checkJump(design, board, player, pos, 6, 2) || // sw, s
+         checkJump(design, board, player, pos, 6, 0) || // sw, w
+         checkJump(design, board, player, pos, 7, 0) || // nw, w
+         checkJump(design, board, player, pos, 7, 4);   // nw, n
+}
 
-  return false;
+Dagaz.AI.see = function(design, board, move) {
+  if (!move.isSimpleMove()) return false;
+  var pos = move.actions[0][0][0];
+  var piece = board.getPiece(pos);
+  if (piece === null) return false;
+  pos = move.actions[0][1][0];
+  var target = board.getPiece(pos);
+  if (target === null) return false;
+  if (!isAttacked(design, board, piece.player, pos)) return true;
+  return Dagaz.AI.getPrice(design, target, pos) > Dagaz.AI.getPrice(design, piece, pos);
 }
 
 /*Dagaz.AI.inCheck = function(design, board) {
@@ -150,21 +176,7 @@ Dagaz.AI.see = function(design, board, move) {
           }
       }
       if (king === null) return false;
-      board.inCheck = checkStep(design, board, board.player, king, 4)    || // n
-                      checkStep(design, board, board.player, king, 0)    || // w
-                      checkStep(design, board, board.player, king, 1)    || // e
-                      checkSlide(design, board, board.player, king, 0)   || // w
-                      checkSlide(design, board, board.player, king, 1)   || // e
-                      checkSlide(design, board, board.player, king, 2)   || // s
-                      checkSlide(design, board, board.player, king, 4)   || // n
-                      checkJump(design, board, board.player, king, 3, 4) || // ne, n
-                      checkJump(design, board, board.player, king, 3, 1) || // ne, e
-                      checkJump(design, board, board.player, king, 5, 2) || // se, s
-                      checkJump(design, board, board.player, king, 5, 1) || // se, e
-                      checkJump(design, board, board.player, king, 6, 2) || // sw, s
-                      checkJump(design, board, board.player, king, 6, 0) || // sw, w
-                      checkJump(design, board, board.player, king, 7, 0) || // nw, w
-                      checkJump(design, board, board.player, king, 7, 4);   // nw, n
+      board.inCheck = isAttacked(design, board, board.player, king);
   }
   return board.inCheck;
 }*/
@@ -193,6 +205,7 @@ Dagaz.AI.eval = function(design, params, board, player) {
            var piece = board.getPiece(pos);
            if (piece === null) return;
            var v = Dagaz.AI.getPrice(design, piece, pos);
+//         if (isAttacked(design, board, piece.player, pos)) v = (v / 2) | 0;
            if (piece.player == board.player) {
                board.completeEval += v;
            } else {
