@@ -166,6 +166,34 @@ Ai.prototype.getMove = function(ctx) {
            }
       }
   }
+  var best = null;
+  _.each(ctx.board.moves, function(move) {
+      var b = ctx.board.apply(move);
+      var cnt = 0;
+      _.each(ctx.design.allPositions(), function(pos) {
+          var piece = b.getPiece(pos);
+          if (piece === null) return;
+          if (piece.player == ctx.board.player) return;
+          var v = piece.getValue(0);
+          if (v === null) return;
+          if (v == 1) {
+              if (ctx.design.inZone(0, ctx.board.player, pos)) cnt++;
+              cnt++;
+          }
+      });
+      if (cnt > 1) {
+          best = move;
+          return;
+      }
+  });
+  if (best !== null) {
+      return {
+         done: true,
+         move: best,
+         time: Date.now() - ctx.timestamp,
+         ai:  "best"
+      };
+  }
   if ((ctx.board.parent !== null) && (ctx.board.parent.parent === null)) {
       var moves = [];
       _.each(ctx.board.moves, function(move) {

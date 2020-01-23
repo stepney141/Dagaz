@@ -127,6 +127,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("h1", [-1, 1, 0, -9]);
     design.addPosition("i1", [-1, 0, 0, -9]);
 
+    design.addZone("death-line", 2, [64, 55, 46, 37, 28, 19, 10, 65, 11, 66, 12, 67, 13, 68, 14, 69, 15, 70, 61, 52, 43, 34, 25, 16]);
+    design.addZone("death-line", 1, [64, 55, 46, 37, 28, 19, 10, 65, 11, 66, 12, 67, 13, 68, 14, 69, 15, 70, 61, 52, 43, 34, 25, 16]);
+
     design.addCommand(0, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(0, ZRF.FUNCTION,	20);	// verify
     design.addCommand(0, ZRF.FUNCTION,	25);	// to

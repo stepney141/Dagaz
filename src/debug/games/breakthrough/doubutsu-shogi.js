@@ -219,7 +219,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(2, ZRF.JUMP,	-11);
     design.addCommand(2, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("King", 0, 1000);
+    design.addPiece("King", 0, 600000);
     design.addMove(0, 0, [1, 9, 9], 0);
     design.addMove(0, 0, [2, 9, 9], 0);
     design.addMove(0, 0, [3, 9, 9], 0);
@@ -229,25 +229,25 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 0, [5, 9, 9], 0);
     design.addMove(0, 0, [8, 9, 9], 0);
 
-    design.addPiece("Za", 1, 2);
+    design.addPiece("Za", 1, 800);
     design.addMove(1, 1, [1, 9, 9], 0);
     design.addMove(1, 2, [16, 0], 0);
 
-    design.addPiece("Sang", 2, 8);
+    design.addPiece("Sang", 2, 3000);
     design.addMove(2, 0, [7, 9, 9], 0);
     design.addMove(2, 0, [6, 9, 9], 0);
     design.addMove(2, 0, [5, 9, 9], 0);
     design.addMove(2, 0, [8, 9, 9], 0);
     design.addMove(2, 2, [16, 0], 0);
 
-    design.addPiece("Jang", 3, 10);
+    design.addPiece("Jang", 3, 5000);
     design.addMove(3, 0, [1, 9, 9], 0);
     design.addMove(3, 0, [2, 9, 9], 0);
     design.addMove(3, 0, [3, 9, 9], 0);
     design.addMove(3, 0, [4, 9, 9], 0);
     design.addMove(3, 2, [16, 0], 0);
 
-    design.addPiece("Hu", 4, 4);
+    design.addPiece("Hu", 4, 5500);
     design.addMove(4, 0, [1, 9, 9], 0);
     design.addMove(4, 0, [2, 9, 9], 0);
     design.addMove(4, 0, [3, 9, 9], 0);

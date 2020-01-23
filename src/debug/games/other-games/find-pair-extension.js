@@ -20,7 +20,7 @@ if (!_.isUndefined(Dagaz.Controller.play)) {
 
 var getEasy = function() {
   var str = window.location.search.toString();
-  var result = str.match(/\?easy=y/);
+  var result = str.match(/[?&]easy=y/);
   if (result) {
       return true;
   } else {

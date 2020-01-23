@@ -10,7 +10,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
 
 var getSeed = function() {
   var str = window.location.search.toString();
-  var result = str.match(/\?seed=([^&]*)/);
+  var result = str.match(/[?&]seed=([^&]*)/);
   if (result) {
       return result[1];
   } else {

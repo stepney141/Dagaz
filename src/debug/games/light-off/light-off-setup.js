@@ -2,7 +2,7 @@
 
 var getSetup = function() {
   var str = window.location.search.toString();
-  var re  = /^\?setup=(.*)$/;
+  var re  = /^[?&]setup=(.*)$/;
   str = str.replace(re, "$1");
   var result = [];
   if (str) {

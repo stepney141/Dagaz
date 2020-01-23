@@ -2,7 +2,7 @@
 
 var getSetup = function() {
   var str = window.location.search.toString();
-  var result = str.match(/\?setup=([^&]*)/);
+  var result = str.match(/[?&]setup=([^&]*)/);
   if (result) {
       return result[1];
   } else {
@@ -12,7 +12,7 @@ var getSetup = function() {
 
 var getTurn = function() {
   var str = window.location.search.toString();
-  var result = str.match(/&turn=(\d+)/);
+  var result = str.match(/[?&]turn=(\d+)/);
   if (result) {
       return result[1];
   } else {

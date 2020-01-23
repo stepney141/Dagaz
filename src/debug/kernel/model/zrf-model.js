@@ -2408,7 +2408,7 @@ Dagaz.Model.continue = function(design, board, str, result) {
 Dagaz.Model.getSetupSelector = function(val) {
   if (_.isUndefined(Dagaz.Model.setupSelector)) {
       var str = window.location.search.toString();
-      var result = str.match(/\?selector=([^&]*)/);
+      var result = str.match(/[?&]selector=([^&]*)/);
       if (result) {
           Dagaz.Model.setupSelector = +result[1];
       }

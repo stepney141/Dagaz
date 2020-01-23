@@ -16,6 +16,8 @@ var ALPHA_FLAG = 1;
 var BETA_FLAG  = 2;
 var EXACT_FLAG = 3;
 
+var AI_FRAME   = null;
+
 function Ai(parent) {
   this.parent = parent;
 }
@@ -23,11 +25,24 @@ function Ai(parent) {
 var findBot = Dagaz.AI.findBot;
 
 Dagaz.AI.findBot = function(type, params, parent) {
-  if ((type == "ab") || (type == "common") || (type == "1") /*|| (type == "2")*/) {
+  if ((type == "ab") || (type == "common") /*|| (type == "1")*/ || (type == "2")) {
       return new Ai(parent);
   } else {
       return findBot(type, params, parent);
   }
+}
+
+var getAiFrame = function() {
+  if (AI_FRAME === null) {
+      var str = window.location.search.toString();
+      var result = str.match(/[?&]ai=([^&]*)/);
+      if (result) {
+          AI_FRAME = result[1];
+      } else {
+          AI_FRAME = Dagaz.AI.AI_FRAME;
+      }
+  }
+  return AI_FRAME;
 }
 
 Dagaz.AI.getPrice = function(design, piece, pos) {
@@ -146,44 +161,20 @@ function MovePicker(ctx, board, best) {
       this.list.push(best);
       done.push(best.zSign);
   }
-  var list = [];
   if (!_.isUndefined(board.move) && board.move.isSimpleMove()) {
       var pos = board.move.actions[0][1][0];
       _.each(board.moves, function(move) {
           if (!move.isSimpleMove()) return;
           if (move.actions[0][1][0] != pos) return;
           var b = applyMove(ctx, board, move);
-/*        if ((best === null) && (Dagaz.AI.NOISE_FACTOR > 0)) {
-              b.weight = _.random(0, Dagaz.AI.NOISE_FACTOR);
-          }*/
           if (!_.isUndefined(best) && (best !== null) && (b.zSign == best.zSign)) return;
-          list.push(b);
+          this.list.push(b);
           done.push(b.zSign);
-      });
+      }, this);
   }
-/*if ((best === null) && (Dagaz.AI.NOISE_FACTOR > 0)) {
-     list = _.sortBy(list, function(b) {
-         return b.weight;
-     });
-  }*/
-  _.each(list, function(b) {
-      this.list.push(b);
-  }, this);
-  list = [];
   _.each(board.moves, function(move) {
       var b = applyMove(ctx, board, move);
       if (_.indexOf(done, b.zSign) >= 0) return;
-/*    if ((best === null) && (Dagaz.AI.NOISE_FACTOR > 0)) {
-          b.weight = _.random(0, Dagaz.AI.NOISE_FACTOR);
-      }*/
-      list.push(b);
-  });
-/*if ((best === null) && (Dagaz.AI.NOISE_FACTOR > 0)) {
-     list = _.sortBy(list, function(b) {
-         return b.weight;
-     });
-  }*/
-  _.each(list, function(b) {
       this.list.push(b);
   }, this);
 }
@@ -344,7 +335,7 @@ Ai.prototype.ab = function(ctx, board, maxLevel, level, alpha, beta) {
        var v = null;
        if (f) {
            if ((ctx.nodeCount & 127) == 127) {
-               if (Date.now() - ctx.timestamp > Dagaz.AI.AI_FRAME) {
+               if (Date.now() - ctx.timestamp > getAiFrame()) {
                    Dagaz.AI.inProgress = false;
                }
            }
@@ -424,7 +415,10 @@ Ai.prototype.getMove = function(ctx) {
   }
   if (Dagaz.AI.NOISE_FACTOR > 0) {
       ctx.board.moves = _.sortBy(ctx.board.moves, function(m) {
-          return _.random(0, Dagaz.AI.NOISE_FACTOR);
+          if (_.isUndefined(m.weight)) {
+              m.weight = _.random(0, Dagaz.AI.NOISE_FACTOR);
+          }
+          return m.weight;
       });
   }
   ctx.timestamp = Date.now();
