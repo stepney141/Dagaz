@@ -126,6 +126,37 @@ var checkAdjust = function(design, board, player, pos, a, b) {
   return (piece !== null) && (piece.player != player);
 }
 
+var isDoubleAtari = function(design, board, pos) {
+  var piece = board.getPiece(pos);
+  if (piece === null) return false;
+  var v = piece.getValue(0);
+  if (v === null) return false;
+  if (v > 1) return false;
+  for (var dir = 0; dir < design.dirs.length; dir++) {
+       var p = design.navigate(board.player, pos, dir);
+       if (p === null) continue;
+       if (board.getPiece(p) === null) return true;
+  }
+  return false;
+}
+
+var isDeathAtari = function(design, board, pos) {
+  if (!design.inZone(0, board.player, pos)) return false;
+  var piece = board.getPiece(pos);
+  if (piece === null) return false;
+  var v = piece.getValue(0);
+  if (v === null) return false;
+  if (v > 1) return false;
+  for (var dir = 0; dir < design.dirs.length; dir++) {
+       var p = design.navigate(board.player, pos, dir);
+       if (p === null) continue;
+       if (board.getPiece(p) !== null) continue;
+       p = design.navigate(board.player, p, dir);
+       if (p === null) return true;
+  }
+  return false;
+}
+
 Ai.prototype.setContext = function(ctx, board) {
   if (this.parent) {
       this.parent.setContext(ctx, board);
@@ -174,12 +205,11 @@ Ai.prototype.getMove = function(ctx) {
           var piece = b.getPiece(pos);
           if (piece === null) return;
           if (piece.player == ctx.board.player) return;
-          var v = piece.getValue(0);
-          if (v === null) return;
-          if (v == 1) {
-              if (ctx.design.inZone(0, ctx.board.player, pos)) cnt++;
-              cnt++;
+          if (isDeathAtari(ctx.design, b, pos)) {
+              best = move;
+              return;
           }
+          if (isDoubleAtari(ctx.design, b, pos)) cnt++;
       });
       if (cnt > 1) {
           best = move;
