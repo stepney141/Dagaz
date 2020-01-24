@@ -49,7 +49,7 @@ Dagaz.AI.isRepDraw = function(board) {
        board = board.parent;
        if (board.zSign == z) return true;
   }
-  return true;
+  return false;
 }
 
 var checkStep = function(design, board, player, pos, dir, types) {

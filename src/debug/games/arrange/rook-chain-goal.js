@@ -1,5 +1,19 @@
 (function() {
 
+Dagaz.AI.AI_FRAME     = 3000;
+Dagaz.AI.REP_DEEP     = 10;
+Dagaz.AI.STALEMATE    = -1;
+
+var penalty = 
+  [-300,-200,-200,-200,-200,-200,-200,-300,
+   -200,-150,-100,-100,-100,-100,-150,-200,
+   -200,-100,   0,   0,   0,   0,-100,-200,
+   -200,-100,   0,   0,   0,   0,-100,-200,
+   -200,-100,   0,   0,   0,   0,-100,-200,
+   -200,-100,   0,   0,   0,   0,-100,-200, 
+   -200,-150,-100,-100,-100,-100,-150,-200, 
+   -300,-200,-200,-200,-200,-200,-200,-300 ];
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
@@ -8,116 +22,119 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+Dagaz.AI.getPrice = function(design, piece, pos) {
+  return +(design.price[piece.type] + penalty[pos]);
+}
+
+Dagaz.AI.isMajorPiece = function(type) {
+  return true;
+}
+
+Dagaz.AI.isRepDraw = function(board) {
+  var z = board.zSign;
+  for (var i = 0; i < Dagaz.AI.REP_DEEP; i++) {
+       if (board.parent === null) return false;
+       board = board.parent;
+       if (board.zSign == z) return true;
+  }
+  return false;
+}
+
+Dagaz.AI.see = function(design, board, move) {
+  return false;
+}
+
+Dagaz.AI.inCheck = function(design, board) {
+  return false;
+}
+
+Dagaz.AI.isRepDraw = function(board) {
+  var z = board.zSign;
+  for (var i = 0; i < Dagaz.AI.REP_DEEP; i++) {
+       if (board.parent === null) return false;
+       board = board.parent;
+       if (board.zSign == z) return true;
+  }
+  return false;
+}
+
 var getGroups = function(design, board) {
   if (_.isUndefined(board.groups)) {
-  board.groups = [];
-  _.each(design.allPositions(), function(pos) {
-     var piece = board.getPiece(pos);
-     if (piece !== null) {
-         for (var i = 0; i < board.groups.length; i++) {
-              if (_.indexOf(board.groups[i].positions, pos) >= 0) return;
-         }
-         var x = {
-              player: piece.player,
-              positions: [pos],
-              ends: [],
-              bads: []
-         };
-         for (var i = 0; i < x.positions.length; i++) {
-              var cnt = 0;
-              _.each(design.allDirections(), function(dir) {
-                  var p = design.navigate(x.player, x.positions[i], dir);
-                  if (p !== null) {
-                       var piece = board.getPiece(p);
-                       if ((piece === null) || (piece.player != x.player)) return;
-                       if (_.indexOf(x.positions, p) < 0) {
-                           x.positions.push(p);
-                       }
-                       cnt++;
-                  }
-              });
-              if (cnt > 2) x.bads.push(x.positions[i]);
-              if (cnt < 2) x.ends.push(x.positions[i]);
-         }
-         board.groups.push(x);
-     }
-  });
+      board.groups = [];
+      _.each(design.allPositions(), function(pos) {
+         var piece = board.getPiece(pos);
+         if (piece !== null) {
+             for (var i = 0; i < board.groups.length; i++) {
+                  if (_.indexOf(board.groups[i].positions, pos) >= 0) return;
+             }
+             var x = {
+                 player: piece.player,
+                 positions: [pos],
+                 ends: [],
+                 bads: []
+            };
+            for (var i = 0; i < x.positions.length; i++) {
+                 var cnt = 0;
+                 _.each(design.allDirections(), function(dir) {
+                     var p = design.navigate(x.player, x.positions[i], dir);
+                     if (p !== null) {
+                          var piece = board.getPiece(p);
+                          if ((piece === null) || (piece.player != x.player)) return;
+                          if (_.indexOf(x.positions, p) < 0) {
+                              x.positions.push(p);
+                          }
+                          cnt++;
+                     }
+                 });
+                 if (cnt > 2) x.bads.push(x.positions[i]);
+                 if (cnt < 2) x.ends.push(x.positions[i]);
+            }
+            board.groups.push(x);
+        }
+     });
   }
   return board.groups;
 }
 
-var backTrace = function(design, pos, level) {
-  while (_.isUndefined(level[pos]) || (level[pos] > 0)) {
-      var mn = null; var r = null;
-      _.each(design.allDirections(), function(dir) {
-           var p = design.navigate(1, pos, dir);
-           if ((p === null) || _.isUndefined(level[p])) return;
-           var l = level[p];
-           if (!_.isUndefined(level[pos]) && (l >= level[pos])) return;
-           if ((mn === null) || (l < mn)) {
-                mn = l;
-                r = p;
-           }
-      });
-      if (r === null) return null;
-      pos = r;
-  }
-  return pos;
-}
-
 var getEval = function(design, board, player) {
-  var groups = _.filter(getGroups(design, board), function(g) {
-      return (g.player == player) && (g.bads.length == 0) && (g.ends.length <= 2) && (g.ends.length > 0);
+  var all = _.filter(getGroups(design, board), function(g) {
+      return g.player == player;
   });
-  if (groups.length == 0) return 0;
-  var r = 0;
-  var node = groups.pop();
-  while (groups.length > 0) {
-      var g = []; var level = [];
-      _.each(node.ends, function(p) {
-          g.push(p);
-          level[p] = 0;
-      });
-      for (var i = 0; i < g.length; i++) {
-           var f = false;
-           _.each(design.allDirections(), function(dir) {
-                var p = design.navigate(player, g[i], dir);
-                if ((p === null) || (_.indexOf(g, p) < 0)) return;
-                var piece = board.getPiece(p);
-                if ((piece !== null) && (piece.player == player)) {
-                    var l = [];
-                    for (var j = 0; j < groups.length; j++) {
-                        if (!f) {
-                            var ix = _.indexOf(groups[j].ends, p);
-                            if (ix >= 0) {
-                                r += level[g[i]] + 1;
-                                if (node.ends.length > 1) {
-                                    var q = backTrace(design, p, level);
-                                    if (q !== null) {
-                                        node.ends = _.without(node.ends, q);
-                                    }
-                                }
-                                node.ends.push(p);
-                                f = true;
-                            }
-                        }
-                        l.push(groups[j]);
-                    }
-                    if (f) groups = l;
-                    return;
-                }
-                g.push(p);
-                level[p] = level[g[i]] + 1;
-           });
-           if (f) break;
+  var avail = []; var group = []; var good  = [];
+  _.each(all, function(g) {
+      if ((g.bads == 0) && (g.ends == 2)) {
+          _.each(g.positions, function(pos) {
+              group.push(pos);
+          });
+          good.push(g);
+      } else {
+          _.each(g.positions, function(pos) {
+              avail.push(pos);
+          });
       }
-  }
-  return 1000 - r;
+  });
+  return 1000000 - avail.length * 1000;
 }
 
-Dagaz.AI.eval = function(ai, design, board, player) {
-  return getEval(design, board, player) -
-         getEval(design, board, design.nextPlayer(player));
+Dagaz.AI.eval = function(design, params, board, player) {
+  if (_.isUndefined(board.eval)) {
+      board.eval = getEval(design, board, board.player) -
+                   getEval(design, board, design.nextPlayer(board.player));
+/*    _.each(design.allPositions, function(pos) {
+          var piece = board.getPiece(pos);
+          var r = Dagaz.AI.getPrice(design, piece, pos);
+          if (piece.player == board.player) {
+              board.eval += r;
+          } else {
+              board.eval -= r;
+          }
+      });*/
+  }
+  if (board.player == player) {
+      return board.eval;
+  } else {
+      return -board.eval;
+  }
 }
 
 var getArity = function(design, board, player, pos) {

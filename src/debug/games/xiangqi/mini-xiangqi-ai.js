@@ -205,7 +205,6 @@ Dagaz.AI.eval = function(design, params, board, player) {
            var piece = board.getPiece(pos);
            if (piece === null) return;
            var v = Dagaz.AI.getPrice(design, piece, pos);
-//         if (isAttacked(design, board, piece.player, pos)) v = (v / 2) | 0;
            if (piece.player == board.player) {
                board.completeEval += v;
            } else {
