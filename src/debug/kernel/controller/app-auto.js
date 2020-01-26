@@ -303,7 +303,7 @@ App.prototype.exec = function() {
              if (this.list.isEmpty()) {
                  this.state = STATE.DONE;
                  Canvas.style.cursor = "default";
-                 this.gameOver(player + " loses", -this.board.player);
+                 this.gameOver(player + " lose", -this.board.player);
                  return;
              }
          }
@@ -324,7 +324,7 @@ App.prototype.exec = function() {
           if (_.isUndefined(result.move)) {
               this.state = STATE.DONE;
               Canvas.style.cursor = "default";
-              this.gameOver(player + " loses", -this.board.player);
+              this.gameOver(player + " lose", -this.board.player);
               return;
           }
           if (result.done || (Date.now() - this.timestamp >= this.params.AI_WAIT)) {
@@ -388,10 +388,10 @@ App.prototype.exec = function() {
               this.state = STATE.DONE;
               Canvas.style.cursor = "default";
               if (g > 0) {
-                  this.doneMessage = player + " wins";
+                  this.doneMessage = player + " won";
                   this.winPlayer   = this.board.parent.player;
               } else if (g < 0) {
-                  this.doneMessage = player + " loses";
+                  this.doneMessage = player + " lose";
                   this.winPlayer   = -this.board.parent.player;
               } else {
                   this.doneMessage = "Draw";

@@ -47,6 +47,14 @@ var gameOver = function(text, self, player) {
   }
   if (Dagaz.Model.progressive) {
       if (Dagaz.Model.silent && (player != 0)) return;
+      if (player < 0) {
+          window.location = window.location.toString();
+          return;
+      }
+      if (Dagaz.Model.progressiveUrl !== null) {
+          window.location = Dagaz.Model.progressiveUrl;
+          return;
+      }
       var str = Dagaz.Model.continue(self.design, self.board, window.location.toString());
       if (str !== null) {
           window.location = str;
@@ -431,7 +439,7 @@ App.prototype.exec = function() {
                  if (!_.isUndefined(Dagaz.Controller.play)) {
                      Dagaz.Controller.play(Dagaz.Sounds.lose);
                  }
-                 this.gameOver(player + " loses", -this.board.player);
+                 this.gameOver(player + " lose", -this.board.player);
                  return;
              }
          }
@@ -455,7 +463,7 @@ App.prototype.exec = function() {
               if (!_.isUndefined(Dagaz.Controller.play)) {
                   Dagaz.Controller.play(Dagaz.Sounds.win);
               }
-              this.gameOver(player + " loses", -this.board.player);
+              this.gameOver(player + " lose", -this.board.player);
               return;
           }
           if (result.done || (Date.now() - this.timestamp >= this.params.AI_WAIT)) {
@@ -543,7 +551,7 @@ App.prototype.exec = function() {
                          Dagaz.Controller.play(Dagaz.Sounds.lose);
                       }
                   }
-                  this.doneMessage = player + " wins";
+                  this.doneMessage = player + " won";
                   this.winPlayer   = this.board.parent.player;
               } else if (g < 0) {
                   if (!_.isUndefined(Dagaz.Controller.play)) {
@@ -553,7 +561,7 @@ App.prototype.exec = function() {
                          Dagaz.Controller.play(Dagaz.Sounds.lose);
                       }
                   }
-                  this.doneMessage = player + " loses";
+                  this.doneMessage = player + " lose";
                   this.winPlayer   = -this.board.parent.player;
               } else {
                   if (!_.isUndefined(Dagaz.Controller.play)) {
