@@ -29,6 +29,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-hints", "false");
     design.checkVersion("mancala-setup", "5");
     design.checkVersion("mancala-view", "true");
+    design.checkVersion("progressive-levels", "tchuka-ruma-4x6.htm");
     design.checkVersion("tchuka-ruma-extension", "5");
 
     design.addDirection("nx");
