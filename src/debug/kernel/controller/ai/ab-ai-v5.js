@@ -154,27 +154,50 @@ Ai.prototype.store = function(ctx, board, value, flag, maxLevel, best, level) {
   };
 }
 
-function MovePicker(ctx, board, best) {
-  this.list = []; var done = [];
-  board.moves = generate(ctx, board); 
+function MovePicker(ctx, board, best, k1, k2) {
+  this.list = []; var loosing = []; var done = [];
   if (!_.isUndefined(best) && (best !== null)) {
+      best.weight = 100000;
       this.list.push(best);
-      done.push(best.zSign);
+      done.push(best.move.getZ());
   }
-  if (!_.isUndefined(board.move) && board.move.isSimpleMove()) {
-      var pos = board.move.actions[0][1][0];
-      _.each(board.moves, function(move) {
-          if (!move.isSimpleMove()) return;
-          if (move.actions[0][1][0] != pos) return;
-          var b = applyMove(ctx, board, move);
-          if (!_.isUndefined(best) && (best !== null) && (b.zSign == best.zSign)) return;
-          this.list.push(b);
-          done.push(b.zSign);
-      }, this);
-  }
+  board.moves = generate(ctx, board); 
   _.each(board.moves, function(move) {
+      if (_.indexOf(done, move.getZ()) >= 0) return;
+      if (!Dagaz.AI.isCapture(board, move)) return;
+      done.push(move.getZ());
       var b = applyMove(ctx, board, move);
-      if (_.indexOf(done, b.zSign) >= 0) return;
+      if (Dagaz.AI.see(ctx.design, board, move)) {
+          b.weight = Dagaz.AI.heuristic(this, ctx.design, board, move);
+          this.list.push(b);
+      } else {
+          loosing.push(b);
+      }
+  }, this);
+  this.list = _.sortBy(this.list, function(b) {
+     return -b.weight;
+  });
+  _.each(board.moves, function(move) {
+      if (_.indexOf(done, move.getZ()) >= 0) return;
+      if (move.getZ() != k1) return;
+      done.push(move.getZ());
+      var b = applyMove(ctx, board, move);
+      this.list.push(b);
+  }, this);
+  _.each(board.moves, function(move) {
+      if (_.indexOf(done, move.getZ()) >= 0) return;
+      if (move.getZ() != k2) return;
+      done.push(move.getZ());
+      var b = applyMove(ctx, board, move);
+      this.list.push(b);
+  }, this);
+  this.prune = this.list.length;
+  _.each(board.moves, function(move) {
+      if (_.indexOf(done, move.getZ()) >= 0) return;
+      var b = applyMove(ctx, board, move);
+      this.list.push(b);
+  }, this);
+  _.each(loosing, function(b) {
       this.list.push(b);
   }, this);
 }
@@ -183,6 +206,10 @@ Ai.prototype.acn = function(ctx, board, maxLevel, level, beta, allowNull) {
   if (maxLevel <= 0) return this.qs(ctx, board, beta - 1, beta, 0, level);
   if (!Dagaz.AI.inProgress) return beta - 1;
   ctx.nodeCount++;
+  while (ctx.killer[0].length <= board.level) {
+      ctx.killer[0].push(0);
+      ctx.killer[1].push(0);
+  }
   if (Dagaz.AI.isRepDraw(board)) return 0;
   if (-MAX_VALUE + level >= beta) return beta;
   if (MAX_VALUE - (level + 1) < beta) return beta - 1;
@@ -225,7 +252,7 @@ Ai.prototype.acn = function(ctx, board, maxLevel, level, beta, allowNull) {
   var inCheck = Dagaz.AI.inCheck(ctx.design, board);
   var g = checkGoal(ctx, board);
   if ((g !== null) && (g < 0)) inCheck = true;
-  var m = new MovePicker(ctx, board, best);
+  var m = new MovePicker(ctx, board, best, ctx.killer[0][board.level], ctx.killer[1][board.level]);
   for (var i = 0; i < m.list.length; i++) {
        var b = m.list[i];
        var ltos = maxLevel - 1;
@@ -233,14 +260,14 @@ Ai.prototype.acn = function(ctx, board, maxLevel, level, beta, allowNull) {
        var isFs = true;
        if (inCheck) {
            ltos++;
-       } /* TODO: else {
-           var r = ltos - (movePicker.atMove > 14 ? 2 : 1);
+       } else {
+           var r = ltos - (i > 14 ? 2 : 1);
            // Late move reductions
-           if (movePicker.stage == 5 && movePicker.atMove > 5 && ply >= 3) {
+           if ((i >= m.prune) && (i > 5) && (maxLevel >= 3)) {
                v = -this.acn(ctx, b, r, level + 1, -(beta - 1), true);
                isFs = (v >= beta);
            }
-       }*/
+       }
        if (isFs) {
            v = -this.acn(ctx, b, maxLevel, level + 1, -(beta  - 1), true);
        }
@@ -248,6 +275,12 @@ Ai.prototype.acn = function(ctx, board, maxLevel, level, beta, allowNull) {
        if (!Dagaz.AI.inProgress) return beta - 1;
        if (v > e) {
            if (v >= beta) {
+               if (!Dagaz.AI.isCapture(board, b.move)) {
+                   if (b.move.getZ() != ctx.killer[0][board.level]) {
+                       ctx.killer[1][board.level] = ctx.killer[0][board.level];
+                       ctx.killer[0][board.level] = b.move.getZ();
+                   }
+               }
                this.store(ctx, board, v, BETA_FLAG, maxLevel, b, level);
                return v;
            }
@@ -309,6 +342,10 @@ Ai.prototype.ab = function(ctx, board, maxLevel, level, alpha, beta) {
       return this.qs(ctx, board, alpha, beta, 0, level);
   }
   ctx.nodeCount++;
+  while (ctx.killer[0].length <= board.level) {
+      ctx.killer[0].push(0);
+      ctx.killer[1].push(0);
+  }
   if (level > ctx.mLevel) ctx.mLevel = level;
   if ((level > 0) && Dagaz.AI.isRepDraw(board)) return 0;
   // Mate distance pruning
@@ -327,7 +364,7 @@ Ai.prototype.ab = function(ctx, board, maxLevel, level, alpha, beta) {
   if ((g !== null) && (g < 0)) inCheck = true;
   var f = false;
   var e = -MAX_VALUE;
-  var m = new MovePicker(ctx, board, best);
+  var m = new MovePicker(ctx, board, best, ctx.killer[0][board.level], ctx.killer[1][board.level]);
   for (var i = 0; i < m.list.length; i++) {
        var b = m.list[i];
        var ltos = maxLevel - 1;
@@ -350,6 +387,12 @@ Ai.prototype.ab = function(ctx, board, maxLevel, level, alpha, beta) {
        if (!Dagaz.AI.inProgress) return alpha;
        if (v > e) {
            if (v >= beta) {
+               if (!Dagaz.AI.isCapture(board, b.move)) {
+                   if (b.move.getZ() != ctx.killer[0][board.level]) {
+                       ctx.killer[1][board.level] = ctx.killer[0][board.level];
+                       ctx.killer[0][board.level] = b.move.getZ();
+                   }
+               }
                this.store(ctx, board, v, BETA_FLAG, maxLevel, b, level);
                return v;
            }
@@ -383,6 +426,11 @@ Ai.prototype.setContext = function(ctx, board) {
   ctx.qLevel     = 0;
   if (_.isUndefined(ctx.cache)) {
       ctx.cache = [];     
+  }
+  if (_.isUndefined(ctx.killer)) {
+      ctx.killer = [];
+      ctx.killer[0] = [];
+      ctx.killer[1] = [];
   }
 /*if (_.isUndefined(ctx.heap)) {
       ctx.heap = [];     

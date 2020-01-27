@@ -1506,6 +1506,7 @@ function ZrfBoard(game) {
   this.values   = [];
   this.zSign    = Dagaz.Model.zplayer(0, this.player);
   this.hSign    = Dagaz.Model.hplayer(0, this.player);
+  this.level    = 0;
 }
 
 ZrfBoard.prototype.assign = function(board) {
@@ -1957,12 +1958,13 @@ ZrfBoard.prototype.apply = function(move) {
   if (!_.isUndefined(move.result)) return move.result;
   var design = Dagaz.Model.design;
   var r = this.copy();
-  r.turn = design.nextTurn(this);
-  r.zSign = Dagaz.Model.zplayer(r.zSign, this.player);
-  r.hSign = Dagaz.Model.hplayer(r.hSign, this.player);
+  r.turn   = design.nextTurn(this);
+  r.zSign  = Dagaz.Model.zplayer(r.zSign, this.player);
+  r.hSign  = Dagaz.Model.hplayer(r.hSign, this.player);
   r.player = design.currPlayer(r.turn);
-  r.zSign = Dagaz.Model.zplayer(r.zSign, r.player);
-  r.hSign = Dagaz.Model.hplayer(r.hSign, r.player);
+  r.zSign  = Dagaz.Model.zplayer(r.zSign, r.player);
+  r.hSign  = Dagaz.Model.hplayer(r.hSign, r.player);
+  r.level  = this.level + 1;
   move.applyAll(r);
   r.move = move;
   return r;
@@ -2010,6 +2012,21 @@ _.mixin({
      return r;
   }
 });
+
+ZrfMove.prototype.getZ = function() {
+  if (_.isUndefined(this.zSign)) {
+      _.each(this.actions, function(a) {
+          if (a[2] === null) return;
+          if (a[0] !== null) {
+              this.zSign = Dagaz.Model.zupdate(this.zSign, a[2][0], a[0][0]);
+          }
+          if (a[1] !== null) {
+              this.zSign = Dagaz.Model.zupdate(this.zSign, a[2][0], a[1][0]);
+          }
+      }, this);
+  }
+  return this.zSign;
+}
 
 ZrfMove.prototype.getControlList = function() {
   return _.chain(this.actions)
