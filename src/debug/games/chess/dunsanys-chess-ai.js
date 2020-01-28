@@ -1,7 +1,8 @@
 (function() {
 
-Dagaz.AI.AI_FRAME = 2000;
-Dagaz.AI.REP_DEEP = 30;
+Dagaz.AI.AI_FRAME    = 1500;
+Dagaz.AI.REP_DEEP    = 30;
+Dagaz.AI.MAX_QS_VARS = 1;
 
 var penalty = [
   [   0,   0,   0,   0,   0,   0,   0,   0,
@@ -70,22 +71,11 @@ Dagaz.AI.isMajorPiece = function(type) {
   return true;
 }
 
-var getTarget = function(move) {
-  for (var i = 0; i < move.actions.length; i++) {
-       if (move.actions[i][0] !== null) {
-           var pos = move.actions[i][0][0];
-           if (move.actions[i][1] === null) return pos;
-           return move.actions[i][1][0];
-       }
-  }
-  return null;
-}
-
 Dagaz.AI.isRepDraw = function(board) {
   var z = board.zSign;
   for (var i = 0; i < Dagaz.AI.REP_DEEP; i++) {
        if (board.parent === null) return false;
-       var pos = getTarget(board.move);
+       var pos = Dagaz.AI.getTarget(board.move);
        board = board.parent;
        if (board.zSign == z) return true;
        if (pos === null) continue;

@@ -5,8 +5,10 @@ Dagaz.AI.AI_FRAME     = 5000;
 Dagaz.AI.IDLE_FRAME   = 1000;
 Dagaz.AI.START_DEEP   = 1;
 Dagaz.AI.NOISE_FACTOR = 100;
-Dagaz.AI.MAX_QS_LEVEL = 1;
+Dagaz.AI.MAX_QS_LEVEL = 3;
 Dagaz.AI.STALEMATE    = 0;
+Dagaz.AI.MAX_AB_VARS  = 7;
+Dagaz.AI.MAX_QS_VARS  = 3;
 
 var MAX_LEVEL = 25;
 var MAX_VALUE = 2000000;
@@ -25,7 +27,7 @@ function Ai(parent) {
 var findBot = Dagaz.AI.findBot;
 
 Dagaz.AI.findBot = function(type, params, parent) {
-  if ((type == "ab") || (type == "common") /*|| (type == "1")*/ || (type == "2")) {
+  if ((type == "ab") || (type == "common") || (type == "1") /*|| (type == "2")*/) {
       return new Ai(parent);
   } else {
       return findBot(type, params, parent);
@@ -154,6 +156,26 @@ Ai.prototype.store = function(ctx, board, value, flag, maxLevel, best, level) {
   };
 }
 
+Dagaz.AI.getSource = function(move) {
+  for (var i = 0; i < move.actions.length; i++) {
+       if ((move.actions[i][0] !== null) && (move.actions[i][1] !== null)) {
+           return move.actions[i][0][0];
+       }
+  }
+  return null;
+}
+
+Dagaz.AI.getTarget = function(move) {
+  for (var i = 0; i < move.actions.length; i++) {
+       if (move.actions[i][0] !== null) {
+           var pos = move.actions[i][0][0];
+           if (move.actions[i][1] === null) return pos;
+           return move.actions[i][1][0];
+       }
+  }
+  return null;
+}
+
 function MovePicker(ctx, board, best, k1, k2) {
   this.list = []; var loosing = []; var done = [];
   if (!_.isUndefined(best) && (best !== null)) {
@@ -169,6 +191,10 @@ function MovePicker(ctx, board, best, k1, k2) {
       var b = applyMove(ctx, board, move);
       if (Dagaz.AI.see(ctx.design, board, move)) {
           b.weight = Dagaz.AI.heuristic(this, ctx.design, board, move);
+          var pos = Dagaz.AI.getTarget(move);
+          if ((pos !== null) && (pos == board.lastt)) {
+              b.weight += 10000;
+          }
           this.list.push(b);
       } else {
           loosing.push(b);
@@ -192,12 +218,15 @@ function MovePicker(ctx, board, best, k1, k2) {
       this.list.push(b);
   }, this);
   this.prune = this.list.length;
+  if (this.list.length >= Dagaz.AI.MAX_AB_VARS) return;
   _.each(board.moves, function(move) {
+      if (this.list.length >= Dagaz.AI.MAX_AB_VARS) return;
       if (_.indexOf(done, move.getZ()) >= 0) return;
       var b = applyMove(ctx, board, move);
       this.list.push(b);
   }, this);
   _.each(loosing, function(b) {
+      if (this.list.length >= Dagaz.AI.MAX_AB_VARS) return;
       this.list.push(b);
   }, this);
 }
@@ -211,6 +240,7 @@ Ai.prototype.acn = function(ctx, board, maxLevel, level, beta, allowNull) {
       ctx.killer[1].push(0);
   }
   if (Dagaz.AI.isRepDraw(board)) return 0;
+  // Mate distance pruning: https://www.chessprogramming.org/Mate_Distance_Pruning
   if (-MAX_VALUE + level >= beta) return beta;
   if (MAX_VALUE - (level + 1) < beta) return beta - 1;
   var best = null;
@@ -262,7 +292,7 @@ Ai.prototype.acn = function(ctx, board, maxLevel, level, beta, allowNull) {
            ltos++;
        } else {
            var r = ltos - (i > 14 ? 2 : 1);
-           // Late move reductions
+           // Late move reductions: https://www.chessprogramming.org/Late_Move_Reductions
            if ((i >= m.prune) && (i > 5) && (maxLevel >= 3)) {
                v = -this.acn(ctx, b, r, level + 1, -(beta - 1), true);
                isFs = (v >= beta);
@@ -300,6 +330,46 @@ Ai.prototype.acn = function(ctx, board, maxLevel, level, beta, allowNull) {
   return e;
 }
 
+function FastMovePicker(ctx, board, inCheck) {
+  var best = null; var weight = null;
+  board.moves = generate(ctx, board); 
+  _.each(board.moves, function(move) {
+     var pos = Dagaz.AI.getTarget(move);
+     if ((pos === null) || (pos != board.lastt)) return;
+     if (!inCheck && !Dagaz.AI.see(ctx.design, board, move)) return;
+     var w = Dagaz.AI.heuristic(this, ctx.design, board, move);
+     if ((weight === null) || (w > weight)) {
+         weight = w;
+         best = move;
+     }
+  }, this);
+  this.list = [];
+  if (best !== null) {
+      var b = applyMove(ctx, board, best);
+      b.weight = weight + 100000;
+      this.list.push(b);
+  }
+  _.each(board.moves, function(move) {
+     if (!inCheck && (this.list.length >= Dagaz.AI.MAX_QS_VARS)) return;
+     if ((best !== null) && (best.getZ() == move.getZ())) return;
+     if (!Dagaz.AI.isCapture(board, move)) return;
+     if (!inCheck && !Dagaz.AI.see(ctx.design, board, move)) return;
+     var b = applyMove(ctx, board, move);
+     b.weight = Dagaz.AI.heuristic(this, ctx.design, board, move);
+     this.list.push(b);
+  }, this);
+  this.list = _.sortBy(this.list, function(b) {
+     return -b.weight;
+  });
+  if (inCheck) {
+      _.each(board.moves, function(move) {
+         if (Dagaz.AI.isCapture(board, move)) return;
+         var b = applyMove(ctx, board, move);
+         this.list.push(b);
+      }, this);
+  }
+}
+
 Ai.prototype.qs = function(ctx, board, alpha, beta, maxLevel, level) {
   if (level > MAX_LEVEL) return 0;
   ctx.qNodeCount++;
@@ -311,27 +381,15 @@ Ai.prototype.qs = function(ctx, board, alpha, beta, maxLevel, level) {
   if (e >= beta) return e;
   if (e > alpha) alpha = e;
   if (maxLevel < -Dagaz.AI.MAX_QS_LEVEL) return e;
-  board.moves = generate(ctx, board); 
-  var moves = [];
-  _.each(board.moves, function(move) {
-      if (inCheck || Dagaz.AI.isCapture(board, move)) moves.push(move);
-  });
-  _.each(moves, function(move) {
-     if (!_.isUndefined(move.score)) return;
-     move.score = this.getMoveScore(ctx, board, move);
-  }, this);
-  moves = _.sortBy(moves, function(move) {
-     return -move.score;
-  });
-  for (var i = 0; i < moves.length; i++) {
-     if (!inCheck && !Dagaz.AI.see(ctx.design, board, moves[i])) continue;
-     var b = applyMove(ctx, board, moves[i]);
-     var v = -this.qs(ctx, b, -beta, -alpha, maxLevel - 1, level + 1);
-     if (v > e) {
-         if (v >= beta) return v;
-         if (v > alpha) alpha = v;
-         e = v;
-     }
+  var m = new FastMovePicker(ctx, board, inCheck);
+  for (var i = 0; i < m.list.length; i++) {
+       var b = m.list[i];
+       var v = -this.qs(ctx, b, -beta, -alpha, maxLevel - 1, level + 1);
+       if (v > e) {
+           if (v >= beta) return v;
+           if (v > alpha) alpha = v;
+           e = v;
+       }
   }
   return e;
 }
@@ -348,7 +406,7 @@ Ai.prototype.ab = function(ctx, board, maxLevel, level, alpha, beta) {
   }
   if (level > ctx.mLevel) ctx.mLevel = level;
   if ((level > 0) && Dagaz.AI.isRepDraw(board)) return 0;
-  // Mate distance pruning
+  // Mate distance pruning: https://www.chessprogramming.org/Mate_Distance_Pruning
   var oa = alpha;
   if (alpha > -MAX_VALUE + level) alpha = -MAX_VALUE + level;
   if (beta < MAX_VALUE - (level + 1)) beta = MAX_VALUE - (level + 1);

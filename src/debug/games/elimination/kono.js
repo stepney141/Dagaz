@@ -26,7 +26,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-blink", "false");
-    design.checkVersion("advisor-wait", "1");
+    design.checkVersion("advisor-wait", "10");
     design.checkVersion("kono-extension", "true");
 
     design.addDirection("w");  // 0
@@ -81,8 +81,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(1, ZRF.FUNCTION,	25);	// to
     design.addCommand(1, ZRF.FUNCTION,	28);	// end
 
-
-    design.addPiece("Ball", 0);
+    design.addPiece("Ball", 0, 800);
     design.addMove(0, 0, [6], 0);
     design.addMove(0, 0, [3], 0);
     design.addMove(0, 0, [4], 0);

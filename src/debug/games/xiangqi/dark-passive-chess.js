@@ -28,6 +28,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-blink", "false");
     design.checkVersion("animate-captures", "false");
+    design.checkVersion("advisor-wait", "10");
 
     design.addDirection("w");
     design.addDirection("e");
@@ -188,25 +189,25 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(3, ZRF.FUNCTION,	25);	// to
     design.addCommand(3, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("General", 0, 1000);
+    design.addPiece("General", 0, 600000);
     design.addMove(0, 0, [4], 0);
     design.addMove(0, 0, [2], 0);
     design.addMove(0, 0, [0], 0);
     design.addMove(0, 0, [1], 0);
 
-    design.addPiece("Mandarin", 1, 4);
+    design.addPiece("Mandarin", 1, 800);
     design.addMove(1, 0, [7], 0);
     design.addMove(1, 0, [6], 0);
     design.addMove(1, 0, [3], 0);
     design.addMove(1, 0, [5], 0);
 
-    design.addPiece("Elephant", 2, 2);
+    design.addPiece("Elephant", 2, 800);
     design.addMove(2, 1, [7, 7], 0);
     design.addMove(2, 1, [6, 6], 0);
     design.addMove(2, 1, [3, 3], 0);
     design.addMove(2, 1, [5, 5], 0);
 
-    design.addPiece("Horse", 3, 8);
+    design.addPiece("Horse", 3, 3000);
     design.addMove(3, 1, [4, 7], 0);
     design.addMove(3, 1, [4, 3], 0);
     design.addMove(3, 1, [2, 6], 0);
@@ -216,13 +217,13 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(3, 1, [0, 6], 0);
     design.addMove(3, 1, [1, 5], 0);
 
-    design.addPiece("Cannon", 4, 10);
+    design.addPiece("Cannon", 4, 5500);
     design.addMove(4, 2, [4, 4, 4, 4], 0);
     design.addMove(4, 2, [2, 2, 2, 2], 0);
     design.addMove(4, 2, [0, 0, 0, 0], 0);
     design.addMove(4, 2, [1, 1, 1, 1], 0);
 
-    design.addPiece("Chariot", 5, 20);
+    design.addPiece("Chariot", 5, 5000);
     design.addMove(5, 3, [4, 4], 0);
     design.addMove(5, 3, [2, 2], 0);
     design.addMove(5, 3, [0, 0], 0);

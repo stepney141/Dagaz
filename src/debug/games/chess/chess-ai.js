@@ -1,7 +1,11 @@
 (function() {
 
-Dagaz.AI.AI_FRAME = 2000;
-Dagaz.AI.REP_DEEP = 30;
+Dagaz.AI.AI_FRAME     = 1000;
+Dagaz.AI.REP_DEEP     = 30;
+Dagaz.AI.MAX_QS_LEVEL = 2;
+Dagaz.AI.MAX_AB_VARS  = 20;
+Dagaz.AI.MAX_QS_VARS  = 1;
+Dagaz.AI.STALEMATE    = 0;
 
 var penalty = [
   [   0,   0,   0,   0,   0,   0,   0,   0,
@@ -70,22 +74,11 @@ Dagaz.AI.isMajorPiece = function(type) {
   return true;
 }
 
-var getTarget = function(move) {
-  for (var i = 0; i < move.actions.length; i++) {
-       if (move.actions[i][0] !== null) {
-           var pos = move.actions[i][0][0];
-           if (move.actions[i][1] === null) return pos;
-           return move.actions[i][1][0];
-       }
-  }
-  return null;
-}
-
 Dagaz.AI.isRepDraw = function(board) {
   var z = board.zSign;
   for (var i = 0; i < Dagaz.AI.REP_DEEP; i++) {
        if (board.parent === null) return false;
-       var pos = getTarget(board.move);
+       var pos = Dagaz.AI.getTarget(board.move);
        board = board.parent;
        if (board.zSign == z) return true;
        if (pos === null) continue;
@@ -118,6 +111,39 @@ var checkSlide = function(design, board, player, pos, dir) {
   return true;
 }
 
+var checkJump = function(design, board, player, pos, d, o) {
+  var p = design.navigate(player, pos, d);
+  if  (p === null) return false;
+  p = design.navigate(player, p, o);
+  if  (p === null) return false;
+  var piece = board.getPiece(p);
+  if (piece === null) return false;
+  if (piece.player == player) return false;
+  if (piece.type != 0) return false;
+  return true;
+}
+
+var isAttacked = function(design, board, player, pos) {
+return checkStep(design, board, board.player, pos, 3) ||
+       checkStep(design, board, board.player, pos, 7) ||
+       checkSlide(design, board, board.player, pos, 0) ||
+       checkSlide(design, board, board.player, pos, 1) ||
+       checkSlide(design, board, board.player, pos, 2) ||
+       checkSlide(design, board, board.player, pos, 3) ||
+       checkSlide(design, board, board.player, pos, 4) ||
+       checkSlide(design, board, board.player, pos, 5) ||
+       checkSlide(design, board, board.player, pos, 6) ||
+       checkSlide(design, board, board.player, pos, 7) ||
+       checkJump(design, board, board.player, pos, 0, 6) ||
+       checkJump(design, board, board.player, pos, 0, 7) ||
+       checkJump(design, board, board.player, pos, 1, 3) ||
+       checkJump(design, board, board.player, pos, 1, 5) ||
+       checkJump(design, board, board.player, pos, 2, 5) ||
+       checkJump(design, board, board.player, pos, 2, 6) ||
+       checkJump(design, board, board.player, pos, 4, 3) ||
+       checkJump(design, board, board.player, pos, 4, 7);
+}
+
 Dagaz.AI.see = function(design, board, move) {
   if (!move.isSimpleMove()) return false;
   var pos = move.actions[0][0][0];
@@ -127,23 +153,14 @@ Dagaz.AI.see = function(design, board, move) {
   pos = move.actions[0][1][0];
   piece = board.getPiece(pos);
   if (piece === null) return false;
-  if (checkStep(design, board, board.player, pos, 3)) return false;
-  if (checkStep(design, board, board.player, pos, 7)) return false;
-  if (checkSlide(design, board, board.player, pos, 0)) return false;
-  if (checkSlide(design, board, board.player, pos, 1)) return false;
-  if (checkSlide(design, board, board.player, pos, 2)) return false;
-  if (checkSlide(design, board, board.player, pos, 3)) return false;
-  if (checkSlide(design, board, board.player, pos, 4)) return false;
-  if (checkSlide(design, board, board.player, pos, 5)) return false;
-  if (checkSlide(design, board, board.player, pos, 6)) return false;
-  if (checkSlide(design, board, board.player, pos, 7)) return false;
+  if (isAttacked(design, board, piece.player, pos)) return false;
   return true;
 }
 
 // TODO: cover
 // TODO: X-Ray атаки
 // Dunsany's Chess зависает в qs при возможной атаке на короля
-/*Dagaz.AI.inCheck = function(design, board) {
+Dagaz.AI.inCheck = function(design, board) {
   if (_.isUndefined(board.inCheck)) {
       board.inCheck = false;
       var king = null;
@@ -155,19 +172,10 @@ Dagaz.AI.see = function(design, board, move) {
           }
       }
       if (king === null) return false;
-      board.inCheck = checkStep(design, board, board.player, king, 3) ||
-                      checkStep(design, board, board.player, king, 7) ||
-                      checkSlide(design, board, board.player, king, 0) ||
-                      checkSlide(design, board, board.player, king, 1) ||
-                      checkSlide(design, board, board.player, king, 2) ||
-                      checkSlide(design, board, board.player, king, 3) ||
-                      checkSlide(design, board, board.player, king, 4) ||
-                      checkSlide(design, board, board.player, king, 5) ||
-                      checkSlide(design, board, board.player, king, 6) ||
-                      checkSlide(design, board, board.player, king, 7);
+      board.inCheck = isAttacked(design, board, board.player, king);
   }
   return board.inCheck;
-}*/
+}
 
 Dagaz.AI.heuristic = function(ai, design, board, move) {
   var r = 1;
