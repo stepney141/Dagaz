@@ -1,8 +1,11 @@
 (function() {
 
-Dagaz.AI.AI_FRAME    = 1500;
-Dagaz.AI.REP_DEEP    = 30;
-Dagaz.AI.MAX_QS_VARS = 1;
+Dagaz.AI.AI_FRAME     = 1500;
+Dagaz.AI.REP_DEEP     = 30;
+Dagaz.AI.MAX_QS_LEVEL = 5;
+Dagaz.AI.MAX_AB_VARS  = 10;
+Dagaz.AI.MAX_QS_VARS  = 1;
+Dagaz.AI.STALEMATE    = 0;
 
 var penalty = [
   [   0,   0,   0,   0,   0,   0,   0,   0,
@@ -133,9 +136,6 @@ Dagaz.AI.see = function(design, board, move) {
   return true;
 }
 
-// TODO: cover
-// TODO: X-Ray атаки
-// Dunsany's Chess зависает в qs при возможной атаке на короля
 Dagaz.AI.inCheck = function(design, board) {
   if (_.isUndefined(board.inCheck)) {
       board.inCheck = false;
@@ -181,7 +181,6 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
   return r;
 }
 
-// TODO: Mobility
 Dagaz.AI.eval = function(design, params, board, player) {
   if (_.isUndefined(board.completeEval)) {
       board.completeEval = 0;

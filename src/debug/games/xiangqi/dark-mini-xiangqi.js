@@ -21,10 +21,11 @@ ZRF = {
 
 Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
-    design.checkVersion("smart-moves", "true");
+    design.checkVersion("smart-moves", "false");
     design.checkVersion("animate-captures", "false");
     design.checkVersion("show-hints", "false");
     design.checkVersion("ko", "situation");
+    design.checkVersion("advisor-wait", "15");
     design.checkVersion("xiangqi-extension", "true");
 
     design.addDirection("w");
@@ -195,12 +196,12 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(6, ZRF.FUNCTION,	25);	// to
     design.addCommand(6, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("Soldier", 0, 1);
+    design.addPiece("Soldier", 0, 800);
     design.addMove(0, 0, [4], 0);
     design.addMove(0, 1, [0], 0);
     design.addMove(0, 1, [1], 0);
 
-    design.addPiece("Horse", 1, 4);
+    design.addPiece("Horse", 1, 3000);
     design.addMove(1, 2, [4, 7], 0);
     design.addMove(1, 2, [4, 3], 0);
     design.addMove(1, 2, [2, 6], 0);
@@ -210,13 +211,13 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(1, 2, [0, 6], 0);
     design.addMove(1, 2, [1, 5], 0);
 
-    design.addPiece("Chariot", 3, 10);
+    design.addPiece("Chariot", 3, 5000);
     design.addMove(3, 4, [4, 4], 0);
     design.addMove(3, 4, [2, 2], 0);
     design.addMove(3, 4, [0, 0], 0);
     design.addMove(3, 4, [1, 1], 0);
 
-    design.addPiece("Cannon", 4, 7);
+    design.addPiece("Cannon", 4, 5500);
     design.addMove(4, 5, [4, 4, 4, 4], 0);
     design.addMove(4, 5, [2, 2, 2, 2], 0);
     design.addMove(4, 5, [0, 0, 0, 0], 0);
@@ -228,7 +229,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(5, 6, [3], 0);
     design.addMove(5, 6, [5], 0);
 
-    design.addPiece("General", 6, 0);
+    design.addPiece("General", 6, 600000);
     design.addMove(6, 6, [4], 0);
     design.addMove(6, 6, [2], 0);
     design.addMove(6, 6, [0], 0);

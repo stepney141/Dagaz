@@ -1,7 +1,5 @@
 (function() {
 
-var MAXVALUE              = 100000;
-
 Dagaz.AI.AI_FRAME         = 5000;
 Dagaz.AI.MIN_DEEP         = 5;
 
@@ -145,51 +143,12 @@ var spockBalance = function(design, board, player, pos) {
   return r;
 }
 
-var isAttacked = function(design, board, player, type, pos) {
-  var r = false;
-  var cover = board.getCover(design);
-  if (cover[pos]) {
-      _.each(cover[pos], function(p) {
-          if (!r) {
-              var piece = board.getPiece(p);
-              if ((piece !== null) && (piece.player != player)) {
-                  if ((+piece.type > 0) || (type == 4) || (type == 0)) {
-                       r = true;
-                  }
-              }
-          }
-      });
-  }
-  return r;
-}
-
 Dagaz.AI.eval = function(design, params, board, player) {
   var r = 0;
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
       if (piece !== null) {
           var v = design.price[piece.type];
-          if ((piece.type == 0) && (piece.player != board.player) && (spockBalance(design, board, piece.player, pos) < 0)) {
-              if (board.player == player) {
-                  r = MAXVALUE;
-              } else {
-                  r = -MAXVALUE;
-              }
-          } else {
-              if (isAttacked(design, board, piece.player, +piece.type, pos)) {
-                  v = (v / 2) | 0;
-                  if (piece.type == 0) {
-                      var cnt = 0;
-                      _.each(design.allPositions(), function(pos) {
-                          var p = board.getPiece(pos);
-                          if ((p !== null) && (p.type == 0) && (p.player == piece.player)) cnt++;
-                      });
-                      if (cnt < 2) {
-                          v = -MAXVALUE;
-                      }
-                  }
-              }
-          }
           if (piece.player != player) {
               v = -v;
           }

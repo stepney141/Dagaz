@@ -1,11 +1,11 @@
 Dagaz.View.MARK_R = 15;
 
-Dagaz.Controller.addSound(10, "sounds/turnover/pawn.wav");
-Dagaz.Controller.addSound(11, "sounds/turnover/knight.wav");
-Dagaz.Controller.addSound(12, "sounds/turnover/bishop.wav");
-Dagaz.Controller.addSound(13, "sounds/turnover/queen.wav");
-Dagaz.Controller.addSound(14, "sounds/turnover/rook.wav");
-Dagaz.Controller.addSound(15, "sounds/turnover/castle.wav");
+Dagaz.Controller.addSound(10, "sounds/turnover/pawn.wav", true);
+Dagaz.Controller.addSound(11, "sounds/turnover/knight.wav", true);
+Dagaz.Controller.addSound(12, "sounds/turnover/bishop.wav", true);
+Dagaz.Controller.addSound(13, "sounds/turnover/queen.wav", true);
+Dagaz.Controller.addSound(14, "sounds/turnover/rook.wav", true);
+Dagaz.Controller.addSound(15, "sounds/turnover/castle.wav", true);
 
 ZRF = {
     JUMP:          0,

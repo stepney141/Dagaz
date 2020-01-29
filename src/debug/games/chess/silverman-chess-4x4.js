@@ -28,14 +28,14 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("advisor-wait", "5");
     design.checkVersion("chess-invariant", "true");
 
-    design.addDirection("w");
-    design.addDirection("e");
-    design.addDirection("s");
-    design.addDirection("ne");
-    design.addDirection("n");
-    design.addDirection("se");
-    design.addDirection("sw");
-    design.addDirection("nw");
+    design.addDirection("w");  // 0
+    design.addDirection("e");  // 1
+    design.addDirection("s");  // 2
+    design.addDirection("ne"); // 3
+    design.addDirection("n");  // 4
+    design.addDirection("se"); // 5
+    design.addDirection("sw"); // 6
+    design.addDirection("nw"); // 7
 
     design.addPlayer("White", [1, 0, 4, 6, 2, 7, 3, 5]);
     design.addPlayer("Black", [1, 0, 4, 6, 2, 7, 3, 5]);
@@ -117,18 +117,18 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(4, ZRF.FUNCTION,	25);	// to
     design.addCommand(4, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("Pawn", 0, 100);
+    design.addPiece("Pawn", 0, 800);
     design.addMove(0, 0, [4], 0);
     design.addMove(0, 1, [7], 0);
     design.addMove(0, 1, [3], 0);
 
-    design.addPiece("Rook", 1, 500);
+    design.addPiece("Rook", 1, 5000);
     design.addMove(1, 2, [4, 4], 0);
     design.addMove(1, 2, [2, 2], 0);
     design.addMove(1, 2, [0, 0], 0);
     design.addMove(1, 2, [1, 1], 0);
 
-    design.addPiece("Queen", 4, 900);
+    design.addPiece("Queen", 4, 9750);
     design.addMove(4, 2, [4, 4], 0);
     design.addMove(4, 2, [2, 2], 0);
     design.addMove(4, 2, [0, 0], 0);
@@ -138,7 +138,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(4, 2, [3, 3], 0);
     design.addMove(4, 2, [5, 5], 0);
 
-    design.addPiece("King", 5, 20000);
+    design.addPiece("King", 5, 600000);
     design.addMove(5, 4, [4], 0);
     design.addMove(5, 4, [2], 0);
     design.addMove(5, 4, [0], 0);
