@@ -389,7 +389,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPiece("Bomb", 2, 400);
     design.addMove(2, 1, [3, 9], 0);
     design.addMove(2, 2, [3, 9, 3, 9], 0);
-    design.addMove(2, 5, [], 0);
+    design.addMove(2, 5, [], 0, 11);
 
     design.addPiece("Rook", 3, 5000);
     design.addMove(3, 6, [3, 9, 3, 9], 0);

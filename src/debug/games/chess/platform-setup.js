@@ -11,7 +11,23 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+var getSetup = function() {
+  var str = window.location.search.toString();
+  var result = str.match(/[?&]setup=([^&]*)/);
+  if (result) {
+      return result[1];
+  } else {
+      return "";
+  }
+}
+
+var setup = Dagaz.Model.setup;
+
 Dagaz.Model.setup = function(board) {
+  if (getSetup()) {
+      setup(board);
+      return;
+  }
   var design = Dagaz.Model.design;
   var pawn   = design.getPieceType("Pawn");
   var bomb   = design.getPieceType("Bomb");

@@ -430,7 +430,7 @@ Ai.prototype.ab = function(ctx, board, maxLevel, level, alpha, beta) {
        if (Dagaz.AI.inCheck(ctx.design, b)) ltos++;
        var v = null;
        if (f) {
-           if ((ctx.nodeCount & 127) == 127) {
+           if ((ctx.nodeCount & 31) == 31) {
                if (Date.now() - ctx.timestamp > getAiFrame()) {
                    Dagaz.AI.inProgress = false;
                }

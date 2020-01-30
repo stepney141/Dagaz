@@ -1,10 +1,10 @@
 (function() {
 
-Dagaz.AI.AI_FRAME     = 2000;
+Dagaz.AI.AI_FRAME     = 5000;
 Dagaz.AI.REP_DEEP     = 30;
 Dagaz.AI.MAX_QS_LEVEL = 3;
-Dagaz.AI.MAX_AB_VARS  = 30;
-Dagaz.AI.MAX_QS_VARS  = 3;
+Dagaz.AI.MAX_AB_VARS  = 1000;
+Dagaz.AI.MAX_QS_VARS  = 100;
 Dagaz.AI.STALEMATE    = 0;
 
 var penalty = [
@@ -84,70 +84,176 @@ Dagaz.AI.isMajorPiece = function(type) {
   return true;
 }
 
-var checkStep = function(design, board, player, pos, dir, types) {
+var buildMobility = function(design, board, player, pos, dir, value) {
   var p = design.navigate(player, pos, dir);
-  if  (p === null) return false;
-  var piece = board.getPiece(p);
-  if (piece === null) return false;
-  if (piece.player == player) return false;
-  if (_.indexOf(types, +piece.type) < 0) return false;
-  return true;
+  if (p === null) return;
+  if (board.getPiece(p) !== null) return;
+  board.mobility[player - 1] += value;
 }
 
-var checkSlide = function(design, board, player, pos, dir, types) {
+var buildStep = function(design, board, player, pos, dir, value) {
   var p = design.navigate(player, pos, dir);
-  if  (p === null) return false;
-  var piece = board.getPiece(p);
-  while (piece === null) {
-      var q = design.navigate(player, p, 9);
-      if (q === null) return false;
-      if (board.getPiece(q) === null) return false;
-      p = design.navigate(player, p, dir);
-      if  (p === null) return false;
-      piece = board.getPiece(p);
+  if (p === null) return;
+  if (board.getPiece(p) === null) {
+      board.mobility[player - 1] += value;
   }
-  if (piece.player == player) return false;
-  if (_.indexOf(types, +piece.type) < 0) return false;
-  return true;
+  if (board.player != player) {
+      if (_.isUndefined(board.attackers[p])) {
+          board.attackers[p] = [];
+      }
+      board.attackers[p].push(pos);
+  } else {
+      if (_.isUndefined(board.defenders[p])) {
+          board.defenders[p] = [];
+      }
+      board.defenders[p].push(pos);
+  }
 }
 
-var checkJump = function(design, board, player, pos, d, o, type) {
+var buildJump = function(design, board, player, pos, o, d, value) {
+  var p = design.navigate(player, pos, o);
+  if (p === null) return;
+  p = design.navigate(player, p, d);
+  if (p === null) return;
+  if (board.getPiece(p) === null) {
+      board.mobility[player - 1] += value;
+  }
+  if (board.player != player) {
+      if (_.isUndefined(board.attackers[p])) {
+          board.attackers[p] = [];
+      }
+      board.attackers[p].push(pos);
+  } else {
+      if (_.isUndefined(board.defenders[p])) {
+          board.defenders[p] = [];
+      }
+      board.defenders[p].push(pos);
+  }
+}
+
+var buildSlide = function(design, board, player, pos, dir, value) {
+  var p = design.navigate(player, pos, dir);
+  while (p !== null) {
+      if (board.player != player) {
+          if (_.isUndefined(board.attackers[p])) {
+              board.attackers[p] = [];
+          }
+          board.attackers[p].push(pos);
+      } else {
+          if (_.isUndefined(board.defenders[p])) {
+              board.defenders[p] = [];
+          }
+          board.defenders[p].push(pos);
+      }
+      if (board.getPiece(p) !== null) break;
+      board.mobility[player - 1] += value;
+      p = design.navigate(player, p, dir);
+  }
+}
+
+var buildBoom = function(design, board, player, pos, d, u) {
+  if (player == board.player) return;
   var p = design.navigate(player, pos, d);
-  if  (p === null) return false;
-  p = design.navigate(player, p, o);
-  if  (p === null) return false;
-  var piece = board.getPiece(p);
-  if (piece === null) return false;
-  if (piece.player == player) return false;
-  if (piece.type != type) return false;
-  return true;
+  if (p === null) return;
+  p = design.navigate(player, p, u);
+  if (board.getPiece(p) === null) return;
+  while (p !== null) {
+      if (p != pos) {
+          if (_.isUndefined(board.attackers[p])) {
+              board.attackers[p] = [];
+          }
+          board.attackers[p].push(pos);
+      }
+      p = design.navigate(player, p, u);
+  }
+}
+
+var buildCover = function(design, board) {
+  board.attackers = []; 
+  board.defenders = []; 
+  board.mobility  = [0, 0];
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if (piece === null) return;
+      if (piece.type == 0) { // Platform
+          buildMobility(design, board, piece.player, pos, 0, 100); // w
+          buildMobility(design, board, piece.player, pos, 1, 100); // e
+          buildMobility(design, board, piece.player, pos, 2, 100); // s
+          buildMobility(design, board, piece.player, pos, 3, 100); // n
+          return;
+      }
+      if (piece.type == 1) { // Pawn
+          buildMobility(design, board, piece.player, pos, 3, 10); // n
+          buildStep(design, board, piece.player, pos, 4, 10);     // ne
+          buildStep(design, board, piece.player, pos, 7, 10);     // nw
+          return;
+      }
+      if (piece.type == 2) { // Bomb
+          buildMobility(design, board, piece.player, pos, 3, 10); // n
+          buildBoom(design, board, piece.player, pos, 9, 8);      // down, up
+          return;
+      }
+      if ((piece.type == 3) || (piece.type == 6)) { // Rook, Queen
+          buildSlide(design, board, piece.player, pos, 0, 10);    // w
+          buildSlide(design, board, piece.player, pos, 1, 10);    // e
+          buildSlide(design, board, piece.player, pos, 2, 10);    // s
+          buildSlide(design, board, piece.player, pos, 3, 10);    // n
+          return;
+      }
+      if (piece.type == 4) { // Knight
+          buildJump(design, board, piece.player, pos, 0, 6, 10);  // w, sw
+          buildJump(design, board, piece.player, pos, 0, 7, 10);  // w, nw
+          buildJump(design, board, piece.player, pos, 1, 4, 10);  // e, ne
+          buildJump(design, board, piece.player, pos, 1, 5, 10);  // e, se
+          buildJump(design, board, piece.player, pos, 2, 5, 10);  // s, se
+          buildJump(design, board, piece.player, pos, 2, 6, 10);  // s, sw
+          buildJump(design, board, piece.player, pos, 3, 4, 10);  // n, ne
+          buildJump(design, board, piece.player, pos, 3, 7, 10);  // n, nw
+          return;
+      }
+      if ((piece.type == 3) || (piece.type == 6)) { // Bishop, Queen
+          buildSlide(design, board, piece.player, pos, 4, 10);    // ne
+          buildSlide(design, board, piece.player, pos, 5, 10);    // se
+          buildSlide(design, board, piece.player, pos, 6, 10);    // sw
+          buildSlide(design, board, piece.player, pos, 7, 10);    // nw
+          return;
+      }
+      if (piece.type == 7) { // King
+          buildStep(design, board, piece.player, pos, 0, 10);     // w
+          buildStep(design, board, piece.player, pos, 1, 10);     // e
+          buildStep(design, board, piece.player, pos, 2, 10);     // s
+          buildStep(design, board, piece.player, pos, 3, 10);     // n
+          buildStep(design, board, piece.player, pos, 4, 10);     // ne
+          buildStep(design, board, piece.player, pos, 5, 10);     // se
+          buildStep(design, board, piece.player, pos, 6, 10);     // sw
+          buildStep(design, board, piece.player, pos, 7, 10);     // nw
+      }
+  });
+}
+
+var getAttackers = function(design, board, player, pos) {
+  if (_.isUndefined(board.attackers)) {
+      buildCover(design, board);
+  }
+  var r = null;
+  if (board.player == player) {
+      r = board.attackers;
+  } else {
+      r = board.defenders;
+  }
+  if (_.isUndefined(r[pos])) return null;
+  return r[pos];
+}
+
+var getMobility = function(design, board, player) {
+  if (_.isUndefined(board.mobility)) {
+      buildCover(design, board);
+  }
+  return board.mobility[player - 1];
 }
 
 var isAttacked = function(design, board, player, pos) {
-return checkStep(design, board, board.player, pos, 4, [1, 7])  ||
-       checkStep(design, board, board.player, pos, 7, [1, 7])  ||
-       checkStep(design, board, board.player, pos, 0, [7])     ||
-       checkStep(design, board, board.player, pos, 1, [7])     ||
-       checkStep(design, board, board.player, pos, 2, [7])     ||
-       checkStep(design, board, board.player, pos, 3, [7])     ||
-       checkStep(design, board, board.player, pos, 5, [7])     ||
-       checkStep(design, board, board.player, pos, 6, [7])     ||
-       checkSlide(design, board, board.player, pos, 0, [6, 3]) ||
-       checkSlide(design, board, board.player, pos, 1, [6, 3]) ||
-       checkSlide(design, board, board.player, pos, 2, [6, 3]) ||
-       checkSlide(design, board, board.player, pos, 3, [6, 3]) ||
-       checkSlide(design, board, board.player, pos, 4, [6, 5]) ||
-       checkSlide(design, board, board.player, pos, 5, [6, 5]) ||
-       checkSlide(design, board, board.player, pos, 6, [6, 5]) ||
-       checkSlide(design, board, board.player, pos, 7, [6, 5]) ||
-       checkJump(design, board, board.player, pos, 0, 6, 4)    ||
-       checkJump(design, board, board.player, pos, 0, 7, 4)    ||
-       checkJump(design, board, board.player, pos, 1, 4, 4)    ||
-       checkJump(design, board, board.player, pos, 1, 5, 4)    ||
-       checkJump(design, board, board.player, pos, 2, 5, 4)    ||
-       checkJump(design, board, board.player, pos, 2, 6, 4)    ||
-       checkJump(design, board, board.player, pos, 3, 4, 4)    ||
-       checkJump(design, board, board.player, pos, 3, 7, 4);
+  return getAttackers(design, board, player, pos) !== null;
 }
 
 Dagaz.AI.see = function(design, board, move) {
@@ -212,6 +318,8 @@ Dagaz.AI.eval = function(design, params, board, player) {
                board.completeEval -= v;
            }
       });
+      board.completeEval += getMobility(design, board, player);
+      board.completeEval -= getMobility(design, board, design.nextPlayer(player));
   }
   if (board.player == player) {
       return board.completeEval;

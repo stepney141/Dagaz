@@ -144,6 +144,11 @@ Dagaz.Model.CheckInvariants = function(board) {
               if (k.getValue(0) || r.getValue(0)) {
                   move.failed = true;
               }
+              if (noDown(design, board, board.player, move.actions[0][1][0]) ||
+                  noDown(design, board, board.player, move.actions[1][1][0])) {
+                  move.failed = true;
+                  return;
+              }
               list.push(move.actions[0][0][0]);
               list.push(move.actions[1][1][0]);
           }
