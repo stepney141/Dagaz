@@ -117,15 +117,21 @@ Dagaz.Model.setup = function(board) {
       if (r.end > 0) {
           _.each(design.allPositions(), function(pos) {
               var piece = null;
+              var cnt   = 0;
               if ((pos < r.res.length) && !_.isUndefined(r.res[pos])) {
                   var type = r.res[pos].type;
                   var player = r.res[pos].player;
                   piece = Dagaz.Model.createPiece(type, player);
                   for (var i = 0; i < r.res[pos].attrs.length; i++) {
                        piece = piece.setValue(i, +r.res[pos].attrs[i]);
+                       cnt += +r.res[pos].attrs[i];
                   }
               }
-              board.setPiece(pos, piece);
+              if (cnt > 0) {
+                  board.setPiece(pos, piece);
+              } else {
+                  board.setPiece(pos, null);
+              }
           });
           var turn = getTurn();
           if (turn) {
