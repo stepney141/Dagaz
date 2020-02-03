@@ -29,6 +29,7 @@ Dagaz.Model.remapPromote    = false;
 Dagaz.Model.passForcedDraw  = true;
 Dagaz.Model.animateRedo     = true;
 Dagaz.Model.completePartial = false;
+Dagaz.Model.zrfCompatible   = false;
 
 Dagaz.Model.checkVersion = function(design, name, value) {  
   if (name == "z2j") {
@@ -1711,6 +1712,9 @@ var addPrior = function(priors, mode, gen) {
   var ix = 0;
   if (gen.design.modes.length > 0) {
       ix = Dagaz.find(gen.design.modes, mode);
+      if (Dagaz.Model.zrfCompatible && (ix < 0)) {
+          ix = gen.design.modes.length;
+      }
   }
   if (ix >= 0) {
       if (_.isUndefined(priors[ix])) {
