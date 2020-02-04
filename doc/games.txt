@@ -22,7 +22,7 @@
   - Four Lines Kono [best, cooperative, family:kono]
   - Cinc Camins [best, cooperative, family:kono]
   - GESS [king, groups, shared, todo:ai, family:other]
-  - Spock [todo:ai, best, family:other]
+  - Spock [best, family:other]
   - Apocalypse [sync, best, kings, family:chess]
   - Euclid [cooperative, family:other]
   - Maharadja [asym, attributes, best, king, family:chess]
@@ -167,7 +167,7 @@
 - XiangQi family
   - Qiquo Xiangqi [dark, 7-players, king, family:chess]
   - XiangQi [dark, ko, cloack, best, todo:ai, checkmate, openings, bug:session(dark), todo:mindsports, family:chess]
-  - Mini XiangQi [dark, ko, cloack, best, todo:ai, checkmate, family:chess]
+  - Mini XiangQi [dark, ko, cloack, best, checkmate, family:chess]
   - Janggi [dark, ko, cloack, best, todo:ai, checkmate, drops, wheel, limit, sparks, setups, todo:mindsports, family:chess]
   - Gwangsanghui [dark, attributes, cloack, best, todo:ai, huge, kings, family:chess]
   - Passive Chess [dark, cloack, best, checkmate, todo:mindsports, family:chess]

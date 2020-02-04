@@ -24,10 +24,10 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("tafl-extension", "goals");
     design.checkVersion("show-blink", "false");
 
-    design.addDirection("w");
-    design.addDirection("e");
-    design.addDirection("s");
-    design.addDirection("n");
+    design.addDirection("w"); // 0
+    design.addDirection("e"); // 1
+    design.addDirection("s"); // 2
+    design.addDirection("n"); // 3
 
     design.addPlayer("Black", [1, 0, 3, 2]);
     design.addPlayer("White", [0, 1, 2, 3]);
@@ -114,14 +114,13 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(1, ZRF.FUNCTION,	25);	// to
     design.addCommand(1, ZRF.FUNCTION,	28);	// end
 
-
-    design.addPiece("Man", 0);
+    design.addPiece("Man", 0, 800);
     design.addMove(0, 0, [3], 0);
     design.addMove(0, 0, [2], 0);
     design.addMove(0, 0, [0], 0);
     design.addMove(0, 0, [1], 0);
 
-    design.addPiece("King", 1);
+    design.addPiece("King", 1, 600000);
     design.addMove(1, 1, [3], 0);
     design.addMove(1, 1, [2], 0);
     design.addMove(1, 1, [0], 0);
