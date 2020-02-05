@@ -6,6 +6,8 @@ Dagaz.View.SHIFT_Y      = 0;
 Dagaz.View.STRIKE_ALPHA = 0.5;
 Dagaz.View.DROPS_ALPHA  = 0.5;
 
+Dagaz.View.HINT_STEPS   = 1;
+
 Dagaz.View.markType = {
    TARGET:    0,
    ATTACKING: 1,
@@ -300,7 +302,7 @@ View2D.prototype.movePiece = function(move, from, to, piece, phase, steps) {
   if (!this.vectorFound(ix, from, to, piece, move.mode)) {
       if (!_.isUndefined(move.hints)) {
           _.each(move.hints, function(p) {
-               this.addPhase(ix, from, p, piece, phase, 1);
+               this.addPhase(ix, from, p, piece, phase, Dagaz.View.HINT_STEPS);
                from = p;
                phase++;
           }, this);

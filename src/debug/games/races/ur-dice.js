@@ -1,5 +1,7 @@
 (function() {
 
+Dagaz.Model.passForcedDraw = false;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
@@ -10,15 +12,12 @@ Dagaz.Model.checkVersion = function(design, name, value) {
 
 var getDice = function(design, board, player) {
   var r = 0;
-  _.each(design.allPositions(), function(pos) {
-      if (design.inZone(4, player, pos)) {
-          var piece = board.getPiece(pos);
-          if (piece === null) return;
-          if (piece.type == 1) {
-              r++;
-          }
-      }
-  });
+  for (var pos = 0; pos < 3; pos++) {
+       var piece = board.getPiece(pos);
+       if ((piece !== null) && (piece.type == 1)) {
+           r++;
+       }
+  }
   if (r == 0) {
       r = 4;
   }
@@ -26,11 +25,11 @@ var getDice = function(design, board, player) {
 }
 
 var clearDices = function(design, board, player, move) {
-  _.each(design.allPositions(), function(pos) {
-      if (design.inZone(4, player, pos) && (board.getPiece(pos) !== null)) {
+  for (var pos = 0; pos < 3; pos++) {
+      if (board.getPiece(pos) !== null) {
           move.capturePiece(pos);
       }
-  });
+  }
 }
 
 var CheckInvariants = Dagaz.Model.CheckInvariants;
