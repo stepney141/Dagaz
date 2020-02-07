@@ -1,10 +1,10 @@
 (function() {
 
-Dagaz.AI.AI_FRAME     = 5000;
+Dagaz.AI.AI_FRAME     = 3000;
 Dagaz.AI.REP_DEEP     = 30;
-Dagaz.AI.MAX_QS_LEVEL = 3;
+Dagaz.AI.MAX_QS_LEVEL = 4;
 Dagaz.AI.MAX_AB_VARS  = 1000;
-Dagaz.AI.MAX_QS_VARS  = 100;
+Dagaz.AI.MAX_QS_VARS  = 50;
 Dagaz.AI.STALEMATE    = 0;
 
 var penalty = [
@@ -312,6 +312,10 @@ Dagaz.AI.eval = function(design, params, board, player) {
            var piece = board.getPiece(pos);
            if (piece === null) return;
            var v = Dagaz.AI.getPrice(design, piece, pos);
+           var attackers = getAttackers(design, board, piece.player, pos);
+           if ((attackers !== null) && (attackers.length > 0)) {
+               v = (v / 2) | 0;
+           }
            if (piece.player == board.player) {
                board.completeEval += v;
            } else {

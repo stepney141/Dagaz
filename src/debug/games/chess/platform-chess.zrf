@@ -54,7 +54,7 @@
   (verify last-to?)
   (verify (or (piece? Pawn) (piece? Bomb)))
   capture
-  n mark n
+  n (check-platform) mark n
   (verify last-from?)
   back
   add

@@ -19,6 +19,8 @@ Dagaz.Model.CheckInvariants = function(board) {
      _.each(move.actions, function(action) {
          if ((action[0] !== null) && (action[1] === null)) {
              var pos = action[0][0];
+             var piece = board.getPiece(pos);
+             if ((piece !== null) && (piece.type != 2)) return;
              var p = design.navigate(board.player, pos, down);
              var fuse = true;
              while (p !== null) {
