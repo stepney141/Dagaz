@@ -69,13 +69,29 @@ Dagaz.Controller.sound = function() {
     if (Dagaz.Controller.soundOff) {
         sound.innerHTML = "no Sound";
         Dagaz.Controller.soundOff = false;
+        document.cookie = "dagaz.sound=on";
     } else {
         sound.innerHTML = "Sound";
         Dagaz.Controller.soundOff = true;
+        document.cookie = "dagaz.sound=off";
     }
 }
 
+Dagaz.Controller.checkSound = function() {
+   var str = document.cookie;
+   var result = str.match(/dagaz\.sound=off/);
+   if (result) {
+       sound.innerHTML = "Sound";
+       Dagaz.Controller.soundOff = true;
+   } else {
+       sound.innerHTML = "no Sound";
+       Dagaz.Controller.soundOff = false;
+   }
+}
+
 })();
+
+Dagaz.Controller.checkSound();
 
 Dagaz.Controller.addSound(Dagaz.Sounds.move,  "../../sounds/clack.wav");
 Dagaz.Controller.addSound(Dagaz.Sounds.drop,  "../../sounds/on.wav");
