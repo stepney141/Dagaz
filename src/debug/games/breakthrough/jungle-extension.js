@@ -2,14 +2,14 @@
 
 Dagaz.AI.AI_FRAME      = 3000;
 Dagaz.AI.getForcedMove = Dagaz.AI.getChessForcedMove;
+Dagaz.AI.strictMode    = false;
 
 var checkVersion = Dagaz.Model.checkVersion;
-var strictMode = false;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
   if (name == "jungle-extension") {
       if (value == "strict") {
-          strictMode = true;
+          Dagaz.AI.strictMode = true;
       }
   } else {
       checkVersion(design, name, value);
@@ -20,7 +20,7 @@ var isGe = function(a, b) {
   if (a == 1) {
       return b == 8;
   }
-  if (strictMode) {
+  if (Dagaz.AI.strictMode) {
       if ((a == 8) && (b == 1)) return false;
   }
   return a >= b;

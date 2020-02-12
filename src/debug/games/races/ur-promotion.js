@@ -30,12 +30,15 @@ Dagaz.Model.CheckInvariants = function(board) {
           }
           pos = design.navigate(board.player, pos, dir);
           if (pos == move.actions[0][1][0]) break;
-/*        if (pos !== null) {
-              if (_.isUndefined(move.hints)) {
-                  move.hints = [];
+          if (pos !== null) {
+              var h = design.navigate(board.player, pos, 9);
+              if (h !== null) {
+                 if (_.isUndefined(move.hints)) {
+                     move.hints = [];
+                 }
+                 move.hints.push(h);
               }
-              move.hints.push(pos);
-          }*/
+          }
       }
       move.actions[0][2] = [piece];
   });

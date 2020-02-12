@@ -1,5 +1,7 @@
 (function() {
 
+Dagaz.Model.showLose = false;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {

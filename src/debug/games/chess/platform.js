@@ -1,5 +1,7 @@
 (function() {
 
+Dagaz.Model.showLose = false;
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {

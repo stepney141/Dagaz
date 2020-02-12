@@ -70,7 +70,7 @@ App.prototype.gameOver = function(text, player) {
       _.delay(gameOver, 1000, text, this, player);
       onceGameOver = false;
   }
-  if (this.board) {
+  if (this.board && Dagaz.Model.showLose) {
      var captured = [];
      _.each(this.design.allPositions(), function(pos) {
         var piece = this.board.getPiece(pos);
