@@ -498,12 +498,20 @@ View2D.prototype.animate = function() {
 
 Dagaz.View.showMarks = function(view, ctx) {
   drawMarks(ctx, view, view.target, "#00AA00");
-  drawMarks(ctx, view, view.strike, "#FF0000");
   drawMarks(ctx, view, view.goal,   "#FFFF00");
 }
 
 Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
+  var isSaved = false;
+  if (_.indexOf(view.strike, pos) >= 0) {
+      ctx.save();
+      ctx.globalAlpha = Dagaz.View.STRIKE_ALPHA;
+      isSaved = true;
+  }
   ctx.drawImage(piece.h, x, y, piece.dx, piece.dy);
+  if (isSaved) {
+      ctx.restore();
+  }
 }
 
 View2D.prototype.reInit = function(board) {
