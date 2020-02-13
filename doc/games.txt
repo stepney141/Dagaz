@@ -158,6 +158,7 @@
   - Sahkku [todo, dices, family:races]
   - Puluc [best, dices, groups, family:races]
   - Ur [best, dices, hints, smart(from), family:races]
+  - Tablan [dices, hints, smart(from), family:races]
   - Shen [best, dices, goto, autocomplete, family:races]
   - Senet [dices, goto, invariant, attributes, smart(from), family:races]
   - Tab [todo, dices, family:races]

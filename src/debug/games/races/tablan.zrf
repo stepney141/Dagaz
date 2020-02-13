@@ -1,0 +1,214 @@
+(define drop-dice (
+  (verify (in-zone? dices))
+  (verify not-friend?)
+  add
+))
+
+(define step-1 (
+  $1 
+  (verify not-friend?) add
+))
+
+(define step-2 (
+  $1 $1
+  (verify not-friend?) add
+))
+
+(define step-4 (
+  $1 $1 $1 $1
+  (verify not-friend?) add
+))
+
+(define step-6 (
+  $1 $1 $1 $1 $1 $1
+  (verify not-friend?) add
+))
+
+(define step-8 (
+  $1 $1 $1 $1 $1 $1 $1 $1
+  (verify not-friend?) add
+))
+
+(define step-12 (
+  $1 $1 $1 $1 $1 $1 $1 $1 $1 $1 $1 $1
+  (verify not-friend?) add
+))
+
+(game
+  (title "Tablan")
+
+  (players White Black)
+  (turn-order White Black)
+
+  (board
+     (image "images/tab/tablan.bmp")
+     (positions
+             (x1  613 0 628 204)
+             (x2  634 0 649 204)
+             (x3  655 0 670 204)
+             (x4  676 0 691 204)
+
+             (a4   2   2  52  52)
+             (a3   2  52  52 102)
+             (a2   2 102  52 152)
+             (a1   2 152  52 202)
+             (b4  52   2 102  52)
+             (b3  52  52 102 102)
+             (b2  52 102 102 152)
+             (b1  52 152 102 202)
+             (c4 102   2 152  52)
+             (c3 102  52 152 102)
+             (c2 102 102 152 152)
+             (c1 102 152 152 202)
+             (d4 152   2 202  52)
+             (d3 152  52 202 102)
+             (d2 152 102 202 152)
+             (d1 152 152 202 202)
+             (e4 202   2 252  52)
+             (e3 202  52 252 102)
+             (e2 202 102 252 152)
+             (e1 202 152 252 202)
+             (f4 252   2 302  52)
+             (f3 252  52 302 102)
+             (f2 252 102 302 152)
+             (f1 252 152 302 202)
+             (g4 302   2 352  52)
+             (g3 302  52 352 102)
+             (g2 302 102 352 152)
+             (g1 302 152 352 202)
+             (h4 352   2 402  52)
+             (h3 352  52 402 102)
+             (h2 352 102 402 152)
+             (h1 352 152 402 202)
+             (i4 402   2 452  52)
+             (i3 402  52 452 102)
+             (i2 402 102 452 152)
+             (i1 402 152 452 202)
+             (j4 452   2 502  52)
+             (j3 452  52 502 102)
+             (j2 452 102 502 152)
+             (j1 452 152 502 202)
+             (k4 502   2 552  52)
+             (k3 502  52 552 102)
+             (k2 502 102 552 152)
+             (k1 502 152 552 202)
+             (l4 552   2 602  52)
+             (l3 552  52 602 102)
+             (l2 552 102 602 152)
+             (l1 552 152 602 202)
+
+             (A4   2   2  52  52)
+             (A3   2  52  52 102)
+             (A2   2 102  52 152)
+             (A1   2 152  52 202)
+             (B4  52   2 102  52)
+             (B3  52  52 102 102)
+             (B2  52 102 102 152)
+             (B1  52 152 102 202)
+             (C4 102   2 152  52)
+             (C3 102  52 152 102)
+             (C2 102 102 152 152)
+             (C1 102 152 152 202)
+             (D4 152   2 202  52)
+             (D3 152  52 202 102)
+             (D2 152 102 202 152)
+             (D1 152 152 202 202)
+             (E4 202   2 252  52)
+             (E3 202  52 252 102)
+             (E2 202 102 252 152)
+             (E1 202 152 252 202)
+             (F4 252   2 302  52)
+             (F3 252  52 302 102)
+             (F2 252 102 302 152)
+             (F1 252 152 302 202)
+             (G4 302   2 352  52)
+             (G3 302  52 352 102)
+             (G2 302 102 352 152)
+             (G1 302 152 352 202)
+             (H4 352   2 402  52)
+             (H3 352  52 402 102)
+             (H2 352 102 402 152)
+             (H1 352 152 402 202)
+             (I4 402   2 452  52)
+             (I3 402  52 452 102)
+             (I2 402 102 452 152)
+             (I1 402 152 452 202)
+             (J4 452   2 502  52)
+             (J3 452  52 502 102)
+             (J2 452 102 502 152)
+             (J1 452 152 502 202)
+             (K4 502   2 552  52)
+             (K3 502  52 552 102)
+             (K2 502 102 552 152)
+             (K1 502 152 552 202)
+             (L4 552   2 602  52)
+             (L3 552  52 602 102)
+             (L2 552 102 602 152)
+             (L1 552 152 602 202)
+     )
+     (links next
+           (a1 b1) (b1 c1) (c1 d1) (d1 e1) (e1 f1) (f1 g1) (g1 h1) (h1 i1) (i1 j1) (j1 k1) (k1 l1)
+           (l2 k2) (k2 j2) (j2 i2) (i2 h2) (h2 g2) (g2 f2) (f2 e2) (e2 d2) (d2 c2) (c2 b2) (b2 a2)
+           (a3 b3) (b3 c3) (c3 d3) (d3 e3) (e3 f3) (f3 g3) (g3 h3) (h3 i3) (i3 j3) (j3 k3) (k3 l3)
+           (l4 k4) (k4 j4) (j4 i4) (i4 h4) (h4 g4) (g4 f4) (f4 e4) (e4 d4) (d4 c4) (c4 b4) (b4 a4)
+           (l1 l2) (a2 a3) (l3 l4)
+     )
+     (links next-black
+           (a1 b1) (b1 c1) (c1 d1) (d1 e1) (e1 f1) (f1 g1) (g1 h1) (h1 i1) (i1 j1) (j1 k1) (k1 l1)
+           (l2 k2) (k2 j2) (j2 i2) (i2 h2) (h2 g2) (g2 f2) (f2 e2) (e2 d2) (d2 c2) (c2 b2) (b2 a2)
+           (a3 b3) (b3 c3) (c3 d3) (d3 e3) (e3 f3) (f3 g3) (g3 h3) (h3 i3) (i3 j3) (j3 k3) (k3 l3)
+           (l4 k4) (k4 j4) (j4 i4) (i4 h4) (h4 g4) (g4 f4) (f4 e4) (e4 d4) (d4 c4) (c4 b4) (b4 a4)
+           (a4 a3) (l3 l2) (a2 a1)
+     )
+     (links up
+           (a1 A1) (b1 B1) (c1 C1) (d1 D1) (e1 E1) (f1 F1) (g1 G1) (h1 H1) (i1 I1) (j1 J1) (k1 K1) (l1 L1)
+           (a2 A2) (b2 B2) (c2 C2) (d2 D2) (e2 E2) (f2 F2) (g2 G2) (h2 H2) (i2 I2) (j2 J2) (k2 K2) (l2 L2)
+           (a3 A3) (b3 B3) (c3 C3) (d3 D3) (e3 E3) (f3 F3) (g3 G3) (h3 H3) (i3 I3) (j3 J3) (k3 K3) (l3 L3)
+           (a4 A4) (b4 B4) (c4 C4) (d4 D4) (e4 E4) (f4 F4) (g4 G4) (h4 H4) (i4 I4) (j4 J4) (k4 K4) (l4 L4)
+     )
+     (symmetry Black (next next-black) (next-black next) (up up))
+     (zone (name target)   
+           (players White) 
+           (positions a4 b4 c4 d4 e4 f4 g4 h4 i4 j4 k4 l4)
+     )
+     (zone (name target)
+           (players Black)
+           (positions a1 b1 c1 d1 e1 f1 g1 h1 i1 j1 k1 l1)
+     )
+  )
+
+  (piece
+	  (name dice0)
+          (image White "images/tab/d0.bmp"
+                 Black "images/tab/d0.bmp")
+          (drops
+             (move-type setup)
+             (drop-dice) 
+          )
+  )
+  (piece
+	  (name dice1)
+          (image White "images/tab/d1.bmp"
+                 Black "images/tab/d1.bmp")
+          (drops
+             (move-type setup)
+             (drop-dice) 
+          )
+  )
+  (piece
+	  (name  Man)
+          (image White "images/tab/white.bmp"
+                 Black "images/tab/black.bmp")
+          (moves
+             (move-type double)
+             (step-2 next) (step-8 next) (step-12 next)
+             (move-type once)
+             (step-1 next) (step-4 next) (step-6 next)
+          )
+  )
+
+  (board-setup
+          (White (Man a1 b1 c1 d1 e1 f1 g1 h1 i1 j1 k1 l1) (dice1 x1) (dice0 x2 x3 x4) )
+          (Black (Man a4 b4 c4 d4 e4 f4 g4 h4 i4 j4 k4 l4))
+  )
+)
