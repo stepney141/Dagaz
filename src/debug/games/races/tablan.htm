@@ -5,18 +5,21 @@
 </head>
 <body>
 
-<img id="Board" style="display:none" src="images/tab/tablan.png">
+<img id="WhiteBoard" style="display:none" src="images/tab/wtablan.png">
+<img id="BlackBoard" style="display:none" src="images/tab/btablan.png">
 <img id="Whitedice0" style="display:none" src="images/tab/d0.png">
 <img id="Blackdice0" style="display:none" src="images/tab/d0.png">
 <img id="Whitedice1" style="display:none" src="images/tab/d1.png">
 <img id="Blackdice1" style="display:none" src="images/tab/d1.png">
 <img id="WhiteMan" style="display:none" src="images/tab/white.png">
 <img id="BlackMan" style="display:none" src="images/tab/black.png">
+<img id="WhiteActive" style="display:none" src="images/tab/white.png">
+<img id="BlackActive" style="display:none" src="images/tab/black.png">
 
 <table style="margin:auto; font-family:sans-serif; font-size:14px" id="Table">
 <tr style="height:204px; vertical-align:top">
-<td id="CanvasCell" style="width:700px">
-<canvas id="Canvas" width="700" height="204" style="cursor:default">Broken canvas...</canvas>
+<td id="CanvasCell" style="width:718px">
+<canvas id="Canvas" width="718" height="204" style="cursor:default">Broken canvas...</canvas>
 </td><td style="width:300px;">
 <div style="height:510px; overflow:auto" id="ScrollDiv">
 <img id="GlyphImage"><p id="HelpText"></p>
@@ -44,8 +47,14 @@
 <script src="../../kernel/model/common-setup-v2.js"></script>
 <script src="../../kernel/view/2d/2d-view-v2.js"></script>
 <script src="../../kernel/controller/utils/move-list-v2.js"></script>
+<script src="../../kernel/controller/ai/heuristic-ai.js"></script>
+<script src="tablan-goal.js"></script>
+<script src="tablan-turns.js"></script>
+<script src="tablan-restriction.js"></script>
+<script src="tablan-dices.js"></script>
+<script src="tablan-hints.js"></script>
 <script src="tablan.js"></script>
-<script src="../../kernel/controller/app-v2.js"></script>
+<script src="../../kernel/controller/app-v4.js"></script>
 
 </body>
 </html>

@@ -21,7 +21,7 @@ ZRF = {
 
 Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
-    design.checkVersion("smart-moves", "from");
+    design.checkVersion("smart-moves", "false");
     design.checkVersion("pass-turn", "forced");
     design.checkVersion("pass-partial", "false");
     design.checkVersion("show-hints", "false");
@@ -36,6 +36,22 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPlayer("White", [0, 1, 2]);
     design.addPlayer("Black", [1, 0, 2]);
+
+    design.addTurn(1, [1, 4, 6, 2, 8, 12]); // 0
+    design.addTurn(1, [1, 4, 6]); // 1
+    design.repeatMark();
+    design.addRandom(2, [0]); // 2
+    design.addRandom(2, [0]); // 3
+    design.addRandom(2, [0]); // 4
+    design.addRandom(2, [0]); // 5
+    design.addTurn(2, [1, 4, 6, 2, 8, 12]); // 6
+    design.addTurn(2, [1, 4, 6]); // 7
+    design.addRandom(1, [0]); // 8
+    design.addRandom(1, [0]); // 9
+    design.addRandom(1, [0]); // 10
+    design.addRandom(1, [0]); // 11
+    design.addTurn(1, [1, 4, 6, 2, 8, 12]); // 12
+    design.addTurn(1, [1, 4, 6]); // 13
 
     design.addPosition("x1", [0, 0, 0]);
     design.addPosition("x2", [0, 0, 0]);
@@ -140,8 +156,10 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addZone("target", 1, [4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48]);
     design.addZone("target", 2, [7, 11, 15, 19, 23, 27, 31, 35, 39, 43, 47, 51]);
+    design.addZone("dices", 1, [0, 1, 2, 3]);
+    design.addZone("dices", 2, [0, 1, 2, 3]);
 
-    design.addCommand(0, ZRF.IN_ZONE,	0);	// dices
+    design.addCommand(0, ZRF.IN_ZONE,	1);	// dices
     design.addCommand(0, ZRF.FUNCTION,	20);	// verify
     design.addCommand(0, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(0, ZRF.FUNCTION,	0);	// not
@@ -150,6 +168,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(1, ZRF.FUNCTION,	24);	// from
+    design.addCommand(1, ZRF.IN_ZONE,	0);	// target
+    design.addCommand(1, ZRF.FUNCTION,	0);	// not
+    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
     design.addCommand(1, ZRF.PARAM,	0);	// $1
     design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(1, ZRF.PARAM,	1);	// $2
@@ -157,56 +178,30 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(1, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(1, ZRF.FUNCTION,	0);	// not
     design.addCommand(1, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(1, ZRF.PROMOTE,	3);	// Active
     design.addCommand(1, ZRF.FUNCTION,	25);	// to
     design.addCommand(1, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(2, ZRF.FUNCTION,	24);	// from
+    design.addCommand(2, ZRF.IN_ZONE,	0);	// target
+    design.addCommand(2, ZRF.FUNCTION,	0);	// not
+    design.addCommand(2, ZRF.FUNCTION,	20);	// verify
     design.addCommand(2, ZRF.PARAM,	0);	// $1
-    design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(2, ZRF.PARAM,	1);	// $2
-    design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(2, ZRF.PARAM,	2);	// $3
-    design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(2, ZRF.PARAM,	3);	// $4
-    design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(2, ZRF.PARAM,	4);	// $5
-    design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(2, ZRF.PARAM,	5);	// $6
-    design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(2, ZRF.PARAM,	6);	// $7
-    design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(2, ZRF.PARAM,	7);	// $8
     design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(2, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(2, ZRF.FUNCTION,	0);	// not
     design.addCommand(2, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(2, ZRF.PROMOTE,	3);	// Active
     design.addCommand(2, ZRF.FUNCTION,	25);	// to
     design.addCommand(2, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(3, ZRF.FUNCTION,	24);	// from
+    design.addCommand(3, ZRF.IN_ZONE,	0);	// target
+    design.addCommand(3, ZRF.FUNCTION,	0);	// not
+    design.addCommand(3, ZRF.FUNCTION,	20);	// verify
     design.addCommand(3, ZRF.PARAM,	0);	// $1
     design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(3, ZRF.PARAM,	1);	// $2
-    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(3, ZRF.PARAM,	2);	// $3
-    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(3, ZRF.PARAM,	3);	// $4
-    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(3, ZRF.PARAM,	4);	// $5
-    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(3, ZRF.PARAM,	5);	// $6
-    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(3, ZRF.PARAM,	6);	// $7
-    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(3, ZRF.PARAM,	7);	// $8
-    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(3, ZRF.PARAM,	8);	// $9
-    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(3, ZRF.PARAM,	9);	// $10
-    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(3, ZRF.PARAM,	10);	// $11
-    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(3, ZRF.PARAM,	11);	// $12
     design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(3, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(3, ZRF.FUNCTION,	0);	// not
@@ -215,7 +210,24 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(3, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(4, ZRF.FUNCTION,	24);	// from
+    design.addCommand(4, ZRF.IN_ZONE,	0);	// target
+    design.addCommand(4, ZRF.FUNCTION,	0);	// not
+    design.addCommand(4, ZRF.FUNCTION,	20);	// verify
     design.addCommand(4, ZRF.PARAM,	0);	// $1
+    design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(4, ZRF.PARAM,	1);	// $2
+    design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(4, ZRF.PARAM,	2);	// $3
+    design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(4, ZRF.PARAM,	3);	// $4
+    design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(4, ZRF.PARAM,	4);	// $5
+    design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(4, ZRF.PARAM,	5);	// $6
+    design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(4, ZRF.PARAM,	6);	// $7
+    design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(4, ZRF.PARAM,	7);	// $8
     design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(4, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(4, ZRF.FUNCTION,	0);	// not
@@ -224,6 +236,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(4, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(5, ZRF.FUNCTION,	24);	// from
+    design.addCommand(5, ZRF.IN_ZONE,	0);	// target
+    design.addCommand(5, ZRF.FUNCTION,	0);	// not
+    design.addCommand(5, ZRF.FUNCTION,	20);	// verify
     design.addCommand(5, ZRF.PARAM,	0);	// $1
     design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(5, ZRF.PARAM,	1);	// $2
@@ -232,6 +247,22 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(5, ZRF.PARAM,	3);	// $4
     design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(5, ZRF.PARAM,	4);	// $5
+    design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(5, ZRF.PARAM,	5);	// $6
+    design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(5, ZRF.PARAM,	6);	// $7
+    design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(5, ZRF.PARAM,	7);	// $8
+    design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(5, ZRF.PARAM,	8);	// $9
+    design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(5, ZRF.PARAM,	9);	// $10
+    design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(5, ZRF.PARAM,	10);	// $11
+    design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(5, ZRF.PARAM,	11);	// $12
+    design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(5, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(5, ZRF.FUNCTION,	0);	// not
     design.addCommand(5, ZRF.FUNCTION,	20);	// verify
@@ -239,17 +270,10 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(5, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(6, ZRF.FUNCTION,	24);	// from
+    design.addCommand(6, ZRF.IN_ZONE,	0);	// target
+    design.addCommand(6, ZRF.FUNCTION,	0);	// not
+    design.addCommand(6, ZRF.FUNCTION,	20);	// verify
     design.addCommand(6, ZRF.PARAM,	0);	// $1
-    design.addCommand(6, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(6, ZRF.PARAM,	1);	// $2
-    design.addCommand(6, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(6, ZRF.PARAM,	2);	// $3
-    design.addCommand(6, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(6, ZRF.PARAM,	3);	// $4
-    design.addCommand(6, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(6, ZRF.PARAM,	4);	// $5
-    design.addCommand(6, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(6, ZRF.PARAM,	5);	// $6
     design.addCommand(6, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(6, ZRF.FUNCTION,	3);	// friend?
     design.addCommand(6, ZRF.FUNCTION,	0);	// not
@@ -257,19 +281,63 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(6, ZRF.FUNCTION,	25);	// to
     design.addCommand(6, ZRF.FUNCTION,	28);	// end
 
+    design.addCommand(7, ZRF.FUNCTION,	24);	// from
+    design.addCommand(7, ZRF.IN_ZONE,	0);	// target
+    design.addCommand(7, ZRF.FUNCTION,	0);	// not
+    design.addCommand(7, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(7, ZRF.PARAM,	0);	// $1
+    design.addCommand(7, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(7, ZRF.PARAM,	1);	// $2
+    design.addCommand(7, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(7, ZRF.PARAM,	2);	// $3
+    design.addCommand(7, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(7, ZRF.PARAM,	3);	// $4
+    design.addCommand(7, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(7, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(7, ZRF.FUNCTION,	0);	// not
+    design.addCommand(7, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(7, ZRF.FUNCTION,	25);	// to
+    design.addCommand(7, ZRF.FUNCTION,	28);	// end
+
+    design.addCommand(8, ZRF.FUNCTION,	24);	// from
+    design.addCommand(8, ZRF.IN_ZONE,	0);	// target
+    design.addCommand(8, ZRF.FUNCTION,	0);	// not
+    design.addCommand(8, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(8, ZRF.PARAM,	0);	// $1
+    design.addCommand(8, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(8, ZRF.PARAM,	1);	// $2
+    design.addCommand(8, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(8, ZRF.PARAM,	2);	// $3
+    design.addCommand(8, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(8, ZRF.PARAM,	3);	// $4
+    design.addCommand(8, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(8, ZRF.PARAM,	4);	// $5
+    design.addCommand(8, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(8, ZRF.PARAM,	5);	// $6
+    design.addCommand(8, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(8, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(8, ZRF.FUNCTION,	0);	// not
+    design.addCommand(8, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(8, ZRF.FUNCTION,	25);	// to
+    design.addCommand(8, ZRF.FUNCTION,	28);	// end
+
     design.addPiece("dice0", 0);
-//  design.addDrop(0, 0, [], 0);
+    design.addDrop(0, 0, [], 0);
 
     design.addPiece("dice1", 1);
-//  design.addDrop(1, 0, [], 0);
+    design.addDrop(1, 0, [], 0);
 
     design.addPiece("Man", 2);
     design.addMove(2, 1, [0, 0], 2);
-    design.addMove(2, 2, [0, 0, 0, 0, 0, 0, 0, 0], 8);
-    design.addMove(2, 3, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 12);
-    design.addMove(2, 4, [0], 1);
-    design.addMove(2, 5, [0, 0, 0, 0], 4);
-    design.addMove(2, 6, [0, 0, 0, 0, 0, 0], 6);
+    design.addMove(2, 2, [0], 1);
+
+    design.addPiece("Active", 3);
+    design.addMove(3, 3, [0, 0], 2);
+    design.addMove(3, 4, [0, 0, 0, 0, 0, 0, 0, 0], 8);
+    design.addMove(3, 5, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 12);
+    design.addMove(3, 6, [0], 1);
+    design.addMove(3, 7, [0, 0, 0, 0], 4);
+    design.addMove(3, 8, [0, 0, 0, 0, 0, 0], 6);
 
     design.setup("White", "Man", 7);
     design.setup("White", "Man", 11);
@@ -302,112 +370,115 @@ Dagaz.Model.BuildDesign = function(design) {
 }
 
 Dagaz.View.configure = function(view) {
-    view.defBoard("Board");
+    view.defBoard("WhiteBoard", 0, 0, undefined, [0, 1, 8, 9, 10, 11, 12, 13]);
+    view.defBoard("BlackBoard", 0, 0, undefined, [2, 3, 4, 5, 6, 7]);
     view.defPiece("Whitedice0", "White dice0");
     view.defPiece("Blackdice0", "Black dice0");
     view.defPiece("Whitedice1", "White dice1");
     view.defPiece("Blackdice1", "Black dice1");
     view.defPiece("WhiteMan", "White Man");
     view.defPiece("BlackMan", "Black Man");
+    view.defPiece("WhiteActive", "White Active");
+    view.defPiece("BlackActive", "Black Active");
  
-    view.defPosition("x1", 613, 0, 15, 204);
-    view.defPosition("x2", 634, 0, 15, 204);
-    view.defPosition("x3", 655, 0, 15, 204);
-    view.defPosition("x4", 676, 0, 15, 204);
-    view.defPosition("a4", 2, 2, 50, 50);
-    view.defPosition("a3", 2, 52, 50, 50);
-    view.defPosition("a2", 2, 102, 50, 50);
-    view.defPosition("a1", 2, 152, 50, 50);
-    view.defPosition("b4", 52, 2, 50, 50);
-    view.defPosition("b3", 52, 52, 50, 50);
-    view.defPosition("b2", 52, 102, 50, 50);
-    view.defPosition("b1", 52, 152, 50, 50);
-    view.defPosition("c4", 102, 2, 50, 50);
-    view.defPosition("c3", 102, 52, 50, 50);
-    view.defPosition("c2", 102, 102, 50, 50);
-    view.defPosition("c1", 102, 152, 50, 50);
-    view.defPosition("d4", 152, 2, 50, 50);
-    view.defPosition("d3", 152, 52, 50, 50);
-    view.defPosition("d2", 152, 102, 50, 50);
-    view.defPosition("d1", 152, 152, 50, 50);
-    view.defPosition("e4", 202, 2, 50, 50);
-    view.defPosition("e3", 202, 52, 50, 50);
-    view.defPosition("e2", 202, 102, 50, 50);
-    view.defPosition("e1", 202, 152, 50, 50);
-    view.defPosition("f4", 252, 2, 50, 50);
-    view.defPosition("f3", 252, 52, 50, 50);
-    view.defPosition("f2", 252, 102, 50, 50);
-    view.defPosition("f1", 252, 152, 50, 50);
-    view.defPosition("g4", 302, 2, 50, 50);
-    view.defPosition("g3", 302, 52, 50, 50);
-    view.defPosition("g2", 302, 102, 50, 50);
-    view.defPosition("g1", 302, 152, 50, 50);
-    view.defPosition("h4", 352, 2, 50, 50);
-    view.defPosition("h3", 352, 52, 50, 50);
-    view.defPosition("h2", 352, 102, 50, 50);
-    view.defPosition("h1", 352, 152, 50, 50);
-    view.defPosition("i4", 402, 2, 50, 50);
-    view.defPosition("i3", 402, 52, 50, 50);
-    view.defPosition("i2", 402, 102, 50, 50);
-    view.defPosition("i1", 402, 152, 50, 50);
-    view.defPosition("j4", 452, 2, 50, 50);
-    view.defPosition("j3", 452, 52, 50, 50);
-    view.defPosition("j2", 452, 102, 50, 50);
-    view.defPosition("j1", 452, 152, 50, 50);
-    view.defPosition("k4", 502, 2, 50, 50);
-    view.defPosition("k3", 502, 52, 50, 50);
-    view.defPosition("k2", 502, 102, 50, 50);
-    view.defPosition("k1", 502, 152, 50, 50);
-    view.defPosition("l4", 552, 2, 50, 50);
-    view.defPosition("l3", 552, 52, 50, 50);
-    view.defPosition("l2", 552, 102, 50, 50);
-    view.defPosition("l1", 552, 152, 50, 50);
-    view.defPosition("A4", 2, 2, 50, 50);
-    view.defPosition("A3", 2, 52, 50, 50);
-    view.defPosition("A2", 2, 102, 50, 50);
-    view.defPosition("A1", 2, 152, 50, 50);
-    view.defPosition("B4", 52, 2, 50, 50);
-    view.defPosition("B3", 52, 52, 50, 50);
-    view.defPosition("B2", 52, 102, 50, 50);
-    view.defPosition("B1", 52, 152, 50, 50);
-    view.defPosition("C4", 102, 2, 50, 50);
-    view.defPosition("C3", 102, 52, 50, 50);
-    view.defPosition("C2", 102, 102, 50, 50);
-    view.defPosition("C1", 102, 152, 50, 50);
-    view.defPosition("D4", 152, 2, 50, 50);
-    view.defPosition("D3", 152, 52, 50, 50);
-    view.defPosition("D2", 152, 102, 50, 50);
-    view.defPosition("D1", 152, 152, 50, 50);
-    view.defPosition("E4", 202, 2, 50, 50);
-    view.defPosition("E3", 202, 52, 50, 50);
-    view.defPosition("E2", 202, 102, 50, 50);
-    view.defPosition("E1", 202, 152, 50, 50);
-    view.defPosition("F4", 252, 2, 50, 50);
-    view.defPosition("F3", 252, 52, 50, 50);
-    view.defPosition("F2", 252, 102, 50, 50);
-    view.defPosition("F1", 252, 152, 50, 50);
-    view.defPosition("G4", 302, 2, 50, 50);
-    view.defPosition("G3", 302, 52, 50, 50);
-    view.defPosition("G2", 302, 102, 50, 50);
-    view.defPosition("G1", 302, 152, 50, 50);
-    view.defPosition("H4", 352, 2, 50, 50);
-    view.defPosition("H3", 352, 52, 50, 50);
-    view.defPosition("H2", 352, 102, 50, 50);
-    view.defPosition("H1", 352, 152, 50, 50);
-    view.defPosition("I4", 402, 2, 50, 50);
-    view.defPosition("I3", 402, 52, 50, 50);
-    view.defPosition("I2", 402, 102, 50, 50);
-    view.defPosition("I1", 402, 152, 50, 50);
-    view.defPosition("J4", 452, 2, 50, 50);
-    view.defPosition("J3", 452, 52, 50, 50);
-    view.defPosition("J2", 452, 102, 50, 50);
-    view.defPosition("J1", 452, 152, 50, 50);
-    view.defPosition("K4", 502, 2, 50, 50);
-    view.defPosition("K3", 502, 52, 50, 50);
-    view.defPosition("K2", 502, 102, 50, 50);
-    view.defPosition("K1", 502, 152, 50, 50);
-    view.defPosition("L4", 552, 2, 50, 50);
-    view.defPosition("L3", 552, 52, 50, 50);
-    view.defPosition("L2", 552, 102, 50, 50);
-    view.defPosition("L1", 552, 152, 50, 50);
+    view.defPosition("x1", 631, 0, 15, 204);
+    view.defPosition("x2", 652, 0, 15, 204);
+    view.defPosition("x3", 673, 0, 15, 204);
+    view.defPosition("x4", 694, 0, 15, 204);
+    view.defPosition("a4", 20, 2, 50, 50);
+    view.defPosition("a3", 20, 52, 50, 50);
+    view.defPosition("a2", 20, 102, 50, 50);
+    view.defPosition("a1", 20, 152, 50, 50);
+    view.defPosition("b4", 70, 2, 50, 50);
+    view.defPosition("b3", 70, 52, 50, 50);
+    view.defPosition("b2", 70, 102, 50, 50);
+    view.defPosition("b1", 70, 152, 50, 50);
+    view.defPosition("c4", 120, 2, 50, 50);
+    view.defPosition("c3", 120, 52, 50, 50);
+    view.defPosition("c2", 120, 102, 50, 50);
+    view.defPosition("c1", 120, 152, 50, 50);
+    view.defPosition("d4", 170, 2, 50, 50);
+    view.defPosition("d3", 170, 52, 50, 50);
+    view.defPosition("d2", 170, 102, 50, 50);
+    view.defPosition("d1", 170, 152, 50, 50);
+    view.defPosition("e4", 220, 2, 50, 50);
+    view.defPosition("e3", 220, 52, 50, 50);
+    view.defPosition("e2", 220, 102, 50, 50);
+    view.defPosition("e1", 220, 152, 50, 50);
+    view.defPosition("f4", 270, 2, 50, 50);
+    view.defPosition("f3", 270, 52, 50, 50);
+    view.defPosition("f2", 270, 102, 50, 50);
+    view.defPosition("f1", 270, 152, 50, 50);
+    view.defPosition("g4", 320, 2, 50, 50);
+    view.defPosition("g3", 320, 52, 50, 50);
+    view.defPosition("g2", 320, 102, 50, 50);
+    view.defPosition("g1", 320, 152, 50, 50);
+    view.defPosition("h4", 370, 2, 50, 50);
+    view.defPosition("h3", 370, 52, 50, 50);
+    view.defPosition("h2", 370, 102, 50, 50);
+    view.defPosition("h1", 370, 152, 50, 50);
+    view.defPosition("i4", 420, 2, 50, 50);
+    view.defPosition("i3", 420, 52, 50, 50);
+    view.defPosition("i2", 420, 102, 50, 50);
+    view.defPosition("i1", 420, 152, 50, 50);
+    view.defPosition("j4", 470, 2, 50, 50);
+    view.defPosition("j3", 470, 52, 50, 50);
+    view.defPosition("j2", 470, 102, 50, 50);
+    view.defPosition("j1", 470, 152, 50, 50);
+    view.defPosition("k4", 520, 2, 50, 50);
+    view.defPosition("k3", 520, 52, 50, 50);
+    view.defPosition("k2", 520, 102, 50, 50);
+    view.defPosition("k1", 520, 152, 50, 50);
+    view.defPosition("l4", 570, 2, 50, 50);
+    view.defPosition("l3", 570, 52, 50, 50);
+    view.defPosition("l2", 570, 102, 50, 50);
+    view.defPosition("l1", 570, 152, 50, 50);
+    view.defPosition("A4", 20, 2, 50, 50);
+    view.defPosition("A3", 20, 52, 50, 50);
+    view.defPosition("A2", 20, 102, 50, 50);
+    view.defPosition("A1", 20, 152, 50, 50);
+    view.defPosition("B4", 70, 2, 50, 50);
+    view.defPosition("B3", 70, 52, 50, 50);
+    view.defPosition("B2", 70, 102, 50, 50);
+    view.defPosition("B1", 70, 152, 50, 50);
+    view.defPosition("C4", 120, 2, 50, 50);
+    view.defPosition("C3", 120, 52, 50, 50);
+    view.defPosition("C2", 120, 102, 50, 50);
+    view.defPosition("C1", 120, 152, 50, 50);
+    view.defPosition("D4", 170, 2, 50, 50);
+    view.defPosition("D3", 170, 52, 50, 50);
+    view.defPosition("D2", 170, 102, 50, 50);
+    view.defPosition("D1", 170, 152, 50, 50);
+    view.defPosition("E4", 220, 2, 50, 50);
+    view.defPosition("E3", 220, 52, 50, 50);
+    view.defPosition("E2", 220, 102, 50, 50);
+    view.defPosition("E1", 220, 152, 50, 50);
+    view.defPosition("F4", 270, 2, 50, 50);
+    view.defPosition("F3", 270, 52, 50, 50);
+    view.defPosition("F2", 270, 102, 50, 50);
+    view.defPosition("F1", 270, 152, 50, 50);
+    view.defPosition("G4", 320, 2, 50, 50);
+    view.defPosition("G3", 320, 52, 50, 50);
+    view.defPosition("G2", 320, 102, 50, 50);
+    view.defPosition("G1", 320, 152, 50, 50);
+    view.defPosition("H4", 370, 2, 50, 50);
+    view.defPosition("H3", 370, 52, 50, 50);
+    view.defPosition("H2", 370, 102, 50, 50);
+    view.defPosition("H1", 370, 152, 50, 50);
+    view.defPosition("I4", 420, 2, 50, 50);
+    view.defPosition("I3", 420, 52, 50, 50);
+    view.defPosition("I2", 420, 102, 50, 50);
+    view.defPosition("I1", 420, 152, 50, 50);
+    view.defPosition("J4", 470, 2, 50, 50);
+    view.defPosition("J3", 470, 52, 50, 50);
+    view.defPosition("J2", 470, 102, 50, 50);
+    view.defPosition("J1", 470, 152, 50, 50);
+    view.defPosition("K4", 520, 2, 50, 50);
+    view.defPosition("K3", 520, 52, 50, 50);
+    view.defPosition("K2", 520, 102, 50, 50);
+    view.defPosition("K1", 520, 152, 50, 50);
+    view.defPosition("L4", 570, 2, 50, 50);
+    view.defPosition("L3", 570, 52, 50, 50);
+    view.defPosition("L2", 570, 102, 50, 50);
+    view.defPosition("L1", 570, 152, 50, 50);
 }
