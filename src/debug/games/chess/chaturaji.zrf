@@ -159,6 +159,13 @@
          (slide n) (slide s) (slide w) (slide e)
      )
   )
+  (piece
+     (name  RajaCaptured)
+     (image South "images/chaturaji/gking.bmp"
+            West  "images/chaturaji/ykingc.bmp"
+            North "images/chaturaji/bkingc.bmp"
+            East  "images/chaturaji/rkingc.bmp")
+  )
 
   (board-setup
     (South

@@ -25,6 +25,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("smart-moves", "false");
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
+    design.checkVersion("show-captures", "false");
     design.checkVersion("advisor-wait", "15");
 
     design.addDirection("se"); // 0
@@ -47,20 +48,20 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addRandom(1, [0]); // 0
     design.addRandom(1, [0]); // 1
-    design.addTurn(1, [2, 3, 4, 5]); // 2
-    design.addTurn(1, [2, 3, 4, 5]); // 3
+    design.addTurn(1, [1, 2, 3, 4, 5]); // 2
+    design.addTurn(1, [1, 2, 3, 4, 5]); // 3
     design.addRandom(2, [0]); // 4
     design.addRandom(2, [0]); // 5
-    design.addTurn(2, [2, 3, 4, 5]); // 6
-    design.addTurn(2, [2, 3, 4, 5]); // 7
+    design.addTurn(2, [1, 2, 3, 4, 5]); // 6
+    design.addTurn(2, [1, 2, 3, 4, 5]); // 7
     design.addRandom(3, [0]); // 8
     design.addRandom(3, [0]); // 9
-    design.addTurn(3, [2, 3, 4, 5]); // 10
-    design.addTurn(3, [2, 3, 4, 5]); // 11
+    design.addTurn(3, [1, 2, 3, 4, 5]); // 10
+    design.addTurn(3, [1, 2, 3, 4, 5]); // 11
     design.addRandom(4, [0]); // 12
     design.addRandom(4, [0]); // 13
-    design.addTurn(4, [2, 3, 4, 5]); // 14
-    design.addTurn(4, [2, 3, 4, 5]); // 15
+    design.addTurn(4, [1, 2, 3, 4, 5]); // 14
+    design.addTurn(4, [1, 2, 3, 4, 5]); // 15
 
     design.addPosition("a8", [9, 8, 0, 1, 0, 0, 0, 0, 67, 64, 67, 64]);
     design.addPosition("b8", [9, 8, 7, 1, -1, 0, 0, 0, 0, 0, 0, 0]);
@@ -204,17 +205,26 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(5, ZRF.FUNCTION,	25);	// to
     design.addCommand(5, ZRF.FUNCTION,	28);	// end
 
+    design.addCommand(6, ZRF.FUNCTION,	24);	// from
+    design.addCommand(6, ZRF.FUNCTION,	26);	// capture
+    design.addCommand(6, ZRF.FUNCTION,	25);	// to
+    design.addCommand(6, ZRF.FUNCTION,	28);	// end
+
     design.addPiece("D2", 0, 2);
     design.addDrop(0, 0, [], 0);
+    design.addMove(0, 6, [], 1);
 
     design.addPiece("D3", 1, 3);
     design.addDrop(1, 0, [], 0);
+    design.addMove(1, 6, [], 1);
 
     design.addPiece("D4", 2, 4);
     design.addDrop(2, 0, [], 0);
+    design.addMove(2, 6, [], 1);
 
     design.addPiece("D5", 3, 5);
     design.addDrop(3, 0, [], 0);
+    design.addMove(3, 6, [], 1);
 
     design.addPiece("Raja", 4, 5);
     design.addMove(4, 1, [7], 5);
@@ -253,6 +263,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(8, 5, [4, 4], 4);
     design.addMove(8, 5, [3, 3], 4);
 
+    design.addPiece("RajaCaptured", 9, 5);
+
     design.setup("South", "Bhata", 48);
     design.setup("South", "Bhata", 49);
     design.setup("South", "Bhata", 50);
@@ -285,7 +297,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("East", "Ashva", 55);
     design.setup("East", "Ratha", 47);
     design.setup("East", "Raja", 39);
-
 }
 
 Dagaz.View.configure = function(view) {
@@ -326,6 +337,10 @@ Dagaz.View.configure = function(view) {
     view.defPiece("WestRatha", "West Ratha");
     view.defPiece("NorthRatha", "North Ratha");
     view.defPiece("EastRatha", "East Ratha");
+    view.defPiece("SouthRajaCaptured", "South RajaCaptured");
+    view.defPiece("WestRajaCaptured", "West RajaCaptured");
+    view.defPiece("NorthRajaCaptured", "North RajaCaptured");
+    view.defPiece("EastRajaCaptured", "East RajaCaptured");
  
     view.defPosition("a8", 59, 2, 50, 50);
     view.defPosition("b8", 109, 2, 50, 50);
