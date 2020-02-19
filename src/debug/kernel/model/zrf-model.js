@@ -64,8 +64,12 @@ Dagaz.Model.checkVersion = function(design, name, value) {
          (name != "promote-dialog")     &&
          (name != "complete-partial")   &&
          (name != "animate-redo")       &&
+         (name != "show-lose")          &&
          (name != "silent-?-moves")) {
          design.failed = true;
+     }
+     if (name == "show-lose") {
+         if (value == "false") Dagaz.Model.showLose = false;
      }
      if (name == "complete-partial") {
          if (value == "true") Dagaz.Model.completePartial = true;

@@ -26,6 +26,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-captures", "false");
+    design.checkVersion("show-lose", "false");
     design.checkVersion("advisor-wait", "15");
 
     design.addDirection("se"); // 0
@@ -41,10 +42,10 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addDirection("nr"); // 10
     design.addDirection("er"); // 11
 
-    design.addPlayer("South", [6, 7, 5, 4, 3, 2, 0, 1, 8, 9, 10, 11]);
-    design.addPlayer("West", [2, 4, 6, 1, 7, 0, 5, 3, 9, 10, 11, 8]);
-    design.addPlayer("North", [6, 7, 5, 4, 3, 2, 0, 1, 10, 11, 8, 9]);
-    design.addPlayer("East", [5, 3, 0, 7, 1, 6, 2, 4, 11, 8, 9, 10]);
+    design.addPlayer("Green", [6, 7, 5, 4, 3, 2, 0, 1, 8, 9, 10, 11]);
+    design.addPlayer("Yellow", [2, 4, 6, 1, 7, 0, 5, 3, 9, 10, 11, 8]);
+    design.addPlayer("Black", [6, 7, 5, 4, 3, 2, 0, 1, 10, 11, 8, 9]);
+    design.addPlayer("Red", [5, 3, 0, 7, 1, 6, 2, 4, 11, 8, 9, 10]);
 
     design.addRandom(1, [0]); // 0
     design.addRandom(1, [0]); // 1
@@ -142,6 +143,26 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addZone("dices", 1, [68, 69]);
     design.addZone("dices", 3, [68, 69]);
     design.addZone("dices", 4, [68, 69]);
+    design.addZone("center", 2, [35, 27, 36, 28]);
+    design.addZone("center", 1, [35, 27, 36, 28]);
+    design.addZone("center", 3, [35, 27, 36, 28]);
+    design.addZone("center", 4, [35, 27, 36, 28]);
+    design.addZone("gaja-column", 2, [0, 7, 63, 56]);
+    design.addZone("gaja-column", 1, [0, 7, 63, 56]);
+    design.addZone("gaja-column", 3, [0, 7, 63, 56]);
+    design.addZone("gaja-column", 4, [0, 7, 63, 56]);
+    design.addZone("ashva-column", 2, [1, 15, 62, 48]);
+    design.addZone("ashva-column", 1, [1, 15, 62, 48]);
+    design.addZone("ashva-column", 3, [1, 15, 62, 48]);
+    design.addZone("ashva-column", 4, [1, 15, 62, 48]);
+    design.addZone("ratha-column", 2, [2, 23, 61, 40]);
+    design.addZone("ratha-column", 1, [2, 23, 61, 40]);
+    design.addZone("ratha-column", 3, [2, 23, 61, 40]);
+    design.addZone("ratha-column", 4, [2, 23, 61, 40]);
+    design.addZone("raja-column", 2, [3, 31, 60, 32]);
+    design.addZone("raja-column", 1, [3, 31, 60, 32]);
+    design.addZone("raja-column", 3, [3, 31, 60, 32]);
+    design.addZone("raja-column", 4, [3, 31, 60, 32]);
 
     design.addCommand(0, ZRF.IN_ZONE,	1);	// dices
     design.addCommand(0, ZRF.FUNCTION,	20);	// verify
@@ -265,82 +286,85 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("RajaCaptured", 9, 5);
 
-    design.setup("South", "Bhata", 48);
-    design.setup("South", "Bhata", 49);
-    design.setup("South", "Bhata", 50);
-    design.setup("South", "Bhata", 51);
-    design.setup("South", "Gaja", 56);
-    design.setup("South", "Ashva", 57);
-    design.setup("South", "Ratha", 58);
-    design.setup("South", "Raja", 59);
-    design.setup("West", "Bhata", 1);
-    design.setup("West", "Bhata", 9);
-    design.setup("West", "Bhata", 17);
-    design.setup("West", "Bhata", 25);
-    design.setup("West", "Gaja", 0);
-    design.setup("West", "Ashva", 8);
-    design.setup("West", "Ratha", 16);
-    design.setup("West", "Raja", 24);
-    design.setup("North", "Bhata", 15);
-    design.setup("North", "Bhata", 14);
-    design.setup("North", "Bhata", 13);
-    design.setup("North", "Bhata", 12);
-    design.setup("North", "Gaja", 7);
-    design.setup("North", "Ashva", 6);
-    design.setup("North", "Ratha", 5);
-    design.setup("North", "Raja", 4);
-    design.setup("East", "Bhata", 62);
-    design.setup("East", "Bhata", 54);
-    design.setup("East", "Bhata", 46);
-    design.setup("East", "Bhata", 38);
-    design.setup("East", "Gaja", 63);
-    design.setup("East", "Ashva", 55);
-    design.setup("East", "Ratha", 47);
-    design.setup("East", "Raja", 39);
+    design.setup("Green", "Bhata", 48);
+    design.setup("Green", "Bhata", 49);
+    design.setup("Green", "Bhata", 50);
+    design.setup("Green", "Bhata", 51);
+    design.setup("Green", "Gaja", 56);
+    design.setup("Green", "Ashva", 57);
+    design.setup("Green", "Ratha", 58);
+    design.setup("Green", "Raja", 59);
+    design.setup("Yellow", "Bhata", 1);
+    design.setup("Yellow", "Bhata", 9);
+    design.setup("Yellow", "Bhata", 17);
+    design.setup("Yellow", "Bhata", 25);
+    design.setup("Yellow", "Gaja", 0);
+    design.setup("Yellow", "Ashva", 8);
+    design.setup("Yellow", "Ratha", 16);
+    design.setup("Yellow", "Raja", 24);
+    design.setup("Black", "Bhata", 15);
+    design.setup("Black", "Bhata", 14);
+    design.setup("Black", "Bhata", 13);
+    design.setup("Black", "Bhata", 12);
+    design.setup("Black", "Gaja", 7);
+    design.setup("Black", "Ashva", 6);
+    design.setup("Black", "Ratha", 5);
+    design.setup("Black", "Raja", 4);
+    design.setup("Red", "Bhata", 62);
+    design.setup("Red", "Bhata", 54);
+    design.setup("Red", "Bhata", 46);
+    design.setup("Red", "Bhata", 38);
+    design.setup("Red", "Gaja", 63);
+    design.setup("Red", "Ashva", 55);
+    design.setup("Red", "Ratha", 47);
+    design.setup("Red", "Raja", 39);
 }
 
 Dagaz.View.configure = function(view) {
-    view.defBoard("Board");
-    view.defPiece("SouthD2", "South D2");
-    view.defPiece("WestD2", "West D2");
-    view.defPiece("NorthD2", "North D2");
-    view.defPiece("EastD2", "East D2");
-    view.defPiece("SouthD3", "South D3");
-    view.defPiece("WestD3", "West D3");
-    view.defPiece("NorthD3", "North D3");
-    view.defPiece("EastD3", "East D3");
-    view.defPiece("SouthD4", "South D4");
-    view.defPiece("WestD4", "West D4");
-    view.defPiece("NorthD4", "North D4");
-    view.defPiece("EastD4", "East D4");
-    view.defPiece("SouthD5", "South D5");
-    view.defPiece("WestD5", "West D5");
-    view.defPiece("NorthD5", "North D5");
-    view.defPiece("EastD5", "East D5");
-    view.defPiece("SouthRaja", "South Raja");
-    view.defPiece("WestRaja", "West Raja");
-    view.defPiece("NorthRaja", "North Raja");
-    view.defPiece("EastRaja", "East Raja");
-    view.defPiece("SouthBhata", "South Bhata");
-    view.defPiece("WestBhata", "West Bhata");
-    view.defPiece("NorthBhata", "North Bhata");
-    view.defPiece("EastBhata", "East Bhata");
-    view.defPiece("SouthGaja", "South Gaja");
-    view.defPiece("WestGaja", "West Gaja");
-    view.defPiece("NorthGaja", "North Gaja");
-    view.defPiece("EastGaja", "East Gaja");
-    view.defPiece("SouthAshva", "South Ashva");
-    view.defPiece("WestAshva", "West Ashva");
-    view.defPiece("NorthAshva", "North Ashva");
-    view.defPiece("EastAshva", "East Ashva");
-    view.defPiece("SouthRatha", "South Ratha");
-    view.defPiece("WestRatha", "West Ratha");
-    view.defPiece("NorthRatha", "North Ratha");
-    view.defPiece("EastRatha", "East Ratha");
-    view.defPiece("SouthRajaCaptured", "South RajaCaptured");
-    view.defPiece("WestRajaCaptured", "West RajaCaptured");
-    view.defPiece("NorthRajaCaptured", "North RajaCaptured");
-    view.defPiece("EastRajaCaptured", "East RajaCaptured");
+    view.defBoard("SBoard", 0, 0, undefined, [0, 1, 2, 3]);
+    view.defBoard("WBoard", 0, 0, undefined, [4, 5, 6, 7]);
+    view.defBoard("NBoard", 0, 0, undefined, [8, 9, 10, 11]);
+    view.defBoard("EBoard", 0, 0, undefined, [12, 13, 14, 15]);
+    view.defPiece("SouthD2", "Green D2");
+    view.defPiece("WestD2", "Yellow D2");
+    view.defPiece("NorthD2", "Black D2");
+    view.defPiece("EastD2", "Red D2");
+    view.defPiece("SouthD3", "Green D3");
+    view.defPiece("WestD3", "Yellow D3");
+    view.defPiece("NorthD3", "Black D3");
+    view.defPiece("EastD3", "Red D3");
+    view.defPiece("SouthD4", "Green D4");
+    view.defPiece("WestD4", "Yellow D4");
+    view.defPiece("NorthD4", "Black D4");
+    view.defPiece("EastD4", "Red D4");
+    view.defPiece("SouthD5", "Green D5");
+    view.defPiece("WestD5", "Yellow D5");
+    view.defPiece("NorthD5", "Black D5");
+    view.defPiece("EastD5", "Red D5");
+    view.defPiece("SouthRaja", "Green Raja");
+    view.defPiece("WestRaja", "Yellow Raja");
+    view.defPiece("NorthRaja", "Black Raja");
+    view.defPiece("EastRaja", "Red Raja");
+    view.defPiece("SouthBhata", "Green Bhata");
+    view.defPiece("WestBhata", "Yellow Bhata");
+    view.defPiece("NorthBhata", "Black Bhata");
+    view.defPiece("EastBhata", "Red Bhata");
+    view.defPiece("SouthGaja", "Green Gaja");
+    view.defPiece("WestGaja", "Yellow Gaja");
+    view.defPiece("NorthGaja", "Black Gaja");
+    view.defPiece("EastGaja", "Red Gaja");
+    view.defPiece("SouthAshva", "Green Ashva");
+    view.defPiece("WestAshva", "Yellow Ashva");
+    view.defPiece("NorthAshva", "Black Ashva");
+    view.defPiece("EastAshva", "Red Ashva");
+    view.defPiece("SouthRatha", "Green Ratha");
+    view.defPiece("WestRatha", "Yellow Ratha");
+    view.defPiece("NorthRatha", "Black Ratha");
+    view.defPiece("EastRatha", "Red Ratha");
+    view.defPiece("SouthRajaCaptured", "Green RajaCaptured");
+    view.defPiece("WestRajaCaptured", "Yellow RajaCaptured");
+    view.defPiece("NorthRajaCaptured", "Black RajaCaptured");
+    view.defPiece("EastRajaCaptured", "Red RajaCaptured");
  
     view.defPosition("a8", 59, 2, 50, 50);
     view.defPosition("b8", 109, 2, 50, 50);
@@ -408,8 +432,8 @@ Dagaz.View.configure = function(view) {
     view.defPosition("h1", 409, 352, 50, 50);
     view.defPosition("r1", 4, 2, 49, 49);
     view.defPosition("r2", 4, 53, 49, 49);
-    view.defPosition("r3", 4, 302, 49, 49);
-    view.defPosition("r4", 4, 353, 49, 49);
+    view.defPosition("r3", 4, 292, 49, 49);
+    view.defPosition("r4", 4, 343, 49, 49);
     view.defPosition("x1", 470, 21, 54, 158);
     view.defPosition("x2", 470, 220, 54, 158);
 }

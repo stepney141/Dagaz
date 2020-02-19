@@ -5,23 +5,26 @@
 </head>
 <body>
 
-<img id="Board" style="display:none" src="images/chaturaji/board.png">
-<img id="SouthD2" style="display:none" src="images/chaturaji/d2.png">
-<img id="WestD2" style="display:none" src="images/chaturaji/d2.png">
-<img id="NorthD2" style="display:none" src="images/chaturaji/d2.png">
-<img id="EastD2" style="display:none" src="images/chaturaji/d2.png">
-<img id="SouthD3" style="display:none" src="images/chaturaji/d3.png">
-<img id="WestD3" style="display:none" src="images/chaturaji/d3.png">
-<img id="NorthD3" style="display:none" src="images/chaturaji/d3.png">
-<img id="EastD3" style="display:none" src="images/chaturaji/d3.png">
-<img id="SouthD4" style="display:none" src="images/chaturaji/d4.png">
-<img id="WestD4" style="display:none" src="images/chaturaji/d4.png">
-<img id="NorthD4" style="display:none" src="images/chaturaji/d4.png">
-<img id="EastD4" style="display:none" src="images/chaturaji/d4.png">
-<img id="SouthD5" style="display:none" src="images/chaturaji/d5.png">
-<img id="WestD5" style="display:none" src="images/chaturaji/d5.png">
-<img id="NorthD5" style="display:none" src="images/chaturaji/d5.png">
-<img id="EastD5" style="display:none" src="images/chaturaji/d5.png">
+<img id="SBoard" style="display:none" src="images/chaturaji/sboard.png">
+<img id="WBoard" style="display:none" src="images/chaturaji/wboard.png">
+<img id="NBoard" style="display:none" src="images/chaturaji/nboard.png">
+<img id="EBoard" style="display:none" src="images/chaturaji/eboard.png">
+<img id="SouthD2" style="display:none" src="images/chaturaji/sd2.png">
+<img id="WestD2" style="display:none" src="images/chaturaji/wd2.png">
+<img id="NorthD2" style="display:none" src="images/chaturaji/nd2.png">
+<img id="EastD2" style="display:none" src="images/chaturaji/ed2.png">
+<img id="SouthD3" style="display:none" src="images/chaturaji/sd3.png">
+<img id="WestD3" style="display:none" src="images/chaturaji/wd3.png">
+<img id="NorthD3" style="display:none" src="images/chaturaji/nd3.png">
+<img id="EastD3" style="display:none" src="images/chaturaji/ed3.png">
+<img id="SouthD4" style="display:none" src="images/chaturaji/sd4.png">
+<img id="WestD4" style="display:none" src="images/chaturaji/wd4.png">
+<img id="NorthD4" style="display:none" src="images/chaturaji/nd4.png">
+<img id="EastD4" style="display:none" src="images/chaturaji/ed4.png">
+<img id="SouthD5" style="display:none" src="images/chaturaji/sd5.png">
+<img id="WestD5" style="display:none" src="images/chaturaji/wd5.png">
+<img id="NorthD5" style="display:none" src="images/chaturaji/nd5.png">
+<img id="EastD5" style="display:none" src="images/chaturaji/ed5.png">
 <img id="SouthRaja" style="display:none" src="images/chaturaji/gking.png">
 <img id="WestRaja" style="display:none" src="images/chaturaji/yking.png">
 <img id="NorthRaja" style="display:none" src="images/chaturaji/bking.png">
@@ -48,9 +51,9 @@
 <img id="EastRajaCaptured" style="display:none" src="images/chaturaji/rkingc.png">
 
 <table style="margin:auto; font-family:sans-serif; font-size:14px" id="Table">
-<tr style="height:404px; vertical-align:top">
+<tr style="height:424px; vertical-align:top">
 <td id="CanvasCell" style="width:535px">
-<canvas id="Canvas" width="535" height="404" style="cursor:default">Broken canvas...</canvas>
+<canvas id="Canvas" width="535" height="424" style="cursor:default">Broken canvas...</canvas>
 </td><td style="width:300px;">
 <div style="height:510px; overflow:auto" id="ScrollDiv">
 <img id="GlyphImage"><p id="HelpText"></p>
@@ -78,8 +81,11 @@
 <script src="../../kernel/model/common-setup-v3.js"></script>
 <script src="../../kernel/view/2d/2d-view-v2.js"></script>
 <script src="../../kernel/controller/utils/move-list-v2.js"></script>
+<script src="chaturaji-score.js"></script>
 <script src="chaturaji-dice.js"></script>
+<script src="chaturaji-triumph.js"></script>
 <script src="chaturaji-extension.js"></script>
+<script src="chaturaji-promotion.js"></script>
 <script src="chaturaji.js"></script>
 <script src="../../kernel/controller/app-v2.js"></script>
 

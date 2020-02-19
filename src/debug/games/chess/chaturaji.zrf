@@ -34,10 +34,10 @@
 (define d
   (piece
      (name D$1)
-     (image South "images/chaturaji/d$1.bmp"
-            West  "images/chaturaji/d$1.bmp"
-            North "images/chaturaji/d$1.bmp"
-            East  "images/chaturaji/d$1.bmp")
+     (image South "images/chaturaji/sd$1.bmp"
+            West  "images/chaturaji/wd$1.bmp"
+            North "images/chaturaji/nd$1.bmp"
+            East  "images/chaturaji/ed$1.bmp")
      (drops
         (move-type setup)
         (drop-dice) 
@@ -67,8 +67,8 @@
      (positions
          (r1   4   2  53  51)
          (r2   4  53  53 102)
-         (r3   4 302  53 351)
-         (r4   4 353  53 402)
+         (r3   4 292  53 341)
+         (r4   4 343  53 392)
          (x1 470  21 524 179)
          (x2 470 220 524 378)
      )
@@ -101,6 +101,21 @@
      )
      (zone (name dices) (players South West North East)
            (positions x1 x2)
+     )
+     (zone (name center) (players South West North East)
+           (positions d4 d5 e4 e5)
+     )
+     (zone (name gaja-column) (players South West North East)
+           (positions a8 h8 h1 a1)
+     )
+     (zone (name ashva-column) (players South West North East)
+           (positions b8 h7 g1 a2)
+     )
+     (zone (name ratha-column) (players South West North East)
+           (positions c8 h6 f1 a3)
+     )
+     (zone (name raja-column) (players South West North East)
+           (positions d8 h5 e1 a4)
      )
   )
 

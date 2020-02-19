@@ -1,5 +1,7 @@
 (function() {
 
+Dagaz.Model.passForcedDraw = false;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
@@ -25,6 +27,7 @@ Dagaz.Model.CheckInvariants = function(board) {
           move.failed = true;
           return;
       }
+      move.addValue(board.player - 1, design.price[piece.type]);
       if (piece.type != 4) return;
       pos = design.navigate(board.player, 0, 8);
       while (pos !== null) {
