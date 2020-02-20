@@ -31,10 +31,12 @@ Dagaz.Model.CheckInvariants = function(board) {
       if (piece.type != 4) return;
       pos = design.navigate(board.player, 0, 8);
       while (pos !== null) {
-          if (board.getPiece(pos) === null) {
+          var place = board.getPiece(pos);
+          if (place === null) {
               move.dropPiece(pos, piece.promote(9));
               return;
           }
+          if (place.player == piece.player) return;
           pos = design.navigate(board.player, pos, 8);
       }
   });

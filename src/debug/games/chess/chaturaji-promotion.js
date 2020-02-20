@@ -42,6 +42,20 @@ Dagaz.Model.CheckInvariants = function(board) {
       if (type === null) return;
       move.actions[0][2] = [ piece.promote(type) ];
   });
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if (piece === null) return;
+      if (piece.player != board.player) return;
+      if (piece.type != 5) return;
+      if (!design.inZone(0, piece.player, pos)) return;
+      var type = getType(design, board, board.player, pos);
+      if (type !== null) {
+          var move = Dagaz.Model.createMove(5);
+//        move.mode = 1;         
+          move.movePiece(pos, pos, piece.promote(type));
+          board.moves.push(move);
+      }
+  });
   CheckInvariants(board);
 }
 

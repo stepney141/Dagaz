@@ -1,5 +1,6 @@
 (function() {
 
+Dagaz.View.MARK_R = 15;
 Dagaz.View.WIDTH = 404;
 
 var checkVersion = Dagaz.Model.checkVersion;
@@ -16,7 +17,12 @@ var getValue = function(board, ix) {
   return v;
 }
 
+var showBoard = Dagaz.View.showBoard;
+
 Dagaz.View.showBoard = function(board, ctx) {
+  if (!_.isUndefined(showBoard)) {
+       showBoard(board, ctx);
+  }
   var g = getValue(board, 0) + getValue(board, 2);
   var r = getValue(board, 1) + getValue(board, 3);
   if (g + r == 0) return;
