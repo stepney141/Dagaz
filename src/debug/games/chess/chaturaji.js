@@ -49,20 +49,20 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addRandom(1, [0]); // 0
     design.addRandom(1, [0]); // 1
-    design.addTurn(1, [1, 2, 3, 4, 5]); // 2
-    design.addTurn(1, [1, 2, 3, 4, 5]); // 3
+    design.addTurn(1, [1, 2, 3, 4, 5, 6]); // 2
+    design.addTurn(1, [1, 2, 3, 4, 5, 6]); // 3
     design.addRandom(2, [0]); // 4
     design.addRandom(2, [0]); // 5
-    design.addTurn(2, [1, 2, 3, 4, 5]); // 6
-    design.addTurn(2, [1, 2, 3, 4, 5]); // 7
+    design.addTurn(2, [1, 2, 3, 4, 5, 6]); // 6
+    design.addTurn(2, [1, 2, 3, 4, 5, 6]); // 7
     design.addRandom(3, [0]); // 8
     design.addRandom(3, [0]); // 9
-    design.addTurn(3, [1, 2, 3, 4, 5]); // 10
-    design.addTurn(3, [1, 2, 3, 4, 5]); // 11
+    design.addTurn(3, [1, 2, 3, 4, 5, 6]); // 10
+    design.addTurn(3, [1, 2, 3, 4, 5, 6]); // 11
     design.addRandom(4, [0]); // 12
     design.addRandom(4, [0]); // 13
-    design.addTurn(4, [1, 2, 3, 4, 5]); // 14
-    design.addTurn(4, [1, 2, 3, 4, 5]); // 15
+    design.addTurn(4, [1, 2, 3, 4, 5, 6]); // 14
+    design.addTurn(4, [1, 2, 3, 4, 5, 6]); // 15
 
     design.addPosition("a8", [9, 8, 0, 1, 0, 0, 0, 0, 67, 64, 67, 64]);
     design.addPosition("b8", [9, 8, 7, 1, -1, 0, 0, 0, 0, 0, 0, 0]);
@@ -284,7 +284,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(8, 5, [4, 4], 4);
     design.addMove(8, 5, [3, 3], 4);
 
-    design.addPiece("RajaCaptured", 9, 5);
+    design.addPiece("RajaCaptured", 9, 1000);
 
     design.setup("Green", "Bhata", 48);
     design.setup("Green", "Bhata", 49);

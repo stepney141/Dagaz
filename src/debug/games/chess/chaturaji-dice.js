@@ -15,7 +15,7 @@ Dagaz.Model.CheckInvariants = function(board) {
   var f = true;
   _.each(board.moves, function(move) {      
       if (!_.isUndefined(move.failed)) return;
-      if (move.mode < 2) return;
+      if ((move.mode < 2) || (move.mode > 5)) return;
       for (var pos = Dagaz.Model.stringToPos("x1"); pos < design.positions.length; pos++) {
            var piece = board.getPiece(pos);
            if ((piece !== null) && (design.price[piece.type] == move.mode)) {

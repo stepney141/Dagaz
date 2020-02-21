@@ -175,7 +175,7 @@
   - Five Tigers [turns, todo:mindsports, family:chess]
 - Chess family
   - Chaturanga [king, family:chess]
-  - Chaturaji [todo, kings, 4-players, dices, family:chess]
+  - Chaturaji [kings, 4-players, dices, family:chess]
   - Shatranj [dark, setups, best, checkmate, family:chess]
   - Makruk [best, checkmate, family:chess]
   - Sittuyin [dark, setups, drops, best, checkmate, wheel, limit, sparks, todo:mindsports, family:chess]

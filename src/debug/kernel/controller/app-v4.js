@@ -387,6 +387,7 @@ App.prototype.exec = function() {
                   this.board.generate(this.design);
               }
               var moves = _.filter(this.board.moves, function(move) {
+                  if (!_.isUndefined(move.failed)) return false;
                   return _.indexOf(this.design.turns[this.board.turn].modes, move.mode) >= 0;
               }, this);
               if (moves.length > 0) {
@@ -401,6 +402,8 @@ App.prototype.exec = function() {
                   } else {
                       this.move.join(move);
                   }
+              } else {
+                  this.boardApply(Dagaz.Model.createMove(0));
               }
           }
           this.state = STATE.EXEC;
