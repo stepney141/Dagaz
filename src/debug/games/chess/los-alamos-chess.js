@@ -19,6 +19,8 @@ ZRF = {
     VERIFY:        20
 };
 
+Dagaz.AI.PROTO = false;
+
 Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-captures", "false");
@@ -151,53 +153,64 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(4, ZRF.FUNCTION,	25);	// to
     design.addCommand(4, ZRF.FUNCTION,	28);	// end
 
-
     design.addPiece("Pawn", 0, 100);
-    design.addMove(0, 0, [4], 0);
-    design.addMove(0, 1, [7], 0);
-    design.addMove(0, 1, [3], 0);
+    if (!Dagaz.AI.PROTO) {
+        design.addMove(0, 0, [4], 0);
+        design.addMove(0, 1, [7], 0);
+        design.addMove(0, 1, [3], 0);
+    }
 
     design.addPiece("King", 1, 20000);
-    design.addMove(1, 2, [4], 0);
-    design.addMove(1, 2, [2], 0);
-    design.addMove(1, 2, [0], 0);
-    design.addMove(1, 2, [1], 0);
-    design.addMove(1, 2, [7], 0);
-    design.addMove(1, 2, [6], 0);
-    design.addMove(1, 2, [3], 0);
-    design.addMove(1, 2, [5], 0);
+    if (!Dagaz.AI.PROTO) {
+        design.addMove(1, 2, [4], 0);
+        design.addMove(1, 2, [2], 0);
+        design.addMove(1, 2, [0], 0);
+        design.addMove(1, 2, [1], 0);
+        design.addMove(1, 2, [7], 0);
+        design.addMove(1, 2, [6], 0);
+        design.addMove(1, 2, [3], 0);
+        design.addMove(1, 2, [5], 0);
+    }
 
     design.addPiece("Rook", 2, 500);
-    design.addMove(2, 3, [4, 4], 0);
-    design.addMove(2, 3, [2, 2], 0);
-    design.addMove(2, 3, [0, 0], 0);
-    design.addMove(2, 3, [1, 1], 0);
+    if (!Dagaz.AI.PROTO) {
+        design.addMove(2, 3, [4, 4], 0);
+        design.addMove(2, 3, [2, 2], 0);
+        design.addMove(2, 3, [0, 0], 0);
+        design.addMove(2, 3, [1, 1], 0);
+    }
 
     design.addPiece("Knight", 3, 330);
-    design.addMove(3, 4, [4, 7], 0);
-    design.addMove(3, 4, [4, 3], 0);
-    design.addMove(3, 4, [2, 6], 0);
-    design.addMove(3, 4, [2, 5], 0);
-    design.addMove(3, 4, [0, 7], 0);
-    design.addMove(3, 4, [0, 6], 0);
-    design.addMove(3, 4, [1, 3], 0);
-    design.addMove(3, 4, [1, 5], 0);
+    if (!Dagaz.AI.PROTO) {
+        design.addMove(3, 4, [4, 7], 0);
+        design.addMove(3, 4, [4, 3], 0);
+        design.addMove(3, 4, [2, 6], 0);
+        design.addMove(3, 4, [2, 5], 0);
+        design.addMove(3, 4, [0, 7], 0);
+        design.addMove(3, 4, [0, 6], 0);
+        design.addMove(3, 4, [1, 3], 0);
+        design.addMove(3, 4, [1, 5], 0);
+    }
 
     design.addPiece("Bishop", 4);
-    design.addMove(4, 3, [7, 7], 0);
-    design.addMove(4, 3, [6, 6], 0);
-    design.addMove(4, 3, [3, 3], 0);
-    design.addMove(4, 3, [5, 5], 0);
+    if (!Dagaz.AI.PROTO) {
+        design.addMove(4, 3, [7, 7], 0);
+        design.addMove(4, 3, [6, 6], 0);
+        design.addMove(4, 3, [3, 3], 0);
+        design.addMove(4, 3, [5, 5], 0);
+    }
 
     design.addPiece("Queen", 5, 900);
-    design.addMove(5, 3, [4, 4], 0);
-    design.addMove(5, 3, [2, 2], 0);
-    design.addMove(5, 3, [0, 0], 0);
-    design.addMove(5, 3, [1, 1], 0);
-    design.addMove(5, 3, [7, 7], 0);
-    design.addMove(5, 3, [6, 6], 0);
-    design.addMove(5, 3, [3, 3], 0);
-    design.addMove(5, 3, [5, 5], 0);
+    if (!Dagaz.AI.PROTO) {
+        design.addMove(5, 3, [4, 4], 0);
+        design.addMove(5, 3, [2, 2], 0);
+        design.addMove(5, 3, [0, 0], 0);
+        design.addMove(5, 3, [1, 1], 0);
+        design.addMove(5, 3, [7, 7], 0);
+        design.addMove(5, 3, [6, 6], 0);
+        design.addMove(5, 3, [3, 3], 0);
+        design.addMove(5, 3, [5, 5], 0);
+    }
 
     design.setup("White", "Pawn", 24);
     design.setup("White", "Pawn", 25);

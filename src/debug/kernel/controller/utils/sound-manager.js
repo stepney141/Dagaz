@@ -58,6 +58,16 @@ Dagaz.Controller.addSound = function(ix, src, duration) {
     sounds[ix] = new Sound(src, duration);
 }
 
+var getMaxage = function() {
+  var str = window.location.search.toString();
+  var result = str.match(/[?&]cookie=(\d+)/);
+  if (result) {
+      return result[1];
+  } else {
+      return "";
+  }
+}
+
 Dagaz.Controller.play = function(ix) {
     if (Dagaz.Controller.soundOff) return;
     if (!_.isUndefined(sounds[ix])) {
@@ -74,14 +84,23 @@ Dagaz.Controller.stop = function() {
 }
 
 Dagaz.Controller.sound = function() {
+    var maxage = getMaxage();
     if (Dagaz.Controller.soundOff) {
         sound.innerHTML = "no Sound";
         Dagaz.Controller.soundOff = false;
-        document.cookie = "dagaz.sound=on";
+        if (maxage) {
+            document.cookie = "dagaz.sound=on; max-age=" + maxage;
+        } else {
+            document.cookie = "dagaz.sound=on";
+        }
     } else {
         sound.innerHTML = "Sound";
         Dagaz.Controller.soundOff = true;
-        document.cookie = "dagaz.sound=off";
+        if (maxage) {
+            document.cookie = "dagaz.sound=off; max-age=" + maxage;
+        } else {
+            document.cookie = "dagaz.sound=off";
+        }
     }
 }
 

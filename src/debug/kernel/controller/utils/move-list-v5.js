@@ -51,6 +51,10 @@ MoveList.prototype.getStarts = function() {
   return result;
 }
 
+MoveList.prototype.filterDrops = function(moves, ix) {
+  return moves;
+}
+
 MoveList.prototype.getStops = function() {
   return this.getStarts();
 }
