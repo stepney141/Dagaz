@@ -1,7 +1,9 @@
 (function() {
 
-Dagaz.Controller.persistense = "session";
-Dagaz.Controller.defaultLife = 0;
+// TODO: Check Dagaz.Model.parseSgf
+
+//Dagaz.Controller.persistense = "session";
+//Dagaz.Controller.defaultLife = 0;
 
 var sessionManager = null;
 
@@ -269,7 +271,7 @@ Dagaz.Controller.undo = function() {
   sm.updateButtons();
 }
 
-var setup = Dagaz.Model.setup;
+/*var setup = Dagaz.Model.setup;
 
 Dagaz.Model.setup = function(board) {
   var str = getCookie();
@@ -290,6 +292,6 @@ Dagaz.Model.setup = function(board) {
       return;
   }
   setup(board);
-}
+}*/
 
 })();
