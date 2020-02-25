@@ -1,5 +1,8 @@
 (function() {
 
+Dagaz.Controller.persistense = "session";
+Dagaz.Controller.defaultLife = 0;
+
 var sessionManager = null;
 
 function SessionManager(controller) {
@@ -12,6 +15,26 @@ Dagaz.Controller.getSessionManager = function(controller) {
       sessionManager = new SessionManager(controller);
   }
   return sessionManager;
+}
+
+var getCookie = function() {
+  var str = document.cookie;
+  var result = str.match(/dagaz\.(session=[^*]*)/);
+  if (result) {
+      return "?" + decodeURIComponent(result[1]);
+  } else {
+      return "";
+  }
+}
+
+var getMaxage = function() {
+  var str = window.location.search.toString();
+  var result = str.match(/[?&]cookie=(\d+)/);
+  if (result) {
+      return result[1];
+  } else {
+      return "";
+  }
 }
 
 SessionManager.prototype.aiPresent = function() {
@@ -104,18 +127,6 @@ SessionManager.prototype.load = function(sgf) {
   return true;
 }
 
-Dagaz.Controller.loadSGF = function() {
-  if (_.isUndefined(SGF)) return;
-  var sm = Dagaz.Controller.getSessionManager();
-  sm.load(SGF.value);
-  sm.updateButtons();
-}
-
-Dagaz.Controller.saveSGF = function() {
-  if (_.isUndefined(SGF)) return;
-  SGF.innerHTML = Dagaz.Controller.getSessionManager().save();
-}
-
 SessionManager.prototype.addState = function(move, board) {
   var current = {
       move:   move,
@@ -137,8 +148,17 @@ SessionManager.prototype.addState = function(move, board) {
       this.states.push(current);
   }
   this.current = current;
-  // DEBUG:
-//Dagaz.Controller.saveSGF();
+  if (Dagaz.Controller.persistense == "session") {
+      var maxage = getMaxage();
+      if (!maxage && (Dagaz.Controller.defaultLife > 0)) maxage = Dagaz.Controller.defaultLife;
+      var str = Dagaz.Controller.getSessionManager().save();
+      if (str == "()") return;
+      if (maxage) {
+          document.cookie = "dagaz.session=" + encodeURIComponent(str + "*") + "; max-age=" + maxage;
+      } else {
+          document.cookie = "dagaz.session=" + encodeURIComponent(str + "*");
+      }
+  }
 }
 
 Dagaz.Controller.addState = function(move, board) {  
@@ -247,6 +267,29 @@ Dagaz.Controller.undo = function() {
   }
   sm.controller.setBoard(board);
   sm.updateButtons();
+}
+
+var setup = Dagaz.Model.setup;
+
+Dagaz.Model.setup = function(board) {
+  var str = getCookie();
+  var result = str.match(/session=(.*)/);
+  if (result) {
+      var sm = Dagaz.Controller.getSessionManager();
+      sm.load(result[1]);
+      board.parent  = sm.controller.board.parent;
+      board.player  = sm.controller.board.player;
+      board.zSign   = sm.controller.board.zSign;
+      board.hSign   = sm.controller.board.hSign;
+      board.lastf   = sm.controller.board.lastf;
+      board.lastt   = sm.controller.board.lastt;
+      board.reserve = sm.controller.board.reserve;
+      board.pieces  = sm.controller.board.pieces;
+      board.values  = sm.controller.board.values;
+      sm.updateButtons();
+      return;
+  }
+  setup(board);
 }
 
 })();
