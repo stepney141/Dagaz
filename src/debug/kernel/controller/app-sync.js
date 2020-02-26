@@ -37,8 +37,18 @@ function App(canvas, params) {
   }
 }
 
+Dagaz.Controller.newGame = function() {
+  if (!_.isUndefined(Dagaz.Controller.clearGame)) {
+      Dagaz.Controller.clearGame();
+  }
+  window.location = window.location.toString();
+}
+
 App.prototype.gameOver = function(text, player) {
   if (onceGameOver) {
+      if (!_.isUndefined(Dagaz.Controller.clearGame)) {
+          Dagaz.Controller.clearGame();
+      }
       _.delay(alert, 1000, [text]);
       onceGameOver = false;
   }

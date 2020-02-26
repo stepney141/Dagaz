@@ -249,4 +249,13 @@ Dagaz.Model.getSetup = function(design, board) {
   return "?setup=" + str;
 }
 
+var clearGame = Dagaz.Controller.clearGame;
+
+Dagaz.Controller.clearGame = function() {
+   document.cookie = "dagaz.setup=" + encodeURIComponent("*") + "; max-age=0";
+   if (!_.isUndefined(clearGame)) {
+       clearGame();
+   }
+}
+
 })();

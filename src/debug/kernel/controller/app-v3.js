@@ -26,8 +26,18 @@ function App(canvas) {
   this.params = [];
 }
 
+Dagaz.Controller.newGame = function() {
+  if (!_.isUndefined(Dagaz.Controller.clearGame)) {
+      Dagaz.Controller.clearGame();
+  }
+  window.location = window.location.toString();
+}
+
 var gameOver = function(text, self, player) {
   if (!Dagaz.Model.silent || (player != 0)) {
+      if (!_.isUndefined(Dagaz.Controller.clearGame)) {
+          Dagaz.Controller.clearGame();
+      }
       alert(text);
   }
   if (Dagaz.Model.progressive) {
