@@ -97,3 +97,32 @@
   (loss-condition (White Black) stalemated)
   (loss-condition (White Black) repetition)
 )
+
+(variant
+  (title "Palestinian Dama (5x8)")
+  (default)
+
+  (board
+     (image "images/5x8.bmp")
+     (grid
+         (start-rectangle 2 2 52 52)
+         (dimensions
+           ("a/b/c/d/e" (50 0)) ; files
+           ("8/7/6/5/4/3/2/1" (0 50)) ; ranks
+         )
+         (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0))
+     )
+     (symmetry Black (n s) (s n) (w w) (e e))
+     (zone (name promotion) (players White)
+           (positions a8 b8 c8 d8 e8)
+     )
+     (zone (name promotion) (players Black)
+           (positions a1 b1 c1 d1 e1)
+     )
+  )
+
+  (board-setup
+    (White (Man a2 b2 c2 d2 e2  a3 b3 c3 d3 e3))
+    (Black (Man a7 b7 c7 d7 e7  a6 b6 c6 d6 e6))
+  )
+)

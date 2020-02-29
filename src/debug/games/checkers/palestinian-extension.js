@@ -34,7 +34,7 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
 
 var getDirs = function(type) {
   if (type == 0) {
-      return [0, 1, 3];
+      return [1, 2, 3];
   } else {
       return [0, 1, 2, 3];
   }
