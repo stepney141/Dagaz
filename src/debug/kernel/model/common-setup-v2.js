@@ -92,6 +92,22 @@ var getReserve = function() {
   }
 }
 
+var getGlobal = function() {
+  var str = window.location.search.toString();
+  var result = str.match(/[?&]global=([;\d]+)/);
+  if (result) {
+      return result[1];
+  } else {
+      str = getCookie();
+      result = str.match(/[?&]global=([;\d]+)/);
+      if (result) {
+          return result[1];
+      } else {
+          return "";
+      }
+  }
+}
+
 function Pattern(exec) {
     this.exec = exec;
     this.then = function (transform) {
@@ -220,7 +236,46 @@ Dagaz.Model.setup = function(board) {
           if (rs) {
               Dagaz.Model.setReserve(design, board, rs);
           }
+          var g = getGlobal();
+          if (g) {
+              Dagaz.Model.setGlobal(design, board, g);
+          }
       }
+  }
+}
+
+Dagaz.Model.getGlobal = function(design, board) {
+  var r = "";
+  var k = _.keys(board.values);
+  if (k.length > 0) {
+     for (var i = 0; i <= _.max(k); i++) {
+          var v = board.getValue(i);
+          if (v !== null) {
+              r = r + v;
+          }
+          r = r + ";";
+     }
+  }
+  return r;
+}
+
+Dagaz.Model.setGlobal = function(design, board, str) {
+  var ix = 0; var n = null;
+  for (var i = 0; i < str.length; i++) {
+       if (str[i] == ';') {
+           if (n !== null) {
+               board.setValue(ix, n);
+           }
+           n = null;
+           ix++;
+       } else {
+           if (n !== null) {
+               n = n * 10;
+           } else {
+               n = 0;
+           }
+           n += +str[i];
+       }
   }
 }
 
@@ -296,6 +351,10 @@ Dagaz.Model.getSetup = function(design, board) {
   var rs = Dagaz.Model.getReserve(design, board);
   if (rs != "") {
       str = str + "&reserve=" + rs;
+  }
+  var g = Dagaz.Model.getGlobal(design, board);
+  if (g != "") {
+      str = str + "&global=" + g;
   }
   if (Dagaz.Controller.persistense == "setup") {
       var s = str + "&game=" + getName() + "*";
