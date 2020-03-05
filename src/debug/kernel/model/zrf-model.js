@@ -27,7 +27,7 @@ Dagaz.Model.detectLoops     = false;
 Dagaz.Model.advisorWait     = null;
 Dagaz.Model.remapPromote    = false;
 Dagaz.Model.passForcedDraw  = true;
-Dagaz.Model.animateRedo     = true;
+Dagaz.Model.animateRedo     = false;
 Dagaz.Model.completePartial = false;
 Dagaz.Model.zrfCompatible   = false;
 Dagaz.Model.showLose        = true;
@@ -76,6 +76,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
      }
      if (name == "animate-redo") {
          if (value == "false") Dagaz.Model.animateRedo = false;
+         if (value == "true")  Dagaz.Model.animateRedo = true;
      }
      if (name == "promote-dialog") {
          if (value == "remap") Dagaz.Model.remapPromote = true;

@@ -1,10 +1,5 @@
 (function() {
 
-// TODO: Check Dagaz.Model.parseSgf
-
-//Dagaz.Controller.persistense = "session";
-//Dagaz.Controller.defaultLife = 0;
-
 var sessionManager = null;
 
 function SessionManager(controller) {
@@ -19,11 +14,32 @@ Dagaz.Controller.getSessionManager = function(controller) {
   return sessionManager;
 }
 
+var getName = function() {
+  var str = window.location.pathname.toString();
+  var result = str.match(/\/([^.\/]+)\./);
+  if (result) {
+      return result[1].replace("-board", "").replace("-ai", "");
+  } else {
+      return str;
+  }
+}
+
+var badName = function(str) {
+  var result = str.match(/[?&]game=([^&]*)/);
+  if (result) {
+      return result[1] != getName();
+  } else {
+      return true;
+  }
+}
+
 var getCookie = function() {
   var str = document.cookie;
   var result = str.match(/dagaz\.(session=[^*]*)/);
   if (result) {
-      return "?" + decodeURIComponent(result[1]);
+      var r = decodeURIComponent(result[1]);
+      if (badName(r)) return "";
+      return "?" + r;
   } else {
       return "";
   }
@@ -111,6 +127,7 @@ SessionManager.prototype.locateMove = function(board, notation) {
 }
 
 SessionManager.prototype.load = function(sgf) {
+  if (_.isUndefined(Dagaz.Model.parseSgf)) return false;
   var res = Dagaz.Model.parseSgf(sgf);
   this.states = [];
   delete this.current;
@@ -124,8 +141,8 @@ SessionManager.prototype.load = function(sgf) {
        if (move === null) return false;
        board = board.apply(move);
        this.addState(move, board);
-  }
-  this.controller.setBoard(board);
+  }  
+  this.controller.setBoard(board, true);
   return true;
 }
 
@@ -155,6 +172,7 @@ SessionManager.prototype.addState = function(move, board) {
       if (!maxage && (Dagaz.Controller.defaultLife > 0)) maxage = Dagaz.Controller.defaultLife;
       var str = Dagaz.Controller.getSessionManager().save();
       if (str == "()") return;
+      str = str + "&game=" + getName();
       if (maxage) {
           document.cookie = "dagaz.session=" + encodeURIComponent(str + "*") + "; max-age=" + maxage;
       } else {
@@ -271,27 +289,23 @@ Dagaz.Controller.undo = function() {
   sm.updateButtons();
 }
 
-/*var setup = Dagaz.Model.setup;
+var clearGame = Dagaz.Controller.clearGame;
 
-Dagaz.Model.setup = function(board) {
+Dagaz.Controller.clearGame = function() {
+   document.cookie = "dagaz.session=" + encodeURIComponent("*") + "; max-age=0";
+   if (!_.isUndefined(clearGame)) {
+       clearGame();
+   }
+}
+
+Dagaz.Model.load = function(board) {
   var str = getCookie();
-  var result = str.match(/session=(.*)/);
+  var result = str.match(/session=([^&]*)/);
   if (result) {
       var sm = Dagaz.Controller.getSessionManager();
       sm.load(result[1]);
-      board.parent  = sm.controller.board.parent;
-      board.player  = sm.controller.board.player;
-      board.zSign   = sm.controller.board.zSign;
-      board.hSign   = sm.controller.board.hSign;
-      board.lastf   = sm.controller.board.lastf;
-      board.lastt   = sm.controller.board.lastt;
-      board.reserve = sm.controller.board.reserve;
-      board.pieces  = sm.controller.board.pieces;
-      board.values  = sm.controller.board.values;
       sm.updateButtons();
-      return;
   }
-  setup(board);
-}*/
+}
 
 })();

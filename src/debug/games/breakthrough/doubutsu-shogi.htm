@@ -20,6 +20,7 @@
 <table style="margin:auto; font-family:sans-serif; font-size:14px" id="Table">
 <tr><td><a href="javascript:Dagaz.Controller.undo()" style="display:none" id="undo"><img src="../../images/undo.png"/></a>
 Copyright (c) Madoka Kitao (<a href="https://en.wikipedia.org/wiki/D%C5%8Dbutsu_sh%C5%8Dgi">rules</a>)
+<a href="javascript:Dagaz.Controller.newGame()">New Game</a>
 <a href="javascript:Dagaz.Controller.redo()" style="display:none" id="redo"><img src="../../images/redo.png"/></a></td></tr>
 <tr style="height:399px; vertical-align:top">
 <td id="CanvasCell" style="width:499px">
@@ -53,9 +54,7 @@ Copyright (c) Madoka Kitao (<a href="https://en.wikipedia.org/wiki/D%C5%8Dbutsu_
 <script src="../../kernel/view/2d/2d-view-v2.js"></script>
 <script src="../../kernel/controller/utils/move-list-v2.js"></script>
 <script src="../../kernel/controller/utils/session-manager.js"></script>
-<script src="../../kernel/controller/ai/random-ai.js"></script>
-<script src="../../kernel/controller/ai/maxmin-ai-v2.js"></script>
-<script src="../../kernel/controller/ai/ab-ai-v5.js"></script>
+<script src="../../utils/sgf-parser.js"></script>
 <script src="doubutsu-shogi-extension.js"></script>
 <script src="doubutsu-shogi-ai.js"></script>
 <script src="doubutsu-shogi.js"></script>

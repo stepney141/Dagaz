@@ -362,8 +362,8 @@ App.prototype.isReady = function() {
   return this.state == STATE.IDLE;
 }
 
-App.prototype.setBoard = function(board) {
-  if (this.isReady()) {
+App.prototype.setBoard = function(board, isForced) {
+  if (this.isReady() || isForced) {
       this.board = board;
       this.view.reInit(board);
       delete this.list;
@@ -390,6 +390,12 @@ App.prototype.isRandom = function() {
 }
 
 App.prototype.exec = function() {
+  this.view.configure();
+  if (!_.isUndefined(Dagaz.Model.load) && (Dagaz.Controller.persistense == "session")) {
+      var board = Dagaz.Model.getInitBoard();
+      Dagaz.Model.load(board);
+      delete Dagaz.Model.load;
+  }
   this.view.draw(this.canvas);
   if (this.state == STATE.STOP) {
       this.state = STATE.IDLE;

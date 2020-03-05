@@ -1,3 +1,5 @@
+Dagaz.Controller.persistense = "session";
+
 ZRF = {
     JUMP:          0,
     IF:            1,
@@ -23,6 +25,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("zrf", "3.0");
     design.checkVersion("animate-captures", "false");
+    design.checkVersion("animate-redo", "true");
     design.checkVersion("highlight-goals", "false");
     design.checkVersion("show-hints", "false");
     design.checkVersion("smart-moves", "false");

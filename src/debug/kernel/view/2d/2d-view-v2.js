@@ -595,7 +595,7 @@ View2D.prototype.reInit = function(board) {
   this.invalidate();
 }
 
-View2D.prototype.draw = function(canvas) {
+View2D.prototype.configure = function() {
   if (!isConfigured) {
       Dagaz.View.configure(this);
       if (this.controller) {
@@ -605,6 +605,10 @@ View2D.prototype.draw = function(canvas) {
       }
       isConfigured = true;
   }
+}
+
+View2D.prototype.draw = function(canvas) {
+  this.configure();
   if (this.allResLoaded() && !isValid) {
       var ctx = canvas.getContext("2d");
       ctx.clearRect(0, 0, canvas.width, canvas.height);

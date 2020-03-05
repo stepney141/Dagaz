@@ -407,7 +407,7 @@ View2D.prototype.showDrops = function(ctx) {
   }
 }
 
-View2D.prototype.draw = function(canvas) {
+View2D.prototype.configure = function() {
   if (!isConfigured) {
       Dagaz.View.configure(this);
       var board = this.controller.getBoard();
@@ -415,6 +415,10 @@ View2D.prototype.draw = function(canvas) {
       this.controller.done();
       isConfigured = true;
   }
+}
+
+View2D.prototype.draw = function(canvas) {
+  this.configure();
   if (this.allResLoaded()) {
       this.animate();
       if (this.valid) return;
