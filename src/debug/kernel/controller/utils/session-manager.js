@@ -25,7 +25,7 @@ var getName = function() {
 }
 
 var badName = function(str) {
-  var result = str.match(/[?&]game=([^&]*)/);
+  var result = str.match(/[?&]game=([^&*]*)/);
   if (result) {
       return result[1] != getName();
   } else {

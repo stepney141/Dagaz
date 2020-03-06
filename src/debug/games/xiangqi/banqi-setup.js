@@ -12,6 +12,53 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+var getName = function() {
+  var str = window.location.pathname.toString();
+  var result = str.match(/\/([^.\/]+)\./);
+  if (result) {
+      return result[1].replace("-board", "").replace("-ai", "");
+  } else {
+      return str;
+  }
+}
+
+var badName = function(str) {
+  var result = str.match(/[?&]game=([^&*]*)/);
+  if (result) {
+      return result[1] != getName();
+  } else {
+      return true;
+  }
+}
+
+var getCookie = function() {
+  var str = document.cookie;
+  var result = str.match(/dagaz\.(setup=[^*]*)/);
+  if (result) {
+      var r = decodeURIComponent(result[1]);
+      if (badName(r)) return "";
+      return "?" + r;
+  } else {
+      return "";
+  }
+}
+
+var getSetup = function() {
+  var str = window.location.search.toString();
+  var result = str.match(/[?&]setup=([^&]*)/);
+  if (result) {
+      return result[1];
+  } else {
+      str = getCookie();
+      result = str.match(/[?&]setup=([^&]*)/);
+      if (result) {
+          return result[1];
+      } else {
+          return "";
+      }
+  }
+}
+
 var addPiece = function(board, type, player, avail) {
   var ix = 0;
   if (avail.length > 1) {
@@ -21,7 +68,14 @@ var addPiece = function(board, type, player, avail) {
   return _.without(avail, avail[ix]);
 }
 
+var setup = Dagaz.Model.setup;
+
 Dagaz.Model.setup = function(board) {
+  var s = getSetup();
+  if (s) {
+      setup(board);
+      return;
+  }
   var design = Dagaz.Model.design;
   var avail  = design.allPositions();
   avail = addPiece(board, 0, 1, avail); if (large) avail = addPiece(board, 0, 1, avail);
