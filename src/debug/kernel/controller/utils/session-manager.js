@@ -34,22 +34,10 @@ var badName = function(str) {
 }
 
 var getCookie = function() {
-  var str = document.cookie;
-  var result = str.match(/dagaz\.(session=[^*]*)/);
+  var result = localStorage.getItem('dagaz.session');
   if (result) {
-      var r = decodeURIComponent(result[1]);
-      if (badName(r)) return "";
-      return "?" + r;
-  } else {
-      return "";
-  }
-}
-
-var getMaxage = function() {
-  var str = window.location.search.toString();
-  var result = str.match(/[?&]cookie=(\d+)/);
-  if (result) {
-      return result[1];
+      if (badName(result)) return "";
+      return "?session=" + result;
   } else {
       return "";
   }
@@ -168,16 +156,10 @@ SessionManager.prototype.addState = function(move, board) {
   }
   this.current = current;
   if (Dagaz.Controller.persistense == "session") {
-      var maxage = getMaxage();
-      if (!maxage && (Dagaz.Controller.defaultLife > 0)) maxage = Dagaz.Controller.defaultLife;
       var str = Dagaz.Controller.getSessionManager().save();
       if (str == "()") return;
       str = str + "&game=" + getName();
-      if (maxage) {
-          document.cookie = "dagaz.session=" + encodeURIComponent(str + "*") + "; max-age=" + maxage;
-      } else {
-          document.cookie = "dagaz.session=" + encodeURIComponent(str + "*");
-      }
+      localStorage.setItem('dagaz.session', str);
   }
 }
 
@@ -292,7 +274,7 @@ Dagaz.Controller.undo = function() {
 var clearGame = Dagaz.Controller.clearGame;
 
 Dagaz.Controller.clearGame = function() {
-   document.cookie = "dagaz.session=" + encodeURIComponent("*") + "; max-age=0";
+   localStorage.setItem('dagaz.session', '');
    if (!_.isUndefined(clearGame)) {
        clearGame();
    }

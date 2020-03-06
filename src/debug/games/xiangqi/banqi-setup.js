@@ -32,12 +32,10 @@ var badName = function(str) {
 }
 
 var getCookie = function() {
-  var str = document.cookie;
-  var result = str.match(/dagaz\.(setup=[^*]*)/);
+  var result = localStorage.getItem('dagaz.setup');
   if (result) {
-      var r = decodeURIComponent(result[1]);
-      if (badName(r)) return "";
-      return "?" + r;
+      if (badName(result)) return "";
+      return "?setup=" + result;
   } else {
       return "";
   }
