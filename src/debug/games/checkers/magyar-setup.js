@@ -170,8 +170,8 @@ var checkEdge = function(design, board, z, f) {
 
 var getShift = function(design, board) {
   var r = 0;
-  if (checkEdge(design, board, 0, 3)) r += 2 * Dagaz.Model.WIDTH - 1;
-  if (checkEdge(design, board, 2, 1)) r -= 2 * Dagaz.Model.WIDTH - 1;
+  if (checkEdge(design, board, 0, 3)) r += Dagaz.Model.WIDTH - 1;
+  if (checkEdge(design, board, 2, 1)) r -= Dagaz.Model.WIDTH - 1;
   if (checkEdge(design, board, 4, 7)) r++;
   if (checkEdge(design, board, 6, 5)) r--;
   return r;
