@@ -7,6 +7,7 @@ var Dagaz  = {
 };
 
 Dagaz.Controller.persistense = "none";
+Dagaz.Controller.loseRefresh = true;
 
 Dagaz.Controller.Done = function(board) {}
 

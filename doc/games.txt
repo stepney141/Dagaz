@@ -13,7 +13,7 @@
   - Abalala'e [sync, attributes, sparks, family:mancala]
   - Ohojitxi [best, attributes, sounds, sparks, family:mancala]
   - Hawalis [attributes, family:mancala]
-  - Ovalhu [attributes, family:mancala]
+  - Ovalhu [attributes, rounds, family:mancala]
   - Tschuba [todo, family:mancala]
   - Selus [traps, attributes, sparks, family:mancala]
   - Redu [todo, family:mancala]

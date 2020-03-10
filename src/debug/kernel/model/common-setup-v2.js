@@ -1,7 +1,6 @@
 (function() {
 
 Dagaz.Controller.persistense = "setup";
-Dagaz.Controller.defaultLife = 3600;
 
 var getName = function() {
   var str = window.location.pathname.toString();

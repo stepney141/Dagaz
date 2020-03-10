@@ -191,6 +191,11 @@ Dagaz.Model.continue = function(design, board, text) {
             offset--;
         }
     });
+  if (board.player == 1) {
+     str = str + ";&turn=1";
+  } else {
+     str = str + ";&turn=0";
+  }
   return str;
 }
 

@@ -395,6 +395,7 @@ View2D.prototype.animate = function() {
    .each(function(frame) {
         if (!_.isUndefined(frame.op)) {
             var piece = this.setup[frame.op];
+            if (_.isUndefined(piece)) return;
             if (!_.isUndefined(frame.dx)) {
                 piece.x += frame.dx;
             }

@@ -1,3 +1,5 @@
+Dagaz.Controller.persistense = "setup";
+Dagaz.Controller.loseRefresh = false;
 Dagaz.View.CLEAR_KO = true;
 
 ZRF = {

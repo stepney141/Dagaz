@@ -41,7 +41,12 @@ Dagaz.Controller.newGame = function() {
   if (!_.isUndefined(Dagaz.Controller.clearGame)) {
       Dagaz.Controller.clearGame();
   }
-  window.location = window.location.toString();
+  var str = window.location.toString();
+  var result = str.match(/^([^?]+)/);
+  if (result) {
+      str = result[1];
+  }
+  window.location = str;
 }
 
 App.prototype.gameOver = function(text, player) {

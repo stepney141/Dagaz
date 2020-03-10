@@ -40,7 +40,7 @@ Dagaz.Model.continue = function(design, board, text) {
   if (c > 8) c = 8;
   x2 -= c * 8;
   for (var i = 0; i < 8 - c; i++) {
-     str = str + "2:2;";
+     str = str + "2:2=1;";
   }
   for (var i = 0; i < c; i++) {
      str = str + "0:2=8;";
@@ -52,7 +52,7 @@ Dagaz.Model.continue = function(design, board, text) {
      str = str + "0:1=8;";
   }
   for (var i = 0; i < 8 - c; i++) {
-     str = str + "2:1;";
+     str = str + "2:1=1;";
   }
   if (x2 > 0) {
       str = str + "0:2=" + x2 + ";";

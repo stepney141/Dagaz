@@ -1,3 +1,6 @@
+Dagaz.Controller.persistense = "session";
+Dagaz.View.CLEAR_KO = true;
+
 ZRF = {
     JUMP:          0,
     IF:            1,
@@ -21,11 +24,13 @@ ZRF = {
 
 Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
-    design.checkVersion("zrf", "3.0");
     design.checkVersion("pass-turn", "forced");
-    design.checkVersion("show-blink", "false");
     design.checkVersion("highlight-goals", "false");
+    design.checkVersion("smart-moves", "false");
+    design.checkVersion("show-hints", "false");
+    design.checkVersion("show-blink", "false");
     design.checkVersion("progressive-levels", "true");
+    design.checkVersion("advisor-wait", "5");
     design.checkVersion("kamisado-extension", "true");
 
     design.addDirection("w");  // 0
