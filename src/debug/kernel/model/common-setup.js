@@ -63,6 +63,22 @@ var getTurn = function() {
   }
 }
 
+var getSeed = function() {
+  var str = window.location.search.toString();
+  var result = str.match(/[?&]seed=(\d+)/);
+  if (result) {
+      return result[1];
+  } else {
+      str = getCookie();
+      result = str.match(/[?&]seed=(\d+)/);
+      if (result) {
+          return result[1];
+      } else {
+          return "";
+      }
+  }
+}
+
 var getNum = function(c) {
   if ((c >= "0".charCodeAt(0)) && (c <= "9".charCodeAt(0))) {
       return c - "0".charCodeAt(0);
@@ -147,11 +163,28 @@ Dagaz.Model.getSetup = function(design, board) {
       });
   }
   str = str + ";&turn=" + board.turn;
+  if (!_.isUndefined(Dagaz.Controller.seed)) {
+      str = str + "&seed=" + Dagaz.Controller.seed;
+  }
   if (Dagaz.Controller.persistense == "setup") {
       var s = str + "&game=" + getName() + "*";
       localStorage.setItem('dagaz.setup', s);
   }
   return "?setup=" + str;
+}
+
+var getSetupSelector = Dagaz.Model.getSetupSelector;
+
+Dagaz.Model.getSetupSelector = function(val) {
+  if (Dagaz.Controller.randomized && _.isUndefined(Dagaz.Controller.seed)) {
+      Dagaz.Controller.seed = getSeed();
+      if (!Dagaz.Controller.seed) {
+          Dagaz.Controller.seed = _.random(0, 10000);
+      }
+      console.log("Seed: " + Dagaz.Controller.seed);
+      Math.seedrandom(+Dagaz.Controller.seed);
+  }
+  return getSetupSelector(val);
 }
 
 var clearGame = Dagaz.Controller.clearGame;

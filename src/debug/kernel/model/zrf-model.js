@@ -2446,7 +2446,11 @@ Dagaz.Model.getSetupSelector = function(val) {
       }
   }
   if (_.isUndefined(Dagaz.Model.setupSelector)) {
-      Dagaz.Model.setupSelector = _.random(1, val);
+      if (!_.isUndefined(val) && (val > 1)) {
+          Dagaz.Model.setupSelector = _.random(1, val);
+      } else {
+          Dagaz.Model.setupSelector = 1;
+      }
   }
   return Dagaz.Model.setupSelector;
 }
