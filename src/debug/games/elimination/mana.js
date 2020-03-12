@@ -1,3 +1,4 @@
+Dagaz.Controller.randomized  = true;
 Dagaz.View.CLEAR_KO = true;
 
 ZRF = {
