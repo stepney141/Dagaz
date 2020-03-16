@@ -1,6 +1,7 @@
 (function() {
 
 Dagaz.Controller.persistense = "setup";
+Dagaz.Controller.saveLastTo  = false;
 
 var getName = function() {
   var str = window.location.pathname.toString();
@@ -79,6 +80,22 @@ var getSeed = function() {
   }
 }
 
+var getLast = function() {
+  var str = window.location.search.toString();
+  var result = str.match(/[?&]last=(\d+)/);
+  if (result) {
+      return result[1];
+  } else {
+      str = getCookie();
+      result = str.match(/[?&]last=(\d+)/);
+      if (result) {
+          return result[1];
+      } else {
+          return "";
+      }
+  }
+}
+
 var getNum = function(c) {
   if ((c >= "0".charCodeAt(0)) && (c <= "9".charCodeAt(0))) {
       return c - "0".charCodeAt(0);
@@ -128,6 +145,10 @@ Dagaz.Model.setup = function(board) {
           board.turn   = +turn;
           board.player = design.currPlayer(board.turn);
       }
+      var last = getLast();
+      if (last) {
+          board.lastt = +last;
+      }
   }
 }
 
@@ -165,6 +186,9 @@ Dagaz.Model.getSetup = function(design, board) {
   str = str + ";&turn=" + board.turn;
   if (!_.isUndefined(Dagaz.Controller.seed)) {
       str = str + "&seed=" + Dagaz.Controller.seed;
+  }
+  if (Dagaz.Controller.saveLastTo && !_.isUndefined(board.lastt)) {
+      str = str + "&last=" + board.lastt;
   }
   if (Dagaz.Controller.persistense == "setup") {
       var s = str + "&game=" + getName() + "*";
