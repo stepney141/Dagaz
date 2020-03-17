@@ -41,8 +41,8 @@ var exec = function() {
           if (moves.length == 1) {
               app.move  = moves[0];
               app.board = app.board.apply(app.move);
-              app.state = 2; // STATE.WAIT
-              app.move.applyAll(app.view);
+              app.state = 4; // STATE.EXEC
+//            app.move.applyAll(app.view);
               delete app.list;
           }
       }
