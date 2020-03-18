@@ -17,7 +17,7 @@ var getName = function() {
   var str = window.location.pathname.toString();
   var result = str.match(/\/([^.\/]+)\./);
   if (result) {
-      return result[1].replace("-board", "");
+      return result[1].replace("-board", "").replace("-alt", "");
   } else {
       return str;
   }
