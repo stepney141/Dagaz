@@ -8,6 +8,14 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+var isFork = function(a) {
+  if (a.length < 2) return false;
+  if (a.length > 2) return true;
+  if ((a[0] == 4) && (a[1] == 4)) return true;
+  if ((a[0] == 3) && (a[1] == 3)) return true;
+  return false;
+}
+
 var addKo = function(board, move) {
   if ((move.actions.length > 0) && (move.actions[0][1] !== null)) {
        pos = move.actions[0][1][0];
@@ -20,72 +28,65 @@ var addKo = function(board, move) {
   }
 }
 
-var isFork = function(a) {
-  if (a.length < 2) return false;
-  if (a.length > 2) return true;
-  if ((a[0] == 4) && (a[1] == 4)) return true;
-  if ((a[0] == 3) && (a[1] == 3)) return true;
-  return false;
+var createPiece = function(player, ix, v) {
+  return Dagaz.Model.createPiece(0, player).setValue(ix, v);
 }
 
-var getLine = function(design, board, player, pos, dir, ix) {
-  var r = 0;
-  var p = design.navigate(player, pos, dir);
-  if (p === null) return 0;
-  var piece = board.getPiece(p);
-  while (piece !== null) {
-      if (piece.player != board.player) break;
-      var v = +piece.getValue(ix);
-      if (r < v) r = v;
-      p = design.navigate(player, p, dir);
-      if (p === null) break;
-      piece = board.getPiece(p);
-  }
-  return r;
-}
-
-var createPiece = function(design, board, player, pos) {
-  var dirs = [];
-  dirs.push(design.getDirection("n")); dirs.push(design.getDirection("ne"));
-  dirs.push(design.getDirection("e")); dirs.push(design.getDirection("se"));
-  dirs.push(design.getDirection("s")); dirs.push(design.getDirection("sw"));
-  dirs.push(design.getDirection("w")); dirs.push(design.getDirection("nw"));
-  var r = Dagaz.Model.createPiece(0, player);
-  for (var ix = 0; ix < 4; ix++) {
-      var a = getLine(design, board, player, pos, dirs[ix], ix);
-      var b = getLine(design, board, player, pos, dirs[ix + 4], ix);
-      r = r.setValue(ix, a + b + 1);
-  }
-  return r;
-}
-
-var getRank = function(design, board, pos, dir, op, ix) {
-  var dirs  = [];
-  dirs.push(design.getDirection("n")); dirs.push(design.getDirection("ne"));
-  dirs.push(design.getDirection("e")); dirs.push(design.getDirection("se"));
-  dirs.push(design.getDirection("s")); dirs.push(design.getDirection("sw"));
-  dirs.push(design.getDirection("w")); dirs.push(design.getDirection("nw"));
+var findEmpty = function(design, board, pos, dir, ix) {
   var p = design.navigate(board.player, pos, dir);
-  if (p === null) return 0;
-  var piece = board.getPiece(p);
-  while (piece !== null) {
-      if (piece.player != board.player) return 0;
+  while (p !== null) {
+      var piece = board.getPiece(p);
+      if (piece === null) {
+          var q = design.navigate(board.player, p, dir);
+          if (q === null) return { p: p, v: 0 };
+          piece = board.getPiece(q);
+          if ((piece === null) || (piece.player != board.player)) return { p: p, v: 0 };
+          var v = piece.getValue(ix);
+          if (v === null) return { p: p, v: 0 };
+          return { p: p, v: v };
+      }
+      if (piece.player != board.player) return null;
       p = design.navigate(board.player, p, dir);
-      if (p === null) return 0;
-      piece = board.getPiece(p);
   }
-  piece = createPiece(design, board, board.player, p);
-  if (piece.getValue(ix) == 5) return 4;
-  var q = design.navigate(board.player, pos, op);
-  if (q === null) return 0;
-  var x = board.getPiece(q);
-  if ((x !== null) && (x.player != board.player)) return 0;
-  p = design.navigate(board.player, p, dir);
-  if (p === null) return 0;
-  var x = board.getPiece(p);
-  if ((x !== null) && (x.player != board.player)) return 0;
-  if (piece.getValue(ix) == 4) return 3;
-  return 0;
+  return null;
+}
+
+var isFour = function(design, board, pos, ix, dirs, cnt) {
+  var c = 0;
+  var piece = board.getPiece(pos);
+  if (piece === null) return false;
+  var v = +piece.getValue(ix);
+  if (v === null) return false;
+  var r = findEmpty(design, board, pos, dirs[ix], ix);
+  if ((r !== null) && (v + r.v + 1 == 5)) {
+      if (cnt == 1) return true;
+      c++;
+  }
+  r = findEmpty(design, board, pos, dirs[ix + 4], ix);
+  if ((r !== null) && (v + r.v + 1 == 5)) c++;
+  return c >= cnt;
+}
+
+var isThree = function(design, board, pos, ix, dirs) {
+  var c = 0;
+  var piece = board.getPiece(pos);
+  if (piece === null) return false;
+  var v = +piece.getValue(ix);
+  if (v === null) return false;
+  var r = findEmpty(design, board, pos, dirs[ix], ix);
+  if ((r !== null) && (v + r.v + 1 == 4)) {
+      board.setPiece(r.p, createPiece(board.player, ix, 4));
+      if (isFour(design, board, r.p, ix, dirs, 2)) c++;
+      board.setPiece(r.p, null);
+  }
+  if (c > 0) return true;
+  r = findEmpty(design, board, pos, dirs[ix + 4], ix);
+  if ((r !== null) && (v + r.v + 1 == 4)) {
+      board.setPiece(r.p, createPiece(board.player, ix, 4));
+      if (isFour(design, board, r.p, ix, dirs, 2)) c++;
+      board.setPiece(r.p, null);
+  }
+  return c > 0;
 }
 
 var CheckInvariants = Dagaz.Model.CheckInvariants;
@@ -109,20 +110,12 @@ Dagaz.Model.CheckInvariants = function(board) {
                if (v > 5) {
                    addKo(board, move);
                    move.failed = true;
+                   board.setPiece(pos, null);
                    return;
                }
-               var a = getRank(design, board, pos, dirs[ix], dirs[ix + 4], ix);
-               var b = getRank(design, board, pos, dirs[ix + 4], dirs[ix], ix);
-               if ((a == 4) && (b == 4)) {
-                    if (v < 4) result.push(4);
-                    result.push(4);
-               }
-               if (v < 3) {
-                   if ((a == 3) && (b != 4)) result.push(3);
-                   if ((a != 4) && (b == 3)) result.push(3);
-               } else {
-                   if ((a == 3) && (b == 3)) result.push(3);
-               }
+               if (isFour(design, board, pos, ix, dirs, 1)) {
+                   result.push(4);
+               } else if (isThree(design, board, pos, ix, dirs)) result.push(3);
           }
           board.setPiece(pos, null);
           if (isFork(result)) {
