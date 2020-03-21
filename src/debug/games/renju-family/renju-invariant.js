@@ -43,7 +43,7 @@ var findEmpty = function(design, board, pos, dir, ix) {
           if ((piece === null) || (piece.player != board.player)) return { p: p, v: 0 };
           var v = piece.getValue(ix);
           if (v === null) return { p: p, v: 0 };
-          return { p: p, v: v };
+          return { p: p, v: +v };
       }
       if (piece.player != board.player) return null;
       p = design.navigate(board.player, p, dir);
@@ -51,7 +51,7 @@ var findEmpty = function(design, board, pos, dir, ix) {
   return null;
 }
 
-var isFour = function(design, board, pos, ix, dirs, cnt) {
+var isFour = function(design, board, pos, ix, dirs) {
   var c = 0;
   var piece = board.getPiece(pos);
   if (piece === null) return false;
@@ -59,12 +59,11 @@ var isFour = function(design, board, pos, ix, dirs, cnt) {
   if (v === null) return false;
   var r = findEmpty(design, board, pos, dirs[ix], ix);
   if ((r !== null) && (v + r.v + 1 == 5)) {
-      if (cnt == 1) return true;
       c++;
   }
   r = findEmpty(design, board, pos, dirs[ix + 4], ix);
   if ((r !== null) && (v + r.v + 1 == 5)) c++;
-  return c >= cnt;
+  return c;
 }
 
 var isThree = function(design, board, pos, ix, dirs) {
@@ -76,14 +75,14 @@ var isThree = function(design, board, pos, ix, dirs) {
   var r = findEmpty(design, board, pos, dirs[ix], ix);
   if ((r !== null) && (v + r.v + 1 == 4)) {
       board.setPiece(r.p, createPiece(board.player, ix, 4));
-      if (isFour(design, board, r.p, ix, dirs, 2)) c++;
+      if (isFour(design, board, r.p, ix, dirs) == 2) c++;
       board.setPiece(r.p, null);
   }
   if (c > 0) return true;
   r = findEmpty(design, board, pos, dirs[ix + 4], ix);
   if ((r !== null) && (v + r.v + 1 == 4)) {
       board.setPiece(r.p, createPiece(board.player, ix, 4));
-      if (isFour(design, board, r.p, ix, dirs, 2)) c++;
+      if (isFour(design, board, r.p, ix, dirs) == 2) c++;
       board.setPiece(r.p, null);
   }
   return c > 0;
@@ -113,7 +112,14 @@ Dagaz.Model.CheckInvariants = function(board) {
                    board.setPiece(pos, null);
                    return;
                }
-               if (isFour(design, board, pos, ix, dirs, 1)) {
+               var r = isFour(design, board, pos, ix, dirs);
+               if ((r == 2) && (v < 4)) {
+                   addKo(board, move);
+                   move.failed = true;
+                   board.setPiece(pos, null);
+                   return;
+               }
+               if (r > 0) {
                    result.push(4);
                } else if (isThree(design, board, pos, ix, dirs)) result.push(3);
           }
