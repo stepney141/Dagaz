@@ -12,6 +12,10 @@ Dagaz.Controller.randomized  = false;
 
 Dagaz.Controller.Done = function(board) {}
 
+Dagaz.Controller.go = function(url) {
+  window.location = url;
+}
+
 Dagaz.KPI.open  = function(scope, stage) {}
 Dagaz.KPI.stage = function(stage, scope) {}
 Dagaz.KPI.close = function(scope, stage) {}
