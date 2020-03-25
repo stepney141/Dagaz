@@ -39,7 +39,7 @@ Dagaz.Controller.go = function(url) {
   go(url);
 }
 
-var getLine = function(design, board, player, pos, dir, ix) {
+Dagaz.Model.getLine = function(design, board, player, pos, dir, ix) {
   var p = design.navigate(player, pos, dir);
   if (p === null) return 0;
   var piece = board.getPiece(p);
@@ -72,8 +72,8 @@ Dagaz.Model.CheckInvariants = function(board) {
           var piece = move.actions[0][2][0];
           for (var ix = 0; ix < dirs.length; ix++) {
                var vl = 1;
-               vl += getLine(design, board, board.player, pos, dirs[ix], ix);
-               vl += getLine(design, board, 0, pos, dirs[ix], ix);
+               vl += Dagaz.Model.getLine(design, board, board.player, pos, dirs[ix], ix);
+               vl += Dagaz.Model.getLine(design, board, 0, pos, dirs[ix], ix);
                updateLine(design, board, board.player, pos, ix, vl, dirs[ix], move);
                updateLine(design, board, 0, pos, ix, vl, dirs[ix], move);
                piece = piece.setValue(ix, vl);

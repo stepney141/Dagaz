@@ -66,7 +66,7 @@ var isFour = function(design, board, pos, ix, dirs) {
   return c;
 }
 
-var isThree = function(design, board, pos, ix, dirs) {
+var isThree = function(design, board, pos, ix, dirs, positions) {
   var c = 0;
   var piece = board.getPiece(pos);
   if (piece === null) return false;
@@ -75,56 +75,104 @@ var isThree = function(design, board, pos, ix, dirs) {
   var r = findEmpty(design, board, pos, dirs[ix], ix);
   if ((r !== null) && (v + r.v + 1 == 4)) {
       board.setPiece(r.p, createPiece(board.player, ix, 4));
-      if (isFour(design, board, r.p, ix, dirs) == 2) c++;
+      if (isFour(design, board, r.p, ix, dirs) == 2) {
+          if (!_.isUndefined(positions)) {
+              positions.push(r.p);
+          }
+          c++;
+      }
       board.setPiece(r.p, null);
   }
   if (c > 0) return true;
   r = findEmpty(design, board, pos, dirs[ix + 4], ix);
   if ((r !== null) && (v + r.v + 1 == 4)) {
       board.setPiece(r.p, createPiece(board.player, ix, 4));
-      if (isFour(design, board, r.p, ix, dirs) == 2) c++;
+      if (isFour(design, board, r.p, ix, dirs) == 2) { 
+          if (!_.isUndefined(positions)) {
+              positions.push(r.p);
+          }
+          c++;
+      }
       board.setPiece(r.p, null);
   }
   return c > 0;
+}
+
+var isPseudoFoul = function(design, board, pos, piece) {
+  var result = []; var dirs = [];
+  dirs.push(design.getDirection("n")); dirs.push(design.getDirection("ne"));
+  dirs.push(design.getDirection("e")); dirs.push(design.getDirection("se"));
+  dirs.push(design.getDirection("s")); dirs.push(design.getDirection("sw"));
+  dirs.push(design.getDirection("w")); dirs.push(design.getDirection("nw"));
+  board.setPiece(pos, piece);
+  for (var ix = 0; ix < 4; ix++) {
+       var v = +piece.getValue(ix);
+       if (v > 5) {
+           board.setPiece(pos, null);
+           return true;
+       }
+       var r = isFour(design, board, pos, ix, dirs);
+       if (r == 2) {
+           board.setPiece(pos, null);
+           return true;
+       }
+  }
+  board.setPiece(pos, null);
+  return false;
+}
+
+var isFoul = function(design, board, pos, piece) {
+  var f = false;
+  var result = []; var positions = []; var dirs = [];
+  dirs.push(design.getDirection("n")); dirs.push(design.getDirection("ne"));
+  dirs.push(design.getDirection("e")); dirs.push(design.getDirection("se"));
+  dirs.push(design.getDirection("s")); dirs.push(design.getDirection("sw"));
+  dirs.push(design.getDirection("w")); dirs.push(design.getDirection("nw"));
+  board.setPiece(pos, piece);
+  for (var ix = 0; ix < 4; ix++) {
+       var v = +piece.getValue(ix);
+       if (v > 5) {
+           board.setPiece(pos, null);
+           return true;
+       }
+       var r = isFour(design, board, pos, ix, dirs);
+       if ((r == 2) && (v < 4)) {
+           f = true;
+       }
+       if (!f && (r > 0)) {
+           result.push(4);
+       } else if (isThree(design, board, pos, ix, dirs, positions)) result.push(3);
+  }
+  board.setPiece(pos, null);
+  if (f || isFork(result)) {
+      for (var i = 0; i < positions.length; i++) {
+           var piece = Dagaz.Model.createPiece(0, board.player);
+           for (var ix = 0; ix < 4; ix++) {
+                var vl = 1;
+                vl += Dagaz.Model.getLine(design, board, board.player, positions[i], dirs[ix], ix);
+                vl += Dagaz.Model.getLine(design, board, 0, positions[i], dirs[ix], ix);
+//              console.log(Dagaz.Model.posToString(positions[i]) + ": ix = " + ix + ", vl = " + vl);
+                piece = piece.setValue(ix, vl);
+           }
+           if (isPseudoFoul(design, board, positions[i], piece)) {
+               return false;
+           }
+      }
+      return true;
+  }
+  return false;
 }
 
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
-  var dirs   = [];
-  dirs.push(design.getDirection("n")); dirs.push(design.getDirection("ne"));
-  dirs.push(design.getDirection("e")); dirs.push(design.getDirection("se"));
-  dirs.push(design.getDirection("s")); dirs.push(design.getDirection("sw"));
-  dirs.push(design.getDirection("w")); dirs.push(design.getDirection("nw"));
   if (board.player == 1) {
       _.each(board.moves, function(move) {          
           if (move.isPass()) return;
           var pos    = move.actions[0][1][0];
           var piece  = move.actions[0][2][0];
-          var result = [];
-          board.setPiece(pos, piece);
-          for (var ix = 0; ix < 4; ix++) {
-               var v = +piece.getValue(ix);
-               if (v > 5) {
-                   addKo(board, move);
-                   move.failed = true;
-                   board.setPiece(pos, null);
-                   return;
-               }
-               var r = isFour(design, board, pos, ix, dirs);
-               if ((r == 2) && (v < 4)) {
-                   addKo(board, move);
-                   move.failed = true;
-                   board.setPiece(pos, null);
-                   return;
-               }
-               if (r > 0) {
-                   result.push(4);
-               } else if (isThree(design, board, pos, ix, dirs)) result.push(3);
-          }
-          board.setPiece(pos, null);
-          if (isFork(result)) {
+          if (isFoul(design, board, pos, piece)) {
               addKo(board, move);
               move.failed = true;
               return;
