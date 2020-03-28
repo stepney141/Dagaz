@@ -27,14 +27,14 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("ordo-extension", "true");
     design.checkVersion("ordo-goal", "true");
 
-    design.addDirection("w");
-    design.addDirection("e");
-    design.addDirection("s");
-    design.addDirection("ne");
-    design.addDirection("n");
-    design.addDirection("se");
-    design.addDirection("sw");
-    design.addDirection("nw");
+    design.addDirection("w");  // 0
+    design.addDirection("e");  // 1
+    design.addDirection("s");  // 2
+    design.addDirection("ne"); // 3
+    design.addDirection("n");  // 4
+    design.addDirection("se"); // 5
+    design.addDirection("sw"); // 6
+    design.addDirection("nw"); // 7
 
     design.addPlayer("White", [1, 0, 4, 6, 2, 7, 3, 5]);
     design.addPlayer("Black", [0, 1, 2, 3, 4, 5, 6, 7]);
@@ -2044,62 +2044,62 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPiece("Man", 0);
     design.addMove(0, 0, [4, 4], 0);
     design.addMove(0, 0, [7, 7], 0);
-    design.addMove(0, 0, [2, 2], 0);
-    design.addMove(0, 0, [5, 5], 0);
+    design.addMove(0, 0, [2, 2], 1);
+    design.addMove(0, 0, [5, 5], 1);
     design.addMove(0, 0, [0, 0], 0);
-    design.addMove(0, 0, [6, 6], 0);
+    design.addMove(0, 0, [6, 6], 1);
     design.addMove(0, 0, [1, 1], 0);
     design.addMove(0, 0, [3, 3], 0);
     design.addMove(0, 1, [4, 0, 4], 0);
-    design.addMove(0, 1, [2, 0, 2], 0);
+    design.addMove(0, 1, [2, 0, 2], 1);
     design.addMove(0, 2, [4, 4, 0, 4, 4], 0);
-    design.addMove(0, 2, [2, 2, 0, 2, 2], 0);
+    design.addMove(0, 2, [2, 2, 0, 2, 2], 1);
     design.addMove(0, 3, [4, 4, 4, 0, 4, 4, 4], 0);
-    design.addMove(0, 3, [2, 2, 2, 0, 2, 2, 2], 0);
+    design.addMove(0, 3, [2, 2, 2, 0, 2, 2, 2], 1);
     design.addMove(0, 4, [4, 4, 4, 4, 0, 4, 4, 4, 4], 0);
-    design.addMove(0, 4, [2, 2, 2, 2, 0, 2, 2, 2, 2], 0);
+    design.addMove(0, 4, [2, 2, 2, 2, 0, 2, 2, 2, 2], 1);
     design.addMove(0, 5, [4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4], 0);
-    design.addMove(0, 5, [2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2], 0);
+    design.addMove(0, 5, [2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2], 1);
     design.addMove(0, 6, [4, 0, 4, 0, 4], 0);
-    design.addMove(0, 6, [2, 0, 2, 0, 2], 0);
+    design.addMove(0, 6, [2, 0, 2, 0, 2], 1);
     design.addMove(0, 7, [4, 4, 0, 4, 4, 0, 4, 4], 0);
-    design.addMove(0, 7, [2, 2, 0, 2, 2, 0, 2, 2], 0);
+    design.addMove(0, 7, [2, 2, 0, 2, 2, 0, 2, 2], 1);
     design.addMove(0, 8, [4, 4, 4, 0, 4, 4, 4, 0, 4, 4, 4], 0);
-    design.addMove(0, 8, [2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2], 0);
+    design.addMove(0, 8, [2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2], 1);
     design.addMove(0, 9, [4, 4, 4, 4, 0, 4, 4, 4, 4, 0, 4, 4, 4, 4], 0);
-    design.addMove(0, 9, [2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2], 0);
+    design.addMove(0, 9, [2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2], 1);
     design.addMove(0, 10, [4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4], 0);
-    design.addMove(0, 10, [2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2], 0);
+    design.addMove(0, 10, [2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2], 1);
     design.addMove(0, 11, [4, 0, 4, 0, 4, 0, 4], 0);
-    design.addMove(0, 11, [2, 0, 2, 0, 2, 0, 2], 0);
+    design.addMove(0, 11, [2, 0, 2, 0, 2, 0, 2], 1);
     design.addMove(0, 12, [4, 4, 0, 4, 4, 0, 4, 4, 0, 4, 4], 0);
-    design.addMove(0, 12, [2, 2, 0, 2, 2, 0, 2, 2, 0, 2, 2], 0);
+    design.addMove(0, 12, [2, 2, 0, 2, 2, 0, 2, 2, 0, 2, 2], 1);
     design.addMove(0, 13, [4, 4, 4, 0, 4, 4, 4, 0, 4, 4, 4, 0, 4, 4, 4], 0);
-    design.addMove(0, 13, [2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2], 0);
+    design.addMove(0, 13, [2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2], 1);
     design.addMove(0, 14, [4, 4, 4, 4, 0, 4, 4, 4, 4, 0, 4, 4, 4, 4, 0, 4, 4, 4, 4], 0);
-    design.addMove(0, 14, [2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2], 0);
+    design.addMove(0, 14, [2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2], 1);
     design.addMove(0, 15, [4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4], 0);
-    design.addMove(0, 15, [2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2], 0);
+    design.addMove(0, 15, [2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2], 1);
     design.addMove(0, 16, [4, 0, 4, 0, 4, 0, 4, 0, 4], 0);
-    design.addMove(0, 16, [2, 0, 2, 0, 2, 0, 2, 0, 2], 0);
+    design.addMove(0, 16, [2, 0, 2, 0, 2, 0, 2, 0, 2], 1);
     design.addMove(0, 17, [4, 4, 0, 4, 4, 0, 4, 4, 0, 4, 4, 0, 4, 4], 0);
-    design.addMove(0, 17, [2, 2, 0, 2, 2, 0, 2, 2, 0, 2, 2, 0, 2, 2], 0);
+    design.addMove(0, 17, [2, 2, 0, 2, 2, 0, 2, 2, 0, 2, 2, 0, 2, 2], 1);
     design.addMove(0, 18, [4, 4, 4, 0, 4, 4, 4, 0, 4, 4, 4, 0, 4, 4, 4, 0, 4, 4, 4], 0);
-    design.addMove(0, 18, [2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2], 0);
+    design.addMove(0, 18, [2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2], 1);
     design.addMove(0, 19, [4, 4, 4, 4, 0, 4, 4, 4, 4, 0, 4, 4, 4, 4, 0, 4, 4, 4, 4, 0, 4, 4, 4, 4], 0);
-    design.addMove(0, 19, [2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2], 0);
+    design.addMove(0, 19, [2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2], 1);
     design.addMove(0, 20, [4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4], 0);
-    design.addMove(0, 20, [2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2], 0);
+    design.addMove(0, 20, [2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2], 1);
     design.addMove(0, 21, [4, 0, 4, 0, 4, 0, 4, 0, 4, 0, 4], 0);
-    design.addMove(0, 21, [2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2], 0);
+    design.addMove(0, 21, [2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2], 1);
     design.addMove(0, 22, [4, 4, 0, 4, 4, 0, 4, 4, 0, 4, 4, 0, 4, 4, 0, 4, 4], 0);
-    design.addMove(0, 22, [2, 2, 0, 2, 2, 0, 2, 2, 0, 2, 2, 0, 2, 2, 0, 2, 2], 0);
+    design.addMove(0, 22, [2, 2, 0, 2, 2, 0, 2, 2, 0, 2, 2, 0, 2, 2, 0, 2, 2], 1);
     design.addMove(0, 23, [4, 4, 4, 0, 4, 4, 4, 0, 4, 4, 4, 0, 4, 4, 4, 0, 4, 4, 4, 0, 4, 4, 4], 0);
-    design.addMove(0, 23, [2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2], 0);
+    design.addMove(0, 23, [2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2], 1);
     design.addMove(0, 24, [4, 4, 4, 4, 0, 4, 4, 4, 4, 0, 4, 4, 4, 4, 0, 4, 4, 4, 4, 0, 4, 4, 4, 4, 0, 4, 4, 4, 4], 0);
-    design.addMove(0, 24, [2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2], 0);
+    design.addMove(0, 24, [2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2], 1);
     design.addMove(0, 25, [4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4], 0);
-    design.addMove(0, 25, [2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2], 0);
+    design.addMove(0, 25, [2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2], 1);
     design.addMove(0, 1, [0, 4, 0], 0);
     design.addMove(0, 1, [1, 4, 1], 0);
     design.addMove(0, 2, [0, 0, 4, 0, 0], 0);
