@@ -109,7 +109,7 @@ Dagaz.Model.closure = function(board, move, group) {
   return r;
 }
 
-MoveList.prototype.isBlinked = function(move) {
+MoveList.prototype.isBlinked = function(move, isStrong) {
   var r = false;
   if (!_.isUndefined(this.blink)) {
        var starts = [];
@@ -123,9 +123,10 @@ MoveList.prototype.isBlinked = function(move) {
             }
        }, this);
        var blink = Dagaz.Model.closure(this.board, move, this.blink);
-       if ((blink.length == starts.length) && 
-           (_.intersection(blink, starts).length == blink.length)) {
-          r = true;
+       if (!isStrong || (blink.length == starts.length)) {
+           if (_.intersection(blink, starts).length == blink.length) {
+               r = true;
+           }
        }
   }
   return r;
@@ -136,7 +137,7 @@ MoveList.prototype.getStops = function() {
       this.stops = [];
       if (!_.isUndefined(this.position)) {
           _.each(this.getMoves(), function(move) {
-              if (!this.isBlinked(move)) return;
+              if (!this.isBlinked(move, true)) return;
               _.each(move.actions, function(a) {
                   if ((a[0] !== null) && (a[1] !== null)) {
                       if (a[0][0] != this.position) return;
@@ -151,11 +152,24 @@ MoveList.prototype.getStops = function() {
 
 Dagaz.Model.blinkFailed = function(self) {
   var r = true;
+  var moves = [];
   _.each(self.getMoves(), function(move) {
-      if (self.isBlinked(move)) {
+      if (self.isBlinked(move, false)) {
           r = false;
+          moves.push(move);
       }
   }, self);
+/*if (!r && (moves.length == 1)) {
+      _.each(moves[0].actions, function(a) {
+            if ((a[0] !== null) && (a[1] !== null)) {
+                var pos = a[0][0];
+                if (_.indexOf(this.blink, pos) < 0) {
+                    self.blink.push(pos);
+                }
+            }
+      });
+      delete self.stops;
+  }*/
   return r;
 }
 
@@ -187,7 +201,7 @@ MoveList.prototype.setPosition = function(pos) {
   var result = null;
   if ((_.indexOf(this.getStops(), pos) >= 0) && !_.isUndefined(this.position)) {
       _.each(this.getMoves(), function(move) {
-         if (!this.isBlinked(move)) return;
+         if (!this.isBlinked(move, true)) return;
          _.each(move.actions, function(a) {
             if ((a[0] !== null) && (a[1] !== null)) {
                 if ((a[0][0] == this.position) && (a[1][0] == pos)) {
