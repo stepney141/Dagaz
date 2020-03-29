@@ -18,7 +18,6 @@ Dagaz.Model.CheckInvariants = function(board) {
       if (move.mode == 0) {
           moves.push(move);
       }
-      console.log("Move: " + move.toString() + ", mode = " + move.mode);
   });
   if (moves.length > 0) {
       board.moves = moves;

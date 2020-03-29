@@ -116,11 +116,27 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
+  var f = false;
+  _.each(board.moves, function(move) {
+      if (f) return;
+      if (move.mode == 1) {
+          f = true;
+      }
+  });
+  if (f) {
+      f = isCoherence(design, board, board.player);
+  }
   _.each(board.moves, function(move) {
       var b = board.apply(move);
+      if (f && (move.mode == 1)) {
+          move.failed = true;
+          return;
+      }
       if (!isCoherence(design, b, board.player)) {
           move.failed = true;
+          return;
       }
+      console.log("Move: " + move.toString() + ", mode = " + move.mode);
   });
   CheckInvariants(board);
 }
