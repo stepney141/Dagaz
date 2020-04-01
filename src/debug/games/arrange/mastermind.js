@@ -133,13 +133,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addDrop(5, 0, [5], 0);
 
     design.addPiece("white", 6);
-
     design.addPiece("black", 7);
-
-    design.setup("Computer", "green", 0);
-    design.setup("Computer", "yellow", 1);
-    design.setup("Computer", "purple", 2);
-    design.setup("Computer", "red", 3);
 }
 
 Dagaz.View.configure = function(view) {
