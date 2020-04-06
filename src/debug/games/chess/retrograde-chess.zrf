@@ -97,7 +97,8 @@
      (moves
          (move-type normal-type)
          (pawn-shift s) (pawn-jump s) 
-         (pawn-step sw) (pawn-step se)
+         (move-type prior-type)
+         (pawn-shift sw) (pawn-shift se)
      )
   )
   (piece
@@ -107,7 +108,7 @@
      (moves
          (move-type normal-type)
          (slide n) (slide s) (slide w) (slide e)
-         (move-type unprom-type)
+         (move-type prior-type)
          (unprom sw) (unprom se)
      )
   )
@@ -120,7 +121,7 @@
          (leap n nw) (leap n ne) (leap s sw) (leap s se)
          (leap w nw) (leap w sw) (leap e ne) (leap e se)
          (unprom s)
-         (move-type unprom-type)
+         (move-type prior-type)
          (unprom sw) (unprom se)
      )
   )
@@ -149,20 +150,10 @@
      (image White "images/wking.bmp"
             Black "images/bking.bmp")
      (moves
+         (move-type normal-type)
          (step n) (step s) (step w) (step e)
          (step nw) (step sw) (step ne) (step se)
          (O-O w e) (O-O-O e w)
      )
-  )
-
-  (board-setup
-    (White 
-         (Rook f1)
-         (King g1)
-    )
-    (Black 
-         (Rook d8)
-         (King c8)
-    )
   )
 )
