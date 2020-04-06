@@ -12,19 +12,19 @@ var addDrops = function(board, pos, types, mode, target) {
   var moves = [];
   _.each(types, function(t) {
       var p = Dagaz.Model.createPiece(t, board.player);
-      var m = Dagaz.Model.createMove(0);
+      var m = Dagaz.Model.createMove(2);
       m.dropPiece(pos, p);
-      m.goTo(board.turn);
-/*    if (target !== null) {
+      if (target !== null) {
           var piece = board.getPiece(target);
           if (piece !== null) {
               m.movePiece(target, target, piece.promote(0));
           }
-      }*/
-      if (mode == 0) {
-          board.moves.push(m);
-      } else {
+      }
+      m.goTo(board.turn);
+      if (mode == 1) {
           moves.push(m);
+      } else {
+          board.moves.push(m);
       }
   });
   if (moves.length > 0) {
@@ -71,7 +71,7 @@ Dagaz.Model.CheckInvariants = function(board) {
           if (checkDir(design, board, board.parent.player, pos, 0, target) ||
               checkDir(design, board, board.parent.player, pos, 2, target)) {
               mode = 1;
-          } else if (!checkDir(design, board, board.parent.player, pos, 1, target)) {
+          } else {
               target = null;
           }
       }
