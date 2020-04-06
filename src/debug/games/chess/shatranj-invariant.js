@@ -12,8 +12,7 @@ var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {
   var king = design.getPieceType("Shah");
-  var nf   = true;
-  var ne   = true;
+  var nf = true; var ne = true;
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
       if ((piece !== null) && (piece.type != king)) {
@@ -24,9 +23,8 @@ Dagaz.Model.checkGoals = function(design, board, player) {
           }
       }
   });
-  if (nf || ne) {
-      return 0;
-  }
+  if (nf) return -1;
+  if (ne) return 1;
   return checkGoals(design, board, player);
 }
 
