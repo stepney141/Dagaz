@@ -14,12 +14,12 @@ var addDrops = function(board, pos, types, mode, target) {
       var p = Dagaz.Model.createPiece(t, board.player);
       var m = Dagaz.Model.createMove(2);
       m.dropPiece(pos, p);
-      if (target !== null) {
+/*    if (target !== null) {
           var piece = board.getPiece(target);
           if (piece !== null) {
               m.movePiece(target, target, piece.promote(0));
           }
-      }
+      }*/
       m.goTo(board.turn);
       if (mode == 1) {
           moves.push(m);
@@ -66,8 +66,8 @@ Dagaz.Model.CheckInvariants = function(board) {
       var piece = board.move.actions[0][2][0];
       if ((piece.type == 0) && (board.move.mode == 0)) return;
       var target = null; var mode = board.move.mode;
-      if (design.inZone(0, board.parent.player, pos) && (_.indexOf([1, 3, 4], +piece.type) >= 0)) {
-          target = board.move.actions[0][1][0];
+      if (design.inZone(0, board.parent.player, pos) && (_.indexOf([3, 4], +piece.type) >= 0)) {
+//        target = board.move.actions[0][1][0];
           if (checkDir(design, board, board.parent.player, pos, 0, target) ||
               checkDir(design, board, board.parent.player, pos, 2, target)) {
               mode = 1;
@@ -77,6 +77,19 @@ Dagaz.Model.CheckInvariants = function(board) {
       }
       addDrops(board, pos, types, mode, target);
   }
+  _.each(board.moves, function(move) {
+      if (move.isSimpleMove()) {
+          var pos = move.actions[0][0][0];
+          var piece = move.actions[0][2][0];
+          if (!design.inZone(0, board.player, pos)) return;
+          if (_.indexOf([3, 4], +piece.type) < 0) return;
+          var target = move.actions[0][1][0];
+          if (!checkDir(design, board, board.player, pos, 0, target) &&
+              !checkDir(design, board, board.player, pos, 2, target)) return;
+          move.actions[0][2].push(piece.promote(0));
+          move.mode = 2;
+      }
+  });
   CheckInvariants(board);
 }
 
