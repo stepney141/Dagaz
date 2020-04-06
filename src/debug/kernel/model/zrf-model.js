@@ -2403,7 +2403,7 @@ ZrfMove.prototype.isDropMove = function() {
   var r = false;
   for (var i = 0; i < this.actions.length; i++) {
        if (this.actions[i][0] !== null) return false;
-       if (this.actions[i][1] !== null) r = true;
+       if (this.actions[i][1] !== null) return true;
   }
   return r;
 }
