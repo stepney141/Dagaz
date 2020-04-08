@@ -1,5 +1,7 @@
 (function() {
 
+Dagaz.Model.DETAIL_MOVE_DESCRIPTION = false;
+
 var sessionManager = null;
 
 function SessionManager(controller) {
@@ -77,6 +79,8 @@ Dagaz.Model.moveToString = function(move) {
            }
            if (move.actions[i][0] !== null) {
                r = r + Dagaz.Model.posToString(move.actions[i][0][0]);
+           } else if (Dagaz.Model.DETAIL_MOVE_DESCRIPTION && (move.actions[i][2] !== null)) {
+               r = r + move.actions[i][2][0].toString() + " ";
            }
            if (move.actions[i][1] !== null) {
                r = r + Dagaz.Model.posToString(move.actions[i][1][0]);
