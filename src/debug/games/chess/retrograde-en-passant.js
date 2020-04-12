@@ -24,7 +24,7 @@ Dagaz.Model.CheckInvariants = function(board) {
       if (p === null) return;
       if (board.getPiece(p) !== null) return;
       piece = Dagaz.Model.createPiece(0, board.player);
-      var move = Dagaz.Model.createMove(2);
+      var move = Dagaz.Model.createMove(4);
       move.dropPiece(p, piece);
       move.goTo(board.turn);
       board.moves.push(move);

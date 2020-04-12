@@ -1,3 +1,4 @@
+Dagaz.Model.DETAIL_MOVE_DESCRIPTION = true;
 Dagaz.Controller.persistense = "none";
 
 ZRF = {
@@ -240,7 +241,7 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("Pawn", 0);
     design.addMove(0, 0, [1], 0);
-    design.addMove(0, 1, [1, 1], 0);
+    design.addMove(0, 1, [1, 1], 2);
     design.addMove(0, 0, [2], 1);
     design.addMove(0, 0, [0], 1);
 
