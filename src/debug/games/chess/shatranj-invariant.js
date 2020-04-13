@@ -12,19 +12,42 @@ var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {
   var king = design.getPieceType("Shah");
-  var nf = true; var ne = true;
+  var fk = null; var fo = [];
+  var ek = null; var eo = [];
   _.each(design.allPositions(), function(pos) {
       var piece = board.getPiece(pos);
-      if ((piece !== null) && (piece.type != king)) {
+      if (piece === null) return;
+      if (piece.type != king) {
           if (piece.player == player) {
-              nf = false;
+              fo.push(pos);
           } else {
-              ne = false;
+              eo.push(pos);
+          }
+      } else {
+          if (piece.player == player) {
+              fk = pos;
+          } else {
+              ek = pos;
           }
       }
   });
-  if (nf) return -1;
-  if (ne) return 1;
+  if ((fo.length == 0) && (eo.length == 0)) {
+      return 0;
+  }
+  if (eo.length == 0) {
+      if ((fo.length == 1) && (ek !== null)) {
+          var f = false;
+          _.each(design.allDirections(), function(dir) {
+              if (f) return;
+              var p = design.navigate(1, ek, dir);
+              if (p === null) return;
+              if (p == fo[0]) f = true;
+          });
+          if (f) return checkGoals(design, board, player);
+      }
+      return 1;
+  }
+  if (fo.length == 0) return -1;
   return checkGoals(design, board, player);
 }
 
