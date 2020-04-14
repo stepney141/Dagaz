@@ -59,6 +59,7 @@ var penalty = [
 ];
 
 Dagaz.AI.getPrice = function(design, piece, pos) {
+  if (pos > 63) return 0;
   var r = design.price[piece.type];
   if (piece.player == 1) {
       r += penalty[piece.type][pos];
