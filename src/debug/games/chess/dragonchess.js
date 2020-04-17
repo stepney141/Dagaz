@@ -349,6 +349,15 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
+    design.addCommand(1, ZRF.FUNCTION,	24);	// from
+    design.addCommand(1, ZRF.PARAM,	0);	// $1
+    design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(1, ZRF.FUNCTION,	3);	// friend?
+    design.addCommand(1, ZRF.FUNCTION,	0);	// not
+    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(1, ZRF.FUNCTION,	25);	// to
+    design.addCommand(1, ZRF.FUNCTION,	28);	// end
+
     design.addPiece("King", 0);
     design.addMove(0, 0, [7], 0);
     design.addMove(0, 0, [1], 0);
@@ -358,16 +367,24 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 0, [2], 0);
     design.addMove(0, 0, [5], 0);
     design.addMove(0, 0, [0], 0);
+    design.addMove(0, 1, [8], 0);
+    design.addMove(0, 1, [9], 0);
 
     design.setup("White", "King", 186);
     design.setup("Black", "King", 102);
 }
 
 Dagaz.View.configure = function(view) {
-    view.defBoard("Board");
+    view.defBoard("Board0", 0, 0, 0);
+    view.defBoard("Board1", 0, 0, 1);
+    view.defBoard("Board2", 0, 0, 2);
     view.defPiece("WhiteKing", "White King");
     view.defPiece("BlackKing", "Black King");
  
+    view.defButton(2, 616, 126, 50, 50);
+    view.defButton(1, 616, 176, 50, 50);
+    view.defButton(0, 616, 226, 50, 50);
+
     view.defPosition("a24", 2, 2, 50, 50, 2);
     view.defPosition("b24", 52, 2, 50, 50, 2);
     view.defPosition("c24", 102, 2, 50, 50, 2);

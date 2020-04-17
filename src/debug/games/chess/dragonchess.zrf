@@ -132,6 +132,7 @@
      (moves
          (king-step n) (king-step s) (king-step w) (king-step e)
          (king-step nw) (king-step sw) (king-step ne) (king-step se)
+         (step u) (step d)
      )
   )
 
