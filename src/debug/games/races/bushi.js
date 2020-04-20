@@ -1,3 +1,5 @@
+Dagaz.View.MARK_R = 18;
+
 ZRF = {
     JUMP:          0,
     IF:            1,
