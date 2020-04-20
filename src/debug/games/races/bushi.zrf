@@ -1,0 +1,98 @@
+(define step (
+  (verify (not-in-zone? last-rank))
+  $1 (verify empty?)
+  add
+))
+
+(define jump (
+  (verify (not-in-zone? last-rank))
+  $1 (verify not-empty?)
+  $1 (verify empty?)
+  (if (not-in-zone? last-rank)
+      (add-partial jump-type)
+   else
+      add
+  )
+))
+
+(game
+  (title "Bushi")
+
+  (players Black White)
+  (turn-order Black White)
+
+  (board
+     (image "images/bushi/board.bmp")
+     (grid
+        (start-rectangle 6 6 65 65)
+        (dimensions
+           ("a/b/c/d/e/f/g/h/i/j" (88 0)) ; files
+           ("10/9/8/7/6/5/4/3/2/1" (0 88)) ; ranks
+        )
+        (directions 
+           (n 0 -1) (s 0 1) (e 1 0) (w -1 0)
+           (nw -1 -1) (sw -1 1) (ne 1 -1) (se 1 1)
+        )
+     )
+     (kill-positions a1 a10 j1 j10)
+     (zone (name last-rank) (players Black)
+           (positions b10 c10 d10 e10 f10 g10 h10 i10)
+     )
+     (zone (name last-rank) (players White)
+           (positions b1 c1 d1 e1 f1 g1 h1 i1)
+     )
+  )
+
+  (piece
+     (name Small)
+     (image White "images/bushi/wsmall.bmp"
+            Black "images/bushi/bsmall.bmp")
+     (moves
+         (move-type normal-type)
+         (step n) (step s) (step w) (step e)
+         (step nw) (step sw) (step ne) (step se)
+         (move-type jump-type)
+         (jump n) (jump s) (jump w) (jump e)
+         (jump nw) (jump sw) (jump ne) (jump se)
+     )
+  )
+  (piece
+     (name Medium)
+     (image White "images/bushi/wmedium.bmp"
+            Black "images/bushi/bmedium.bmp")
+     (moves
+         (move-type normal-type)
+         (step n) (step s) (step w) (step e)
+         (step nw) (step sw) (step ne) (step se)
+         (move-type jump-type)
+         (jump n) (jump s) (jump w) (jump e)
+         (jump nw) (jump sw) (jump ne) (jump se)
+     )
+  )
+  (piece
+     (name Large)
+     (image White "images/bushi/wlarge.bmp"
+            Black "images/bushi/blarge.bmp")
+     (moves
+         (move-type normal-type)
+         (step n) (step s) (step w) (step e)
+         (step nw) (step sw) (step ne) (step se)
+         (move-type jump-type)
+         (jump n) (jump s) (jump w) (jump e)
+         (jump nw) (jump sw) (jump ne) (jump se)
+     )
+  )
+
+  (board-setup
+    (Black 
+         (Small d2 e2 f2 g2)
+         (Medium b1 c1 h1 i1)
+         (Large d1 e1 f1 g1)
+    )
+    (White 
+         (Small d9 e9 f9 g9)
+         (Medium b10 c10 h10 i10)
+         (Large d10 e10 f10 g10)
+    )
+  )
+)
