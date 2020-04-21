@@ -4,14 +4,56 @@
   add
 ))
 
-(define jump (
+(define jump-large (
   (verify (not-in-zone? last-rank))
   $1 (verify not-empty?)
-  $1 (verify empty?)
-  (if (not-in-zone? last-rank)
-      (add-partial jump-type)
-   else
+  (if enemy?
+      capture
+      $1 (verify empty?)
       add
+   else
+      $1 (verify empty?)
+      (if (not-in-zone? last-rank)
+          (add-partial jump-type)
+       else
+          add
+      )
+  )
+))
+
+(define jump-medium (
+  (verify (not-in-zone? last-rank))
+  $1 (verify not-empty?)
+  (verify (not-piece? Large))
+  (if enemy?
+      capture
+      $1 (verify empty?)
+      add
+   else
+      $1 (verify empty?)
+      (if (not-in-zone? last-rank)
+          (add-partial jump-type)
+       else
+          add
+      )
+  )
+))
+
+(define jump-small (
+  (verify (not-in-zone? last-rank))
+  $1 (verify not-empty?)
+  (verify (piece? Small))
+  (if enemy?
+      capture
+      $1 (verify empty?)
+      add
+   else
+      $1 (verify empty?)
+      (if (not-in-zone? last-rank)
+          (add-partial jump-type)
+       else
+          add
+      )
   )
 ))
 
@@ -52,8 +94,8 @@
          (step n) (step s) (step w) (step e)
          (step nw) (step sw) (step ne) (step se)
          (move-type jump-type)
-         (jump n) (jump s) (jump w) (jump e)
-         (jump nw) (jump sw) (jump ne) (jump se)
+         (jump-small n) (jump-small s) (jump-small w) (jump-small e)
+         (jump-small nw) (jump-small sw) (jump-small ne) (jump-small se)
      )
   )
   (piece
@@ -65,8 +107,8 @@
          (step n) (step s) (step w) (step e)
          (step nw) (step sw) (step ne) (step se)
          (move-type jump-type)
-         (jump n) (jump s) (jump w) (jump e)
-         (jump nw) (jump sw) (jump ne) (jump se)
+         (jump-medium n) (jump-medium s) (jump-medium w) (jump-medium e)
+         (jump-medium nw) (jump-medium sw) (jump-medium ne) (jump-medium se)
      )
   )
   (piece
@@ -78,8 +120,8 @@
          (step n) (step s) (step w) (step e)
          (step nw) (step sw) (step ne) (step se)
          (move-type jump-type)
-         (jump n) (jump s) (jump w) (jump e)
-         (jump nw) (jump sw) (jump ne) (jump se)
+         (jump-large n) (jump-large s) (jump-large w) (jump-large e)
+         (jump-large nw) (jump-large sw) (jump-large ne) (jump-large se)
      )
   )
 
