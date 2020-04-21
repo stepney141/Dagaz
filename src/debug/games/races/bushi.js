@@ -1,4 +1,5 @@
 Dagaz.View.MARK_R = 18;
+Dagaz.Model.showLose = false;
 
 ZRF = {
     JUMP:          0,

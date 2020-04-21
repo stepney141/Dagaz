@@ -156,6 +156,7 @@
   - Halma [loops, family:halma]
   - Chinese Checkers [loops, best, family:halma]
   - Traverse [loops, attributes, setups, drops, wheel, limit, sparks, family:halma]
+  - Bushi [loops, goto, lastt, family:halma]
   - Pyon Pyon Shogi [family:halma]
   - Sahkku [todo, dices, family:races]
   - Puluc [best, dices, groups, capture, lastt, family:races]
