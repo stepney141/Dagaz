@@ -249,6 +249,7 @@ View2D.prototype.capturePiece = function(move, pos, phase) {
       from:  pos,
       op:    ix
   });
+  currZ = this.pos[pos].z;
 }
 
 View2D.prototype.dropPiece = function(move, pos, piece, phase) {
@@ -262,6 +263,7 @@ View2D.prototype.dropPiece = function(move, pos, piece, phase) {
       model: piece,
       np:    piece.toString()
   });
+  currZ = this.pos[pos].z;
 }
 
 View2D.prototype.addVector = function(from, to, steps, mode, level) {
@@ -330,6 +332,7 @@ View2D.prototype.movePiece = function(move, from, to, piece, phase, steps) {
       }
       this.addPhase(ix, from, to, piece, phase, steps);
   }
+  currZ = this.pos[to].z;
 }
 
 View2D.prototype.commit = function(move) {
