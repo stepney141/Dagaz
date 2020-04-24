@@ -38,13 +38,23 @@
 ))
 
 (define slide (
-  $1 (while empty? add $1)
+  $1 (while empty? 
+     add d 
+    (if enemy? 
+       (verify (not-piece? Basilisk))
+    ) u  
+  $1)
   (verify not-friend?) add
 ))
 
 (define mage-slide (
   (verify (in-zone? l1-level))
-  $1 (while empty? add $1)
+  $1 (while empty? 
+     add d 
+    (if enemy? 
+       (verify (not-piece? Basilisk))
+    ) u  
+  $1)
   (verify not-friend?) add
 ))
 
