@@ -141,7 +141,7 @@
   - Neutron [todo, shared, family:breakthrough]
   - Chessball [composite, best, family:breakthrough]
   - Arimaa [todo, turns, elimination, stalemate, family:breakthrough]
-  - Terrace [todo, todo:vectors, customblink, family:breakthrough]
+  - Terrace [todo, todo:vectors, family:breakthrough]
 - Races
   - Salt and Pepper [setups, forced, family:other]
   - Jasir [todo:ai, family:other]
@@ -194,7 +194,7 @@
   - Omega Chess Advanced [drops, checkmate, todo:ai, todo:dark, limit, sparks, dialog(promotion), family:chess]
   - Belarusian Chess [best, checkmate, invariant, todo:ai, dialog(promotion), family:chess]
   - Platform Chess [best, attributes, checkmate, transformer, layers, capture, drag-n-drop=false, dialog(promotion), family:chess]
-  - Dragonchess [3d, king, todo:checkmate, wheel, capture, createmove, showpiece, todo:ai, family:chess]
+  - Dragonchess [3d, king, todo:checkmate, wheel, capture, createmove, showpiece, family:chess]
   - Cyvasse [best, cooperative, turns, todo, family:chess]
   - Alice Chess [checkmate, attributes, dialog(promotion), family:chess]
   - Resurrection Chess [checkmate, layers, showpiece, dialog(promotion), family:chess]
