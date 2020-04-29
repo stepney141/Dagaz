@@ -1,6 +1,14 @@
-(define step (
+(define shift (
   $1 (verify empty?)
   add
+))
+
+(define step (
+  $1 add
+))
+
+(define slide (
+  $1 (while not-enemy? (if empty? add) $1)
 ))
 
 (define p
@@ -9,12 +17,12 @@
      (image Black "images/terrace/b$2.bmp"
             White "images/terrace/w$2.bmp")
      (moves
-        (step nu) (step n) (step nd)
-        (step su) (step s) (step sd)
-        (step eu) (step e) (step ed)
-        (step wu) (step w) (step wd)
-        (step ee) (step seu) (step swu) (step neu) (step nwu)
-        (step ww) (step sed) (step swd) (step ned) (step nwd)
+        (shift nu) (shift eu) (shift nwu) (shift neu) 
+        (shift su) (shift wu) (shift swu) (shift seu) 
+        (shift nd) (shift ed) (step  nwd) (step  ned) 
+        (shift sd) (shift wd) (step  swd) (step  sed) 
+        (slide  n) (slide  e) (slide   w) (slide   s)
+        (shift ww) (shift ee)
      )
   )
 )
@@ -164,6 +172,12 @@
      (links nd
             (c3 c4) (b2 b3) (b3 b4) (b4 b5) (a1 a2) (a2 a3) 
             (a3 a4) (a4 a5) (a5 a6)
+     )
+     (zone (name goal-zone) (players Black)
+           (positions f6)
+     )
+     (zone (name goal-zone) (players White)
+           (positions a1)
      )
   )
 

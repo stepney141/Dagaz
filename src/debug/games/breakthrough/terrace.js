@@ -21,6 +21,10 @@ ZRF = {
     VERIFY:        20
 };
 
+if (!_.isUndefined(Dagaz.Controller.addSound)) {
+    Dagaz.Controller.addSound(1, "../../sounds/slide.ogg", true);
+}
+
 Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-drops", "false");
@@ -90,6 +94,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("b1", [0, 0, 0, 0, 0, 0, 0, 0, -7, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0, -6, 0, 0]);
     design.addPosition("a1", [0, 0, 0, 0, 0, 0, 0, 0, -7, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, -6]);
 
+    design.addZone("goal-zone", 2, [35]);
+    design.addZone("goal-zone", 1, [0]);
+
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
     design.addCommand(0, ZRF.FUNCTION,	22);	// navigate
@@ -98,101 +105,123 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("T", 0);
-    design.addMove(0, 0, [20], 0);
-    design.addMove(0, 0, [19], 0);
-    design.addMove(0, 0, [21], 0);
-    design.addMove(0, 0, [17], 0);
-    design.addMove(0, 0, [16], 0);
-    design.addMove(0, 0, [18], 0);
-    design.addMove(0, 0, [14], 0);
-    design.addMove(0, 0, [13], 0);
-    design.addMove(0, 0, [15], 0);
-    design.addMove(0, 0, [11], 0);
-    design.addMove(0, 0, [10], 0);
-    design.addMove(0, 0, [12], 0);
-    design.addMove(0, 0, [1], 0);
-    design.addMove(0, 0, [2], 0);
-    design.addMove(0, 0, [3], 0);
-    design.addMove(0, 0, [4], 0);
-    design.addMove(0, 0, [5], 0);
-    design.addMove(0, 0, [0], 0);
-    design.addMove(0, 0, [6], 0);
-    design.addMove(0, 0, [7], 0);
-    design.addMove(0, 0, [8], 0);
-    design.addMove(0, 0, [9], 0);
+    design.addCommand(1, ZRF.FUNCTION,	24);	// from
+    design.addCommand(1, ZRF.PARAM,	0);	// $1
+    design.addCommand(1, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(1, ZRF.FUNCTION,	25);	// to
+    design.addCommand(1, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("S", 1);
-    design.addMove(1, 0, [20], 0);
-    design.addMove(1, 0, [19], 0);
-    design.addMove(1, 0, [21], 0);
-    design.addMove(1, 0, [17], 0);
-    design.addMove(1, 0, [16], 0);
-    design.addMove(1, 0, [18], 0);
-    design.addMove(1, 0, [14], 0);
-    design.addMove(1, 0, [13], 0);
-    design.addMove(1, 0, [15], 0);
-    design.addMove(1, 0, [11], 0);
-    design.addMove(1, 0, [10], 0);
-    design.addMove(1, 0, [12], 0);
-    design.addMove(1, 0, [1], 0);
-    design.addMove(1, 0, [2], 0);
-    design.addMove(1, 0, [3], 0);
-    design.addMove(1, 0, [4], 0);
-    design.addMove(1, 0, [5], 0);
-    design.addMove(1, 0, [0], 0);
-    design.addMove(1, 0, [6], 0);
-    design.addMove(1, 0, [7], 0);
-    design.addMove(1, 0, [8], 0);
-    design.addMove(1, 0, [9], 0);
+    design.addCommand(2, ZRF.FUNCTION,	24);	// from
+    design.addCommand(2, ZRF.PARAM,	0);	// $1
+    design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(2, ZRF.FUNCTION,	2);	// enemy?
+    design.addCommand(2, ZRF.IF,	10);
+    design.addCommand(2, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(2, ZRF.FUNCTION,	0);	// not
+    design.addCommand(2, ZRF.IF,	4);
+    design.addCommand(2, ZRF.FORK,	3);
+    design.addCommand(2, ZRF.FUNCTION,	25);	// to
+    design.addCommand(2, ZRF.FUNCTION,	28);	// end
+    design.addCommand(2, ZRF.PARAM,	1);	// $2
+    design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(2, ZRF.JUMP,	-10);
+    design.addCommand(2, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("M", 2);
-    design.addMove(2, 0, [20], 0);
-    design.addMove(2, 0, [19], 0);
-    design.addMove(2, 0, [21], 0);
-    design.addMove(2, 0, [17], 0);
-    design.addMove(2, 0, [16], 0);
-    design.addMove(2, 0, [18], 0);
-    design.addMove(2, 0, [14], 0);
-    design.addMove(2, 0, [13], 0);
-    design.addMove(2, 0, [15], 0);
-    design.addMove(2, 0, [11], 0);
-    design.addMove(2, 0, [10], 0);
-    design.addMove(2, 0, [12], 0);
-    design.addMove(2, 0, [1], 0);
-    design.addMove(2, 0, [2], 0);
-    design.addMove(2, 0, [3], 0);
-    design.addMove(2, 0, [4], 0);
-    design.addMove(2, 0, [5], 0);
-    design.addMove(2, 0, [0], 0);
-    design.addMove(2, 0, [6], 0);
-    design.addMove(2, 0, [7], 0);
-    design.addMove(2, 0, [8], 0);
-    design.addMove(2, 0, [9], 0);
+    design.addPiece("T", 0, 10000);
+    design.addMove(0, 0, [20], 0, 0);
+    design.addMove(0, 0, [14], 0, 0);
+    design.addMove(0, 0, [5], 0, 0);
+    design.addMove(0, 0, [4], 0, 0);
+    design.addMove(0, 0, [17], 0, 0);
+    design.addMove(0, 0, [11], 0, 0);
+    design.addMove(0, 0, [3], 0, 0);
+    design.addMove(0, 0, [2], 0, 0);
+    design.addMove(0, 0, [21], 0, 0);
+    design.addMove(0, 0, [15], 0, 0);
+    design.addMove(0, 1, [9], 0, 0);
+    design.addMove(0, 1, [8], 0, 0);
+    design.addMove(0, 0, [18], 0, 0);
+    design.addMove(0, 0, [12], 0, 0);
+    design.addMove(0, 1, [7], 0, 0);
+    design.addMove(0, 1, [6], 0, 0);
+    design.addMove(0, 2, [19, 19], 0, 1);
+    design.addMove(0, 2, [13, 13], 0, 1);
+    design.addMove(0, 2, [10, 10], 0, 1);
+    design.addMove(0, 2, [16, 16], 0, 1);
+    design.addMove(0, 0, [0], 0, 0);
+    design.addMove(0, 0, [1], 0, 0);
 
-    design.addPiece("L", 3);
-    design.addMove(3, 0, [20], 0);
-    design.addMove(3, 0, [19], 0);
-    design.addMove(3, 0, [21], 0);
-    design.addMove(3, 0, [17], 0);
-    design.addMove(3, 0, [16], 0);
-    design.addMove(3, 0, [18], 0);
-    design.addMove(3, 0, [14], 0);
-    design.addMove(3, 0, [13], 0);
-    design.addMove(3, 0, [15], 0);
-    design.addMove(3, 0, [11], 0);
-    design.addMove(3, 0, [10], 0);
-    design.addMove(3, 0, [12], 0);
-    design.addMove(3, 0, [1], 0);
-    design.addMove(3, 0, [2], 0);
-    design.addMove(3, 0, [3], 0);
-    design.addMove(3, 0, [4], 0);
-    design.addMove(3, 0, [5], 0);
-    design.addMove(3, 0, [0], 0);
-    design.addMove(3, 0, [6], 0);
-    design.addMove(3, 0, [7], 0);
-    design.addMove(3, 0, [8], 0);
-    design.addMove(3, 0, [9], 0);
+    design.addPiece("S", 1, 100);
+    design.addMove(1, 0, [20], 0, 0);
+    design.addMove(1, 0, [14], 0, 0);
+    design.addMove(1, 0, [5], 0, 0);
+    design.addMove(1, 0, [4], 0, 0);
+    design.addMove(1, 0, [17], 0, 0);
+    design.addMove(1, 0, [11], 0, 0);
+    design.addMove(1, 0, [3], 0, 0);
+    design.addMove(1, 0, [2], 0, 0);
+    design.addMove(1, 0, [21], 0, 0);
+    design.addMove(1, 0, [15], 0, 0);
+    design.addMove(1, 1, [9], 0, 0);
+    design.addMove(1, 1, [8], 0, 0);
+    design.addMove(1, 0, [18], 0, 0);
+    design.addMove(1, 0, [12], 0, 0);
+    design.addMove(1, 1, [7], 0, 0);
+    design.addMove(1, 1, [6], 0, 0);
+    design.addMove(1, 2, [19, 19], 0, 1);
+    design.addMove(1, 2, [13, 13], 0, 1);
+    design.addMove(1, 2, [10, 10], 0, 1);
+    design.addMove(1, 2, [16, 16], 0, 1);
+    design.addMove(1, 0, [0], 0, 0);
+    design.addMove(1, 0, [1], 0, 0);
+
+    design.addPiece("M", 2, 200);
+    design.addMove(2, 0, [20], 0, 0);
+    design.addMove(2, 0, [14], 0, 0);
+    design.addMove(2, 0, [5], 0, 0);
+    design.addMove(2, 0, [4], 0, 0);
+    design.addMove(2, 0, [17], 0, 0);
+    design.addMove(2, 0, [11], 0, 0);
+    design.addMove(2, 0, [3], 0, 0);
+    design.addMove(2, 0, [2], 0, 0);
+    design.addMove(2, 0, [21], 0, 0);
+    design.addMove(2, 0, [15], 0, 0);
+    design.addMove(2, 1, [9], 0, 0);
+    design.addMove(2, 1, [8], 0, 0);
+    design.addMove(2, 0, [18], 0, 0);
+    design.addMove(2, 0, [12], 0, 0);
+    design.addMove(2, 1, [7], 0, 0);
+    design.addMove(2, 1, [6], 0, 0);
+    design.addMove(2, 2, [19, 19], 0, 1);
+    design.addMove(2, 2, [13, 13], 0, 1);
+    design.addMove(2, 2, [10, 10], 0, 1);
+    design.addMove(2, 2, [16, 16], 0, 1);
+    design.addMove(2, 0, [0], 0, 0);
+    design.addMove(2, 0, [1], 0, 0);
+
+    design.addPiece("L", 3, 300);
+    design.addMove(3, 0, [20], 0, 0);
+    design.addMove(3, 0, [14], 0, 0);
+    design.addMove(3, 0, [5], 0, 0);
+    design.addMove(3, 0, [4], 0, 0);
+    design.addMove(3, 0, [17], 0, 0);
+    design.addMove(3, 0, [11], 0, 0);
+    design.addMove(3, 0, [3], 0, 0);
+    design.addMove(3, 0, [2], 0, 0);
+    design.addMove(3, 0, [21], 0, 0);
+    design.addMove(3, 0, [15], 0, 0);
+    design.addMove(3, 1, [9], 0, 0);
+    design.addMove(3, 1, [8], 0, 0);
+    design.addMove(3, 0, [18], 0, 0);
+    design.addMove(3, 0, [12], 0, 0);
+    design.addMove(3, 1, [7], 0, 0);
+    design.addMove(3, 1, [6], 0, 0);
+    design.addMove(3, 2, [19, 19], 0, 1);
+    design.addMove(3, 2, [13, 13], 0, 1);
+    design.addMove(3, 2, [10, 10], 0, 1);
+    design.addMove(3, 2, [16, 16], 0, 1);
+    design.addMove(3, 0, [0], 0, 0);
+    design.addMove(3, 0, [1], 0, 0);
 
     design.setup("Black", "L", 35);
     design.setup("Black", "L", 34);
