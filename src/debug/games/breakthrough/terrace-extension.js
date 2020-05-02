@@ -20,8 +20,11 @@ var addMove = function(design, board, pos, piece, d, a) {
   var p = design.navigate(1, pos, d);
   var last = pos;
   while (p !== null) {
-      if (board.getPiece(p) === null) {
+      var t = board.getPiece(p);
+      if (t === null) {
           hints.push(p);
+      } else {
+          if (t.player != board.player) break;
       }
       last = p;
       p = design.navigate(1, p, d);
@@ -32,13 +35,13 @@ var addMove = function(design, board, pos, piece, d, a) {
       if (t === null) {
           var m = Dagaz.Model.createMove(0, 1);
           m.movePiece(pos, p, piece);
-          m.hints = [];
+/*        m.hints = [];
           _.each(hints, function(h) {
               m.hints.push(h);
-          });
+          });*/
           board.moves.push(m);
       } else {
-          if (piece.player != board.player) break;
+          if (t.player != board.player) break;
       }
       hints.push(p);
       p = design.navigate(1, p, a);
