@@ -141,7 +141,7 @@
   - Neutron [todo, shared, family:breakthrough]
   - Chessball [composite, best, family:breakthrough]
   - Arimaa [todo, turns, elimination, stalemate, family:breakthrough]
-  - Terrace [todo, todo:vectors, family:breakthrough]
+  - Terrace [todo:hints, family:breakthrough]
 - Races
   - Salt and Pepper [setups, forced, family:other]
   - Jasir [todo:ai, family:other]
