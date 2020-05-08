@@ -17,7 +17,9 @@ Dagaz.Model.checkGoals = function(design, board, player) {
       if (piece === null) return;
       if (piece.type > 0) return;
       var r = 1;
-      if (design.inZone(0, piece.player, pos)) r++;
+      if (design.inZone(0, piece.player, pos)) {
+          r++;
+      }
       if (piece.player == player) {
           f = r;
       } else {

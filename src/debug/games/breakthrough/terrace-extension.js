@@ -21,11 +21,11 @@ var addMove = function(design, board, pos, piece, d, a) {
   var last = pos;
   while (p !== null) {
       var t = board.getPiece(p);
-      if (t === null) {
-          hints.push(p);
-      } else {
-          if (t.player != board.player) break;
+      var q = design.navigate(1, p, 22);
+      if (q !== null) {
+          hints.push(q);
       }
+      if ((t !== null) && (t.player != board.player)) break;
       last = p;
       p = design.navigate(1, p, d);
   }

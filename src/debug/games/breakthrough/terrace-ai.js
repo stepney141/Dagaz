@@ -66,7 +66,6 @@ Dagaz.AI.see = function(design, board, move) {
 }
 
 Dagaz.AI.inCheck = function(design, board) {
-  // TODO:
   return false;
 }
 
