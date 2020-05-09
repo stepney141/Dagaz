@@ -166,7 +166,7 @@
             Black "images/evoluchess/bwall.bmp")
      (moves
          (move-type normal-type)
-         (wall-step n) (wall-step e) (wall-step w)
+         (wall-step n) (wall-step e) (wall-step w) (wall-step s)
      )
      (drops
          (move-type drop-type)

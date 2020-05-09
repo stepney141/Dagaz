@@ -270,6 +270,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(6, 6, [7], 2);
     design.addMove(6, 6, [3], 2);
     design.addMove(6, 6, [4], 2);
+    design.addMove(6, 6, [1], 2);
 
     design.setup("White", "Pawn", 48);
     design.setup("White", "Pawn", 49);
