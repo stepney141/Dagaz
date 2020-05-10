@@ -248,12 +248,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(8, ZRF.FUNCTION,	25);	// to
     design.addCommand(8, ZRF.FUNCTION,	28);	// end
 
-    design.addPriority(0);			// drop-king-type
     design.addPriority(1);			// drop-type
     design.addPriority(2);			// normal-type
 
     design.addPiece("King", 0, 600000);
-    design.addDrop(0, 0, [], 0);
+    design.addDrop(0, 0, [], 1);
 
     design.addPiece("Pawn", 1, 800);
     design.addMove(1, 1, [7], 2);
@@ -315,7 +314,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(5, 5, [5, 5], 2);
     design.addMove(5, 5, [0, 0], 2);
 
-    design.addPiece("Wall", 6, 2000);
+    design.addPiece("Wall", 6, 4000);
     design.addDrop(6, 0, [], 1);
     design.addMove(6, 8, [7], 2);
     design.addMove(6, 8, [3], 2);
