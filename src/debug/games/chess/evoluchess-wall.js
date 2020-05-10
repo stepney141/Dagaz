@@ -36,6 +36,11 @@ Dagaz.Model.CheckInvariants = function(board) {
                return;
           }
           move.movePiece(dst, pos, piece);
+      } else {
+          piece = board.getPiece(dst);
+          if ((piece !== null) && (piece.player == board.player)) {
+               move.failed = true;
+          }
       }
   });
   CheckInvariants(board);
