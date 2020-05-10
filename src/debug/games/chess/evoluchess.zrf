@@ -51,6 +51,24 @@
   $1 add
 ))
 
+(define en-passant (
+  $1
+  (verify enemy?)
+  (verify last-to?)
+  (verify (piece? Pawn))
+  capture
+  n mark n
+  (verify last-from?)
+  back
+  add
+))
+
+(define split (
+  (varify (in-zone? home-zone))
+  $1 (verify empty?)
+  (add Pawn);
+))
+
 (game
   (title "EVOLUCHESS")
 
@@ -104,6 +122,7 @@
          (move-type normal-type)
          (pawn-shift n) (pawn-jump n) 
          (pawn-step nw) (pawn-step ne)
+         (en-passant e) (en-passant w)
      )
   )
   (piece
@@ -113,6 +132,7 @@
      (moves
          (move-type normal-type)
          (slide n) (slide s) (slide w) (slide e)
+         (split nw) (split ne) (split sw) (split se)
      )
      (drops
          (move-type drop-type)
@@ -127,6 +147,8 @@
          (move-type normal-type)
          (leap n nw) (leap n ne) (leap s sw) (leap s se)
          (leap w nw) (leap w sw) (leap e ne) (leap e se)
+         (split n)  (split  e) (split  w) (split s)
+         (split nw) (split ne) (split sw) (split se)
      )
      (drops
          (move-type drop-type)
@@ -140,6 +162,7 @@
      (moves
          (move-type normal-type)
          (slide nw) (slide sw) (slide ne) (slide se)
+         (split n)  (split  e) (split  w) (split s)
      )
      (drops
          (move-type drop-type)

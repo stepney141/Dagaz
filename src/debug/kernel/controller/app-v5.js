@@ -575,6 +575,9 @@ App.prototype.exec = function() {
       }
       if (!this.move.isPass()) {
           this.move = this.clarify(this.move);
+          if (!_.isUndefined(Dagaz.Model.PostProcessing)) {
+              Dagaz.Model.PostProcessing(this.board, [this.move]);
+          }
           this.view.markPositions(Dagaz.View.markType.TARGET, []);
           this.view.markPositions(Dagaz.View.markType.CURRENT, []);
           lastPosition = null;
@@ -596,6 +599,9 @@ App.prototype.exec = function() {
               if (moves.length > 0) {
                   var m = this.clarify(moves[0]);
                   delete this.selected;
+                  if (!_.isUndefined(Dagaz.Model.PostProcessing)) {
+                      Dagaz.Model.PostProcessing(this.board, [m]);
+                  }
                   this.boardApply(m);
                   Dagaz.Model.Done(this.design, this.board);
                   console.log("Debug: " + m.toString());

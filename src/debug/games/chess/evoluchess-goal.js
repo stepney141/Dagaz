@@ -11,7 +11,8 @@ Dagaz.Model.checkVersion = function(design, name, value) {
 var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {
-  var f = 0; var e = 0;
+  var f = board.reserve[0][player]; 
+  var e = board.reserve[0][design.nextPlayer(player)];
   _.each(_.range(64), function(pos) {
       var piece = board.getPiece(pos);
       if (piece === null) return;
