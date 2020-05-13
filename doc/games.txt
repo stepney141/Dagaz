@@ -206,7 +206,7 @@
   - StarChess [drops, todo, family:chess]
   - Oblong Shatranj [setups, dices, todo:ai, forced, family:chess]
   - Turnover [checkmate, best, dark, layers, todo:mindsports, family:chess]
-  - EVOLUCHESS [drops, king, limit, goalreserve, dialogs, postprocessing, family:chess]
+  - EVOLUCHESS [drops, king, limit, goalreserve, dialogs, editor, postprocessing, family:chess]
 - Shogi family
   - Doubutsu Shogi [best, ko, reserve, king, breakthrough, family:chess]
   - Goro Goro Doubutsu Shogi [reserve, king, todo:ai, dialog(promotion), family:chess]

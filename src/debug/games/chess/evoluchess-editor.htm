@@ -6,8 +6,6 @@
 <body>
 
 <img id="Board" style="display:none" src="images/evoluchess/chess8x8.png">
-<img id="Promote-5" style="display:none" src="images/evoluchess/dialog-5.png">
-<img id="Promote-2" style="display:none" src="images/evoluchess/dialog-2.png">
 <img id="WhiteKing" style="display:none" src="images/evoluchess/wking.png">
 <img id="BlackKing" style="display:none" src="images/evoluchess/bking.png">
 <img id="WhitePawn" style="display:none" src="images/evoluchess/wpawn.png">
@@ -24,12 +22,11 @@
 <img id="BlackWall" style="display:none" src="images/evoluchess/bwall.png">
 
 <table style="margin:auto; font-family:sans-serif; font-size:14px" id="Table">
-<tr><td><a href="javascript:Dagaz.Controller.undo()" style="display:none" id="undo"><img src="../../images/undo.png"/></a>
+<tr><td>
 Copyright (c) 2020 Michele Alessandro Tumbarello
-<a href="javascript:Dagaz.Controller.newGame()">New Game</a>
-<a href="javascript:Dagaz.Controller.sound()" id="sound">no Sound</a>
-<a href="javascript:Dagaz.Controller.go('evoluchess-editor.htm')">Edit</a>
-<a href="javascript:Dagaz.Controller.redo()" style="display:none" id="redo"><img src="../../images/redo.png"/></a></td></tr>
+<a href="javascript:Dagaz.Controller.newGame()">Clear</a>
+<a href="javascript:Dagaz.Controller.go('evoluchess.htm')">Play</a>
+</td></tr>
 <tr style="height:541px; vertical-align:top">
 <td id="CanvasCell" style="width:541px">
 <canvas id="Canvas" width="541" height="541" style="cursor:default">Broken canvas...</canvas>
@@ -57,24 +54,11 @@ Copyright (c) 2020 Michele Alessandro Tumbarello
 <script src="../../kernel/dagaz.js"></script>
 <script src="../../kernel/model/zrf-model.js"></script>
 <script src="../../kernel/model/zobrist-v2.js"></script>
-<script src="../../kernel/model/common-setup-v3.js"></script>
-<script src="../../kernel/view/2d/2d-view-v3.js"></script>
+<script src="../../kernel/model/common-setup-v2.js"></script>
+<script src="../../kernel/view/2d/2d-view-v2.js"></script>
 <script src="../../kernel/controller/utils/move-list-v3.js"></script>
-<script src="../../kernel/controller/utils/session-manager.js"></script>
-<script src="../../kernel/controller/utils/sound-manager-v2.js"></script>
-<script src="../../kernel/controller/ai/random-ai.js"></script>
-<script src="../../kernel/controller/ai/maxmin-ai-v2.js"></script>
-<script src="../../kernel/controller/ai/ab-ai-v5.js"></script>
-<script src="../../utils/sgf-parser.js"></script>
-<script src="evoluchess-edit.js"></script>
-<script src="evoluchess-ai.js"></script>
-<script src="evoluchess-goal.js"></script>
-<script src="evoluchess-promotion.js"></script>
-<script src="evoluchess-king.js"></script>
-<script src="evoluchess-split.js"></script>
-<script src="evoluchess-shoot.js"></script>
-<script src="evoluchess-wall.js"></script>
-<script src="evoluchess.js"></script>
+<script src="evoluchess-editor-extension.js"></script>
+<script src="evoluchess-editor.js"></script>
 <script src="../../kernel/controller/app-v5.js"></script>
 
 </body>
