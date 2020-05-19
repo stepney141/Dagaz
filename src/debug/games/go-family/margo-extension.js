@@ -65,7 +65,7 @@ var isLocked = function(design, board, player, pos, dir) {
 var isZombie = function(design, board, pos, captured) {
   var r = false;
   _.each([4, 6, 8, 10], function(dir) {
-      if (!r) return;
+      if (r) return;
       var p = design.navigate(1, pos, dir);
       if (p === null) return;
       if (_.indexOf(captured, p) >= 0) return;
@@ -125,36 +125,38 @@ Dagaz.Model.CheckInvariants = function(board) {
       });
       var d = getDame(design, board, board.player, g);
       var done = [];
-      _.each(e, function(pos) {
-          if (_.indexOf(done, pos) >= 0) return;
-          var piece = board.getPiece(pos);
+      board.setPiece(pos, move.actions[0][2][0]);
+      _.each(e, function(q) {
+          if (_.indexOf(done, q) >= 0) return;
+          var piece = board.getPiece(q);
           if (piece === null) return;
-          var group = [pos];
+          var group = [q];
           var dame = getDame(design, board, piece.player, group);
           done = _.union(done, group);
           if (dame == 0) {
               var captured = []; var zombie = [];
-              group = _.sortBy(group, function(pos) {
-                  return pos;
+              group = _.sortBy(group, function(x) {
+                  return x;
               });
               while (group.length > 0) {
-                  var pos = group.pop();
-                  if (isZombie(design, board, pos, captured)) {
-                      zombie.push(pos);
+                  var q = group.pop();
+                  if (isZombie(design, board, q, captured)) {
+                      zombie.push(q);
                   } else {
-                      captured.push(pos);
+                      captured.push(q);
                   }
               }
-              _.each(captured, function(pos) {
-                  if ((_.indexOf(e, pos) >= 0) && design.inZone(0, 1, pos)) {
+              _.each(captured, function(q) {
+                  if ((_.indexOf(e, q) >= 0) && design.inZone(0, 1, q)) {
                       d++;
                   }
-                  move.capturePiece(pos);
+                  move.capturePiece(q);
               });
               group = zombie;
           }
           setDame(board, group, dame, move);
       });
+      board.setPiece(pos, null);
       if (d == 0) {
           move.failed = true;
       }
