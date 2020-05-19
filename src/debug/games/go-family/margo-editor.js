@@ -23,11 +23,10 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-drops", "false");
     design.checkVersion("animate-captures", "false");
+    design.checkVersion("show-captures", "false");
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-drops", "true");
-    design.checkVersion("show-captures", "false");
-    design.checkVersion("ko", "situation");
 
     design.addDirection("n");   // 0
     design.addDirection("e");   // 1
@@ -42,8 +41,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addDirection("usw"); // 10
     design.addDirection("dne"); // 11
 
-    design.addPlayer("White", [3, 2, 1, 0, 5, 4, 7, 6, 9, 8, 11, 10]);
-    design.addPlayer("Black", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+    design.addPlayer("You", [3, 2, 1, 0, 5, 4, 7, 6, 9, 8, 11, 10]);
 
     design.addPosition("aa9", [0, 9, 0, 1, 0, 0, 0, 0, 81, 0, 0, 0]);
     design.addPosition("aa8", [-1, 9, 0, 1, 80, 0, 0, 0, 81, 0, 0, 0]);
@@ -331,23 +329,29 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("hb1", [-1, 0, -2, 0, 0, -7, 1, -4, 0, -8, 0, -5]);
     design.addPosition("ia1", [0, 0, 0, 0, 0, -3, 0, -1, 0, -4, 0, -2]);
 
-    design.addZone("plane", 2, [8, 17, 26, 35, 44, 53, 62, 71, 80, 7, 16, 25, 34, 43, 52, 61, 70, 79, 6, 15, 24, 33, 42, 51, 60, 69, 78, 5, 14, 23, 32, 41, 50, 59, 68, 77, 4, 13, 22, 31, 40, 49, 58, 67, 76, 3, 12, 21, 30, 39, 48, 57, 66, 75, 2, 11, 20, 29, 38, 47, 56, 65, 74, 1, 10, 19, 28, 37, 46, 55, 64, 73, 0, 9, 18, 27, 36, 45, 54, 63, 72]);
-    design.addZone("plane", 1, [8, 17, 26, 35, 44, 53, 62, 71, 80, 7, 16, 25, 34, 43, 52, 61, 70, 79, 6, 15, 24, 33, 42, 51, 60, 69, 78, 5, 14, 23, 32, 41, 50, 59, 68, 77, 4, 13, 22, 31, 40, 49, 58, 67, 76, 3, 12, 21, 30, 39, 48, 57, 66, 75, 2, 11, 20, 29, 38, 47, 56, 65, 74, 1, 10, 19, 28, 37, 46, 55, 64, 73, 0, 9, 18, 27, 36, 45, 54, 63, 72]);
-
     design.addCommand(0, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(0, ZRF.FUNCTION,	20);	// verify
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("Stone", 0);
+    design.addCommand(1, ZRF.FUNCTION,	24);	// from
+    design.addCommand(1, ZRF.FUNCTION,	26);	// capture
+    design.addCommand(1, ZRF.FUNCTION,	25);	// to
+    design.addCommand(1, ZRF.FUNCTION,	28);	// end
+
+    design.addPiece("White", 0);
     design.addDrop(0, 0, [], 0);
+    design.addMove(0, 1, [], 0);
+
+    design.addPiece("Black", 1);
+    design.addDrop(1, 0, [], 0);
+    design.addMove(1, 1, [], 0);
 }
 
 Dagaz.View.configure = function(view) {
     view.defBoard("Board");
-    view.defPiece("WhiteStone", "White Stone");
-    view.defPiece("BlackStone", "Black Stone");
-    view.defPiece("Ko", "Ko");
+    view.defPiece("BlackStone", "You Black");
+    view.defPiece("WhiteStone", "You White");
  
     view.defPosition("aa9", 30, 30, 60, 60);
     view.defPosition("aa8", 30, 90, 60, 60);
