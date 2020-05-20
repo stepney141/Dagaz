@@ -9,6 +9,7 @@ var Dagaz  = {
 Dagaz.Controller.persistense = "none";
 Dagaz.Controller.loseRefresh = true;
 Dagaz.Controller.randomized  = false;
+Dagaz.Controller.noDropIndex = false;
 
 Dagaz.Controller.Done = function(board) {}
 

@@ -459,7 +459,9 @@ App.prototype.exec = function() {
              if (!_.isUndefined(Dagaz.Model.getSetup)) {
                  console.log("Setup: " + Dagaz.Model.getSetup(this.design, this.board));
              }
-             dropIndex = 0;
+             if (!Dagaz.Controller.noDropIndex) {
+                 dropIndex = 0;
+             }
              this.list = Dagaz.Model.getMoveList(this.board);
              var ko = [];
              if (!_.isUndefined(this.board.ko)) {
