@@ -1,4 +1,5 @@
 Dagaz.Controller.noDropIndex = true;
+Dagaz.Controller.cyclicDropIndex = true;
 
 ZRF = {
     JUMP:          0,

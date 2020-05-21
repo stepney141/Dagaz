@@ -250,7 +250,13 @@ App.prototype.mouseLocate = function(view, pos) {
           if (!_.isUndefined(this.list) && (pos.length == 1) && (_.indexOf(this.getDrops(), pos[0]) >= 0)) {
               var pieces = this.list.getDropPieces(pos[0]);
               if ((pieces !== null) && (pieces.length > 0)) {
-                  if (dropIndex >= pieces.length) dropIndex = pieces.length - 1;
+                  if (dropIndex >= pieces.length) {
+                     if (Dagaz.Controller.cyclicDropIndex){
+                         dropIndex = 0;
+                     } else {
+                         dropIndex = pieces.length - 1;
+                     }
+                  }
                   this.view.setDrops(pieces[dropIndex].toString(), [ pos[0] ]);
               }
           } else {
@@ -480,7 +486,13 @@ App.prototype.exec = function() {
                  if (drops.length > 0) {
                      var pieces = this.list.getDropPieces(drops[0]);
                      if ((pieces !== null) && (pieces.length > 0)) {
-                         if (dropIndex >= pieces.length) dropIndex = pieces.length - 1;
+                         if (dropIndex >= pieces.length) {
+                             if (Dagaz.Controller.cyclicDropIndex){
+                                 dropIndex = 0;
+                             } else {
+                                 dropIndex = pieces.length - 1;
+                             }
+                         }
                          this.view.setDrops(pieces[dropIndex].toString(), drops);
                      }
                  }
