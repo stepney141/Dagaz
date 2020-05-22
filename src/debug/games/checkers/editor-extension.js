@@ -3,7 +3,7 @@
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "russian-checkers-editor-extension") {
+  if (name != "editor-extension") {
      checkVersion(design, name, value);
   }
 }
@@ -19,9 +19,8 @@ Dagaz.Controller.go = function(url) {
       var piece = board.getPiece(pos);
       var s = "";
       if (piece !== null) {
-          var player = (+piece.type % 2) + 1;
-          var type = (+piece.type / 2) | 0;
-          s = s + type + ":" + player;
+          var type = (piece.type * 2) + (piece.player - 1);
+          s = s + type + ":1";
       }
       if ((prev === null) || (prev != s)) {
           if (prev !== null) {
@@ -41,7 +40,7 @@ Dagaz.Controller.go = function(url) {
   if (cnt > 0) {
       url = url + "+" + cnt;
   }
-  url = url + ";&turn=0";
+  url = url + ";";
   go(url);
 }
 
