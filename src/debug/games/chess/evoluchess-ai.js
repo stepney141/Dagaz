@@ -229,7 +229,6 @@ Dagaz.AI.see = function(design, board, move) {
   pos = move.actions[0][1][0];
   piece = board.getPiece(pos);
   if (piece === null) return false;
-  if (isAttacked(design, board, piece.player, pos)) return false;
   return true;
 }
 

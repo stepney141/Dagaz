@@ -249,8 +249,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(8, ZRF.FUNCTION,	25);	// to
     design.addCommand(8, ZRF.FUNCTION,	28);	// end
 
-    design.addPriority(1);			// drop-type
-    design.addPriority(2);			// normal-type
+//  design.addPriority(1);			// drop-type
+//  design.addPriority(2);			// normal-type
 
     design.addPiece("King", 0, 600000);
     design.addDrop(0, 0, [], 1);
