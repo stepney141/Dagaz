@@ -225,7 +225,7 @@ Dagaz.AI.see = function(design, board, move) {
   var pos = move.actions[0][0][0];
   var piece = board.getPiece(pos);
   if (piece === null) return false;
-  if (piece.type == 0) return true;
+  if (piece.type == 1) return true; // Pawn
   pos = move.actions[0][1][0];
   piece = board.getPiece(pos);
   if (piece === null) return false;
@@ -238,7 +238,7 @@ Dagaz.AI.inCheck = function(design, board) {
       var king = null;
       for (var pos = 0; pos < design.positions.length; pos++) {
           var piece = board.getPiece(pos);
-          if ((piece !== null) && (piece.player == board.player) && (piece.type == 0)) {
+          if ((piece !== null) && (piece.player == board.player) && (piece.type == 0)) { // King
               if (king !== null) return false;
               king = pos;
           }
