@@ -28,6 +28,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-drops", "true");
     design.checkVersion("show-captures", "false");
     design.checkVersion("animate-redo", "false");
+    design.checkVersion("smart-moves", "to");
 
     design.addDirection("s");
     design.addDirection("e");
@@ -3260,11 +3261,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addZone("home", 1, [0, 1, 2, 3, 4, 5, 6]);
     design.addZone("home", 2, [7, 8, 9, 10, 11, 12, 13]);
 
-    design.addCommand(0, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(0, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(0, ZRF.FUNCTION,	25);	// to
-    design.addCommand(0, ZRF.FUNCTION,	28);	// end
-
     design.addPiece("Blue", 0);
     design.addPiece("Red", 1);
     design.addPiece("Yellow", 2);
@@ -3274,7 +3270,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPiece("Light", 6);
 
     design.addPiece("Mark", 7);
-    design.addDrop(7, 0, [], 0);
 }
 
 Dagaz.View.configure = function(view) {

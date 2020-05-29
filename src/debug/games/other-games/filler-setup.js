@@ -28,6 +28,27 @@ var getSeed = function() {
   }
 }
 
+var setupPlayer = function(design, board, player, pos, start) {
+  var piece = board.getPiece(pos);
+  if (piece === null) return;
+  board.setPiece(+piece.type + start, Dagaz.Model.createPiece(7, player));
+  var group = [pos];
+  for (var i = 0; i < group.length; i++) {
+      _.each(design.allDirections(), function(dir) {
+           var p = design.navigate(player, group[i], dir);
+           if ((p === null) || (_.indexOf(group, p) >= 0)) return;
+           var target = board.getPiece(p);
+           if (target === null) return;
+           if (target.type != piece.type) return;
+           group.push(p);
+      });
+  }
+  piece = piece.changeOwner(player);
+  _.each(group, function(pos) {
+      board.setPiece(pos, piece);
+  });
+}
+
 var setup = Dagaz.Model.setup;
 
 Dagaz.Model.setup = function(board) {
@@ -47,6 +68,8 @@ Dagaz.Model.setup = function(board) {
       if (pos < 14) return;
       board.setPiece(pos, pieces[_.random(6)]);
   });
+  setupPlayer(design, board, 1, 53, 0);
+  setupPlayer(design, board, 2, 3174, 7);
 }
 
 })();
