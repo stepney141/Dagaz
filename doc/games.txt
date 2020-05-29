@@ -283,3 +283,4 @@
   - Netwalk [best]
   - Lines [best, dices, goto, createmove, customblink, hints]
   - Mastermind [best, drops, wheel]
+  - Filler [best, keyboard, groups, scoring, smart(to), family:other]

@@ -16,6 +16,7 @@ Dagaz.Controller.soundOff = false;
 
 var sounds  = [];
 var current = null;
+var cnt     = 0;
 
 function Sound(src, clonable) {
     this.sound = document.createElement("audio");
@@ -53,7 +54,11 @@ var getSound = function(ix, player) {
 Dagaz.Controller.play = function(ix, player) {
     if (Dagaz.Controller.soundOff) return;
     Dagaz.Controller.stop();
-    current = getSound(ix, player);
+    cnt++;
+    if (cnt > 2) {
+        cnt = 1;
+    }
+    current = getSound(ix, cnt);
     if (current !== null) {
         current.play();
     }
