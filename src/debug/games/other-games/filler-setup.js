@@ -1,5 +1,8 @@
 (function() {
 
+Dagaz.Model.WEST_POS = 53;
+Dagaz.Model.EAST_POS = 3174;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
@@ -68,8 +71,8 @@ Dagaz.Model.setup = function(board) {
       if (pos < 14) return;
       board.setPiece(pos, pieces[_.random(6)]);
   });
-  setupPlayer(design, board, 1, 53, 0);
-  setupPlayer(design, board, 2, 3174, 7);
+  setupPlayer(design, board, 1, Dagaz.Model.WEST_POS, 0);
+  setupPlayer(design, board, 2, Dagaz.Model.EAST_POS, 7);
 }
 
 })();
