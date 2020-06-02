@@ -67,8 +67,19 @@ Dagaz.Model.setup = function(board) {
   for (var i = 0; i < 7; i++) {
       pieces.push(Dagaz.Model.createPiece(i, 3));
   }
+  var wall = Dagaz.Model.createPiece(8, 3);
   _.each(design.allPositions(), function(pos) {
       if (pos < 14) return;
+      if (design.inZone(2, 1, pos)) {
+          board.setPiece(pos, wall);
+          return;
+      }
+      for (var zone = 6; zone < 13; zone++) {
+          if (design.inZone(zone, 1, pos)) {
+              board.setPiece(pos, pieces[zone - 6]);
+              return;
+          }
+      }
       board.setPiece(pos, pieces[_.random(6)]);
   });
   setupPlayer(design, board, 1, Dagaz.Model.WEST_POS, 0);

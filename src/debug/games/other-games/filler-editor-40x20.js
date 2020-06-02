@@ -1,5 +1,4 @@
-Dagaz.Model.WEST_POS = 33;
-Dagaz.Model.EAST_POS = 794;
+Dagaz.Controller.noDropIndex = true;
 
 ZRF = {
     JUMP:          0,
@@ -26,23 +25,17 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-drops", "false");
     design.checkVersion("animate-captures", "false");
+    design.checkVersion("show-captures", "false");
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-drops", "true");
-    design.checkVersion("show-captures", "false");
-    design.checkVersion("animate-redo", "false");
-    design.checkVersion("smart-moves", "to");
 
     design.addDirection("s");
     design.addDirection("e");
     design.addDirection("w");
     design.addDirection("n");
 
-    design.addPlayer("West", [3, 2, 1, 0]);
-    design.addPlayer("East", [0, 1, 2, 3]);
-    design.addPlayer("None", [0, 1, 2, 3]);
-    design.addTurn(1);
-    design.addTurn(2);
+    design.addPlayer("You", [3, 2, 1, 0]);
 
     design.addPosition("AX", [0, 0, 0, 0]);
     design.addPosition("BX", [0, 0, 0, 0]);
@@ -859,69 +852,69 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("s40", [0, 1, -1, -20]);
     design.addPosition("t40", [0, 0, -1, -20]);
 
-    design.setupSelector(2);
+    design.addZone("black", 1, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]);
 
-    design.addZone("start", 1, [33]);
-    design.addZone("start", 2, [794]);
-    design.addZone("home", 1, [0, 1, 2, 3, 4, 5, 6]);
-    design.addZone("home", 2, [7, 8, 9, 10, 11, 12, 13]);
+    design.addCommand(1, ZRF.IN_ZONE,	0);	// black
+    design.addCommand(1, ZRF.FUNCTION,	0);	// not
+    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(1, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(1, ZRF.FUNCTION,	25);	// to
+    design.addCommand(1, ZRF.FUNCTION,	28);	// end
 
-    design.addZone("wall", 1, [119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,139,159,179,199,219,239,242,243,244,245,246,247,248,259,262,268,279,282,288,299,302,305,308,319,322,325,328,342,345,362,365,382,385,402,405,422,425,442,445,462,465,482,485,499,502,505,508,519,522,525,528,539,545,548,559,565,568,579,580,581,582,583,584,585,588,608,628,648,668,688,694,695,696,697,698,699,700,701,702,703,704,705,706,707,708], 1);
-    design.addZone("dark", 1, [], 1);
-    design.addZone("fire", 1, [], 1);
-    design.addZone("ice", 1, [], 1);
-    design.addZone("blue", 1, [], 1);
-    design.addZone("red", 1, [], 1);
-    design.addZone("gold", 1, [263,264,283,284,303,304,323,324,343,344,363,364,383,384,403,404,423,424,443,444,463,464,483,484,503,504,523,524,543,544,563,564], 1);
-
-    design.addZone("wall", 1, [97,98,99,106,117,126,137,146,157,166,177,182,186,202,206,222,226,242,246,259,260,261,262,266,339,340,341,342,343,344,345,346,347,348,479,480,481,482,483,484,485,486,487,488,561,565,566,567,568,581,585,601,605,621,625,641,645,650,661,670,681,690,701,710,721,728,729,730], 2);
-    design.addZone("dark", 1, [], 2);
-    design.addZone("fire", 1, [], 2);
-    design.addZone("ice", 1, [], 2);
-    design.addZone("blue", 1, [118,119,120,121,138,139,140,141,158,159,160,161,178,179,180,181,198,199,200,201,218,219,220,221,238,239,240,241], 2);
-    design.addZone("red", 1, [586,587,588,589,606,607,608,609,626,627,628,629,646,647,648,649,666,667,668,669,686,687,688,689,706,707,708,709], 2);
-    design.addZone("gold", 1, [359,360,361,362,363,364,365,366,367,368,379,380,381,382,383,384,385,386,387,388,399,400,401,402,403,404,405,406,407,408,419,420,421,422,423,424,425,426,427,428,439,440,441,442,443,444,445,446,447,448,459,460,461,462,463,464,465,466,467,468], 2);
+    design.addCommand(3, ZRF.FUNCTION,	24);	// from
+    design.addCommand(3, ZRF.FUNCTION,	26);	// capture
+    design.addCommand(3, ZRF.FUNCTION,	25);	// to
+    design.addCommand(3, ZRF.FUNCTION,	28);	// end
 
     design.addPiece("Blue", 0);
+    design.addDrop(0, 1, [], 0);
+    design.addMove(0, 3, [], 0);
+
     design.addPiece("Red", 1);
+    design.addDrop(1, 1, [], 0);
+    design.addMove(1, 3, [], 0);
+
     design.addPiece("Yellow", 2);
+    design.addDrop(2, 1, [], 0);
+    design.addMove(2, 3, [], 0);
+
     design.addPiece("Green", 3);
+    design.addDrop(3, 1, [], 0);
+    design.addMove(3, 3, [], 0);
+
     design.addPiece("Purple", 4);
+    design.addDrop(4, 1, [], 0);
+    design.addMove(4, 3, [], 0);
+
     design.addPiece("Orange", 5);
+    design.addDrop(5, 1, [], 0);
+    design.addMove(5, 3, [], 0);
+
     design.addPiece("Light", 6);
+    design.addDrop(6, 1, [], 0);
+    design.addMove(6, 3, [], 0);
 
-    design.addPiece("Mark", 7);
+    design.addPiece("Wall", 7);
+    design.addDrop(7, 1, [], 0);
+    design.addMove(7, 3, [], 0);
 
-    design.addPiece("Wall", 8);
+    design.addPiece("Dark", 8);
+    design.addDrop(8, 1, [], 0);
+    design.addMove(8, 3, [], 0);
 }
 
 Dagaz.View.configure = function(view) {
     view.defBoard("Board");
-    view.defPiece("WestBlue", "West Blue");
-    view.defPiece("EastBlue", "East Blue");
-    view.defPiece("NoneBlue", "None Blue");
-    view.defPiece("WestRed", "West Red");
-    view.defPiece("EastRed", "East Red");
-    view.defPiece("NoneRed", "None Red");
-    view.defPiece("WestYellow", "West Yellow");
-    view.defPiece("EastYellow", "East Yellow");
-    view.defPiece("NoneYellow", "None Yellow");
-    view.defPiece("WestGreen", "West Green");
-    view.defPiece("EastGreen", "East Green");
-    view.defPiece("NoneGreen", "None Green");
-    view.defPiece("WestPurple", "West Purple");
-    view.defPiece("EastPurple", "East Purple");
-    view.defPiece("NonePurple", "None Purple");
-    view.defPiece("WestOrange", "West Orange");
-    view.defPiece("EastOrange", "East Orange");
-    view.defPiece("NoneOrange", "None Orange");
-    view.defPiece("WestLight", "West Light");
-    view.defPiece("EastLight", "East Light");
-    view.defPiece("NoneLight", "None Light");
-    view.defPiece("WestMark", "West Mark");
-    view.defPiece("EastMark", "East Mark");
-    view.defPiece("NoneWall", "None Wall");
-    view.defPiece("Ko", "Ko");
+    view.defPiece("Blue", "You Blue");
+    view.defPiece("Red", "You Red");
+    view.defPiece("Yellow", "You Yellow");
+    view.defPiece("Green", "You Green");
+    view.defPiece("Purple", "You Purple");
+    view.defPiece("Orange", "You Orange");
+    view.defPiece("Light", "You Light");
+    view.defPiece("Wall", "You Wall");
+    view.defPiece("Dark", "You Dark");
  
     view.defPosition("AX", 5, 358, 30, 30);
     view.defPosition("BX", 40, 358, 30, 30);

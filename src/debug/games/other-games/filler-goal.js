@@ -1,8 +1,5 @@
 (function() {
 
-Dagaz.Model.WIN_CNT = 1600;
-Dagaz.AI.NOISE_FACTOR = 0;
-
 var WIDTH = 640;
 var HEIGHT = 32;
 
@@ -20,15 +17,16 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
 
 var getScore = function(design, board) {
   if (_.isUndefined(board.score)) {
-      board.score = [0, 0];
+      board.score = [0, 0, 0];
       _.each(design.allPositions(), function(pos) {
           var piece = board.getPiece(pos);
           if (piece === null) return;
+          if (piece.type > 7) return;
+          board.score[2]++;
           if (piece.player > 2) return;
           if (piece.type > 6) return;
           board.score[piece.player - 1]++;
       });
-      console.log(board.score);
   }
   return board.score;
 }
@@ -58,14 +56,15 @@ var checkGoals = Dagaz.Model.checkGoals;
 
 Dagaz.Model.checkGoals = function(design, board, player) {
   var score = getScore(design, board);
-  if (score[0] > Dagaz.Model.WIN_CNT) {
+  var win = (score[2] / 2) | 0;
+  if (score[0] > win) {
       if (player == 1) {
           return 1;
       } else {
           return -1;
       }
   }
-  if (score[1] > Dagaz.Model.WIN_CNT) {
+  if (score[1] > win) {
       if (player == 2) {
           return 1;
       } else {
