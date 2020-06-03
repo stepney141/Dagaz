@@ -100,6 +100,9 @@ Dagaz.Model.CheckInvariants = function(board) {
           }
           list = getEnemyList(design, board, +start.type);
           pos  = Dagaz.Model.stringToPos("p17");
+          if (board.player == 2) {
+               pos = Dagaz.Model.stringToPos("b1");
+          }
           while ((pos !== null) && (list.length > 0)) {
               var p = list.shift();
               move.movePiece(p, pos, board.getPiece(p));
