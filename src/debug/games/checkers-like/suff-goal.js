@@ -150,6 +150,9 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
   var m = getMove(move);
   var r = 1;
   if (m !== null) {
+      if (!design.inZone(0, 1, m.start) && !design.inZone(0, 1, m.end)) {
+          return -1000;
+      }
       if (_.indexOf(t.first, m.end) >= 0) {
           r = 1000 + getDistance(t.first, m.start);
       }

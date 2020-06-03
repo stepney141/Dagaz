@@ -68,10 +68,15 @@ Dagaz.Model.setup = function(board) {
       pieces.push(Dagaz.Model.createPiece(i, 3));
   }
   var wall = Dagaz.Model.createPiece(8, 3);
+  var dark = Dagaz.Model.createPiece(9, 3);
   _.each(design.allPositions(), function(pos) {
       if (pos < 14) return;
       if (design.inZone(2, 1, pos)) {
           board.setPiece(pos, wall);
+          return;
+      }
+      if (design.inZone(3, 1, pos)) {
+          board.setPiece(pos, dark);
           return;
       }
       for (var zone = 6; zone < 13; zone++) {

@@ -27,7 +27,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("smart-moves", "false");
     design.checkVersion("pass-partial", "true");
     design.checkVersion("detect-loops", "true");
-    design.checkVersion("advisor-wait", "5");
+    design.checkVersion("advisor-wait", "30");
 
     design.addDirection("se"); // 0
     design.addDirection("s");  // 1
@@ -365,7 +365,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(1, ZRF.FUNCTION,	25);	// to
     design.addCommand(1, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("Small", 0, 1);
+    design.addPiece("Small", 0, 100);
     design.addMove(0, 0, [7], 0);
     design.addMove(0, 0, [6], 0);
     design.addMove(0, 0, [3], 0);
@@ -384,7 +384,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 1, [0, 0], 1);
     design.addMove(0, 0, [10], 2);
 
-    design.addPiece("Big", 1, 10);
+    design.addPiece("Big", 1, 300);
     design.addMove(1, 0, [7], 0);
     design.addMove(1, 0, [6], 0);
     design.addMove(1, 0, [3], 0);
