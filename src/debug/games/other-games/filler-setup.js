@@ -69,6 +69,8 @@ Dagaz.Model.setup = function(board) {
   }
   var wall = Dagaz.Model.createPiece(8, 3);
   var dark = Dagaz.Model.createPiece(9, 3);
+  var fire = Dagaz.Model.createPiece(10, 3);
+  var ice  = Dagaz.Model.createPiece(11, 3);
   _.each(design.allPositions(), function(pos) {
       if (pos < 14) return;
       if (design.inZone(2, 1, pos)) {
@@ -77,6 +79,14 @@ Dagaz.Model.setup = function(board) {
       }
       if (design.inZone(3, 1, pos)) {
           board.setPiece(pos, dark);
+          return;
+      }
+      if (design.inZone(4, 1, pos)) {
+          board.setPiece(pos, fire);
+          return;
+      }
+      if (design.inZone(5, 1, pos)) {
+          board.setPiece(pos, ice);
           return;
       }
       for (var zone = 6; zone < 13; zone++) {

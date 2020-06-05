@@ -12,6 +12,9 @@
 <img id="BlackKnight" style="display:none" src="images/camelot/nknight.png">
 
 <table style="margin:auto; font-family:sans-serif; font-size:14px" id="Table">
+<tr><td>
+<a href="javascript:Dagaz.Controller.newGame()">New Game</a>
+</a></td></tr>
 <tr style="height:804px; vertical-align:top">
 <td id="CanvasCell" style="width:704px">
 <canvas id="Canvas" width="704" height="804" style="cursor:default">Broken canvas...</canvas>
@@ -43,13 +46,15 @@
 <script src="../../kernel/view/2d/2d-view-v2.js"></script>
 <script src="../../kernel/controller/utils/move-list-v1.js"></script>
 <script src="../../kernel/controller/ai/random-ai.js"></script>
-<script src="../../kernel/controller/ai/heuristic-ai-v2.js"></script>
+<script src="../../kernel/controller/ai/heuristic-ai.js"></script>
+<script src="../../kernel/controller/ai/heuristic-ai-v5.js"></script>
 <script src="camelot-goal.js"></script>
+<script src="chivalry-ai.js"></script>
 <script src="camelot-restrictions.js"></script>
 <script src="camelot-invariant.js"></script>
 <script src="camelot-extension.js"></script>
 <script src="chivalry.js"></script>
-<script src="../../kernel/controller/app-v2.js"></script>
+<script src="../../kernel/controller/app-auto.js"></script>
 
 </body>
 </html>
