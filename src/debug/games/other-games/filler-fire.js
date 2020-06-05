@@ -60,6 +60,12 @@ Dagaz.Model.CheckInvariants = function(board) {
                   }
               });
               done = _.union(done, group);
+              _.each(move.actions, function(a) {
+                   if (a[1] === null) return;
+                   if (a[2] === null) return;
+                   if (a[2][0].type != 9) return;
+                   done.push(a[1][0]);
+              });
               if (start.type == 10) {
                   var pieces = [];
                   for (var i = 0; i < 7; i++) {
