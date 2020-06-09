@@ -12,6 +12,8 @@ Dagaz.Controller.randomized  = false;
 Dagaz.Controller.noDropIndex = false;
 Dagaz.Controller.cyclicDropIndex = false;
 
+Dagaz.AI.selector = false;
+
 Dagaz.Controller.Done = function(board) {}
 
 Dagaz.Controller.go = function(url) {

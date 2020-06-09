@@ -510,56 +510,58 @@ Ai.prototype.getMove = function(ctx) {
            ai:  "once"
       };
   }
-  for (var i = 0; i < ctx.board.moves.length; i++) {
-       var b = ctx.board.apply(ctx.board.moves[i]);
-       if (Dagaz.Model.checkGoals(ctx.design, b, ctx.board.player) > 0)
-           return {
+  if (!Dagaz.AI.selector || (Dagaz.Model.getSetupSelector(2) == 2)) {
+      for (var i = 0; i < ctx.board.moves.length; i++) {
+           var b = ctx.board.apply(ctx.board.moves[i]);
+           if (Dagaz.Model.checkGoals(ctx.design, b, ctx.board.player) > 0)
+               return {
+                   done: true,
+                   move: ctx.board.moves[i],
+                   time: Date.now() - ctx.timestamp,
+                   ai:  "goal"
+               };
+      }
+      if (Dagaz.AI.NOISE_FACTOR > 0) {
+          ctx.board.moves = _.sortBy(ctx.board.moves, function(m) {
+              if (_.isUndefined(m.weight)) {
+                  m.weight = _.random(0, Dagaz.AI.NOISE_FACTOR);
+              }
+              return m.weight;
+          });
+      }
+      ctx.timestamp = Date.now();
+      ctx.best = null;
+      Dagaz.AI.inProgress = true;
+      var alpha = -MAX_VALUE;
+      var beta = MAX_VALUE;
+      for (var i = Dagaz.AI.START_DEEP; (i < 100) && Dagaz.AI.inProgress; i++) {
+           var v = this.ab(ctx, ctx.board, i, 0, alpha, beta);
+           if (!Dagaz.AI.inProgress) break;
+           if ((v > alpha) && (v < beta)) {
+               alpha = v - 500;
+               beta = v + 500;
+               if (alpha < -MAX_VALUE) alpha = -MAX_VALUE;
+               if (beta > MAX_VALUE) beta = MAX_VALUE;
+           } else if (alpha != -MAX_VALUE) {
+               alpha = -MAX_VALUE;
+               beta = MAX_VALUE;
+               i--;
+           }
+           var node = ctx.cache[ctx.board.zSign & HASH_MASK];
+           if (!_.isUndefined(node) && (node.lock == ctx.board.hSign)) {
+               ctx.best = node.best.move;
+           }
+      }
+      Dagaz.AI.inProgress = false;
+      if (ctx.best !== null) {
+          console.log("AB: " + ctx.best.toString() + ", A=" + alpha + ", B=" + beta + ", N=" + ctx.nodeCount + ", Q=" + ctx.qNodeCount + ", T=" + ctx.tNodeCount + ", L=" + ctx.mLevel + ", D=" + ctx.qLevel);
+          return {
                done: true,
-               move: ctx.board.moves[i],
+               move: ctx.best,
                time: Date.now() - ctx.timestamp,
-               ai:  "goal"
-           };
-  }
-  if (Dagaz.AI.NOISE_FACTOR > 0) {
-      ctx.board.moves = _.sortBy(ctx.board.moves, function(m) {
-          if (_.isUndefined(m.weight)) {
-              m.weight = _.random(0, Dagaz.AI.NOISE_FACTOR);
-          }
-          return m.weight;
-      });
-  }
-  ctx.timestamp = Date.now();
-  ctx.best = null;
-  Dagaz.AI.inProgress = true;
-  var alpha = -MAX_VALUE;
-  var beta = MAX_VALUE;
-  for (var i = Dagaz.AI.START_DEEP; (i < 100) && Dagaz.AI.inProgress; i++) {
-       var v = this.ab(ctx, ctx.board, i, 0, alpha, beta);
-       if (!Dagaz.AI.inProgress) break;
-       if ((v > alpha) && (v < beta)) {
-           alpha = v - 500;
-           beta = v + 500;
-           if (alpha < -MAX_VALUE) alpha = -MAX_VALUE;
-           if (beta > MAX_VALUE) beta = MAX_VALUE;
-       } else if (alpha != -MAX_VALUE) {
-           alpha = -MAX_VALUE;
-           beta = MAX_VALUE;
-           i--;
-       }
-       var node = ctx.cache[ctx.board.zSign & HASH_MASK];
-       if (!_.isUndefined(node) && (node.lock == ctx.board.hSign)) {
-           ctx.best = node.best.move;
-       }
-  }
-  Dagaz.AI.inProgress = false;
-  if (ctx.best !== null) {
-      console.log("AB: " + ctx.best.toString() + ", A=" + alpha + ", B=" + beta + ", N=" + ctx.nodeCount + ", Q=" + ctx.qNodeCount + ", T=" + ctx.tNodeCount + ", L=" + ctx.mLevel + ", D=" + ctx.qLevel);
-      return {
-           done: true,
-           move: ctx.best,
-           time: Date.now() - ctx.timestamp,
-           ai:  "ab"
-      };
+               ai:  "ab"
+          };
+      }
   }
   if (this.parent) {
       return this.parent.getMove(ctx);

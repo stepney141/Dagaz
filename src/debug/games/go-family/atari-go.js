@@ -1,3 +1,5 @@
+Dagaz.AI.selector = true;
+
 ZRF = {
     JUMP:          0,
     IF:            1,

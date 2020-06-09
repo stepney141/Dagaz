@@ -359,6 +359,7 @@ App.prototype.getAI = function() {
       } else {
           this.ai = Dagaz.AI.findBot("random",  this.params, this.ai);
           this.ai = Dagaz.AI.findBot("common",  this.params, this.ai);
+          this.ai = Dagaz.AI.findBot("smart",   this.params, this.ai);
           this.ai = Dagaz.AI.findBot("opening", this.params, this.ai);
       }
   }
@@ -409,6 +410,27 @@ App.prototype.setMove = function(move) {
       this.move = move;
       this.state = STATE.EXEC;
   }
+}
+
+App.prototype.passTurn = function() {
+  if (this.state != STATE.IDLE) return;
+  if (_.isUndefined(this.list)) return;
+  var moves = _.filter(this.board.moves, function(move) {
+      return move.isPass();
+  });
+  if (moves.length < 1) return;
+  if (confirm("Pass Turn?")) {
+      var move = moves[0];
+      delete this.list;
+      this.boardApply(move);
+      Dagaz.Model.Done(this.design, this.board);
+      this.move = move;
+      this.state = STATE.EXEC;
+  }
+}
+
+Dagaz.Controller.passTurn = function() {
+  Dagaz.Controller.app.passTurn();
 }
 
 App.prototype.exec = function() {

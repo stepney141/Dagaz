@@ -1,70 +1,79 @@
 (function() {
 
-Dagaz.AI.AI_FRAME     = 1500;
-Dagaz.AI.REP_DEEP     = 30;
-Dagaz.AI.MAX_QS_LEVEL = 3;
-Dagaz.AI.MAX_AB_VARS  = 10;
-Dagaz.AI.MAX_QS_VARS  = 2;
-Dagaz.AI.STALEMATE    = 0;
+Dagaz.AI.AI_FRAME       = 1500;
+Dagaz.AI.REP_DEEP       = 30;
+Dagaz.AI.MAX_QS_LEVEL   = 3;
+Dagaz.AI.MAX_AB_VARS    = 10;
+Dagaz.AI.MAX_QS_VARS    = 2;
+Dagaz.AI.STALEMATE      = 0;
+Dagaz.AI.ENDGAME_PIECES = 3;
 
 var penalty = [
-  [   0,   0,   0,   0,   0,   0,   0,   0,   // Pawn
-    -25, 105, 135, 270, 270, 135, 105, -25,
-    -80,   0,  30, 176, 176,  30,   0, -80,
-    -85,  -5,  25, 175, 175,  25,  -5, -85,
-    -90, -10,  20, 125, 125,  20, -10, -90,
-    -95, -15,  15,  75,  75,  15, -15, -95, 
-   -100, -20,  10,  70,  70,  10, -20,-100, 
-      0,   0,   0,   0,   0,   0,   0,   0 ],
-  [ -60, -30, -10,  20,  20, -10, -30, -60,   // Rook
-     40,  70,  90, 120, 120,  90,  70,  40,
-    -60, -30, -10,  20,  20, -10, -30, -60,
-    -60, -30, -10,  20,  20, -10, -30, -60,
-    -60, -30, -10,  20,  20, -10, -30, -60,
-    -60, -30, -10,  20,  20, -10, -30, -60,
-    -60, -30, -10,  20,  20, -10, -30, -60,
-    -60, -30, -10,  20,  20, -10, -30, -60 ],
-  [-200,-100, -50, -50, -50, -50,-100,-200,   // Knight
-   -100,   0,   0,   0,   0,   0,   0,-100,
-    -50,   0,  60,  60,  60,  60,   0, -50,
-    -50,   0,  30,  60,  60,  30,   0, -50,
-    -50,   0,  30,  60,  60,  30,   0, -50,
-    -50,   0,  30,  30,  30,  30,   0, -50,
-   -100,   0,   0,   0,   0,   0,   0,-100,
-   -200, -50, -25, -25, -25, -25, -50,-200 ],
-  [ -50, -50, -25, -10, -10, -25, -50, -50,   // Bishop
-    -50, -25, -10,   0,   0, -10, -25, -50,
-    -25, -10,   0,  25,  25,   0, -10, -25,
-    -10,   0,  25,  40,  40,  25,   0, -10,
-    -10,   0,  25,  40,  40,  25,   0, -10,
-    -25, -10,   0,  25,  25,   0, -10, -25,
-    -50, -25, -10,   0,   0, -10, -25, -50,
-    -50, -50, -25, -10, -10, -25, -50, -50 ],
-  [ -50, -50, -25, -10, -10, -25, -50, -50,   // Queen
-    -50, -25, -10,   0,   0, -10, -25, -50,
-    -25, -10,   0,  25,  25,   0, -10, -25,
-    -10,   0,  25,  40,  40,  25,   0, -10,
-    -10,   0,  25,  40,  40,  25,   0, -10,
-    -25, -10,   0,  25,  25,   0, -10, -25,
-    -50, -25, -10,   0,   0, -10, -25, -50,
-    -50, -50, -25, -10, -10, -25, -50, -50 ],
-  [  50, 150, -25,-125,-125, -25, 150,  50,   // King
-     50, 150, -25,-125,-125, -25, 150,  50,
-     50, 150, -25,-125,-125, -25, 150,  50,
-     50, 150, -25,-125,-125, -25, 150,  50,
-     50, 150, -25,-125,-125, -25, 150,  50,
-     50, 150, -25,-125,-125, -25, 150,  50,
-     50, 150, -25,-125,-125, -25, 150,  50,
-    150, 250,  75, -25, -25,  75, 250, 150 ]
+  [  0,  0,  0,  0,  0,  0,  0,  0,   // Pawn
+    50, 50, 50, 50, 50, 50, 50, 50,
+    10, 10, 20, 30, 30, 20, 10, 10,
+     5,  5, 10, 25, 25, 10,  5,  5,
+     0,  0,  0, 20, 20,  0,  0,  0,
+     5, -5,-10,  0,  0,-10, -5,  5,
+     5, 10, 10,-20,-20, 10, 10,  5,
+     0,  0,  0,  0,  0,  0,  0,  0 ],
+  [  0,  0,  0,  0,  0,  0,  0,  0,   // Rook
+     5, 10, 10, 10, 10, 10, 10,  5,
+    -5,  0,  0,  0,  0,  0,  0, -5,
+    -5,  0,  0,  0,  0,  0,  0, -5,
+    -5,  0,  0,  0,  0,  0,  0, -5,
+    -5,  0,  0,  0,  0,  0,  0, -5,
+    -5,  0,  0,  0,  0,  0,  0, -5,
+     0,  0,  0,  5,  5,  0,  0,  0 ],
+  [-50,-40,-30,-30,-30,-30,-40,-50,   // Knight
+   -40,-20,  0,  0,  0,  0,-20,-40,
+   -30,  0, 10, 15, 15, 10,  0,-30,
+   -30,  5, 15, 20, 20, 15,  5,-30,
+   -30,  0, 15, 20, 20, 15,  0,-30,
+   -30,  5, 10, 15, 15, 10,  5,-30,
+   -40,-20,  0,  5,  5,  0,-20,-40,
+   -50,-40,-30,-30,-30,-30,-40,-50 ],
+ [ -20,-10,-10,-10,-10,-10,-10,-20,   // Bishop
+   -10,  0,  0,  0,  0,  0,  0,-10,
+   -10,  0,  5, 10, 10,  5,  0,-10,
+   -10,  5,  5, 10, 10,  5,  5,-10,
+   -10,  0, 10, 10, 10, 10,  0,-10,
+   -10, 10, 10, 10, 10, 10, 10,-10,
+   -10,  5,  0,  0,  0,  0,  5,-10,
+   -20,-10,-10,-10,-10,-10,-10,-20 ],
+ [ -20,-10,-10, -5, -5,-10,-10,-20,   // Queen
+   -10,  0,  0,  0,  0,  0,  0,-10,
+   -10,  0,  5,  5,  5,  5,  0,-10,
+    -5,  0,  5,  5,  5,  5,  0, -5,
+     0,  0,  5,  5,  5,  5,  0, -5,
+   -10,  5,  5,  5,  5,  5,  0,-10,
+   -10,  0,  5,  0,  0,  0,  0,-10,
+   -20,-10,-10, -5, -5,-10,-10,-20 ],
+ [ -30,-40,-40,-50,-50,-40,-40,-30,   // King (middle game)
+   -30,-40,-40,-50,-50,-40,-40,-30,
+   -30,-40,-40,-50,-50,-40,-40,-30,
+   -30,-40,-40,-50,-50,-40,-40,-30,
+   -20,-30,-30,-40,-40,-30,-30,-20,
+   -10,-20,-20,-20,-20,-20,-20,-10,
+    20, 20,  0,  0,  0,  0, 20, 20,
+    20, 30, 10,  0,  0, 10, 30, 20 ],
+ [ -50,-40,-30,-20,-20,-30,-40,-50,   // King (end game)
+   -30,-20,-10,  0,  0,-10,-20,-30,
+   -30,-10, 20, 30, 30, 20,-10,-30,
+   -30,-10, 30, 40, 40, 30,-10,-30,
+   -30,-10, 30, 40, 40, 30,-10,-30,
+   -30,-10, 20, 30, 30, 20,-10,-30,
+   -30,-30,  0,  0,  0,  0,-30,-30,
+   -50,-30,-30,-30,-30,-30,-30,-50 ]
 ];
 
-Dagaz.AI.getPrice = function(design, piece, pos) {
+Dagaz.AI.getPrice = function(design, type, player, pos) {
   if (pos > 63) return 0;
-  var r = design.price[piece.type];
-  if (piece.player == 1) {
-      r += penalty[piece.type][pos];
+  var r = design.price[type];
+  if (player == 1) {
+      r += penalty[type][pos];
   } else {
-      r += penalty[piece.type][63 - pos];
+      r += penalty[type][63 - pos];
   }
   return r;
 }
@@ -97,7 +106,7 @@ var checkStep = function(design, board, player, pos, price, dir, types, cover) {
   if (_.indexOf(types, +piece.type) < 0) return false;
   if (!_.isUndefined(price)) {
       if (isAttacked(design, board, piece.player, p)) return false;
-      if (Dagaz.AI.getPrice(design, piece, p) > price) return false;
+      if (Dagaz.AI.getPrice(design, piece.type, piece.player, p) > price) return false;
   }
   if (!_.isUndefined(cover)) {
       if (_.isUndefined(cover[p])) {
@@ -122,7 +131,7 @@ var checkSlide = function(design, board, player, pos, price, dir, types, cover) 
   if (_.indexOf(types, +piece.type) < 0) return false;
   if (!_.isUndefined(price)) {
       if (isAttacked(design, board, piece.player, p)) return false;
-      if (Dagaz.AI.getPrice(design, piece, p) > price) return false;
+      if (Dagaz.AI.getPrice(design, piece.type, piece.player, p) > price) return false;
   }
   if (!_.isUndefined(cover)) {
       if (_.isUndefined(cover[p])) {
@@ -145,7 +154,7 @@ var checkJump = function(design, board, player, pos, price, d, o, type, cover) {
   if (piece.type != type) return false;
   if (!_.isUndefined(price)) {
       if (isAttacked(design, board, piece.player, p)) return false;
-      if (Dagaz.AI.getPrice(design, piece, p) > price) return false;
+      if (Dagaz.AI.getPrice(design, piece.type, piece.player, p) > price) return false;
   }
   if (!_.isUndefined(cover)) {
       if (_.isUndefined(cover[p])) {
@@ -221,7 +230,7 @@ Dagaz.AI.heuristic = function(ai, design, board, move) {
       var pos = move.actions[0][1][0];
       var piece = board.getPiece(pos);
       if (piece !== null) {
-          r += Dagaz.AI.getPrice(design, piece, pos);
+          r += Dagaz.AI.getPrice(design, piece.type, piece.player, pos);
       }
   }
   return r;
@@ -232,10 +241,19 @@ Dagaz.AI.eval = function(design, params, board, player) {
   if (_.isUndefined(board.completeEval)) {
       board.completeEval = 0;
       var cover = [];
+      var cnt = [0, 0];
       _.each(design.allPositions(), function(pos) {
            var piece = board.getPiece(pos);
            if (piece === null) return;
-           var v = Dagaz.AI.getPrice(design, piece, pos);
+           cnt[+piece.player]++;
+      });
+      _.each(design.allPositions(), function(pos) {
+           var piece = board.getPiece(pos);
+           if (piece === null) return;
+           if (piece.type == 0) return;
+           var t = piece.type;
+           if ((t == 5) && (cnt[+piece.player] <= Dagaz.AI.ENDGAME_PIECES)) t++;
+           var v = Dagaz.AI.getPrice(design, t, piece.player, pos);
            // Check Attacking
            if (isAttacked(design, board, piece.player, pos, Math.abs(v), cover)) {
                v = (v / 4) | 0;
@@ -257,7 +275,9 @@ Dagaz.AI.eval = function(design, params, board, player) {
                var target = board.getPiece(p);
                if (target === null) return;
                if (target.player == piece.player) return;
-               var x = Dagaz.AI.getPrice(design, target, p) * 2;
+               var t = target.type;
+               if ((t == 5) && (cnt[+target.player] <= Dagaz.AI.ENDGAME_PIECES)) t++;
+               var x = Dagaz.AI.getPrice(design, t, target.player, p) * 2;
                if ((v === null) || (v > x)) v = x;
            });
            if (v === null) return;
