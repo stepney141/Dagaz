@@ -25,7 +25,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("smart-moves", "false");
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
-    design.checkVersion("pass-turn", "true");
+    design.checkVersion("pass-turn", "false");
     design.checkVersion("advisor-wait", "20");
 
     design.addDirection("se"); // 0
@@ -104,6 +104,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("f1", [0, 0, 0, 1, -1, -7, -9, -8]);
     design.addPosition("g1", [0, 0, 0, 1, -1, -7, -9, -8]);
     design.addPosition("h1", [0, 0, 0, 0, -1, 0, -9, -8]);
+    design.addPosition("WP", [0, 0, 0, 0, 0, 0, 0, 0]);
+    design.addPosition("BP", [0, 0, 0, 0, 0, 0, 0, 0]);
     design.addPosition("X1", [0, 0, 0, 0, 0, 0, 0, 0]);
     design.addPosition("X2", [0, 0, 0, 0, 0, 0, 0, 0]);
     design.addPosition("X3", [0, 0, 0, 0, 0, 0, 0, 0]);
@@ -273,6 +275,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(8, ZRF.FUNCTION,	25);	// to
     design.addCommand(8, ZRF.FUNCTION,	28);	// end
 
+    design.addCommand(9, ZRF.FUNCTION,	24);	// from
+    design.addCommand(9, ZRF.FUNCTION,	26);	// capture
+    design.addCommand(9, ZRF.FUNCTION,	25);	// to
+    design.addCommand(9, ZRF.FUNCTION,	28);	// end
+
     design.addPiece("Pawn", 0, 800);
     design.addMove(0, 0, [7], 0);
     design.addMove(0, 1, [7, 7], 0);
@@ -341,6 +348,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(5, 7, [3, 3, 3, 4, 4], 0);
     design.addMove(5, 8, [4, 4, 4, 4, 3, 3, 3], 0);
 
+    design.addPiece("Pass", 6, 0);
+    design.addMove(6, 9, [], 1);
+
     design.setup("White", "Pawn", 48);
     design.setup("White", "Pawn", 49);
     design.setup("White", "Pawn", 50);
@@ -357,6 +367,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("White", "Bishop", 61);
     design.setup("White", "Queen", 59);
     design.setup("White", "King", 60);
+    design.setup("White", "Pass", 64);
     design.setup("Black", "Pawn", 8);
     design.setup("Black", "Pawn", 9);
     design.setup("Black", "Pawn", 10);
@@ -376,8 +387,7 @@ Dagaz.Model.BuildDesign = function(design) {
 }
 
 Dagaz.View.configure = function(view) {
-    view.defBoard("WhiteBoard", 0, 0, undefined, [0]);
-    view.defBoard("BlackBoard", 0, 0, undefined, [1]);
+    view.defBoard("Board");
     view.defPiece("WhitePawn", "White Pawn");
     view.defPiece("BlackPawn", "Black Pawn");
     view.defPiece("WhiteRook", "White Rook");
@@ -390,6 +400,8 @@ Dagaz.View.configure = function(view) {
     view.defPiece("BlackQueen", "Black Queen");
     view.defPiece("WhiteKing", "White King");
     view.defPiece("BlackKing", "Black King");
+    view.defPiece("WhitePass", "White Pass");
+    view.defPiece("BlackPass", "Black Pass");
  
     view.defPosition("a8", 2, 2, 68, 68);
     view.defPosition("b8", 70, 2, 68, 68);
@@ -455,6 +467,8 @@ Dagaz.View.configure = function(view) {
     view.defPosition("f1", 342, 478, 68, 68);
     view.defPosition("g1", 410, 478, 68, 68);
     view.defPosition("h1", 478, 478, 68, 68);
+    view.defPosition("WP", 528, 528, 16, 16);
+    view.defPosition("BP", 4, 4, 16, 16);
 
     view.defPopup("Promote", 127, 100);
     view.defPopupPosition("X1", 10, 7, 68, 68);

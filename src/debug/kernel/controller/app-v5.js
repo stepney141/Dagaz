@@ -412,27 +412,6 @@ App.prototype.setMove = function(move) {
   }
 }
 
-App.prototype.passTurn = function() {
-  if (this.state != STATE.IDLE) return;
-  if (_.isUndefined(this.list)) return;
-  var moves = _.filter(this.board.moves, function(move) {
-      return move.isPass();
-  });
-  if (moves.length < 1) return;
-  if (confirm("Pass Turn?")) {
-      var move = moves[0];
-      delete this.list;
-      this.boardApply(move);
-      Dagaz.Model.Done(this.design, this.board);
-      this.move = move;
-      this.state = STATE.EXEC;
-  }
-}
-
-Dagaz.Controller.passTurn = function() {
-  Dagaz.Controller.app.passTurn();
-}
-
 App.prototype.exec = function() {
   this.view.configure();
   if (!_.isUndefined(Dagaz.Model.load) && (Dagaz.Controller.persistense == "session")) {

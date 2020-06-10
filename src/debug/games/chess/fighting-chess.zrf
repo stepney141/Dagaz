@@ -1,3 +1,7 @@
+(define capture-piece (
+  capture add
+))
+
 (define pawn-shift (
   $1 (verify not-friend?)
   (if (in-zone? last-rank)
@@ -82,6 +86,10 @@
 
   (board
      (image "images/8x8.bmp")
+     (positions
+         (W 4 4 20 20)
+         (B 528 528 544 544)
+     )
      (grid
          (start-rectangle 2 2 70 70)
          (dimensions
@@ -166,6 +174,14 @@
          (O-O e w) (O-O-O w e)
      )
   )
+  (piece
+     (name Pass)
+     (image White "images/p.bmp"
+            Black "images/p.bmp")
+     (moves
+         (capture-piece)
+     )
+  )
 
   (board-setup
     (White 
@@ -175,6 +191,7 @@
          (Bishop c1 f1)
          (Queen d1)
          (King e1)
+         (Pass W)
     )
     (Black 
          (Pawn a7 b7 c7 d7 e7 f7 g7 h7)
