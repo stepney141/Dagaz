@@ -1,3 +1,5 @@
+Dagaz.Model.WIDTH = 10;
+
 ZRF = {
     JUMP:          0,
     IF:            1,
@@ -30,10 +32,10 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("advisor-wait", "5");
     design.checkVersion("international-extension", "true");
 
-    design.addDirection("se");
-    design.addDirection("sw");
-    design.addDirection("ne");
-    design.addDirection("nw");
+    design.addDirection("se"); // 0
+    design.addDirection("sw"); // 1
+    design.addDirection("ne"); // 2
+    design.addDirection("nw"); // 3
 
     design.addPlayer("White", [3, 2, 1, 0]);
     design.addPlayer("Black", [3, 2, 1, 0]);
