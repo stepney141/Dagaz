@@ -68,9 +68,8 @@ Dagaz.Model.setup = function(board) {
   }
   var design = Dagaz.Model.design;
   var piece = Dagaz.Model.createPiece(6, 1);
-  positions = _.range(16, 47);
-  positions = addPieces(design, board, piece, positions);
-  positions = addPieces(design, board, piece, positions);
+  addPieces(design, board, piece, _.range(24, 31));
+  addPieces(design, board, piece, _.range(32, 39));
 }
 
 var CheckInvariants = Dagaz.Model.CheckInvariants;
