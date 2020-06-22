@@ -12,6 +12,50 @@ if (!_.isUndefined(Dagaz.Controller.addSound)) {
     Dagaz.Controller.addSound(0, "../../sounds/slide.ogg");
 }
 
+var go = Dagaz.Controller.go;
+
+Dagaz.Controller.go = function(url) {
+  var design = Dagaz.Model.design;
+  var board = Dagaz.Controller.app.board;
+  url = url + "?setup="; 
+  var prev = null; var cnt = 0;
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      var s = "";
+      if (piece !== null) {
+          var player = piece.player;
+          if (piece.type > 0) {
+              if (player == 1) {
+                  player = 2;
+              } else {
+                  player = 1;
+              }
+          }
+          var type = (player - 1);
+          s = s + type + ":1";
+      }
+      if ((prev === null) || (prev != s)) {
+          if (prev !== null) {
+              url = url + prev;
+              if (cnt > 0) {
+                  url = url + "+" + cnt;
+              }
+              url = url + ";";
+          }
+          prev = s;
+          cnt = 0;
+      } else {
+          cnt++;
+      }
+  });
+  url = url + prev;
+  if (cnt > 0) {
+      url = url + "+" + cnt;
+  }
+  url = url + ";";
+  go(url);
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
