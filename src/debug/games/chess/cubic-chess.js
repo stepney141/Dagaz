@@ -436,19 +436,23 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addZone("third-rank", 2, [322, 330, 338, 346, 354, 362, 370, 378]);
     design.addZone("plane", 1, [320, 328, 336, 344, 352, 360, 368, 376, 321, 329, 337, 345, 353, 361, 369, 377, 322, 330, 338, 346, 354, 362, 370, 378, 323, 331, 339, 347, 355, 363, 371, 379, 324, 332, 340, 348, 356, 364, 372, 380, 325, 333, 341, 349, 357, 365, 373, 381, 326, 334, 342, 350, 358, 366, 374, 382, 327, 335, 343, 351, 359, 367, 375, 383]);
     design.addZone("plane", 2, [320, 328, 336, 344, 352, 360, 368, 376, 321, 329, 337, 345, 353, 361, 369, 377, 322, 330, 338, 346, 354, 362, 370, 378, 323, 331, 339, 347, 355, 363, 371, 379, 324, 332, 340, 348, 356, 364, 372, 380, 325, 333, 341, 349, 357, 365, 373, 381, 326, 334, 342, 350, 358, 366, 374, 382, 327, 335, 343, 351, 359, 367, 375, 383]);
+    design.addZone("first-ranks", 1, [327, 335, 343, 351, 359, 367, 375, 383, 320, 328, 336, 344, 352, 360, 368, 376]);
+    design.addZone("first-ranks", 2, [327, 335, 343, 351, 359, 367, 375, 383, 320, 328, 336, 344, 352, 360, 368, 376]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
     design.addCommand(0, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(0, ZRF.IN_ZONE,	0);	// third-rank
     design.addCommand(0, ZRF.FUNCTION,	0);	// not
-    design.addCommand(0, ZRF.IF,	9);
+    design.addCommand(0, ZRF.IF,	11);
     design.addCommand(0, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(0, ZRF.FUNCTION,	0);	// not
     design.addCommand(0, ZRF.FUNCTION,	20);	// verify
     design.addCommand(0, ZRF.FORK,	3);
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
+    design.addCommand(0, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(0, ZRF.FUNCTION,	20);	// verify
     design.addCommand(0, ZRF.PARAM,	1);	// $2
     design.addCommand(0, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(0, ZRF.FUNCTION,	2);	// enemy?
@@ -468,68 +472,78 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(2, ZRF.FUNCTION,	24);	// from
     design.addCommand(2, ZRF.PARAM,	0);	// $1
     design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(2, ZRF.PARAM,	1);	// $2
-    design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(2, ZRF.IN_ZONE,	2);	// first-ranks
+    design.addCommand(2, ZRF.FUNCTION,	20);	// verify
     design.addCommand(2, ZRF.FUNCTION,	25);	// to
     design.addCommand(2, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(3, ZRF.FUNCTION,	24);	// from
     design.addCommand(3, ZRF.PARAM,	0);	// $1
     design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(3, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(3, ZRF.FUNCTION,	0);	// not
-    design.addCommand(3, ZRF.IF,	7);
-    design.addCommand(3, ZRF.FORK,	3);
-    design.addCommand(3, ZRF.FUNCTION,	25);	// to
-    design.addCommand(3, ZRF.FUNCTION,	28);	// end
     design.addCommand(3, ZRF.PARAM,	1);	// $2
     design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(3, ZRF.JUMP,	-8);
     design.addCommand(3, ZRF.FUNCTION,	25);	// to
     design.addCommand(3, ZRF.FUNCTION,	28);	// end
 
     design.addCommand(4, ZRF.FUNCTION,	24);	// from
     design.addCommand(4, ZRF.PARAM,	0);	// $1
     design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(4, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(4, ZRF.FUNCTION,	0);	// not
+    design.addCommand(4, ZRF.IF,	7);
+    design.addCommand(4, ZRF.FORK,	3);
     design.addCommand(4, ZRF.FUNCTION,	25);	// to
     design.addCommand(4, ZRF.FUNCTION,	28);	// end
+    design.addCommand(4, ZRF.PARAM,	1);	// $2
+    design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(4, ZRF.JUMP,	-8);
+    design.addCommand(4, ZRF.FUNCTION,	25);	// to
+    design.addCommand(4, ZRF.FUNCTION,	28);	// end
+
+    design.addCommand(5, ZRF.FUNCTION,	24);	// from
+    design.addCommand(5, ZRF.PARAM,	0);	// $1
+    design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(5, ZRF.FUNCTION,	25);	// to
+    design.addCommand(5, ZRF.FUNCTION,	28);	// end
 
     design.addPiece("Disk", 0);
     design.addMove(0, 0, [10, 10], 0);
     design.addMove(0, 1, [12], 0);
     design.addMove(0, 1, [13], 0);
-    design.addMove(0, 2, [0, 4], 1);
-    design.addMove(0, 2, [0, 5], 1);
-    design.addMove(0, 2, [3, 6], 1);
-    design.addMove(0, 2, [3, 7], 1);
-    design.addMove(0, 2, [2, 4], 1);
-    design.addMove(0, 2, [2, 6], 1);
-    design.addMove(0, 2, [1, 5], 1);
-    design.addMove(0, 2, [1, 7], 1);
-    design.addMove(0, 3, [4, 4], 2);
-    design.addMove(0, 3, [5, 5], 2);
-    design.addMove(0, 3, [6, 6], 2);
-    design.addMove(0, 3, [7, 7], 2);
-    design.addMove(0, 3, [0, 0], 3);
-    design.addMove(0, 3, [1, 1], 3);
-    design.addMove(0, 3, [2, 2], 3);
-    design.addMove(0, 3, [3, 3], 3);
-    design.addMove(0, 3, [0, 0], 4);
-    design.addMove(0, 3, [1, 1], 4);
-    design.addMove(0, 3, [2, 2], 4);
-    design.addMove(0, 3, [3, 3], 4);
-    design.addMove(0, 3, [4, 4], 4);
-    design.addMove(0, 3, [5, 5], 4);
-    design.addMove(0, 3, [6, 6], 4);
-    design.addMove(0, 3, [7, 7], 4);
-    design.addMove(0, 4, [0], 5);
-    design.addMove(0, 4, [1], 5);
-    design.addMove(0, 4, [2], 5);
-    design.addMove(0, 4, [3], 5);
-    design.addMove(0, 4, [4], 5);
-    design.addMove(0, 4, [5], 5);
-    design.addMove(0, 4, [6], 5);
-    design.addMove(0, 4, [7], 5);
+    design.addMove(0, 2, [2], 0);
+    design.addMove(0, 2, [1], 0);
+    design.addMove(0, 3, [0, 4], 1);
+    design.addMove(0, 3, [0, 5], 1);
+    design.addMove(0, 3, [3, 6], 1);
+    design.addMove(0, 3, [3, 7], 1);
+    design.addMove(0, 3, [2, 4], 1);
+    design.addMove(0, 3, [2, 6], 1);
+    design.addMove(0, 3, [1, 5], 1);
+    design.addMove(0, 3, [1, 7], 1);
+    design.addMove(0, 4, [4, 4], 2);
+    design.addMove(0, 4, [5, 5], 2);
+    design.addMove(0, 4, [6, 6], 2);
+    design.addMove(0, 4, [7, 7], 2);
+    design.addMove(0, 4, [0, 0], 3);
+    design.addMove(0, 4, [1, 1], 3);
+    design.addMove(0, 4, [2, 2], 3);
+    design.addMove(0, 4, [3, 3], 3);
+    design.addMove(0, 4, [0, 0], 4);
+    design.addMove(0, 4, [1, 1], 4);
+    design.addMove(0, 4, [2, 2], 4);
+    design.addMove(0, 4, [3, 3], 4);
+    design.addMove(0, 4, [4, 4], 4);
+    design.addMove(0, 4, [5, 5], 4);
+    design.addMove(0, 4, [6, 6], 4);
+    design.addMove(0, 4, [7, 7], 4);
+    design.addMove(0, 5, [0], 5);
+    design.addMove(0, 5, [1], 5);
+    design.addMove(0, 5, [2], 5);
+    design.addMove(0, 5, [3], 5);
+    design.addMove(0, 5, [4], 5);
+    design.addMove(0, 5, [5], 5);
+    design.addMove(0, 5, [6], 5);
+    design.addMove(0, 5, [7], 5);
 
     design.setup("White", "Disk", 326);
     design.setup("White", "Disk", 334);

@@ -1,13 +1,19 @@
 (define pawn-shift (
   $1 
   (if (in-zone? third-rank)
-      (verify not-enemy?) add $1 
+      (verify not-enemy?) add 
+      (verify empty?) $1 
   )
   (verify not-enemy?) add
 ))
 
 (define pawn-step (
   $1 (verify enemy?)
+  add
+))
+
+(define side-step (
+  $1 (verify (in-zone? first-ranks)) 
   add
 ))
 
@@ -1267,6 +1273,9 @@
                       Fa1 Fb1 Fc1 Fd1 Fe1 Ff1 Fg1 Fh1
            )
      )
+     (zone (name first-ranks) (players White Black)
+           (positions Fa1 Fb1 Fc1 Fd1 Fe1 Ff1 Fg1 Fh1 Fa8 Fb8 Fc8 Fd8 Fe8 Ff8 Fg8 Fh8)
+     )
   )
 
   (piece
@@ -1276,6 +1285,7 @@
      (moves
          (move-type pawn-type)
          (pawn-shift pn) (pawn-step pnw) (pawn-step pne)
+         (side-step w) (side-step e)
          (move-type knight-type)
          (jump n nw) (jump n ne) (jump s sw) (jump s se)
          (jump w nw) (jump w sw) (jump e ne) (jump e se)
