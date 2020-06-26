@@ -34,7 +34,7 @@ var checkGoals = Dagaz.Model.checkGoals;
 Dagaz.Model.checkGoals = function(design, board, player) {
   var c = countKings(design, board);
   if (c[player - 1] == 0) return -1;
-  if (c[design.nextPlayer(player) - 1] == 0) return 1;
+//if (c[design.nextPlayer(player) - 1] == 0) return 1;
   return checkGoals(design, board, player);
 }
 
