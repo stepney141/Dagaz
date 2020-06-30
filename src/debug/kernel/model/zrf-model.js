@@ -1972,11 +1972,11 @@ ZrfBoard.prototype.apply = function(move) {
   r.zSign  = Dagaz.Model.zplayer(r.zSign, this.player);
   r.hSign  = Dagaz.Model.hplayer(r.hSign, this.player);
   r.player = design.currPlayer(r.turn);
-  r.zSign  = Dagaz.Model.zplayer(r.zSign, r.player);
-  r.hSign  = Dagaz.Model.hplayer(r.hSign, r.player);
   r.level  = this.level + 1;
   move.applyAll(r);
   r.move = move;
+  r.zSign  = Dagaz.Model.zplayer(r.zSign, r.player);
+  r.hSign  = Dagaz.Model.hplayer(r.hSign, r.player);
   return r;
 }
 
