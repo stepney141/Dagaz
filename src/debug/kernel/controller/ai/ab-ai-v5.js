@@ -483,17 +483,19 @@ Ai.prototype.setContext = function(ctx, board) {
   ctx.tNodeCount = 0;
   ctx.mLevel     = 0;
   ctx.qLevel     = 0;
-  if (_.isUndefined(ctx.cache)) {
-      ctx.cache = [];     
+  if (!Dagaz.AI.selector || (Dagaz.Model.getSetupSelector(2) == 2)) {
+      if (_.isUndefined(ctx.cache)) {
+          ctx.cache = [];     
+      }
+      if (_.isUndefined(ctx.killer)) {
+          ctx.killer = [];
+          ctx.killer[0] = [];
+          ctx.killer[1] = [];
+      }
+/*    if (_.isUndefined(ctx.heap)) {
+          ctx.heap = [];     
+      }*/
   }
-  if (_.isUndefined(ctx.killer)) {
-      ctx.killer = [];
-      ctx.killer[0] = [];
-      ctx.killer[1] = [];
-  }
-/*if (_.isUndefined(ctx.heap)) {
-      ctx.heap = [];     
-  }*/
 }
 
 Ai.prototype.getMove = function(ctx) {
