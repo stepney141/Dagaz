@@ -220,7 +220,9 @@ MaxMinAi.prototype.setContext = function(ctx, board) {
       this.parent.setContext(ctx, board);
   }
   ctx.timestamp = Date.now();
-  this.changeCache(ctx, board);
+  if (!Dagaz.AI.selector || (Dagaz.Model.getSetupSelector(2) == 1)) {
+      this.changeCache(ctx, board);
+  }
 }
 
 MaxMinAi.prototype.shedule = function(ctx, cache) {
@@ -343,50 +345,52 @@ MaxMinAi.prototype.getMove = function(ctx) {
            ai:  "once"
       };
   }
-  for (var ix = 0; ix < ctx.cache.length; ix++) {
-       var node = ctx.cache[ix];
-       if (_.isUndefined(node.cache)) {
-           node.cache = [];
-           node.eval = this.expandMoves(ctx, node.board, ctx.board.player, node.cache, false, 1);
-       }
-       if (node.eval == MAXVALUE) {
-           result = ix;
-       }
-  }
-  while ((result === null) && (Date.now() - ctx.timestamp < this.params.AI_FRAME)) {
-       var ix = this.shedule(ctx, ctx.cache);
-       if (ix === null) break;
-       var eval = this.proceed(ctx, ctx.cache, ix).eval;
-/*     if (eval == MAXVALUE) {
-           result = ix;
-       } */
-  }
-  this.dumpAll(ctx, ctx.board.player, ctx.cache);
-  var eval = 0;
-  if (result === null) {
+  if (!Dagaz.AI.selector || (Dagaz.Model.getSetupSelector(2) == 1)) {
       for (var ix = 0; ix < ctx.cache.length; ix++) {
            var node = ctx.cache[ix];
-           if ((result === null) || (node.eval > eval)) {
-                result = ix;
-                eval = node.eval;
-           } else {
-                if ((node.eval == eval) && (_.random(0, 10) > this.params.NOISE_FACTOR)) {
-                    result = ix;
-                }
+           if (_.isUndefined(node.cache)) {
+               node.cache = [];
+               node.eval = this.expandMoves(ctx, node.board, ctx.board.player, node.cache, false, 1);
+           }
+           if (node.eval == MAXVALUE) {
+               result = ix;
            }
       }
-  }
-  if (result !== null) {
-      var r = {
-           done: true,
-           move: ctx.cache[result].move,
-           time: Date.now() - ctx.timestamp,
-           ai:  "maxmin"
-      };
-      this.setCache(ctx, result);
-      return r;
-  } else {
-      ctx.cache = [];
+      while ((result === null) && (Date.now() - ctx.timestamp < this.params.AI_FRAME)) {
+           var ix = this.shedule(ctx, ctx.cache);
+           if (ix === null) break;
+           var eval = this.proceed(ctx, ctx.cache, ix).eval;
+/*         if (eval == MAXVALUE) {
+               result = ix;
+          } */
+      }
+      this.dumpAll(ctx, ctx.board.player, ctx.cache);
+      var eval = 0;
+      if (result === null) {
+          for (var ix = 0; ix < ctx.cache.length; ix++) {
+               var node = ctx.cache[ix];
+               if ((result === null) || (node.eval > eval)) {
+                    result = ix;
+                    eval = node.eval;
+               } else {
+                    if ((node.eval == eval) && (_.random(0, 10) > this.params.NOISE_FACTOR)) {
+                        result = ix;
+                    }
+               }
+          }
+      }
+      if (result !== null) {
+          var r = {
+              done: true,
+              move: ctx.cache[result].move,
+              time: Date.now() - ctx.timestamp,
+              ai:  "maxmin"
+         };
+         this.setCache(ctx, result);
+         return r;
+      } else {
+         ctx.cache = [];
+      }
   }
   if (this.parent) {
       return this.parent.getMove(ctx);

@@ -476,6 +476,9 @@ Ai.prototype.ab = function(ctx, board, maxLevel, level, alpha, beta) {
 }
 
 Ai.prototype.setContext = function(ctx, board) {
+  if (this.parent) {
+      this.parent.setContext(ctx, board);
+  }
   ctx.board = board;
   ctx.timestamp  = Date.now();
   ctx.nodeCount  = 0;
