@@ -175,8 +175,9 @@
   - Mini XiangQi [dark, ko, cloack, best, checkmate, family:chess]
   - Janggi [dark, ko, cloack, best, todo:ai, checkmate, drops, wheel, limit, sparks, setups, forced, todo:mindsports, family:chess]
   - Gwangsanghui [dark, attributes, cloack, best, todo:ai, huge, kings, family:chess]
-  - Passive Chess [dark, cloack, best, checkmate, todo:mindsports, family:chess]
+  - Passive Chess [dark, cloack, best, checkmate, todo:mindsports, family:chess]  
   - Five Tigers [turns, todo:mindsports, forced, family:chess]
+  - Storm the Ivory Tower [best, todo:ai, checkmate, family:chess]
 - Chess family
   - Chaturanga [king, family:chess]
   - Chaturaji [kings, 4-players, todo:coalition, dices, forced, createmove, family:chess]
