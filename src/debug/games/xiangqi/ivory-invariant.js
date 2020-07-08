@@ -1,6 +1,6 @@
 (function() {
 
-var inProgress = false;
+Dagaz.AI.inProgress = false;
 
 var checkVersion = Dagaz.Model.checkVersion;
 
@@ -46,8 +46,8 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
-  if (!inProgress) {
-      inProgress = true;
+  if (!Dagaz.AI.inProgress) {
+      Dagaz.AI.inProgress = true;
       _.each(board.moves, function(move) {
           var b = board.apply(move);
           var p = findGeneral(design, b, board.player);
@@ -67,7 +67,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                }
           }
       });
-      inProgress = false;
+      Dagaz.AI.inProgress = false;
   }
   CheckInvariants(board);
 }

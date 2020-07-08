@@ -5,6 +5,7 @@ var MAXVALUE          = 1000000;
 Dagaz.AI.MAX_DEEP     = 5;
 Dagaz.AI.NOISE_FACTOR = 5;
 Dagaz.AI.AI_FRAME     = 1000;
+Dagaz.AI.inProgress   = false;
 
 function MaxMinAi(params, parent) {
   this.params = params;
@@ -346,6 +347,7 @@ MaxMinAi.prototype.getMove = function(ctx) {
       };
   }
   if (!Dagaz.AI.selector || (Dagaz.Model.getSetupSelector(2) == 1)) {
+      Dagaz.AI.inProgress = true;
       for (var ix = 0; ix < ctx.cache.length; ix++) {
            var node = ctx.cache[ix];
            if (_.isUndefined(node.cache)) {
@@ -379,6 +381,7 @@ MaxMinAi.prototype.getMove = function(ctx) {
                }
           }
       }
+      Dagaz.AI.inProgress = false;
       if (result !== null) {
           var r = {
               done: true,
