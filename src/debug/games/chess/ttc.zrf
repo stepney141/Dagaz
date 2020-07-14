@@ -12,6 +12,18 @@
   add
 ))
 
+(define en-passant (
+  $1
+  (verify enemy?)
+  (verify last-to?)
+  (verify (piece? Pawn))
+  capture
+  n mark n
+  (verify last-from?)
+  back
+  add
+))
+
 (define step (
   $1 add
 ))
@@ -26,6 +38,27 @@
   add
 ))
 
+(define O-O (
+  $1 (verify empty?)
+  $1 (verify empty?)
+  to
+  $1 (verify friend?) (verify (piece? Rook))
+  cascade
+  $2 $2
+  add
+))
+
+(define O-O-O (
+  $1 (verify empty?)
+  $1 (verify empty?)
+  to
+  $1 (verify empty?)
+  $1 (verify friend?) (verify (piece? Rook))
+  cascade
+  $2 $2 $2
+  add
+))
+
 (game
   (title "Tactical Tower Chess")
 
@@ -35,7 +68,7 @@
   (board
      (image "images/ttc/board.bmp")
      (grid
-         (start-rectangle 25 25 85 85)
+         (start-rectangle 25 99 85 159)
          (dimensions
            ("a/b/c/d/e/f/g/h" (60 0)) ; files
            ("8/7/6/5/4/3/2/1" (0 60)) ; ranks
@@ -43,14 +76,45 @@
          (directions 
               (n 0 -1) (s 0 1) (e 1 0) (w -1 0)
               (nw -1 -1) (sw -1 1) (ne 1 -1) (se 1 1)
+              (nx 1 0)
          )
      )
-     (symmetry Black (n s) (s n) (nw sw) (sw nw) (ne se) (se ne) (w w) (e e))
+     (grid
+         (start-rectangle 25 4 85 64)
+         (dimensions
+           ("a/b/c/d/e/f/g/h" (60 0)) ; files
+           ("9/0" (0 610)) ; ranks
+         )
+     )
+     (links wr
+         (a8 a0) (a0 b0) (b0 c0) (c0 d0) (d0 e0) (e0 f0) (f0 g0) (g0 h0)
+     )
+     (links br
+         (a8 a9) (a9 b9) (b9 c9) (c9 d9) (d9 e9) (e9 f9) (f9 g9) (g9 h9)
+     )
+     (links nx
+         (a0 a8) (b0 a8) (c0 a8) (d0 a8) (e0 a8) (f0 a8) (g0 a8) (h0 a8)
+         (a9 a8) (b9 a8) (c9 a8) (d9 a8) (e9 a8) (f9 a8) (g9 a8) (h9 a8)
+         (h8 a7) (h7 a6) (h6 a5) (h5 a4) (h4 a3) (h3 a2) (h2 a1)
+     )
+     (symmetry Black (n s) (s n) (nw sw) (sw nw) (ne se) (se ne) (w w) (e e) (wr br) (br wr) (nx nx))
+     (zone (name last-rank) (players White)
+           (positions a8 b8 c8 d8 e8 f8 g8 h8)
+     )
+     (zone (name last-rank) (players Black)
+           (positions a1 b1 c1 d1 e1 f1 g1 h1)
+     )
      (zone (name third-rank) (players White)
            (positions a3 b3 c3 d3 e3 f3 g3 h3)
      )
      (zone (name third-rank) (players Black)
            (positions a6 b6 c6 d6 e6 f6 g6 h6)
+     )
+     (zone (name reserve-rank) (players White)
+           (positions a0 b0 c0 d0 e0 f0 g0 h0)
+     )
+     (zone (name reserve-rank) (players Black)
+           (positions a0 b0 c0 d0 e0 f0 g0 h0)
      )
   )
 
@@ -61,6 +125,7 @@
      (moves
          (pawn-shift n)
          (pawn-step nw) (pawn-step ne)
+         (en-passant e) (en-passant w)
      )
   )
   (piece
@@ -104,6 +169,7 @@
      (moves
          (step n) (step s) (step w) (step e)
          (step nw) (step sw) (step ne) (step se)
+         (O-O e w) (O-O-O w e)
      )
   )
   (piece

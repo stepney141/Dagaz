@@ -322,6 +322,11 @@ View2D.prototype.capturePiece = function(move, pos, phase) {
 View2D.prototype.dropPiece = function(move, pos, piece, phase) {
   if (!phase) { phase = 0; }
   var ix = posToIx(this, pos);
+  if (Dagaz.View.clearDrops) {
+      this.setup = _.filter(this.setup, function(x) {
+          return x.pos != pos;
+      });
+  }
   this.changes.push({
       phase: phase,
       steps: 1,

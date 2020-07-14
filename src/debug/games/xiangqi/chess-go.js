@@ -1,4 +1,5 @@
 Dagaz.Model.DETAIL_MOVE_DESCRIPTION = true;
+Dagaz.View.clearDrops = true;
 
 ZRF = {
     JUMP:          0,
