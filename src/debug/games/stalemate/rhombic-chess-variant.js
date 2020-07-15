@@ -27,27 +27,29 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-drops", "true");
+    design.checkVersion("advisor-wait", "5");
 
-    design.addDirection("n");
-    design.addDirection("s");
-    design.addDirection("e");
-    design.addDirection("w");
+    design.addDirection("n"); // 0
+    design.addDirection("s"); // 1
+    design.addDirection("e"); // 2
+    design.addDirection("w"); // 3
+    design.addDirection("m"); // 4
 
-    design.addPlayer("Black", [1, 0, 3, 2]);
-    design.addPlayer("White", [0, 1, 2, 3]);
+    design.addPlayer("Black", [1, 0, 3, 2, 4]);
+    design.addPlayer("White", [0, 1, 2, 3, 4]);
 
-    design.addPosition("a3", [0, 8, 1, 0]);
-    design.addPosition("b3", [0, 4, 1, -1]);
-    design.addPosition("c3", [0, 4, 1, -1]);
-    design.addPosition("d3", [0, 8, 0, -1]);
-    design.addPosition("a2", [0, 1, 2, 3]);
-    design.addPosition("b2", [-4, 4, 1, 0]);
-    design.addPosition("c2", [-4, 4, 0, -1]);
-    design.addPosition("d2", [0, 1, 2, 3]);
-    design.addPosition("a1", [-8, 0, 1, 0]);
-    design.addPosition("b1", [-4, 0, 1, -1]);
-    design.addPosition("c1", [-4, 0, 1, -1]);
-    design.addPosition("d1", [-8, 0, 0, -1]);
+    design.addPosition("a3", [0, 8, 1, 0, 11]);
+    design.addPosition("b3", [0, 4, 1, -1, 9]);
+    design.addPosition("c3", [0, 4, 1, -1, 7]);
+    design.addPosition("d3", [0, 8, 0, -1, 5]);
+    design.addPosition("a2", [0, 1, 2, 3, 4]);
+    design.addPosition("b2", [-4, 4, 1, 0, 1]);
+    design.addPosition("c2", [-4, 4, 0, -1, -1]);
+    design.addPosition("d2", [0, 1, 2, 3, 4]);
+    design.addPosition("a1", [-8, 0, 1, 0, -5]);
+    design.addPosition("b1", [-4, 0, 1, -1, -7]);
+    design.addPosition("c1", [-4, 0, 1, -1, -9]);
+    design.addPosition("d1", [-8, 0, 0, -1, -11]);
 
     design.addZone("board-zone", 2, [8, 9, 10, 11, 5, 6, 0, 1, 2, 3]);
     design.addZone("board-zone", 1, [8, 9, 10, 11, 5, 6, 0, 1, 2, 3]);
@@ -66,9 +68,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(1, ZRF.FUNCTION,	20);	// verify
     design.addCommand(1, ZRF.FUNCTION,	25);	// to
     design.addCommand(1, ZRF.FUNCTION,	28);	// end
-
-    design.addPriority(0);			// drop-type
-    design.addPriority(1);			// normal-type
 
     design.addPiece("Stone", 0);
     design.addDrop(0, 0, [], 0);
