@@ -31,6 +31,10 @@ Dagaz.Model.CheckInvariants = function(board) {
   var design  = board.game.design;
   _.each(board.moves, function(move) {
       if (move.mode != 0) return;
+      if (!_.isUndefined(board.move) && (board.move.mode == 0)) {
+          move.failed = true;
+          return;
+      }
       if (isBuzy(board, move.actions[0][0][0]) || 
           isBuzy(board, move.actions[0][1][0])) {
           move.failed = true;

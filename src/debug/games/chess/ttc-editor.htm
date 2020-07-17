@@ -5,8 +5,7 @@
 </head>
 <body>
 
-<img id="WhiteBoard" style="display:none" src="images/ttc/boards.png">
-<img id="BlackBoard" style="display:none" src="images/ttc/boardn.png">
+<img id="Board" style="display:none" src="images/ttc/boards.png">
 <img id="WhitePawn" style="display:none" src="images/ttc/wpawn.png">
 <img id="BlackPawn" style="display:none" src="images/ttc/bpawn.png">
 <img id="WhiteRook" style="display:none" src="images/ttc/wrook.png">
@@ -19,23 +18,12 @@
 <img id="BlackQueen" style="display:none" src="images/ttc/bqueen.png">
 <img id="WhiteKing" style="display:none" src="images/ttc/wking.png">
 <img id="BlackKing" style="display:none" src="images/ttc/bking.png">
-<img id="WhitePawnP" style="display:none" src="images/ttc/wpawnp.png">
-<img id="BlackPawnP" style="display:none" src="images/ttc/bpawnp.png">
-<img id="WhiteRookP" style="display:none" src="images/ttc/wrookp.png">
-<img id="BlackRookP" style="display:none" src="images/ttc/brookp.png">
-<img id="WhiteKnightP" style="display:none" src="images/ttc/wknightp.png">
-<img id="BlackKnightP" style="display:none" src="images/ttc/bknightp.png">
-<img id="WhiteBishopP" style="display:none" src="images/ttc/wbishopp.png">
-<img id="BlackBishopP" style="display:none" src="images/ttc/bbishopp.png">
-<img id="WhiteQueenP" style="display:none" src="images/ttc/wqueenp.png">
-<img id="BlackQueenP" style="display:none" src="images/ttc/bqueenp.png">
-<img id="WhiteKingP" style="display:none" src="images/ttc/wkingp.png">
-<img id="BlackKingP" style="display:none" src="images/ttc/bkingp.png">
 
 <table style="margin:auto; font-family:sans-serif; font-size:14px" id="Table">
-<tr><td><a href="javascript:Dagaz.Controller.undo()" style="display:none" id="undo"><img src="../../images/undo.png"/></a>
-<a href="javascript:Dagaz.Controller.newGame()">New Game</a>
-<a href="javascript:Dagaz.Controller.redo()" style="display:none" id="redo"><img src="../../images/redo.png"/></a></td></tr>
+<tr><td>
+<a href="javascript:Dagaz.Controller.newGame()">Clear</a>
+<a href="javascript:Dagaz.Controller.go('ttc.htm')">Play</a>
+</td></tr>
 <tr style="height:678px; vertical-align:top">
 <td id="CanvasCell" style="width:538px">
 <canvas id="Canvas" width="538" height="678" style="cursor:default">Broken canvas...</canvas>
@@ -65,12 +53,10 @@
 <script src="../../kernel/model/zobrist-v2.js"></script>
 <script src="../../kernel/model/common-setup-v2.js"></script>
 <script src="../../kernel/view/2d/2d-view-v2.js"></script>
-<script src="../../kernel/controller/utils/session-manager.js"></script>
-<script src="../../kernel/controller/utils/move-list-v2.js"></script>
-<script src="ttc-goal.js"></script>
-<script src="ttc-extension.js"></script>
-<script src="ttc.js"></script>
-<script src="../../kernel/controller/app-v2.js"></script>
+<script src="../../kernel/controller/utils/move-list-v3.js"></script>
+<script src="ttc-editor-extension.js"></script>
+<script src="ttc-editor.js"></script>
+<script src="../../kernel/controller/app-v5.js"></script>
 
 </body>
 </html>

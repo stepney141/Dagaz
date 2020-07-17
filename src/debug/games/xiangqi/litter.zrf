@@ -4,7 +4,38 @@
 
 (define step (
   (verify friend?)
+  $1 (verify not-friend?)
+  add
+))
+
+(define step-2 (
+  (verify friend?)
   $1 (verify empty?)
+  $2 (verify not-friend?)
+  add
+))
+
+(define slide (
+  (verify friend?)
+  $1 
+  (while empty?
+     add
+     $1
+  )
+  (verify not-friend?)
+  add
+))
+
+(define shoot (
+  (verify friend?)
+  $1 
+  (while empty?
+     add
+     $1
+  )
+  (verify not-empty?) $1
+  (while empty? $1)
+  (verify not-friend?)
   add
 ))
 
@@ -115,7 +146,20 @@
      (image Gold "images/litter/gold.bmp"
             Silver "images/litter/silver.bmp")
      (moves
-        (move-type normal-type)
+        (move-type soldier-type)
+        (step n)
+        (move-type horse-type)
+        (step-2 n nw) (step-2 n ne) (step-2 s sw) (step-2 s se)
+        (step-2 w nw) (step-2 e ne) (step-2 w sw) (step-2 e se)
+        (move-type elephant-type)
+        (step-2 nw nw) (step-2 ne ne) (step-2 sw sw) (step-2 se se)
+        (move-type chariot-type)
+        (slide n) (slide e) (slide w) (slide s)
+        (move-type cannon-type)
+        (shoot n) (shoot e) (shoot w) (shoot s)
+        (move-type mandarin-type)
+        (step nw) (step ne) (step sw) (step se)
+        (move-type general-type)
         (step n) (step e) (step w) (step s)
      )
   )

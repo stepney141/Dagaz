@@ -1,3 +1,21 @@
+(define from-reserve (
+  (verify (in-zone? reserve-rank)) $1 
+  (while (on-board? $1)
+     (if friend? add) $1
+  )
+  (verify friend?)
+  add
+))
+
+(define promote-pawn (
+  (verify (in-zone? last-rank)) a8
+  (while (on-board? $1)
+     (if not-empty? add) $1
+  )
+  (verify not-empty?)
+  add
+))
+
 (define pawn-shift (
   $1 
   (if (in-zone? third-rank)
@@ -60,7 +78,7 @@
 ))
 
 (game
-  (title "Tactical Tower Chess")
+  (title "Division Tower Chess")
 
   (players White Black)
   (turn-order White Black)
@@ -114,7 +132,7 @@
            (positions a0 b0 c0 d0 e0 f0 g0 h0)
      )
      (zone (name reserve-rank) (players Black)
-           (positions a0 b0 c0 d0 e0 f0 g0 h0)
+           (positions a9 b9 c9 d9 e9 f9 g9 h9)
      )
   )
 
@@ -123,17 +141,14 @@
      (image White "images/ttc/wpawn.bmp"
             Black "images/ttc/bpawn.bmp")
      (moves
+         (move-type normal-type)
          (pawn-shift n)
          (pawn-step nw) (pawn-step ne)
          (en-passant e) (en-passant w)
-     )
-  )
-  (piece
-     (name Rook)
-     (image White "images/ttc/wrook.bmp"
-            Black "images/ttc/brook.bmp")
-     (moves
-         (slide n) (slide s) (slide w) (slide e)
+         (move-type reserve-type)
+         (from-reserve nx)
+         (move-type promote-type)
+         (promote-pawn nx)
      )
   )
   (piece
@@ -141,8 +156,11 @@
      (image White "images/ttc/wknight.bmp"
             Black "images/ttc/bknight.bmp")
      (moves
+         (move-type normal-type)
          (leap n nw) (leap n ne) (leap s sw) (leap s se)
          (leap w nw) (leap w sw) (leap e ne) (leap e se)
+         (move-type reserve-type)
+         (from-reserve nx)
      )
   )
   (piece
@@ -150,7 +168,21 @@
      (image White "images/ttc/wbishop.bmp"
             Black "images/ttc/bbishop.bmp")
      (moves
+         (move-type normal-type)
          (slide nw) (slide sw) (slide ne) (slide se)
+         (move-type reserve-type)
+         (from-reserve nx)
+     )
+  )
+  (piece
+     (name Rook)
+     (image White "images/ttc/wrook.bmp"
+            Black "images/ttc/brook.bmp")
+     (moves
+         (move-type normal-type)
+         (slide n) (slide s) (slide w) (slide e)
+         (move-type reserve-type)
+         (from-reserve nx)
      )
   )
   (piece
@@ -158,8 +190,11 @@
      (image White "images/ttc/wqueen.bmp"
             Black "images/ttc/bqueen.bmp")
      (moves
+         (move-type normal-type)
          (slide n) (slide s) (slide w) (slide e)
          (slide nw) (slide sw) (slide ne) (slide se)
+         (move-type reserve-type)
+         (from-reserve nx)
      )
   )
   (piece
@@ -167,8 +202,10 @@
      (image White "images/ttc/wking.bmp"
             Black "images/ttc/bking.bmp")
      (moves
+         (move-type normal-type)
          (step n) (step s) (step w) (step e)
          (step nw) (step sw) (step ne) (step se)
+         (move-type king-type)
          (O-O e w) (O-O-O w e)
      )
   )
@@ -177,16 +214,11 @@
      (image White "images/ttc/wpawnp.bmp"
             Black "images/ttc/bpawnp.bmp")
      (moves
+         (move-type normal-type)
          (pawn-shift n)
          (pawn-step nw) (pawn-step ne)
-     )
-  )
-  (piece
-     (name RookP)
-     (image White "images/ttc/wrookp.bmp"
-            Black "images/ttc/brookp.bmp")
-     (moves
-         (slide n) (slide s) (slide w) (slide e)
+         (move-type promote-type)
+         (promote-pawn nx)
      )
   )
   (piece
@@ -194,6 +226,7 @@
      (image White "images/ttc/wknightp.bmp"
             Black "images/ttc/bknightp.bmp")
      (moves
+         (move-type normal-type)
          (leap n nw) (leap n ne) (leap s sw) (leap s se)
          (leap w nw) (leap w sw) (leap e ne) (leap e se)
      )
@@ -203,7 +236,17 @@
      (image White "images/ttc/wbishopp.bmp"
             Black "images/ttc/bbishopp.bmp")
      (moves
+         (move-type normal-type)
          (slide nw) (slide sw) (slide ne) (slide se)
+     )
+  )
+  (piece
+     (name RookP)
+     (image White "images/ttc/wrookp.bmp"
+            Black "images/ttc/brookp.bmp")
+     (moves
+         (move-type normal-type)
+         (slide n) (slide s) (slide w) (slide e)
      )
   )
   (piece
@@ -211,6 +254,7 @@
      (image White "images/ttc/wqueenp.bmp"
             Black "images/ttc/bqueenp.bmp")
      (moves
+         (move-type normal-type)
          (slide n) (slide s) (slide w) (slide e)
          (slide nw) (slide sw) (slide ne) (slide se)
      )
@@ -220,6 +264,7 @@
      (image White "images/ttc/wkingp.bmp"
             Black "images/ttc/bkingp.bmp")
      (moves
+         (move-type normal-type)
          (step n) (step s) (step w) (step e)
          (step nw) (step sw) (step ne) (step se)
      )
