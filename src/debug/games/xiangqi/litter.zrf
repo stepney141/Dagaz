@@ -147,7 +147,7 @@
             Silver "images/litter/silver.bmp")
      (moves
         (move-type soldier-type)
-        (step n)
+        (step n) (step e) (step w)
         (move-type horse-type)
         (step-2 n nw) (step-2 n ne) (step-2 s sw) (step-2 s se)
         (step-2 w nw) (step-2 e ne) (step-2 w sw) (step-2 e se)
