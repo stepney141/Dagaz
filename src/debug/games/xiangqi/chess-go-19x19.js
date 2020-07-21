@@ -1,5 +1,6 @@
 Dagaz.Model.DETAIL_MOVE_DESCRIPTION = true;
 Dagaz.View.clearDrops = true;
+Dagaz.Model.WIDTH = 19;
 
 ZRF = {
     JUMP:          0,
@@ -429,6 +430,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(3, ZRF.FUNCTION,	24);	// from
     design.addCommand(3, ZRF.PARAM,	0);	// $1
     design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
+    design.addCommand(3, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(3, ZRF.FUNCTION,	20);	// verify
     design.addCommand(3, ZRF.PARAM,	1);	// $2
     design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(3, ZRF.FUNCTION,	25);	// to
@@ -626,7 +629,6 @@ Dagaz.View.configure = function(view) {
     view.defPiece("WhiteMandarin", "White Mandarin");
     view.defPiece("BlackGeneral", "Black General");
     view.defPiece("WhiteGeneral", "White General");
-    view.defPiece("Ko", "Ko");
  
     view.defPosition("a19", 6, 6, 30, 30);
     view.defPosition("b19", 36, 6, 30, 30);

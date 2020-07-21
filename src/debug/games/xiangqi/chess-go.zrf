@@ -26,7 +26,8 @@
 ))
 
 (define step-2 (
-  $1 $2 add
+  $1 (verify empty?)
+  $2 add
 ))
 
 (define slide (
