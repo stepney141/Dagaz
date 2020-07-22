@@ -26,27 +26,18 @@
 ))
 
 (define step-2 (
-  $1 (verify empty?)
+  $1 (verify (or empty? (piece? Stone)))
   $2 add
 ))
 
 (define slide (
-  $1 (while empty? add $1)
+  $1 (while (or empty? (piece? Stone)) add $1)
   add
 ))
 
 (define shoot (
+  $1 (while (or empty? (piece? Stone)) (if empty? add) $1)
   $1 (while empty? $1)
-  (if (piece? Stone)
-      (if friend?
-          (while (and (piece? Stone) friend?) $1)
-       else
-          (while (and (piece? Stone) enemy?) $1)
-      )
-   else
-      $1
-  )
-  (while empty? add $1)
   add
 ))
 

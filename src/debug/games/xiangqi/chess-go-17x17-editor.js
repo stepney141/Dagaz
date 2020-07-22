@@ -1,6 +1,4 @@
-Dagaz.Model.DETAIL_MOVE_DESCRIPTION = true;
-Dagaz.View.clearDrops = true;
-Dagaz.Model.WIDTH = 17;
+Dagaz.Controller.noDropIndex = true;
 
 ZRF = {
     JUMP:          0,
@@ -27,12 +25,10 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-drops", "false");
     design.checkVersion("animate-captures", "false");
-    design.checkVersion("smart-moves", "false");
+    design.checkVersion("show-captures", "false");
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-drops", "true");
-    design.checkVersion("show-captures", "false");
-    design.checkVersion("ko", "situation");
 
     design.addDirection("se"); // 0
     design.addDirection("s");  // 1
@@ -43,8 +39,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addDirection("nw"); // 6
     design.addDirection("n");  // 7
 
-    design.addPlayer("Black", [6, 7, 5, 4, 3, 2, 0, 1]);
-    design.addPlayer("White", [0, 1, 2, 3, 4, 5, 6, 7]);
+    design.addPlayer("You", [6, 7, 5, 4, 3, 2, 0, 1]);
 
     design.addPosition("a17", [18, 17, 0, 1, 0, 0, 0, 0]);
     design.addPosition("b17", [18, 17, 16, 1, -1, 0, 0, 0]);
@@ -341,207 +336,111 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
-    design.addCommand(1, ZRF.FUNCTION,	3);	// friend?
-    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(1, ZRF.LITERAL,	0);	// Stone
-    design.addCommand(1, ZRF.FUNCTION,	10);	// piece?
-    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(1, ZRF.FUNCTION,	24);	// from
+    design.addCommand(1, ZRF.FUNCTION,	26);	// capture
     design.addCommand(1, ZRF.FUNCTION,	25);	// to
     design.addCommand(1, ZRF.FUNCTION,	28);	// end
 
-    design.addCommand(2, ZRF.FUNCTION,	24);	// from
-    design.addCommand(2, ZRF.PARAM,	0);	// $1
-    design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(2, ZRF.FUNCTION,	25);	// to
-    design.addCommand(2, ZRF.FUNCTION,	28);	// end
-
-    design.addCommand(3, ZRF.FUNCTION,	24);	// from
-    design.addCommand(3, ZRF.PARAM,	0);	// $1
-    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(3, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(3, ZRF.IF,	6);
-    design.addCommand(3, ZRF.LITERAL,	0);	// Stone
-    design.addCommand(3, ZRF.FUNCTION,	10);	// piece?
-    design.addCommand(3, ZRF.IF,	3);
-    design.addCommand(3, ZRF.LITERAL,	0);	// false
-    design.addCommand(3, ZRF.JUMP,	2);
-    design.addCommand(3, ZRF.LITERAL,	1);	// true
-    design.addCommand(3, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(3, ZRF.PARAM,	1);	// $2
-    design.addCommand(3, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(3, ZRF.FUNCTION,	25);	// to
-    design.addCommand(3, ZRF.FUNCTION,	28);	// end
-
-    design.addCommand(4, ZRF.FUNCTION,	24);	// from
-    design.addCommand(4, ZRF.PARAM,	0);	// $1
-    design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(4, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(4, ZRF.IF,	6);
-    design.addCommand(4, ZRF.LITERAL,	0);	// Stone
-    design.addCommand(4, ZRF.FUNCTION,	10);	// piece?
-    design.addCommand(4, ZRF.IF,	3);
-    design.addCommand(4, ZRF.LITERAL,	0);	// false
-    design.addCommand(4, ZRF.JUMP,	2);
-    design.addCommand(4, ZRF.LITERAL,	1);	// true
-    design.addCommand(4, ZRF.FUNCTION,	0);	// not
-    design.addCommand(4, ZRF.IF,	7);
-    design.addCommand(4, ZRF.FORK,	3);
-    design.addCommand(4, ZRF.FUNCTION,	25);	// to
-    design.addCommand(4, ZRF.FUNCTION,	28);	// end
-    design.addCommand(4, ZRF.PARAM,	1);	// $2
-    design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(4, ZRF.JUMP,	-15);
-    design.addCommand(4, ZRF.FUNCTION,	25);	// to
-    design.addCommand(4, ZRF.FUNCTION,	28);	// end
-
-    design.addCommand(5, ZRF.FUNCTION,	24);	// from
-    design.addCommand(5, ZRF.PARAM,	0);	// $1
-    design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(5, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(5, ZRF.IF,	6);
-    design.addCommand(5, ZRF.LITERAL,	0);	// Stone
-    design.addCommand(5, ZRF.FUNCTION,	10);	// piece?
-    design.addCommand(5, ZRF.IF,	3);
-    design.addCommand(5, ZRF.LITERAL,	0);	// false
-    design.addCommand(5, ZRF.JUMP,	2);
-    design.addCommand(5, ZRF.LITERAL,	1);	// true
-    design.addCommand(5, ZRF.FUNCTION,	0);	// not
-    design.addCommand(5, ZRF.IF,	10);
-    design.addCommand(5, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(5, ZRF.FUNCTION,	0);	// not
-    design.addCommand(5, ZRF.IF,	4);
-    design.addCommand(5, ZRF.FORK,	3);
-    design.addCommand(5, ZRF.FUNCTION,	25);	// to
-    design.addCommand(5, ZRF.FUNCTION,	28);	// end
-    design.addCommand(5, ZRF.PARAM,	1);	// $2
-    design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(5, ZRF.JUMP,	-18);
-    design.addCommand(5, ZRF.PARAM,	2);	// $3
-    design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(5, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(5, ZRF.FUNCTION,	0);	// not
-    design.addCommand(5, ZRF.IF,	4);
-    design.addCommand(5, ZRF.PARAM,	3);	// $4
-    design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(5, ZRF.JUMP,	-5);
-    design.addCommand(5, ZRF.FUNCTION,	25);	// to
-    design.addCommand(5, ZRF.FUNCTION,	28);	// end
-
-    design.addCommand(6, ZRF.FUNCTION,	24);	// from
-    design.addCommand(6, ZRF.PARAM,	0);	// $1
-    design.addCommand(6, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(6, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(6, ZRF.FUNCTION,	0);	// not
-    design.addCommand(6, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(6, ZRF.LITERAL,	0);	// Stone
-    design.addCommand(6, ZRF.FUNCTION,	10);	// piece?
-    design.addCommand(6, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(6, ZRF.FUNCTION,	25);	// to
-    design.addCommand(6, ZRF.FUNCTION,	28);	// end
-
-    design.addCommand(7, ZRF.FUNCTION,	24);	// from
-    design.addCommand(7, ZRF.PARAM,	0);	// $1
-    design.addCommand(7, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(7, ZRF.FUNCTION,	3);	// friend?
-    design.addCommand(7, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(7, ZRF.LITERAL,	0);	// Stone
-    design.addCommand(7, ZRF.FUNCTION,	10);	// piece?
-    design.addCommand(7, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(7, ZRF.FUNCTION,	25);	// to
-    design.addCommand(7, ZRF.FUNCTION,	28);	// end
-
-    design.addPiece("Stone", 0);
+    design.addPiece("BlackStone", 0);
     design.addDrop(0, 0, [], 0);
+    design.addMove(0, 1, [], 0);
 
-    design.addPiece("Soldier", 1);
-    design.addDrop(1, 1, [], 1);
-    design.addMove(1, 2, [7], 2);
-    design.addMove(1, 2, [3], 2);
-    design.addMove(1, 2, [4], 2);
-    design.addMove(1, 2, [1], 2);
+    design.addPiece("WhiteStone", 1);
+    design.addDrop(1, 0, [], 0);
+    design.addMove(1, 1, [], 0);
 
-    design.addPiece("Horse", 2);
-    design.addDrop(2, 1, [], 1);
-    design.addMove(2, 3, [7, 6], 2);
-    design.addMove(2, 3, [7, 5], 2);
-    design.addMove(2, 3, [1, 2], 2);
-    design.addMove(2, 3, [1, 0], 2);
-    design.addMove(2, 3, [4, 6], 2);
-    design.addMove(2, 3, [3, 5], 2);
-    design.addMove(2, 3, [4, 2], 2);
-    design.addMove(2, 3, [3, 0], 2);
+    design.addPiece("BlackSoldier", 2);
+    design.addDrop(2, 0, [], 0);
+    design.addMove(2, 1, [], 0);
 
-    design.addPiece("Elephant", 3);
-    design.addDrop(3, 1, [], 1);
-    design.addMove(3, 3, [6, 6], 2);
-    design.addMove(3, 3, [5, 5], 2);
-    design.addMove(3, 3, [2, 2], 2);
-    design.addMove(3, 3, [0, 0], 2);
+    design.addPiece("WhiteSoldier", 3);
+    design.addDrop(3, 0, [], 0);
+    design.addMove(3, 1, [], 0);
 
-    design.addPiece("Chariot", 4);
-    design.addDrop(4, 1, [], 1);
-    design.addMove(4, 4, [7, 7], 2);
-    design.addMove(4, 4, [3, 3], 2);
-    design.addMove(4, 4, [4, 4], 2);
-    design.addMove(4, 4, [1, 1], 2);
+    design.addPiece("BlackHorse", 4);
+    design.addDrop(4, 0, [], 0);
+    design.addMove(4, 1, [], 0);
 
-    design.addPiece("Cannon", 5);
-    design.addDrop(5, 1, [], 1);
-    design.addMove(5, 5, [7, 7, 7, 7, 7, 7], 2);
-    design.addMove(5, 5, [3, 3, 3, 3, 3, 3], 2);
-    design.addMove(5, 5, [4, 4, 4, 4, 4, 4], 2);
-    design.addMove(5, 5, [1, 1, 1, 1, 1, 1], 2);
+    design.addPiece("WhiteHorse", 5);
+    design.addDrop(5, 0, [], 0);
+    design.addMove(5, 1, [], 0);
 
-    design.addPiece("Mandarin", 6);
-    design.addDrop(6, 1, [], 1);
-    design.addMove(6, 6, [6], 2);
-    design.addMove(6, 6, [5], 2);
-    design.addMove(6, 6, [2], 2);
-    design.addMove(6, 6, [0], 2);
+    design.addPiece("BlackElephant", 6);
+    design.addDrop(6, 0, [], 0);
+    design.addMove(6, 1, [], 0);
 
-    design.addPiece("General", 7);
-    design.addDrop(7, 1, [], 1);
-    design.addMove(7, 7, [7], 2);
-    design.addMove(7, 7, [3], 2);
-    design.addMove(7, 7, [4], 2);
-    design.addMove(7, 7, [1], 2);
+    design.addPiece("WhiteElephant", 7);
+    design.addDrop(7, 0, [], 0);
+    design.addMove(7, 1, [], 0);
 
-    design.reserve("White", "Stone", 500);
-    design.reserve("White", "Soldier", 5);
-    design.reserve("White", "Horse", 2);
-    design.reserve("White", "Elephant", 2);
-    design.reserve("White", "Chariot", 2);
-    design.reserve("White", "Mandarin", 2);
-    design.reserve("White", "Cannon", 2);
-    design.reserve("White", "General", 1);
-    design.reserve("Black", "Stone", 500);
-    design.reserve("Black", "Soldier", 5);
-    design.reserve("Black", "Horse", 2);
-    design.reserve("Black", "Elephant", 2);
-    design.reserve("Black", "Chariot", 2);
-    design.reserve("Black", "Mandarin", 2);
-    design.reserve("Black", "Cannon", 2);
-    design.reserve("Black", "General", 1);
+    design.addPiece("BlackChariot", 8);
+    design.addDrop(8, 0, [], 0);
+    design.addMove(8, 1, [], 0);
+
+    design.addPiece("WhiteChariot", 9);
+    design.addDrop(9, 0, [], 0);
+    design.addMove(9, 1, [], 0);
+
+    design.addPiece("BlackCannon", 10);
+    design.addDrop(10, 0, [], 0);
+    design.addMove(10, 1, [], 0);
+
+    design.addPiece("WhiteCannon", 11);
+    design.addDrop(11, 0, [], 0);
+    design.addMove(11, 1, [], 0);
+
+    design.addPiece("BlackMandarin", 12);
+    design.addDrop(12, 0, [], 0);
+    design.addMove(12, 1, [], 0);
+
+    design.addPiece("WhiteMandarin", 13);
+    design.addDrop(13, 0, [], 0);
+    design.addMove(13, 1, [], 0);
+
+    design.addPiece("BlackGeneral", 14);
+    design.addDrop(14, 0, [], 0);
+    design.addMove(14, 1, [], 0);
+
+    design.addPiece("WhiteGeneral", 15);
+    design.addDrop(15, 0, [], 0);
+    design.addMove(15, 1, [], 0);
+
+    design.reserve("You", "WhiteStone", 500);
+    design.reserve("You", "WhiteSoldier", 5);
+    design.reserve("You", "WhiteHorse", 2);
+    design.reserve("You", "WhiteElephant", 2);
+    design.reserve("You", "WhiteChariot", 2);
+    design.reserve("You", "WhiteMandarin", 2);
+    design.reserve("You", "WhiteCannon", 2);
+    design.reserve("You", "WhiteGeneral", 1);
+    design.reserve("You", "BlackStone", 500);
+    design.reserve("You", "BlackSoldier", 5);
+    design.reserve("You", "BlackHorse", 2);
+    design.reserve("You", "BlackElephant", 2);
+    design.reserve("You", "BlackChariot", 2);
+    design.reserve("You", "BlackMandarin", 2);
+    design.reserve("You", "BlackCannon", 2);
+    design.reserve("You", "BlackGeneral", 1);
 }
 
 Dagaz.View.configure = function(view) {
     view.defBoard("Board");
-    view.defPiece("BlackStone", "Black Stone");
-    view.defPiece("WhiteStone", "White Stone");
-    view.defPiece("BlackSoldier", "Black Soldier");
-    view.defPiece("WhiteSoldier", "White Soldier");
-    view.defPiece("BlackHorse", "Black Horse");
-    view.defPiece("WhiteHorse", "White Horse");
-    view.defPiece("BlackElephant", "Black Elephant");
-    view.defPiece("WhiteElephant", "White Elephant");
-    view.defPiece("BlackChariot", "Black Chariot");
-    view.defPiece("WhiteChariot", "White Chariot");
-    view.defPiece("BlackCannon", "Black Cannon");
-    view.defPiece("WhiteCannon", "White Cannon");
-    view.defPiece("BlackMandarin", "Black Mandarin");
-    view.defPiece("WhiteMandarin", "White Mandarin");
-    view.defPiece("BlackGeneral", "Black General");
-    view.defPiece("WhiteGeneral", "White General");
+    view.defPiece("BlackStone", "You BlackStone");
+    view.defPiece("WhiteStone", "You WhiteStone");
+    view.defPiece("BlackSoldier", "You BlackSoldier");
+    view.defPiece("WhiteSoldier", "You WhiteSoldier");
+    view.defPiece("BlackHorse", "You BlackHorse");
+    view.defPiece("WhiteHorse", "You WhiteHorse");
+    view.defPiece("BlackElephant", "You BlackElephant");
+    view.defPiece("WhiteElephant", "You WhiteElephant");
+    view.defPiece("BlackChariot", "You BlackChariot");
+    view.defPiece("WhiteChariot", "You WhiteChariot");
+    view.defPiece("BlackCannon", "You BlackCannon");
+    view.defPiece("WhiteCannon", "You WhiteCannon");
+    view.defPiece("BlackMandarin", "You BlackMandarin");
+    view.defPiece("WhiteMandarin", "You WhiteMandarin");
+    view.defPiece("BlackGeneral", "You BlackGeneral");
+    view.defPiece("WhiteGeneral", "You WhiteGeneral");
  
     view.defPosition("a17", 5, 5, 31, 31);
     view.defPosition("b17", 36, 5, 31, 31);
