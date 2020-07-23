@@ -34,6 +34,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-blink", "false");
     design.checkVersion("shared-pieces", "true");
+    design.checkVersion("show-lose", "false");
 
     design.addDirection("se"); // 0
     design.addDirection("s");  // 1
@@ -259,7 +260,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(4, ZRF.FUNCTION,	25);	// to
     design.addCommand(4, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("BlankTile", 0);
+    design.addPiece("BlankTile", 0, 0);
     design.addMove(0, 0, [7], 0, 10);
     design.addMove(0, 0, [3], 0, 10);
     design.addMove(0, 0, [4], 0, 10);
@@ -269,7 +270,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 0, [2], 0, 10);
     design.addMove(0, 0, [0], 0, 10);
 
-    design.addPiece("HorseTile", 1);
+    design.addPiece("HorseTile", 1, 0);
     design.addMove(1, 0, [7], 0, 10);
     design.addMove(1, 0, [3], 0, 10);
     design.addMove(1, 0, [4], 0, 10);
@@ -279,7 +280,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(1, 0, [2], 0, 10);
     design.addMove(1, 0, [0], 0, 10);
 
-    design.addPiece("ElephantTile", 2);
+    design.addPiece("ElephantTile", 2, 0);
     design.addMove(2, 0, [7], 0, 10);
     design.addMove(2, 0, [3], 0, 10);
     design.addMove(2, 0, [4], 0, 10);
@@ -289,7 +290,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(2, 0, [2], 0, 10);
     design.addMove(2, 0, [0], 0, 10);
 
-    design.addPiece("ChariotTile", 3);
+    design.addPiece("ChariotTile", 3, 0);
     design.addMove(3, 0, [7], 0, 10);
     design.addMove(3, 0, [3], 0, 10);
     design.addMove(3, 0, [4], 0, 10);
@@ -299,7 +300,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(3, 0, [2], 0, 10);
     design.addMove(3, 0, [0], 0, 10);
 
-    design.addPiece("CannonTile", 4);
+    design.addPiece("CannonTile", 4, 0);
     design.addMove(4, 0, [7], 0, 10);
     design.addMove(4, 0, [3], 0, 10);
     design.addMove(4, 0, [4], 0, 10);
@@ -309,7 +310,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(4, 0, [2], 0, 10);
     design.addMove(4, 0, [0], 0, 10);
 
-    design.addPiece("MandarinTile", 5);
+    design.addPiece("MandarinTile", 5, 0);
     design.addMove(5, 0, [7], 0, 10);
     design.addMove(5, 0, [3], 0, 10);
     design.addMove(5, 0, [4], 0, 10);
@@ -319,7 +320,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(5, 0, [2], 0, 10);
     design.addMove(5, 0, [0], 0, 10);
 
-    design.addPiece("GeneralTile", 6);
+    design.addPiece("GeneralTile", 6, 0);
     design.addMove(6, 0, [7], 0, 10);
     design.addMove(6, 0, [3], 0, 10);
     design.addMove(6, 0, [4], 0, 10);
@@ -329,7 +330,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(6, 0, [2], 0, 10);
     design.addMove(6, 0, [0], 0, 10);
 
-    design.addPiece("Horse", 7);
+    design.addPiece("Horse", 7, 3000);
     design.addMove(7, 1, [7, 6], 1);
     design.addMove(7, 1, [7, 5], 1);
     design.addMove(7, 1, [1, 2], 1);
@@ -339,31 +340,31 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(7, 1, [4, 2], 1);
     design.addMove(7, 1, [3, 0], 1);
 
-    design.addPiece("Elephant", 8);
+    design.addPiece("Elephant", 8, 800);
     design.addMove(8, 1, [6, 6], 1);
     design.addMove(8, 1, [2, 2], 1);
     design.addMove(8, 1, [5, 5], 1);
     design.addMove(8, 1, [0, 0], 1);
 
-    design.addPiece("Chariot", 9);
+    design.addPiece("Chariot", 9, 5000);
     design.addMove(9, 2, [7, 7], 1);
     design.addMove(9, 2, [1, 1], 1);
     design.addMove(9, 2, [4, 4], 1);
     design.addMove(9, 2, [3, 3], 1);
 
-    design.addPiece("Cannon", 10);
+    design.addPiece("Cannon", 10, 5500);
     design.addMove(10, 3, [7, 7, 7, 7], 1);
     design.addMove(10, 3, [1, 1, 1, 1], 1);
     design.addMove(10, 3, [4, 4, 4, 4], 1);
     design.addMove(10, 3, [3, 3, 3, 3], 1);
 
-    design.addPiece("Mandarin", 11);
+    design.addPiece("Mandarin", 11, 800);
     design.addMove(11, 4, [6], 1);
     design.addMove(11, 4, [2], 1);
     design.addMove(11, 4, [5], 1);
     design.addMove(11, 4, [0], 1);
 
-    design.addPiece("General", 12);
+    design.addPiece("General", 12, 600000);
     design.addMove(12, 4, [7], 1);
     design.addMove(12, 4, [1], 1);
     design.addMove(12, 4, [4], 1);
