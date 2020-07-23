@@ -51,7 +51,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                });
           }
           if (piece.player == board.player) {
-              if (dame > 1) isSuicide = false;
+              if (dame > 0) isSuicide = false;
               return;
           }
           if (dame == 0) {
