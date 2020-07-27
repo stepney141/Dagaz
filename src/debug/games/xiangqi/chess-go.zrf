@@ -37,7 +37,7 @@
 
 (define shoot (
   $1 (while (or empty? (piece? Stone)) (if empty? add) $1)
-  $1 (while empty? $1)
+  $1 (while (or empty? (piece? Stone)) $1)
   add
 ))
 
@@ -152,21 +152,21 @@
 
    (board-setup
       (White
-         (Soldier off 5)
-         (Horse off 2)
-         (Elephant off 2)
-         (Chariot off 2)
+         (Soldier off 2)
+         (Horse off 1)
+         (Elephant off 1)
+         (Chariot off 1)
          (Mandarin off 2)
-         (Cannon off 2)
+         (Cannon off 1)
          (General off 1)
       )
       (Black
-         (Soldier off 5)
-         (Horse off 2)
-         (Elephant off 2)
-         (Chariot off 2)
+         (Soldier off 2)
+         (Horse off 1)
+         (Elephant off 1)
+         (Chariot off 1)
          (Mandarin off 2)
-         (Cannon off 2)
+         (Cannon off 1)
          (General off 1)
       )
    )
@@ -188,6 +188,27 @@
          )
       )
    )
+
+   (board-setup
+      (White
+         (Soldier off 5)
+         (Horse off 2)
+         (Elephant off 2)
+         (Chariot off 2)
+         (Mandarin off 2)
+         (Cannon off 2)
+         (General off 1)
+      )
+      (Black
+         (Soldier off 5)
+         (Horse off 2)
+         (Elephant off 2)
+         (Chariot off 2)
+         (Mandarin off 2)
+         (Cannon off 2)
+         (General off 1)
+      )
+   )
 )
 
 (variant
@@ -204,6 +225,27 @@
          (directions (n 0 -1) (e 1 0) (s 0 1) (w -1 0)
                      (ne 1 -1) (nw -1 -1) (se 1 1) (sw -1 1)
          )
+      )
+   )
+
+   (board-setup
+      (White
+         (Soldier off 5)
+         (Horse off 2)
+         (Elephant off 2)
+         (Chariot off 2)
+         (Mandarin off 2)
+         (Cannon off 2)
+         (General off 1)
+      )
+      (Black
+         (Soldier off 5)
+         (Horse off 2)
+         (Elephant off 2)
+         (Chariot off 2)
+         (Mandarin off 2)
+         (Cannon off 2)
+         (General off 1)
       )
    )
 )

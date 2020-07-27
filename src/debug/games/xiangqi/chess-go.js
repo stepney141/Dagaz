@@ -211,11 +211,18 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(5, ZRF.PARAM,	2);	// $3
     design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(5, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(5, ZRF.IF,	6);
+    design.addCommand(5, ZRF.LITERAL,	0);	// Stone
+    design.addCommand(5, ZRF.FUNCTION,	10);	// piece?
+    design.addCommand(5, ZRF.IF,	3);
+    design.addCommand(5, ZRF.LITERAL,	0);	// false
+    design.addCommand(5, ZRF.JUMP,	2);
+    design.addCommand(5, ZRF.LITERAL,	1);	// true
     design.addCommand(5, ZRF.FUNCTION,	0);	// not
     design.addCommand(5, ZRF.IF,	4);
     design.addCommand(5, ZRF.PARAM,	3);	// $4
     design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(5, ZRF.JUMP,	-5);
+    design.addCommand(5, ZRF.JUMP,	-12);
     design.addCommand(5, ZRF.FUNCTION,	25);	// to
     design.addCommand(5, ZRF.FUNCTION,	28);	// end
 
@@ -299,20 +306,20 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(7, 7, [1], 2);
 
     design.reserve("White", "Stone", 500);
-    design.reserve("White", "Soldier", 5);
-    design.reserve("White", "Horse", 2);
-    design.reserve("White", "Elephant", 2);
-    design.reserve("White", "Chariot", 2);
+    design.reserve("White", "Soldier", 2);
+    design.reserve("White", "Horse", 1);
+    design.reserve("White", "Elephant", 1);
+    design.reserve("White", "Chariot", 1);
     design.reserve("White", "Mandarin", 2);
-    design.reserve("White", "Cannon", 2);
+    design.reserve("White", "Cannon", 1);
     design.reserve("White", "General", 1);
     design.reserve("Black", "Stone", 500);
-    design.reserve("Black", "Soldier", 5);
-    design.reserve("Black", "Horse", 2);
-    design.reserve("Black", "Elephant", 2);
-    design.reserve("Black", "Chariot", 2);
+    design.reserve("Black", "Soldier", 2);
+    design.reserve("Black", "Horse", 1);
+    design.reserve("Black", "Elephant", 1);
+    design.reserve("Black", "Chariot", 1);
     design.reserve("Black", "Mandarin", 2);
-    design.reserve("Black", "Cannon", 2);
+    design.reserve("Black", "Cannon", 1);
     design.reserve("Black", "General", 1);
 }
 

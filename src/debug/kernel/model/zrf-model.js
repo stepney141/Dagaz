@@ -2326,25 +2326,34 @@ ZrfMove.prototype.getTarget = function() {
   return null;
 }
 
+ZrfMove.prototype.setReserve = function(type, player, value, part) {
+  if (!part) part = 1;
+  this.actions.push([ null, null, [{
+      exec: function(obj) {
+          if (obj.reserve) {
+              obj.reserve[type][player] = value;
+          }
+      }
+  }], part]);
+}
+
+ZrfMove.prototype.addReserve = function(type, player, value, part) {
+  if (!part) part = 1;
+  this.actions.push([ null, null, [{
+      exec: function(obj) {
+          if (obj.reserve) {
+              obj.reserve[type][player] += value;
+          }
+      }
+  }], part]);
+}
+
 ZrfMove.prototype.setValue = function(name, value, part) {
   if (!part) part = 1;
   this.actions.push([ null, null, [{
       exec: function(obj) {
           if (obj.setValue) {
               obj.setValue(name, value);
-          }
-      }
-  }], part]);
-}
-
-ZrfMove.prototype.goTo = function(turn, part) {
-  if (!part) part = 1;
-  this.actions.push([ null, null, [{
-      exec: function(obj) {
-          var design = Dagaz.Model.design;
-          if (!_.isUndefined(obj.turn) && !_.isUndefined(obj.player)) {
-              obj.turn = turn;
-              obj.player = design.currPlayer(turn);
           }
       }
   }], part]);
@@ -2359,6 +2368,19 @@ ZrfMove.prototype.addValue = function(name, value, part) {
               if (!acc) acc = 0;
               acc += value;
               obj.setValue(name, acc);
+          }
+      }
+  }], part]);
+}
+
+ZrfMove.prototype.goTo = function(turn, part) {
+  if (!part) part = 1;
+  this.actions.push([ null, null, [{
+      exec: function(obj) {
+          var design = Dagaz.Model.design;
+          if (!_.isUndefined(obj.turn) && !_.isUndefined(obj.player)) {
+              obj.turn = turn;
+              obj.player = design.currPlayer(turn);
           }
       }
   }], part]);

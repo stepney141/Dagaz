@@ -491,11 +491,18 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(5, ZRF.PARAM,	2);	// $3
     design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(5, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(5, ZRF.IF,	6);
+    design.addCommand(5, ZRF.LITERAL,	0);	// Stone
+    design.addCommand(5, ZRF.FUNCTION,	10);	// piece?
+    design.addCommand(5, ZRF.IF,	3);
+    design.addCommand(5, ZRF.LITERAL,	0);	// false
+    design.addCommand(5, ZRF.JUMP,	2);
+    design.addCommand(5, ZRF.LITERAL,	1);	// true
     design.addCommand(5, ZRF.FUNCTION,	0);	// not
     design.addCommand(5, ZRF.IF,	4);
     design.addCommand(5, ZRF.PARAM,	3);	// $4
     design.addCommand(5, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(5, ZRF.JUMP,	-5);
+    design.addCommand(5, ZRF.JUMP,	-12);
     design.addCommand(5, ZRF.FUNCTION,	25);	// to
     design.addCommand(5, ZRF.FUNCTION,	28);	// end
 

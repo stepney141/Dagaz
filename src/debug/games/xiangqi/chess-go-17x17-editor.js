@@ -343,67 +343,67 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("BlackStone", 0);
     design.addDrop(0, 0, [], 0);
-    design.addMove(0, 1, [], 0);
+    design.addMove(0, 1, [], 1);
 
     design.addPiece("WhiteStone", 1);
     design.addDrop(1, 0, [], 0);
-    design.addMove(1, 1, [], 0);
+    design.addMove(1, 1, [], 1);
 
     design.addPiece("BlackSoldier", 2);
     design.addDrop(2, 0, [], 0);
-    design.addMove(2, 1, [], 0);
+    design.addMove(2, 1, [], 1);
 
     design.addPiece("WhiteSoldier", 3);
     design.addDrop(3, 0, [], 0);
-    design.addMove(3, 1, [], 0);
+    design.addMove(3, 1, [], 1);
 
     design.addPiece("BlackHorse", 4);
     design.addDrop(4, 0, [], 0);
-    design.addMove(4, 1, [], 0);
+    design.addMove(4, 1, [], 1);
 
     design.addPiece("WhiteHorse", 5);
     design.addDrop(5, 0, [], 0);
-    design.addMove(5, 1, [], 0);
+    design.addMove(5, 1, [], 1);
 
     design.addPiece("BlackElephant", 6);
     design.addDrop(6, 0, [], 0);
-    design.addMove(6, 1, [], 0);
+    design.addMove(6, 1, [], 1);
 
     design.addPiece("WhiteElephant", 7);
     design.addDrop(7, 0, [], 0);
-    design.addMove(7, 1, [], 0);
+    design.addMove(7, 1, [], 1);
 
     design.addPiece("BlackChariot", 8);
     design.addDrop(8, 0, [], 0);
-    design.addMove(8, 1, [], 0);
+    design.addMove(8, 1, [], 1);
 
     design.addPiece("WhiteChariot", 9);
     design.addDrop(9, 0, [], 0);
-    design.addMove(9, 1, [], 0);
+    design.addMove(9, 1, [], 1);
 
     design.addPiece("BlackCannon", 10);
     design.addDrop(10, 0, [], 0);
-    design.addMove(10, 1, [], 0);
+    design.addMove(10, 1, [], 1);
 
     design.addPiece("WhiteCannon", 11);
     design.addDrop(11, 0, [], 0);
-    design.addMove(11, 1, [], 0);
+    design.addMove(11, 1, [], 1);
 
     design.addPiece("BlackMandarin", 12);
     design.addDrop(12, 0, [], 0);
-    design.addMove(12, 1, [], 0);
+    design.addMove(12, 1, [], 1);
 
     design.addPiece("WhiteMandarin", 13);
     design.addDrop(13, 0, [], 0);
-    design.addMove(13, 1, [], 0);
+    design.addMove(13, 1, [], 1);
 
     design.addPiece("BlackGeneral", 14);
     design.addDrop(14, 0, [], 0);
-    design.addMove(14, 1, [], 0);
+    design.addMove(14, 1, [], 1);
 
     design.addPiece("WhiteGeneral", 15);
     design.addDrop(15, 0, [], 0);
-    design.addMove(15, 1, [], 0);
+    design.addMove(15, 1, [], 1);
 
     design.reserve("You", "WhiteStone", 500);
     design.reserve("You", "WhiteSoldier", 5);
