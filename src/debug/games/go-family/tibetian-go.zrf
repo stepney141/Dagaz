@@ -19,6 +19,12 @@
           )
           (directions (n 0 -1) (e 1 0) (s 0 1) (w -1 0))
       )
+      (zone (name init) (players White)
+           (positions c3 c11 g15 k3 o7 o15)
+      )
+      (zone (name init) (players Black)
+           (positions c7 c15 g3 k15 o3 o11)
+      )
    )
 
    (piece

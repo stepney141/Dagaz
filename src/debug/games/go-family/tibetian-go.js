@@ -325,6 +325,9 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("p1", [0, 1, -1, -17]);
     design.addPosition("q1", [0, 0, -1, -17]);
 
+    design.addZone("init", 1, [240, 104, 40, 248, 184, 48]);
+    design.addZone("init", 2, [172, 36, 244, 44, 252, 116]);
+
     design.addCommand(0, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(0, ZRF.FUNCTION,	20);	// verify
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
@@ -333,24 +336,28 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPiece("Stone", 0);
     design.addDrop(0, 0, [], 0);
 
-    design.setup("White", "Stone", 240);
-    design.setup("White", "Stone", 104);
-    design.setup("White", "Stone", 40);
-    design.setup("White", "Stone", 248);
-    design.setup("White", "Stone", 184);
-    design.setup("White", "Stone", 48);
-    design.setup("Black", "Stone", 172);
-    design.setup("Black", "Stone", 36);
-    design.setup("Black", "Stone", 244);
-    design.setup("Black", "Stone", 44);
-    design.setup("Black", "Stone", 252);
-    design.setup("Black", "Stone", 116);
+    design.addPiece("InitStone", 1);
+
+    design.setup("White", "InitStone", 240);
+    design.setup("White", "InitStone", 104);
+    design.setup("White", "InitStone", 40);
+    design.setup("White", "InitStone", 248);
+    design.setup("White", "InitStone", 184);
+    design.setup("White", "InitStone", 48);
+    design.setup("Black", "InitStone", 172);
+    design.setup("Black", "InitStone", 36);
+    design.setup("Black", "InitStone", 244);
+    design.setup("Black", "InitStone", 44);
+    design.setup("Black", "InitStone", 252);
+    design.setup("Black", "InitStone", 116);
 }
 
 Dagaz.View.configure = function(view) {
     view.defBoard("Board");
     view.defPiece("BlackStone", "Black Stone");
     view.defPiece("WhiteStone", "White Stone");
+    view.defPiece("BlackStone", "Black InitStone");
+    view.defPiece("WhiteStone", "White InitStone");
     view.defPiece("Ko", "Ko");
  
     view.defPosition("a17", 5, 5, 31, 31);
