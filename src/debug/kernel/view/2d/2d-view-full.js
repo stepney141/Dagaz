@@ -2,74 +2,128 @@
 
 var MessageCode = {
   MOUSE_MOVE:           0,
-  MOUSE_LKM:            1,
-  MOUSE_PKM:            2,
-  MOUSE_WHEEL:          3,
-  KEY_PRESSED:          4,
-  TURN_MOVE:            5,
-  MARK_CAPTURES:        6,
-  MARK_TARGETS:         7
+  MOUSE_LKM_DOWN:       1,
+  MOUSE_LKM_UP:         2,
+  MOUSE_PKM_DOWN:       3,
+  MOUSE_PKM_UP:         4,
+  MOUSE_WHEEL:          5,
+  KEY_PRESSED:          6,
+  MARK_TARGETS:         7,
+  MARK_CAPTURES:        8,
+  MARK_DROPS:           9,
+  STATE_CHANGED:        10,
+  STATUS_CHANGED:       11,
+  TURN_CHANGED:         12,
+  POSITION_SELECTED:    13,
+  MOVE_COMPLETED:       14
 };
 
 var isValid             = false;
 var mouseX              = 0;
 var mouseY              = 0;
-var mousePressed        = false; // TODO
+var mousePressed        = false;
 
 Dagaz.View.SHIFT_X      = 0;
 Dagaz.View.SHIFT_Y      = 0;
 Dagaz.View.STRIKE_ALPHA = 0.5;
 Dagaz.View.STEP_CNT     = 3;
 
-function Region(x, y, dx, dy, isActive, extension) {
-  this.e = extension;
-  this.x = x; this.dx = dx;
-  this.y = y; this.dy = dy;
-  this.isActive = isActive;
-  this.regions = [];
-  this.boards = [];
+function Region(isActive, draw, events) {
+  this.d = draw; this.e = events;
+  this.sx = 0; this.sy = 0;
+  this.isActive  = isActive;
+  this.regions   = [];
+  this.boards    = [];
   this.positions = [];
+  this.frames    = [];
 }
 
-Region.prototype.addRegion = function(x, y, dx, dy, isActive, extension) {
-  var r = new Region(x, y, dx, dy, isActive, extension);
-  r.view = this.view;
+Region.prototype.addFrame = function(x, y, dx, dy, turns) {
+  this.frames.push({
+      t:  turns,
+      x:  x,
+      y:  y,
+      dx: dx,
+      dy: dy
+  });
+}
+
+Region.prototype.addRegion = function(x, y, dx, dy, isActive, turns, draw, events) {
+  if (_.isUndefined(isActive)) isActive = true;
+  var r = new Region(isActive, draw, events);
+  r.addFrame(x, y, dx, dy, turns);
+  r.view   = this.view;
   r.parent = this;
   r.zValue = this.regions.length;
   this.regions.push(r);
   return r;
 }
 
-Region.prototype.addBoard = function(name, turns, selector, extension) {
+Region.prototype.addBoard = function(name, turns, selector, draw) {
   if (!_.isUndefined(selector) && (selector != Dagaz.Model.getResourceSelector())) return;
   var board = {
       h: document.getElementById(name),
       t: turns,
-      e: extension
+      d: draw
   };
   this.boards.push(board);
 }
 
-Region.prototype.addPosition = function(name, x, y, dx, dy) {
-  var pos = {
-      name: name,
-      x:    x,
-      y:    y,
-      dx:   dx,
-      dy:   dy
-  };
-  this.positions.push(pos);
-}
-
-Region.prototype.findPosition = function(name) {
+Region.prototype.findPosition = function(name, isNotRecursive) {
   for (var i = 0; i < this.positions.length; i++) {
        if (this.positions[i].name == name) return this.positions[i];
   }
+  if (isNotRecursive) return null;
   for (var i = 0; i < this.regions.length; i++) {
        var r = this.regions[i].findPosition(name);
        if (r !== null) return r;
   }
   return null;
+}
+
+Region.prototype.addPosition = function(name, x, y, dx, dy, turns, selector, draw) {
+  if (!_.isUndefined(selector) && (selector != Dagaz.Model.getResourceSelector())) return;
+  var pos = this.findPosition(name, true);
+  if (pos === null) {
+      pos = {
+          name: name,
+          r:    this,
+          c:    [],
+          d:    draw
+      };
+      this.positions.push(pos);
+  }
+  pos.c.push({
+      t:    turns,
+      x:    x,
+      y:    y,
+      dx:   dx,
+      dy:   dy
+  });
+}
+
+Region.prototype.scrollX = function(dx) {
+  this.sx += dx;
+  if (this.sx < 0) this.sx = 0;
+  this.view.invalidate();
+}
+
+Region.prototype.scrollY = function(dy) {
+  this.sy += dy;
+  if (this.sy < 0) this.sy = 0;
+  this.view.invalidate();
+}
+
+Region.prototype.clearX = function() {
+  if (this.sx == 0) return;
+  this.sx = 0;
+  this.view.invalidate();
+}
+
+Region.prototype.clearY = function() {
+  if (this.sy == 0) return;
+  this.sy = 0;
+  this.view.invalidate();
 }
 
 Region.prototype.isLoaded = function() {
@@ -83,65 +137,6 @@ Region.prototype.isLoaded = function() {
        this.boards[i].dy = image.naturalHeight;
   }
   return true;
-}
-
-var drawMark = function(ctx, pos, x, y, color) {
-  x += pos.x; y += pos.y;
-  x += (pos.dx / 2) | 0;
-  y += (pos.dy / 2) | 0;
-  var r = pos.dx / 4;
-  if (Math.abs(pos.dy - pos.dx) > 10) {
-      r = Math.min(pos.dy, pos.dx) / 2;
-  }
-  if (!_.isUndefined(Dagaz.View.MARK_R)) {
-      r = Dagaz.View.MARK_R;
-  }
-  ctx.beginPath();
-  ctx.fillStyle = color;
-  ctx.arc(x + Dagaz.View.SHIFT_X, y + Dagaz.View.SHIFT_Y, r, 0, 2 * Math.PI);
-  ctx.fill();
-  ctx.stroke();
-}
-
-Region.prototype.draw = function(ctx, x, y) {
-  if (!this.isActive) return;
-  _.each(r.boards, function(board) {
-      if (!_.isUndefined(board.t) && !_.isUndefined(this.turn)) {
-          if (_.indexOf(board.t, +this.turn) < 0) return;
-      }
-      ctx.drawImage(board.h, x, y);
-      if (!_.isUndefined(board.e)) {
-          board.e(view, ctx, board);
-      }
-  });
-  for (var i = 0; i < this.positions.length; i++) {
-       if (!_.isUndefined(this.positions[i].setup)) {
-           var setup = this.positions[i].setup;
-           if (setup.c > 0) {
-               setup.x += setup.dx;
-               setup.y += setup.dy;
-               setup.c--;
-           }
-           setup.piece.e(view, ctx, this.positions[i], x + setup.x, y + setup.y);
-       }
-  }
-  if (!_.isUndefined(this.markTargets)) {
-       for (var i = 0; i < this.positions.length; i++) {
-            var ix = Dagaz.Model.stringToPos(this.positions[i].name, this.view.design);
-            if (_.indexOf(this.markTargets, ix) >= 0) {
-                drawMark(ctx, this.positions[i], x, y, "#00AA00");
-            }
-       }
-  }
-  // TODO: Show drops, etc.
-
-  if (!_.isUndefined(this.e)) {
-       this.e(view, ctx, this);
-  }
-  for (var i = 0; i < this.regions.length; i++) {
-       var r = this.regions[i];
-       r.draw(ctx, x + r.x, y + r.y);
-  }
 }
 
 Region.prototype.close = function() {
@@ -166,6 +161,83 @@ Region.prototype.open = function() {
   this.isActive = true;
 }
 
+var drawMark = function(ctx, region, pos, x, y, color) {
+  x += pos.x; y += pos.y;
+  x += (pos.dx / 2) | 0;
+  y += (pos.dy / 2) | 0;
+  var r = pos.dx / 4;
+  if (Math.abs(pos.dy - pos.dx) > 10) {
+      r = Math.min(pos.dy, pos.dx) / 2;
+  }
+  if (!_.isUndefined(Dagaz.View.MARK_R)) {
+      r = Dagaz.View.MARK_R;
+  }
+  ctx.beginPath();
+  ctx.fillStyle = color;
+  ctx.arc(x + Dagaz.View.SHIFT_X, y + Dagaz.View.SHIFT_Y, r, 0, 2 * Math.PI);
+  ctx.fill();
+  ctx.stroke();
+}
+
+Region.prototype.draw = function(ctx, x, y, dx, dy) {
+  if (!this.isActive) return;
+  if (!_.isUndefined(this.d)) {
+       this.d(ctx, this);
+       return;
+  }
+  _.each(this.boards, function(board) {
+      if (!_.isUndefined(board.t)) {
+          if (_.indexOf(board.t, this.view.turn) < 0) return;
+      }
+      ctx.drawImage(board.h, x, y);
+      if (!_.isUndefined(board.d)) {
+          board.d(ctx, this, board);
+      }
+  }, this);
+  _.each(this.positions, function(pos) {
+     if (!_.isUndefined(pos.d)) {
+         pos.d(ctx, this, pos);
+     }
+     if (!_.isUndefined(pos.setup)) {
+         if (pos.setup.c > 0) {
+             pos.setup.x += setup.dx;
+             pos.setup.y += setup.dy;
+             pos.setup.c--;
+         }
+     }
+     var isDone = false;
+     _.each(pos.c, function(c) {
+         if (isDone) return;
+         if (!_.isUndefined(c.t)) {
+             if (_.indexOf(c.t, this.view.turn) < 0) return;
+         }
+         if (c.x + pos.setup.x - this.sx < 0) return;
+         if (c.y + pos.setup.y - this.sy < 0) return;
+         if (c.x + c.dx + pos.setup.x - this.sx >= dx) return;
+         if (c.y + c.dy + pos.setup.y - this.sy >= dy) return;
+         if (!_.isUndefined(pos.setup)) {
+             pos.setup.piece.d(ctx, this, pos, x + pos.setup.x - this.sx, y + pos.setup.y - this.sy);
+         }
+         if (!_.isUndefined(this.view.markTargets) && (_.indexOf(this.view.markTargets, pos.name) >= 0)) {
+             drawMark(ctx, this, pos, x - this.sx, y - this.sy, "#00AA00");
+         }
+         isDone = true;
+     }, this);
+  }, this);
+  _.each(this.regions, function(r) {
+     _.each(r.frames, function(w) {
+         if (!_.isUndefined(w.t)) {
+             if (_.indexOf(w.t, this.view.turn) < 0) return;
+         }
+         if (w.x + w.dx - this.sx < 0) return;
+         if (w.y + w.dy - this.sy < 0) return;
+         if (w.x - this.sx >= dx) return;
+         if (w.y - this.sy >= dy) return;
+         r.draw(ctx, x + w.x - this.sx, y + w.y - this.sy);
+     }, this);
+  }, this);
+}
+
 var inRect = function(obj, x, y) {
   return (x >= obj.x) &&
          (y >= obj.y) &&
@@ -174,10 +246,6 @@ var inRect = function(obj, x, y) {
 }
 
 Region.prototype.recv = function(code, event, x, y) {
-  if (code == TURN_MOVE) {
-      this.turn = event;
-      return false;
-  }
   if (!_.isUndefined(x) && !_.isUndefined(y)) {
       for (var i = 0; i < this.positions.length; i++) {
            if (inRect(this.positions[i], x, y) && this.view.recv(code, event, this.positions[i].name)) return true;
@@ -205,9 +273,11 @@ Region.prototype.send = function(code, event, x, y) {
 
 function View(design) {
   this.design = design;
-  this.root = new Region(0, 0, canvas.width, canvas.height, true);
+  this.root = new Region(true);
+  this.root.addFrame(0, 0, canvas.width, canvas.height);
   this.root.view = this;
   this.pieces = [];
+  this.turn = 0;
 }
 
 Dagaz.View.getView = function() {
@@ -217,8 +287,9 @@ Dagaz.View.getView = function() {
   return Dagaz.View.view;
 }
 
-var drawPiece = function(view, ctx, pos, x, y) {
+var drawPiece = function(ctx, region, pos, x, y) {
   var isSaved = false;
+  var view  = region.view;
   var piece = pos.setup.piece;
   if (Dagaz.Model.showCaptures) {
       var ix = Dagaz.Model.stringToPos(pos.name, view.design);
@@ -236,11 +307,11 @@ var drawPiece = function(view, ctx, pos, x, y) {
   }
 }
 
-View.prototype.addPiece = function(name, extension) {
+View.prototype.addPiece = function(name, draw) {
   var piece = {
       n: name,
       h: document.getElementById(name),
-      e: _.isUndefined(extension) ? drawPiece : extension
+      d: _.isUndefined(draw) ? drawPiece : draw
   };
   this.pieces.push(piece);
 }
@@ -377,10 +448,10 @@ View.prototype.animate = function() {
 View.prototype.draw = function() {
   if (!this.isLoaded()) return;
   this.animate();
-  if (!isValid) return;
+  if (isValid) return;
   var ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, this.root.dx, this.root.dy);
-  this.root.draw(ctx, 0, 0);
+  this.root.draw(ctx, 0, 0, this.root.dx, this.root.dy);
   isValid = true;
 }
 
