@@ -1,4 +1,4 @@
-Dagaz.AI.selector = true;
+Dagaz.Controller.persistense = "none";
 
 ZRF = {
     JUMP:          0,
@@ -34,7 +34,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-redo", "false");
 
     if (!_.isUndefined(Dagaz.Controller.addSound)) {
-        Dagaz.Controller.addSound(0, "../../sounds/clack.wav");
+        Dagaz.Controller.addSound(0, "../../sounds/clack.wav", true);
     }
 
     design.addDirection("w"); // 0
@@ -42,10 +42,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addDirection("s"); // 2
     design.addDirection("n"); // 3
 
-    design.addPlayer("White", [1, 0, 3, 2]);
-    design.addPlayer("Black", [0, 1, 2, 3]);
-    design.addTurn(2);
-    design.addTurn(1);
+    design.addPlayer("Black", [1, 0, 3, 2]);
+    design.addPlayer("White", [0, 1, 2, 3]);
 
     design.addPosition("a9", [0, 1, 9, 0]);
     design.addPosition("b9", [-1, 1, 9, 0]);
