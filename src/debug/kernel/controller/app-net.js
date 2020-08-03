@@ -9,6 +9,7 @@ var STATE = {
 var SERVICE  = "http://127.0.0.1:3000/api/";
 var USERNAME = "root";
 var PASSWORD = "root";
+var WAIT_FRAME = 100;
 
 var once = false;
 var onceGameOver = true;
@@ -372,7 +373,7 @@ App.prototype.run = function() {
   var delta = Date.now() - timestamp;
   _.delay(function() {
      Dagaz.Controller.app.run();
-  }, (delta > this.params.WAIT_FRAME) ? 0 : this.params.WAIT_FRAME - delta);
+  }, (delta > WAIT_FRAME) ? 0 : WAIT_FRAME - delta);
 }
 
 Dagaz.Controller.app.view.init(Dagaz.Controller.app.canvas, Dagaz.Controller.app);
