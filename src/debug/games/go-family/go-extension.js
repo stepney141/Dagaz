@@ -8,6 +8,16 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
+Dagaz.Model.moveToString = function(move) {
+  var r = "";
+  for (var i = 0; i < move.actions.length; i++) {
+       if ((move.actions[i][0] === null) && (move.actions[i][1] !== null)) {
+           r = Dagaz.Model.posToString(move.actions[i][1][0]);
+       }
+  }
+  return r;
+}
+
 var go = Dagaz.Controller.go;
 
 Dagaz.Controller.go = function(url) {

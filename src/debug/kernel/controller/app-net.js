@@ -2,8 +2,7 @@
 
 var STATE = {
     IDLE: 1,
-    DONE: 2,
-    STOP: 3
+    DONE: 2
 };
 
 var SERVICE  = "http://127.0.0.1:3000/api/";
@@ -11,7 +10,7 @@ var USERNAME = "root";
 var PASSWORD = "root";
 var WAIT_FRAME = 100;
 
-var once = false;
+var once = true;
 var onceGameOver = true;
 var inProgress = false;
 var auth = null;
@@ -60,6 +59,25 @@ Dagaz.Controller.createApp = function(canvas) {
       Dagaz.Controller.app = new App(canvas);
   }
   return Dagaz.Controller.app;
+}
+
+Dagaz.Controller.newGame = function() {
+  if (!_.isUndefined(Dagaz.Controller.clearGame)) {
+      Dagaz.Controller.clearGame();
+  }
+  var str = window.location.toString();
+  var result = str.match(/^([^?]+)/);
+  if (result) {
+      str = result[1];
+  }
+  window.location = str;
+}
+
+App.prototype.done = function() {
+  if (this.doneMessage) {
+      this.gameOver(this.doneMessage, this.winPlayer);
+      delete this.doneMessage;
+  }
 }
 
 App.prototype.boardApply = function(move) {
@@ -184,8 +202,10 @@ var getMove = function() {
         xhr.setRequestHeader('Authorization', 'Bearer ' + auth.access_token);
      },
      success: function(data) {
-         console.log('Move: Succeed');
-         move = data;
+         if (data.length > 0) {
+             console.log('Move: Succeed');
+             move = data[0];
+         }
          inProgress = false;
      },
      error: function() {
@@ -197,6 +217,9 @@ var getMove = function() {
         },
         403: function() {
              alert('Move: Bad User!');
+        },
+        404: function() {
+             alert('Move: Bad Session!');
         },
         500: function() {
              alert('Move: Internal Error!');
@@ -261,7 +284,6 @@ var winSession = function(user) {
          console.log('Close: Succeed');
          move = null;
          inProgress = false;
-         Dagaz.Controller.app.state = STATE.DONE;
      },
      error: function() {
          alert('Close: Error!');
@@ -299,7 +321,6 @@ var loseSession = function(user) {
          console.log('Close: Succeed');
          move = null;
          inProgress = false;
-         Dagaz.Controller.app.state = STATE.DONE;
      },
      error: function() {
          alert('Close: Error!');
@@ -334,6 +355,14 @@ App.prototype.exec = function() {
       if (auth === null) return;
       getSession();
       if (session === null) return;
+      if (once) {
+          if (session.last_setup) {
+              var board = this.getBoard();
+              Dagaz.Model.setup(board, session.last_setup);
+              this.view.reInit(board);
+          }
+          once = false;
+      }
       getMove();
       if (move === null) return;
       var board = this.getBoard();
@@ -348,21 +377,37 @@ App.prototype.exec = function() {
            return m.toString() == move.move_str;
       });
       if (moves.length != 1) {
-           console.log("Incorrect move [" + move.move_str + "] from user [" + move.user_id + "]");
+           console.log("Incorrect move [" + move.move_str + "] from user [" + move.user_id + "]");          
            loseSession(move.user_id);
            this.gameOver("Lose", board.player);
+           this.state = STATE.DONE;
            return;
       }
       this.boardApply(moves[0]);
       setup = Dagaz.Model.getSetup(this.design, this.board);
+      var g = this.board.checkGoals(this.design, board.player);
       this.board.generate();
-      if (this.board.moves.length == 0) {
+      if ((this.board.moves.length == 0) || (g > 0)) {
            console.log("User [" + move.user_id + "] won!");
            winSession(move.user_id);
            this.gameOver("Win", board.player);
+           this.state = STATE.DONE;
+           return;
+      }
+      if ((g !== null) && (g < 0)) {
+           console.log("User [" + move.user_id + "] lose!");
+           loseSession(move.user_id);
+           this.gameOver("Lose", board.player);
+           this.state = STATE.DONE;
+           return;
       }
   }
 }
+
+App.prototype.mouseWheel = function(view, delta) {}
+App.prototype.mouseLocate = function(view, pos) {}
+App.prototype.mouseDown = function(view, pos) {}
+App.prototype.mouseUp = function(view, pos) {}
 
 Dagaz.Model.InitGame();
 Dagaz.Controller.app = Dagaz.Controller.createApp(Canvas);

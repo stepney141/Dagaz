@@ -31,8 +31,11 @@ var getCookie = function() {
   }
 }
 
-var getSetup = function() {
+var getSetup = function(setup) {
   var str = window.location.search.toString();
+  if (setup) {
+      str = setup;
+  }
   var result = str.match(/[?&]setup=([^&]*)/);
   if (result) {
       return result[1];
@@ -47,8 +50,11 @@ var getSetup = function() {
   }
 }
 
-var getTurn = function() {
+var getTurn = function(setup) {
   var str = window.location.search.toString();
+  if (setup) {
+      str = setup;
+  }
   var result = str.match(/[?&]turn=(\d+)/);
   if (result) {
       return result[1];
@@ -63,8 +69,11 @@ var getTurn = function() {
   }
 }
 
-var getSeed = function() {
+var getSeed = function(setup) {
   var str = window.location.search.toString();
+  if (setup) {
+      str = setup;
+  }
   var result = str.match(/[?&]seed=(\d+)/);
   if (result) {
       return result[1];
@@ -79,8 +88,11 @@ var getSeed = function() {
   }
 }
 
-var getReserve = function() {
+var getReserve = function(setup) {
   var str = window.location.search.toString();
+  if (setup) {
+      str = setup;
+  }
   var result = str.match(/[?&]reserve=([,;\d]+)/);
   if (result) {
       return result[1];
@@ -95,8 +107,11 @@ var getReserve = function() {
   }
 }
 
-var getGlobal = function() {
+var getGlobal = function(setup) {
   var str = window.location.search.toString();
+  if (setup) {
+      str = setup;
+  }
   var result = str.match(/[?&]global=([;\d]+)/);
   if (result) {
       return result[1];
@@ -197,9 +212,9 @@ var term = seq([
 
 var conf = rep(term);
 
-Dagaz.Model.setup = function(board) {
+Dagaz.Model.setup = function(board, setup) {
   var design = Dagaz.Model.design;
-  var setup  = getSetup();
+  var setup  = getSetup(setup);
   if (setup) {
       var r = conf.exec(setup, 0);
       if (r.end > 0) {
@@ -225,7 +240,7 @@ Dagaz.Model.setup = function(board) {
                   }
               }
           }
-          var turn = getTurn();
+          var turn = getTurn(setup);
           if (turn) {
               board.turn   = +turn;
               board.player = design.currPlayer(board.turn);
@@ -235,11 +250,11 @@ Dagaz.Model.setup = function(board) {
                   board.reserve[t][p] = 0;
               });
           });
-          var rs = getReserve();
+          var rs = getReserve(setup);
           if (rs) {
               Dagaz.Model.setReserve(design, board, rs);
           }
-          var g = getGlobal();
+          var g = getGlobal(setup);
           if (g) {
               Dagaz.Model.setGlobal(design, board, g);
           }
