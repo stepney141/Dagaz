@@ -212,9 +212,9 @@ var term = seq([
 
 var conf = rep(term);
 
-Dagaz.Model.setup = function(board, setup) {
+Dagaz.Model.setup = function(board, init) {
   var design = Dagaz.Model.design;
-  var setup  = getSetup(setup);
+  var setup  = getSetup(init);
   if (setup) {
       var r = conf.exec(setup, 0);
       if (r.end > 0) {
@@ -240,7 +240,7 @@ Dagaz.Model.setup = function(board, setup) {
                   }
               }
           }
-          var turn = getTurn(setup);
+          var turn = getTurn(init);
           if (turn) {
               board.turn   = +turn;
               board.player = design.currPlayer(board.turn);
@@ -250,11 +250,11 @@ Dagaz.Model.setup = function(board, setup) {
                   board.reserve[t][p] = 0;
               });
           });
-          var rs = getReserve(setup);
+          var rs = getReserve(init);
           if (rs) {
               Dagaz.Model.setReserve(design, board, rs);
           }
-          var g = getGlobal(setup);
+          var g = getGlobal(init);
           if (g) {
               Dagaz.Model.setGlobal(design, board, g);
           }

@@ -163,13 +163,13 @@ var getSession = function() {
         xhr.setRequestHeader('Authorization', 'Bearer ' + auth.access_token);
      },
      success: function(data) {
-         if (data.length < 1) return;
          if (data.length > 1) {
              alert('Sess: Too many sessions!');
              return;
+         } else if (data.length == 1) {
+             session = data[0];
+             console.log('Sess: Succeed');
          }
-         session = data[0];
-         console.log('Sess: Succeed');
          inProgress = false;
      },
      error: function() {
@@ -358,15 +358,15 @@ App.prototype.exec = function() {
       if (once) {
           if (session.last_setup) {
               var board = this.getBoard();
-              Dagaz.Model.setup(board, session.last_setup);
-              this.view.reInit(board);
+              Dagaz.Model.setup(this.board, session.last_setup);
+              this.view.reInit(this.board);
           }
           once = false;
       }
       getMove();
       if (move === null) return;
       var board = this.getBoard();
-      if ((move.time_limit <= 0) && (move.additional_time + move.time_limit < 0)) {
+      if ((move.time_limit <= 0) && (+move.additional_time + move.time_limit < 0)) {
            console.log("Time limit for user [" + move.user_id + "]");
            loseSession(move.user_id);
            this.gameOver("Lose", board.player);
