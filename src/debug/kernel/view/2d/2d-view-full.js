@@ -10,18 +10,13 @@ var MessageCode = {
   KEY_PRESSED:          6,
   MARK_TARGETS:         7,
   MARK_CAPTURES:        8,
-  MARK_DROPS:           9,
+  MARK_SELECTED:        9,
   STATE_CHANGED:        10,
   STATUS_CHANGED:       11,
-  TURN_CHANGED:         12,
-  POSITION_SELECTED:    13,
-  MOVE_COMPLETED:       14
+  TURN_CHANGED:         12
 };
 
 var isValid             = false;
-var mouseX              = 0;
-var mouseY              = 0;
-var mousePressed        = false;
 
 Dagaz.View.SHIFT_X      = 0;
 Dagaz.View.SHIFT_Y      = 0;
@@ -317,30 +312,41 @@ var inRect = function(obj, x, y) {
          (y < obj.y + obj.dy);
 }
 
-Region.prototype.recv = function(code, event, x, y) {
-  if (!_.isUndefined(x) && !_.isUndefined(y)) {
-      for (var i = 0; i < this.positions.length; i++) {
-           if (inRect(this.positions[i], x, y) && this.view.recv(code, event, this.positions[i].name)) return true;
+Region.prototype.send = function(code, event, x, y, callback) {
+  var f = false;
+  if (!this.isActive) return false;
+  _.each(this.frames, function(w) {
+      if (!_.isUndefined(w.t)) {
+          if (_.indexOf(w.t, this.view.turn) < 0) return;
       }
-  }
-  // TODO:
-
-}
-
-Region.prototype.send = function(code, event, x, y) {
-  var r = false;
-  if (_.isUndefined(x) || _.isUndefined(y) || inRect(this, x, y)) {
-      for (var i = this.regions.length - 1; i >= 0 ; i--) {
-           if (this.regions[i].isActive) {
-               r = this.regions[i].send(code, event, _.isUndefined(x) ? x : x - this.regions[i].x, _.isUndefined(y) ? y : y - this.regions[i].y);
-           }
-           if (r) break;         
+      if (_.isUndefined(x) || _.isUndefined(y) || inRect(w, x, y)) {
+          if (!_.isUndefined(this.e)) {
+              f = this.e(code, event, x - this.sz, y - this.sy, callback);
+              if (f) return;
+          }
+          _.each(this.regions.reverse(), function(r) {
+             if (f) return;
+             f = r.send(code, event, 
+                 _.isUndefined(x) ? x : x - this.sz - w.x, 
+                 _.isUndefined(y) ? y : y - this.sy - w.y, 
+                 callback);
+          }, this);
+          if (!_.isUndefined(x) && !_.isUndefined(y)) {
+              _.each(this.positions, function(pos) {
+                 if (f) return;
+                 _.each(pos.c, function(w) {
+                     if (!_.isUndefined(w.t)) {
+                         if (_.indexOf(w.t, this.view.turn) < 0) return;
+                     }
+                     if (inRect(w, x - this.sz, y - this.sy)) {
+                         f = callback(code, event, x, y, pos);
+                     }
+                 }, this);
+              }, this);
+          }
       }
-      if (!r) {
-           r = this.recv(code, event, x, y);
-      }
-  }
-  return r;
+  }, this);
+  return f;
 }
 
 function View(design) {
@@ -409,23 +415,6 @@ View.prototype.isLoaded = function() {
       this.allLoaded = true;
   }
   return this.allLoaded;
-}
-
-View.prototype.send = function(code, event, x, y) {
-  if (code == MessageCode.MARK_CAPTURES) {
-      this.markCaptures = event;
-      return true;
-  }
-  if (code == MessageCode.MARK_TARGETS) {
-      this.markTargets = event;
-      return true;
-  }
-
-  return this.root.send(code, event, x, y);
-}
-
-View.prototype.invalidate = function() {
-   isValid = false;
 }
 
 View.prototype.addSetup = function(name, piece) {
@@ -543,63 +532,40 @@ View.prototype.draw = function() {
   isValid = true;
 }
 
-View.prototype.recv = function(code, event, name) {
-  // TODO: PKM
-
+View.prototype.send = function(code, event, x, y, callback) {
+  if (code == MessageCode.MARK_TARGETS) {
+      this.markTargets = event;
+      return true;
+  }
+  if (code == MessageCode.MARK_CAPTURES) {
+      this.markCaptures = event;
+      return true;
+  }
+  if (code == MessageCode.MARK_SELECTED) {
+      this.markSelected = event;
+      return true;
+  }
+  if (code == MessageCode.STATE_CHANGED) {
+      this.state = event;
+      return true;
+  }
+  if (code == MessageCode.STATUS_CHANGED) {
+      this.status = event;
+      return true;
+  }
+  if (code == MessageCode.TURN_CHANGED) {
+      this.turn = event;
+      return true;
+  }
+  return this.root.send(code, event, x, y, callback);
 }
 
-var mouseUpdate = function(event) {
-  var canvasRect = canvas.getBoundingClientRect();
-  mouseX = event.clientX - canvasRect.left;
-  mouseY = event.clientY - canvasRect.top;
-}
-
-var mouseMove = function(event) {
-  mouseUpdate(event);
-  this.root.send(MessageCode.MOUSE_MOVE, event, mouseX, mouseY);
-}
-
-var mouseUp = function(event) {
-  // TODO:
-
-}
-
-var mouseDown = function(event) {
-  // TODO:
-
-}
-
-var mouseWheel = function(event) {
-  // TODO:
-
+View.prototype.invalidate = function() {
+   isValid = false;
 }
 
 View.prototype.setController = function(controller) {
-  canvas.onmousemove = mouseMove;
-  canvas.onmouseup   = mouseUp;
-  canvas.onmousedown = mouseDown;
-  if ('onwheel' in document) {
-      document.addEventListener('wheel', mouseWheel, { passive: false });
-  } else if ('onmousewheel' in document) {
-      document.addEventListener('mousewheel', mouseWheel, { passive: false });
-  } else {
-      document.MozMousePixelScroll = mouseWheel;
-  }
   this.controller = controller;
-}
-
-document.oncontextmenu = function()  { 
-  this.root.send(MessageCode.MOUSE_PKM_UP, null, mouseX, mouseY);
-  return false; 
-}
-
-var onkeyup = window.onkeyup;
-
-window.onkeyup = function(event) {
-  this.root.send(MessageCode.KEY_PRESSED, event);
-  if (onkeyup) {
-      onkeyup(event);
-  }
 }
 
 })();
