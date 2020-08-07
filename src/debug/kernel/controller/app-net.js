@@ -176,7 +176,7 @@ var getSession = function() {
          if (data.length > 1) {
              var sid = getSid();
              if (sid) {
-                 data = _.map(data, function(s) {
+                 data = _.filter(data, function(s) {
                       return s.id = sid;
                  });
              }
