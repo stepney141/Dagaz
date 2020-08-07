@@ -177,7 +177,7 @@ var getSession = function() {
              var sid = getSid();
              if (sid) {
                  data = _.filter(data, function(s) {
-                      return s.id = sid;
+                      return s.id == sid;
                  });
              }
          }
