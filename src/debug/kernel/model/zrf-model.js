@@ -752,6 +752,12 @@ ZrfDesign.prototype.setup = function(player, piece, pos, selector) {
   if (!_.isUndefined(selector) && (selector != Dagaz.Model.getSetupSelector())) {
       return;
   }
+  if (_.isArray(pos)) {
+      _.each(pos, function(p) {
+         this.setup(player, piece, Dagaz.Model.stringToPos(p, this), selector);
+      }, this);
+      return;
+  }
   var o = Dagaz.find(this.playerNames, player);
   var t = Dagaz.find(this.pieceNames, piece);
   if ((o < 0) || (t < 0)) {
@@ -1015,9 +1021,77 @@ ZrfDesign.prototype.prevTurn = function(board) {
   return board.turn - 1;
 }
 
+function ZrfGrid(design) {
+  this.design = design;
+  this.scales = [];
+  this.dirs   = [];
+}
+
+ZrfGrid.prototype.addScale = function(scale) {
+  this.scales.unshift(scale.split('/'));
+}
+
+ZrfGrid.prototype.addDirection = function(name, offsets) {
+  if (_.indexOf(this.dirs, name) < 0) {
+      this.design.addDirection(name);
+  }
+  var ix = _.indexOf(this.dirs, name);
+  if (ix >= 0) {
+      this.dirs[ix] = offsets;
+  }
+}
+
 ZrfDesign.prototype.addPosition = function(name, links) {
+  if (_.isUndefined(links)) {
+      links = _.map(_.range(this.dirs.length), function(dir) {
+          return 0;
+      });
+  }
+  if (_.isArray(name)) {
+      _.each(name, function(n) {
+          this.addPosition(n, links);
+      }, this);
+      return;
+  }
   this.positionNames.push(name);
   this.positions.push(Dagaz.int32Array(links));
+}
+
+ZrfDesign.prototype.addGrid = function() {
+  return new ZrfGrid(this);
+}
+
+var addPositions = function(self, ix, name, point) {
+  if (ix >= self.scales.length) {
+      var offsets = _.map(_.range(self.dirs.length), function(dir) {
+          return 0;
+      });
+      _.each(_.keys(self.dirs), function(dir) {
+           var o = 0;
+           for (var i = 0; i < self.scales.length; i++) {
+                if (i > 0) {
+                    o = o * self.scales[i - 1].length;
+                }
+                var v = self.dirs[dir][self.scales.length - i];
+                var x = point[i] + v;
+                if (x < 0) return;
+                if (x >= self.scales[i].length) return;
+                o += v;
+           }
+           offsets[dir] = o;
+      });
+      self.design.addPosition(name, offsets);
+      return;
+  }
+  for (var i = 0; i < self.scales[ix].length; i++) {
+      point.push(i);
+      addPositions(self, ix + 1, self.scales[ix][i] + name, point);
+      point.pop();
+  }
+}
+
+ZrfGrid.prototype.addPositions = function() {
+  addPositions(this, 0, "", []);
 }
 
 ZrfDesign.prototype.findDirection = function(from, to) {

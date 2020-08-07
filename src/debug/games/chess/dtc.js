@@ -21,26 +21,27 @@ ZRF = {
 
 Dagaz.Model.BuildDesign = function(design) {
 
-     design.checkVersion("z2j", "2");
-     design.checkVersion("smart-moves", "false");
-     design.checkVersion("show-blink", "false");
-     design.checkVersion("show-hints", "false");
-     design.checkVersion("show-captures", "false");
+    design.checkVersion("z2j", "2");
+    design.checkVersion("smart-moves", "false");
+    design.checkVersion("show-blink", "false");
+    design.checkVersion("show-hints", "false");
+    design.checkVersion("show-captures", "false");
 
-     var g = design.addGrid(); // TODO
-     g.addScale("A/B/C/D/E/F/G/H"); g.addScale("8/7/6/5/4/3/2/1");
-     g.addDirection("n",[ 0, -1]); g.addDirection("nw",[-1, -1]);
-     g.addDirection("e",[ 1,  0]); g.addDirection("ne",[ 1, -1]);
-     g.addDirection("w",[-1,  0]); g.addDirection("sw",[-1,  1]);
-     g.addDirection("s",[ 0,  1]); g.addDirection("se",[ 1,  1]);
-     design.addPlayer("White", [6, 7, 4, 5, 2, 3, 0, 1]);
-     design.addPlayer("Black", [6, 5, 2, 7, 4, 1, 0, 3]);
-     g.addPositions(["RWP", "RWN", "RWB", "RWR", "RWQ", "RWK", "RBP", "RBN", "RBB", "RBR", "RBQ", "RBK", "UP", "DN"]); // TODO
+    var g = design.addGrid();
+    g.addScale("A/B/C/D/E/F/G/H"); g.addScale("8/7/6/5/4/3/2/1");
+    g.addDirection("n",[ 0, -1]); g.addDirection("nw",[-1, -1]);
+    g.addDirection("e",[ 1,  0]); g.addDirection("ne",[ 1, -1]);
+    g.addDirection("w",[-1,  0]); g.addDirection("sw",[-1,  1]);
+    g.addDirection("s",[ 0,  1]); g.addDirection("se",[ 1,  1]);
+    design.addPlayer("White", [6, 7, 4, 5, 2, 3, 0, 1]);
+    design.addPlayer("Black", [6, 5, 2, 7, 4, 1, 0, 3]);
+    g.addPositions();
+    design.addPosition(["RWP", "RWN", "RWB", "RWR", "RWQ", "RWK", "RBP", "RBN", "RBB", "RBR", "RBQ", "RBK", "UP", "DN"]);
 
-     design.addZone("last-rank",  1, [0, 1, 2, 3, 4, 5, 6, 7]);
-     design.addZone("last-rank",  2, [56, 57, 58, 59, 60, 61, 62, 63]);
-     design.addZone("third-rank", 1, [40, 41, 42, 43, 44, 45, 46, 47]);
-     design.addZone("third-rank", 2, [16, 17, 18, 19, 20, 21, 22, 23]);
+    design.addZone("last-rank",  1, [0, 1, 2, 3, 4, 5, 6, 7]);
+    design.addZone("last-rank",  2, [56, 57, 58, 59, 60, 61, 62, 63]);
+    design.addZone("third-rank", 1, [40, 41, 42, 43, 44, 45, 46, 47]);
+    design.addZone("third-rank", 2, [16, 17, 18, 19, 20, 21, 22, 23]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
@@ -260,7 +261,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPiece("QueenR", 10);
     design.addPiece("KingR", 11);
 
-    design.setup("White", "Pawn", ["A2", "B2", "C2", "D2", "E2", "F2", "G2", "H2"]); // TODO
+    design.setup("White", "Pawn", ["A2", "B2", "C2", "D2", "E2", "F2", "G2", "H2"]);
     design.setup("White", "Knight", ["B1", "G1"]);
     design.setup("White", "Bishop", ["C1", "F1"]);
     design.setup("White", "Rook", ["A1", "H1"]);
@@ -287,54 +288,64 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "KingR", ["RBK"]);
 }
 
+Dagaz.Controller.configure = function(app) {
+    app.addState([0, 1, 0, 0, 0, 0], Dagaz.Controller.idleState);
+    app.addState([7, 0, 2, 0, 0, 0], Dagaz.Controller.selectState);
+    app.addState([7, 0, 0, 3, 0, 0], Dagaz.Controller.targetState);
+    app.addState([0, 0, 0, 0, 4, 0], Dagaz.Controller.execState);
+    app.addState([0, 0, 0, 0, 0, 5], Dagaz.Controller.buzyState);
+    app.addState([6, 0, 0, 0, 0, 0], Dagaz.Controller.wait2State);
+}
+
 Dagaz.View.configure = function(view) {
 
-  var b = view.root.addRegion(70, 0, 540, 540);
-  b.addBoard("Board");
-  var g = b.addGrid(31, 31, 58, 58);
-  g.addScale("A/B/C/D/E/F/G/H", 60, 0);
-  g.addScale("8/7/6/5/4/3/2/1", 0, 60);
-  g.addTurns(0, [0]);
-  g.addTurns(1, [1]);
+    var b = view.root.addRegion(70, 0, 540, 540);
+    b.addBoard("WhiteBoard", [0]);
+    b.addBoard("BlackBoard", [1]);
+    var g = b.addGrid(31, 31, 58, 58);
+    g.addScale("A/B/C/D/E/F/G/H", 60, 0);
+    g.addScale("8/7/6/5/4/3/2/1", 0, 60);
+    g.addTurns(0, [0]);
+    g.addTurns(1, [1]);
 
-  var r = view.root.addRegion(630, 0, 120, 540);
-  r.addBoard("rpw", [0]);
-  r.addBoard("rpb", [1]);
+    var r = view.root.addRegion(630, 0, 120, 540);
+    r.addBoard("rpw", [0]);
+    r.addBoard("rpb", [1]);
 
-  r.addPosition("RWP", 22,  41, 58, 58, [0]);
-  r.addPosition("RWN", 22, 121, 58, 58, [0]);
-  r.addPosition("RWB", 22, 201, 58, 58, [0]);
-  r.addPosition("RWR", 22, 281, 58, 58, [0]);
-  r.addPosition("RWQ", 22, 361, 58, 58, [0]);
-  r.addPosition("RWK", 22, 441, 58, 58, [0]);
-  r.addPosition("RBP", 82,  41, 58, 58, [0]);
-  r.addPosition("RBN", 82, 121, 58, 58, [0]);
-  r.addPosition("RBB", 82, 201, 58, 58, [0]);
-  r.addPosition("RBR", 82, 281, 58, 58, [0]);
-  r.addPosition("RBQ", 82, 361, 58, 58, [0]);
-  r.addPosition("RBK", 82, 441, 58, 58, [0]);
+    r.addPosition("RWP", 22,  41, 58, 58, [0]);
+    r.addPosition("RWN", 22, 121, 58, 58, [0]);
+    r.addPosition("RWB", 22, 201, 58, 58, [0]);
+    r.addPosition("RWR", 22, 281, 58, 58, [0]);
+    r.addPosition("RWQ", 22, 361, 58, 58, [0]);
+    r.addPosition("RWK", 22, 441, 58, 58, [0]);
+    r.addPosition("RBP", 82,  41, 58, 58, [0]);
+    r.addPosition("RBN", 82, 121, 58, 58, [0]);
+    r.addPosition("RBB", 82, 201, 58, 58, [0]);
+    r.addPosition("RBR", 82, 281, 58, 58, [0]);
+    r.addPosition("RBQ", 82, 361, 58, 58, [0]);
+    r.addPosition("RBK", 82, 441, 58, 58, [0]);
 
-  r.addPosition("RBP", 22,  41, 58, 58, [1]);
-  r.addPosition("RBN", 22, 121, 58, 58, [1]);
-  r.addPosition("RBB", 22, 201, 58, 58, [1]);
-  r.addPosition("RBR", 22, 281, 58, 58, [1]);
-  r.addPosition("RBQ", 22, 361, 58, 58, [1]);
-  r.addPosition("RBK", 22, 441, 58, 58, [1]);
-  r.addPosition("RWP", 82,  41, 58, 58, [1]);
-  r.addPosition("RWN", 82, 121, 58, 58, [1]);
-  r.addPosition("RWB", 82, 201, 58, 58, [1]);
-  r.addPosition("RWR", 82, 281, 58, 58, [1]);
-  r.addPosition("RWQ", 82, 361, 58, 58, [1]);
-  r.addPosition("RWK", 82, 441, 58, 58, [1]);
+    r.addPosition("RBP", 22,  41, 58, 58, [1]);
+    r.addPosition("RBN", 22, 121, 58, 58, [1]);
+    r.addPosition("RBB", 22, 201, 58, 58, [1]);
+    r.addPosition("RBR", 22, 281, 58, 58, [1]);
+    r.addPosition("RBQ", 22, 361, 58, 58, [1]);
+    r.addPosition("RBK", 22, 441, 58, 58, [1]);
+    r.addPosition("RWP", 82,  41, 58, 58, [1]);
+    r.addPosition("RWN", 82, 121, 58, 58, [1]);
+    r.addPosition("RWB", 82, 201, 58, 58, [1]);
+    r.addPosition("RWR", 82, 281, 58, 58, [1]);
+    r.addPosition("RWQ", 82, 361, 58, 58, [1]);
+    r.addPosition("RWK", 82, 441, 58, 58, [1]);
 
-  var d = view.root.addRegion(770, 0, 120, 540, true, undefined, Dagaz.Model.drawDivision, Dagaz.Controller.eventDivision);
-  d.addBoard("div");
-  d.addPosition("UP", 1, 1, 120, 30);
-  d.addPosition("DN", 1, 510, 120, 30);
+    var d = view.root.addRegion(770, 0, 120, 540, true, undefined, Dagaz.Model.drawDivision, Dagaz.Controller.eventDivision);
+    d.addBoard("div");
+    d.addPosition("UP", 1, 1, 120, 30);
+    d.addPosition("DN", 1, 510, 120, 30);
 
-  view.addPiece(["WhitePawn", "WhiteKnight", "WhiteBishop", "WhiteRook", "WhiteQueen", "WhiteKing"], Dagaz.Model.drawPiece); // TODO
-  view.addPiece(["BlackPawn", "BlackKnight", "BlackBishop", "BlackRook", "BlackQueen", "BlackKing"], Dagaz.Model.drawPiece);
-  view.addPiece(["WhitePawnR", "BlackPawnR", "WhiteKnightR", "BlackKnightR", "WhiteBishopR", "BlackBishopR", "WhiteRookR", "BlackRookR", "WhiteQueenR", "BlackQueenR", "WhiteKingR", "BlackKingR"], Dagaz.Model.drawRes);
-  view.addPieces(["d0", "d1", "d2", "d3", "d4", "d5", "d6", "d7", "d8", "d9", "plus", "minus", "question"]);
-  view.addPieces(["db", "dw", "ub", "uw"]);
+    view.addPiece(["WhitePawn", "WhiteKnight", "WhiteBishop", "WhiteRook", "WhiteQueen", "WhiteKing"], Dagaz.Model.drawPiece);
+    view.addPiece(["BlackPawn", "BlackKnight", "BlackBishop", "BlackRook", "BlackQueen", "BlackKing"], Dagaz.Model.drawPiece);
+    view.addPiece(["WhitePawnR", "BlackPawnR", "WhiteKnightR", "BlackKnightR", "WhiteBishopR", "BlackBishopR", "WhiteRookR", "BlackRookR", "WhiteQueenR", "BlackQueenR", "WhiteKingR", "BlackKingR"], Dagaz.Model.drawRes);
+    view.addPieces(["d0", "d1", "d2", "d3", "d4", "d5", "d6", "d7", "d8", "d9", "plus", "minus", "question"]);
+    view.addPieces(["db", "dw", "ub", "uw"]);
 }

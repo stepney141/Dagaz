@@ -388,6 +388,12 @@ var drawPiece = function(ctx, region, pos, x, y) {
 }
 
 View.prototype.addPiece = function(name, draw) {
+  if (_.isArray(name)) {
+      _.each(name, function(n) {
+         this.addPiece(n, draw);
+      }, this);
+      return;
+  }
   var piece = {
       n: name,
       h: document.getElementById(name),
