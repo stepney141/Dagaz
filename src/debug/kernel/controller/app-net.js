@@ -7,7 +7,7 @@ var STATE = {
 
 var SERVICE  = "http://127.0.0.1:3000/api/";
 var USERNAME = "root";
-var PASSWORD = "root";
+var PASSWORD = "joker";
 var WAIT_FRAME = 100;
 
 var once = true;
@@ -151,6 +151,16 @@ var refresh = function() {
   });
 }
 
+var getSid = function() {
+  var str = window.location.search.toString();
+  var result = str.match(/[?&]sid=([^&]*)/);
+  if (result) {
+      return result[1];
+  } else {
+      return "";
+  }
+}
+
 var getSession = function() {
   if (auth === null) return;
   if (session !== null) return;
@@ -164,7 +174,15 @@ var getSession = function() {
      },
      success: function(data) {
          if (data.length > 1) {
-             alert('Sess: Too many sessions!');
+             var sid = getSid();
+             if (sid) {
+                 data = _.map(data, function(s) {
+                      return s.id = sid;
+                 });
+             }
+         }
+         if (data.length != 1) {
+             alert('Sess: No session!');
              return;
          } else if (data.length == 1) {
              session = data[0];
