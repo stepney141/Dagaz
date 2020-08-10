@@ -7,7 +7,7 @@ var STATE = {
 
 var SERVICE  = "http://127.0.0.1:3000/api/";
 var USERNAME = "root";
-var PASSWORD = "joker";
+var PASSWORD = "root";
 var WAIT_FRAME = 100;
 
 var once = true;

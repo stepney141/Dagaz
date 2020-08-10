@@ -9,13 +9,10 @@ Dagaz.Model.checkVersion = function(design, name, value) {
 }
 
 Dagaz.Model.moveToString = function(move) {
-  var r = "";
-  for (var i = 0; i < move.actions.length; i++) {
-       if ((move.actions[i][0] === null) && (move.actions[i][1] !== null)) {
-           r = Dagaz.Model.posToString(move.actions[i][1][0]);
-       }
+  if ((move.actions.length > 0) && (move.actions[0][1] !== null)) {
+      return Dagaz.Model.posToString(move.actions[0][1][0]);
   }
-  return r;
+  return "";
 }
 
 var go = Dagaz.Controller.go;
@@ -82,14 +79,28 @@ var capture = function(move, group) {
    });
 }
 
-var change = function(move, board, group, dame) {
+var change = function(move, board, group, dame, stop) {
    _.each(group, function(pos) {
+        if (pos == stop) return;
         var piece = board.getPiece(pos);
         if (piece !== null) {
             piece = piece.setValue(0, dame);
             move.movePiece(pos, pos, piece);
         }
    });
+}
+
+var getPlayer = function(board, pos, stop) {
+   var r = board.player;
+   if (pos != stop) {
+       var piece = board.getPiece(pos);
+       if (piece !== null) {
+           r = piece.player;
+       } else {
+           r = null;
+       }
+   }
+   return r;
 }
 
 var CheckInvariants = Dagaz.Model.CheckInvariants;
@@ -121,13 +132,6 @@ Dagaz.Model.CheckInvariants = function(board) {
                                     enemies.push(q);
                                });
                                dame.push(p);
-                           } else {
-                               var g = [ p ];
-                               expand(design, board, piece.player, g, []);
-                               _.each(g, function(q) {
-                                    enemies.push(q);
-                               });
-                               change(move, board, g, value - 1);
                            }
                        }
                    } else {
@@ -138,33 +142,35 @@ Dagaz.Model.CheckInvariants = function(board) {
            expand(design, board, board.player, group, dame);
            if (captured.length > 0) {
                capture(move, captured);
-               var friends = [];
-               _.each(captured, function(e) {
-                   _.each(design.allDirections(), function(dir) {
-                       var p = design.navigate(board.player, e, dir);
-                       if ((p !== null) && (_.indexOf(group, p) < 0) && (_.indexOf(friends, p) < 0)) {
-                            var g = [ p ]; var d = [];
-                            expand(design, board, board.player, g, d, captured);
-                            _.each(g, function(q) {
-                                friends.push(q);
-                                var piece = board.getPiece(q);
-                                if ((piece !== null) && (piece.player == board.player)) {
-                                     piece = piece.setValue(0, d.length);
-                                     move.movePiece(q, q, piece);
-                                }
-                            });
-                       }
-                   });
-               });
            } else {
                if (dame.length <= 1) {
                    move.failed = true;
                    return;
                }
            }
-           change(move, board, group, dame.length - 1);
            var piece = move.actions[0][2][0].setValue(0, dame.length - 1);
            move.actions[0][2] = [ piece ];
+           var done = [];
+           _.each(design.allPositions(), function(p) {
+                if (_.indexOf(done, p) >= 0) return;
+                var player = getPlayer(board, p, pos);
+                if (player === null) return;
+                var dame = []; var group = [p];
+                for (var i = 0; i < group.length; i++) {
+                     _.each(design.allDirections(), function(dir) {
+                          var q = design.navigate(1, group[i], dir);
+                          if ((q === null) || (_.indexOf(group, q) >= 0)) return;
+                          var x = getPlayer(board, q, pos);
+                          if ((x === null) || (_.indexOf(captured, q) >= 0)) {
+                              if (_.indexOf(dame, q)) dame.push(q);
+                              return;
+                          }
+                          if (x != player) return;
+                          group.push(q);
+                     });
+                }
+                change(move, board, group, dame.length, pos);
+           });
       }
   });
   CheckInvariants(board);
