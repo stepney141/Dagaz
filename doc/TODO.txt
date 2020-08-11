@@ -1,210 +1,2832 @@
-п»ї- РЎС‚РѕР»Р±РѕРІС‹Рµ С€Р°С€РєРё
-  - РҐСЂР°РЅРёС‚СЊ СЃС‚РµРє РІР·СЏС‚С‹С… С„РёРіСѓСЂ РІ С‡РёСЃР»РѕРІРѕРј (РёР»Рё СЃС‚СЂРѕРєРѕРІРѕРј) Р·РЅР°С‡РµРЅРёРё Р°С‚СЂРёР±СѓС‚Р°
-    - РўРѕ Р¶Рµ РґР»СЏ РјР°РЅРєР°Р»
-  - РџРµСЂРµРїРёСЃС‹РІР°СЏ С…РѕРґ Р·Р°РјРµРЅСЏС‚СЊ РІР·СЏС‚РёСЏ РїСЂРµРІСЂР°С‰РµРЅРёСЏРјРё РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ Р°С‚СЂРёР±СѓС‚РѕРІ
-  - РљР°СЃС‚РѕРјРЅРѕ РѕС‚СЂРёСЃРѕРІС‹РІР°С‚СЊ С„РёРіСѓСЂС‹ РІРѕ view РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ Р·РЅР°С‡РµРЅРёСЏ Р°С‚СЂРёР±СѓС‚Р°
-    - РўРѕР»СЊРєРѕ РІРµСЂС…РЅСЏСЏ Рё РєСЂР°Р№ СЃР°РјРѕР№ РЅРёР¶РЅРµР№ С„РёРіСѓСЂС‹
-    - РЎС‚РѕР»Р±РёРє С„РёРіСѓСЂ, СЃРѕСЃС‚РѕСЏС‰РёР№ РёР· РїРѕР»РѕСЃРѕРє
-    - РЎС‚РѕР»Р±РёРє СЃРїСЂР°РІР° РѕС‚ С„РёРіСѓСЂС‹ (СЃ РѕР±СЏР·Р°С‚РµР»СЊРЅРѕР№ РёРЅРґРёРєР°С†РёРµР№ РґР°РјРѕРє)
+- Игры
+  - https://ru.wikipedia.org/wiki/Французское_таро
 
-- AI
-  - Doubutsu Shogi
-    - РџСЂРµР¶РґРµРІСЂРµРјРµРЅРЅРѕ РїСЂРёР·РЅР°С‘С‚ РїРѕСЂР°Р¶РµРЅРёРµ (СЃРј. Р»РѕРі + 0001.log)
+- dagaz-full
+  - app-full-v1
+    - Конфигурирование пользовательского графа перехода между статусами (матрица переходов + обработчики)
+    - Поддержка view-full
+    - Для разделения реакции клика на пустую и заполненную позиции использовать callback
+      - При вызове callback из кастомных обработчиков code события можно менять
+      - Окончательное решение о приёме события принимает app, возвращая результат из callback
+  - view-full
+    - Доработать
+      - API для опроса содержимого позиции со стороны app
+    * Регионы
+      * Относительное позиционирование
+      * Z-order
+      * Всплывающие диалоги
+      * Графические ресурсы интерфейса
+      * Кнопки
+      * Прокрутка содержимого регионов по X и Y (поддержка окна отсечения)
+      * Поддержка примитивов генерации сеток (для изменения координат позиций при автоповороте доски)
+    - Обработка событий
+      - Мышь (кнопки, позиционирование, колесо)
+      - Клавиатура
+      - Кастомные события (индикация очерёдности хода, подсветка позиций)
+      - Поддержка сброса фигур
+    * Кастомное отображение
+      * Расположения регионов
+      * Размещения позиций (для автоповорота доски)
+      * Фигур и подсветки
+      * Регинов интерфейса
+    - Анимация
+      * Перемещение фигур
+        * Одновременное перемещение (в том числе, набор группы как в Abalone)
+        * Перемещение по сложным траекториям
+      * Сброс и захват фигур
+      * Поддержка составных ходов
+  - DTC prototype (v1)
+    - Режим Hot Seat
+      * Автоповорот доски
+    - Управление разделением и слиянием фигур
+      * Кастомный регион интерфейса
+  - app
+    - Загрузка нескольких моделей (статусы)
+      - Редактор позиций
+      - Игра
+      - Анализ
+      - AI (модель игры для бота может отличаться от игровой)
+    - Состояния приложения
+      - Связь состояний с моделями
+      - Переходы между состояними с сохранением позиции
+    - Взаимодействие с сервером
+  - DTC
 
-- Move List
-  - РЎРµРІРµСЂРЅС‹Рµ С€Р°С€РєРё
-    - northern-extension РЅРµ СЂР°Р±РѕС‚Р°РµС‚ 
-      - РїСЂРµРІСЂР°С‰РµРЅРёРµ "РЅР° РјРµСЃС‚Рµ" РЅРµ СЃС‡РёС‚Р°С‚СЊ С…РѕРґРѕРј (РµСЃР»Рё СЌС‚Рѕ С‡СѓР¶Р°СЏ С„РёРіСѓСЂР°)
-  - Damone
-    - РџСЂРё РЅРµСЃРєРѕР»СЊРєРёС… РІРѕР·РјРѕР¶РЅС‹С… С…РѕРґР°С… СЃ СЃРѕРІРїР°РґР°СЋС‰РёРј С‡Р°СЃС‚РёС‡РЅС‹Рј С…РѕРґРѕРј, РґРѕР»Р¶РµРЅ СЃСЂР°Р±Р°С‚С‹РІР°С‚СЊ smart-move
-  - Abalone
-    - Р“СЂСѓРїРїРѕРІРѕР№ (РїРѕР»РµСЂРµС‡РЅС‹Р№) С…РѕРґ РЅРµСЃРєРѕР»СЊРєРёС… С„РёРіСѓСЂ
-      - Р•СЃР»Рё РёРјРµРµС‚СЃСЏ Р±РѕР»РµРµ РѕРґРЅРѕРіРѕ РІР°СЂРёР°РЅС‚Р° С…РѕРґР°
-      - РџРѕРјРµС‡Р°С‚СЊ С„РёРіСѓСЂС‹ Р·Р°РґРµР№СЃС‚РІРѕРІР°РЅРЅС‹Рµ РІ С…РѕРґРµ (РєР»РёРєРѕРј)
-      - РџСЂРё РєР»РёРєРµ РЅР° С†РµР»РµРІРѕРµ РїРѕР»Рµ - РІС‹РїРѕР»РЅСЏС‚СЊ С…РѕРґ
-      - РџСЂРё РєР»РёРєРµ РЅР° СЃС‚Р°СЂС‚РѕРІРѕРµ РїРѕР»Рµ РЅРµ РІС…РѕРґСЏС‰РµРµ РІ РѕРґРЅСѓ РёР· РіСЂСѓРїРї - СЃР±СЂРѕСЃ РїРѕРјРµС‚РѕРє
+- app-net
+  - Поддержка sound-manager
+  - Анимация перемещений (шахматы)
+    - WAIT статус
+  - Поддержка составных ходов (шашки)
 
-- Tenjiku Shogi
-  - РћРїС‚РёРјРёР·РёСЂРѕРІР°С‚СЊ MoveList РїРѕ Р±С‹СЃС‚СЂРѕРґРµР№СЃС‚РІРёСЋ (РґРµРјРѕРЅ + РєРѕСЂРѕР»СЊ)
-    - РћС‚Р»РѕР¶РµРЅРЅР°СЏ РіРµРЅРµСЂР°С†РёСЏ СЃРѕСЃС‚Р°РІРЅС‹С… С…СЂРґРѕРІ?
-  - РќРµ СЂР°Р±РѕС‚Р°РµС‚ РїСЂРµСЂС‹РІР°РЅРёРµ СЃРѕСЃС‚Р°РІРЅРѕРіРѕ С…РѕРґР° РїРѕ pass-partial
+- jQuery
+  - https://jquery.com/download/
+  - https://jquery-docs.ru/
+  - https://habr.com/ru/post/38208/
+  - https://habr.com/ru/post/80858/
+  - https://habr.com/ru/post/31239/
+  - https://habr.com/ru/post/52201/
+  - https://anton.shevchuk.name/javascript/jquery-for-beginners-ajax/
+  - https://stackoverflow.com/questions/14010851/set-request-header-jquery-ajax
+  - https://learn.javascript.ru/fetch
+
+- dagaz-server
+  - todo
+    - поддерживать игры без ограничения по времени
+  - requirements
+    - Просмотр начатых и завершённых партий (session-manager)
+    - Подключение к начатой партии в качестве наблюдателя (session-manager отключен)
+    - Персональные вызовы на партию
+    - Назначение ботов в качестве игроков (ходы бота также передаются с клиента на сервер)
+  - Is it possible for you to create a menu button for the pass button? The options need to be
+    - Pass
+    - Offer Draw
+    - Resign
+
+- Escalation
+  - http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=2546
+  - http://www.mayhematics.com/p/gpjournal_07.pdf
+
+- Tibetian Checkers
+  - prototype
+    - https://www.youtube.com/watch?v=PbtGh3MJ9h4
+
+- Nyout
+  - prototype
+    - https://skyruk.livejournal.com/216114.html
+
+- Sahkku
+  - prototype
+    - https://skyruk.livejournal.com/288965.html
+
+- Column Checkers
+  - ai
+    - https://ru.wikipedia.org/wiki/Столбовые_шашки
+
+- Wehrschach
+  - https://de.wikipedia.org/wiki/Wehrschach
+  - https://fellhuhn.com/index.php?page=wehrschach.rules
+  - https://www.boardgamegeek.com/boardgame/194735/kerak
+
+- Ludo
+  - prototype
+    - https://skyruk.livejournal.com/215193.html
+    - https://skyruk.livejournal.com/225466.html
+    - https://skyruk.livejournal.com/218067.html
+    - https://skyruk.livejournal.com/215478.html
+
+- Games
+  - https://www.boardgames.com/boardgame/komikan
+
+- Chess Go
+  - variants:
+    - Колесница может камни перед ней стоящме сдвинуть вперед себя
+    - Пушка сзади себя стоящий камень забросить вперёд себя
+  - invariant
+    - ?setup=+3;0:2;;7:2;+5;0:2+1;6:2;0:2+1;+38;0:1+5;+2;0:1;+1;0:1;;0:1;+2;7:1;;0:1;5:1;0:1;;&turn=0&reserve=500,5,2,2,2,1,2,0,;500,5,2,2,2,2,1,0,
+  - Bug: Даёт вывести советника из окружённой группы
+    - ?setup=0:2;;0:2+1;0:1+2;;0:1;0:2+1;;0:2;0:1;;0:1+2;0:2;1:1;0:2;6:2;0:2;6:1;0:1;6:1;0:2;0:1+2;0:2;0:1;7:2;0:2+1;1:2;0:1;1:2;0:1+2;0:2;+1;0:2;0:1;0:2;0:1+1;7:1;0:1;0:2+1;;0:2+2;6:2;0:1;0:2;+1;0:2+1;1:1;0:1+2;0:2+2;;0:2+1;0:1+1;0:2+1;+2;&turn=1&reserve=500,3,2,2,2,2,0,0,;500,3,2,2,2,2,0,0,
+  - setups
+    - ?setup=0:2;;0:2+1;0:1+2;;0:1;0:2+1;;0:2;0:1;;0:1+2;0:2;1:1;0:2;6:2;0:2;0:1+1;6:1;0:2;0:1+2;0:2;6:1;7:2;0:2+1;1:2;0:1;1:2;0:1+2;0:2;+1;0:2;0:1;0:2;0:1+1;7:1;0:1;0:2+1;;0:2+2;6:2;0:1;0:2;+1;0:2+1;1:1;0:1+2;0:2+2;;0:2+1;0:1+1;0:2+1;+2;&turn=0&reserve=459,3,2,2,2,2,0,0,;458,3,2,2,2,2,0,0,
+    - ?setup=0:2;;0:2+1;0:1+2;;0:1;0:2+1;;0:2;0:1;;0:1+2;0:2;0:1;0:2+2;0:1+2;0:2;0:1+2;;0:1;0:2+3;0:1;0:2;0:1+2;0:2;+1;0:2;;0:2;0:1+3;0:2+1;;0:2+3;0:1;0:2;+1;0:2;;0:2;0:1+2;0:2+2;;0:2;0:1+2;0:2+1;+2;&turn=0&reserve=460,5,2,2,2,2,2,1,;460,5,2,2,2,2,2,1,
+    - ?setup=0:1;;0:1;+6;7:1;0:1;1:2;+4;0:1+1;0:2;0:1;+45;0:2+3;+4;0:2;;7:2;;&turn=1&reserve=500,5,2,2,2,2,2,0,;500,4,2,2,2,2,2,0,
+    - ?setup=0:1;;0:1;+6;7:1;;1:2;+4;0:1+1;0:2;0:1;+6;0:1;+37;0:2+3;+4;0:2;;7:2;;&turn=1&reserve=500,5,2,2,2,2,2,0,;500,4,2,2,2,2,2,0,
+
+- Сянцы втёмную
+  - https://magazeta.com/new-chess/
+
+- Игры
+  - http://www.fishka.spb.ru/fishka2menu/igroteka.html
+  - http://sports.sina.com.cn/go/2006-11-17/10342572567.shtml
+  - https://www.google.com/search?q=%E4%B8%89%E8%BB%8D%E6%A3%8B&rlz=1C1ASUM_enRU815RU815&sxsrf=ALeKk027sOf0aYlrh3_oRpBY59-eTDH2Qg:1595577577950&tbm=isch&source=iu&ictx=1&fir=Wz31eF6cNgPH2M%252C8qQYWES6OXiWPM%252C_&vet=1&usg=AI4_-kRUIt3weDpfFCQBf8uL49E9Mbh1hg&sa=X&ved=2ahUKEwjg6frVteXqAhXvkYsKHdBmADMQ9QEwA3oECAoQIw&biw=1920&bih=937#imgrc=DJB4h1V9dpRW_M
+
+- Ludii
+  - https://ludii.games/details.php?keyword=Dice%20Shogi 
+  - https://ludii.games/details.php?keyword=Fevga
+  - https://ludii.games/details.php?keyword=Ja-Jeon-Geo-Gonu
+  - https://ludii.games/details.php?keyword=L%20Game
+  - https://ludii.games/details.php?keyword=Phantom%20Go
+  - https://ludii.games/details.php?keyword=Pong%20Hau%20K%27i
+  - https://ludii.games/details.php?keyword=Plakoto
+  - https://ludii.games/details.php?keyword=Ad%20elta%20stelpur
+  - https://ludii.games/details.php?keyword=Boseog%20Gonu
+  - https://ludii.games/details.php?keyword=Chameleon
+
+- Littera Chinese Chess
+  - invariant
+    - ?setup=3:2;1:2;4:2;2:2;5:2;6:2;0:2+1;6:2;5:2;0:2+1;1:2;3:2;2:2;4:2;2:2;0:2+1;6:2;4:2;1:2;3:2;5:2+1;4:2;2:2;3:2;0:2+1;6:2;1:2;4:1;2:1;3:1;1:1;0:1+1;5:1;6:1;1:1;3:1;5:1;4:1;2:1;6:1;0:1+2;6:1;1:1;0:1;3:1;5:1;4:1;2:1;0:1+1;6:1;5:1;2:1;4:1;1:1;3:1;7:2+1;;7:2+3;;;7:2+1;;7:2;;7:2+1;+2;;+14;7:1;+2;;;7:1;+1;7:1;;7:1;;7:1;+1;7:1+1;+1;7:1+2;;7:1+1;7:2;7:1+1;&turn=0
+
+- 2d-view-full
+  - Области прокрутки
+    - Отсечение
+    - Смещение
+    - Кнопки для управления смещением
+
+- Тибетские шашки
+  - prototype
+
+- Dara
+  - https://en.wikipedia.org/wiki/Dara_(game)
+
+- Division Tower Chess
+  - extension
+    - Ход может освобождать фигуру противника
+      - В тех случаях когда ход столбиком запрещён
+  - cases
+    - ?setup=+3;5:2;+6;0:2;+38;0:1;+6;5:1;+18;&turn=0
+    - ?setup=+3;5:2;+6;0:1;+38;0:2;+6;5:1;+18;&turn=0
+    - ?setup=+3;5:2;+5;0:1;+10;1:2;+22;2:1;+2;0:2;+7;5:1;+18;&turn=0
+    - ?setup=+3;5:2;+12;0:2;+30;6:1=1;+8;5:1;+2;1:2;+14;&turn=0
+    - ?setup=+2;1:2;1:1;+1;5:2;+3;0:1;+16;1:2;+2;2:1;+24;5:1;+18;&turn=0
+    - ?setup=5:2;+3;1:2;+11;1:2;;2:2;+3;0:1;;0:1;+32;5:1;+17;&turn=0
+    - ?setup=5:2;+16;1:2;+6;0:1+1;+34;5:1;+15;&turn=0
+    - ?setup=+2;5:2;+22;2:1;+6;0:1;+8;2:1;+16;5:1;+15;&turn=0
+    - ?setup=+3;5:2;+21;4:1;+13;1:1;+1;2:1;+16;5:1;+15;&turn=0
+  - prototype
+    * Не более 2 фигур на одном поле (столбиком)
+    * Фигуры составные (1 - пешка, 2 - конь, 3 - слон, 4 - ладья, 5 - ферзь, 6 - король)
+    * Правила хода и принадлежность игроку определяются верхней фигурой
+    * Фигура из своего резерва может быть помещена под свою одиночную фигуру (кроме короля)
+    * Верхняя пешка с последней линии может (освобождая фигуру под ней)
+      * Повысить верхнюю фигуру своего одноцветного столбика
+      * Понизить верхнюю фигуру противника (кроме короля), подавившую свою фигуру
+  - extension
+    * При ходе на короля, король убирается с доски (запретить ход на своего короля?)
+    - Верхнюю фигуру можно делить, выполняя ход (если это не последний король)
+    * Верхнюю фигуру можно снимать, выполняя ход (если это не открывает вражескую фигуру)
+    * Можно ходить всем столбиком из двух фигур (нельзя ходить на другой столбик)
+    * При ходе на 2 своих фигуры или ходе своим столбиком на свою фигуру
+      - Шашки нижней и средней фигуры перераспределяются (вариативно) составляя фигуру остающююся внизу
+      * Остаток шашек нижней фигуры идёт в свой резерв (как новая фигура)
+      * Если средняя фигура повышена до короля, верхняя фигура также уходит в резерв
+    * При ходе на столбик (или столбиком), внизу которого фигура противника, нижняя фигура уходит в резерв противника
+    * Зажатая фигура противника уходит в резерв
+  - invariant
+    - Атакованный король не может рокироваться и ходить на свои фигуры
+    ? Если последний король под шахом, угроза королю должна быть утранена (если это возможно)
+    - Запрещено понижать фигуру, атакующую последнего короля
+    - Запрещено повышать свою фигуру если в результате она атакует последнего короля противника
+  - goal
+    * Если по завершении хода на доске нет своего короля - поражение
+    - 3-кратное повторение позиции - поражение
+    - После 50 не результативных ходов побеждает тот у кого больше шашек (с учётом резерва)
+
+- https://vn.foospb.ru/lekcii/
+
+- Словари (китайский)
+  - https://bkrs.info/
+  - nciku.com
+
+- Tobito
+  - https://castux.github.io/tobito/
+
+- Jasir
+  - ai
+    - Dagaz.AI.selector = true
+  - model
+    - Unlike Jasir, the archers in Jarmo can move forward, backward, laterally on any marked line. In Jasir, archers cannot move backwards.
+    - Archers that make it to the other player's first row can no longer move backward to re-enter the rest of the board behind them. They must stay there for the remainder of the game unless they are captured by an enemy archer that moves backwards onto it.
+    - As mentioned earlier, a marked archer is one that has captured at least one enemy archer. When a marked archer reaches the enemy's first row, they allow for the player to take back one of their captured pieces from the enemy player, and place it on any available hole on the player's first row. If no holes are available on that turn, then the player must wait to place it on their next opportunity.
+    - In order to avoid some unnecessary draws, a player cannot move an archer back and forth between two holes in four consecutive turns.
+
+- Russian Checkers
+  - ?setup=+2;0:2;+5;0:2;;0:2;;0:2;+1;0:1;;0:2;;0:2;+1;0:2;;0:1;+2;0:2;+1;0:1;;0:1;;0:2;;0:2;+1;0:1;+7;0:1;;0:1;+7;0:1;;&turn=0
+
+- Cubic Chess
+  - символ хода наверное лучше по центру клетки делать ровно
+
+- Mancala
+  - https://boardgamegeek.com/thread/2451582/new-game-silos
+
+- CHEX
+  - prototype
+
+- Chess
+  - http://www.fishka.spb.ru/artickles/igroteka/oborotni/311.htm
+
+- Constitutional Draughts
+  - https://www.facebook.com/photo.php?fbid=4162346007170445&set=gm.611049006188404&type=3&av=2021281731522625&eav=AfaaUjA85k6oEhUzXoVhwyhnURigCFOfF646DWMIiGvXvA6ZyxOFWpxM5QQN0TBkDvkPMAHCtyUE6vgusYjXoWk5&theater
+  - ?setup=+15;1:1;+25;0:1;+11;1:2;+5;0:1;+35;&turn=1
+
+- app-v5
+  - Dagaz.Controller.passTurn не работает для fighting-chess-board
+
+- Backgammon
+  - https://acedrexbackgammon.wordpress.com/
+- Monkey
+  - https://www.facebook.com/groups/AbstractNationX/permalink/606581829968455/
+
+- Camelot
+  - heuristic-ai
+    - grand-camelot
+  - cases
+    - file:///E:/work/Dagaz/src/debug/games/checkers-like/camelot.htm?setup=+17;1:1;+38;1:2;+2;1:2;0:2+3;+1;1:2;+4;1:2;0:2+2;+12;0:2;+17;1:1;0:1+3;1:1;+4;1:1;0:1+5;+62;&turn=0
+    - file:///E:/work/Dagaz/src/debug/games/checkers-like/camelot.htm?setup=+61;1:2;0:2+5;1:2;+4;1:2;0:2+1;;0:2;1:2;+9;0:2;+10;1:1;+6;1:1;0:1+3;+5;1:1;0:1+5;1:1;+61;&turn=0
+    - file:///E:/work/Dagaz/src/debug/games/checkers-like/camelot.htm?setup=+61;1:2;0:2+5;1:2;+4;1:2;0:2+1;;0:2;1:2;+8;1:1;+11;0:2;+6;1:1;0:1+3;+5;1:1;0:1+5;1:1;+61;&turn=0
+- Halma
+  - heuristic-ai
+    - file:///E:/work/Dagaz/src/debug/games/races/halma-8x8.htm?setup=+4;0:1+1;0:2;+4;0:1+1;+5;0:1+1;+17;0:2+1;;0:2;0:1;+2;0:2+1;+4;0:2+2;0:1+1;+2;&turn=0
+    - file:///E:/work/Dagaz/src/debug/games/races/halma-10x10.htm?setup=0:1+1;+7;0:1+3;+5;0:1+2;+6;0:1+2;+8;0:1;+24;0:2;+5;0:2+3;+6;0:2+3;+5;0:2+3;&turn=0
+    - file:///E:/work/Dagaz/src/debug/games/races/halma-10x10.htm?setup=0:1+2;+6;0:1+3;+5;0:1+2;+6;0:1+2;+34;0:2;+6;0:2+3;+5;0:2+3;+5;0:2+3;&turn=0
+- Bushi
+  - ai
+- Traverse
+  - ai
+- Jeson Mor
+  - ai
+    - Бонусы строить динамически, в зависимости от фазы игры
+
+- Suffragetto
+  - не распознает изолированную фигуру (и во многих случаях это привело к материальным потерям)
+  - не распознает ценность "тяжелых" фигур. Советую руководиться приравнением: "тяжелая" фигура = 3 "легкие" фигуры при материальном равенстве или перевесе, а при материальном недостатке "тяжелая" фигура = 1.5 "легкая" фигура
+  - по моему представлению, своей фигурой нельзя перепригывать через занявшие конечную клетку фигуры
+
+- Pay Sho
+  - https://www.youtube.com/watch?v=c4G_hx_mScg
+
+- Игры
+  - https://pinco11.blogspot.com/2020/06/astratti-return-to-camelot.html
+  - https://www.facebook.com/photo.php?fbid=10158354589464854&set=pcb.606581829968455&type=3&av=2021281731522625&eav=AfbbtV43i3lZHFaORvESEzKANFaFaT7RiSsN_lF9TwAbN2U5ZoidHDfXds0evoweZ0y3C1IQ5y8dBBFdg4qZLUCg&theater&ifg=1
+
+- Столбовые шахматы
+  - asln@inbox.ru
+    - https://sites.google.com/site/recreomathematica/home/chess-variants/muskeetervalues
+      - https://www.chessprogramming.org/Simplified_Evaluation_Function
+    - https://musketeerchess.net/games/musketeer/rules/rules-short.php
+    - https://www.kostyor.ru/2-03/chess2-03.php
+    - http://tavreli-chess.ru/правила
 
 - Tafl
-  - Р¤РёРєСЃРёСЂСѓРµС‚ РїРѕР±РµРґСѓ Р±РµР»С‹С… Р·Р° РѕРґРёРЅ С€Р°Рі РґРѕ С†РµР»РµРІРѕР№ РєР»РµС‚РєРё
-    - РР· Р·Р° РёР·РјРµРЅРµРЅРёСЏ РїРѕСЂСЏРґРєР° РёРіСЂРѕРєРѕРІ!
+  - ai
+    - Половина стоимости за возможность взятия следующим ходом
+    - Бонус за возможность достижения цели следующим ходом
 
+- Shen
+  - Возможно зацикливание если оба игрока выбросив кости зашли в тупик
 
-- sgf-ai Р»РѕРІСѓС€РєРё РґР»СЏ РїРµСЂРІРѕРіРѕ РёРіСЂРѕРєР°
-  - РѕС‚РІРµС‚ РЅР° РѕС€РёР±РєРё
-  - РїСЂРѕРІРѕРєР°С†РёРё
+- Lines
+  - Зависает когда остаётся 1-2 поля
+  - Когда появляется цвет, который заканчивает линию, она должна уничтожаться
 
-- AutoPlay РЅР° Node.js
-  - Р Р°СЃРїР°СЂР°Р»Р»РµР»РёС‚СЊ РЅРµСЃРєРѕР»СЊРєРѕ РёРіСЂРѕРІС‹С… СЃРµСЃСЃРёР№ РЅР° РѕС‚РґРµР»СЊРЅС‹Рµ РїРѕС‚РѕРєРё?
+- dagaz-v2
+  - Примитивы определения досок
+    - Автоматическое формирование addDirection, addPosition
+    - Формирование addPlayer?
 
-- Z2J  
-  - Walhall
-    - РќРµ СЂР°Р±РѕС‚Р°РµС‚ Р°Р»СЊС‚РµСЂРЅР°С‚РёРІРЅРѕРµ РѕРїСЂРµРґРµР»РµРЅРёСЏ Valkyrie slide Рё jump
-  - Chessence
-    - РќР°РїСЂР°РІР»РµРЅРёСЏ СЃ РїРѕР·РёС†РёР№ СЂРµР·РµСЂРІР° СЃС„РѕСЂРјРёСЂРѕРІР°Р»РёСЃСЊ РЅРµРєРѕСЂСЂРµРєС‚РЅРѕ
-  - Tenjiku Shogi
-    - z2j-a РІРјРµСЃС‚Рѕ РёРјС‘РЅ С„РёРіСѓСЂ (РІРѕСЃРєР»РёС†Р°С‚РµР»СЊРЅС‹Р№ Р·РЅР°Рє РІ РёРјРµРЅРё)
-  - Konane
-    - capture РІ second-move РЅРµ С„РѕСЂРјРёСЂСѓРµС‚СЃСЏ
-  - Fanorona
-    - РљРѕРЅСЃС‚СЂСѓРєС†РёРё (on-board? dir) РЅРµ СЃР»РёРІР°СЋС‚ С€Р°Р±Р»РѕРЅС‹ (РІ РѕС‚Р»РёС‡РёРё РѕС‚ РіРѕР»С‹С… РЅР°РїСЂР°РІР»РµРЅРёР№)
-    - РџСЂРѕРІРµСЂРёС‚СЊ РіРµРЅРµСЂР°С†РёСЋ (p? (opposite dir))
-    - Р РµР°Р»РёР·Р°С†РёСЏ С…РѕРґР° РІР·СЏС‚Р°СЏ РёР· Walhall РЅРµ СЂР°Р±РѕС‚Р°РµС‚
-  - EleHunt
-    - Internal Error (Extract positions) 2 grid-Р°?
+- Suffragetto
+  - exchange
+    - ?setup=+15;0:2;+15;0:2;+9;0:1;+4;1:2;+6;0:1;+1;0:2;+4;0:2;+6;0:1;;0:1;;0:2;+3;0:2;+1;1:2;0:2;+3;0:2+1;+5;0:2;0:1;+3;0:2;+4;0:2;+4;0:1;+8;1:2;+5;1:1;+4;0:2;+9;1:1;+2;0:1;+11;0:1;+11;1:1;+2;0:1;;1:1;0:1;;0:1;+10;0:1;+4;0:1;;1:2;;0:2;+5;1:1;+5;0:2+1;1:2;+6;0:1;+15;0:1;+15;0:1;+15;&turn=1
+    - ?setup=+15;0:2;+15;0:2;+15;0:2;+6;1:1;+7;0:2;+8;0:1;;0:1;+3;0:2;+1;1:2;0:2+1;+6;0:2+1;1:2;;0:2;+6;0:1;;1:1;+5;0:2;+15;1:2;+4;0:1;+4;1:2;0:2;+2;0:2;+15;0:2;0:1;+2;0:2;+10;0:2;0:1;;1:1;;0:1;;0:1;+3;0:1;+4;0:1;+2;1:1;+2;1:2;;0:1;+5;0:1;+4;0:1;+2;0:1;+5;0:1;+15;0:1;+15;1:1;+15;&turn=1
+  - extension
+    - ?setup=+56;0:2;+2;0:2;+9;1:2;0:2+1;+2;0:2;;1:2;+5;1:2;0:2+4;1:2;0:2+2;;0:2;1:2;+14;0:2;+13;0:1;+15;0:2;+16;0:1;+16;1:1;0:1;+3;1:1;0:1+4;1:1;0:1+2;+8;1:1;0:1+1;+3;0:1;1:1;+9;0:1;+2;0:1;+56;&turn=1
+
+- WASM
+  - https://www.mattkeeter.com/projects/pont/
+
+- games
+  - https://chessillusion.blogspot.com/
+  - http://mindsports.nl/index.php/the-pit/628-pommel 
+  - http://mindsports.nl/index.php/the-pit/1019-slyde
+  - http://mindsports.nl/index.php/the-pit/551-square-off
+  - http://mindsports.nl/index.php/the-pit/553-swish-squeeze
+  - http://mindsports.nl/index.php/arena/storisende/747-storisende-rules
+  - http://mindsports.nl/index.php/dagaz/993-vexed?start=1
+
+- EVOLUCHESS
+  - ai
+    - Не ест ферзя
+      - ?setup=4f4;1b3;1a2;1d2;1e2;1f2;1g2;1h2;0e1;5f1;6h1;-0a8;3b8;4e8;2g8;6h8;1b7;1d7;1g7;1a6;5d1;;&turn=0&reserve=0,0,0,0,0,0,0,;0,0,0,0,0,0,0,
+      - ?setup=4d6;1b3;1a2;1d2;1e2;1f2;1g2;1h2;2d1;0e1;5f1;6h1;-0a8;3b8;4e8;2g8;6h8;1b7;1d7;1g7;1a6;1f4;5b1;;&turn=0&reserve=0,0,0,0,0,0,0,;0,0,0,0,0,0,0,
+      - ?setup=4d8;1b3;1a2;4b2;1d2;1e2;1f2;1g2;1h2;2d1;0e1;5f1;6h1;-0a8;3b8;4e8;2g8;6h8;1b7;1c7;1d7;1g7;1a6;3d6;1f4;5b1;;&turn=0&reserve=0,0,0,0,0,0,0,;0,0,0,0,0,0,0,
+    - Ставит фигуры на атакуемые не защищённые поля
+      - ?setup=4h5;1e2;0e1;-4a8;6b8;3c8;0e8;1a7;1b7;1f7;&turn=0&reserve=0,0,0,0,0,0,0,;0,0,0,0,0,0,0,
+      - ?setup=4h5;1b4;1d4;1e4;4d3;1a2;1c2;1f2;1g2;1h2;2b1;3c1;0e1;3g1;6h1;-4a8;6b8;3c8;4d8;0e8;3f8;2g8;1a7;1b7;1f7;1c6;1e6;5h6;;&turn=0&reserve=0,0,0,0,0,0,0,;0,0,0,0,0,0,0,
+  - wall
+    - Стена может вытеснить короля за пределы его домашней зоны
+  - setup
+    - ?setup=1a2;1b2;1c2;1d2;1e2;1f2;1g2;1h2;5a1;2b1;3c1;4d1;0e1;4f1;3g1;6h1;-4a8;6b8;3c8;4d8;0e8;3f8;2g8;5h8;1a7;1b7;1c7;1d7;1e7;1f7;1g7;1h7;;&turn=0&reserve=0,0,0,0,0,0,0,;0,0,0,0,0,0,0,
+  - session-manager
+    - Превращения и расщепления не поддерживаются в нотации сохранения ходов
+      - ?setup=1e4;1a2;1b2;1c2;1d2;1f2;1g2;1h2;5a1;2b1;3c1;4d1;0e1;4f1;3g1;6h1;-4a8;6b8;3c8;4d8;0e8;3f8;2g8;5h8;1a7;1b7;1c7;1d7;1f7;1g7;1h7;1e5;;&turn=0&reserve=0,0,0,0,0,0,0,;0,0,0,0,0,0,0,
+  - common-setup-v2, common-setup-v3 (перенести в bugs.txt)
+    - Bug: Не очищается reserve при загрузке (только для Wall, в случае если reserve для пешек не указан)
+      - ?setup=2:2;5:2;3:2;4:2;0:2;4:2;3:2;6:2;1:2+7;+31;1:1+7;6:1;3:1;4:1+1;0:1;3:1;5:1;2:1;+4;&turn=0&reserve=0,0,0,0,0,0,;0,0,0,0,0,0,
+      - ?setup=1a2;1b2;1c2;1d2;1e2;1f2;1g2;1h2;6a1;2b1;3c1;5d1;0e1;4f1;3g1;4h1;-6a8;3b8;4c8;4d8;0e8;5f8;2g8;3h8;1a7;1b7;1c7;1d7;1e7;1f7;1g7;1h7;;&turn=0&reserve=0,0,0,0,0,0,0,;0,0,0,0,0,0,0,
+  - prototype
+    - https://www.youtube.com/watch?v=5yGfO6C4iAY
+
+- Chess
+  - ai
+    - Не предсказывает вилки (chess.log)
+      - d1d4: ?setup=0d5;0e5;2c3;2f3;0a2;0b2;0c2;0f2;0g2;0h2;1a1;3c1;4d1;5e1;3f1;1h1;-1b8;3c8;4d8;5e8;3f8;1g8;0a7;0b7;0c7;0d7;0e7;0f7;0g7;0h7;2b4;2g4;;&turn=0
+        ? В эвристики добавить поиск не атакуемых вилок
+    - Встаёт на атакованное поле, не видит вилок (charge-light-brigade.log)
+      - h2h4: ?setup=0d5;0a2;0b2;0c2;0f2;0g2;0h2;4b1;4d1;5f1;4g1;-2b8;2c8;2d8;5e8;2f8;0a7;0b7;0c7;0d7;0e7;0f7;0g7;0h7;2b6;2g6;2e4;;&turn=0
+      - d4f6: ?setup=4d4;4d3;0a2;0b2;0c2;0f2;5f1;4g1;-2b8;2c8;2d8;5e8;2f8;0a7;0b7;0c7;0d7;0e7;0f7;0g7;0h7;2f6;2g2;;&turn=0
+        - fast-chess-ai убрал: f1g2
+      - f1e1: ?setup=0d5;0h4;0a2;0b2;0c2;0f2;0g2;4b1;4d1;5f1;4g1;-2b8;2c8;2d8;5e8;2f8;0a7;0b7;0c7;0d7;0e7;0f7;0g7;0h7;2b6;2g6;2d2;;&turn=0
+        - fast-chess-ai: d1d2
+      - d4g7: ?setup=4d4;4d3;0a2;0b2;0c2;0f2;5g2;4g1;-2b8;2c8;2d8;5e8;2f8;0a7;0b7;0c7;0d7;0e7;0f7;0g7;0h7;2g4;;&turn=0
+        - fast-chess-ai: g1d1
+
+- DeJarik
+  - http://ru.starwars.wikia.com/wiki/%D0%94%D0%B5%D0%B6%D0%B0%D1%80%D0%B8%D0%BA
+
+- Tab
+  - prototype
+    - https://www.ancientgames.org/tab/
+    - https://en.wikipedia.org/wiki/T%C3%A2b
+    - https://skyruk.livejournal.com/290069.html
+    - https://www.youtube.com/watch?v=wIF86O-EgMw
+
+- Шашки
+  - variants
+    - https://vk.com/club66188626
+    - https://skyruk.livejournal.com/335640.html
+
+- Checkers
+  - session-manager
+    - Не работает в режиме совместимости с common-setup (загрузка setup, если session восстановить не удалось)
+      - setup загружается раньше session и изменяет начальную доску, после чего session не может быть применён
+  - editor
+
+- Reversi
+  - editor
+    - Как фиксировать значение селектора?
+- Go
+  - editor
+    - ko как постоянные фигуры для композиций (требуется переделка extension)
+
+- MarGo
+  - doc
+    - https://web.archive.org/web/20120131185339/http://www.cameronius.com/games/margo/
+  - extension
+    - ?setup=0:1=1;+7;0:1=1;0:2=9;+6;0:1=1;0:2=9;+6;0:1=1;0:2=9;+6;0:1=1;0:2=9;+6;0:1=1;0:2=9;+6;0:1=1;0:2=9;+6;0:1=1;0:2=9;+6;0:1=1;0:2=9;+210;&turn=1
+    - ?setup=+21;0:1=4;+6;0:1=4;;0:1=4;+5;0:2=2;0:1=2;0:2=2;+6;0:2=3;+234;&turn=1
+    - ?setup=+21;0:2=5;0:1=3+1;+4;0:2=5;;0:2=5;0:1=3;+4;0:1=3;;0:2=5;0:1=3;+5;0:1=3+2;+232;&turn=0
+    - ?setup=+23;0:2=5;0:1=3+1;+5;0:1=3+1;0:2=5;+6;0:2=5+1;+5;0:1=3+2;+49;0:1=3;+14;0:2=5;+163;&turn=0
+    - ?setup=+5;0:1=3;0:2=5;0:1=3;+5;0:1=3;0:2=5;0:1=3;+4;0:2=5+2;0:1=3;+6;0:2=5;+59;0:1=3;+188;&turn=0
+    - ?setup=+5;0:1=3+2;+5;0:1=3;0:2=5;0:1=3;+5;0:2=5;;0:2=5;+6;0:2=5;+51;0:2=5;0:1=3;+195;&turn=0
+    - ?setup=+4;0:1=3;0:2=5;0:1=3;+5;0:1=3;0:2=5+2;+5;0:1=3+2;+5;0:1=3+2;+49;0:1=3;+7;0:2=5;0:1=3;+5;0:2=5+1;+52;0:2=5;+125;&turn=0
+  - editor
+    - app-v5 показывает drop только у края доски
+  - goal
+  - ai
+
+- Frisian Checkers
+  - https://www.frisiandraughts.com/frisian%20draughts/learn.html?fbclid=IwAR2h5BvogjqsqEaxJX8k2iwXV2hOlgs054Ba_atfazzqvgI__jZjMVQKFPU
+
+- Acnos
+  - https://boardgamegeek.com/boardgame/227501/acnos
+
+- Dragonchess
+  - Всплывающие подсказки о фигурах tooltip-ами
+
+- Charge of the Light Brigade
+  - Перекодировать setup в go с учётом поворота доски, для сохранения состояния при переключении
+
+- Chase
+  - prototype
+
+- http://ancientchess.com/commander-chess/index.htm
+
+- Terrace
+  - view
+    - hint-ы по верхнему уровню не работают (пропадают фигуры при перемещении через них)
+
+- Resurrection Chess
+  - invariant
+    - Bug: ?setup=1g8;0d4;0e4;0c3;2d3;2e3;0f3;0a2;0b2;0h2;3c1;5e1;3f1;4d14;1a11;-1a8;2b8;3c8;5e8;3f8;0a7;0b7;0c7;0d7;0e6;0f6;0g4;2g16;1h12;;&turn=0
+  - ai
+    - heuristics
+      - Не оживлять фигуры под угрозой
+      - Стоимость слона суммируется со стоимостью призраков на полях того же цвета (уменьшить собственную стоимость)
+  - setup
+    - ?setup=0d4;0e4;0c3;0f3;0a2;0b2;0g2;0h2;3c1;5e1;3f1;4d14;1a11;2d11;2e11;1h11;-1a8;2b8;3c8;5e8;3f8;2g8;1h8;0a7;0b7;0c7;0d7;0e7;0f7;0g7;0h7;;&turn=0
+
+- http://abrobecker.free.fr/chess.htm
+
+- Traverse
+  - setup persistence
+    - Не поддерживается модулем traverse-setup
+
+- Genesis Chess
+  - drop ботом фигур на поля диалога (X1, X2, X3, X4)
+  - session-manager persistence не сохраняет результат превращения фигур
+
+- Turkish Dama
+  - prototype
+    - https://tinyurl.com/sp828ov
+  - Редактор
+    - Начальная позиция
+    - SGF
+  - Тренажёр
+    - Выполнение SGF, автоматический откат ошибочных ходов
+
+- Progresssive chess
+  - editor
+  - session persistence
+    - Сохранять selector для первоначальной расстановки
+
+- Shatranj
+  - Сохранять selector при выполнении New Game
+  - Либо учитывать начальную расстановку в режиме сохранения "session"
+
+- Chess sandbox
+  - prototype
+
+- move-list-v4
+  - Abalone
+    - Проверить работу Dagaz.Model.closure
+  - Ordo
+    - Автоматическое расширение blink при единственном возможном ходе
+      - ?setup=;0:2;;0:2;+1;0:2;+1;0:2+12;+1;0:2;+2;0:2+1;+3;0:1;0:2;0:1+3;+1;0:1+1;+5;0:1+1;+7;0:1+1;+1;0:1+2;;0:1+1;+1;0:1+1;+1;0:1+1;;&turn=0
+
+- common-setup-v2
+  - Переключать "session" на "setup" при загрузке из url
+
+- Renju
+  - editor
+    - Не запоминает цвет при переключении на белый камень
+
+- Gala
+  - ab-ai-v5
+
+- Renju
+  - https://ru.wikipedia.org/wiki/Рэндзю
+    - Открытыми могут быть только сплошные четвёрки, для которых возможна постановка камней на свободные пункты, соседние с крайними камнями четвёрки
+    - Если зависимая позиция фол другого хода, не фиксировать фол
+  - https://docs.google.com/spreadsheets/d/1L3lw_jF4RvpJHNQFyBXcqKm4AEGkq2Ay_Y6E_nrQGpQ/edit?fbclid=IwAR3VjAC3WQUaFN8j6J4Y555x5KtxFD4SZuHn5MUkkN7Py_6atTn3wPQyS6o#gid=612572596
+  - https://www.gambler.ru/%D0%A0%D1%8D%D0%BD%D0%B4%D0%B7%D1%8E
+  - ai
+    - forced-ai
+      - Renju (поиск последовательности угроз)
+    - sgf-ai
+- Ninuki Renju
+  - advisor работает некорректно для 2-го хода
+
+- Morocco
+  - https://mancala.fandom.com/wiki/Um_ed-Dyar
+  - https://mancala.fandom.com/wiki/Koumma
+  - https://mancala.fandom.com/wiki/Um_Laarais
+  - https://mancala.fandom.com/wiki/Krur
+  - https://mancala.fandom.com/wiki/Tihbat
+
+- Magyar Checkers
+  - goal
+    - Отсутствие возможности хода - поражение
+      - Не учитывать ходы с перемещением тайлов
+      - Не учитывать отсутствие возможности перемещения тайла на втором полуходе
+  - model
+    - pass-turn=forced работающий только на фазе перемещения тайлов
+  - magyar-ko
+    - Запрет перемещение тайла в последний раз перемещённого противником
+      - Поддержка двухфазных ходов
+  - ai
+    - Каждый ход состоит из двух полуходов (второй полуход может быть пропущен)
+    - Максимизируем оценку после завершения хода противника
+
+- Kamisado
+  - ai
+    - Зависает (заменить бота?)
+    - Преждевременно признаёт поражение (kamisado.log)
+
+- Ohvalhu
+  - 2d-view
+    - TypeError: piece is undefined 2d-view.js:399:17 (ohvalhu.log)
+    - 2d-view-v2 анимация выполняется медленее
+
+- animate-redo (отключен)
+  - Bug: Не актуализируется view (рассинхронизация)
+    - ?setup=;3:2;0:2;2:2;+2;1:2;+3;1:1;3:1;+1;2:1;0:1;+1;&turn=1
+    - undo/redo
+  - Обеспечить сохранение последующей истории
+
+- Platform Chess
+  - Поддержка common-setup-v3 (фраза turn) с platform-setup
+  - Поддержка turn в common-setup
+
+- Chess
+  - ai
+    - Улучшить оценку
+      - Подставляет фигуры без защиты (los-alamos-chess.log)
+  - chess-proto
+    - Генерация ходов в расширении
+    - Режим генерации только ходов со взятием
+- Chessence
+  - ab-ai-v5
+    - Матрица бонусов зависящая от соседей (определить типы, затем выбрать матрицы)
+
+- Chaturanji
+  - extension
+    - Обмен королей
+      - ?setup=6e5;5d3;5a2;5b2;5c2;7d2;8c1;4d1;-5b8;7e8;8a6;5b6;6c6;5b5;9r4;3x1;-8f8;6h8;5e7;5g7;5h7;5f6;7h6;9r1;-5f4;5f3;8h3;4f2;5g2;7h2;5g1;6h1;;&turn=7
+      - ?setup=6a5;5a2;5b2;5c2;5d2;7b1;8c1;4d1;-6a8;5b8;7a7;5b7;8a6;5b6;5b5;9r4;0x1;3x2;-4e8;8f8;7g8;6h8;5e7;5f7;5g7;5h7;-5g4;4h4;5g3;8h3;5g2;7h2;5g1;6h1;;&turn=6
+  - bug
+    - Не всегда удаляется кость при выполнении хода (не очищается view)    
+  - common-setup-v2
+    - Сохранять значения доски
+
+- Narde
+  - https://en.wikipedia.org/wiki/Tables_(board_game)
+
+- Tablan
+  - dice
+    - Розыгрыш начального хода
+- Ur
+  - dice
+    - Розыгрыш начального хода
+
+- ab-ai-v5
+  - Shatranj
+  - Shabel
+  - Brandubh
+    - ab-ai-v5
+      - Почему не выполняет взятие?
+        - ?setup=+2;0:1+1;+4;0:2;0:1;+1;0:1+1;;0:2;+2;0:1;;0:2;1:2;0:2;;0:1;+2;0:2;0:1;;0:1;+1;0:1;0:2;+4;0:1+1;+2;&turn=1
+      - Бонус за вход в клещи (не рядом с троном)
+        - Сортировать тихие ходы по эвристикам
+      - Не определяет ситуацию захвата короля
+        - Не учитывать стоимость королей в eval
+        - Учитывать атаки на королей в eval (с 4 сторон)
+          - Если следующим ходом один из атакующих не берётся
+  - Jungle
+    - Крыса не нападает на слона
+  - Rithmomachia
+  - Столбовые шашки
   - Platform Chess
-    - Link [up] from Position [z2j-l] already exists
-    - РќРµ СЃС„РѕСЂРјРёСЂРѕРІР°Р»СЃСЏ capture РґР»СЏ boom
+    - Отключать отсечения в AB при малом количестве фигур противника
+      - ?setup=+1;0:2+1;;0:2+1;;0:2;0:1;0:2;0:1+4;+5;7:2;+21;1:2;+4;1:2;+7;6:2;+16;7:1;+4;&turn=0
+  - eval
+    - Мобильность
+    - Угрозы
+    - Защита
+  - common
+    - Регулировать MAX_AB_VARS в зависимости от количества фигур противника
+    - Передавать MAX_AB_VARS и MAX_QS_VARS через url
+    - Проверить: ходы должны генерироваться только при необходимости
+    - Хранить ctx.cache в зависимости от board.level (для удаления устаревших данных)
+    - Требуется ли ссылка на board в 
+    - Разделить кэши apply и ab ctx.cache?
+    - Перейти от рекурсивных алгоритмов к итеративным
+    - Разделить атакующие и тихие ходы по режимам, генерировать только атакующие в qs (если не шах)
+    - acn виснет
+  - eval
+    - see
+    - Мобильность
   - Doubutsu Shogi
-    - РќРµРєРѕСЂСЂРµРєС‚РЅРѕ СЃС‚СЂРѕРёС‚ СЃРёРјРјРµС‚СЂРёРё: (symmetry Red (n s) (s n) (th tn)) -> [0, 2, 1, 1, 2, 3, 4, 5, 6, 10, 7]
+    - ai
+      - Проверить see
+  - Atari Go
+    - ai
+      - Сортировка ходов по паттернам в MovePicker
+      - Играть более агрессивно, приоритет разрезаниям
+    - opening
+      - Запрещать ходы под атари на второй линии
+      - Захват в атари на второй линии
+      - Захват в гэта
+      - Захват с ситэ
+  - BanQi
+  - Toronto
+  - Mini XiangQi
+    - goal
+      - ab-ai-v5 не видит ход ведущий к мату, в отсутствии checkGoals
+        - https://glukkazan.github.io/xiangqi/mini-xiangqi.htm?setup=6e2;-5c6;6d6;5e6;3g4;4d2;4f2;;&turn=1
+    - Для Co Tuong La
+      - https://www.facebook.com/groups/2518172548394101/
+  - Chess
+    - Использовать acn
+    - Null move - отключаемый на уровне настроек
+  - Kamisado
+    - Форсировать до достижении цели
+    - Оценивать мобильность и открытые линии
+  - Gauntlet
+  - Chessence
+  - Shakti
+  - Dunsany's Chess
+    - goal
+      - dunsanys-chess.htm?setup=0h5;-5e8;3f8;0b7;0e7;0f6;3g6;2d5;4d4;1a2;1c2;;&turn=1
+  - Pawn Wars
+    - Пешки которые никто уже не может перехватить оценивать как победу
+      - pawn-wars-8x8.htm?setup=0a4;0c4;0d4;0e4;0h4;0b3;0g3;-0b6;0d6;0g6;0a5;0c5;0e5;0h5;;&turn=1
+      - 5x4: g4 c5, f4 d5, e4 c4, dxc4 dxe4 
+    - При оценке учитывать нежелательные ходы (то есть ходы под непосредственную атаку) как штрафы
+  - goal
+    - Обрабатывать знак goal (оценка всегда с точки зрения текущего игрока)
+    - Должен выбираться ход ведущий к достижению цели
+      - pawn-wars-5x5.htm?setup=0a3;0c3;0a2;0e2;0d1;-0b5;0c4;0d4;0e3;;&turn=0
+    - Должен предотвращаться ход ведущий к цели противника
+      - pawn-wars-5x5.htm?setup=0b4;0d3;0a2;0c1;0e1;-0c5;0d4;0e4;;&turn=1
+    - Ход завершающий игру должен выбираться немедленно
+      - pawn-wars-5x5.htm?setup=0c3;0d2;0e1;-0a5;0d5;0c4;0e4;0b2;;&turn=1
+  - Turnover
+    - Кэшировать расстановку виртуальных составных фигур
+
+- Ur
+  - advisor
+    - Передавать значение таймаута через url
+  - resources
+    - Поправить outline-ы в стеках
+  - heuristic: 100
+    - Выход с доски: 1000
+    - Звезда: 500
+    - Ход на a2: 400
+    - Бой превращённой фигуры: 400
+    - Выход с доски с a2: 300
+    - Бой обычной фигуры: 200
+    - Захват g2: 100
+    - Захват фигуры противника в стопке: 50
+    - Захват вершины стопки: 20
+    - Ход на безопасное поле: 10
+    - Ход с превращением: -10
+  - eval
+    - После завершения всех ходов игрока
+    - Штрафы за фигуры под угрозой
+    - Бонусы за вывод фигур с доски
+    - На h2 при наличии атакующей фигуры
+    - На 2-3 перед противником на атакуемых полях
+    - Стоимость фигуры зависит от позиции
+    - Бонусы за звёзды в шаговой доступности (включить в матрицу стоимостей)
+  - view
+    - Подправить outline-ы
+  - promotion
+    - Проставлять узловые точки перемещения
+      - complete-partial=true не поддерживается app-v4 (для drop-а взятой фигуры)
+      - hints в 2d-view-v2 ломает анимацию при прохождении занятой позиции
+        - ?setup=1:2+2;2:2+5;+10;2:2;+9;2:1;+19;2:1+5;;&turn=7
+  - prototype
+    - Начинает игрок выбросивший единицу
+
+- Surakarta
+  - Zobrist может использоваться для хэширования не только позиций, но и ходов (дублирующие ходы)
+
+- http://www.quadibloc.com/other/boaint.htm
+
+- Races
+  - http://www.ludoteka.com/barricade.html
+  - https://skyruk.livejournal.com/218067.html 
+  - https://skyruk.livejournal.com/225466.html
+  - https://skyruk.livejournal.com/216114.html 
+  - https://skyruk.livejournal.com/215478.html
+  - https://skyruk.livejournal.com/215193.html
+
+- Hanoi
+  - http://cambolbro.com/games/hanoi/
+
+- Games
+  - http://mindsports.nl/index.php/dagaz/805-starweb  
+  - http://mindsports.nl/index.php/dagaz/865-rotary
+  - http://mindsports.nl/index.php/dagaz/824-storisende  
+  - http://mindsports.nl/index.php/dagaz/956-mu-velox 
+  - http://mindsports.nl/index.php/dagaz/944-morelli
+  - http://mindsports.nl/index.php/dagaz/868-macbeth
+  - http://mindsports.nl/index.php/dagaz/856-glass-bead-game
+  - http://mindsports.nl/index.php/dagaz/968-minimancala
+  - http://mindsports.nl/index.php/dagaz/801-explocus
+  - http://mindsports.nl/index.php/dagaz/954-dominions
+  - http://mindsports.nl/index.php/dagaz/921-cyclix
+  - http://mindsports.nl/index.php/dagaz/800-crossfire
+  - http://mindsports.nl/index.php/dagaz/882-congo
+  - http://mindsports.nl/index.php/dagaz/972-breakthrough
+  - http://mindsports.nl/index.php/dagaz/836-ayu
+  - http://mindsports.nl/index.php/dagaz/970-jump-sturdy
+
+- Stations
+  - Использовать графический диалог для поворота фигур
+
+- Reversi
+  - Подсказки высвечивать опционально
+
+- Ладейная змейка
+  - prototype
+    - serserpoloz@gmail.com
+
+- Rithmomachia
+  - goal (1748 (433), 1312 (328))
+    - De Corpore (by body): >= 15
+    - De Bonis (by goods): >= 1315, 984
+    - De Honore (by honour): >= 1315, 984 | < 15
+    - Victoria Magna (great victory): три фигуры (на территории противника) в арифметической прогрессии
+    - Victoria Major (greater victory): четыре фигуры так, чтобы имелись две (но не более) групп из трёх фигур
+    - Victoria Excellentissima (most excellent victory): четыре фигуры так, чтобы имелось все три вида прогрессии
+  - bugs
+    - Взятие пирамиды (rithmomachia.log)
+    - При бое фигурами пирамиды учитывать их тип, а не использовать общий бой пирамидой
+    - При проверке ambush и equality учитывать перекрытие прямого хода другими фигурами
+    - Не восстанавливает ход партии по SGF в сборке для MindSports
+    - Очистка в off-board не работает при загрузке из common-setup (число ищется в массиве строк rithmomachia-ambush:53)
+  - variants
+    - http://www.boardspace.net/rithmomachy/english/rules.html
+    - https://en.wikipedia.org/wiki/Rithmomachy
+    - https://commons.wikimedia.org/wiki/Category:Rithmomachia
+    - https://www.youtube.com/watch?v=3lSIh1Xl_k0
+    - http://cescoreale.com/fr/project/rithmomachia-un-gioco-medievale-di-strategia-e-matematica/
+  - eval
+    - Веса для количества и суммы очков
+    - Количество фигур и очков у белых и чёрных различно
+  - extension
+    - ambush 
+      - check 
+        - ?setup=+15;47:2;46:2;+3;45:2;41:2;111:2=5=19=27=41=42;44:2;29:2;28:2;26:2;27:2;43:2;;31:2;;14:2;13:2;12:2;11:2;24:2+1;+2;10:2;9:2;8:2;+1;30:2;+4;40:2;+17;93:1=0=2=16=17=33=34;+7;1:1;2:1;3:1;4:1;+1;16:1;15:1;2:1;5:1;6:1;7:1;22:1;23:1;32:1;35:1;19:1;18:1;20:1;21:1;;37:1;33:1;36:1;+3;38:1;39:1;+15;&turn=1
+        - ?setup=+15;47:2;46:2;+3;45:2;41:2;;44:2;29:2;28:2;26:2;27:2;;40:2;31:2;30:2;14:2;13:2;+6;10:2;+4;111:2=5=19=27=41=42;;49:1=0=16;8:2;43:2;+4;15:1;+7;24:2;+2;35:1;32:1;+2;22:1;37:1;23:1;+1;1:1;2:1;3:1;4:1;+1;16:1;;2:1;5:1;6:1;7:1;+3;19:1;18:1;20:1;21:1;+1;33:1;36:1;+3;38:1;39:1;+15;&turn=0
+      - Опциональное взятие кусками одной и той же пирамиды (с проверкой ходов)
+      - Если опция отключена, проверять, что не piece	
+
+- Three.js
+  - https://customizer.github.io/three.js-doc.ru/three.js-ru.htm
+  - https://habr.com/ru/post/477956/
+
+- Hawalis и все манкалы с продолжением посева
+  - Проверить не будет ли интерфейс быстрее с app.js (добавить ko)
+- Dakon
+  - Проверить первый ход против бота из крайней правой лунки 
+    - завершение в амбаре, должен быть второй ход
+    - ответ бота не продолжается
+- Abalala'e
+  - Проверить правильность продолжения посева
+
+- Russian Backgammon
+  - Проверить продолжаются ли бонусные броски при выбрасывании дубля после бонуса?
+- Backgammon
+  - variants
+    - Плакото (Тапа)
+      - Блот запирается, а не сбивается в бар
+      - Самая нижняя фишка в начальном слоте – материнская (её запирание означает поражение)
+    - Кавказские
+      - В своём доме запрещено прятаться или выбрасывать после боя
+    - Ядерные
+      - В этой игре присутствует дополнительная фишка, называющаяся "атомная бомба"
+      - Вначале игры атомная бомба не принадлежит никому
+      - В любой момент игры каждый из игроков может объявить "атомный взрыв"
+      - При этом все одинокие шашки (блоты) считаются побитыми и ставятся на бар, но "бомба" передается на сторону противника
+  - sound
+    - Не проигрывается звук на втором перемещении бота
+  - extension
+    - Пропускать бросок кубиков в ситуациях "закрытой доски"
+  - session-manager
+    - Не работает
+  - ai
+    - Создаёт и оставляет блоты без причины (в том числе под прямые удары)
+    - Не двигаем отставшую (в том числе запертую) фишку вперёд (иногда приоритетнее чем уход из под боя)
+    - Стараться не освобождать первые позиции в доме (блокировать противника на баре)
+    - Вместо того, чтобы загнать фишки в дом (или подтянуть остатки), переставляет фишки в доме
+
+- Ludii
+  - https://ludii.games/downloads.php
+  - https://github.com/Ludeme/LudiiExampleAI
+  - http://cambolbro.com/cv/index.html
+  - http://www.di.fc.ul.pt/~jpn/ludae/index.htm
+
+- Tavola delle stagioni
+  - extension
+    - Выводить фигуры из дома с самой дальней позиции, если все фигуры в доме и отсутствуют другие ходы (isFuzzy = true)
+      - file:///E:/work/Dagaz/src/debug/games/races/tavola.htm?setup=0:3+2;+13;0:3+5;+10;0:1+9;+6;0:1;+15;0:4+2;+30;0:4;+15;0:2+1;+14;0:2+4;+11;0:2+3;+63;0:4+4;+11;0:1;+32;0:4;+83;0:3;+15;0:2;+15;0:3;+83;0:4+1;+21;0:3;+22;6:2;+4;&turn=14
+  - ai
+  - il libro dei giochi di Alfonso X il saggio
+    - ?setup=0:1+2;+13;0:1+2;+13;0:1+1;+14;0:1+1;+31;0:1+1;+14;0:4;+15;0:4+1;+14;0:4+2;+13;0:4+1;+14;0:4;+15;0:4+2;+13;0:2;+15;0:2+1;+14;0:2+1;+31;0:2+3;+12;0:2+2;+13;0:3;+32;0:3+1;+14;0:3+5;+10;0:3+1;+14;0:3;+134;1:1;2:1;4:1;&turn=3
+    - http://www.gamestormsiena.it/2019/05/17/el-mundo-o-la-tavola-delle-4-stagioni-gioco-medievale/
+    - http://www.elenafrascaodorizzi.it/artheablog/creazione-di-un-ludus-duodecim-scriptorum-giocato-nellimpero-romano/
+
+- Redu
+  - extension
+
+- Эпизоды
+  - Morris
+    - Сбросы и перемещения
+      - Начальная расстановка
+        - Short Assize
+        - Sittuyin
+        - Klin Zha
+        - Fangqi
+      - Маскарад сброса
+        - Mine Sweeper
+        - Ultimate Tic Tac Toe
+    - Визуализация захватов
+    - Сложное Ко
+      - Go
+      - Stoical Go
+      - Renju
+        - Визуализация сброса
+          - Reversi
+      - Визуализация полей сброса
+        - Sittuyin
+          - Управляемый сброс
+        - Game of Generals
+        - Stratego
+      - Игры втёмную
+        - Dark Chess
+  - Rithmomachy
+    - Разделяемые фигуры
+      - Stavropol Checkers
+      - Neutral King
+      - Renge Shogi
+      - Pasang
+      - Banqi
+    - Кооперативное взятие
+      - Cinc Camins
+      - Nam Dinh
+      - Bizingo
+      - Hasami Shogi
+      - Go
+      - Reversi
+      - Ming Mang
+      - Archimedes
+      - Euclid
+      - Ultima
+      - Cyvasse
+    - Многовариантные завершения
+      - Shatar
+      - Pasang
+  - Ur
+    - Вектора перемещений
+      - Gala
+      - Kolowisi Awithlaknannai
+    - Автоматическое завершение хода
+      - Shen
+      - Gravity Chess
+      - Momentum Chess
+    - Промежуточные позиции
+      - Surakarta
+      - Terrace
+      - Senet
+      - Ur
+      - Lines
+        - goTo для выполнения бонусного хода
+  - Backgammon
+    - Кости
+      - Oblong Shatranj
+    - Ход несколькими фигурами
+      - Five Tigers
+      - Nine Tile Cyvasse
+    - Изменяемый порядок ходов
+      - Shen
+      - Lines
+    - Изменяемая геометрия
+      - Luzhanqi
+        - Смещение target marks
+      - Backgammon
+        - Пружинное смещение позиций (дискретное изменение высоты столбиков)
+  - Magyar Dama
+    - Составные фигуры
+      - Turnover
+      - Column Checkers
+      - Tchuka Ruma
+      - Kauri
+      - L-game
+    - Составное поле
+      - Platform Chess
+      - Gate
+    - Большие фигуры
+      - Elehunt
+
+- Martian Chess
+  - ai
+    - Проверять может ли взявшая фигура атаковать дружественную следующим ходом
+    - Если есть преимущество по очкам, форсировать завершение игры
+  - prototype
+    - https://en.wikipedia.org/wiki/Martian_chess
+    - http://www.wunderland.com/icehouse/MartianChess.html
+
+- session-manager
+  - animate-redo
+    - Не сбрасывать историю при выполнении анимации хода
+    - Перестала работать анимация redo в debug/russian-checkers
+
+- Klin Zha
+  - prototype
+    - http://www.klinzha.com/zog/
+    - https://www.chessvariants.com/shape.dir/klinzha/klinzha.html
+
+- Lines
+  - view
+    - Анимировать drop-ы и capture (в том числе и для random-фазы)
+
+- Checkers
+  - deferred-captures
+    - https://glukkazan.github.io/checkers/russian-checkers-problem.htm?setup=+7;0:2;+2;0:2;;0:2;+12;0:2;;0:2;+1;0:2;+11;0:2;+7;0:1;+7;&turn=0
+    - https://glukkazan.github.io/checkers/international-checkers-board.htm?setup=+31;0:2;;0:2;+31;0:2;+7;0:2;+5;0:2;+4;1:1;+9;&turn=0
+
+- Netwalk
+  - seed
+    - 1690
+
+- Column Checkers
+  - resources
+    - Подправить изображение шашек
+
+- https://sdin.jp/browser/board/yoninshogi/
+
+- Gravity Chess
+  - view
+    - Рассинхронизация после падения фигур (0001.png)
+  - invariant
+    - Король не может взять ладью или отойти на G2 (0002.png)
+  - ai
+    - Отфильтровывать бессмыссленные ходы с падением на то же место
+
+- Luzhanqi
+  - view
+    - Останавливать blink при deselect-е фигуры, если она ещё не начала движение
+    - Убрать "мерцание" при взятии фигуры (две фигуры на одном поле)
+  - release
+    - Разобрать критику на Хабре
+  - model
+    - detect-loops не помогает для инженеров
+      - ?setup=1:2;3:2;6:2;;2:2;;12:2;10:2;8:2;+2;4:2;;7:2;3:2;6:2;;10:2+1;;5:2;+1;9:2;+2;8:1;+1;3:1;+2;6:1;1:1;3:1;7:1;+1;8:1;;10:1+1;;9:1;;0:1;6:1;7:1;+3;10:1;11:1;+2;2:1;8:1;7:1;&turn=25
+        - В Chinese Checkers работает:
+          - file:///E:/work/Dagaz/src/debug/games/races/chinese-checkers.htm?setup=+15;0:2;0:4;+12;0:4;+7;0:3;+1;0:5;0:2;;0:5;;0:5;+5;0:3;+13;0:5;0:3;;0:4;+6;0:6;0:3;0:1;0:2;;0:6;+8;0:4;0:3;0:1;;0:6;0:3;+4;0:5;0:2;0:1;0:5;+10;0:2;;0:6;0:2;;0:6;;0:6;+7;0:4+1;+10;0:1+1;+11;0:1;+2;&turn=0
+  - view
+    - Bug: При взятии инженером мины составным ходом пропадает фигура инженера (2d-view-v2, move-list-v3, app-v4)
+      - ?setup=1:2;3:2;6:2;3:2;7:2;2:2;11:2;10:2;;7:2;;8:2;4:2;8:2;6:2;0:2;6:2;5:2;10:2+1;0:1;5:2;;7:2;+8;4:1;5:1;6:1;1:1;3:1;7:1;8:1;;8:1;;10:1+1;3:1;9:1;+1;6:1;7:1;4:1;2:1;9:1;2:1;10:1;11:1;+3;8:1;7:1;&turn=25
+        - app-v4 не поддерживает составные ходы
+  * goal
+    - ?setup=1:2;3:2;6:2;3:2;7:2;2:2;11:2;10:2;8:2;7:2;;8:2;;0:1;0:2;;6:2;5:2;8:1;6:2;;5:2;;7:2;+8;4:1;5:1;6:1;1:1;3:1;7:1;8:1;;8:1;;10:1+1;3:1;9:1;+1;6:1;7:1;4:1;2:1;9:1;2:1;10:1;11:1;+4;7:1;&turn=25
+  * setup
+    - ?setup=1:2;3:2;6:2;3:2;7:2;2:2;11:2;10:2;;7:2;;8:2;4:2;8:2;6:2;;6:2;5:2;10:2+1;;5:2;;7:2;9:2;2:2;0:2;4:2;9:2;8:2;+2;4:1;5:1;6:1;1:1;3:1;7:1;8:1;;8:1;;10:1+1;3:1;9:1;;0:1;6:1;7:1;4:1;;9:1;;10:1;11:1;6:1;5:1;2:1+1;8:1;7:1;&turn=25
+  - prototype
+    * Если фишка-солдат атакует равную по силе фишку, с доски удаляются обе
+    * Слабая фишка считается срубленной, а сильная остаётся на этом поле
+    * Фигура в лагере не может быть атакована
+    * Инженер единственный может обезвредить пехотную мину, не подорвавшись на ней
+    * Граната уничтожает любую фишку при атаке, при этом самоликвидируется тоже
+    * Мина не движется, а при попытке атаковать её уничтожает любую фишку (кроме Инженера)
+    * В северных провинциях Китая не принято удалять фишку-мину, если на ней кто-либо подорвался
+    * Мины должны быть размещены в одном из двух ближних к игроку рядов
+    * Гранаты не могут находиться в первом ряду
+    * Инженер может перемещаться по ЖД путям, выполняя поворот
+    * Части, которые входят в чужой базовый лагерь, не могут быть перемещены.
+    * Когда у игрока «погибает» фельдмаршал, игрок обязан раскрыть местонахождение Флага
+    - Раскрывать вражеские фигуры по завершении игры
+    ? Для выигрыша игрок должен взять захваченный Флаг под захватившую его фишку и доставить этот «бутерброд» к собственному Флагу
+    ? Эта сдвоенная фишка движется обычным порядком, но если противник по пути срубит её и отобьёт свой Флаг, тот возвращается в родную Штаб-квартиру
+    ? Кроме того, в рамках этого варианта правил фишки не теряют подвижности, входя в Штаб-квартиру
+    ? В некоторых частях Китая допускается въезд на гору подвижных частей, перед входом они должны быть расположены на железной дороге вокруг горы. 
+    ? Шахматные фигуры в горном мире не могут атаковать. Части, снятые с горы, могут быть размещены на любой пустой станции на железной дороге вокруг горы. 
+    ? Есть также правила, которые позволяют инженерам входить в гору.
+  - variants
+    - https://zh.wikipedia.org/wiki/%E9%99%B8%E8%BB%8D%E6%A3%8B
+    - https://zh.wikipedia.org/wiki/%E9%99%86%E6%B5%B7%E7%A9%BA%E5%86%9B%E6%A3%8B
+    - https://zh.wikipedia.org/wiki/%E6%B5%B7%E8%BB%8D%E6%A3%8B
+    - https://zh.m.wikipedia.org/wiki/%E4%B8%89%E8%BB%8D%E6%A3%8B
+    - https://baike.baidu.com/item/%E6%A8%A1%E6%8B%9F%E9%99%86%E6%88%98%E6%A3%8B
+    - https://ja.wikipedia.org/wiki/%E8%BB%8D%E4%BA%BA%E5%B0%86%E6%A3%8B
+    - https://baike.baidu.com/item/%E6%9A%97%E5%B8%83%E8%B1%A1%E6%A3%8B
+    - https://zh.wikipedia.org/wiki/%E6%B3%95%E5%9C%8B%E9%99%B8%E8%BB%8D%E6%A3%8B
+    - http://www.ultrastratego.com/alternativerules.php
+  - resources
+    - https://www.ymimports.com/pages/how-to-play-luzhanqi
+    - https://github.com/wongkaho2626/Luzhanqi
+    - https://www.uihere.com/free-cliparts/search?q=xiangqi
+
+- Maka Dai Dai Shogi
+  - ai
+    - Capricorn vs Capricorn + Free-King
+      - ?setup=+8;16:2;+17;14:2;+302;14:1;+29;&turn=0
+  - bugs
+    - Бот съел свою фигуру (1568800582130.log) после undo/redo (session-manager?)
+  - heuristic
+    - В uct-ai не выполняется отсев для отрицательных эвристик
+    - В maxmin-ai-v2 не определена Dagaz.AI.heuristic
+  - ai
+    - Обеспечить кастомизацию стоимости фигур и настроечных параметров ботов
+    - Не проверять invariant при работе бота (на вложенных вызовах)
+  - prototype
+    - http://anubhuuti.com/mdds/
+    - https://vk.com/topic-209372_34463732
+
+- Domino
+  - Пасьянсы
+    - https://books.google.ru/books?id=pxxhDwAAQBAJ&pg=PA103&lpg=PA103&dq=%D0%B4%D0%BE%D0%BC%D0%B8%D0%BD%D0%BE+%D0%BF%D0%B0%D1%81%D1%8C%D1%8F%D0%BD%D1%81+%D0%BD%D0%B0%D1%83%D0%BA%D0%B0+%D0%B8+%D0%B6%D0%B8%D0%B7%D0%BD%D1%8C&source=bl&ots=vYSqcUufji&sig=ACfU3U2dpkhfpx9QSlhGgLUxaNkMVedqOA&hl=ru&sa=X&ved=2ahUKEwiX5MH2_JXjAhWKyqYKHVqQA1IQ6AEwAnoECAkQAQ#v=onepage&q=%D0%B4%D0%BE%D0%BC%D0%B8%D0%BD%D0%BE%20%D0%BF%D0%B0%D1%81%D1%8C%D1%8F%D0%BD%D1%81%20%D0%BD%D0%B0%D1%83%D0%BA%D0%B0%20%D0%B8%20%D0%B6%D0%B8%D0%B7%D0%BD%D1%8C&f=false
+
+- Ohvalhu
+  - prototype
+    - https://skyruk.livejournal.com/342579.html
+    - https://mancala.fandom.com/wiki/Ohvalhu
+
+- Hex
+  - ai
+    - Определение места начального хода
+    - Перекрытие диагоналей
+
+- Stratego
+  - extension
+    - По завершении игры, раскрывать фигуры противника во всех Cloack-играх
+    - Показывать фигуры противника при анимации взятия
+  - setup
+    - file:///E:/work/Dagaz/src/debug/games/races/stratego.htm?setup=2:2;11:2;2:2+1;4:2;11:2;3:2;11:2;0:2;11:2;6:2;2:2+1;11:2;3:2;6:2+1;2:2;11:2;2:2;7:2;3:2;1:2;4:2+1;2:2;5:2;9:2;5:2+1;7:2;3:2;5:2;3:2;7:2;8:2;6:2;8:2;9:2;4:2;+19;7:1;11:1;4:1;3:1;11:1;2:1;1:1;4:1;2:1;11:1;9:1;3:1;6:1;5:1;3:1;2:1;7:1;3:1;11:1;4:1;2:1;6:1;5:1;3:1;6:1;5:1+1;6:1;4:1;11:1;2:1;8:1;2:1+1;7:1;8:1;2:1;10:1;11:1;0:1;&turn=40
+
+- Shatra
+  - prototype
+    - Шатра
+      - Взятия должны поглощать ходы из резерва
+        - ?setup=+23;1:2;+19;2:1;+4;0:2;+12;0:2;+6;1:1;+20;0:1;+1;&turn=0
+      - Приоритеты работают некорректно
+        - Взятие обязательно
+          - ?setup=+23;2:1;+38;0:2;+7;0:2;+20;0:1;+1;&turn=0
+        - Признаёт поражение после заполнения всех целевые поля резерва
+          - ?setup=+1;0:2+1;+19;1:2;+2;0:2+20;0:1;+2;0:1;;0:1+14;+2;1:1;+11;0:1+2;+3;0:1+2;+1;&turn=0
+        - Право Бия при нахождении в чужих воротах (можно отказаться от ударного хода)
+          - ?setup=+23;1:2;+19;2:1;+4;0:2;+12;0:2;+28;0:1;+1;&turn=0
+        - Может прервать цепочку взятий в воротах
+      - Шатра не может заходить в свои ворота и крепость (цепочка взятий дожна прерываться)
+        - ?setup=+23;1:2;+19;0:1;+4;0:2;+12;0:2;+31;&turn=0
+    - Бий
+      - Бий при ударном ходе может не бить, но тогда он обязан сделать другой ход
+        - Только при условии, что у Бия есть рубящий ход
+          - ?setup=+1;0:2+2;+3;0:2+2;+3;0:2+2;+4;1:2;+2;0:2+11;;0:2;+10;0:1;+6;0:2;+10;1:1;+19;0:1;+2;&turn=0
+        - Может прерывать цепочку взятий
+  - goal
+    - Потеря Бия - поражение
+
+- Morris
+  - ai
+    - Не строит тройку, когда есть такая возможность, не препятствует построению тройки
+
+- Shobu
+  - prototype
+    - https://boardgamegeek.com/boardgame/272380/shbu
+    - https://www.boardgamequest.com/shobu-review/
+    - https://www.smirkandlaughter.com/product-page/shobu
+
+- Magnetic games
+  - prototype
+    - https://salardicristian.blogspot.com/p/prototipi-giochi-da-tavolo.html
+
+- Fanorona
+  - Многораундовая игра
+
+- Ultimate Tic-Tac-Toe
+  - goal
+    - Фиксировать ничьи при отсутствии ходов
+
+- Ko Shogi
+  - Bugs
+    - Обратное превращение Twelve-mile fog показывается во view только на его следующем ходу (2d-view-v4?)
+
+- Dagaz
+  - view
+    - При отсутсвии хода выбранной фигурой выполнять короткий blink при её выборе
+
+- Shogi variants
+  - http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=2885
+  - http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=2901
+  - http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=2900
+  - http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=2863
+  - http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=2862
+  - http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=2784
+  - http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=2779
+  - http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=2732
+  - http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=2696
+  - http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=2691
+  - http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=2689
+  - http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=2672
+
+- Dice games
+  - https://en.wikipedia.org/wiki/Category:Tables_games
+  - https://en.wikipedia.org/wiki/Category:Cross_and_circle_games
+  - https://en.wikipedia.org/wiki/Category:Roll-and-move_board_games
+  - https://en.wikipedia.org/wiki/Category:Roll-and-move_board_games
+  
+- Посмотреть
+  - http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=2945
+  - http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=2919
+  - http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=2910
+
+- Dice Chess
+  - prototype
+    - В том числе с тремя кубиками
+
+- 2d-view-v1
+  - Bug
+    - Исчезают пометки целевых полей (трудновоспроизводимо)
+
+- Pilare
+  - heuristic-ai-v5
+    - Продолжать ход пока противник пасует
+    - Вычислять eval по количеству фигур принадлежащих игрокам
+    - Вычислять heuristic по количеству вражеских фигур сменивших владельца
+    - Приближаться к достижимым вражеским фигурам промежуточными ходами
+
+- Shen
+  - cases
+    - file:///E:/work/Dagaz/src/debug/games/races/shen.htm?setup=1:1;0:1;1:1+1;0:2+2;1:2;+53;2:2;+1;2:1;+8;&turn=13
+    - file:///E:/work/Dagaz/src/debug/games/races/shen.htm?setup=0:1;1:1;0:1;1:1;+28;2:1;+19;2:2;+11;2:2;2:1;2:2;2:1;2:2;2:1;2:2;2:1;&turn=8
+    - file:///E:/work/Dagaz/src/debug/games/races/shen.htm?setup=+3;0:2+1;1:2;0:2;+20;2:1;+23;2:2;+11;2:2;2:1;2:2;2:1;2:2;2:1;2:2;2:1;&turn=13
+    - file:///E:/work/Dagaz/src/debug/games/races/shen.htm?setup=+3;0:2+3;2:2;+25;2:1;+19;2:2;+10;2:1;2:2;2:1;2:2;2:1;2:2;2:1;&turn=13
+  - prototype
+    - https://skyruk.livejournal.com/330835.html
+    - https://skyruk.livejournal.com/214033.html
+    - https://skyruk.livejournal.com/238198.html
+    - https://www.youtube.com/watch?v=Wci2P61B-do
+
+- Dagaz
+  - prototype
+    - Ссылки со страниц игр на главную страницу
+
+- view
+  - magic sound проигрывать через метод view с паузой, после завершения анимации предыдущего хода
+- app
+  - при выполнении последующих частичных ходов воспроизводить sound хода повторно
+
+- ai
+  - https://habr.com/ru/post/419725/
+
+- sound-manager
+  - https://css-tricks.com/introduction-web-audio-api/
+  - https://developer.mozilla.org/ru/docs/Web/API/AudioContext
+
+- Игры с контролем времени
+  - Tamsk 
+    - http://www.gipf.com/tamsk/rules/rules.html
+    - Фигуры, изменяющие состояние со временем 
+      - timestamp и state фиксируются в атрибутах при выполнении хода
+      - view учитывает время прошедшее с timestamp при отрисовке
+      - Если прошедшее время больше state - ход фигурой запрещается контроллером
+        - Если не осталось разрешённых ходов - фиксируется поражение
+      - Выполнение хода обновляет атрибуты всех фигур
+  - Pipelines
+  - Crazy Trains
+
+- Oblong Shantranj
+  - resources
+    - Помечать последнюю сходившую фигуру противника
+  - ai
+    - Не берёт фигуры когда есть такая возможность
+  - kernel
+    - pass-move
+      - Исключить срабатывание при отпускании кнопки мыши на той же фигуре
+
+- Go
+  - extension
+    - Bug: ?setup=+123;0:1=5+1;+15;0:1=2;0:2=6;0:1=5;+15;0:2=6;;0:2=7;+14;0:2=9;+1;0:2=7+1;+14;0:2=9;+1;0:2=7;+15;0:2=7+1;+16;0:1=3;+121;&turn=0
+
+- Turnover
+  - app
+    - Не сбрасывать инициированный ход иначе как повторным нажатием на стартовую позицию
+
+- Turnover
+  - Pawn shift + Enemy Pawn: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;+2;0:2;0:1;+2;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;&turn=0
+  - Pawn shift + Enemy Knight: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;+2;1:2;+2;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;+2;0:2;0:1;+2;0:2;+5;0:1;0:2;+5;0:1;0:2;+4;0:1;;&turn=0
+  - Pawn shift + Enemy Bishop: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;+2;1:2;+2;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;+3;0:1;+2;0:2;+5;0:1;0:2;+2;0:2;+1;0:1;0:2;+3;0:1;+1;&turn=0
+  - Pawn shift + Enemy Rook: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;+2;2:2;+2;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;+6;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+4;1:2;1:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;+3;0:1;+2;0:2;+5;0:1;0:2;+1;0:1;+2;0:1;0:2;+6;&turn=0
+  - Pawn shift + Enemy Queen: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;+2;2:2;+2;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;+2;1:2;+2;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;+3;0:1;+2;0:2;+5;0:1;0:2;+2;0:1;+1;0:1;0:2;+6;&turn=0
+  - Pawn shift + Enemy Castle: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;+3;2:2;2:1;+1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;+3;1:2;1:1;+1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;+3;0:2;0:1;+1;0:2;+5;0:1;0:2;+5;0:1;0:2;+3;0:1;+1;&turn=0
+  - Castle leap + Enemy Pawn: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+3;2:1;+1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+3;1:1;+1;1:2;+5;1:1;1:2;+5;1:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+3;0:1;+5;0:2;+1;0:1;0:2;+5;0:1;&turn=0
+  - Castle leap + Enemy Knight: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+3;2:1;+1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+3;1:1;+5;1:2;+1;1:1;1:2;+5;1:1;1:2;+5;1:1;0:2;+4;0:1;;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+3;0:1;+5;0:2;+1;0:1;0:2;+5;0:1;0:2;+5;0:1;&turn=0
+  - Castle leap + Enemy Bishop: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+3;2:1;+1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+3;1:1;+5;1:2;+1;1:1;1:2;+5;1:1;1:2;+5;1:1;0:2;+3;0:1;+1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+3;0:1;+8;0:1;0:2;+5;0:1;0:2;+3;0:2;;0:1;&turn=0
+  - Castle leap + Enemy Rook: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+3;2:1;+5;2:2;+1;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+3;1:1;+8;1:1;1:2;+3;1:2;;1:1;1:2;+5;1:1;0:2;+1;0:1;+3;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+3;0:1;+8;0:1;0:2;+5;0:1;0:2;+3;0:2;;0:1;&turn=0
+  - Castle leap + Enemy Queen: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+3;2:1;+5;2:2;+1;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+3;1:1;+5;1:2;+1;1:1;1:2;+5;1:1;1:2;+5;1:1;0:2;+2;0:1;+2;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+3;0:1;+8;0:1;0:2;+5;0:1;0:2;+3;0:2;;0:1;&turn=0
+  - Castle leap + Enemy Castle: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+3;2:1;+5;2:2;+1;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+3;1:1;+5;1:2;+1;1:1;1:2;+5;1:1;1:2;+5;1:1;0:2;+3;0:1;+1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+3;0:1;+5;0:2;+1;0:1;0:2;+5;0:1;0:2;+5;0:1;&turn=0
+  - Pawn leap + Enemy Pawn: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+2;0:1;+5;0:2;+2;0:1;0:2;+5;0:1;&turn=0
+  - Pawn leap + Enemy Pawn: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+4;1:1+1;1:2;+9;1:2;+2;1:1;1:2;+5;1:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+2;0:1;+5;0:2;+2;0:1;0:2;+5;0:1;&turn=0
+  - Pawn leap + Enemy Bishop: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+3;1:1;;1:1;1:2;+5;1:1;1:2;+9;1:2;+2;1:1;1:2;+5;1:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+2;0:1;+9;0:1;0:2;+3;0:2;;0:1;&turn=0
+  - Pawn leap + Enemy Rook: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;+2;2:2;+2;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+3;1:1;;1:1;1:2;+5;1:1;1:2;+13;1:1;1:2;+2;1:2;+1;1:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+2;0:1;+9;0:1;0:2;+3;0:2;;0:1;&turn=0
+  - Pawn leap + Enemy Queen: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+4;2:1;+3;2:2;+2;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+3;1:1;;1:1;1:2;+5;1:1;1:2;+9;1:2;+2;1:1;1:2;+5;1:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+2;0:1;+9;0:1;0:2;+3;0:2;;0:1;&turn=0
+  - Pawn leap + Enemy Castle: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;+2;2:2;+2;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+3;1:1;;1:1;1:2;+5;1:1;1:2;+9;1:2;+2;1:1;1:2;+5;1:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+2;0:1;+5;0:2;+2;0:1;0:2;+5;0:1;&turn=0
+  - Knight + Enemy Pawn: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+2;1:1;+2;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+2;0:1;+4;0:2;+3;0:1;0:2;+5;0:1;+1;0:2;+3;0:1;&turn=0
+  - Knight + Enemy Knight: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+2;1:1;+4;1:2;+3;1:1;1:2;+5;1:1;1:2;+5;1:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+2;0:1;+4;0:2;+3;0:1;0:2;+5;0:1;;0:2;+4;0:1;&turn=0
+  - Knight + Enemy Bishop: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+1;1:2;+2;1:1;1:2;+3;1:1;+1;1:2;+5;1:1;+6;1:1;1:2;+5;1:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+3;0:1;+1;0:2;+5;0:1;+1;0:2;+3;0:1;0:2;+5;0:1;&turn=0
+  - Knight + Enemy Rook: ?setup=2:2;+4;2:1;;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;+2;2:2;+2;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+4;1:1;;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+3;1:1;+8;1:1;1:2;+5;1:1;1:2;+2;1:2;+1;1:1;0:2;+4;0:1;;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+3;0:1;+8;0:1;0:2;+5;0:1;0:2;+1;0:2;+2;0:1;&turn=0
+  - Knight + Enemy Queen: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;+1;2:2;+3;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+2;1:1;+4;1:2;+3;1:1;1:2;+5;1:1;1:2;+5;1:1;0:2;+4;0:1;;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+2;0:1;+9;0:1;0:2;+5;0:1;0:2;+1;0:2;+2;0:1;&turn=0
+  - Knight + Enemy Castle: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;+1;2:2;+3;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+2;1:1;+4;1:2;+3;1:1;1:2;+5;1:1;1:2;+5;1:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+2;0:1;+4;0:2;+3;0:1;0:2;+5;0:1;0:2;+5;0:1;&turn=0
+  - Bishop + Enemy Pawn: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;0:2;+5;0:1;0:2;+4;0:1;;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;;0:2;+4;0:1;&turn=0
+  - Bishop + Enemy Knight: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;;1:2;+4;1:1;0:2;+5;0:1;0:2;+3;0:1;+1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;;0:2;+4;0:1;&turn=0
+  - Bishop + Enemy Bishop: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;;1:2;+4;1:1;0:2;+5;0:1;0:2;+2;0:1;+2;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+1;0:2;+2;0:1;+6;0:1;&turn=0
+  - Bishop + Enemy Rook: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;;2:2;+4;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;+1;1:2;+3;1:1;0:2;+5;0:1;0:2;+1;0:1;+3;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+1;0:2;+2;0:1;+5;0:1;;&turn=0
+  - Bishop + Enemy Queen: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;;2:2;+4;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;;1:2;+4;1:1;0:2;+5;0:1;0:2;+1;0:1;+3;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+1;0:2;+2;0:1;+6;0:1;&turn=0
+  - Bishop + Enemy Castle: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;;2:2;+4;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;;1:2;+4;1:1;0:2;+5;0:1;0:2;+4;0:1;;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;;0:2;+2;0:1;+1;&turn=0
+  - Rook + Enemy Pawn: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+3;1:1;;1:1;1:2;+7;0:2;+4;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+3;0:1;;0:1;0:2;+5;0:1;+2;0:2;+3;&turn=0
+  - Rook + Enemy Knight: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+3;1:1;;1:1;+1;1:2;+5;0:2;+4;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+3;0:1;;0:1;0:2;+5;0:1;+1;0:2;+4;&turn=0
+  - Rook + Enemy Bishop: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+3;1:1;;1:1;+1;1:2;+5;0:2;+4;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+1;0:2;0:1;+1;0:1;0:2;+5;0:1;+7;&turn=0
+  - Rook + Enemy Rook: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+2;1:1;+1;1:1;1:2;+1;1:2;+2;1:1;+8;0:2;+4;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+1;0:2;0:1;+1;0:1;0:2;+5;0:1;+7;&turn=0
+  - Rook + Enemy Queen: ?setup=2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;+1;2:2;+3;2:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+2;1:1;+1;1:1;1:2;+5;1:1;+1;1:2;+5;0:2;+4;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+1;0:2;0:1;+1;0:1;0:2;+5;0:1;+7;&turn=0
+  - Rook + Enemy Castle: ?setup=2:2;+5;2:1;+6;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;2:2;+5;2:1;1:2;+5;1:1;;1:2;+4;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+5;1:1;1:2;+7;0:2;+4;0:1;;0:2;+4;0:1;+6;0:1;0:2;+5;0:1;0:2;+5;0:1;0:2;+4;0:1+1;0:2;+5;0:1;0:2;+6;&turn=0
+
+- session-manager
+  - animate-redo
+    - Не сбрасывать последующую историю при выполнении redo
+  - Ленивая загрузка SGF 
+    - Создание узлов при переходе на них
+    - Загрузка всей иерархии SGF
+
+- 2d-view-v4
+  - Не работает с Dameo
+
+- Symple
+  - model
+    - add-partial не работает в drop-ходах
+
+- Hawalis
+  - goal
+    - Завершать игру вничью в ситуации бесконечного посева
+
+- Google Drive
+  - Для игры по сети?
+
+- 2d-view-v4
+  - Hanga Roa
+    - Не отображать взятую фигуру при завершении анимации хода с шахматным взятием
+
+- Hanga Roa
+  - https://www.chessvariants.com/other.dir/hanga_roa/hanga_roa.html
+    - Проверить соответствие правилам
+
+- https://www.jsbeasley.co.uk/
+- https://it.wikipedia.org/wiki/Categoria:Giochi_astratti
+  - https://it.wikipedia.org/wiki/Dama_tuareg
+
+- Lyra
+  - http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=2839
+
+- Fanorona
+  - В move-list-v1 исправлена ошибка
+    - Если он не первый в составном ходе
+    - На модели удаляется не та группа которая выбрана
+    - В представлении ни одна из групп не удаляется
+  - В move-list-v2 не работает анимация целей составных ходов
+
+- http://mindsports.nl/index.php/arena/mu
+- http://superdupergames.org/
+
+- QXO
+  - goal
+    - Фиксировать Draw при отсутствии хода
+
+- 2d-view-v4
+  - Dakon
+    - Протестировать отрисовку амбаров
+
+- AI
+  - http://mrraow.com/index.php/aiai-home/
+  - http://tjger.ddns.net/tjger/en/index.html
+  - https://dell.tanaka.ecc.u-tokyo.ac.jp/~ktanaka/dobutsushogi/
+
+- Shogi Variants
+  - prototype
+    - The Lance moves like the Liberated Horse from Wa Shogi!
+    - https://www.chessvariants.com/rules/gyaku-sama-shogi
+    - z2j
+      - Bug: команда add в if не транслируется в конструкцию с fork
+  - https://www.chessvariants.com/invention/suzumu-shogi
+  - https://www.chessvariants.com/rules/mitsugumi-shogi  
+
+- uct-ai-v5
+  - Doubutsu Shogi
+    - heuristic
+      - doubutsu-shogi-1.log (Юг успевает первым)
+      - Взятие шахующей фигуры приоритетно
+      - Шаховать защищённой фигурой
+  - Mini XiangQi
+  - Breakthrough
+  - Spock
+    - В h учитывать взятие своих фигур
+  - Tenjiku Shogi
+    - Несколько королевских фигур
+  - 5 Tigers
+    - Сложный порядок передачи ходов
+  - Yonin Shogi
+    - Кооперация против первого игрока
+
+- Muller
+  - https://www.chessvariants.com/invention/interactive-diagrams
+  - https://www.chessvariants.com/graphics.dir/
+
+- Ситтуйин
+  - Запрещено ставить "пат"
+
+- Renge Shogi
+  - invariant
+    - Запрещён мат сбросом фигуры из резерва противника
+
+- Dark Yonin Shogi
+  - Преждевременное завершение игры, протестировать (0002.png)
+    - Возможно AI не находит ход
+
+- Selus
+  - Проверить предоставление дополнительного хода при повторном захвате из глаз противника
+
+- Toguz Kumalak
+  - Амбар раньше времени переключается на числовое представление
+    - Для амбаров специальное значение Dagaz.View.MX
+
+- https://en.wikipedia.org/wiki/Tuknanavuhpi
+- https://en.wikipedia.org/wiki/Diaballik
+
+- https://en.wikipedia.org/wiki/L_game
+- https://en.wikipedia.org/wiki/Cram_(game)
+- https://en.wikipedia.org/wiki/Crossings_(game)
+- https://en.wikipedia.org/wiki/Indian_and_jackrabbits
+- https://en.wikipedia.org/wiki/Ringo_(game)
+
+- XiangQi variants
+  - http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=1905
+  - http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=1628
+  - http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=1645
+  - http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=920
+  - http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=1007
+
+- https://en.wikipedia.org/wiki/Category:Chess_variants
+  - https://en.wikipedia.org/wiki/List_of_abstract_strategy_games
+  - https://en.wikipedia.org/wiki/Giog
+
+- http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=622
+- http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=2839
+- http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=2696
+
+- https://internationalpaisho.wordpress.com/play-pai-sho/
+- https://www.wikihow.com/Play-the-Ancient-Game-of-Pai-Sho#The_Game_sub
+
+- Blokus
+  - extension
+    - В свойстве доски вести массив сброшенных фигур (без учёта поворотов)
+  - invariant
+    - Первая фигура каждого цвета должна занять (накрыть) угловой квадрат доски
+    - Каждая следующая фигура этого цвета должна выставляться так, чтобы коснуться хотя бы одной фигуры (можно более) своего цвета углом, но не коснуться ни одной из фигур своего цвета стороной
+    - Помечать полупрозрачными sparks доступные для хода позиции
+  - goal
+    - Игра заканчивается, когда ходы закончились у всех игроков
+    - Игрок зарабатывает столько очков, сколько он выставил маленьких квадратов
+    - Если игрок выставил все фигуры, он получает дополнительно 20 очков (если последней была выставлена фигура, состоящая из 1 маленького квадрата) или 15 очков (в противном случае)
+  - app
+    - Прокручивать только те режимы которые имеются в списке ходов
+    - Не перемещать сбрасываемую фигуру пока возможно при перемещении мыши
+- L - игра
+  - prototype
+
+- http://abstractgames.ru/rules.php
+- http://playashshi.ru/
+
+- Italian Dama
+  - priority
+    - Italian-dama-capture.pdf
+
+- move-list-sgf
+  - Chess
+    - Библиотека дебютов (ChessWOB)
+      - Поддержка PGN нотации
+        - Фиксировать в логе ходы, нотацию которых расшифровать не удалось
+      - Использовать Ко для подсвета фигур начинающих ход
+      - При выборе фигуры подсвечивать только поля задействованные в sgf
+      - Разрешать ход на поля (и фигурами) не задейтсвованные в sgf
+  - Go
+    - Kogo's Joseki Dictionary
+      - Поддерживать текстовые коментарии
+      - Поддерживать индикацию Ко (помимо пометок полей ходов из sgf)
+  - Checkers
+    - Библиотека дебютных ловушек
+      - Поддержка составных ходов
+      - Индикация промежуточных полей выбранного хода из sgf
+
+- https://github.com/AssemblyScript/assemblyscript
+
+- Mana
+  - common-setup-v2
+    - Сохранять selector
+  - invariant
+    - file:///E:/work/Dagaz/src/debug/games/elimination/mana.htm?setup=+11;0:2+4;2:2;+11;0:1+4;2:1;+11;&turn=12
+
+- Gwangsanghui
+  - Изменились правила
+    - https://librewiki.net/wiki/%EA%B4%91%EC%83%81%ED%9D%AC
+      - Knight: 2 по диагонали
+      - Killer: 1 по диагонали имунен и не бьёт никого кроме Killer
+
+- magic-sound
+  - Choko
+    - Проигрывать звук при выполнении предыдущего хода
+  - Yote
+  - Bolotoudou
+  - Omega Chess Advanced
+    - Проигрывать звук при выполнении хода противника
+
+- Halma
+  - kernel
+    - Использовать move.playSound для звука составных ходов (view вместо exec)
+
+- PaiSho
+  - extension
+    - paisho.log: file:///E:/work/Dagaz/src/debug/games/races/paisho.htm?setup=+19;1:2;+6;2:1;+1;2:2;+6;1:1;+1;1:2;+8;2:1;+5;5:2;0:1;5:1;+15;1:1;+1;1:2;+6;2:1;+1;2:2;+6;1:1;+57;3:2;+5;4:1;3:1;;3:2;;4:2;0:2;+6;4:1;4:2;2:2;+8;3:1;;3:2;4:2;+4;4:1;3:1;+37;&turn=0
+      - Некоректное удаление Аватара в середине составного хода
+      - Не определяется завершение игры при удалении Лотоса
+      - Зависает на следующем ходе белых
+
+- Bahrain Dama
+  - Bug: bahrain-dama.log
+    - Некорректное определение завершения игры (по инварианту при нападении на дамку)
+
+- Составные фигуры
+  - Крокодилы и бегемоты
+    - В игре Бегемоты и Крокодилы используется доска 20х10 клеток ("река") либо доска 14х14 клеток ("озеро")
+    - Первый игрок решает, хочет ли он играть "Бегемотами" или "Крокодилами" и кладет первую свою фигурку в любое место на доске
+    - Игра завершается, когда у одного из игроков не остается возможности выложить на доску очередную свою фигурку
+  - Isaac
+    - http://www.iggamecenter.com/info/en/isaac.html
+  - Taiji
+    - http://www.iggamecenter.com/info/en/taiji.html
+  - Дао Ши Сян
+    - http://lotos-khv.ru/game/games/games.htm
+
+- Дикие слоны
+  - http://www.iggamecenter.com/info/ru/madbishops.html
+- Клоббер
+  - http://www.iggamecenter.com/info/ru/clobber.html
+
+- Oshi
+  - prototype
+    - https://en.wikipedia.org/wiki/Oshi
+    - https://www.funagain.com/control/product/~product_id=016137/~affil=ELDR
+- Onitama
+  - prototype
+    - https://tesera.ru/game/onitama/
+
+- Chinese Domino
+  - prototype
+    - https://www.youtube.com/watch?v=kbGg-a3W_y0
+
+- Kiela
+  - http://mancala.wikia.com/wiki/Kiela
+
+- Halma
+  - ai
+- Pyon Pyon Shogi (variant)
+  - ai
+
+- uct-ai-v5
+  - Chu Shogi
+    - Без генерации ходов
+      - Доводить до конца размены
+      - Отслеживать цепочки форсированных ходов (защит от шаха)
+    - Понизить приоритет drop-ходов
+      - Кроме сброса Lion или Free-King на безопасное поле
+
+- Chu Shogi
+  - drop
+    - Фигура не может сбрасываться на поле с которого не может двигаться (принудительное превращение)
+    - Сброс в лагерь противника инициирует превращение
+      - Также фигура может быть превращена на любом последующем ходу
+  - extension
+    - Лев не может взять несмежного льва 
+      - Если он может быть захвачен на следующем ходу
+      - Если он также не захватывает что-то кроме пешки и посредника
+    - Не лев не может бить льва если на предыдущем ходу лев был захвачен не львом на другом поле
+      - Окадзаки: контрудар разрешён по не защищённому льву
+      - Можно бить только что превратившегося Кирина
+  - ko
+    - Четвёртое повторение ситуации на доске запрещено
+  - goal
+    - Голый король проигрывает если не может оголить противника следующим ходом или взять единственного короля
+
+- forced-ai
+  - Chess variants
+  - Shogi variants
   - XiangQi
-    - РћС€РёР±РєР° Z2J РІ step-pawn РµСЃР»Рё РЅР°РїСЂР°РІР»РµРЅРёРµ Р·Р°РґР°РЅРѕ Р»РёС‚РµСЂР°Р»РѕРј Р° РЅРµ РїР°СЂР°РјРµС‚СЂРѕРј
-  - Maharaja
-    - Р•СЃР»Рё $1 РІ pawn-shift Р·Р°РјРµРЅРёС‚СЊ РЅР° n, Z2J РіРµРЅРµСЂРёСЂСѓРµС‚ РЅРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ С…РѕРґ
-    - РќРµ СЂР°Р±РѕС‚Р°РµС‚ СЂРѕРєРёСЂРѕРІРєР° Р±РµР· СѓРєР°Р·Р°РЅРёСЏ РЅР°РїСЂР°РІР»РµРЅРёР№ РІ РїР°СЂР°РјРµС‚СЂР°С…
-  - Dablot, Zamma
-    - Р•СЃР»Рё РґРѕСЃРєР° РѕРїСЂРµРґРµР»РµРЅР° РјР°РєСЂРѕСЃРѕРј РґР»СЏ variant РЅРµ СЂР°Р±РѕС‚Р°РµС‚ СѓРЅРёРєР°Р»СЊРЅРѕСЃС‚СЊ Рє game
 
-- View (РѕРїС†РёРѕРЅР°Р»СЊРЅРѕ)
-  - Р—Р°РїСЂРµС‰С‘РЅРЅС‹Рµ С…РѕРґС‹ (drops) РїРѕРјРµС‡Р°С‚СЊ РєРІР°РґСЂР°С‚РёРєРѕРј
-  - РџРѕСЃР»РµРґРЅРёР№ С…РѕРґ РїРѕРјРµС‡Р°С‚СЊ РєСЂСѓР¶РєРѕРј
-  - РџСЂРё РїСЂРѕС…РѕР¶РґРµРЅРёРё РјС‹С€Рё РїРѕ РїРѕР»СЋ СЃР±СЂРѕСЃР° РѕС‚РѕР±СЂР°Р¶Р°С‚СЊ РїРѕР»СѓРїСЂРѕР·СЂР°С‡РЅСѓСЋ С„РёРіСѓСЂСѓ
-  - РћРїС†РёРѕРЅР°Р»СЊРЅРѕ РїРѕРјРµС‡Р°С‚СЊ С‚РµРєСѓС‰СѓСЋ С„РёРіСѓСЂСѓ Рё РµС‘ С…РѕРґС‹ РїРѕСЃР»Рµ MouseUp
+- Косынка
+  - case
+    - https://glukkazan.github.io/arrange/klondike.htm?seed=1405
+    - https://glukkazan.github.io/arrange/klondike.htm?seed=4448
+    - https://glukkazan.github.io/arrange/klondike.htm?seed=439
+    - https://glukkazan.github.io/arrange/klondike.htm?seed=2949
+    - https://glukkazan.github.io/arrange/klondike.htm?seed=8675
+    - https://glukkazan.github.io/arrange/klondike.htm?seed=4336
+    - https://glukkazan.github.io/arrange/klondike.htm?seed=5112
+    - https://glukkazan.github.io/arrange/klondike.htm?seed=4224
+    - https://glukkazan.github.io/arrange/klondike.htm?seed=9048
+    - https://glukkazan.github.io/arrange/klondike.htm?seed=79
+    - https://glukkazan.github.io/arrange/klondike.htm?seed=9574
+    - https://glukkazan.github.io/arrange/klondike.htm?seed=1960
+    - https://glukkazan.github.io/arrange/klondike.htm?seed=9942
+    - https://glukkazan.github.io/arrange/klondike.htm?seed=6346
+    - https://glukkazan.github.io/arrange/klondike.htm?seed=832
+  - sounds
+    - Bug: Перенос стопки закрытых карт
+    - Bug: Проигрывается неправильный звук при победе
 
+- Yote
+  - uct-ai-v4
+    - Bug: yote.txt (heuristic?)
 
-- РџСЂРёР·РЅР°РєРё С„РѕСЂСЃРёСЂРѕРІР°РЅРЅС‹С… РїРѕР·РёС†РёР№ РІ С€Р°С…РјР°С‚Р°С…
-  - РІР·СЏС‚РёСЏ
-  - РЅР°Р»РёС‡РёРµ failed-С…РѕРґРѕРІ РґР»СЏ РѕРґРЅРѕРіРѕ РёР· РёРіСЂРѕРєРѕРІ
+- Kantorai
+  - ai
+    - file:///D:/Gluk/Dagaz/src/debug/games/shogi-family/kantorai.htm?setup=3:2;;5:2;0:2;7:2;5:2;3:2;+6;1:2+2;+2;1:2;+3;1:2;+12;1:1;+1;1:1;;1:1;+1;1:1+1;3:1;+1;3:1;+4;5:1;0:1;7:1;5:1;;&turn=1
+  - invariant
+    - file:///D:/Gluk/Dagaz/src/debug/games/shogi-family/kantorai-variant.htm?setup=3:2;7:2;;0:2;;5:2;3:2;1:2+2;;1:2+2;+2;1:2;+24;1:1;8:2;1:1;5:1;1:1;;1:1;;1:1;;1:1;;1:1;3:1;7:1;5:1;0:1;+1;3:1;&turn=0
 
-- perl-СЃРєСЂРёРїС‚ РґР»СЏ РІРёР·СѓР°Р»РёР·Р°С†РёРё РґР°РЅРЅС‹С… Р»РѕРіР° solitaire-ai
-- SGF РґРµР±СЋС‚С‹ РґР»СЏ Go
+- Chessence
+  - ai
 
-- Rhino/Nashorn API РјРѕР¶РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РґР»СЏ СЂР°СЃРїР°СЂР°Р»Р»РµР»РёРІР°РЅРёСЏ AI (Java-СЃРµСЂРІРµСЂ)
+- uct-ai-v4
+  - Atari Go
 
-- РћРґРЅРѕРІСЂРµРјРµРЅРЅС‹Рµ С€Р°С…РјР°С‚С‹
-  - РћС„РѕСЂРјР»СЏРµС‚СЃСЏ РєР°Рє РёРіСЂР° РѕРґРЅРѕРіРѕ РёРіСЂРѕРєР°
-  - Р‘РѕС‚ РІС‹РїРѕР»РЅСЏРµС‚ РїРѕРёСЃРє С…РѕРґР° РІ С„РѕРЅРѕРІРѕРј СЂРµР¶РёРјРµ, РїРѕРєР° РёРіСЂРѕРє РґСѓРјР°РµС‚ РЅР°Рґ С…РѕРґРѕРј
-    - РњРѕР¶РµС‚ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РґРµР±СЋС‚РЅС‹Рµ РєРЅРёРіРё РІ РЅР°С‡Р°Р»Рµ РёРіСЂС‹
-  - РџСЂРё РІРІРѕРґРµ С…РѕРґР° РІ MoveList, Р±РѕС‚ РїРѕРґРјРµС€РёРІР°РµС‚ СЃРІРѕР№ С…РѕРґ РІ С…РѕРґ РёРіСЂРѕРєР°
-  - Р¤РёРіСѓСЂР° РїСЂРѕС‚РёРІРЅРёРєР° РїРµСЂРµРјРµС‰Р°РµС‚СЃСЏ РѕРґРЅРѕРІСЂРµРјРµРЅРЅРѕ СЃ С„РёРіСѓСЂРѕР№ РёРіСЂРѕРєР°
-  - Р•СЃР»Рё Р±РѕС‚ РІС‹Р±СЂР°Р» С‚Сѓ Р¶Рµ С†РµР»РµРІСѓСЋ (РїСѓСЃС‚СѓСЋ) РїРѕР·РёС†РёСЋ
-    - РљРѕРЅС„Р»РёРєС‚РЅС‹Р№ С…РѕРґ Р±РѕС‚Р° РѕС‚Р±СЂР°СЃС‹РІР°РµС‚СЃСЏ
-    - РЈ Р±РѕС‚Р° Р·Р°РїСЂР°С€РёРІР°РµС‚СЃСЏ РЅРµ РєРѕРЅС„Р»РёРєС‚СѓСЋС‰РёР№ С…РѕРґ
-    - РҐРѕРґ Р±РѕС‚Р° РїРѕРґРјРµС€РёРІР°РµС‚СЃСЏ РІ С…РѕРґ РёРіСЂРѕРєР° РґРѕ РµРіРѕ РІС‹РїРѕР»РЅРµРЅРёСЏ
-  - РЈР№С‚Рё РѕС‚ С€Р°С…Р° РјРѕР¶РЅРѕ С‚РѕР»СЊРєРѕ РїРµСЂРµРјРµС‰РµРЅРёРµРј РєРѕСЂРѕР»СЏ
-    - РЈРіСЂРѕР·Р° Р°С‚Р°РєСѓСЋС‰РµР№ С„РёРіСѓСЂРµ РЅРµ РїРѕРјРµС€Р°РµС‚ РµР№ СѓРґР°СЂРёС‚СЊ
-    - РЈС…РѕРґ РєРѕСЂРѕР»СЏ РёР· РїРѕРґ СѓРґР°СЂР° РїСЂРёРѕСЂРёС‚РµС‚РµРЅ
-      - Р‘Р»Р°РіРѕРґРѕСЂСЏ СЌС‚РѕРјСѓ РЅРµР»СЊР·СЏ РѕР±РѕСЋРґРЅРѕ СЃСЉРµСЃС‚СЊ РѕР±РѕРёС… РєРѕСЂРѕР»РµР№
-      - Р’РѕР·РјРѕР¶РЅСѓСЋ СЃРёС‚СѓР°С†РёСЋ РѕРґРЅРѕРІСЂРµРјРµРЅРЅРѕРіРѕ РјР°С‚Р° СЂР°СЃСЃРјР°С‚СЂРёРІР°С‚СЊ РєР°Рє РЅРёС‡СЊСЋ
-    - РљРѕСЂРѕР»СЊ РЅРµ РјРѕР¶РµС‚ РїРµСЂРµРјРµС‰Р°С‚СЊСЃСЏ РЅР° РїРѕР»Рµ РїРѕРґ СѓРґР°СЂРѕРј
-    - Р•СЃР»Рё РєРѕСЂРѕР»СЊ РїРѕРґ СѓРґР°СЂРѕРј Рё РЅРµ РјРѕР¶РµС‚ РЅРёРєСѓРґР° РїРµСЂРµРјРµСЃС‚РёС‚СЊСЃСЏ - РјР°С‚
-- РћРїС‚РёРјРёР·Р°С†РёСЏ: is_attacked РґР»СЏ РїРѕР»СЏ РјРѕР¶РµС‚ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊСЃСЏ РїРѕРІС‚РѕСЂРЅРѕ РІ РґСЂСѓРіРѕРј С…РѕРґСѓ
+- forced-ai
+  - Chess
+    - Последовательность шахов
+    - Расчёт разменов
+  - Column Checkers
+    - Учитывать состав башен в оценке и эвристике
+  - Magyar Dama
+    - Поддержка сложного порядка передачи хода
+  - Turkish Dama
+    - Bug: turkish-dama.log
+  - Argentinian Checkers
+    - Bug: argentinian-checkers.log
+  - Checkers variants
+    - Armenian Tama
+    - Tribunes
+  - Checkers like
+    - Dameo
+    - Fanorona
+  - Chess and Cheskers variants
+    - Cheskers
+    - Белорусские шахматы
+      - Форсированные ходы
+        - Шахи
+        - Ход под бой шашечных фигур (в том числе открытый ход)
+  - Russian Checkers
+    - bug
+      - file:///E:/work/Dagaz/src/debug/games/checkers/russian-checkers.htm?setup=+9;0:2;;0:2;;0:2;+5;0:2;+1;0:2;+2;0:2;;0:2;+7;0:2;0:1;+2;0:1;;0:1;+5;0:1;+3;0:1;;0:1;;0:1;;&turn=0
+      - file:///E:/work/Dagaz/src/debug/games/checkers/russian-checkers.htm?setup=+2;0:2;+2;0:2;+1;0:2;+2;0:2;+3;0:2;+2;0:2;0:1;+2;0:2;;0:2;+1;0:1;+9;0:1;;0:1;+3;0:1;+1;0:1;+2;0:1;;0:1;+2;&turn=0
+    - case
+      - file:///E:/work/Dagaz/src/debug/games/checkers/russian-checkers.htm?setup=+2;0:2;;0:2;+1;0:2;+4;0:2;+5;0:2;+1;0:2;;0:1;;0:2;+9;0:1;+1;0:1;;0:1;+7;0:1;+3;0:1;+2;0:1;;&turn=0
+      - file:///E:/work/Dagaz/src/debug/games/checkers/russian-checkers.htm?setup=+2;0:2;;0:2;+5;0:2;;0:2;+3;0:2;+2;0:2+1;;0:2;;0:2;+3;0:1;+2;0:1;;0:1+1;;0:1;;0:1;+3;0:1;+5;0:1;+2;0:1;+2;&turn=0
+      - file:///E:/work/Dagaz/src/debug/games/checkers/russian-checkers.htm?setup=+7;0:2;+2;0:2;;0:2;+8;0:2;;0:1;+2;0:2;+1;0:1;;0:1;;0:2;+3;0:1;+2;0:2;+14;0:1;;&turn=0
 
-- Luzhanqi РїСЂРё РіРµРЅРµСЂР°С†РёРё СЃРѕР±РёСЂР°С‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ РІ Р°С‚СЂРёР±СѓС‚Р°С… С„РёРіСѓСЂ
-  - РџРѕ РЅР°С‡Р°Р»СЊРЅРѕРјСѓ СЂР°СЃРїРѕР»РѕР¶РµРЅРёСЋ
-  - РџРѕ СЂРµР·СѓР»СЊС‚Р°С‚Р°Рј Р±РѕСЏ СЃ РёР·РІРµСЃС‚РЅРѕР№ С„РёРіСѓСЂРѕР№
-  - РџРѕ РѕСЃРѕР±РµРЅРЅРѕСЃС‚СЏРј РїРµСЂРµРјРµС‰РµРЅРёР№
-- Lewthwaite's game
-  - Р”РѕСЂР°Р±РѕС‚Р°С‚СЊ turn-order
-  - РЈРґР°Р»РµРЅРёРµ С„РёРіСѓСЂС‹ РІС‹РїРѕР»РЅСЏС‚СЊ drop-РѕРј (РѕС‚РѕР±СЂР°Р¶Р°С‚СЊ РїРѕР»СѓРїСЂРѕР·СЂР°С‡РЅС‹Р№ РєСЂРµСЃС‚)
-- Jungle
-  - jungle-extension.js Р°С‚СЂРёР±СѓС‚С‹ РґР»СЏ РёРґРµРЅС‚РёС„РёРєР°С†РёРё СЃРёР»С‹ С„РёРіСѓСЂ, СѓС‡С‘С‚ Р·РѕРЅ
-  - РџСЂРё РІС‹С…РѕРґРµ Р·Р° РїСЂРµРґРµР»С‹ РґРѕСЃРєРё (РІ РѕР±Р»Р°С‚СЊ С…РёРЅС‚Р°) РѕС‚РѕР±СЂР°Р¶Р°РµС‚СЃСЏ С…РёРЅС‚ С„РёРіСѓСЂС‹ РЅР° РЅСѓР»РµРІРѕР№ РїРѕР·РёС†РёРё
-  - РћС‚РѕР±СЂР°Р¶Р°С‚СЊ С…РёРЅС‚С‹ РґР»СЏ РїРѕР·РёС†РёР№ (РІРѕРґР°, Р»РѕРІСѓС€РєР°, РіРЅРµР·РґРѕ)
-    - РќРѕРІС‹Рµ С‚РµРіРё РґР»СЏ zone
-      - glyph, help - РѕС‚РѕР±СЂР°Р¶Р°СЋС‚СЃСЏ РІРЅРёР·Сѓ, РµСЃР»Рё РЅР° РїРѕР»Рµ РЅРµС‚ С„РёРіСѓСЂС‹
-      - image - СЂРёСЃСѓРµС‚СЃСЏ РїРѕРІРµСЂС… РґРѕСЃРєРё РЅРѕ РїРѕРґ С„РёРіСѓСЂР°РјРё (РґР»СЏ РЎРѕРєРѕР±Р°РЅР°)
+- Breakthrough
+  - Определять не перехватываемые фигуры (+ Gauntlet)
+    - В том числе начинающие движение диагональным ходом
+    - Перемещать лидирующие фигуры
+  - Форсирующие ходы без приоритета
 
-- РњРЅРѕРіРѕСЂР°СѓРЅРґРѕРІС‹Рµ РёРіСЂС‹ (РїРѕ Р·Р°РІРµСЂС€РµРЅРёРё СЂР°СѓРЅРґР° РјРµРЅСЏСЋС‚СЃСЏ РїСЂР°РІРёР»Р° СЂР°СЃСЃС‚Р°РЅРѕРІРєРё)
+- Banqi
+  - Проверить корректность звуков win и loss (в зависимости от цвета первого игрока)
+- Halma Puzzle
+  - Счётчик ходов (считать составные ходы)
+- Kamisado
+  - Bug: зависание бота после выполнения толкающего хода
+  - Проверить толкающие ходы
 
-- Tamsk С„РёРіСѓСЂС‹, РёР·РјРµРЅСЏСЋС‰РёРµ СЃРѕСЃС‚РѕСЏРЅРёРµ СЃРѕ РІСЂРµРјРµРЅРµРј 
-  - РІРёРґ С„РёРіСѓСЂС‹ РёР·РјРµРЅСЏРµС‚СЃСЏ РІ РїСЂРѕРјРµР¶СѓРёРєРµ РјРµР¶РґСѓ С…РѕРґР°РјРё (СЃРѕ РІСЂРµРјРµРЅРµРј)
-  - РЅРѕРІРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ С„РёРєРёСЂСѓРµС‚СЃСЏ РІ РЅР°С‡Р°Р»Рµ С…РѕРґР°
+- ab-ai-v4
+  - Russian Checkers
+    - Bug: преждвременно признаёт поражение
+  - Yonin Shogi
+    - Кэшировать дерево состояний глобально без привязки к контекстам игроков
+    - Усилить влияние шума на близкие по значению эвристики
+    - Бонусы за атаки с целевого поля
+      - Бонусы за дальние атаки сходившей фигурой
+      - При наличии покрытия рассчитывать размены на целевом поле (с учётом взятой фигуры)
+    - Режим защиты короля
+      - Включается на 0 уровне при наличии покрытия и угрозе королю
+      - В угрозы включается король угрожающего игрока
+      - Если угроз меньше трёх - бонус за взятие угрожающей фигуры
+      - Не начислять другие бонусы (рассматриваются только уходы и закрытия)
+    - Рассчитывать покрытие на листовых позициях для eval?
+    - Проверки на атаки конём при начислении штрафа за короля под шахом
+  - Column Checkers
+    - Bug: Преждевременно признаёт поражение
+  - XiangQi
+  - Janggi
+  - Spock
+- uct-ai-v4
+  - Gauntlet (7x7)
+    - Bug: Легко обыгрывается, проигрывает uct-ai
+  - Thai Checkers
+    - Bug: играет слабее maxmin-ai-v2
+  - Kono
+    - Оценки
+      - Симметричная оценка для всех игр двух игроков
+      - Кэшировать eval-оценку для текущего игрока
+      - Улучшение eval листа по сравнению с корнем считать количеством побед
+      - Учитывать фигуры под боем при построении оценки
+    - Эвристики
+      - Сортировка и отброс ходов не производятся
+      - На нулевом уровне эвристики соответсвуют начальному количеству побед
+      - Выбор хода на нижних уровнях случайный, с учётом веса эвристики хода
+    - Алгоритм
+      - Сравнить с ab-ai-v4
+      - Кэшировать рассмотренные состояния, не вычислять board заново
+      - Просматривать не менее чем на MIN_DEEP в глубину
+      - Если есть ходы с эвристикой больше елиницы, смотреть далее
+      - Завершать просмотр при отсутствии ходов
+  - Checkers
+    - Не включать в покрытие дружественные фигуры
+    - Включать в eval только фигуры не находящиеся под боем (не имеет смысла при форсировании)
+    - Стоимость фигур зависит от позиции
+    - Использовать задачи для проверки эффективности алгоритма
+  - Breakthrough
+  - Abalone
+    - heuristic
+      - Количество выталкиваемых за пределы доски фигур
+    - eval
+      - Учитывать угрозы выталкивания (не только за границы доски)
+  - Column Checkers
+    - Играет слабее maxmin-ai-v2
+    - В eval учитываать высоту своего цвета в башнях и стоимость дамок
+  - Chessence
 
-- custom-model Рё custom-view
-  - РќР°РёР±РѕР»РµРµ СЂР°СЃРїСЂРѕСЃС‚СЂР°РЅС‘РЅРЅС‹Рµ grid-С‹
-    - РџСЂСЏРјРѕСѓРіРѕР»СЊРЅР°СЏ РґРѕСЃРєР° СЃ 8 РЅР°РїСЂР°РІР»РµРЅРёСЏРјРё
-    - Р”РѕСЃРєРё РђР»СЊРєСѓСЌСЂРєР° Рё Р¤Р°РЅРѕСЂРѕРЅС‹ (С‡Р°СЃС‚СЊ РґРёР°РіРѕРЅР°Р»РµР№ СѓРґР°Р»РµРЅР°)
-    - Р“РµРєСЃР°РіРѕРЅР°Р»СЊРЅС‹Рµ, С‚СЂРёРіРѕРЅР°Р»СЊРЅС‹Рµ Рё РґРёР°РіРѕРЅР°Р»СЊРЅС‹Рµ РґРѕСЃРєРё
-  - РЎРёРјРјРµС‚СЂРёРё
-    - 2 РёРіСЂРѕРєР° РЅР° РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРѕР№ РґРѕСЃРєРµ 
-    - 3 РёРіСЂРѕРєР° РЅР° РіРµРєСЃР°РіРѕРЅР°Р»СЊРЅРѕР№ РґРѕСЃРєРµ
-    - 4 РёРіСЂРѕРєР° РЅР° РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРѕР№ РґРѕСЃРєРµ
-  - РЁР°Р±Р»РѕРЅС‹ С…РѕРґРѕРІ
-    - empty-step Рё step
-    - jump Рё shift (2 С€Р°РіР°, РїСЂРѕРјРµР¶СѓС‚РѕС‡РЅС‹Р№ РїСѓСЃС‚РѕР№)
-    - slide, РєРёС‚Р°Р№СЃРєРёРµ Рё РєРѕСЂРµР№СЃРєРёРµ РїСѓС€РєРё
-- 2D СЂР°Р·РјРµС‚РєР° РјРѕР¶РµС‚ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊСЃСЏ РІ 3D РІРёРґР°С… РґР»СЏ СЂР°Р·РјРµС‰РµРЅРёСЏ С„РёРіСѓСЂ РЅР° РїР»Р°РЅРµ
-  - РР·РѕРјРµС‚СЂРёС‡РµСЃРєР°СЏ 2D СЂР°Р·РјРµС‚РєР° РЅРµРїСЂРёРіРѕРґРЅР° РґР»СЏ 3D-РґРѕСЃРѕРє
+- Splut
+  - extension
+    - Бросок камня (всегда завершает ход)
+      - Автоматически бросать камень, если есть всего одно направление
+    - Удаление команды при убийстве мага
+  - invariant
+    - Можно продолжать левитацию того-же камня следующим шагом
+    - Левитация непрерывна в течении хода
+    - Нельзя левитировать камень которым манипулировал последний противник
+  - goal
+  - move-list-v4
+    - Поддержка перетаскивания чужих камней
+    - Поддержка составных ходов
+      - drop вторым частичным ходом
+      - Бросок камня  
+  - ai (+ Viruses)
+    - Предварительно обрабатывать склеивая ходы игрока в один ход
+      - Требуется доработка move-list
 
-- Р Р°Р·РґРµР»РёС‚СЊ Design Рё Board
-  - AI СЂР°Р±РѕС‚Р°СЋС‰РёРµ РїРѕ СЂР°Р·Р»РёС‡Р°СЋС‰РёРјСЃСЏ design СЃ СЃРѕРІРјРµСЃС‚РёРјС‹РјРё board
-  - РђР»СЊС‚РµСЂРЅР°С‚РёРІРЅРѕРµ РѕРїРёСЃР°РЅРёРµ design Р±РµР· ZRF
+- Traverse
+  - setup
+    - После загрузки из URL, drop ходы доступны (хотя резерв обнулён) почему-то только для окружностей
+      - file:///E:/work/Dagaz/src/debug/games/races/traverse.htm?setup=;2:3;;3:3;0:3;1:3;3:3;2:3;1:3;;3:2;+1;0:3;+5;1:2;+6;2:4;3:4;2:2;+7;1:4;1:2;+7;0:4;0:2;+7;1:4;0:2;+7;0:4;;3:2;+6;3:4;2:2;+3;0:1;+2;2:4;;1:1;3:1;0:1;;3:1;2:1;1:1;2:1;;&turn=8
+  - view
+    - При неаккуратном нажатии на целевое поле (при прыжке) из view пропадает переместившаяся фигура
+- Jasir
+  - heuristic-ai
 
-- РњРµР»СЊРЅРёС†Р° http://www.iggamecenter.com/info/ru/ninemenmorris.html
-  - РµСЃР»Рё РёРіСЂРѕРє РІС‹РІРµР» РѕРґРёРЅ РёР· СЃРІРѕРёС… РєР°РјРЅРµР№ РёР· СЃС„РѕСЂРјРёСЂРѕРІР°РЅРЅРѕРіРѕ СЂСЏРґР° РґР»СЏ С‚РѕРіРѕ, С‡С‚РѕР±С‹ СЃРІРѕРёРј С…РѕРґРѕРј СЃС„РѕСЂРјРёСЂРѕРІР°С‚СЊ РґСЂСѓРіРѕР№ СЂСЏРґ, С‚Рѕ РѕРЅ РЅРµ РёРјРµРµС‚ РїСЂР°РІР° РІРµСЂРЅСѓС‚СЊ СЌС‚РѕС‚ РєР°РјРµРЅСЊ РѕР±СЂР°С‚РЅРѕ СЃР»РµРґСѓСЋС‰РёРј С…РѕРґРѕРј.
-  - РµСЃР»Рё РёРіСЂРѕРє СЃРІРѕРёРј С…РѕРґРѕРј С„РѕСЂРјРёСЂСѓРµС‚ РѕРґРЅРѕРІСЂРµРјРµРЅРЅРѕ РґРІР° СЂСЏРґР°, С‚Рѕ РѕРЅ РїРѕР»СѓС‡Р°РµС‚ РїСЂР°РІРѕ Р·Р°С…РІР°С‚РёС‚СЊ РґРІР° РєР°РјРЅСЏ РѕРїРїРѕРЅРµРЅС‚Р°.
-  - РґР»СЏ Р»РµС‚Р°СЋС‰РёС… РєР°РјРЅРµР№ РѕС‚РґРµР»СЊРЅРѕ СЃС‚СЂРѕРёС‚СЊ С…РѕРґ СЃС‚СЂРѕСЏС‰РёР№ РІРѕР·РјРѕР¶РЅС‹Рµ СЂСЏРґС‹ (СЃРѕ РІР·СЏС‚РёСЏРјРё) Рё РѕС‚РґРµР»СЊРЅРѕ С…РѕРґ СЃРѕРґРµСЂР¶Р°С‰РёР№ РІСЃРµ РЅРµСЂРµР·СѓР»СЊС‚Р°С‚РёРІРЅС‹Рµ РїРµСЂРµРјРµС‰РµРЅРёСЏ
+- Tenjiku Shogi
+  - promotion dialog
+    - Поддержка превращения на середине составного хода
 
-- Р±Р°РіРё ZRF
-  - move РЅР° РјРµСЃС‚Рµ (РѕР±С‹С‡РЅРѕ СЃ РёР·РјРµРЅРµРЅРёРµРј С‚РёРїР°) РЅРµ СЂР°Р±РѕС‚Р°РµС‚ РµСЃР»Рё РїСЂРµРґРІР°СЂРёС‚РµР»СЊРЅРѕ РІС‹РїРѕР»РЅРµРЅС‹ (capture dir), РїРѕСЃРєРѕР»СЊРєСѓ РЅРµ РіРµРЅРµСЂРёСЂСѓРµС‚СЃСЏ С…РѕРґ
-    - СЂР°Р±РѕС‚Р°РµС‚, РµСЃР»Рё РїРµСЂРµРґ РїСЂРѕРІРµСЂРєР°РјРё РІС‹РїРѕР»РЅРёС‚СЊ change-type
-  - РЅРµ СѓРґР°Р»СЏРµС‚СЃСЏ С„РёРіСѓСЂР° Сѓ РєРѕС‚РѕСЂРѕРј РЅР° С‚РѕРј Р¶Рµ С…РѕРґСѓ РёР·РјРµРЅС‘РЅ С‚РёРї РёР»Рё Р°С‚СЂРёР±СѓС‚
+- Halma
+  - prototype
+    - Черным предоставляется один дополнительный ход после завершения белых
 
-- rithmomachy-extension
-  - РћР±РѕРіР°С‰Р°С‚СЊ С…РѕРґС‹ РІР·СЏС‚РёСЏРјРё (С‚РѕР»СЊРєРѕ РІР·СЏС‚РёСЏРјРё РІС‹РїРѕР»РЅСЏРµРјС‹РјРё С…РѕРґРёРІС€РµР№ С„РёРіСѓСЂРѕР№)
-  - РџСЂРѕРІРµСЂСЏС‚СЊ РІС‹РїРѕР»РЅРµРЅРёРµ СѓСЃР»РѕРІРёР№ Р·Р°РІРµСЂС€РµРЅРёСЏ РёРіСЂС‹
-- РЁР°С‚Р°СЂ
-  - Р—Р°РїСЂРµС‰Р°С‚СЊ СЃРїРµС†РёС„РёС‡РµСЃРєРёРµ РјР°С‚СѓСЋС‰РёРµ С…РѕРґС‹
-  - РћРїСЂРµРґРµР»СЏС‚СЊ РІР°СЂРёР°РЅС‚ Р·Р°РІРµСЂС€РµРЅРёСЏ РёРіСЂС‹ (РїРѕР±РµРґС‹) РїРѕ С‚РёРїСѓ РјР°С‚Р°
-- ordo-extension
-  - Р“СЂСѓРїРїРѕРІРѕРµ РїРµСЂРµРјРµС‰РµРЅРёРµ С„РёРіСѓСЂ
-- Nine-Tile Cyvasse
-  - РћС‚РјРµРЅР° С…РѕРґРѕРІ РЅРµ РёРјРµСЋС‰РёС… РЅРµРѕР±С…РѕРґРёРјРѕРіРѕ "Р·Р°С†РµРїР»РµРЅРёСЏ"
-  - РЎРѕСЃС‚Р°РІРЅС‹Рµ С…РѕРґС‹ РґРІСѓРјСЏ СЂР°Р·Р»РёС‡РЅС‹РјРё Rable (СЃ СѓРєР°Р·Р°РЅРёРµРј СЂРµР¶РёРјРѕРІ Рё Р·Р°РїСЂРµС‚РѕРј РґРІРѕР№РЅРѕРіРѕ РїРµСЂРµРјРµС‰РµРЅРёСЏ)
-- Р“Рѕ
-  - Р РµР¶РёРј СЂСѓС‡РЅРѕРіРѕ СѓРґР°Р»РµРЅРёСЏ РіСЂСѓРїРї Рё РїРѕРґСЃС‡С‘С‚Р° РѕС‡РєРѕРІ
-  - РљРѕРЅС‚СЂРѕР»СЊ РІСЂРµРјРµРЅРё
-  - РРЅС‚РµРіСЂР°С†РёСЏ СЃ AI-Р±РѕС‚Р°РјРё
-  - РџРѕРґРґРµСЂР¶РєР° SGF
-- Р РµРІРµСЂСЃРё
-  - РџРѕРґСЃС‡С‘С‚ РѕС‡РєРѕРІ РЅР° Р·Р°РІРµСЂС€РµРЅРёРё РёРіСЂС‹
-- РњРёРЅРі-РњР°РЅРі
-  - РћР±РѕРіР°С‰РµРЅРёРµ С…РѕРґР° РёР·РјРµРЅРµРЅРёРµРј РїСЂРёРЅР°РґР»РµР¶РЅРѕСЃС‚Рё С„РёРіСѓСЂ
-  - Р—Р°С…РІР°С‚ Р»РѕРјР°РЅРѕР№ Р»РёРЅРёРё
+- Little Shogi
+  - invariant
+    - Запрещать мат сбросом пешки
+
+- app-v5
+  - Bug: drop фигур в Genesis Chess, Omega Chess Advanced, Short Assize
+    - ?setup=6:2;1:2;2:2;3:2;4:2;5:2;3:2;2:2;1:2;6:2;0:2+4;+3;0:1;+34;0:2;+23;0:1+6;;0:1+1;6:1;1:1;2:1;3:1;4:1;5:1;3:1;2:1;1:1;6:1;7:1+1;7:2+1;+7;&turn=0
+  - Исправить getPieces для Cheskers
+  - Привязывать превращение к фазе составного хода (Шашматы)
+  - Для drop-ходов выбор диалога подходящего объёма (частичное наполнение)
+
+- Abalala'e
+  - Рандомизировать ответный ход на нулевом посеве
+  - mancala-view
+    - Сохранять целые значения уровня board
+    - Bug: Не стирается старый амбар при отрисовке нового (Dakon)
+
+- advisor-mode
+  - Использовать sgf-ai для кодирования первых ходов в Sittuyin
+    - Обеспечить поддержку drop-ходов в gf-ai
+  - Во всех манкалах кроме Ohojichi подсказанный ход не успевает отобразиться до запуска AI
+  - Bug: Если было нажатие на фигуру, advisor не срабатывает
+
+- Anti King
+  - variant
+    - https://www.chessvariants.com/diffobjective.dir/anti-king-chess.html
+      - The Anti-King is a King that is in check whenever it is not attacked by opposing pieces. If a player ends their turn with their Anti-King not attacked, they are checkmated and lose. Additionally, the Anti-Kings in this game may not capture opposing pieces, only friendly ones. Since Anti-Kings are a form of King, they may not be captured, only mated. Anti-Kings do not offer check to friendly Kings. Kings do not attack Anti-Kings, so an Anti-King next to a hostile King but not attacked by any other piece is not attacked and so in check. 
+    - http://zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=43
+      - The Anti-King is a King that is in check whenever it is not attacked by opposing pieces. If a player ends their turn with their Anti-King not attacked, they are checkmated and lose. Additionally, the Anti-Kings in this game may not capture opposing pieces, only friendly ones. Since Anti-Kings are a form of King, they may not be captured, only mated. Anti-Kings do not offer check to friendly Kings. Kings do not attack Anti-Kings, so an Anti-King next to a hostile King but not attacked by any other piece is not attacked and so in check. 
+      - Pawns in Anti-King Chess I are Berolina Pawns, which move diagonally forward one square without capturing, or move one square straight forward to capture. They have no double move or en passant capture in this game. Pawns promote as usual to the owning player's choice of Knight, Bishop, Rook or Queen. 
+      - If a King or Anti-King has not yet moved, it may make as its first move a Knight's leap to an empty square. This is what this game provides instead of castling. Unlike castling, the King's leap may be used to escape check. 
+      - Anti-King Chess is won either by checkmating your opponent's King (by attacking it so that it may not escape) or by checkmating your opponent's Anti-King (by stranding where it can not reach an attacked square). 
+    - http://zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=1709
+
+- French Military Game
+  - Bug: При быстром нажатии на исходную/целевую ход выполняется без анимации
+    - В результате происходит рассогласование модели и представления
+
+- Hasami Shogi
+  - ai
+    - Ход завершающий ряд - приоритетный
+    - Ходы выполняющие взятие наиболее ценные (с учётом стоимости взятых фигур)
+    - Ходы увеличивающие открытый ряд желательны
+    - Учитывать ситуации возможного смыкания рядов (как в Рендзю)
+    - Ходы подставляющие фигуру под немедленный удар не должны рассматриваться
+    - Ценность фигуры определяется вхождением в открытые ряды
+    - Строить цепочки к позициям взятия
+    - Строить цепочки к фигурам противника в рядах
+    - Строить цепочки к дополнениям открытого ряда
+
+- Konane
+  - Не выполнять поиск первого хода в uct-ai (пропускать в random-ai)
+
+- Cannon, Yote, Bolotoudou
+  - sparks
+    - Бонусные взятия
+    - На втором частичном ходу
+
+- Dark XiangQi
+  - Bug: ошибка при откате хода съедающего фигуру
+    - Съеденная фигура не отображается
+
+- Fox Hunting
+  - prototype
+    - Счётчик лис
+
+- BanQi
+  - AI
+    - Bug: Открыл фигуру вместо того чтобы съесть стоящую рядом (0002, 0003)
+    - Не вставать под бой вражеской пушки
+    - Равной фигурой стараться вставать в диагональную оппозицию
+    - Убегать от более сильных фигур
+    - Загонять одиночную фигуру группой фигур
+  - model
+    - Добавить нотацию открывающих ходов
+    - common-setup-v2 не поддерживается
+
+- Reversi
+  - common-setup-v2
+    - Не сохраняет selector
+
+- Banqi
+  - Debug
+    - Проверить логику isDefended
+    - Проверить работу с gols и chains (структура объектов)
+    - Не сформировалось wish на основании бонусной chain
+  - Goal
+    - Кастомизировать имя проигравшего игрока (в зависимости от первого хода)
+  - Common
+    - The first player turns up a piece to begin the game. The color of that first uncovered piece is the color he or she will play in the game
+    - The game ends when a player cannot move, and that player is the loser
+    - Only pieces of equal or lower rank may be captured
+    - The general cannot capture soldiers, and soldiers can capture the general
+    - General captures everything except soldiers
+  - Hong Kong
+    - General x1 > Chariot x2 > Horse x2 > Cannon x2 > Advisor x2 > Elephant x2 > Soldier x5
+  - Taiwanese
+    - General x1 > Advisor x2 > Elephant x2 > Chariot x2 > Horse x2 > Soldier x5
+    - The Cannon can capture a piece of any rank, and yet is vulnerable to capture by any piece except the soldier
+    - A cannon captures as in Xiangqi
+    - Under Taiwanese rules, playing first is a slight disadvantage. If you turn up a cannon, the opponent can turn up next to it with a high likelihood of capturing the cannon and no risk of losing his piece to the cannon. If you turn up anything else, the opponent can turn over a piece one hop away. If he finds a cannon, it can take your piece, but no matter what it is, your piece can't immediately take his
+  - Chinese
+    - General x1 > Advisor x2 > Elephant x2 > Chariot x2 > Horse x2 > Cannon x2 > Soldier x5
+    - General may capture a Soldier if the General moves first
+    - Cannons cannot jump
+  - Variants
+    - A variation that may change the strategy is that the cannon can not use a face down piece for a screen but can capture multiple pieces in a single turn. The cannon can not capture face down pieces in this variant
+    - Banqi can be played on an 8x8 board using 2 sets of Chinese chess pieces
+    - A popular variation with children, allows multiple captures on the same turn for already exposed pieces as well as face-down pieces as long as they are successful
+    - In some variants of Banqi, face-down pieces may also be captured
+    - A popular variation allows the attempted capture of a face-down piece, which if it can be captured is done so. If the piece cannot be captured due to its rank or color, then it is left face-up, and no movement takes place
+    - One variation gives cannons the ability to capture soldiers and other cannons directly, without jumping over a screen. In other words, the cannon acts like the other pieces, ranking between horse and soldier, but with the added ability of capturing any piece by catapulting
+  - sources
+    - https://en.wikipedia.org/wiki/Banqi
+    - https://zh.wikipedia.org/wiki/%E6%9A%97%E6%A3%8B
+    - http://woodpress.org/banqi/
+  - setup
+    - common-setup option (+ поддержка значений уровня доски)
+  - extension
+    - shared-pieces на все ходы, все проверки в extension
+    - При первом ходе записывать в значения доски индексы игроков
+  - kernel
+    - Нотация открывающих ходов
+
+- session-manager
+  - Поддержка keyboard
+    - Backspace - кнопка "назад"
+
+- sound-manager
+  - Привязать звуковые эффекты к анимации
+    - Опционально к началу или завершению
+    - addSound(ix, delay, duration)
+  - Бросок нескольких костей random-ai
+    - stop не должен срабатывать если ролик не проигрался
+      - Задавать продолжительность ролика в addSound
+    - play не должен делать ничего если уже проигрывается тот же ролик
+
+- BanQi (heuristic-ai)
+  - Строить цепочки индивидуально от каждой фигуры (своей или противника)
+    - Common
+      - chain[from] = { trace: [pos, ...], price: value, traps: [] }
+    - Bolotoudou
+    - Three Crowns
+    - BanQi
+      - Выбор хода
+        - Увеличить стоимость защитных цепочек к своим атакованным фигурам
+        - Защищать атакуемые фигуры открытыми фигурами (укорачивать цепочку)
+  - Выбирать ход на основании построенных цепочек
+    - Брать наиболее ценную фигуру противника 
+    - Уменьшать наиболее перспективную из своих цепочек
+      - Ход по бонусным цепочкам может совпадать с ходом по штрафным цепочкам
+      - Отдавать предпотение коротким цепочкам    
+      - Умножать стоимость штрафных цепочек на коэффициент осторожности
+    - Препятсвовать продвижению противника по его перспективным цепочкам
+      - Располагать крысу в воде на пути прыгающей фигуры
+      - Подтягивать свои слабые фигуры к ловушкам
+        - На безопасные или защищённые позиции
+      - Идти на перехват в промежуточных полях цепочек более сильными фигурами
+
+- Andantino
+  - https://en.wikipedia.org/wiki/Andantino_(game)
+  - scrolling
+- Bosworth
+  - https://en.wikipedia.org/wiki/Bosworth_(game)
+- Sovereign Chess
+  - https://en.wikipedia.org/wiki/Sovereign_Chess
+- Legan chess
+  - https://en.wikipedia.org/wiki/Legan_chess
+- Madrasi chess
+  - https://en.wikipedia.org/wiki/Madrasi_chess
+
+- https://nauchikus.github.io/typescript-definitive-guide/book/contents
+
+- Головоломки
+  - Кубик Рубика (бондаж)
+  - Перевёртыши (на базе тетраэдров)
+    - Отключить анимацию перемещения (=1)
+    - Использвать ресурсы Alapo
+
+- TODO: dagaz-v2
+  - prototype: Cheskers
+    - Как передать массив в список параметров обработчика хода?
+  - view: Кастомный диалог выбора типа фигуры для превращения
+    - Фрагменты досок для отображения в диалоге (в относительных координатах)
+    - 3D доски из фрагментов?
+  - concepts
+    - Не допускать рассогласования model и view (строить view на основе модели)
+    - Не прямоугольные области позиций во view (Triangle Sliding Puzzle)
+    - Использовать имена позиций в design.setup!
+    - opposite - навигация в противоположном направлении
+    - Отказ от стековой машины
+    - Отказ от goals (использовать zones)
+    - Изменение структуры внутреннего хранения хода
+      - Массив частичных ходов на верхнем уровне
+      - Отказ от списков позиций в from и to (pieces и.б. множественным)
+      - Резервировать 0-action для главного действия части хода
+    - Позиции индексируются с 1 (dummy)!
+    - Направления индексируются с 0
+      - Добавить комментарии с индексом направления (sliding-puzzles/triangle)
+    - Сохранять последовательность в списке направлений
+    - Продумать deferred и превращение в Международных шашках
+    - Использовать TypeScript?
+
+- Китайские шахматные игры
+  - (+) https://baike.baidu.com/item/%E4%B8%AD%E5%9B%BD%E6%A3%8B%E6%96%87%E5%8C%96
+    - (++) https://baike.baidu.com/item/%E5%8F%98%E7%A7%8D%E8%B1%A1%E6%A3%8B
+      - https://baike.baidu.com/item/%E8%B5%A4%E5%A3%81%E6%88%98%E6%A3%8B
+      - https://baike.baidu.com/item/%E4%BA%94%E8%A1%8C%E8%B1%A1%E6%A3%8B
+      - https://baike.baidu.com/item/%E5%85%AD%E5%9B%BD%E8%B1%A1%E6%A3%8B
+      - https://baike.baidu.com/item/%E6%94%BB%E5%9F%8E%E8%B1%A1%E6%A3%8B
+      - https://baike.baidu.com/item/%E5%A4%AA%E6%9E%81%E8%B1%A1%E6%A3%8B
+      - https://baike.baidu.com/item/%E6%A5%9A%E6%B1%89%E8%B1%A1%E6%A3%8B
+      - https://baike.baidu.com/item/%E6%B0%B8%E6%81%92%E8%B1%A1%E6%A3%8B
+      - https://baike.baidu.com/item/%E5%8E%9F%E5%A7%8B%E8%B1%A1%E6%A3%8B
+      - https://baike.baidu.com/item/%E8%A5%BF%E6%B8%B8%E8%B1%A1%E6%A3%8B
+      - https://baike.baidu.com/item/%E5%BD%B1%E5%AD%90%E8%B1%A1%E6%A3%8B
+      - https://baike.baidu.com/item/%E7%95%8C%E5%A4%96%E8%B1%A1%E6%A3%8B
+      - https://baike.baidu.com/item/%E4%B8%AD%E5%AE%AB%E8%B1%A1%E6%A3%8B
+    - Народные (++): https://baike.baidu.com/item/%E6%B0%91%E9%97%B4%E6%A3%8B
+      - https://baike.baidu.com/item/%E4%B8%8A%E8%B0%B7%E8%80%81%E8%99%8E%E6%A3%8B
+      - https://baike.baidu.com/item/%E8%A2%AB%E5%8A%A8%E8%B1%A1%E6%A3%8B
+      - https://baike.baidu.com/item/%E8%BF%9E%E7%BB%AD%E4%BD%9C%E6%88%98%E6%A3%8B
+      - https://baike.baidu.com/item/%E6%89%93%E9%9D%B6%E6%A3%8B
+      - https://baike.baidu.com/item/%E7%83%88%E7%81%AB%E5%86%9B%E6%A3%8B
+      - https://baike.baidu.com/item/%E5%85%B5%E6%B3%95%E9%98%B5%E6%A3%8B
+      - https://baike.baidu.com/item/%E6%96%97%E5%85%BD%E5%B0%86%E6%A3%8B
+      - https://baike.baidu.com/item/%E5%B9%B3%E5%8E%9F%E6%96%97%E5%85%BD%E6%A3%8B
+      - https://baike.baidu.com/item/%E5%B1%B1%E6%9E%97%E6%96%97%E5%85%BD%E6%A3%8B
+      - https://baike.baidu.com/item/%E7%81%B5%E9%AD%82%E6%96%97%E5%85%BD%E6%A3%8B
+      - https://baike.baidu.com/item/%E9%83%A1%E7%8E%8B%E7%9B%B8%E6%A3%8B
+      - https://baike.baidu.com/item/%E6%B8%B8%E5%87%BB%E8%B1%A1%E6%A3%8B
+      - https://baike.baidu.com/item/%E5%B7%A7%E5%85%A5%E6%95%8C%E5%90%8E%E6%A3%8B
+      - https://baike.baidu.com/item/%E5%85%BD%E4%BC%8F%E6%A3%8B
+    - Общие шахматы: https://baike.baidu.com/item/%E5%A4%A7%E5%B0%86%E8%B1%A1%E6%A3%8B
+      - Золотые шахматы (+): https://baike.baidu.com/item/%E9%87%91%E8%9D%89%E8%B1%A1%E6%A3%8B
+    - Зодиакальные шахматы: https://kuaibao.qq.com/s/20180410G1ASFZ00?refer=spider
+    - Двойные шахматы: https://baike.baidu.com/item/%E5%8F%8C%E6%89%BF%E6%A3%8B
+    - https://baike.baidu.com/item/%E5%86%B2%E5%87%BA%E8%9B%87%E5%9B%B4%E6%A3%8B
+    - https://baike.baidu.com/item/%E8%BF%9E%E6%AD%A5%E6%A3%8B
+    - https://baike.baidu.com/item/%E5%B7%AE%E6%AD%A5%E6%A3%8B
+    - https://baike.baidu.com/item/%E8%B1%A1%E5%BE%81%E6%A3%8B
+
+- Dagaz
+  - Редизайн главной страницы с превью игр (и групп игр)
+
+- LoA
+  - variant
+    - https://www.boardspace.net/loa/english/variations.html?
+
+- Luzhanqi при генерации собирать информацию в атрибутах фигур
+  - prototype
+  - ai
+    - По начальному расположению
+    - По результатам боя с известной фигурой
+    - По особенностям перемещений
+
+- Connect Four
+  - animate-drops=true
+- Koom Valley Thud
+  - ai
+
+- Ki Shogi
+  - prototype
+
+- Qiquo Xiangqi
+  - dark-view
+    - Проверить корректность работы модуля
+
 - GESS
-  - Р“СЂСѓРїРїРѕРІРѕРµ РїРµСЂРµРјРµС‰РµРЅРёРµ С„РёРіСѓСЂ
-  - РџРѕСЂР°Р¶РµРЅРёРµ РїСЂРё СЂР°Р·СЂСѓС€РµРЅРёРё "РєРѕР»СЊС†Р°"
+  - aggressive-ai-v5
+    - Допускает ходы разрушающие кольцо
+  - move-list-v3
+    - Не работает, поскольку drop формируется до перемещения
+
+- Gauntlet
+  - ai
+
+- RPG
+  - Общие сведения
+    - Враги перемещаются и атакуют одновременно с игроком
+    - Враги не видны сквозь стены
+    - Выстрелы не проходят сквозь препятствия
+    - Враги могут наносить ущерб друг другу
+    - Турель и взрывы могут наносить ущерб игроку
+    - Взрыв разрушает стены на соседних полях
+    - При ходе игрока на граничное поле происходит переход в соседнюю комнату
+    - Комнаты генерируются случайно, на основании seed
+    - Если seed не задан в URL, он создаётся автоматически при первом переходе
+    - Враги создаются при входе в комнату
+    - Всегда на 1-3 класса выше игрока
+    - При уничтожении врага может выпасть случайный предмет
+    - Также предметы могут быть размещены на поле
+    - Чтобы взять предмет надо встать игроком на него
+    - Использовать console.log для детального описания боя
+  - Характеристики
+    - Опыт
+      - При убийстве более сильных врагов прибавляется разность в классах
+      - При достижении 10 обнуляется, повышая класс
+      - Повышение класса позволяет увеличить на 1 характеристику (кроме опыта)
+      - Каждая характеристика не может превышать 10
+    - Здоровье
+      - Кратно 10 единицам, первоначально 10
+      - Урон может отличаться от 10
+    - Выносливость
+      - В начале игры предел выносливости = 1
+      - Позволяет перемещаться более чем на 1 шаг за ход
+      - Превышение >1 при любом ходе отнимается от текущей выносливости
+      - Если разность ловкостей >0 парирование позволяет уменьшить урон
+      - Парирование случайная величина, лимит пропорционален разности ловкости
+      - Каждое парирование на 1 уменьшает выносливость
+      - Если не расходуется, увеличивается на 1 (не больше текущего предела)
+    - Ловкость
+      - В начале игры предел ловкости = 1
+      - Увеличивает шанс попадания при атаках (от 10 до 100%)
+      - Увеличивает шанс двойного урона (от 1 до 10%)
+      - Даёт возможность уклонения от вражеских атак
+      - Даёт возможность выполнения нескольких действий за ход
+      - Каждое действие уменьшает ловкость на 1
+      - Если ловкость = 1, любое действие завершает ход
+      - Перемещение всегда завершает ход
+      - В начале хода ловкость восстанавливается до текущего предела
+    - Сила
+      - В начале игры = 1
+      - Каждая единица силы позволяет нести 5 предметов
+      - При превышении силы предмет исчезает, но не берётся
+      - Превышение >1 позволяет бросать предметы на соответсвующее расстояние
+      - Влияет на величину базового урона при атаках (от 10 до 100 единиц)
+      - Урон при атаке - случайная величина не превышающая базового урона
+      - При выпадении критической атаки урон удваивается
+  - Оружие
+    - Меч
+      - Позволяет атаковать соседние поля
+      - Позволяет вскрывать сундук с возможным повреждением
+    - Лук (и стрелы)
+      - Позволяет атаковать на расстоянии
+      - Не обязательно в одном из 8 направлений
+      - Ущерб при выстреле обратно пропорционален расстоянию
+      - Количество выстрелов ограничено (наборы по 10 стрел берутся на поле)
+      - Взрывает ранее установленную бомбу на расстоянии
+    - Бомба
+      - На соседнее поле бомба устанавливается, на дальнем взрывается сразу
+      - Установленная бомба может быть подорвана выстрелом
+      - Одна бомба может подорвать другую по цепочке (на расстоянии от 1 до 2)
+      - Урон падает с расстоянием (1 - 100, 2 - 50, 3 - 10)
+    - FireBall
+      - Всегда устанавливается на соседнее с игроком поле
+      - Летит в противоположную от игрока сторону
+      - Пролетает до ближайшей стены или края доски за один ход
+      - Всё оказавшееся на пути уничтожается
+    - Турель
+      - Бросается на поле в зависимости от силы
+      - Имеет характеристики равные характеристикам игрока при установке
+      - Автономно наносит дальний ущерб по врагам
+      - Количество выстрелов не ограничено
+      - Исчезает при разрушении или при выходе из комнаты
+    - Невидимость
+      - Враги перестают видеть игрока
+      - Заканчивается через 10 ходов
+  - Предметы
+    - Сундук
+      - При атаке мечом превращается в предмет или разрушается
+      - Бомба в сундуке взрывается
+      - В зависимости от ловкости
+      - При атаке бомбой или FireBall-ом уничтожается
+    - Ключ
+      - Позволяет забрать случайный предмет встав на сундук
+      - Ключ расходуется
+      - Ядовитая ловушка в сундуке срабатывает
+    - Аптечка
+      - Немедленно пополняет здоровье на 10 если ниже лимита
+    - Алтарь
+      - Поднимает все характеристики до их лимитов
+    - Ядовитая ловушка
+      - Снижает здоровье на 10
+    - Набор стрел
+  - Враги
+    - Гнездо
+    - Призрак
+      - Проходит сквозь стены
+      - Наносит ущерб подойдя вплотную
+    - Вампир
+    - Дракон
+      - >5 класса
+      - Метает FireBall
+
+- Cannon
+  - blink атакующими пушками при наведении мыши на цель
+
+- Pentago
+  - На фазе поворота show-drop отображать стрелки-манипуляторы
+
+- Abalone
+  - move-list-v4
+    - Дополнительно помечать цели не текущих фигур, входящих в группу
+  - Bug: abalone-snakes.log
+
+- Hive
+  - progressive-levels="silent" для "прокрутки" при достижении края доски
+
+- Сброс управляемый колесом мыши
+  - War Go
+
+- Kamisado
+  - Добавить выбор расстановки (слева-направо или справа-налево)
+    - Вызывать промежуточную конфигурацию для выбора расстановки
+      - Для каждой из своих фигур два варианта хода на первую линию
+      - В зависимости от выбора хода формировать один из двух setup-ов
+      - После выполнения хода переходить к основной конфигурации
+      - Не отображать alert на выходе из промежуточной конфигурации
+        - Служебный код завершения игры
+  - common-setup
+    - Первым ходит игрок, сходивший последним в предыдущем раунде
+  - При возникновении взаимного пата проигрывает игрок ходивший последним
+
+- Go
+  - Фаза удаления мёртвых камней после двойного паса и перед подсчётом очков
+- app-v2
+  - Bug: После первого setPosition не показывает stop-метки 
+    - трудновоспоизводимо
+
+- Fangqi (Синьцзянские шахматы)
+  - https://en.wikipedia.org/wiki/Fangqi
+  - https://zh.wikipedia.org/wiki/%E6%96%B9%E6%A3%8B#%E6%96%B0%E7%96%86%E6%96%B9%E6%A3%8B
+  - Варианты:
+    - На предварительном этапе (после расстановки)
+      - Подсчёт форм (за обе стороны)
+      - После этого, удаление соответствующего количества камней
+      - Не удаляются камни, входящие в состав форм
+    - Запрещается занимать пустой угол (противника)
+    - 5x5 
+      - 5 по диагонали съедают 5 камней
+      - 5 по ортогонали съедают 4 камня
+      - Диагональ 4 соединяет две стороны - ест 3 камня
+      - Диагональ 4 соединяет две стороны - ест 2 камня
+      - Квадрат - ест один камень
+    - 6x6
+      - Квадраты произвольного размера
+    - 7x7 (Юй Фан)
+      - Второй игрок убирает два камня в начальной фазе
+      - Дом в центре доски
+      - Первый ход в центр
+      - 7 по ортогонали - съедают 3
+      - квадрат съедает 1
+    - 5 по вертикали или горизонтали ест 3 камня
+    - Камни не берутся, а меняют цвет
+    - Форма не может быть использована повторно на том же месте
+    - Доска предварительно заполнена в шахматном порядке
+    - Игра Найджела
+      - Доска NxN (N - чётно)
+      - Ортогональный ряд N ест N камней
+      - Квадрат - ест один камень
+      - Два камня после расстановки берутся только если нет форм
+      - Если доступно меньше N ходов, можно перепрыгивать врагов (строя форму)
+    - Фигуры окружённые с 4 сторон забираются: https://zh.wikipedia.org/wiki/%E6%96%B9%E6%A3%8B#%E4%B8%9F%E6%96%B9
+
+- Morris
+  - prototype
+    - Перепрыгивающие ходы
+  - goal
+    - Если каждый игрок остался всего с тремя коровами и ни у одного из них не получилось отстрелить ни одну из коров противника в течение 10 ходов, то игра завершается вничью
+
+- Бечи
+  - https://skyruk.livejournal.com/396115.html
+  - вариант 3x2
+  - многораундовая игра
+- Моди
+  - https://skyruk.livejournal.com/401206.html
+
+- Раш
+  - http://www.iggamecenter.com/info/en/rush.html
+- Оуст
+  - http://www.iggamecenter.com/info/en/oust.html
+- Шахматы Макаренко
+  - http://igrovir.ucoz.ru/blog/o_shakhmatakh_makarenko_prodolzhenie/2013-08-15-2
+
+- Bolotoudou
+  - prototype
+    - file:///X:/games/Dagaz/src/debug/games/checkers-like/bolotoudou.htm?setup=0:2+1;0:1;0:2;;0:1;;0:1;;0:2+1;0:1;0:2;0:1+1;;0:1;0:2+2;0:1+1;0:2+1;0:1+1;;0:2;0:1;;&turn=24
+    - https://ru.wikipedia.org/wiki/%D0%91%D0%BE%D0%BB%D0%BE%D1%82%D1%83%D0%B4%D1%83
+    - http://zhurnalko.net/=sam/junyj-tehnik-dlja-umelyh-ruk/1989-06--num9
+  - heuristic
+    - На фазе drop-а запрещено построение троек
+      - Занимать поле с соседними недостроенными тройками (своими и противника)
+    - Можно удалять только фигуры примыкающие к тройкам
+    - Можно перемещать только фигуру входящую в состав последней тройки
+      - Максимизировать результативность при построении троек
+        - Стараться удалять наиболее опасные фигуры противника
+        - Выбирать тройки с макисимальной полезной мобильностью входящих фигур
+  - ai
+    - Использовать покрытие для определения опасных камней при бонусном взятии
+    - Покрытие пустых полей (определение безопасных позиций при сбросе)
+  - https://en.wikipedia.org/wiki/Yot%C3%A9
+- Agon
+  - heuristic
+
+- Танбо
+  - http://www.iggamecenter.com/info/en/tanbo.html
+- Teeko
+  - http://www.iggamecenter.com/info/ru/teeko.html
+
+- Morris
+  - heuristic
+    - Удаляется не самый опасный камень (ближайший к построению тройки)
+  - zrf-model
+    - Bug: Даёт выполнять drop-ходы на kill-позиции
+- Neutreeko
+  - http://www.iggamecenter.com/info/en/neutreeko.html
+
+- Seega
+  - heuristic
+    - Поддержка drop-ходов
+  - eval
+    - cover
+  - uct-ai-v3
+    - Bug: Ломается модель (продолжает делать drop-ходы в фазе перемещения)
+
+- Irensei 
+  - https://sites.google.com/site/boardandpieces/list-of-games/irensei
+- Boku
+  - prototype
+- Pente
+  - view
+    - Счётчик захватов
+- Зуреро
+  - http://www.iggamecenter.com/info/ru/zurero.html
+
+- Virus Wars
+  - show-drops=all
+    - Отображаются подсказки не того типа (два типа фигур)
+      - Если в различные из доступных полей идёт drop разных фигур
+
+- Yugo
+  - http://www.iggamecenter.com/info/en/yugo.html
+- Gonnect
+  - http://www.iggamecenter.com/info/ru/gonnect.html
+
+- Go
+  - common-setup-v2
+    - Подготовить скрипт конвертации линейного SGF-файла в setup-выражение
+  - go-extension=suicide
+    - zrf-model: Не удаляется камень сделавший ход в последнее dame группы
+- Тибетское Го
+- Sunjang Baduk
+  - https://en.wikipedia.org/wiki/Go_variants#Sunjang_Baduk
+- Stoical Go
+  - https://en.wikipedia.org/wiki/Go_variants#Stoical_Go
+
+- app-auto
+  - Bug: При пасе всех игроков зацикливается сообщение Draw
+
+- Dagaz 2.0
+  - Не обращаться к полям (таким как piece.type) напрямую, использовать геттеры
+  - Исключить возможность рассогласования модели и представления
+    - Строить представление на основе игрового состояния модели
+    - Выполнять анимацию на основе хода
+  - Сконфигурированные опции выводить в настройки приложения в UI
+    - Использовать комментарии для задания возможных альтернатив
+  - Раздельные песочницы для ботов
+    - Возможность задания design отличного от игрового
+    - Использование различных версий одного бота
+    - Использование различных настроек одного бота (в том числе дебютов и т.п.)
+  - Не использовать 0 в качестве индекса позиции
+    ? Не использовать позиции в качестве индексов массивов
+      - Из за неявного преобразования индексов массивов в строки
+  - Поддерживать grid на уровне JS-модели
+    - Вызовы grid формируют addPosition при выполнении JS-кода
+    - Описания позиций во view формируются одновременно с позициями модели
+    - Поддерживаются множественные grid
+    - После выполнения grid допускается создание/удаление позиций и связей
+  - Доработать модель симметрий и игроков
+    ? Отказаться от хранения opposite в симметрии нулевого игрока
+  - Описания ходов хранить в виде JS-функций
+    - Отказаться от системы команд стековой машины при описании ходов
+  - Ввести расширения уровня Board
+    - Не засорять Move побочными действиями (например установкой атрибутов)
+    - При применении хода, выполнять дополнительные действия расширением
+    ? Продумать множественное превращение фигур
+  - Отказаться от диалоговых окон
+    - Окна диалога отрисовывать непосредственно в canvas
+
+- Vai Lung Thlan
+  - Проверить ситуацию захвата целевой лунки
+  - Проверить ситуацию захвата стартовой лунки
+
+- Hiashatar
+  - getCover
+    - Кастомизировать getCover
+- Omega Chess
+  - eval
+    - Использовать cover (в Chess тоже)
+
+- Генетическая подстройка алгоритмов
+  - Кодировать настройки AI в URL
+  - Выполнять мутации и скрещивания настроек при каждом запуске
+  - Собирать события Win/Loss с ассоциированными URL через Google Analytics
+  - Использовать статистику для мутаций и закрепления выигрышных настроек
+  - Фиксировать sandbox (алгоритмы, оценки, эвристики, настройки)
+  - Разрешить различным sandbox играть между собой (в том числе более 2)
+  - В URL фиксировать настройки всех sandbox задействованных в игре
+  - Фиксировать сторону, не только Win, но и Loss/Draw для всех sandbox
+  - Активатор sandbox подгружает необходимые алгоритмы AI при запуске
+  - AI может получать от sandbox альтернативный design игры
+
+- 1.2.0:
+  - Abstract Puluc: http://www.di.fc.ul.pt/~jpn/gv/abpuluc.htm
+  - Bagh Bandi: http://www.di.fc.ul.pt/~jpn/gv/baghbandi.htm, https://sites.google.com/site/boardandpieces/list-of-games/bagh-bandi
+  - Sher Bakar: https://sites.google.com/site/boardandpieces/list-of-games/sher-bakar
+  - 24 vs 1: https://sites.google.com/site/boardandpieces/list-of-games/24-vs-1-on-alquerque-board
+  - Mancala: http://www.di.fc.ul.pt/~jpn/gv/mancala.htm
+  - Seti: http://www.di.fc.ul.pt/~jpn/gv/seti.htm
+
+- AB AI
+  - Spock (AB AI)
+    - Bug
+      - Подставился под удар (spock.log)
+        - Почему не рассмотрен ответный ход (максимальная эвристика)?
+  - los-alamos-chess
+    - неадекватные ходы с обоих сторон (см. лог)
+    - использоать покрытие
+  - russian-checkers 
+    - eval
+      - бонусы за фигуры противника все ходы которых ведут под удар
+        - не поддавать таким фигурам
+    - проверить решение задач на лучший ход
+    - неадекватные ходы (см. лог)
+    - проигрывает maxmin-ai-v2
+  - kono
+    - проигрывает maxmin-ai-v2 (см. лог)
+  - alquerque
+    - две фигуры не могут загнать одну (см. лог)
+    - проигрывает maxmin-ai-v2
+  - column-checkers
+    - в eval учитывать наполнение башен
+
+- Jofur
+  - Доска 10x10
+  - Тайлы
+    - Суша (отсуствие тайла)
+    - Трясина
+    - Вода
+  - Диски
+    - С - Командный (3-5) по три диска на игрока
+    - R - Ход ладьи (1-2) на две клетки в отсутствии Q
+    - B - Ход слона (1-2) на две клетки в отсутствии Q
+    - G - Осушение (2-3)
+    - W - Заболачивание (2-3)
+    - F - Полёт (2-3)
+    - Q - Перемещение на дальние дистанции (2-3)
+    - A - Амфибия (2-3)
+    - E - Расширение влияния (3-4)
+    - I - Инициатива (3-4) несколько перемещений за ход
+    - H - Гипноз (5) возможность манипуляций с вражескими башнями
+    - V - Вампиризм (5) отъём очков инициативы у вражеской башни
+        - Не более максимального номинала диска во вражеской башне
+        - Если атакующая башня главная очки инициативы увеличивают ход
+  - Концепции
+    - Выигрывает первый игрок построивший три башни 5-го уровня
+    - Максимальная башня с командным диском определяет количество ходов
+    - Количество ходов - сумма очков дисков (в том числе, отрицательных)
+    - Два командных диска не могут входить в одну башню
+    - При начальном размещении информация о части нейтральных дисков скрыта
+
+- SGF AI
+  - Bug 0002 Если первый ход не соответствует дебюту, второй может сработать
+    - Очищать контекст SGF если какой-то из ходов не найден
+
+- Chess
+  - goal
+    - В минииграх фиксировать поражение при недостатке фигур для мата
+
+- HiQue
+  - AI
+- Watermelon Chess
+  - eval: штрафы за перекрытые дамэ (только для одиночных фигур)
+- Nubia
+  - maxmin-ai-v2: Не контролирует достижение цели за 1 ход
+
+- Ko Shogi
+  - AI
+    - prices
+
+- Yonin Shogi
+  - heuristic, eval
+    - Нападать дальнобойными фигурами на ценные фигуры (Короля)
+      - Перемещаться на безопасные или защищённые (учитывать размен) поля
+    - Не открывать короля угрозам дальнобойных фигур
+    - Выгоднее нападать на следующего игрока чем на предыдущего
+      - Учитывая выбывших из игры игроков
+- Liberian Queah
+  - AI
+    - Различная стоимость нахождения фигур для различных полей
+    - Учитывать угрозы
+
+- uct-ai-v3
+  - Bug
+    - Подставил Спока под бой (spock.log)
+      - minmax вернул MAXVALUE (Best Move) при том, что node.maxmin == null
+
+- bruteforce-ai-v3
+  - https://en.wikipedia.org/wiki/Dancing_Links
+
+- Rithmomachy: https://sites.google.com/site/boardandpieces/list-of-games/rithmomachy
+- Volo: https://sites.google.com/site/boardandpieces/list-of-games/volo
+
+- Shogi
+  - AI
+    - prices
+    - openings
+
+- Courier Chess
+  - Предполагают, что пешка, достигшая восьмой горизонтали, была должна совершать три прыжка на шестой, четвертый и второй ряды этой вертикали, прежде чем её можно было превратить только в <королеву>. Она не могла перескакивать через фигуры или бить фигуру при своих прыжках. Её также нельзя было бить, когда она достигала восьмой горизонтали, хотя разрешалось во время прыжков назад на свой исходный квадрат. Подобные прыжки должны были чередоваться с другими ходами.
+
+- Hanga Roa
+  - extension
+    - Захват работает некорректно
+      - Не сработал захват Moai (hanga-roa.png)
+      - Если выполняется первым, а не вторым камнем (pass-partial)
+    - Запрещать сброс Ariki на поле с которого нет хода
+
+- Caissa: http://www.mindsports.nl/index.php/how-i-invented-games-and-why-not/chess-variants-are-easy
+  - AI
+- Hanga Roa
+  - extension: Оптимизировать производительность
+  - AI
+- Jeson Mor
+  - AI
+
+- Игра по переписке
+  - Наличие аргументов в командной строке активирует режим
+  - Загружать состояние из URL
+    - Расширяемая сериализация
+    - Расстановка фигур
+    - turn order
+    - last from и last to
+    - Куммулятивное время на обдумывание хода
+    - Значения уровня доски (счётчики)    
+  - По завершении анимации (и хода AI) сериализовать в URL и выполнять переход
+
+- Congo: http://www.chessvariants.com/ms.dir/congo.html
+- Chad: http://www.chessvariants.com/ms.dir/chad.html
+
+- simple-ko
+  - История состояния не доступно в режиме игры по переписке
+  - Использовать last to
+    - Если last to участвует в окружении одного поставленного камня
+    - и если last to единственный камень забираемый при выполнении хода
+
+- Elementals
+  - Stone
+    - Запрещать взятие если фигура неуязвима
+    - Запрещать толчок если первая фигура уязвима
+  - Fire
+    - Уничтожение уязвимых врагов на продолжении прямого удара
+      - Только на дистанции единичного шага?
+  - Water
+    - Запрещать бой врагов после прохождения через преграду
+    - Замораживать врагов после прямого перемещения
+  - Wind
+    - Запрещать бой неуязвимых фигур
+  - Воздух <- Огонь <-> Камень 
+  - Камень <- Воздух <-> Вода
+  - Вода <- Камень <-> Огонь
+  - Огонь <- Вода <-> Воздух
+  - Вода скользит в одном направлении
+  - Вода подходя замораживает троих (пока фигуры стоят на месте)
+  - Вода проходит сквозь камень (скользя, без убийства)
+  - Воздух скользит в трёх направлениях
+  - Воздух проходит сквозь Огонь и Воду убивая
+  - После убийства Воздух может сделать ещё один ход, меняя направление
+  - Огонь скользит в одном направлении
+  - Огонь убивает цепочку врагов, подойдя к ним
+  - Камень не скользит
+  - Камень двигает любую цепочку фигур
+- AI
+  - Alea Evangeli
+  - Spock
+- Chakra
+  - http://www.mindsports.nl/index.php/the-pit/521-chakra
+
+- https://www.facebook.com/ChessVariants/
+
+- http://www.chessvariants.com/xiangqivariants.dir/yangqi.html
+- http://www.chessvariants.com/invention/wild-kingdom
+- http://www.chessvariants.com/shogivariants.dir/tori.html
+- http://www.chessvariants.com/shogivariants.dir/whale.html
+- http://www.chessvariants.com/43.dir/voidrider.html
+- http://www.chessvariants.com/44.dir/pirateknics.html
+- http://www.chessvariants.com/invention/mimic-chess
+- http://www.chessvariants.com/winning.dir/neutral-king.html
+- http://www.chessvariants.com/diffobjective.dir/anti-king-chess.html
+- http://www.chessvariants.com/38.dir/flip.html
+- http://www.chessvariants.com/invention/petteia-latrunculi-xxi
+- http://www.chessvariants.com/other.dir/hanga_roa/hanga_roa.html
+- http://www.chessvariants.com/invention/dimension-x
+- http://www.chessvariants.com/3d.dir/dragonchess.html
+- http://www.chessvariants.com/invention/sovereign-chess
+- http://www.chessvariants.com/other.dir/ultima.html
+- http://www.chessvariants.com/other.dir/rococo.html
+
+- Chess
+  - situation - a pinned piece giving check at the same time
+
+- aggressive-ai-v4
+  - Использовать ending-ai для форсирования эндшпилей
+  - Плохо защищает свои фигуры
+  - Учитывать мобильность по результатам хода
+  - Бонусы за защиту фигур и атаки на противника в первичном eval
+  - Qiquo Xiangqi: Игра за нескольких игроков
+  - Platform Chess: aggressive-ai-v3 отдаёт незащищённые фигуры
+  - Gala: Проиграл aggressive-ai-v2
+  - Walhall: Игнорирует возможность взятия тёмными (Walhall.log)
+- ab-ai
+  - Shogi variants: (small)
+  - Free Chessence: Учитывать мобильность
+  - Makyek: aggressive-ai не работает
+  - Shatra: Эвристики и учёт угроз
+  
+- AI
+  - Chessence
+  - Three Crowns
+
+- Breakthru: https://en.wikipedia.org/wiki/Breakthru_(board_game)
+- 2000 A.D. https://en.wikipedia.org/wiki/2000_A.D._(chess_variant)
+- Forchess https://en.wikipedia.org/wiki/Forchess
+- Djambi https://en.wikipedia.org/wiki/Djambi
+- Sannin shogi https://en.wikipedia.org/wiki/Sannin_shogi
+
+- Aggressive AI v2
+  - Spock
+    - e1-e4 не берёт Бумагу Споком
+    - Построить библиотеку дебютов
+  - Gala
+    - Оптимизировать быстродействие
+- Sittuyin
+  - Добавить нотацию ходу "превращение на месте"
+- Шатрандж
+  - Первым ходом новый ферзь имел право пойти на второе поле по вертикали (то есть назад) или диагонали, независимо от того, занято это поле или нет.
+
+- MaxMin AI v2
+  - Makruk
+    - Взять оценочную функцию на основе мобильности из aggressive-ai-v2
+
+- AB AI
+  - Gala
+  - Шахматы
+    - Задачи "Мат в N ходов"
+
+- Keyboard
+  - Common
+    - Ввод хода в текстовой нотации
+
+- Aggressive AI v2
+  - Gwangsanghui
+    - Учитывать результаты захвата "Дворцов"
+  - Tenjiku Shogi
+    - Учитывать результаты превращения фигур
+  - Shatra (variant)
+    - Отдаёт фигуры
+    - Не может поймать одинокого короля
+
+- view
+  - High Jump
+    - При анимации движущаяся фигура проходит под неподвижной
+- MaxMin AI v2
+  - Исправить, чтобы не подставлялся под выигрышный ход
+
+- High Jump
+  - eval: Поля перекрывающие возможные ходы фигуры (на одну клетку по диагонали)
+
+- Гонки
+  - Башни Торонто
+
+- UCT AI
+  - https://senseis.xmp.net/?UCT
+  - UCTValue(parent, n) = winrate + sqrt((ln(parent.visits))/(5*n.nodevisits))
+
+- Доджем, Хальма, Торонто
+  - eval:Разность количества ходов до победы (с учётом препятствий)
+
+- MaxMin AI v3
+  - v2 играет лучше, когда не подставляется под удар (0002.log, 0003.log)
+  - Своим ходом подставляется под невыгодный размен!
+  - В expand выбирается node.best за пределами node.cache (0001.log)
+  - профилировать
+
+- AB AI
+  - При форсированном ходе противника в MAX_DEEP ещё шаг и оценка
+  - Не выбирать ходы с установленным win-ответом
+  - Если количество ответов 1-2 продолжать углубляться
+  - Адаптивная глубина просмотра
+    - Глубина не менее MIN_DEEP
+    - MIN_DEEP без учёта времени
+      - Не выполнять предварительный expand вторых узлов
+    - Если количество начальных ходов снижается вдвое - увеличивать глубину
+    - Если количество начальных ходов увеличивается вдвое - уменьшать глубину
+    - Если выполнено несколько просмотров с разной глубиной
+      - Всегда использовать результат только полных просмотров
+      - Изменять глубину на максимальную глубину полного просмотра
+    - Если не успел выполнить полный просмотр - уменьшать глубину
+
+- View v2 
+  - Почему не изменяется курсор при перетаскивании?
+
+- app-auto
+  - Почему вызывается UI determinate?
+
+- Mini XiangQi
+  - Некорректно зафиксирован мат (0001)
+
+- UCT AI v2
+  - Russian Checkers
+    - Зацикливается когда остаётся одна фигура
+
+- Pawns
+- UCT AI v2
+  - Концепции
+    - Избегать узлов с установленным best или ведущих к неравноценному размену
+    - В первую очередь рассматривать ходы с наименьшей стоимостью
+  - Утилиты
+    - В шахматных играх всегда задавать стоимость короля
+    - Dagaz.AI.movePrice - стоимость фигуры выполняющей ход
+    - Опционально включать в оценку позиции мобильность
+      - Свою, на основании количества ходов из узла
+      - Противника - среднее количество ходов из дочерних узлов
+    - Использовать минимакс для обновления оценок разменов
+  - Алгоритм
+    - Доходить до MAX_DEEP по цепочке форсированных ходов
+    - Переключать кэш для использования данных ранее выполненных рассчётов
+
+- UCT AI v2
+  - Интегрировать с SGF AI v2
+    - Использовать время UCT для обработки ходов полученных от SGF AI
+    - Передавать все допустимые ходы, а не только выбранный
+
+- AI
+  - Форсированные ходы
+    - Ход ведущий к превращению считать форсированным
+    - В шахматах - ход берущий lastt самой дешёвой фигурой
+    - В шашках - случайный берущий ход
+  - Цели
+    - Doubutsu Shogi
+      - Проверить отслеживается ли AI достижение королём последней горизонтали
+  - Оценочная функция
+    - Gala
+      - В оценочной функции расстояние королей для цели
+      - Король в целевой области - бонус
+    - LoA
+      - Штраф на количество связных областей
+    - Konane
+      - Соотношение количества возможных взятий
+    - Gauntlet
+    - Chessence
+    - Knight's Court
+      - Фигуры в резерве дороже
+      - Мобильность короля?
+    - Three Crowns
+  - UCT (v2)
+    - Checkers
+      - Продолжить на один тихий ход противника после цепочки взятий
+    - Fanorona
+    - Belarusian Chess
+    - Platform Chess
+    - Shatra
+    - XiangQi
+    - Janggi
+    - Gwangsanghui
+    - Tenjiku Shogi
+
+- MaxMin AI v2
+  - Общее
+    - Альфа-бета отсечение
+    - UCT v2
+  - Column Checkers, Laska
+    - При расчёте оценочной функции учитывать состав столбцов
+  - Russian Checkers
+    - Рассматривать поддающие ходы как приоритетные в эвристиках
+    - Учитывать оппозицию
+  - Shatra, Fanorona, Belarusian Chess
+    - MaxMin AI v2 виснет
+  - Konane
+    - Эвристика: количество потенциальных взятий (своих и противника)
 
 - Z2J
-  - РњР°РєСЂРѕСЃС‹ РєР°Рє Р¤Р’Рџ
-  - Р Р°СЃС€РёСЂРµРЅРЅР°СЏ РЅР°РІРёРіР°С†РёРѕРЅРЅР°СЏ С„РѕСЂРјР° (empty? n nw)
+  - Транслировать в JS-код, а не команды стековой машины
+
+- Dablot (Child)
+  - Обычная фигура берёт принца (0003.log)
+  - Простая фигура белых съела короля чёрных (не сработал extension)
+  - Проверить составное взятие Man заканчивающееся King или Prince
+- Zamma
+  - Повторные взятия?
+- Самоеды
+  - Не всегда отрабатывает приоритет за чёрных
+
+http://peerjs.com/
+https://threejs.org/
+https://threejs.org/examples/
+
+- 2d-view-v2
+  - Не отображаются хинты по фигурам
+  - Помечать целевую позицию при отключенном smart-moves
+
+- AI
+  - Gauntlet
+    - При игре UCT за чёрных выбирать ход с минимумом поражений
+    - Победой за белых (с т.з. AI) считать фигуру которую не догоняют чёрные
+- Doubutsu Shogi
+  - Преждевременно признаёт поражение (см. лог + 0001.log)
+
+- Z2J
+  - Find Pair
+    - Обратный порядок столбец-строка в grid-е
+  - Agon
+    - Макрос drop формирует некорректный код без первого verify
+      - Проглатывается абсолютное позиционирование 'с1'
+  - Walhall
+    - Не работает альтернативное определения Valkyrie slide и jump
+  - Chessence
+    - Направления с позиций резерва сформировались некорректно
+  - Konane
+    - capture в second-move не формируется
+  - Fanorona
+    - Конструкции (on-board? dir) не сливают шаблоны (в отличии от голых направлений)
+    - Проверить генерацию (p? (opposite dir))
+    - Реализация хода взятая из Walhall не работает
+  - Platform Chess
+    - Link [up] from Position [z2j-l] already exists
+    - Не сформировался capture для boom
+  - Doubutsu Shogi
+    - Некорректно строит симметрии: (symmetry Red (n s) (s n) (th tn)) -> [0, 2, 1, 1, 2, 3, 4, 5, 6, 10, 7]
+  - XiangQi
+    - Ошибка Z2J в step-pawn если направление задано литералом а не параметром
+  - Maharaja
+    - Если $1 в pawn-shift заменить на n, Z2J генерирует некорректный ход
+    - Не работает рокировка без указания направлений в параметрах
+  - Dablot, Zamma
+    - Если доска определена макросом для variant не работает уникальность к game
+
+- View (опционально)
+  - Запрещённые ходы (drops) помечать квадратиком
+  - Последний ход помечать кружком
+  - Опционально помечать текущую фигуру и её ходы после MouseUp
+
+- В Болотуду формировать недетерминированные взятия отдельным частичным ходом
+
+- SGF дебюты для Go
+
+- Rhino/Nashorn API можно использовать для распараллеливания AI (Java-сервер)
+- попробовать throttle на обработке событий мыши
+
+- Jungle
+  - При выходе за пределы доски (в область хинта) отображается хинт фигуры на нулевой позиции
+  - Отображать хинты для позиций (вода, ловушка, гнездо)
+    - Новые теги для zone
+      - glyph, help - отображаются внизу, если на поле нет фигуры
+      - image - рисуется поверх доски но под фигурами (для Сокобана)
+
+- Поддержка атласов и масштабирования фигур
+- Поддержка SVG-графики
+
+- Gobies
+  - Доска Nx3 с каждой стороны по 3 фигуры на разных дорожках
+  - Два кубика, броски распределяются на любые фигуры
+  - Если дойдя до противника потратили не все очки - отскок на остаток
+  - Выход с доски со своей стороны - потеря фигуры (без точного броска)
+  - Выход со стороны противника без точного броска по свободной дорожке
+  - Проигрывает потерявший все свои фигуры
+
+http://nontwistypuzzles.ru/game/game.php
+https://habrahabr.ru/post/168867/
+
+- sticky-puzzle
+  - Сцепить все одноцветные блоки
+  - Серые (0) блоки никогда не сцепляются
+  - Всегда сцеаленные (даже когда не находятся рядом) блоки
+    - Возможность "вклеить" блок в разорванную склеянную деталь
+  - Не более 3 одноцветных блоков на игру
+  - Два пустых места на игру
+
+- Разделить Design и Board
+  - AI работающие по различающимся design с совместимыми board
+  - Альтернативное описание design без ZRF
+
+http://underscorejs.ru/
+
+- баги ZRF
+  - move на месте (обычно с изменением типа) не работает если предварительно выполнены (capture dir), поскольку не генерируется ход
+    - работает, если перед проверками выполнить change-type
+  - не удаляется фигура у котором на том же ходу изменён тип или атрибут
+  - http://www.frontiernet.net/~alcove/chess/zogfeedback.html
+
+- Шатар
+  - Запрещать специфические матующие ходы
+  - Определять вариант завершения игры (победы) по типу мата
+- Nine-Tile Cyvasse
+  - Отмена ходов не имеющих необходимого "зацепления"
+  - Составные ходы двумя различными Rable (с указанием режимов и запретом двойного перемещения)
+- Го
+  - Режим ручного удаления групп и подсчёта очков
+  - Контроль времени
+  - Интеграция с AI-ботами
+  - Поддержка SGF
+- Тамск
+  - Счётчики времени на фигурах (песочные часы)
+
+- Z2J
+  - Макросы как ФВП
+  - Расширенная навигационная форма (empty? n nw)
 
 - ZRF
-  ? РќРµРІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ РІР·СЏС‚РёСЏ С„РёРіСѓСЂС‹ Сѓ РєРѕС‚РѕСЂРѕР№ РІ С‡Р°СЃС‚РёС‡РЅРѕРј С…РѕРґСѓ РёР·РјРµРЅСЏР»РёСЃСЊ Р°С‚СЂРёР±СѓС‚С‹ РёР»Рё С‚РёРї
-  ? add-partial РІ С†РёРєР»Рµ
+  ? Невозможность взятия фигуры у которой в частичном ходу изменялись атрибуты или тип
+  ? add-partial в цикле
 
-- РџРѕРґРґРµСЂР¶РєР° СЂР°РЅРґРѕРјРЅС‹С… РёРіСЂРѕРєРѕРІ
-- РџРѕРґРґРµСЂР¶РєР° РєРѕР°Р»РёС†РёР№ РёРіСЂРѕРєРѕРІ (РІ С‚РѕРј С‡РёСЃР»Рµ, РІСЂРµРјРµРЅРЅС‹С…)
+- Поддержка коалиций игроков (в том числе, временных)
 
-- discard-cascades=true РєР°СЃРєР°РґРЅС‹Рµ РїРµСЂРµРјРµС‰РµРЅРёСЏ СЃР±СЂР°СЃС‹РІР°СЋС‚СЃСЏ РІ ZRF_FORK
-- zrf-advanced=shared РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ С…РѕРґР° С‡СѓР¶РёРјРё С„РёРіСѓСЂР°РјРё
-- zrf-advanced=simple РёР·РјРµРЅРµРЅРёСЏ СЃРѕСЃС‚РѕСЏРЅРёСЏ РґРѕСЃС‚СѓРїРЅС‹ РїСЂРё РіРµРЅРµСЂР°С†РёРё С‡Р°СЃС‚РёС‡РЅРѕРіРѕ С…РѕРґР°
-- zrf-advanced=mark РІР»РѕР¶РµРЅРЅС‹Р№ mark/back
-- zrf-advanced=composite СЃРѕС…СЂР°РЅРµРЅРёРµ РїРѕР·РёС†РёРѕРЅРЅС‹С… С„Р»Р°РіРѕРІ РІ СЂР°РјРєР°С… СЃРѕСЃС‚Р°РІРЅРѕРіРѕ С…РѕРґР° (Р‘РѕР№ РїРѕРјРµС‡РµРЅРЅС‹С… РїРѕР»РµР№ РІ Р‘РѕР»РѕС‚СѓРґСѓ)
-- zrf-advanced=fork СЃРѕС…СЂР°РЅРµРЅРёРµ РІР·СЏС‚РёР№ РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё ZRF_FORK
-- zrf-advanced=numeric РїРѕРґРґРµСЂР¶РєР° Р°СЂРёС„РјРµС‚РёРєРё (Р РёС‚РјРѕРјР°С…РёСЏ, Р§РµР№Р·, РџРѕРµРґРёРЅРѕРє)
-- zrf-advanced=foreach РїРѕРёСЃРє РЅР° РґРѕСЃРєРµ (СЃРґРІРѕРµРЅРЅС‹Рµ РїРµС€РєРё РІ РЎС‘РіРё)
-- zrf-advanced=priority СЃР»РѕР¶РЅС‹Рµ РїСЂРёРѕСЂРёС‚РµС‚С‹ (РїСЂРёРѕСЂРёС‚РµС‚ РІР·СЏС‚РёСЏ СЃРІРѕРµР№ С„РёРіСѓСЂРѕР№ РІ "РЎС‚Р°РІСЂРѕРїРѕР»СЊСЃРєРёС… С€Р°С€РєР°С…")
-- zrf-advanced=turn-order РїРѕРІС‚РѕСЂ С…РѕРґР° (РїСЂРѕРїСѓСЃРє С…РѕРґР° РІСЃРµРјРё РёРіСЂРѕРєР°РјРё), РїСЂРѕРїСѓСЃРє С…РѕРґР°
-- zrf-advanced=player РѕРїСЂРµРґРµР»РµРЅРёРµ С‚РµРєСѓС‰РµРіРѕ РёРіСЂРѕРєР°, СЃР»РµРґСѓСЋС‰РµРіРѕ, РІР»Р°РґРµР»СЊС†Р° С„РёРіСѓСЂС‹
-- zrf-advanced=global РіР»РѕР±Р°Р»СЊРЅС‹Рµ С„Р»Р°РіРё Рё РїРµСЂРµРјРµРЅРЅС‹Рµ (РєР°Рє РІ Axiom)
-- zrf-advanced=partial РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊ РїСЂРѕРґРѕР»Р¶РµРЅРёСЏ РЅРµ С‚РѕР»СЊРєРѕ С„РёРіСѓСЂРѕР№ РІС‹РїРѕР»РЅСЏРІС€РµР№ С…РѕРґ (Р±РѕРЅСѓСЃРЅРѕРµ РІР·СЏС‚РёРµ РІ Р™РѕС‚Р°Р№)
-- zrf-advanced=capture СѓРїСЂРѕС‰С‘РЅРЅС‹Р№ С…РѕРґ СЃРѕРґРµСЂР¶Р°С‰РёР№ Р»РёС€СЊ РІР·СЏС‚РёРµ С„РёРіСѓСЂС‹
-- notation=simple РЅР°РёР±РѕР»РµРµ Р»Р°РєРѕРЅРёС‡РЅР°СЏ РЅРѕС‚Р°С†РёСЏ С…РѕРґРѕРІ
-- notation=zsg С„РѕСЂРјРёСЂРѕРІР°РЅРёРµ С…РѕРґРѕРІ РІ ZSG-РЅРѕС‚Р°С†РёРё
-- smart-moves=from,to С‡Р°СЃС‚РёС‡РЅРѕРµ РІРєР»СЋС‡РµРЅРёРµ РѕРїС†РёРё
+- discard-cascades=true каскадные перемещения сбрасываются в ZRF_FORK
+- zrf-advanced=shared возможность хода чужими фигурами
+- zrf-advanced=simple изменения состояния доступны при генерации частичного хода
+- zrf-advanced=mark вложенный mark/back
+- zrf-advanced=composite сохранение позиционных флагов в рамках составного хода (Бой помеченных полей в Болотуду)
+- zrf-advanced=fork сохранение взятий при выполнении ZRF_FORK
+- zrf-advanced=numeric поддержка арифметики (Ритмомахия, Чейз, Поединок)
+- zrf-advanced=foreach поиск на доске (сдвоенные пешки в Сёги)
+- zrf-advanced=priority сложные приоритеты (приоритет взятия своей фигурой в "Ставропольских шашках")
+- zrf-advanced=turn-order повтор хода (пропуск хода всеми игроками), пропуск хода
+- zrf-advanced=player определение текущего игрока, следующего, владельца фигуры
+- zrf-advanced=global глобальные флаги и переменные (как в Axiom)
+- zrf-advanced=partial возможность продолжения не только фигурой выполнявшей ход (бонусное взятие в Йотай)
+- zrf-advanced=capture упрощённый ход содержащий лишь взятие фигуры
+- notation=simple наиболее лаконичная нотация ходов
+- notation=zsg формирование ходов в ZSG-нотации
+- smart-moves=from,to частичное включение опции

@@ -1035,7 +1035,7 @@ ZrfGrid.prototype.addDirection = function(name, offsets) {
   if (_.indexOf(this.dirs, name) < 0) {
       this.design.addDirection(name);
   }
-  var ix = _.indexOf(this.dirs, name);
+  var ix = _.indexOf(this.design.dirs, name);
   if (ix >= 0) {
       this.dirs[ix] = offsets;
   }
@@ -1068,11 +1068,11 @@ var addPositions = function(self, ix, name, point) {
       });
       _.each(_.keys(self.dirs), function(dir) {
            var o = 0;
-           for (var i = 0; i < self.scales.length; i++) {
-                if (i > 0) {
-                    o = o * self.scales[i - 1].length;
+           for (var i = self.scales.length - 1; i >= 0; i--) {
+                if (i < self.scales.length - 1) {
+                    o = o * self.scales[i + 1].length;
                 }
-                var v = self.dirs[dir][self.scales.length - i];
+                var v = self.dirs[dir][i];
                 var x = point[i] + v;
                 if (x < 0) return;
                 if (x >= self.scales[i].length) return;
