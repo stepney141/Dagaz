@@ -302,7 +302,7 @@ Dagaz.View.configure = function(view) {
     var b = view.root.addRegion(70, 0, 540, 540);
     b.addBoard("WhiteBoard", [0]);
     b.addBoard("BlackBoard", [1]);
-    var g = b.addGrid(31, 31, 58, 58);
+    var g = b.addGrid(31, 31, 89, 89);
     g.addScale("A/B/C/D/E/F/G/H", 60, 0);
     g.addScale("8/7/6/5/4/3/2/1", 0, 60);
     g.addTurns(0, [0]);
@@ -346,6 +346,7 @@ Dagaz.View.configure = function(view) {
     view.addPiece(["WhitePawn", "WhiteKnight", "WhiteBishop", "WhiteRook", "WhiteQueen", "WhiteKing"], Dagaz.Model.drawPiece);
     view.addPiece(["BlackPawn", "BlackKnight", "BlackBishop", "BlackRook", "BlackQueen", "BlackKing"], Dagaz.Model.drawPiece);
     view.addPiece(["WhitePawnR", "BlackPawnR", "WhiteKnightR", "BlackKnightR", "WhiteBishopR", "BlackBishopR", "WhiteRookR", "BlackRookR", "WhiteQueenR", "BlackQueenR", "WhiteKingR", "BlackKingR"], Dagaz.Model.drawRes);
-    view.addPieces(["d0", "d1", "d2", "d3", "d4", "d5", "d6", "d7", "d8", "d9", "plus", "minus", "question"]);
-    view.addPieces(["db", "dw", "ub", "uw"]);
+    view.addPiece(["Pawn", "SmallPawn", "Knight", "SmallKnight", "Bishop", "SmallBishop", "Rook", "SmallRook", "Queen", "SmallQueen", "King", "SmallKing"]);
+    view.addPiece(["two", "d0", "d1", "d2", "d3", "d4", "d5", "d6", "d7", "d8", "d9", "plus", "minus", "question"]);
+    view.addPiece(["db", "dw", "ub", "uw"]);
 }

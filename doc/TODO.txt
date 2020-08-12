@@ -1,6 +1,3 @@
-- Игры
-  - https://ru.wikipedia.org/wiki/Французское_таро
-
 - dagaz-full
   - app-full-v1
     - Конфигурирование пользовательского графа перехода между статусами (матрица переходов + обработчики)
@@ -52,6 +49,25 @@
     - Взаимодействие с сервером
   - DTC
 
+- Tibetian Checkers
+  - prototype
+    - https://www.youtube.com/watch?v=PbtGh3MJ9h4
+
+- Escalation
+  - http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=2546
+  - http://www.mayhematics.com/p/gpjournal_07.pdf
+
+- Nyout
+  - prototype
+    - https://skyruk.livejournal.com/216114.html
+
+- Sahkku
+  - prototype
+    - https://skyruk.livejournal.com/288965.html
+
+- Игры
+  - https://ru.wikipedia.org/wiki/Французское_таро
+
 - app-net
   - Поддержка sound-manager
   - Анимация перемещений (шахматы)
@@ -81,22 +97,6 @@
     - Pass
     - Offer Draw
     - Resign
-
-- Escalation
-  - http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=2546
-  - http://www.mayhematics.com/p/gpjournal_07.pdf
-
-- Tibetian Checkers
-  - prototype
-    - https://www.youtube.com/watch?v=PbtGh3MJ9h4
-
-- Nyout
-  - prototype
-    - https://skyruk.livejournal.com/216114.html
-
-- Sahkku
-  - prototype
-    - https://skyruk.livejournal.com/288965.html
 
 - Column Checkers
   - ai

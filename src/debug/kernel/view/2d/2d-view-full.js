@@ -153,9 +153,9 @@ Grid.prototype.addTurns = function(dir, turns, selector, draw) {
             x += this.s[i].x * ix[i];
             y += this.s[i].y * ix[i];
        }
-       this.r.addPosition(name, x, y,this.dx, this.dy, turns, selector, draw);
+       this.r.addPosition(name, x, y, this.dx, this.dy, turns, selector, draw);
        for (var i = 0; i < ix.length; i++) {
-            if (ix[i] < this.s[i].s.length) {
+            if (ix[i] < this.s[i].s.length - 1) {
                 ix[i]++;
                 break;
             } else {
@@ -166,7 +166,7 @@ Grid.prototype.addTurns = function(dir, turns, selector, draw) {
 }
 
 Region.prototype.addGrid = function(sx, sy, dx, dy) {
-  var g = new Grid(this, sx, sy, dx, dy);
+  var g = new Grid(this, sx, sy, dx - sx, dy - sy);
   return g;
 }
 
