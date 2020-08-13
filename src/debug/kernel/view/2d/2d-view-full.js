@@ -153,6 +153,7 @@ Grid.prototype.addTurns = function(dir, turns, selector, draw) {
             x += this.s[i].x * ix[i];
             y += this.s[i].y * ix[i];
        }
+//     console.log('view.defPosition("' + name + '", ' + x + ', ' + y + ', ' + this.dx + ', ' + this.dy + ')');
        this.r.addPosition(name, x, y, this.dx, this.dy, turns, selector, draw);
        for (var i = 0; i < ix.length; i++) {
             if (ix[i] < this.s[i].s.length - 1) {
@@ -358,9 +359,9 @@ function View(design) {
   this.turn = 0;
 }
 
-Dagaz.View.getView = function() {
+Dagaz.View.getView = function(design) {
   if (_.isUndefined(Dagaz.View.view)) {
-      Dagaz.View.view = new View();
+      Dagaz.View.view = new View(design);
   }
   return Dagaz.View.view;
 }
@@ -411,7 +412,7 @@ View.prototype.findPiece = function(name) {
 
 View.prototype.isLoaded = function() {
   if (_.isUndefined(this.allLoaded)) {
-      if (!root.isLoaded()) return false;
+      if (!this.root.isLoaded()) return false;
       for (var i = 0; i < this.pieces.length; i++) {
            var image = this.pieces[i].h;
            if (!image.complete || (image.naturalWidth == 0)) return false;
@@ -423,16 +424,27 @@ View.prototype.isLoaded = function() {
   return this.allLoaded;
 }
 
-View.prototype.addSetup = function(name, piece) {
+View.prototype.addSetup = function(name, piece, model) {
   var pos = this.root.findPosition(name);
   if (pos !== null) {
       pos.setup = {
+          model: model,
           piece: piece,
           hints: [],
           x: 0, y: 0
       };
       this.invalidate();
   }
+}
+
+View.prototype.setup = function(board) {
+  _.each(this.design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if (piece === null) return;
+      var name = Dagaz.Model.posToString(pos, this.design);
+//    console.log(name + ": " + piece.getOwner() + piece.getType());
+      this.addSetup(name, this.findPiece(piece.getOwner() + piece.getType()), piece);
+  }, this);
 }
 
 View.prototype.apply = function(move) {
@@ -443,6 +455,7 @@ View.prototype.apply = function(move) {
   return true;
 }
 
+// TODO: setup.model
 View.prototype.animate = function() {
   if (!_.isUndefined(this.changes) && !_.isUndefined(this.move)) {
        var f = true;

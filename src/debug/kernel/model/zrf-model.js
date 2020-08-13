@@ -1080,6 +1080,8 @@ var addPositions = function(self, ix, name, point) {
           }
           offsets[dir] = o;
       });
+//    console.log('design.addPosition(' + name + ', [' + offsets +'])');
+      self.design.addPosition(name, offsets);
       return;
   }
   for (var i = 0; i < self.scales[ix].length; i++) {
