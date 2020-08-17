@@ -21,7 +21,7 @@ var isValid             = false;
 Dagaz.View.SHIFT_X      = 0;
 Dagaz.View.SHIFT_Y      = 0;
 Dagaz.View.STRIKE_ALPHA = 0.5;
-Dagaz.View.STEP_CNT     = 3;
+Dagaz.View.STEP_CNT     = 5;
 
 Dagaz.View.NORMAL_DIR   = 0;
 Dagaz.View.REVERSE_DIR  = 1;
@@ -118,6 +118,7 @@ Region.prototype.addPosition = function(name, x, y, dx, dy, turns, selector, dra
       this.positions.push(pos);
   }
   pos.c.push({
+      p:    pos,
       t:    turns,
       x:    x,
       y:    y,
@@ -455,7 +456,65 @@ View.prototype.apply = function(move) {
   return true;
 }
 
-// TODO: setup.model
+View.prototype.createChanges = function() {
+  this.step++;
+  _.each(this.move.actions, function(a) {
+       if (a[3] != this.step) return;
+       var o = null; var n = null;
+       var piece = null; var model = null;
+       if (a[0] !== null) {
+           o = this.root.findAndLocate(a[0][0]);
+           if (o === null) return;
+           if (o.p.setup) {
+               piece = o.p.setup.piece;
+               model = o.p.setup.model;
+           }
+       }
+       if (a[1] !== null) {
+           n = this.root.findAndLocate(a[1][0]);
+           if (n === null) return;
+       }
+       if (a[2] !== null) {
+           var name = a[2][0].getOwner() + a[2][0].getType();
+           piece = this.findPiece(name);
+           if (piece === null) return;
+           model = a[2][0];
+       }
+       var c = 0;
+       if ((o !== null) && (n !== null)) {
+           o.p.setup.hints = [];
+           o.p.setup.x = 0; o.p.setup.y = 0;
+           if (!_.isUndefined(this.move.hints)) {
+                for (var i = 0; i < this.move.hints.length; i++) {
+                     var loc = this.root.findAndLocate(this.move.hints[i]);
+                     if (loc !== null) {
+                         o.p.setup.hints.push(loc.x - o.x);
+                         o.p.setup.hints.push(loc.y - o.y);
+                     }
+                     c++;
+                }
+           } else {
+                c = Dagaz.View.STEP_CNT;
+                var dx = ((n.x - o.x) / c) | 0;
+                var dy = ((n.y - o.y) / c) | 0;
+                var x = 0; var y = 0;
+                for (var i = 0; i < c; i++) {
+                     x += dx; y += dy;
+                     o.p.setup.hints.push(x);
+                     o.p.setup.hints.push(y);
+                }
+          }
+       }
+       this.changes.push({
+          c: c,
+          o: o,
+          n: n,
+          p: piece,
+          m: model
+       });
+  }, this);
+}
+
 View.prototype.animate = function() {
   if (!_.isUndefined(this.changes) && !_.isUndefined(this.move)) {
        var f = true;
@@ -466,75 +525,26 @@ View.prototype.animate = function() {
        });
        if (f) {
            _.each(this.changes, function(c) {
-                if ((c.o !== null) && !_.isUndefined(c.o.setup)) {
-                    delete c.o.setup;
+                if ((c.o !== null) && !_.isUndefined(c.o.p.setup)) {
+                    delete c.o.p.setup;
                 }
                 if (c.n === null) return;
                 if (c.p === null) return;
-                c.n.setup = {
+                c.n.p.setup = {
+                    model: c.m,
                     piece: c.p,
                     hints: [],
                     x: 0, y: 0
                 };
            });
-           this.step++;
            this.changes = [];
-           _.each(this.move.actions, function(a) {
-                if (a[3] != this.step) return;
-                var o = null; var n = null;
-                var piece = null;
-                if (a[0] !== null) {
-                    o = this.findAndLocate(a[0][0]);
-                    if (o === null) return;
-                    if (o.setup !== null) {
-                        piece = o.setup.piece;
-                    }
-                }
-                if (a[1] !== null) {
-                    n = this.findAndLocate(a[1][0]);
-                    if (n === null) return;
-                }
-                if (a[2] !== null) {
-                    var name = a[2][0].getOwner() + a[2][0].getType();
-                    piece = this.findPiece(name);
-                    if (piece === null) return;
-                }
-                var c = 0;
-                if ((o !== null) && (n !== null)) {
-                   o.setup.hints = [];
-                   o.setup.x = 0; o.setup.y = 0;
-                   if (!_.isUndefined(this.move.hints)) {
-                       for (var i = 0; i < this.move.hints.length; i++) {
-                            var loc = this.root.findAndLocate(this.move.hints[i]);
-                            if (loc !== null) {
-                                o.setup.hints(loc.x - o.x);
-                                o.setup.hints(loc.y - o.y);
-                            }
-                            c++;
-                       }
-                   } else {
-                       c = Dagaz.View.STEP_CNT;
-                       var dx = ((n.x - o.x) / c) | 0;
-                       var dy = ((n.y - o.y) / c) | 0;
-                       var x = 0; var y = 0;
-                       for (var i = 0; i < c; c++) {
-                           x += dx; y += dy;
-                           o.setup.hints(x);
-                           o.setup.hints(y);
-                       }
-                   }
-                }
-                this.changes.push({
-                   c: c,
-                   o: o,
-                   n: n,
-                   p: piece
-                });
-           }, this);
+           this.createChanges();
            if (this.changes.length == 0) {
                delete this.changes;
                delete this.move;
-               this.controller.done();
+               if (this.controller.done) {
+                   this.controller.done();
+               }
            }
        }
        this.invalidate();

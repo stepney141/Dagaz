@@ -67,6 +67,16 @@
 
 - Игры
   - https://ru.wikipedia.org/wiki/Французское_таро
+  - https://boardgamegeek.com/image/1297092/cosmolita
+
+- games
+  - https://chessillusion.blogspot.com/
+  - http://mindsports.nl/index.php/the-pit/628-pommel 
+  - http://mindsports.nl/index.php/the-pit/1019-slyde
+  - http://mindsports.nl/index.php/the-pit/551-square-off
+  - http://mindsports.nl/index.php/the-pit/553-swish-squeeze
+  - http://mindsports.nl/index.php/arena/storisende/747-storisende-rules
+  - http://mindsports.nl/index.php/dagaz/993-vexed?start=1
 
 - app-net
   - Поддержка sound-manager
@@ -321,15 +331,6 @@
 
 - WASM
   - https://www.mattkeeter.com/projects/pont/
-
-- games
-  - https://chessillusion.blogspot.com/
-  - http://mindsports.nl/index.php/the-pit/628-pommel 
-  - http://mindsports.nl/index.php/the-pit/1019-slyde
-  - http://mindsports.nl/index.php/the-pit/551-square-off
-  - http://mindsports.nl/index.php/the-pit/553-swish-squeeze
-  - http://mindsports.nl/index.php/arena/storisende/747-storisende-rules
-  - http://mindsports.nl/index.php/dagaz/993-vexed?start=1
 
 - EVOLUCHESS
   - ai

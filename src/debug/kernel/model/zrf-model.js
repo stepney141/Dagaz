@@ -1033,6 +1033,7 @@ ZrfGrid.prototype.addScale = function(scale) {
 
 ZrfGrid.prototype.addDirection = function(name, offsets) {
   if (_.indexOf(this.dirs, name) < 0) {
+//    console.log('design.addDirection("' + name + '") // ' + this.design.dirs.length);
       this.design.addDirection(name);
   }
   var ix = _.indexOf(this.design.dirs, name);
