@@ -23,6 +23,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "false");
+    design.checkVersion("show-drops", "true");
+    design.checkVersion("show-captures", "false");
     design.checkVersion("pass-partial", "true");
     design.checkVersion("shared-pieces", "true");
     design.checkVersion("detect-loops", "true");
@@ -233,9 +235,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("m14", [0, 1, -1, -14, 0]);
     design.addPosition("n14", [0, 0, -1, -14, 0]);
 
-    design.addZone("init", 2, [90, 105]);
-    design.addZone("init", 1, [90, 105]);
-
     design.addCommand(0, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(0, ZRF.FUNCTION,	20);	// verify
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
@@ -279,14 +278,18 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 2, [2, 2], 3);
     design.addMove(0, 2, [0, 0], 3);
 
-    design.setup("White", "Stone", 90);
-    design.setup("Black", "Stone", 105);
+    design.addPiece("Init", 1);
+
+    design.setup("White", "Init", 90);
+    design.setup("Black", "Init", 105);
 }
 
 Dagaz.View.configure = function(view) {
     view.defBoard("Board");
     view.defPiece("BlackStone", "Black Stone");
     view.defPiece("WhiteStone", "White Stone");
+    view.defPiece("BlackStone", "Black Init");
+    view.defPiece("WhiteStone", "White Init");
  
     view.defPosition("a1", 5, 5, 30, 30);
     view.defPosition("b1", 36, 5, 30, 30);
