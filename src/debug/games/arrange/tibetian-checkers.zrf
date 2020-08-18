@@ -22,8 +22,8 @@
 (game
   (title "Tibetian checkers")
 
-  (players Black White)
-  (turn-order Black White)
+  (players White Black)
+  (turn-order White Black)
 
   (board
       (image "images/tibetian-checkers/board.bmp")
@@ -34,11 +34,6 @@
             ("1/2/3/4/5/6/7/8/9/10/11/12/13/14" (0 31)) ; ranks
           )
           (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0))
-      )
-      (links d (g7 h8) (h8 g7))
-      (zone (name init)  
-          (players White Black) 
-          (positions g7 h8)
       )
   )
 
@@ -53,7 +48,7 @@
      (moves
           (move-type capture-type)
           (move-type normal-type)
-          (shift n) (shift e) (shift w) (shift s) (shift d)
+          (shift n) (shift e) (shift w) (shift s)
           (move-type step-type)
           (step n) (step e) (step w) (step s)
      ) 
