@@ -14,9 +14,15 @@ view.setController(Dagaz.Controller.app);
 Dagaz.View.configure(view);
 
 var board = Dagaz.Model.getInitBoard();
+
+var pos = Dagaz.Model.stringToPos('RWP');
+var piece = board.getPiece(pos);
+piece = piece.setValue(0, 5);
+board.setPiece(pos, piece);
+
 view.setup(board);
 
-board.generate(design);
+/*board.generate(design);
 var moves = _.filter(board.moves, function(move) {
   return move.toString() == "E2 - E4";
 });
@@ -25,12 +31,12 @@ _.each(moves, function(move) {
   console.log(move.toString());
 });
 
-view.apply(moves[0]);
+view.apply(moves[0]);*/
 
 App.prototype.exec = function() {
   if (view.isLoaded()) {
       view.draw();
-//    return true;
+      return true;
   }
   return false;
 }

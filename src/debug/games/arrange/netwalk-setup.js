@@ -113,13 +113,13 @@ var getType = function(design, mask) {
 var setup = Dagaz.Model.setup;
 
 Dagaz.Model.setup = function(board) {
-  var seed = getSeed();
-  console.log("Seed: " + seed);
-  Math.seedrandom(seed);
   if (getSetup()) {
       setup(board);
       return;
   }
+  var seed = getSeed();
+  console.log("Seed: " + seed);
+  Math.seedrandom(seed);
   var design = Dagaz.Model.design;
   var queue = [];
   var cnt = _.random(2, 5);

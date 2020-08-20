@@ -208,7 +208,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(0, 1, [3], 0);
     design.addMove(0, 2, [2, 0, 0], 0);
     design.addMove(0, 2, [4, 0, 0], 0);
-//  design.addMove(0, 3, [0, 7], 1);
 
     design.addPiece("Knight", 1);
     design.addMove(1, 4, [0, 1], 0);
@@ -251,8 +250,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(5, 6, [5], 0);
     design.addMove(5, 6, [6], 0);
     design.addMove(5, 6, [7], 0);
-    design.addMove(5, 7, [2, 2, 2, 4, 4], 2);
-    design.addMove(5, 8, [4, 4, 4, 4, 2, 2, 2], 2);
+    design.addMove(5, 7, [2, 2, 2, 4, 4], 1);
+    design.addMove(5, 8, [4, 4, 4, 4, 2, 2, 2], 1);
 
     design.addPiece("PawnR", 6);
     design.addPiece("KnightR", 7);
@@ -343,9 +342,9 @@ Dagaz.View.configure = function(view) {
     d.addPosition("UP", 1, 1, 120, 30);
     d.addPosition("DN", 1, 510, 120, 30);
 
-    view.addPiece(["WhitePawn", "WhiteKnight", "WhiteBishop", "WhiteRook", "WhiteQueen", "WhiteKing"], Dagaz.Model.drawPiece);
-    view.addPiece(["BlackPawn", "BlackKnight", "BlackBishop", "BlackRook", "BlackQueen", "BlackKing"], Dagaz.Model.drawPiece);
-    view.addPiece(["WhitePawnR", "BlackPawnR", "WhiteKnightR", "BlackKnightR", "WhiteBishopR", "BlackBishopR", "WhiteRookR", "BlackRookR", "WhiteQueenR", "BlackQueenR", "WhiteKingR", "BlackKingR"], Dagaz.Model.drawRes);
+    view.addPiece(["WhitePawn", "WhiteKnight", "WhiteBishop", "WhiteRook", "WhiteQueen", "WhiteKing"], Dagaz.View.drawPiece);
+    view.addPiece(["BlackPawn", "BlackKnight", "BlackBishop", "BlackRook", "BlackQueen", "BlackKing"], Dagaz.View.drawPiece);
+    view.addPiece(["WhitePawnR", "BlackPawnR", "WhiteKnightR", "BlackKnightR", "WhiteBishopR", "BlackBishopR", "WhiteRookR", "BlackRookR", "WhiteQueenR", "BlackQueenR", "WhiteKingR", "BlackKingR"], Dagaz.View.drawRes);
     view.addPiece(["PawnWhite", "SmallPawnWhite", "KnightWhite", "SmallKnightWhite", "BishopWhite", "SmallBishopWhite", "RookWhite", "SmallRookWhite", "QueenWhite", "SmallQueenWhite", "KingWhite", "SmallKingWhite"]);
     view.addPiece(["PawnBlack", "SmallPawnBlack", "KnightBlack", "SmallKnightBlack", "BishopBlack", "SmallBishopBlack", "RookBlack", "SmallRookBlack", "QueenBlack", "SmallQueenBlack", "KingBlack", "SmallKingBlack"]);
     view.addPiece(["two", "d0", "d1", "d2", "d3", "d4", "d5", "d6", "d7", "d8", "d9", "plus", "minus", "question"]);
