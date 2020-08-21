@@ -27,7 +27,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-captures", "false");
     design.checkVersion("pass-partial", "true");
     design.checkVersion("shared-pieces", "true");
-    design.checkVersion("detect-loops", "true");
 
     design.addDirection("s"); // 0
     design.addDirection("e"); // 1
@@ -254,27 +253,35 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(2, ZRF.FUNCTION,	20);	// verify
     design.addCommand(2, ZRF.PARAM,	0);	// $1
     design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
-    design.addCommand(2, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(2, ZRF.FUNCTION,	0);	// not
+    design.addCommand(2, ZRF.FUNCTION,	2);	// enemy?
     design.addCommand(2, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(2, ZRF.FUNCTION,	26);	// capture
     design.addCommand(2, ZRF.PARAM,	1);	// $2
     design.addCommand(2, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(2, ZRF.FUNCTION,	1);	// empty?
     design.addCommand(2, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(2, ZRF.MODE,	3);	// step-type
+    design.addCommand(2, ZRF.MODE,	2);	// step-type
     design.addCommand(2, ZRF.FUNCTION,	25);	// to
     design.addCommand(2, ZRF.FUNCTION,	28);	// end
 
+    design.addCommand(3, ZRF.FUNCTION,	24);	// from
+    design.addCommand(3, ZRF.FUNCTION,	2);	// enemy?
+    design.addCommand(3, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(3, ZRF.FUNCTION,	26);	// capture
+    design.addCommand(3, ZRF.FUNCTION,	25);	// to
+    design.addCommand(3, ZRF.FUNCTION,	28);	// end
+
     design.addPiece("Stone", 0);
     design.addDrop(0, 0, [], 0);
-    design.addMove(0, 1, [3], 2);
-    design.addMove(0, 1, [1], 2);
-    design.addMove(0, 1, [2], 2);
-    design.addMove(0, 1, [0], 2);
-    design.addMove(0, 2, [3, 3], 3);
-    design.addMove(0, 2, [1, 1], 3);
-    design.addMove(0, 2, [2, 2], 3);
-    design.addMove(0, 2, [0, 0], 3);
+    design.addMove(0, 1, [3], 1);
+    design.addMove(0, 1, [1], 1);
+    design.addMove(0, 1, [2], 1);
+    design.addMove(0, 1, [0], 1);
+    design.addMove(0, 2, [3, 3], 2);
+    design.addMove(0, 2, [1, 1], 2);
+    design.addMove(0, 2, [2, 2], 2);
+    design.addMove(0, 2, [0, 0], 2);
+    design.addMove(0, 3, [], 3);
 
     design.addPiece("Init", 1);
 

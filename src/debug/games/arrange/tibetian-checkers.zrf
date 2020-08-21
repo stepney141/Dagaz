@@ -2,10 +2,6 @@
   (verify empty?) add
 ))
 
-(define move-stone (
-  (verify empty?) add
-))
-
 (define shift (
   (verify friend?)
   $1 (verify empty?)
@@ -14,9 +10,15 @@
 
 (define step (
   (verify friend?)
-  $1 (verify not-empty?)
+  $1 (verify enemy?)
+  capture
   $1 (verify empty?)
   (add-partial step-type)
+))
+
+(define capture-stone (
+  (verify enemy?)
+  capture add
 ))
 
 (game
@@ -46,11 +48,12 @@
           (drop-stone)
      )
      (moves
-          (move-type capture-type)
           (move-type normal-type)
           (shift n) (shift e) (shift w) (shift s)
           (move-type step-type)
           (step n) (step e) (step w) (step s)
+          (move-type capture-type)
+          (capture-stone)
      ) 
   )  
 
