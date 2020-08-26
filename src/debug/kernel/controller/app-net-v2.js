@@ -11,11 +11,8 @@ var STATE = {
 };
 
 var SERVICE = "http://127.0.0.1:3000/api/";
-Dagaz.Controller.AI_DELAY = 500;
 
 var isDrag = false;
-var passForced = 0;
-var once = false;
 var lastPosition = null;
 var determinated = null;
 var dropIndex = 0;
@@ -38,9 +35,6 @@ function App(canvas, params) {
   } else {
       this.params = [];
   }
-  if (_.isUndefined(this.params.AI_WAIT)) {
-      this.params.AI_WAIT = 3000;
-  }
   if (_.isUndefined(this.params.WAIT_FRAME)) {
       this.params.WAIT_FRAME = 100;
   }
@@ -52,39 +46,12 @@ function App(canvas, params) {
   }
 }
 
-Dagaz.Controller.newGame = function() {
-  if (!_.isUndefined(Dagaz.Controller.clearGame)) {
-      Dagaz.Controller.clearGame();
-  }
-  var str = window.location.toString();
-  var result = str.match(/^([^?]+)/);
-  if (result) {
-      str = result[1];
-  }
-  window.location = str;
-}
-
 var gameOver = function(text, self, player) {
   if (!Dagaz.Model.silent || (player != 0)) {
       if (!_.isUndefined(Dagaz.Controller.clearGame)) {
           Dagaz.Controller.clearGame();
       }
       alert(text);
-  }
-  if (Dagaz.Model.progressive) {
-      if (Dagaz.Model.silent && (player != 0)) return;
-      if (Dagaz.Controller.loseRefresh && (player < 0)) {
-          window.location = window.location.toString();
-          return;
-      }
-      if (Dagaz.Model.progressiveUrl !== null) {
-          window.location = Dagaz.Model.progressiveUrl;
-          return;
-      }
-      var str = Dagaz.Model.continue(self.design, self.board, window.location.toString());
-      if (str !== null) {
-          window.location = str;
-      }
   }
 }
 
@@ -271,9 +238,6 @@ App.prototype.boardApply = function(move) {
   if (!_.isUndefined(this.view.sync)) {
       this.view.sync(this.board);
   }
-  if (!_.isUndefined(Dagaz.Controller.addState)) {
-      Dagaz.Controller.addState(move, this.board);
-  }
 }
 
 App.prototype.mouseDown = function(view, pos) {
@@ -325,41 +289,12 @@ App.prototype.mouseUp = function(view, pos) {
   isDrag = false;
 }
 
-App.prototype.getAI = function() {
-  if (_.isUndefined(this.ai)) {
-      this.ai = null;
-      if (this.design.isPuzzle()) {
-          this.ai = Dagaz.AI.findBot("solver",  this.params, this.ai);
-      } else {
-          this.ai = Dagaz.AI.findBot("random",  this.params, this.ai);
-          this.ai = Dagaz.AI.findBot("common",  this.params, this.ai);
-          this.ai = Dagaz.AI.findBot("smart",   this.params, this.ai);
-          this.ai = Dagaz.AI.findBot("opening", this.params, this.ai);
-      }
-  }
-  return this.ai;
-}
-
 App.prototype.getBoard = function() {
   if (_.isUndefined(this.board)) {
       this.board = Dagaz.Model.getInitBoard();
-      if (!_.isUndefined(Dagaz.Controller.addState)) {
-          Dagaz.Controller.addState(Dagaz.Model.createMove(), this.board);
-      }
       Dagaz.Model.Done(this.design, this.board);
   }
   return this.board;
-}
-
-App.prototype.getContext = function(player, forced) {
-  if (_.isUndefined(forced) && Dagaz.AI.isFriend(1, player) && !this.design.isPuzzle()) return null;
-  if (_.isUndefined(this.context)) {
-      this.context = [];
-  }
-  if (_.isUndefined(this.context[player])) {
-      this.context[player] = Dagaz.AI.createContext(this.design);
-  }
-  return this.context[player];
 }
 
 App.prototype.determinate = function(move) {
@@ -401,13 +336,6 @@ App.prototype.setMove = function(move) {
   }
 }
 
-App.prototype.isRandom = function() {
-  if (!_.isUndefined(this.design.turns) && !_.isUndefined(this.design.turns[this.board.turn])) {
-      return this.design.turns[this.board.turn].random;
-  }
-  return false;
-}
-
 var getName = function() {
   var str = window.location.pathname.toString();
   var result = str.match(/\/([^.\/]+)\./);
@@ -415,6 +343,16 @@ var getName = function() {
       return result[1];
   } else {
       return str;
+  }
+}
+
+var getPlayerNum = function() {
+  var str = window.location.search.toString();
+  var result = str.match(/[?&]player=([^&]*)/);
+  if (result) {
+      return result[1];
+  } else {
+      return "";
   }
 }
 
@@ -462,7 +400,7 @@ var recovery = function() {
              uid = id;
              player_num = data[0].player_num;
              setup = data[0].last_setup;
-             console.log('Recovery: Succeed [uid = ' + uid + "]");
+             console.log('Recovery: Succeed [uid = ' + uid + ']');
          } else {
              localStorage.removeItem('dagaz.uid');
          }
@@ -490,7 +428,8 @@ var connect = function() {
      url: SERVICE + "session/anonymous",
      type: "POST",
      data: {
-         filename: getName()
+         filename: getName(),
+         player_num: getPlayerNum()
      },
      dataType: "json",
      beforeSend: function (xhr) {
@@ -500,7 +439,7 @@ var connect = function() {
          uid = data.uid;     
          player_num = data.player_num;
          localStorage.setItem('dagaz.uid', uid);
-         console.log('Connect: Succeed [uid = ' + uid + "]");
+         console.log('Connect: Succeed [uid = ' + uid + ']');
          inProgress = false;
      },
      error: function() {
@@ -535,7 +474,7 @@ var getConfirmed = function() {
      success: function(data) {
          if (data.length == 1) {
              last_move = data[0].move_str;
-             console.log('Confirmed: Succeed [uid = ' + uid + "]");
+             console.log('Confirmed: Succeed [uid = ' + uid + ']');
          }
          inProgress = false;
      },
@@ -556,28 +495,24 @@ var getConfirmed = function() {
   });
 }
 
-var addMove = function() {
+var addMove = function(move, setup) {
   if (auth === null) return;
   if (uid === null) return;
-  if (last_move === null) return;
   inProgress = true;
   $.ajax({
      url: SERVICE + "move",
      type: "POST",
      data: {
-         // TODO: No session_id
          uid: uid,
-         move_str: last_move,
-         setup_str: last_setup
+         move_str: move,
+         setup_str: setup
      },
      dataType: "json",
      beforeSend: function (xhr) {
          xhr.setRequestHeader('Authorization', 'Bearer ' + auth);
      },
      success: function(data) {
-         last_move = null;
-         last_setup = null;
-         console.log('Move: Succeed [uid = ' + uid + "]");
+         console.log('Move: Succeed [move = ' + move + ']');
          inProgress = false;
      },
      error: function() {
@@ -597,6 +532,74 @@ var addMove = function() {
   });
 }
 
+var winGame = function() {
+  if (auth === null) return;
+  if (uid === null) return;
+  $.ajax({
+     url: SERVICE + "session/close",
+     type: "POST",
+     data: {
+         winner: uid
+     },
+     dataType: "json",
+     beforeSend: function (xhr) {
+         xhr.setRequestHeader('Authorization', 'Bearer ' + auth);
+     },
+     success: function(data) {
+         console.log('Close: Succeed');
+         inProgress = false;
+     },
+     error: function() {
+         alert('Close: Error!');
+     },
+     statusCode: {
+        401: function() {
+             alert('Close: Bad User!');
+        },
+        403: function() {
+             alert('Close: Not Found!');
+        },
+        500: function() {
+             alert('Close: Internal Error!');
+        }
+     }
+  });
+}
+
+var loseGame = function() {
+  if (auth === null) return;
+  if (uid === null) return;
+  $.ajax({
+     url: SERVICE + "session/close",
+     type: "POST",
+     data: {
+         loser: uid
+     },
+     dataType: "json",
+     beforeSend: function (xhr) {
+         xhr.setRequestHeader('Authorization', 'Bearer ' + auth);
+     },
+     success: function(data) {
+         console.log('Close: Succeed');
+         inProgress = false;
+     },
+     error: function() {
+         alert('Close: Error!');
+     },
+     statusCode: {
+        401: function() {
+             alert('Close: Bad User!');
+        },
+        403: function() {
+             alert('Close: Not Found!');
+        },
+        500: function() {
+             alert('Close: Internal Error!');
+        }
+     }
+  });
+}
+
 App.prototype.exec = function() {
   this.view.configure();
   this.view.draw(this.canvas);
@@ -608,199 +611,111 @@ App.prototype.exec = function() {
       if (inProgress) return;
       authorize();
       if (auth === null) return;
-      // TODO: recovery
+      recovery();
       connect();
       if (uid === null) return;
-
+      if (setup !== null) {
+          Dagaz.Model.setup(this.board, setup);
+          this.view.reInit(this.board);
+          setup = null;
+      }
+      if (player_num === null) {
+          alert('Exec: Error [no player_num]');
+      }
       this.state = STATE.IDLE;
   }
   if (this.state == STATE.IDLE) {
-      var ctx = this.getContext(this.getBoard().player);
-      if (this.isRandom()) {
-          this.move = null;
-          while (this.isRandom()) {
-              if (_.isUndefined(this.board.moves)) {
-                  this.board.generate(this.design);
+      if (player_num == this.board.player) {
+          if (_.isUndefined(this.list)) {
+              var player = this.design.playerNames[this.board.player];
+              console.log("Player: " + player);
+              if (!_.isUndefined(Dagaz.Model.getSetup)) {
+                  console.log("Setup: " + Dagaz.Model.getSetup(this.design, this.board));
               }
-              var moves = _.filter(this.board.moves, function(move) {
-                  if (!_.isUndefined(move.failed)) return false;
-                  return _.indexOf(this.design.turns[this.board.turn].modes, move.mode) >= 0;
-              }, this);
-              if (moves.length > 0) {
-                  var ix = 0;
-                  if (moves.length > 1) {
-                      ix = _.random(0, moves.length - 1);
-                  }
-                  var move = moves[ix];
-                  this.boardApply(move);
-                  if (this.move === null) {
-                      this.move = move;
-                  } else {
-                      this.move.join(move);
-                  }
+              if (!Dagaz.Controller.noDropIndex) {
+                  dropIndex = 0;
+              }
+              this.list = Dagaz.Model.getMoveList(this.board);
+              var ko = [];
+              if (!_.isUndefined(this.board.ko)) {
+                  ko = this.board.ko;
+              }
+              this.view.markPositions(Dagaz.View.markType.KO, ko);
+              if (!_.isUndefined(Dagaz.Model.getMarked)) {
+                  this.view.markPositions(Dagaz.View.markType.ATTACKING, Dagaz.Model.getMarked(this.list));
               } else {
-                  this.boardApply(Dagaz.Model.createMove(0));
+                  if (this.params.SHOW_ATTACKING && Dagaz.Model.showCaptures) {
+                      this.view.markPositions(Dagaz.View.markType.ATTACKING, this.list.getCaptures());
+                  }
+              }
+              var drops = this.getDrops();
+              if ((Dagaz.Model.showDrops == -2) || (!_.isUndefined(this.drops) && (Dagaz.Model.showDrops > 0) && (this.drops.length <= Dagaz.Model.showDrops))) {
+                  if (drops.length > 0) {
+                      var pieces = this.list.getDropPieces(drops[0]);
+                      if ((pieces !== null) && (pieces.length > 0)) {
+                          if (dropIndex >= pieces.length) {
+                              if (Dagaz.Controller.cyclicDropIndex){
+                                  dropIndex = 0;
+                              } else {
+                                  dropIndex = pieces.length - 1;
+                              }
+                          }
+                          this.view.setDrops(pieces[dropIndex].toString(), drops);
+                      }
+                  }
+                  this.view.invalidate();
+              }
+              if (this.list.isEmpty()) {
+                  this.state = STATE.DONE;
+                  Canvas.style.cursor = "default";
+                  if (!_.isUndefined(Dagaz.Controller.play)) {
+                      Dagaz.Controller.play(Dagaz.Sounds.lose);
+                  }
+                  loseGame();
+                  this.gameOver(player + " lose", -this.board.player);
+                  return;
               }
           }
-          this.state = STATE.EXEC;
-          return;
-      }
-      var ai  = this.getAI();
-      if ((ctx !== null) && (ai !== null)) {
-         ai.setContext(ctx, this.board);
-         this.state = STATE.BUZY;
-         if (!_.isUndefined(Dagaz.Controller.AI_DELAY)) {
-             Dagaz.Controller.delayTimestamp = Date.now();
-         }
-         Canvas.style.cursor = "wait";
-         this.timestamp = Date.now();
-         once = true;
       } else {
-         if (!_.isUndefined(Dagaz.AI.advisorStamp) && !_.isUndefined(Dagaz.Controller.pushState) && (ai !== null) && (Dagaz.Model.advisorWait !== null)) {
-             var timestamp = Date.now();
-             if (Dagaz.AI.advisorStamp === null) {
-                 Dagaz.AI.advisorStamp = timestamp + Dagaz.Model.advisorWait;
-             }
-             if (Dagaz.Controller.noRedo() && (Dagaz.AI.advisorStamp < timestamp)) {
-                 var ctx = this.getContext(this.board.player, true);
-                 if (ctx !== null) {
-                     ai.setContext(ctx, this.board);
-                     var result = ai.getMove(ctx);
-                     if (result && result.done) {
-                         delete Dagaz.AI.advisorStamp;
-                         console.log("Advisor: " + result.move);
-                         var board = this.board.apply(result.move);
-                         Dagaz.Controller.pushState(result.move, board);
-                         if (!_.isUndefined(Dagaz.Sounds) && !_.isUndefined(Dagaz.Sounds.hint)) {
-                             Dagaz.Controller.play(Dagaz.Sounds.hint);
-                         }
-                     }
-                 }
-             }
-         }
-         if (_.isUndefined(this.list)) {
-             Dagaz.AI.advisorStamp = null;
-             var player = this.design.playerNames[this.board.player];
-             console.log("Player: " + player);
-             if (!_.isUndefined(Dagaz.Model.getSetup)) {
-                 console.log("Setup: " + Dagaz.Model.getSetup(this.design, this.board));
-             }
-             if (!Dagaz.Controller.noDropIndex) {
-                 dropIndex = 0;
-             }
-             this.list = Dagaz.Model.getMoveList(this.board);
-             var ko = [];
-             if (!_.isUndefined(this.board.ko)) {
-                 ko = this.board.ko;
-             }
-             this.view.markPositions(Dagaz.View.markType.KO, ko);
-             if (!_.isUndefined(Dagaz.Model.getMarked)) {
-                 this.view.markPositions(Dagaz.View.markType.ATTACKING, Dagaz.Model.getMarked(this.list));
-             } else {
-                 if (this.params.SHOW_ATTACKING && Dagaz.Model.showCaptures) {
-                     this.view.markPositions(Dagaz.View.markType.ATTACKING, this.list.getCaptures());
-                 }
-             }
-             var drops = this.getDrops();
-             if ((Dagaz.Model.showDrops == -2) || (!_.isUndefined(this.drops) && (Dagaz.Model.showDrops > 0) && (this.drops.length <= Dagaz.Model.showDrops))) {
-                 if (drops.length > 0) {
-                     var pieces = this.list.getDropPieces(drops[0]);
-                     if ((pieces !== null) && (pieces.length > 0)) {
-                         if (dropIndex >= pieces.length) {
-                             if (Dagaz.Controller.cyclicDropIndex){
-                                 dropIndex = 0;
-                             } else {
-                                 dropIndex = pieces.length - 1;
-                             }
-                         }
-                         this.view.setDrops(pieces[dropIndex].toString(), drops);
-                     }
-                 }
-                 this.view.invalidate();
-             }
-             if (this.list.isPassForced()) {
-                  if (Dagaz.Model.passForcedDraw && (passForced >= this.design.getPlayersCount())) {
-                      this.state = STATE.DONE;
-                      Canvas.style.cursor = "default";
-                      if (!_.isUndefined(Dagaz.Controller.play)) {
-                          Dagaz.Controller.play(Dagaz.Sounds.draw);
-                      }
-                      this.gameOver("Draw", 0);
-                  } else {
-                      this.boardApply(Dagaz.Model.createMove());
-                      this.state = STATE.IDLE;
-                      delete this.list;
-                      this.view.clearDrops();
-                      passForced++;
-                  }
-                  return;
-             }
-             passForced = 0;
-             if (this.list.isEmpty()) {
-                 this.state = STATE.DONE;
-                 Canvas.style.cursor = "default";
-                 if (!_.isUndefined(Dagaz.Controller.play)) {
-                     Dagaz.Controller.play(Dagaz.Sounds.lose);
-                 }
-                 this.gameOver(player + " lose", -this.board.player);
-                 return;
-             }
-         }
+          this.state = STATE.BUZY;
+          this.timestamp = Date.now();
       }
   }
   if (this.state == STATE.BUZY) {
-      if (!_.isUndefined(Dagaz.Controller.delayTimestamp)) {
-          if (Date.now() - Dagaz.Controller.delayTimestamp < Dagaz.Controller.AI_DELAY) return;
-          delete Dagaz.Controller.delayTimestamp;
+      this.board.generate(this.design);
+      if (this.board.moves.length == 0) {
+          this.state = STATE.DONE;
+          Canvas.style.cursor = "default";
+          if (!_.isUndefined(Dagaz.Controller.play)) {
+              Dagaz.Controller.play(Dagaz.Sounds.win);
+          }
+          winGame();
+          this.gameOver(player + " lose", -this.board.player);
+          return;
       }
-      var ctx = this.getContext(this.board.player);
+      getConfirmed();
+      if (last_move === null) return;
+      this.move = null;
+      _.each(this.board.moves, function(move) {
+          if (move.toString() == last_move) {
+              this.move = move;
+          }
+      }, this);
+      if (this.move === null) {
+          winGame();
+          alert('Buzy: Bad move [' + last_move + ']');
+      }
       var player = this.design.playerNames[this.board.player];
-      var result = this.getAI().getMove(ctx);
-      if (once) {
-          console.log("Player: " + player);
-          if (!_.isUndefined(Dagaz.Model.getSetup)) {
-              console.log("Setup: " + Dagaz.Model.getSetup(this.design, this.board));
-          }
-          once = false;
+      console.log("Player: " + player);
+      if (!_.isUndefined(Dagaz.Model.getSetup)) {
+          console.log("Setup: " + Dagaz.Model.getSetup(this.design, this.board));
       }
-      if (result) {
-          if (_.isUndefined(result.move)) {
-              this.state = STATE.DONE;
-              Canvas.style.cursor = "default";
-              if (!_.isUndefined(Dagaz.Controller.play)) {
-                  Dagaz.Controller.play(Dagaz.Sounds.win);
-              }
-              this.gameOver(player + " lose", -this.board.player);
-              return;
-          }
-          if (result.done || (Date.now() - this.timestamp >= this.params.AI_WAIT)) {
-              this.boardApply(result.move);
-              Dagaz.Model.Done(this.design, this.board);
-              if (result.move.isPass()) {
-                  if (Dagaz.Model.passForcedDraw && (passForced >= this.design.getPlayersCount())) {
-                      this.state = STATE.DONE;
-                      Canvas.style.cursor = "default";
-                      if (!_.isUndefined(Dagaz.Controller.play)) {
-                          Dagaz.Controller.play(Dagaz.Sounds.draw);
-                      }
-                      this.gameOver("Draw", 0);
-                  } else {
-                      this.state = STATE.IDLE;
-                      delete this.list;
-                      this.view.clearDrops();
-                      passForced++;
-                      return;
-                  }
-              } else {
-                  passForced = 0;
-              }
-              this.move = result.move;
-              this.state = STATE.EXEC;
-          }
-      }
+      this.boardApply(this.move);
+      Dagaz.Model.Done(this.design, this.board);
+      this.state = STATE.EXEC;
+      last_move = null;
   }
   if (this.state == STATE.EXEC) {
-      delete Dagaz.AI.advisorStamp;
       this.state = STATE.IDLE;
       isDrag = false;
       if (!_.isUndefined(this.list) && this.list.isDone()) {
@@ -839,6 +754,11 @@ App.prototype.exec = function() {
                   }
               }
               this.boardApply(m);
+              var setup = null;
+              if (!_.isUndefined(Dagaz.Model.getSetup)) {
+                  setup = Dagaz.Model.getSetup(this.design, this.board);
+              }
+              addMove(m.toString(), setup);
               Dagaz.Model.Done(this.design, this.board);
               console.log("Debug: " + m.toString());
           }
@@ -859,21 +779,29 @@ App.prototype.exec = function() {
               this.state = STATE.DONE;
               Canvas.style.cursor = "default";
               if (g > 0) {
-                  if (!_.isUndefined(Dagaz.Controller.play)) {
-                      if (this.board.parent.player == 1) {
-                         Dagaz.Controller.play(Dagaz.Sounds.win);
-                      } else {
-                         Dagaz.Controller.play(Dagaz.Sounds.lose);
+                  if (this.board.parent.player == 1) {
+                      winGame();
+                      if (!_.isUndefined(Dagaz.Controller.play)) {
+                          Dagaz.Controller.play(Dagaz.Sounds.win);
+                      }
+                  } else {
+                      loseGame();
+                      if (!_.isUndefined(Dagaz.Controller.play)) {
+                          Dagaz.Controller.play(Dagaz.Sounds.lose);
                       }
                   }
                   this.doneMessage = player + " won";
                   this.winPlayer   = this.board.parent.player;
               } else if (g < 0) {
-                  if (!_.isUndefined(Dagaz.Controller.play)) {
-                      if (this.board.parent.player != 1) {
-                         Dagaz.Controller.play(Dagaz.Sounds.win);
-                      } else {
-                         Dagaz.Controller.play(Dagaz.Sounds.lose);
+                  if (this.board.parent.player != 1) {
+                      winGame();
+                      if (!_.isUndefined(Dagaz.Controller.play)) {
+                          Dagaz.Controller.play(Dagaz.Sounds.win);
+                      }
+                  } else {
+                      loseGame();
+                      if (!_.isUndefined(Dagaz.Controller.play)) {
+                          Dagaz.Controller.play(Dagaz.Sounds.lose);
                       }
                   }
                   this.doneMessage = player + " lose";
@@ -892,13 +820,6 @@ App.prototype.exec = function() {
 
 Dagaz.Model.InitGame();
 Dagaz.Controller.app = Dagaz.Controller.createApp(Canvas);
-
-if (!_.isUndefined(Dagaz.Controller.getSessionManager)) {
-  Dagaz.Controller.getSessionManager(Dagaz.Controller.app);
-}
-if (!_.isUndefined(Dagaz.Controller.play)) {
-  Dagaz.Controller.play(Dagaz.Sounds.start);
-}
 
 App.prototype.run = function() {
   var timestamp = Date.now();

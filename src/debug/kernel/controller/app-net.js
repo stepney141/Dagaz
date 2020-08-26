@@ -81,6 +81,13 @@ App.prototype.done = function() {
 }
 
 App.prototype.boardApply = function(move) {
+   if (!_.isUndefined(Dagaz.Controller.play)) {
+        var sound = Dagaz.Sounds.move;
+        if (!_.isUndefined(this.move.sound)) {
+            sound = this.move.sound;
+        }
+        Dagaz.Controller.play(sound, this.board.player);
+  }
   this.board = this.board.apply(move);
   move.applyAll(this.view);
 }
