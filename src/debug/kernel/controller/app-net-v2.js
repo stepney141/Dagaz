@@ -369,13 +369,16 @@ var authorize = function() {
          inProgress = false;
      },
      error: function() {
+         Dagaz.Controller.app.state = STATE.STOP;
          alert('Auth: Error!');
      },
      statusCode: {
         401: function() {
+             Dagaz.Controller.app.state = STATE.STOP;
              alert('Auth: Bad User!');
         },
         500: function() {
+             Dagaz.Controller.app.state = STATE.STOP;
              alert('Auth: Internal Error!');
         }
      }
@@ -385,12 +388,16 @@ var authorize = function() {
 var recovery = function() {
   if (auth === null) return;
   if (setup !== null) return;
+  if (uid !== null) return;
   var id = localStorage.getItem('dagaz.uid');
   if (!id) return;
   inProgress = true;
   $.ajax({
-     url: SERVICE + "session/recovery/" + id,
-     type: "GET",
+     url: SERVICE + "session/recovery",
+     type: "POST",
+     data: {
+         uid: id
+     },
      dataType: "json",
      beforeSend: function (xhr) {
          xhr.setRequestHeader('Authorization', 'Bearer ' + auth);
@@ -407,13 +414,16 @@ var recovery = function() {
          inProgress = false;
      },
      error: function() {
+         Dagaz.Controller.app.state = STATE.STOP;
          alert('Recovery: Error!');
      },
      statusCode: {
         401: function() {
+             Dagaz.Controller.app.state = STATE.STOP;
              alert('Recovery: Bad User!');
         },
         500: function() {
+             Dagaz.Controller.app.state = STATE.STOP;
              alert('Recovery: Internal Error!');
         }
      }
@@ -421,6 +431,7 @@ var recovery = function() {
 }
 
 var connect = function() {
+  if (inProgress) return;
   if (auth === null) return;
   if (uid !== null) return;
   inProgress = true;
@@ -443,16 +454,20 @@ var connect = function() {
          inProgress = false;
      },
      error: function() {
+         Dagaz.Controller.app.state = STATE.STOP;
          alert('Connect: Error!');
      },
      statusCode: {
         401: function() {
+             Dagaz.Controller.app.state = STATE.STOP;
              alert('Connect: Bad User!');
         },
         404: function() {
+             Dagaz.Controller.app.state = STATE.STOP;
              alert('Connect: Not Found!');
         },
         500: function() {
+             Dagaz.Controller.app.state = STATE.STOP;
              alert('Connect: Internal Error!');
         }
      }
@@ -479,16 +494,20 @@ var getConfirmed = function() {
          inProgress = false;
      },
      error: function() {
+         Dagaz.Controller.app.state = STATE.STOP;
          alert('Confirmed: Error!');
      },
      statusCode: {
         401: function() {
+             Dagaz.Controller.app.state = STATE.STOP;
              alert('Confirmed: Bad User!');
         },
         404: function() {
+             Dagaz.Controller.app.state = STATE.STOP;
              alert('Confirmed: Not Found!');
         },
         500: function() {
+             Dagaz.Controller.app.state = STATE.STOP;
              alert('Confirmed: Internal Error!');
         }
      }
@@ -516,16 +535,20 @@ var addMove = function(move, setup) {
          inProgress = false;
      },
      error: function() {
+         Dagaz.Controller.app.state = STATE.STOP;
          alert('Move: Error!');
      },
      statusCode: {
         401: function() {
+             Dagaz.Controller.app.state = STATE.STOP;
              alert('Move: Bad User!');
         },
         404: function() {
+             Dagaz.Controller.app.state = STATE.STOP;
              alert('Move: Not Found!');
         },
         500: function() {
+             Dagaz.Controller.app.state = STATE.STOP;
              alert('Move: Internal Error!');
         }
      }
@@ -548,18 +571,23 @@ var winGame = function() {
      success: function(data) {
          console.log('Close: Succeed');
          inProgress = false;
+         this.state = STATE.STOP;
      },
      error: function() {
+         Dagaz.Controller.app.state = STATE.STOP;
          alert('Close: Error!');
      },
      statusCode: {
         401: function() {
+             Dagaz.Controller.app.state = STATE.STOP;
              alert('Close: Bad User!');
         },
         403: function() {
+             Dagaz.Controller.app.state = STATE.STOP;
              alert('Close: Not Found!');
         },
         500: function() {
+             Dagaz.Controller.app.state = STATE.STOP;
              alert('Close: Internal Error!');
         }
      }
@@ -582,18 +610,23 @@ var loseGame = function() {
      success: function(data) {
          console.log('Close: Succeed');
          inProgress = false;
+         this.state = STATE.STOP;
      },
      error: function() {
+         Dagaz.Controller.app.state = STATE.STOP;
          alert('Close: Error!');
      },
      statusCode: {
         401: function() {
+             Dagaz.Controller.app.state = STATE.STOP;
              alert('Close: Bad User!');
         },
         403: function() {
+             Dagaz.Controller.app.state = STATE.STOP;
              alert('Close: Not Found!');
         },
         500: function() {
+             Dagaz.Controller.app.state = STATE.STOP;
              alert('Close: Internal Error!');
         }
      }
@@ -614,12 +647,13 @@ App.prototype.exec = function() {
       recovery();
       connect();
       if (uid === null) return;
-      if (setup !== null) {
+      if (setup) {
           Dagaz.Model.setup(this.board, setup);
           this.view.reInit(this.board);
           setup = null;
       }
       if (player_num === null) {
+          this.state = STATE.STOP;
           alert('Exec: Error [no player_num]');
       }
       this.state = STATE.IDLE;
@@ -689,7 +723,7 @@ App.prototype.exec = function() {
           if (!_.isUndefined(Dagaz.Controller.play)) {
               Dagaz.Controller.play(Dagaz.Sounds.win);
           }
-          winGame();
+          var player = this.design.playerNames[this.board.player];
           this.gameOver(player + " lose", -this.board.player);
           return;
       }
@@ -754,11 +788,11 @@ App.prototype.exec = function() {
                   }
               }
               this.boardApply(m);
-              var setup = null;
+              var s = null;
               if (!_.isUndefined(Dagaz.Model.getSetup)) {
-                  setup = Dagaz.Model.getSetup(this.design, this.board);
+                  s = Dagaz.Model.getSetup(this.design, this.board);
               }
-              addMove(m.toString(), setup);
+              addMove(m.toString(), s);
               Dagaz.Model.Done(this.design, this.board);
               console.log("Debug: " + m.toString());
           }
