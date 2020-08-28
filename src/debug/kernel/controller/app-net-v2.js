@@ -24,6 +24,8 @@ var uid = null;
 var player_num = null;
 var setup = null;
 var last_move = null;
+var sid = null;
+var turn = 1;
 
 function App(canvas, params) {
   this.design = Dagaz.Model.getDesign();
@@ -356,6 +358,16 @@ var getPlayerNum = function() {
   }
 }
 
+var getSid = function() {
+  var str = window.location.search.toString();
+  var result = str.match(/[?&]sid=([^&]*)/);
+  if (result) {
+      return result[1];
+  } else {
+      return "";
+  }
+}
+
 var authorize = function() {
   if (auth !== null) return;
   inProgress = true;
@@ -474,7 +486,83 @@ var connect = function() {
   });
 }
 
+var watch = function() {
+  if (inProgress) return;
+  if (auth === null) return;
+  if (sid != "0") return;
+  inProgress = true;
+  $.ajax({
+     url: SERVICE + "session",
+     type: "GET",
+     dataType: "json",
+     beforeSend: function (xhr) {
+        xhr.setRequestHeader('Authorization', 'Bearer ' + auth);
+     },
+     success: function(data) {
+         if (data.length > 0) {
+             sid = data[0].id;
+             console.log('Watch: Succeed [sid = ' + sid + ']');
+         }
+         inProgress = false;
+     },
+     error: function() {
+         Dagaz.Controller.app.state = STATE.STOP;
+         alert('Watch: Error!');
+     },
+     statusCode: {
+        401: function() {
+             Dagaz.Controller.app.state = STATE.STOP;
+             alert('Watch: Bad User!');
+        },
+        500: function() {
+             Dagaz.Controller.app.state = STATE.STOP;
+             alert('Watch: Internal Error!');
+        }
+     }
+  });
+}
+
+var watchMove = function() {
+  if (inProgress) return;
+  if (auth === null) return;
+  if (sid === null) return;
+  if (turn === null) return;
+  inProgress = true;
+  $.ajax({
+     url: SERVICE + "move/all/" + sid + "/" + turn,
+     type: "GET",
+     dataType: "json",
+     beforeSend: function (xhr) {
+        xhr.setRequestHeader('Authorization', 'Bearer ' + auth);
+     },
+     success: function(data) {
+         if (data.length > 0) {
+             last_move = data[0].move_str;
+             turn++;
+             console.log('Watch Move: Succeed [move = ' + last_move + ']');
+         }
+         inProgress = false;
+     },
+     error: function() {
+         Dagaz.Controller.app.state = STATE.STOP;
+         alert('Watch Move: Error!');
+     },
+     statusCode: {
+        401: function() {
+             Dagaz.Controller.app.state = STATE.STOP;
+             alert('Watch Move: Bad User!');
+        },
+        500: function() {
+             Dagaz.Controller.app.state = STATE.STOP;
+             alert('Watch Move: Internal Error!');
+        }
+     }
+  });
+}
+
 var getConfirmed = function() {
+  if (sid != "") return;
+  if (inProgress) return;
   if (auth === null) return;
   if (uid === null) return;
   if (last_move !== null) return;
@@ -489,7 +577,7 @@ var getConfirmed = function() {
      success: function(data) {
          if (data.length == 1) {
              last_move = data[0].move_str;
-             console.log('Confirmed: Succeed [uid = ' + uid + ']');
+             console.log('Confirmed: Succeed [move = ' + last_move + ']');
          }
          inProgress = false;
      },
@@ -515,6 +603,7 @@ var getConfirmed = function() {
 }
 
 var addMove = function(move, setup) {
+  if (sid != "") return;
   if (auth === null) return;
   if (uid === null) return;
   inProgress = true;
@@ -556,6 +645,7 @@ var addMove = function(move, setup) {
 }
 
 var winGame = function() {
+  if (sid != "") return;
   if (auth === null) return;
   if (uid === null) return;
   $.ajax({
@@ -595,6 +685,7 @@ var winGame = function() {
 }
 
 var loseGame = function() {
+  if (sid != "") return;
   if (auth === null) return;
   if (uid === null) return;
   $.ajax({
@@ -644,22 +735,30 @@ App.prototype.exec = function() {
       if (inProgress) return;
       authorize();
       if (auth === null) return;
-      recovery();
-      connect();
-      if (uid === null) return;
+      if (sid === null) {
+          sid = getSid();
+      }
+      if (sid == "") {
+          recovery();
+          connect();
+      } else if (sid == "0") {
+          watch();
+      }
+      if ((uid === null) && (sid == "")) return;
+      if (sid == "0") return;
       if (setup) {
           Dagaz.Model.setup(this.board, setup);
           this.view.reInit(this.board);
           setup = null;
       }
-      if (player_num === null) {
+      if ((player_num === null) && (sid == "")) {
           this.state = STATE.STOP;
           alert('Exec: Error [no player_num]');
       }
       this.state = STATE.IDLE;
   }
   if (this.state == STATE.IDLE) {
-      if (player_num == this.board.player) {
+      if ((player_num == this.board.player) && (sid == "")) {
           if (_.isUndefined(this.list)) {
               var player = this.design.playerNames[this.board.player];
               console.log("Player: " + player);
@@ -723,11 +822,17 @@ App.prototype.exec = function() {
           if (!_.isUndefined(Dagaz.Controller.play)) {
               Dagaz.Controller.play(Dagaz.Sounds.win);
           }
-          var player = this.design.playerNames[this.board.player];
-          this.gameOver(player + " lose", -this.board.player);
+          if (sid == "") {
+              var player = this.design.playerNames[this.board.player];
+              this.gameOver(player + " lose", -this.board.player);
+          }
           return;
       }
-      getConfirmed();
+      if (sid == "") {
+          getConfirmed();
+      } else {
+          watchMove();
+      }
       if (last_move === null) return;
       this.move = null;
       _.each(this.board.moves, function(move) {
@@ -736,7 +841,9 @@ App.prototype.exec = function() {
           }
       }, this);
       if (this.move === null) {
-          winGame();
+          if (sid == "") {
+              winGame();
+          }
           alert('Buzy: Bad move [' + last_move + ']');
       }
       var player = this.design.playerNames[this.board.player];

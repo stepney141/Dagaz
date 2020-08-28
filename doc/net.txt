@@ -1,0 +1,9 @@
+GET:  api/auth/anonymous -> {access_token: "..."}
+POST: api/session/anonymous <- {filename: "...", player_num: ...} -> {id: ..., player_num: ..., uid: ...}
+POST: api/session/recovery <- {uid: ...} -> [{id: ..., player_num: ..., uid: ..., last_setup: "..."}]
+GET:  api/move/confirmed/:uid -> {move_str: "...", setup_str: "...", time_delta: ..., time_limit: ..., additional_time: ...}
+POST: api/move <- {uid: ..., move_str: "...", setup_str: "..."}
+POST: api/session/close <- {winner: ..., loser: ...}
+
+GET:  api/session -> [{id: ...}]
+GET:  api/move/all/:sid/:turn -> [{move_str: "...", setup_str: "...", turn_num: ...}]
