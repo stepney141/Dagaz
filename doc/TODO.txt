@@ -40,8 +40,9 @@
       - Управление результатом слияния при ходе на свою башню
 
 - Escalation
-  - http://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=2546
-  - http://www.mayhematics.com/p/gpjournal_07.pdf
+  - promotion
+  - invariant
+
 
 - app-net-v2
   - Наблюдение за ходом игры
