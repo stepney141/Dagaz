@@ -324,18 +324,18 @@ Dagaz.View.configure = function(view) {
     r.addPosition("RBQ", 61, 361, 58, 58, [0]);
     r.addPosition("RBK", 61, 441, 58, 58, [0]);
 
-    r.addPosition("RBP", 22,  41, 58, 58, [1]);
-    r.addPosition("RBN", 22, 121, 58, 58, [1]);
-    r.addPosition("RBB", 22, 201, 58, 58, [1]);
-    r.addPosition("RBR", 22, 281, 58, 58, [1]);
-    r.addPosition("RBQ", 22, 361, 58, 58, [1]);
-    r.addPosition("RBK", 22, 441, 58, 58, [1]);
-    r.addPosition("RWP", 82,  41, 58, 58, [1]);
-    r.addPosition("RWN", 82, 121, 58, 58, [1]);
-    r.addPosition("RWB", 82, 201, 58, 58, [1]);
-    r.addPosition("RWR", 82, 281, 58, 58, [1]);
-    r.addPosition("RWQ", 82, 361, 58, 58, [1]);
-    r.addPosition("RWK", 82, 441, 58, 58, [1]);
+    r.addPosition("RBP",  1,  41, 58, 58, [1]);
+    r.addPosition("RBN",  1, 121, 58, 58, [1]);
+    r.addPosition("RBB",  1, 201, 58, 58, [1]);
+    r.addPosition("RBR",  1, 281, 58, 58, [1]);
+    r.addPosition("RBQ",  1, 361, 58, 58, [1]);
+    r.addPosition("RBK",  1, 441, 58, 58, [1]);
+    r.addPosition("RWP", 61,  41, 58, 58, [1]);
+    r.addPosition("RWN", 61, 121, 58, 58, [1]);
+    r.addPosition("RWB", 61, 201, 58, 58, [1]);
+    r.addPosition("RWR", 61, 281, 58, 58, [1]);
+    r.addPosition("RWQ", 61, 361, 58, 58, [1]);
+    r.addPosition("RWK", 61, 441, 58, 58, [1]);
 
     var d = view.root.addRegion(770, 0, 120, 540, true, undefined, Dagaz.Model.drawDivision, Dagaz.Controller.eventDivision);
     d.addBoard("div");

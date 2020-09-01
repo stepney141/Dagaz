@@ -1,6 +1,6 @@
 (function() {
 
-var MessageCode = {
+Dagaz.Controller.Event = {
   MOUSE_MOVE:           0,
   MOUSE_LKM_DOWN:       1,
   MOUSE_LKM_UP:         2,
@@ -249,6 +249,17 @@ var drawMark = function(ctx, x, y, dx, dy) {
   ctx.stroke();
 }
 
+var isBadFrame = function(view, region, c, dx, dy) {
+  if (!_.isUndefined(c.t)) {
+      if (_.indexOf(c.t, view.turn) < 0) return true;
+  }
+  if (c.x - region.sx < 0) return true;
+  if (c.y - region.sy < 0) return true;
+  if (c.x + c.dx - region.sx >= dx) return true;
+  if (c.y + c.dy - region.sy >= dy) return true;
+  return false;
+}
+
 Region.prototype.draw = function(ctx, x, y, dx, dy) {
   if (!this.isActive) return;
   if (!_.isUndefined(this.d)) {
@@ -268,25 +279,40 @@ Region.prototype.draw = function(ctx, x, y, dx, dy) {
      if (!_.isUndefined(pos.d)) {
          pos.d(ctx, this, pos);
      }
-     if (!_.isUndefined(pos.setup)) {
-         if (pos.setup.hints.length > 1) {
-             pos.setup.x = pos.setup.hints.shift();
-             pos.setup.y = pos.setup.hints.shift();
-         }
-     }
+  }, this);
+  _.each(this.positions, function(pos) {
+     if (_.isUndefined(pos.setup)) return;
+     if (pos.setup.hints.length > 1) return;
      var isDone = false;
      _.each(pos.c, function(c) {
          if (isDone) return;
-         if (!_.isUndefined(c.t)) {
-             if (_.indexOf(c.t, this.view.turn) < 0) return;
-         }
-         if (c.x - this.sx < 0) return;
-         if (c.y - this.sy < 0) return;
-         if (c.x + c.dx - this.sx >= dx) return;
-         if (c.y + c.dy - this.sy >= dy) return;
+         if (isBadFrame(this.view, this, c, dx, dy)) return;
          if (!_.isUndefined(pos.setup)) {
              pos.setup.piece.d(ctx, this, pos, x + c.x + pos.setup.x - this.sx, y + c.y + pos.setup.y - this.sy);
          }
+         isDone = true;
+     }, this);
+  }, this);
+  _.each(this.positions, function(pos) {
+     if (_.isUndefined(pos.setup)) return;
+     if (pos.setup.hints.length < 2) return;
+     pos.setup.x = pos.setup.hints.shift();
+     pos.setup.y = pos.setup.hints.shift();
+     var isDone = false;
+     _.each(pos.c, function(c) {
+         if (isDone) return;
+         if (isBadFrame(this.view, this, c, dx, dy)) return;
+         if (!_.isUndefined(pos.setup)) {
+             pos.setup.piece.d(ctx, this, pos, x + c.x + pos.setup.x - this.sx, y + c.y + pos.setup.y - this.sy);
+         }
+         isDone = true;
+     }, this);
+  }, this);
+  _.each(this.positions, function(pos) {
+     var isDone = false;
+     _.each(pos.c, function(c) {
+         if (isDone) return;
+         if (isBadFrame(this.view, this, c, dx, dy)) return;
          if (!_.isUndefined(this.view.markTargets) && (_.indexOf(this.view.markTargets, pos.name) >= 0)) {
              drawMark(ctx, x + c.x - this.sx, y + c.y - this.sy, c.dx, c.dy);
          }
@@ -321,6 +347,7 @@ Region.prototype.send = function(code, event, x, y, callback) {
       if (!_.isUndefined(w.t)) {
           if (_.indexOf(w.t, this.view.turn) < 0) return;
       }
+      var wx = w.x; var wy = w.y;
       if (_.isUndefined(x) || _.isUndefined(y) || inRect(w, x, y)) {
           if (!_.isUndefined(this.e)) {
               f = this.e(code, event, x - this.sz, y - this.sy, callback);
@@ -329,8 +356,8 @@ Region.prototype.send = function(code, event, x, y, callback) {
           _.each(this.regions.reverse(), function(r) {
              if (f) return;
              f = r.send(code, event, 
-                 _.isUndefined(x) ? x : x - this.sz - w.x, 
-                 _.isUndefined(y) ? y : y - this.sy - w.y, 
+                 _.isUndefined(x) ? x : x - this.sx/* - w.x*/, 
+                 _.isUndefined(y) ? y : y - this.sy/* - w.y*/, 
                  callback);
           }, this);
           if (!_.isUndefined(x) && !_.isUndefined(y)) {
@@ -340,8 +367,8 @@ Region.prototype.send = function(code, event, x, y, callback) {
                      if (!_.isUndefined(w.t)) {
                          if (_.indexOf(w.t, this.view.turn) < 0) return;
                      }
-                     if (inRect(w, x - this.sz, y - this.sy)) {
-                         f = callback(code, event, x, y, pos);
+                     if (inRect(w, x - this.sx - wx, y - this.sy - wy)) {
+                         f = callback(this.view.controller, code, event, x, y, pos);
                      }
                  }, this);
               }, this);
@@ -562,28 +589,30 @@ View.prototype.draw = function() {
 }
 
 View.prototype.send = function(code, event, x, y, callback) {
-  if (code == MessageCode.MARK_TARGETS) {
+  if (code == Dagaz.Controller.Event.MARK_TARGETS) {
       this.markTargets = event;
+      this.invalidate();
       return true;
   }
-  if (code == MessageCode.MARK_CAPTURES) {
+  if (code == Dagaz.Controller.Event.MARK_CAPTURES) {
       this.markCaptures = event;
       return true;
   }
-  if (code == MessageCode.MARK_SELECTED) {
+  if (code == Dagaz.Controller.Event.MARK_SELECTED) {
       this.markSelected = event;
       return true;
   }
-  if (code == MessageCode.STATE_CHANGED) {
+  if (code == Dagaz.Controller.Event.STATE_CHANGED) {
       this.state = event;
       return true;
   }
-  if (code == MessageCode.STATUS_CHANGED) {
+  if (code == Dagaz.Controller.Event.STATUS_CHANGED) {
       this.status = event;
       return true;
   }
-  if (code == MessageCode.TURN_CHANGED) {
+  if (code == Dagaz.Controller.Event.TURN_CHANGED) {
       this.turn = event;
+      this.invalidate();
       return true;
   }
   return this.root.send(code, event, x, y, callback);
