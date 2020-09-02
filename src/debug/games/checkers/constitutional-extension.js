@@ -54,8 +54,10 @@ Dagaz.Model.CheckInvariants = function(board) {
               if (stop < start) {
                   step = -step;
               }
-              for (var pos = start + step; pos != stop; pos += step) {
-                   if (isAttacked(design, board, board.player, pos, Math.abs(step))) return;
+              if (!isAttacked(design, board, board.player, stop, Math.abs(step))) {
+                  for (var pos = start + step; pos != stop; pos += step) {
+                       if (isAttacked(design, board, board.player, pos, Math.abs(step))) return;
+                  }
               }
           }
       }

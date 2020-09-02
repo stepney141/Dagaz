@@ -75,6 +75,8 @@ Dagaz.Model.CheckInvariants = function(board) {
           } else {
               move.actions[0][2] = [piece.setValue(0, (board.player - 1) * 10 + type)];
           }
+      } else {
+          move.actions[0][2] = [piece.setValue(0, (target.player - 1) * 10 + target.type)];
       }
   });
   CheckInvariants(board);

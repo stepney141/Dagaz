@@ -1,6 +1,7 @@
 (function() {
 
-Dagaz.Controller.WAIT_FRAME = 100;
+Dagaz.Controller.WAIT_FRAME  = 100;
+Dagaz.Controller.turnChanged = false;
 
 var mouseX          = 0;
 var mouseY          = 0;
@@ -11,10 +12,35 @@ function App() {
   this.states = [];
 }
 
+Dagaz.Controller.newGame = function() {
+  if (!_.isUndefined(Dagaz.Controller.clearGame)) {
+      Dagaz.Controller.clearGame();
+  }
+  var str = window.location.toString();
+  var result = str.match(/^([^?]+)/);
+  if (result) {
+      str = result[1];
+  }
+  window.location = str;
+}
+
+var moveCallback = function(app, code, event, x, y, pos) {
+  var p = Dagaz.Model.stringToPos(pos.name, app.design);
+  if (!_.isUndefined(app.start) && (_.indexOf(app.start, p) >= 0)) {
+      canvas.style.cursor = "pointer";
+  } else {
+      canvas.style.cursor = "default";
+  }
+}
+
 var mouseMove = function(event) {
+  var app = Dagaz.Controller.app;
   var canvasRect = canvas.getBoundingClientRect();
   mouseX = event.clientX - canvasRect.left;
   mouseY = event.clientY - canvasRect.top;
+  if (!_.isUndefined(app.view)) {
+      app.view.send(Dagaz.Controller.Event.MOUSE_MOVE, event, mouseX, mouseY, moveCallback);
+  }
 }
 
 var mouseUp = function(event) { 
@@ -27,7 +53,9 @@ var mouseCallback = function(app, code, event, x, y, pos) {
   var targets = _.map(app.list.getTargets(), function(p) {
       return Dagaz.Model.posToString(p, app.design);
   });
-  app.view.send(Dagaz.Controller.Event.MARK_TARGETS, targets);
+  if (!_.isUndefined(app.view)) {
+      app.view.send(Dagaz.Controller.Event.MARK_TARGETS, targets);
+  }
   if (!app.move.isPass()) {
        app.state = 2;
   }
@@ -37,7 +65,9 @@ var mouseCallback = function(app, code, event, x, y, pos) {
 var mouseDown = function(event) { 
   var app = Dagaz.Controller.app;
   if (!app.isReady()) return;
-  app.view.send(Dagaz.Controller.Event.MOUSE_LKM_DOWN, event, mouseX, mouseY, mouseCallback);
+  if (!_.isUndefined(app.view)) {
+      app.view.send(Dagaz.Controller.Event.MOUSE_LKM_DOWN, event, mouseX, mouseY, mouseCallback);
+  }
 }
 
 App.prototype.isReady = function() {
@@ -45,12 +75,13 @@ App.prototype.isReady = function() {
 }
 
 var init = function(app) {
-  var design = Dagaz.Model.getDesign();
-  Dagaz.Model.BuildDesign(design);
-  app.view = Dagaz.View.getView(design);
+  app.design = Dagaz.Model.getDesign();
+  Dagaz.Model.BuildDesign(app.design);
+  app.view = Dagaz.View.getView(app.design);
   app.view.setController(Dagaz.Controller.app);
   Dagaz.View.configure(app.view);
-  app.board = Dagaz.Model.getInitBoard();
+  app.board = Dagaz.Model.getInitBoard();  
+  Dagaz.Model.setup(app.board);
   app.view.setup(app.board);
   app.state = 1;
   return false;
@@ -58,14 +89,20 @@ var init = function(app) {
 
 var idle = function(app) {
   if (_.isUndefined(app.list)) {
-      app.list = Dagaz.Model.getMoveList(app.board);
+      app.list  = Dagaz.Model.getMoveList(app.board);
+      app.start = app.list.getStarts();
+      if (!_.isUndefined(Dagaz.Model.getSetup)) {
+          console.log("Setup: " + Dagaz.Model.getSetup(app.design, app.board));
+      }
   }
   return false;
 }
 
 App.prototype.done = function() {
   this.board = this.board.apply(this.move);
-  this.view.send(Dagaz.Controller.Event.TURN_CHANGED, this.board.turn);
+  if (Dagaz.Controller.turnChanged && !_.isUndefined(app.view)) {
+      this.view.send(Dagaz.Controller.Event.TURN_CHANGED, this.board.turn);
+  }
   delete this.move;
   this.state = 1;
 }
