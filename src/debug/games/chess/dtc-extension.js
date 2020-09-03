@@ -14,12 +14,12 @@ var addReserve = function(design, board, player, type, move, cnt) {
       var piece = board.getPiece(pos);
       if (piece === null) return;
       if (piece.player != player) return;
-      if (piece.type != type + 6) return;
+      if (piece.type != +type + 6) return;
       var v = piece.getValue(0);
       if (v === null) { 
           v = 0;
       }
-      move.movePiece(pos, pos, piece.setValue(v + cnt));
+      move.movePiece(pos, pos, piece.setValue(0, v + cnt));
   });
 }
 
@@ -55,7 +55,14 @@ Dagaz.Model.CheckInvariants = function(board) {
           addReserve(design, board, board.player, 5, move);
           return;
       }
-      if (target.player != board.player) return;
+      if (target.player != board.player) {
+          if (piece.getValue(0) !== null) {
+              addReserve(design, board, target.player, target.type, move);
+          } else {
+              move.actions[0][2] = [piece.setValue(0, (target.player - 1) * 10 + target.type)];
+          }
+          return;
+      }
       if (v === null) {
           v = piece.getValue(0);
       }
@@ -75,8 +82,6 @@ Dagaz.Model.CheckInvariants = function(board) {
           } else {
               move.actions[0][2] = [piece.setValue(0, (board.player - 1) * 10 + type)];
           }
-      } else {
-          move.actions[0][2] = [piece.setValue(0, (target.player - 1) * 10 + target.type)];
       }
   });
   CheckInvariants(board);
