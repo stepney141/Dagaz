@@ -246,6 +246,7 @@
   - Chessence [reserve, todo:ai, limit, family:chess]
   - Klin Zha [todo, drops, dark, cloack, wheel, todo:sparks, family:chess]
   - Shakti [forced, family:chess]
+  - Escalation [attributes, showpiece, family:chess]
 - Arrange [arrange]
   - Ultimate Tic Tac Toe [best, drops:only, sparks, masquerade, family:renju]
   - Renju [best, attributes, drops:only, restrictions, sparks, editor, forced, family:renju]
