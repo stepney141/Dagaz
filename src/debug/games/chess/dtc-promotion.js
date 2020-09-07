@@ -25,7 +25,7 @@ var addReserve = function(design, board, move) {
       if (v === null) { 
           v = 0;
       }
-      move.movePiece(pos, pos, piece.setValue(v + 1));
+      move.movePiece(pos, pos, piece.setValue(0, v + 1));
   });
   move.mode = 3;
 }
@@ -46,15 +46,15 @@ Dagaz.Model.CheckInvariants = function(board) {
           if (target.type == 5) return;
           var v = target.getValue(0);
           if (v === null) return;
-          var t = getType(v);
+          var type = getType(v);
           var player = getPlayer(v);
           if (player != board.player) return;
           var m = Dagaz.Model.createMove(2);
-          if (target.player == board.player) {
+          if (target.player == board.player) {              
               m.movePiece(pos, p, target.promote(+target.type + 1).setValue(0, target.getValue(0)));
           } else {
               if (target.type == 0) {
-                  m.movePiece(pos, p, Dagaz.Model.createPiece(t, player));
+                  m.movePiece(pos, p, Dagaz.Model.createPiece(type, player));
               } else {
                   m.movePiece(pos, p, target.promote(+target.type - 1).setValue(0, target.getValue(0)));
               }

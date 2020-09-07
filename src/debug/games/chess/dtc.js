@@ -287,15 +287,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setup("Black", "KingR", ["RBK"]);
 }
 
-Dagaz.Controller.configure = function(app) {
-    app.addState([0, 1, 0, 0, 0, 0], Dagaz.Controller.idleState);
-    app.addState([7, 0, 2, 0, 0, 0], Dagaz.Controller.selectState);
-    app.addState([7, 0, 0, 3, 0, 0], Dagaz.Controller.targetState);
-    app.addState([0, 0, 0, 0, 4, 0], Dagaz.Controller.execState);
-    app.addState([0, 0, 0, 0, 0, 5], Dagaz.Controller.buzyState);
-    app.addState([6, 0, 0, 0, 0, 0], Dagaz.Controller.wait2State);
-}
-
 Dagaz.View.configure = function(view) {
 
     var b = view.root.addRegion(70, 0, 540, 540);

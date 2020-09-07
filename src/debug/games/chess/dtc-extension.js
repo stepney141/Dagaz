@@ -42,9 +42,15 @@ Dagaz.Model.CheckInvariants = function(board) {
               return;
           }
           var player = ((v / 10) | 0) + 1;
+          var type = v % 10;
+          if ((target.player != board.player) && (player == board.player)) {
+              addReserve(design, board, board.player, target.type, move);
+              move.actions[0][2] = [piece.setValue(0, +type + (player - 1) * 10)];
+              return;
+          }
           if ((target.player != board.player) || (player != board.player)) {
-              var type = v % 10;
               addReserve(design, board, player, type, move);
+              v = null;
           }
       }
       if (target.type == 5) {
@@ -53,34 +59,50 @@ Dagaz.Model.CheckInvariants = function(board) {
               return;
           }
           addReserve(design, board, board.player, 5, move);
-          return;
-      }
-      if (target.player != board.player) {
-          if (piece.getValue(0) !== null) {
-              addReserve(design, board, target.player, target.type, move);
-          } else {
-              move.actions[0][2] = [piece.setValue(0, (target.player - 1) * 10 + target.type)];
+          if (v !== null) {
+              move.actions[0][2] = [piece.setValue(0, v)];
           }
           return;
       }
       if (v === null) {
           v = piece.getValue(0);
+          if (v === null) {
+              if (piece.getValue(0) !== null) {
+                  addReserve(design, board, target.player, target.type, move);
+              } else {
+                  move.actions[0][2] = [piece.setValue(0, +target.type + (target.player - 1) * 10)];
+              }
+              return;
+          } else if (target.player != board.player) {
+              addReserve(design, board, target.player, target.type, move);
+              return;
+          }
       }
       if (v !== null) {
           var player = ((v / 10) | 0) + 1;
           if (player != board.player) return;
-          var type = (v % 10) + target.type;
-          if (type > 5) {
-              var t = type - 5;
+          var type = +target.type + (v % 10) + 2;
+          if (type > 6) {
+              var t = type - 7;
+              if ((type == 10) && (piece.type == 5)) {
+                  addReserve(design, board, board.player, 4, move);
+                  move.actions[0][2] = [piece.promote(5).setValue(0, (board.player - 1) * 10 + 4)];
+                  return;
+              }
               if (t == piece.type) {
                   addReserve(design, board, board.player, piece.type, move, 2);
               } else {
                   addReserve(design, board, board.player, t, move);
                   addReserve(design, board, board.player, piece.type, move);
               }
-              move.actions[0][2] = [Dagaz.Model.createPiece(5, board.player)];
+              move.actions[0][2] = [piece.promote(5)];
           } else {
-              move.actions[0][2] = [piece.setValue(0, (board.player - 1) * 10 + type)];
+              if (type == 6) {
+                  addReserve(design, board, board.player, piece.type, move);
+                  move.actions[0][2] = [piece.promote(5)];
+              } else {
+                  move.actions[0][2] = [piece.setValue(0, (board.player - 1) * 10 + type - 1)];
+              }
           }
       }
   });
