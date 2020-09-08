@@ -1,11 +1,24 @@
 (function() {
 
+var extended = true;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "dtc-extension") {
+  if (name == "dtc-extension") {
+      if (value == "extended") extended = true;
+  } else {
       checkVersion(design, name, value);
   }
+}
+
+var clone = function(move) {
+  var m = Dagaz.Model.createMove(move.mode, move.sound);
+  var s = move.actions[0][0][0];
+  var d = move.actions[0][1][0];
+  var p = move.actions[0][2][0];
+  m.movePiece(s, d, p);
+  return m;
 }
 
 var addReserve = function(design, board, player, type, move, cnt) {
@@ -23,10 +36,29 @@ var addReserve = function(design, board, player, type, move, cnt) {
   });
 }
 
+var debug = function(move) {
+  var piece = move.actions[0][2][0];
+  var r = "" + (+piece.type + 1);
+  var v = piece.getValue(0);
+  if (v !== null) {
+      r = r + "/" + ((v % 10) + 1);
+  }
+  for (var i = 1; i < move.actions.length; i++) {
+       piece = move.actions[i][2][0];
+       r = r + " + " + (piece.type - 5);
+       v = piece.getValue(0);
+       if ((v !== null) && (v > 1)) {
+           r = r + "*" + v;
+       }
+  }
+  return r;
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
+  var moves = [];
   _.each(board.moves, function(move) {
       if (!move.isSimpleMove()) return;
       var pos = move.actions[0][0][0];
@@ -82,6 +114,14 @@ Dagaz.Model.CheckInvariants = function(board) {
           var player = ((v / 10) | 0) + 1;
           if (player != board.player) return;
           var type = +target.type + (v % 10) + 2;
+          if (extended && (piece.type < 5)) {
+              for (var t = +target.type + 1; t < Math.min(type, 6); t++) {
+                   var m = clone(move);
+                   addReserve(design, board, board.player, type - t - 1, m);
+                   m.actions[0][2] = [piece.setValue(0, (board.player - 1) * 10 + t - 1)];
+                   moves.push(m);
+              }
+          }
           if (type > 6) {
               var t = type - 7;
               if ((type == 10) && (piece.type == 5)) {
@@ -105,6 +145,9 @@ Dagaz.Model.CheckInvariants = function(board) {
               }
           }
       }
+  });
+  _.each(moves, function(move) {
+      board.moves.push(move);
   });
   CheckInvariants(board);
 }
