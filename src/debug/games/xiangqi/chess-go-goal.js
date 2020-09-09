@@ -22,10 +22,10 @@ Dagaz.Model.checkGoals = function(design, board, player) {
           }
       }
   });
-  if ((e < 1) && (board.reserve[7][design.nextPlayer(player)] == 0)) {
+  if ((e < 1) && (!board.reserve[7] || (board.reserve[7][design.nextPlayer(player)] == 0))) {
       return 1;
   }
-  if ((f < 1) && (board.reserve[7][player] == 0)) {
+  if ((f < 1) && (!board.reserve[7] || (board.reserve[7][player] == 0))) {
       return -1;
   }
   return checkGoals(design, board, player);
