@@ -26,6 +26,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-captures", "false");
+    design.checkVersion("dtc-extension", "extended");
 
     var g = design.addGrid();
     g.addScale("A/B/C/D/E/F/G/H"); g.addScale("8/7/6/5/4/3/2/1");

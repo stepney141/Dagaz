@@ -1,6 +1,6 @@
 (function() {
 
-var extended = true;
+var extended = false;
 
 var checkVersion = Dagaz.Model.checkVersion;
 
