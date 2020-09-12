@@ -38,17 +38,21 @@ Dagaz.View.showBoard = function(board, ctx) {
       }
   }
   if (dir !== null) {
-      if (design.getDirection(dir) !== null) {
-          dir = design.getDirection(dir);
-      }
+      var dirs = dir.split(',');
+      dirs = _.map(dirs, function(d) {
+          if (design.getDirection(d) !== null) {
+              return design.getDirection(d);
+          }
+          return +d;
+      });
   }
   _.each(design.allPositions(), function(p) {
       if ((pos !== null) && (pos != p)) return;
       _.each(design.allDirections(), function(d) {
+           if ((dir !== null) && (_.indexOf(dirs, d) < 0)) return;
            var r = view.pos[p];
            var q = design.navigate(board.player, p, d);
            if (!_.isUndefined(r) && (q !== null)) {
-               if ((dir !== null) && (dir != d)) return;
                var t = view.pos[q];
                if (!_.isUndefined(t)) {
                    ctx.save();
