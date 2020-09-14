@@ -86,6 +86,13 @@ var showStat = function(design, board, pos, stat, move) {
   }
 }
 
+var isDone = function(design, board) {
+  for (var pos = 4; pos < 8; pos++) {
+      if (board.getPiece(pos) === null) return false;
+  }
+  return true;
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
@@ -98,6 +105,14 @@ Dagaz.Model.CheckInvariants = function(board) {
           var s = getStat(design, b, pos);
           if (s === null) return;
           showStat(design, board, pos, s, move);
+      }
+      if (isDone(design, b)) {
+          for (var p = 0; p < 4; p++) {
+               var piece = board.getPiece(p);
+               if (piece !== null) {
+                   move.dropPiece(p, piece.changeOwner(1));
+               }
+          }
       }
   });
   CheckInvariants(board);
