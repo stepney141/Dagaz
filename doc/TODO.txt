@@ -106,9 +106,6 @@
     - https://skyruk.livejournal.com/218067.html
     - https://skyruk.livejournal.com/215478.html
 
-- Сянцы втёмную
-  - https://magazeta.com/new-chess/
-
 - DeJarik
   - http://ru.starwars.wikia.com/wiki/%D0%94%D0%B5%D0%B6%D0%B0%D1%80%D0%B8%D0%BA
 
@@ -171,6 +168,7 @@
     - Возможность подключения одним аккаунтом с нескольких IP-адресов
 
 - app-net-v2
+  - Long polling
   - Наблюдение за ходом игры
     - Регистрация неограниченного количества подписчиков-наблюдателей
       - Контроль соответсвия игры загруженному sid
