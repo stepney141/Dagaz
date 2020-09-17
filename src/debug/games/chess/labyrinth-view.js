@@ -8,15 +8,12 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
-  if (model.type == 0) {
-      ctx.save();
-      ctx.globalAlpha = 0.5;
-  }
+Dagaz.View.drawPawn = function(ctx, region, pos, x, y) {
+  var piece = pos.setup.piece;
+  ctx.save();
+  ctx.globalAlpha = 0.5;
   ctx.drawImage(piece.h, x, y, piece.dx, piece.dy);
-  if (model.type == 0) {
-      ctx.restore();
-  }
+  ctx.restore();
 }
 
 })();
