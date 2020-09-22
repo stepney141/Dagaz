@@ -30,6 +30,14 @@ Dagaz.Controller.newGame = function() {
   window.location = str;
 }
 
+App.prototype.findMove = function(move) {
+  if (_.isUndefined(this.board) || _.isUndefined(this.board.moves)) return move;
+  for (var i =0; i < this.board.moves.length; i++) {
+       if (this.board.moves[i].toString() == move.toString()) return this.board.moves[i];
+  }
+  return move;
+}
+
 var moveCallback = function(app, code, event, x, y, pos) {
   var p = Dagaz.Model.stringToPos(pos.name, app.design);
   if (!_.isUndefined(app.start) && (_.indexOf(app.start, p) >= 0)) {
@@ -54,7 +62,7 @@ var mouseUp = function(event) {}
 var mouseCallback = function(app, code, event, x, y, pos) {
   var p = Dagaz.Model.stringToPos(pos.name, app.design);
   if (_.isUndefined(app.list)) return true;
-  app.move = app.list.setPosition(p);
+  app.move = app.findMove(app.list.setPosition(p));
   var targets = _.map(app.list.getTargets(), function(p) {
       return Dagaz.Model.posToString(p, app.design);
   });

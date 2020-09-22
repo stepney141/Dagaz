@@ -28,11 +28,28 @@ var addStep = function(design, board, pos, dir, positions) {
   }
 }
 
+var animate = function(design, view, pos, src, dst, move) {
+  var p = view.root.findAndLocate(pos);
+  var s = view.root.findAndLocate(src);
+  var d = view.root.findAndLocate(dst);
+  if ((s === null) || (d === null)) return;
+  var dx = ((d.x - s.x) / Dagaz.View.STEP_CNT) | 0; var x = s.x;
+  var dy = ((d.y - s.y) / Dagaz.View.STEP_CNT) | 0; var y = s.y;
+  for (var i = 0; i < Dagaz.View.STEP_CNT; i++) {
+      x += dx; y += dy;
+      move.hints.push({
+           x: x - p.x,
+           y: y - p.y
+      });
+  }
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
-  var moves = [];
+  var view   = Dagaz.Controller.app.view;
+  var moves  = [];
   _.each(board.moves, function(move) {
       if (!move.isSimpleMove()) return;
       var pos = move.actions[0][1][0];
@@ -81,6 +98,9 @@ Dagaz.Model.CheckInvariants = function(board) {
           _.each(positions, function(q) {
               var m = Dagaz.Model.createMove(move.mode);
               m.movePiece(move.actions[0][0][0], q, move.actions[0][2][0]);
+              m.hints = [];
+              animate(design, view, move.actions[0][0][0], move.actions[0][0][0], move.actions[0][1][0], m);
+              animate(design, view, move.actions[0][0][0], p, q, m);
               moves.push(m);
           });
       });
