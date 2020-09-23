@@ -167,30 +167,30 @@ var checkJump = function(design, board, player, pos, price, d, o, type, cover) {
 }
 
 var isAttacked = function(design, board, player, pos, price, cover) {
-return checkStep(design, board, board.player, pos, price, 3, [0, 5], cover)  || // ne - Pawn, King
-       checkStep(design, board, board.player, pos, price, 7, [0, 5], cover)  || // nw - Pawn, King
-       checkStep(design, board, board.player, pos, price, 0, [5], cover)     || // w - King
-       checkStep(design, board, board.player, pos, price, 1, [5], cover)     || // e - King
-       checkStep(design, board, board.player, pos, price, 2, [5], cover)     || // s - King
-       checkStep(design, board, board.player, pos, price, 4, [5], cover)     || // n - King
-       checkStep(design, board, board.player, pos, price, 5, [5], cover)     || // se - King
-       checkStep(design, board, board.player, pos, price, 6, [5], cover)     || // sw - King
-       checkSlide(design, board, board.player, pos, price, 0, [4, 1], cover) || // w - Queen, Rook
-       checkSlide(design, board, board.player, pos, price, 1, [4, 1], cover) || // e - Queen, Rook
-       checkSlide(design, board, board.player, pos, price, 2, [4, 1], cover) || // s - Queen, Rook
-       checkSlide(design, board, board.player, pos, price, 3, [4, 3], cover) || // ne - Queen, Bishop
-       checkSlide(design, board, board.player, pos, price, 4, [4, 1], cover) || // n - Queen, Rook
-       checkSlide(design, board, board.player, pos, price, 5, [4, 3], cover) || // se - Queen, Bishop
-       checkSlide(design, board, board.player, pos, price, 6, [4, 3], cover) || // sw - Queen, Bishop
-       checkSlide(design, board, board.player, pos, price, 7, [4, 3], cover) || // nw - Queen, Bishop
-       checkJump(design, board, board.player, pos, price, 0, 6, 2, cover)    || // w sw - Knight
-       checkJump(design, board, board.player, pos, price, 0, 7, 2, cover)    || // w nw - Knight
-       checkJump(design, board, board.player, pos, price, 1, 3, 2, cover)    || // e ne - Knight
-       checkJump(design, board, board.player, pos, price, 1, 5, 2, cover)    || // e se - Knight
-       checkJump(design, board, board.player, pos, price, 2, 5, 2, cover)    || // s se - Knight
-       checkJump(design, board, board.player, pos, price, 2, 6, 2, cover)    || // s sw - Knight
-       checkJump(design, board, board.player, pos, price, 4, 3, 2, cover)    || // n ne - Knight
-       checkJump(design, board, board.player, pos, price, 4, 7, 2, cover);      // n nw - Knight
+return checkStep(design, board, player, pos, price, 3, [0, 5], cover)  || // ne - Pawn, King
+       checkStep(design, board, player, pos, price, 7, [0, 5], cover)  || // nw - Pawn, King
+       checkStep(design, board, player, pos, price, 0, [5], cover)     || // w - King
+       checkStep(design, board, player, pos, price, 1, [5], cover)     || // e - King
+       checkStep(design, board, player, pos, price, 2, [5], cover)     || // s - King
+       checkStep(design, board, player, pos, price, 4, [5], cover)     || // n - King
+       checkStep(design, board, player, pos, price, 5, [5], cover)     || // se - King
+       checkStep(design, board, player, pos, price, 6, [5], cover)     || // sw - King
+       checkSlide(design, board, player, pos, price, 0, [4, 1], cover) || // w - Queen, Rook
+       checkSlide(design, board, player, pos, price, 1, [4, 1], cover) || // e - Queen, Rook
+       checkSlide(design, board, player, pos, price, 2, [4, 1], cover) || // s - Queen, Rook
+       checkSlide(design, board, player, pos, price, 3, [4, 3], cover) || // ne - Queen, Bishop
+       checkSlide(design, board, player, pos, price, 4, [4, 1], cover) || // n - Queen, Rook
+       checkSlide(design, board, player, pos, price, 5, [4, 3], cover) || // se - Queen, Bishop
+       checkSlide(design, board, player, pos, price, 6, [4, 3], cover) || // sw - Queen, Bishop
+       checkSlide(design, board, player, pos, price, 7, [4, 3], cover) || // nw - Queen, Bishop
+       checkJump(design, board, player, pos, price, 0, 6, 2, cover)    || // w sw - Knight
+       checkJump(design, board, player, pos, price, 0, 7, 2, cover)    || // w nw - Knight
+       checkJump(design, board, player, pos, price, 1, 3, 2, cover)    || // e ne - Knight
+       checkJump(design, board, player, pos, price, 1, 5, 2, cover)    || // e se - Knight
+       checkJump(design, board, player, pos, price, 2, 5, 2, cover)    || // s se - Knight
+       checkJump(design, board, player, pos, price, 2, 6, 2, cover)    || // s sw - Knight
+       checkJump(design, board, player, pos, price, 4, 3, 2, cover)    || // n ne - Knight
+       checkJump(design, board, player, pos, price, 4, 7, 2, cover);      // n nw - Knight
 }
 
 Dagaz.AI.see = function(design, board, move) {
