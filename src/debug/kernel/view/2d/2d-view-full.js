@@ -551,7 +551,10 @@ View.prototype.animate = function() {
   if (!_.isUndefined(this.changes) && !_.isUndefined(this.move)) {
        var f = true;
        _.each(this.changes, function(c) {
-           if (c.c <= 0) return;
+           if ((c.c <= 2) && (c.n !== null) && (c.o !== null) && c.n.p.setup) {
+               delete c.n.p.setup;
+           }
+           if (c.c <= 1) return;
            c.c--;
            f = false;
        });

@@ -1,9 +1,15 @@
 (function() {
 
+var capturePieces = false;
+var orthodox = false;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "gogomoku-extension") {
+  if (name == "gogomoku-extension") {
+      if (value == "capture") capturePieces = true;
+      if (value == "orthodox") orthodox = true;
+  } else {
       checkVersion(design, name, value);
   }
 }
@@ -34,13 +40,10 @@ Dagaz.Model.CheckInvariants = function(board) {
       if (!move.isDropMove()) return;
       var pos = move.actions[0][1][0];
       var piece = move.actions[0][2][0];
+      var oSuicide = false; var dSuicide = false;
       board.setPiece(pos, piece);
-      var group = [pos];
-      if (isDead(design, board, piece.player, group, [1, 3, 4, 7]) ||
-          isDead(design, board, piece.player, group, [0, 2, 5, 6])) {
-          move.failed = true;
-          return;
-      }
+      if (isDead(design, board, piece.player, [pos], [1, 3, 4, 7])) oSuicide = true;
+      if (isDead(design, board, piece.player, [pos], [0, 2, 5, 6])) dSuicide = true;
       var captured = [];
       _.each([1, 3, 4, 7], function(dir) {
           var p = design.navigate(1, pos, dir);
@@ -51,6 +54,7 @@ Dagaz.Model.CheckInvariants = function(board) {
           var group = [p];
           if (!isDead(design, board, piece.player, group, [1, 3, 4, 7])) return;
           captured = _.union(captured, group);
+          oSuicide = false;
       });
       _.each([0, 2, 5, 6], function(dir) {
           var p = design.navigate(1, pos, dir);
@@ -61,13 +65,25 @@ Dagaz.Model.CheckInvariants = function(board) {
           var group = [p];
           if (!isDead(design, board, piece.player, group, [0, 2, 5, 6])) return;
           captured = _.union(captured, group);
+          dSuicide = false;
       });
       _.each(captured, function(p) {
+          if (!orthodox) {
+              oSuicide = false;
+              dSuicide = false;
+          }
           var piece = board.getPiece(p);
           if (piece === null) return;
           if (piece.player == board.player) return;
-          move.movePiece(p, p, piece.changeOwner(board.player));
+          if (capturePieces) {
+              move.capturePiece(p);
+          } else {
+              move.movePiece(p, p, piece.changeOwner(board.player));
+          }
       });
+      if (oSuicide || dSuicide) {
+          move.failed = true;
+      }
       board.setPiece(pos, null);
   });
   CheckInvariants(board);

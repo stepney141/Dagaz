@@ -1,4 +1,13 @@
-﻿- Бонусы
+﻿- Jocly
+  - https://l.facebook.com/l.php?u=https%3A%2F%2Fgithub.com%2Fmi-g%2Fjocly%3Ffbclid%3DIwAR3RXASBS3XsGF7FK0PWbGWvuyGyH2xqYbxMUK4PQuR9C8yBIhbhCoiG-RQ&h=AT0176xdHMNMCyHmNE5-s6wbUNbRgfwgcU85C9PvVFnZUABWRviGTX2753Gsd-y-rvr5F4UBuWov9MGLg7DvUyGLcf08Oghgl2Ya5kEpGj8F5tyi2dZMnma2MMsUYrMqHZetMA
+  - https://l.facebook.com/l.php?u=http%3A%2F%2Fhgm.nubati.net%2Fjocly%2Fjocly-master%2Fexamples%2Fbrowser%2Fcontrol.html%3Fgame%3Dchu-chess%26fbclid%3DIwAR0_3CPLgWhQ8XOdx3q1d3yyxrgiOBvB9fYqGICl0rB8NbirYpgtJ50czdU&h=AT0176xdHMNMCyHmNE5-s6wbUNbRgfwgcU85C9PvVFnZUABWRviGTX2753Gsd-y-rvr5F4UBuWov9MGLg7DvUyGLcf08Oghgl2Ya5kEpGj8F5tyi2dZMnma2MMsUYrMqHZetMA
+
+- model
+  - kill-positions
+  - link-positions
+  - unlink-positions
+
+- Бонусы
   - Жизненный цикл
     - Анонимная авторизация (получаем access-token)
       - GET: api/auth/anonymous -> {access_token: "..."}
@@ -22,15 +31,13 @@
 
 - Labyrinth Chess
   - cases
+    - ?setup=4f5;0g4;0c2;0d2;0e2;0f2;0h2;0i2;0j2;1c1;2d1;3e1;5g1;3h1;2i1;1j1;-1c12;2d12;3e12;4f12;5g12;3h12;2i12;0c11;0d11;0e11;0f11;0g11;0h11;0i11;0j11;1e6;;&turn=1
     - ?setup=2e5;0g5;1g4;0e3;0c2;0d2;0f2;3g2;0h2;0i2;0j2;1b1;3e1;4f1;5g1;2i1;-1c12;2d12;3e12;5g12;2i12;1j12;0c11;0e11;0f11;0g11;0h11;0d9;0i9;0j9;4d5;;&turn=1
     - ?setup=2e5;0g5;5h5;1e4;0e3;0c2;0d2;0f2;3g2;0h2;0i2;0j2;1b1;3e1;4f1;2i1;-1c12;2d12;3e12;5g12;2i12;1j12;0c11;0e11;0f11;0g11;0h11;0d9;0i9;0j9;4f7;;&turn=0
   - ai
-    - Матрицы весов позиций
+    - Убирать фигуры из под атаки
     - Не учитывать одиночную пешку
     - Бонус за расположение короля рядом с пешкой
-  - view
-    - Убрать мерцание при взятии фигуры
-  - release
   - app-full
     - Поддержка session-manager
 
