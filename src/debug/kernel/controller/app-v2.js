@@ -56,6 +56,27 @@ Dagaz.Controller.newGame = function() {
   window.location = str;
 }
 
+Dagaz.Controller.passTurn = function() {
+  var app = Dagaz.Controller.app;
+  if ((app.state == STATE.IDLE) && !_.isUndefined(app.list)) {
+      var moves = _.filter(app.board.moves, function(move) {
+          return move.isPass();
+      });
+      if (moves.length < 1) return;
+      app.boardApply(moves[0]);
+      app.syncCaptures(moves[0]);
+      app.state = STATE.IDLE;
+      delete app.list;
+      app.view.clearDrops();
+      lastPosition = null;
+      if (_.isUndefined(Dagaz.Model.getMarked)) {
+          app.view.markPositions(Dagaz.View.markType.ATTACKING, []);
+      }
+      app.view.markPositions(Dagaz.View.markType.CURRENT, []);
+      app.view.markPositions(Dagaz.View.markType.TARGET, []);
+  }
+}
+
 var gameOver = function(text, self, player) {
   if (!Dagaz.Model.silent || (player != 0)) {
       if (!_.isUndefined(Dagaz.Controller.clearGame)) {
