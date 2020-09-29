@@ -1,4 +1,11 @@
-﻿- Бонусы
+﻿- Turnover
+  - invariant
+    - If a Castle is in Check, then it moves and take like a King, one square around it.
+    - If your LAST CASTLE is in Check, then it CANNOT move or take on a square in check.
+    - If you have NO possible move to do with any piece (if all pieces are stucked) and you have at least 1 Castle NOT in check, then it is a draw. 
+    - If you have just 1 Castle and it is in check, this Castle can take the LAST opponent Castle to win the game, even if this opponent Castle is in check.
+
+- Бонусы
   - Жизненный цикл
     - Анонимная авторизация (получаем access-token)
       - GET: api/auth/anonymous -> {access_token: "..."}
@@ -20,17 +27,17 @@
     - Использовать MD5 подпись в запросе бонуса
       - Подписывать access-token + last-setup
 
+- DualGo
+  - goal
+    - Фаза ручного удаления мёртвых камней
+    - Автоматический подсчёт глаз у форм для определения их статуса
+
 - Jocly
   - https://l.facebook.com/l.php?u=https%3A%2F%2Fgithub.com%2Fmi-g%2Fjocly%3Ffbclid%3DIwAR3RXASBS3XsGF7FK0PWbGWvuyGyH2xqYbxMUK4PQuR9C8yBIhbhCoiG-RQ&h=AT0176xdHMNMCyHmNE5-s6wbUNbRgfwgcU85C9PvVFnZUABWRviGTX2753Gsd-y-rvr5F4UBuWov9MGLg7DvUyGLcf08Oghgl2Ya5kEpGj8F5tyi2dZMnma2MMsUYrMqHZetMA
   - https://l.facebook.com/l.php?u=http%3A%2F%2Fhgm.nubati.net%2Fjocly%2Fjocly-master%2Fexamples%2Fbrowser%2Fcontrol.html%3Fgame%3Dchu-chess%26fbclid%3DIwAR0_3CPLgWhQ8XOdx3q1d3yyxrgiOBvB9fYqGICl0rB8NbirYpgtJ50czdU&h=AT0176xdHMNMCyHmNE5-s6wbUNbRgfwgcU85C9PvVFnZUABWRviGTX2753Gsd-y-rvr5F4UBuWov9MGLg7DvUyGLcf08Oghgl2Ya5kEpGj8F5tyi2dZMnma2MMsUYrMqHZetMA
 
 - Rokumoku
   - ?setup=+262;0:2;+16;0:2;;0:1;+14;0:2;;0:1+2;+12;0:2;;0:1;;0:1+1;+13;0:1+3;+13;0:2;;0:1;;0:1+1;&turn=1
-
-- model
-  - kill-positions
-  - link-positions
-  - unlink-positions
 
 - Labyrinth Chess
   - cases

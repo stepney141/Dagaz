@@ -1058,6 +1058,71 @@ ZrfDesign.prototype.addPosition = function(name, links) {
   this.positions.push(Dagaz.int32Array(links));
 }
 
+ZrfDesign.prototype.linkPosition = function(dir, from, to) {
+  if (dir >= this.dirs.length) return;
+  if ((from >= this.positions.length) || (to >= this.positions.length) || (from == to)) return;
+  this.positions[from][dir] = to - from;
+}
+
+ZrfDesign.prototype.linkPositions = function(commands, selector) {
+  if (!_.isUndefined(selector) && (selector != Dagaz.Model.getResourceSelector())) return;
+  _.each(commands, function(c) {
+     this.linkPosition(c.dir, c.from, c.to);
+  }, this);
+}
+
+ZrfDesign.prototype.unlinkPosition = function(dir, from) {
+  if (dir >= this.dirs.length) return;
+  if (from >= this.positions.length) return;
+  this.positions[from][dir] = 0;
+}
+
+ZrfDesign.prototype.unlinkPositions = function(commands, selector) {
+  if (!_.isUndefined(selector) && (selector != Dagaz.Model.getResourceSelector())) return;
+  _.each(commands, function(c) {
+     var dirs = _.range(this.dirs.length);
+     if (!_.isUndefined(c.dir)) {
+         dirs = [c.dir];
+     }
+     if (!_.isUndefined(c.from)) {
+         _.each(dirs, function(dir) {
+            if (!_.isUndefined(c.to)) {
+                var p = this.navigate(1, c.from, dir);
+                if ((p !== null) && (p != c.to)) return;
+            }
+            this.unlinkPosition(dir, c.from);
+         }, this);
+     } else {
+         if (_.isUndefined(c.to)) return;
+         _.each(this.allPositions(), function(from) {
+            if (from == c.to) return;
+            _.each(dirs, function(dir) {
+                var p = this.navigate(1, from, dir);
+                if (p === null) return;
+                if (p != c.to) return;
+                this.unlinkPosition(dir, from);
+            }, this);
+         });
+     }
+  }, this);
+}
+
+ZrfDesign.prototype.killPosition = function(pos) {
+  for (var dir = 0; dir < this.dirs.length; dir++) {
+       this.unlinkPosition(dir, pos);
+  }
+  this.unlinkPositions({
+       to: pos
+  });
+}
+
+ZrfDesign.prototype.killPositions = function(positions, selector) {
+  if (!_.isUndefined(selector) && (selector != Dagaz.Model.getResourceSelector())) return;
+  _.each(positions, function(pos) {
+     this.killPosition(pos);
+  }, this);
+}
+
 ZrfDesign.prototype.addGrid = function() {
   return new ZrfGrid(this);
 }
@@ -2559,27 +2624,6 @@ ZrfDesign.prototype.setupSelector = function(val) {
 
 Dagaz.Model.getResourceSelector = function() {
   return Dagaz.Model.setupSelector;
-}
-
-ZrfDesign.prototype.killPositions = function(list, selector) {
-  if (!_.isUndefined(selector) && (selector != Dagaz.Model.getResourceSelector())) return;
-  for (var pos = 0; pos < this.positions.length; pos++) {
-      for (var dir = 0; dir < this.dirs.length; dir++) {
-           if (this.positions[pos][dir] != 0) {
-               var p = + pos + this.positions[pos][dir];
-               if (_.indexOf(list, p) >= 0) {
-                   this.positions[pos][dir] = 0;
-               }
-           }
-      }
-  }
-  var dirs = [];
-  for (var dir = 0; dir < this.dirs.length; dir++) {
-       dirs.push(0);
-  }
-  _.each(list, function(pos) {
-       this.positions[pos] = dirs;
-  }, this);
 }
 
 })();
