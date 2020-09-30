@@ -63,6 +63,7 @@ Dagaz.Controller.passTurn = function() {
           return move.isPass();
       });
       if (moves.length < 1) return;
+      if (!confirm("Pass turn?")) return;
       app.boardApply(moves[0]);
       app.syncCaptures(moves[0]);
       app.state = STATE.IDLE;

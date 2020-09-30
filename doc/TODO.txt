@@ -1,11 +1,47 @@
-﻿- Turnover
-  - invariant
-    - If a Castle is in Check, then it moves and take like a King, one square around it.
-    - If your LAST CASTLE is in Check, then it CANNOT move or take on a square in check.
-    - If you have NO possible move to do with any piece (if all pieces are stucked) and you have at least 1 Castle NOT in check, then it is a draw. 
-    - If you have just 1 Castle and it is in check, this Castle can take the LAST opponent Castle to win the game, even if this opponent Castle is in check.
+﻿- Dual Go
+  - score
+    - Разобраться с багом во view
+    - Фиксировать позицию в common-setup после post-обработки
+  - extension
+    - Удалять мёртвые группы
+  - goal
+    - Подсчитывать очки
 
 - Бонусы
+  - Доработки
+    - Анонимная регистрация по отпечатку браузера
+      - https://fingerprintjs.com/
+    - Страничка для активации бонусов (с авторизацией) и статистика
+    - Пересылка бонуса по EMail (по завершении игры)
+    - Авторизация в игре по логину/паролю (с регистрацией)
+    - Защита по высоте (Кирилл)
+  - release
+    - Filler (лёгкая)
+    - Netwalk (средняя)
+    - Mahjong solitaire (средняя)
+    - French Military Game (лёгкая)
+    - Horn Chess (лёгкая)
+    - UXO (сложная)
+    - Light Off (сложная)
+    - Fox and Geese (средняя)
+    - Asalto (средняя)
+    - Bagh Chal (средняя)
+    - Kharbaga (сложная)
+    - Italian Damone (сложная)
+    - Magyar Dama (сложная)
+    - Maharadja (средняя)
+    - Reversi (сложная)
+    - Shisima (средняя)
+    - Connect Four (средняя)
+    - Morris (средняя)
+    - Doubutsu Shogi (средняя)
+    - Gate (средняя)
+    - Frisian Checkers (сложная)
+    - Tchuka Ruma (средняя)
+    - Super Chinese Checkers (сложная)
+    - Hughe puzzle (средняя)
+    - British Solitaire (средняя)
+    - Descent (лёгкая)
   - Жизненный цикл
     - Анонимная авторизация (получаем access-token)
       - GET: api/auth/anonymous -> {access_token: "..."}
@@ -26,6 +62,13 @@
     - Бонусы различного уровня для разных игр
     - Использовать MD5 подпись в запросе бонуса
       - Подписывать access-token + last-setup
+
+- Turnover
+  - invariant
+    - If a Castle is in Check, then it moves and take like a King, one square around it.
+    - If your LAST CASTLE is in Check, then it CANNOT move or take on a square in check.
+    - If you have NO possible move to do with any piece (if all pieces are stucked) and you have at least 1 Castle NOT in check, then it is a draw. 
+    - If you have just 1 Castle and it is in check, this Castle can take the LAST opponent Castle to win the game, even if this opponent Castle is in check.
 
 - DualGo
   - goal
