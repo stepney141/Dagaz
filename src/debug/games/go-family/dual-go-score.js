@@ -1,3 +1,4 @@
+Dagaz.View.clearDrops = true;
 Dagaz.Controller.noDropIndex = true;
 Dagaz.Controller.cyclicDropIndex = true;
 
@@ -415,9 +416,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
-    design.addCommand(1, ZRF.FUNCTION,	24);	// from
     design.addCommand(1, ZRF.FUNCTION,	26);	// capture
-    design.addCommand(1, ZRF.FUNCTION,	25);	// to
     design.addCommand(1, ZRF.FUNCTION,	28);	// end
 
     design.addPiece("Black", 0);
