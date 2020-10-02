@@ -212,6 +212,7 @@ App.prototype.getAI = function() {
       this.ai = null;
       this.ai = Dagaz.AI.findBot("random",  this.params, this.ai);
       this.ai = Dagaz.AI.findBot("common",  this.params, this.ai);
+      this.ai = Dagaz.AI.findBot("smart",   this.params, this.ai);
       this.ai = Dagaz.AI.findBot("opening", this.params, this.ai);
   }
   return this.ai;

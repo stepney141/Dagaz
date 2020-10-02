@@ -1,30 +1,56 @@
 (function() {
 
+var separate = false;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "dual-go-score-extension") {
-     checkVersion(design, name, value);
+  if (name == "dual-go-score-extension") {
+      if (value == "separate") separate = true;
+  } else {
+      checkVersion(design, name, value);
   }
 }
 
-var checkTerritory = function(design, board, group) {
-  var r = null;
+var getTerritoryDirs = function(design, board, group, dirs) {
+  var player = null;
   for (var i = 0; i < group.length; i++) {
-       for (var dir = 0; dir < design.dirs.length; dir++) {
-            var pos = design.navigate(1, group[i], dir);
+       for (var j = 0; j < dirs.length; j++) {
+            var pos = design.navigate(1, group[i], dirs[j]);
             if ((pos !== null) && (_.indexOf(group, pos) < 0)) {
                 var piece = board.getPiece(pos);
                 if ((piece !== null) && (piece.type < 2)) {
-                    if ((r !== null) && (r != +piece.type + 1)) return null;
-                    r = +piece.type + 1;
+                    if ((player !== null) && (player != +piece.type + 1)) return null;
+                    player = +piece.type + 1;
                 } else {
                     group.push(pos);
                 }
             }
        }
   }
-  return r;
+  return {
+       player: player,
+       positions: group
+  }
+}
+
+var getTerritory = function(design, board, pos) {
+  var o = getTerritoryDirs(design, board, [pos], [1, 3, 4, 7]);
+  var d = getTerritoryDirs(design, board, [pos], [0, 2, 5, 6]);
+  if (o === null) return separate ? d : null;
+  if (d === null) return separate ? o : null;
+  if (o.player != d.player) return null;
+  if (separate) {
+      return {
+          player: o.player,
+          positions: _.union(o.positions, d.positions)
+      };
+  } else {
+      return {
+          player: o.player,
+          positions: _.intersection(o.positions, d.positions)
+      }
+  }
 }
 
 var PostProcessing = Dagaz.Model.PostProcessing;
@@ -37,13 +63,12 @@ Dagaz.Model.PostProcessing = function(board, moves) {
       _.each(design.allPositions(), function(pos) {
           var piece = b.getPiece(pos);
           if ((piece !== null) && (piece.type < 2)) return;
-          var group = [pos];
-          var player = checkTerritory(design, b, group);
-          if (player === null) return;
-          if (player == 1) {
-              black = _.union(black, group);
+          var r = getTerritory(design, b, pos);
+          if (r === null) return;
+          if (r.player == 1) {
+              black = _.union(black, r.positions);
           } else {
-              white = _.union(white, group);
+              white = _.union(white, r.positions);
           }
       });
       var target = null;
@@ -53,7 +78,7 @@ Dagaz.Model.PostProcessing = function(board, moves) {
       _.each(design.allPositions(), function(pos) {
           var piece = b.getPiece(pos);
           if (piece === null) {
-              if (_.indexOf(black, pos) >= 0) {
+              if (_.indexOf(_.difference(black, white), pos) >= 0) {
                   if ((target !== null) && (target == pos)) {
                       move.actions[0][1] = [move.actions[0][0][0]];
                       move.actions[0][2] = [Dagaz.Model.createPiece(2, 1)];
@@ -61,7 +86,7 @@ Dagaz.Model.PostProcessing = function(board, moves) {
                       move.dropPiece(pos, Dagaz.Model.createPiece(2, 1));
                   }
               }
-              if (_.indexOf(white, pos) >= 0) {
+              if (_.indexOf(_.difference(white, black), pos) >= 0) {
                   if ((target !== null) && (target == pos)) {
                       move.actions[0][1] = [move.actions[0][0][0]];
                       move.actions[0][2] = [Dagaz.Model.createPiece(3, 1)];
@@ -71,8 +96,8 @@ Dagaz.Model.PostProcessing = function(board, moves) {
               }
           } else {
               if (piece.type >= 2) {
-                  if (_.indexOf(black, pos) >= 0) return;
-                  if (_.indexOf(white, pos) >= 0) return;
+                  if (_.indexOf(_.difference(black, white), pos) >= 0) return;
+                  if (_.indexOf(_.difference(white, black), pos) >= 0) return;
                   move.capturePiece(pos);
               }
           }

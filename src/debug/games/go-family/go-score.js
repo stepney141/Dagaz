@@ -1,3 +1,7 @@
+Dagaz.View.clearDrops = true;
+Dagaz.Controller.noDropIndex = true;
+Dagaz.Controller.cyclicDropIndex = true;
+
 ZRF = {
     JUMP:          0,
     IF:            1,
@@ -23,18 +27,17 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("z2j", "2");
     design.checkVersion("animate-drops", "false");
     design.checkVersion("animate-captures", "false");
+    design.checkVersion("show-captures", "false");
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
-    design.checkVersion("show-captures", "false");
-    design.checkVersion("pass-turn", "true");
+    design.checkVersion("show-drops", "true");
 
     design.addDirection("w");
     design.addDirection("e");
     design.addDirection("s");
     design.addDirection("n");
 
-    design.addPlayer("Black", [1, 0, 3, 2]);
-    design.addPlayer("White", [0, 1, 2, 3]);
+    design.addPlayer("You", [0, 1, 2, 3]);
 
     design.addPosition("a19", [0, 1, 19, 0]);
     design.addPosition("b19", [-1, 1, 19, 0]);
@@ -398,20 +401,25 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("r1", [-1, 1, 0, -19]);
     design.addPosition("s1", [-1, 0, 0, -19]);
 
-    design.addCommand(0, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(0, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(0, ZRF.FUNCTION,	25);	// to
+    design.addCommand(0, ZRF.FUNCTION,	26);	// capture
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
-    design.addPiece("Stone", 0);
-    design.addDrop(0, 0, [], 0);
+    design.addPiece("Black", 0);
+    design.addDrop(0, 0, [], 1);
+
+    design.addPiece("White", 1);
+    design.addDrop(1, 0, [], 1);
+
+    design.addPiece("BlackPoint", 2);
+    design.addPiece("WhitePoint", 3);
 }
 
 Dagaz.View.configure = function(view) {
     view.defBoard("Board");
-    view.defPiece("BlackStone", "Black Stone");
-    view.defPiece("WhiteStone", "White Stone");
-    view.defPiece("Ko", "Ko");
+    view.defPiece("BlackStone", "You Black");
+    view.defPiece("WhiteStone", "You White");
+    view.defPiece("BlackPoint", "You BlackPoint");
+    view.defPiece("WhitePoint", "You WhitePoint");
  
     view.defPosition("a19", 6, 6, 30, 30);
     view.defPosition("b19", 36, 6, 30, 30);

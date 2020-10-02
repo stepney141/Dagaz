@@ -2,6 +2,7 @@
 
 var capturePieces = false;
 var orthodox = false;
+var separate = false;
 
 var checkVersion = Dagaz.Model.checkVersion;
 
@@ -9,28 +10,51 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   if (name == "dual-go-extension") {
       if (value == "capture") capturePieces = true;
       if (value == "orthodox") orthodox = true;
+      if (value == "separate") separate = true;
   } else {
       checkVersion(design, name, value);
   }
 }
 
-var checkTerritory = function(design, board, group) {
-  var r = null;
+var getTerritoryDirs = function(design, board, group, dirs) {
+  var player = null;
   for (var i = 0; i < group.length; i++) {
-       for (var dir = 0; dir < design.dirs.length; dir++) {
-            var pos = design.navigate(1, group[i], dir);
+       for (var j = 0; j < dirs.length; j++) {
+            var pos = design.navigate(1, group[i], dirs[j]);
             if ((pos !== null) && (_.indexOf(group, pos) < 0)) {
                 var piece = board.getPiece(pos);
                 if (piece !== null) {
-                    if ((r !== null) && (r != piece.player)) return null;
-                    r = piece.player;
+                    if ((player !== null) && (player != piece.player)) return null;
+                    player = piece.player;
                 } else {
                     group.push(pos);
                 }
             }
        }
   }
-  return r;
+  return {
+       player: player,
+       positions: group
+  }
+}
+
+var getTerritory = function(design, board, pos) {
+  var o = getTerritoryDirs(design, board, [pos], [1, 3, 4, 7]);
+  var d = getTerritoryDirs(design, board, [pos], [0, 2, 5, 6]);
+  if (o === null) return separate ? d : null;
+  if (d === null) return separate ? o : null;
+  if (o.player != d.player) return null;
+  if (separate) {
+      return {
+          player: o.player,
+          positions: _.union(o.positions, d.positions)
+      };
+  } else {
+      return {
+          player: o.player,
+          positions: _.intersection(o.positions, d.positions)
+      }
+  }
 }
 
 var go = Dagaz.Controller.go;
@@ -42,13 +66,12 @@ Dagaz.Controller.go = function(url, scoring) {
   if (scoring) {
       _.each(design.allPositions(), function(pos) {
           if (board.getPiece(pos) !== null) return;
-          var group = [pos];
-          var player = checkTerritory(design, board, group);
-          if (player === null) return;
-          if (player == 1) {
-              black = _.union(black, group);
+          var r = getTerritory(design, board, pos);
+          if (r === null) return;
+          if (r.player == 1) {
+              black = _.union(black, r.positions);
           } else {
-              white = _.union(white, group);
+              white = _.union(white, r.positions);
           }
       });
   }
@@ -61,10 +84,10 @@ Dagaz.Controller.go = function(url, scoring) {
           var type = piece.player - 1;
           s = s + type + ":1";
       } else {
-          if (_.indexOf(black, pos) >= 0) {
+          if (_.indexOf(_.difference(black, white), pos) >= 0) {
               s = s + "2:1";
           }
-          if (_.indexOf(white, pos) >= 0) {
+          if (_.indexOf(_.difference(white, black), pos) >= 0) {
               s = s + "3:1";
           }
       }

@@ -77,7 +77,7 @@
   - Reversi [best, drops:only, territory, setups, forced, family:custodian]
   - Ming Mang [best, ko, territory, todo:goal, todo:mindsports, family:custodian]
 - Go family [restrictions]
-  - Go [todo:ai, ko, attributes, editor, drops:only, todo:pkm, sparks, family:go]
+  - Go [todo:ai, ko, attributes, editor, drops:only, todo:pkm, sparks, postprocessing:score, family:go]
   - Atari Go [best, drops:only, net, family:go]
   - Three Color Go [todo:ai, ko, drops:only, sparks, lastt, family:go]
   - Paper and Pencil Go [todo:ai, attributes, drops:only, todo:mindsports, family:go]

@@ -15,11 +15,46 @@ Dagaz.Model.moveToString = function(move) {
   return "";
 }
 
+var checkTerritory = function(design, board, group) {
+  var r = null;
+  for (var i = 0; i < group.length; i++) {
+       for (var dir = 0; dir < design.dirs.length; dir++) {
+            var pos = design.navigate(1, group[i], dir);
+            if ((pos !== null) && (_.indexOf(group, pos) < 0)) {
+                var piece = board.getPiece(pos);
+                if (piece !== null) {
+                    if ((r !== null) && (r != piece.player)) return null;
+                    r = piece.player;
+                } else {
+                    group.push(pos);
+                }
+            }
+       }
+  }
+  return r;
+}
+
 var go = Dagaz.Controller.go;
 
-Dagaz.Controller.go = function(url) {
+Dagaz.Controller.go = function(url, scoring) {
   var design = Dagaz.Model.design;
   var board = Dagaz.Controller.app.board;
+  var black = []; var white = []; var done = [];
+  if (scoring) {
+      _.each(design.allPositions(), function(pos) {
+          if (_.indexOf(done, pos) >= 0) return;
+          if (board.getPiece(pos) !== null) return;
+          var group = [pos];
+          var player = checkTerritory(design, board, group);
+          done = _.union(done, group);
+          if (player === null) return;
+          if (player == 1) {
+              black = _.union(black, group);
+          } else {
+              white = _.union(white, group);
+          }
+      });
+  }
   url = url + "?setup="; 
   var prev = null; var cnt = 0;
   _.each(design.allPositions(), function(pos) {
@@ -28,6 +63,13 @@ Dagaz.Controller.go = function(url) {
       if (piece !== null) {
           var type = piece.player - 1;
           s = s + type + ":1";
+      } else {
+          if (_.indexOf(black, pos) >= 0) {
+              s = s + "2:1";
+          }
+          if (_.indexOf(white, pos) >= 0) {
+              s = s + "3:1";
+          }
       }
       if ((prev === null) || (prev != s)) {
           if (prev !== null) {
@@ -107,6 +149,11 @@ var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
+  if (!_.isUndefined(board.move) && board.move.isPass() && (board.parent !== null)) {
+      if (!_.isUndefined(board.parent.move) && board.parent.move.isPass()) {
+           _.delay(Dagaz.Controller.go, 500, 'go-score.htm', true);
+      }
+  }
   _.each(board.moves, function(move) {
       if ((move.actions.length == 1) && (move.actions[0][1] !== null) && (move.actions[0][2] !== null)) {
            var pos  = move.actions[0][1][0];
