@@ -148,4 +148,43 @@ Dagaz.Model.PostProcessing = function(board, moves) {
   }
 }
 
+var CheckInvariants = Dagaz.Model.CheckInvariants;
+
+Dagaz.Model.CheckInvariants = function(board) {
+  var design = Dagaz.Model.design;
+  _.each(board.moves, function(move) {
+      if (move.mode != 1) return;
+      var pos = move.actions[0][0][0];
+      var piece = board.getPiece(pos);
+      if ((piece === null) || (piece.type >= 2)) {
+          move.failed = true;
+          return;
+      }
+      var player = +piece.type;
+      var group  = [pos];
+      for (var i = 0; i < group.length; i++) {
+          _.each(design.allDirections(), function(dir) {
+               var p = design.navigate(1, group[i], dir);
+               if ((p === null) || (_.indexOf(group, p) >= 0)) return;
+               var piece = board.getPiece(p);
+               if (piece === null) return;
+               if ((+piece.type != player) && (+piece.type != player + 2)) return;
+               group.push(p);
+          });
+      }
+      for (var i = 1; i < group.length; i++) {
+           var p = group[i];
+           var piece = board.getPiece(p);
+           move.movePiece(p, p, piece.promote(_.indexOf([0, 2], +piece.type) >= 0 ? 3: 2));
+      }
+      var pos = move.actions[0][0][0];
+      var piece = board.getPiece(pos);
+      if (piece !== null) {
+          move.actions[0][1] = [pos];
+          move.actions[0][2] = [piece.promote(_.indexOf([0, 2], +piece.type) >= 0 ? 3: 2)];
+      }
+  });
+  CheckInvariants(board);
+}
+
 })();

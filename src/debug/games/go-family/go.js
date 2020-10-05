@@ -26,6 +26,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("show-blink", "false");
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-captures", "false");
+    design.checkVersion("ko", "true");
     design.checkVersion("pass-turn", "true");
 
     design.addDirection("w");
