@@ -87,15 +87,13 @@ var isAttacked = function(design, board, player, pos) {
          isAttackedStep(design, board, player, pos, 5);
 }
 
-var disableMove = function(design, board, pos, dir) {
-  var p = design.navigate(1, pos, dir);
-  if (p === null) return;
+var disableMoves = function(design, board, pos) {
   _.each(board.moves, function(move) {
+      if (move.mode == 16) return;
       if (move.actions.length < 1) return;
       if (move.actions[0][0] === null) return;
       if (move.actions[0][1] === null) return;
       if (move.actions[0][0][0] != pos) return;
-      if (move.actions[0][1][0] != p) return;
       move.failed = true;
   });
 }
@@ -118,7 +116,7 @@ Dagaz.Model.CheckInvariants = function(board) {
   _.each(f, function(pos) {
        if (!isAttacked(design, board, board.player, pos)) return;
        _.each(_.range(8), function(dir) {
-            var move = Dagaz.Model.createMove(0);
+            var move = Dagaz.Model.createMove(16);
             var p = pos;
             while (p !== null) {
                 var piece = board.getPiece(p);
@@ -139,10 +137,20 @@ Dagaz.Model.CheckInvariants = function(board) {
                     }
                 }
             }
-            disableMove(design, board, pos, dir);
+            disableMoves(design, board, pos, dir);
             board.moves.push(move);
        });
   });
+  if (f.length == 1) {
+      _.each(board.moves, function(move) {
+          if (move.mode == 16) return;
+          if (move.actions.length < 1) return;
+          if (move.actions[0][0] === null) return;
+          if (move.actions[0][1] === null) return;
+          if (move.actions[0][0][0] != f[0]) return;
+          move.failed = true;
+      });
+  }
   CheckInvariants(board);
 }
 
