@@ -1,11 +1,20 @@
-﻿- Бонусы
+﻿- Turnover
+  - check all pieces and treat castles as not in check to check if they are checking any piece
+  - test castles if they are checking castles, this time if they are in check you move like in check
+  - check all castles again, now if they are in check you move like in check and if not so move normal. So this is a 3 pass to check if any castle is in check and it catches at least castles indirectly in check (when a piece is checking a castle and an opponent castle near can be take by this status as king so it works.) hard to explain
+
+- DagazServer
+  - Проверять уникальность логина при создании пользователя явно, а не по констрейнту
+  - Ввести realm-ы (для разделения объектов различных проектов)
+
+- Бонусы
   - api
     - http://192.168.101.137:3000/games/filler-intro.htm
     - http://games.dtco.ru:3000/games/filler.htm
   - Доработки
-    - Заменить название игры в lose и bonus
     - Доработать страницу активации бонусов
     - Пересылка бонуса по EMail (по завершении игры)
+    - Заменить название игры в lose и bonus
     - Авторизация в игре по логину/паролю (с регистрацией)
     - Защита по высоте (Кирилл)
     - Вывод сообщений об ошибках (Кирилл)
