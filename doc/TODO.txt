@@ -1,18 +1,15 @@
-﻿- Turnover
-  - check all pieces and treat castles as not in check to check if they are checking any piece
-  - test castles if they are checking castles, this time if they are in check you move like in check
-  - check all castles again, now if they are in check you move like in check and if not so move normal. So this is a 3 pass to check if any castle is in check and it catches at least castles indirectly in check (when a piece is checking a castle and an opponent castle near can be take by this status as king so it works.) hard to explain
-
-- DagazServer
-  - Проверять уникальность логина при создании пользователя явно, а не по констрейнту
-  - Ввести realm-ы (для разделения объектов различных проектов)
+﻿- Frisian Checkers
+  - app-net-v2
+    - При recovery принимает setup от другой игры (chess-go)
+      - http://games.dtco.ru/dagaz/chess-go-mobile.htm
+      - http://games.dtco.ru/dagaz/chess-go-mobile.htm?player=b
+      - http://games.dtco.ru/dagaz/frisian-checkers.html
 
 - Бонусы
   - api
     - http://192.168.101.137:3000/games/filler-intro.htm
     - http://games.dtco.ru:3000/games/filler.htm
   - Доработки
-    - Доработать страницу активации бонусов
     - Пересылка бонуса по EMail (по завершении игры)
     - Заменить название игры в lose и bonus
     - Авторизация в игре по логину/паролю (с регистрацией)
@@ -60,6 +57,13 @@
       - POST: api/session/close <- {winner: ..., loser: ...}
     - Запрос бонуса
       - POST: api/bonus <- {uid: ... } -> {id: ..., bonus: "...", created: "...", expired: "..."}
+    - Передача бонуса по EMail
+      - POST: api/bonus/send <- {uid: ..., bonus: "...", email: "..."}
+
+- Turnover
+  - check all pieces and treat castles as not in check to check if they are checking any piece
+  - test castles if they are checking castles, this time if they are in check you move like in check
+  - check all castles again, now if they are in check you move like in check and if not so move normal. So this is a 3 pass to check if any castle is in check and it catches at least castles indirectly in check (when a piece is checking a castle and an opponent castle near can be take by this status as king so it works.) hard to explain
 
 - app-net
   - Присоединение к сессии с использованием разделяемого секрета

@@ -27,6 +27,16 @@ var last_move = null;
 var sid = null;
 var turn = 1;
 
+var getPlayer = function() {
+  var str = window.location.search.toString();
+  var result = str.match(/[?&]player=([^&]*)/);
+  if (result) {
+      return result[1];
+  } else {
+      return null;
+  }
+}
+
 function App(canvas, params) {
   this.design = Dagaz.Model.getDesign();
   this.canvas = canvas;
@@ -371,8 +381,13 @@ var getSid = function() {
 var authorize = function() {
   if (auth !== null) return;
   inProgress = true;
+  var u = SERVICE + "auth/anonymous";
+  var p = getPlayer();
+  if (p !== null)  {
+      u = u + "/" + p;
+  }
   $.ajax({
-     url: SERVICE + "auth/anonymous",
+     url: u,
      type: "GET",
      dataType: "json",
      success: function(data) {
