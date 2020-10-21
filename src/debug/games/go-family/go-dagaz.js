@@ -1,39 +1,13 @@
-Dagaz.Controller.persistense = "none";
+(function() {
 
-ZRF = {
-    JUMP:          0,
-    IF:            1,
-    FORK:          2,
-    FUNCTION:      3,
-    IN_ZONE:       4,
-    FLAG:          5,
-    SET_FLAG:      6,
-    POS_FLAG:      7,
-    SET_POS_FLAG:  8,
-    ATTR:          9,
-    SET_ATTR:      10,
-    PROMOTE:       11,
-    MODE:          12,
-    ON_BOARD_DIR:  13,
-    ON_BOARD_POS:  14,
-    PARAM:         15,
-    LITERAL:       16,
-    VERIFY:        20
-};
+var drop = function(ctx, params) {
+    if (ctx.isEmpty()) {
+        ctx.end();
+    }
+}
 
 Dagaz.Model.BuildDesign = function(design) {
-    design.checkVersion("z2j", "2");
-    design.checkVersion("animate-drops", "false");
-    design.checkVersion("animate-captures", "false");
-    design.checkVersion("show-blink", "false");
-    design.checkVersion("show-hints", "false");
     design.checkVersion("show-drops", "true");
-    design.checkVersion("show-captures", "false");
-    design.checkVersion("animate-redo", "false");
-
-    if (!_.isUndefined(Dagaz.Controller.addSound)) {
-        Dagaz.Controller.addSound(0, "../../sounds/clack.wav", true);
-    }
 
     design.addDirection("w"); // 0
     design.addDirection("e"); // 1
@@ -125,16 +99,8 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("h1", [-1, 1, 0, -9]);
     design.addPosition("i1", [-1, 0, 0, -9]);
 
-    design.addZone("death-line", 2, [64, 55, 46, 37, 28, 19, 10, 65, 11, 66, 12, 67, 13, 68, 14, 69, 15, 70, 61, 52, 43, 34, 25, 16]);
-    design.addZone("death-line", 1, [64, 55, 46, 37, 28, 19, 10, 65, 11, 66, 12, 67, 13, 68, 14, 69, 15, 70, 61, 52, 43, 34, 25, 16]);
-
-    design.addCommand(0, ZRF.FUNCTION,	1);	// empty?
-    design.addCommand(0, ZRF.FUNCTION,	20);	// verify
-    design.addCommand(0, ZRF.FUNCTION,	25);	// to
-    design.addCommand(0, ZRF.FUNCTION,	28);	// end
-
     design.addPiece("Stone", 0);
-    design.addDrop(0, 0, [], 0);
+    design.addDrop(0, drop, [], 0);
 }
 
 Dagaz.View.configure = function(view) {
@@ -224,3 +190,5 @@ Dagaz.View.configure = function(view) {
     view.defPosition("h1", 432, 492, 61, 61);
     view.defPosition("i1", 492, 492, 61, 61);
 }
+
+})();

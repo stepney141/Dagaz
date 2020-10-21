@@ -4,6 +4,7 @@
       - http://games.dtco.ru/dagaz/chess-go-mobile.htm
       - http://games.dtco.ru/dagaz/chess-go-mobile.htm?player=b
       - http://games.dtco.ru/dagaz/frisian-checkers.html
+    - Передавать разделяемый секрет игровой сессии параметром
 
 - Бонусы
   - api
