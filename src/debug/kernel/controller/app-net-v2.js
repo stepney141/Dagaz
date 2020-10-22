@@ -423,6 +423,7 @@ var recovery = function() {
      url: SERVICE + "session/recovery",
      type: "POST",
      data: {
+         filename: getName(),
          uid: id
      },
      dataType: "json",
