@@ -1,6 +1,117 @@
-﻿- Frisian Checkers
+﻿- Launcher
+  - bug
+    - Dark Chinese Chess (то же в BanQi)
+      - Передавать seed
+      - Подавлять random setup на втором игроке
+      - Формировать начальный setup даже при отсутствии хода
+  - database
+    - Использовать стили связанные с игроками (скрытые) для игр типа Stratego
+      - Основной вид (для подмастривания за игрой) и opposite для 2 игрока
+  - ai
+    - Адаптировать GarboChess
+    - Создавать сессию вторым игроком если нет текущей игры и ждать
+  - debug
+    - http://127.0.0.1:3000/dagaz/frisian-checkers.html?sid=1030
+    - http://games.dtco.ru/dagaz/go-19x19.html?sid=1034
+  - frontend (при авторизации в реалме Dagaz)
+    - Join
+      - Выбор номера игрока (из доступных) при подсоединении
+    - Watch
+      - Отображать очерёдность хода
+    - Launch
+      - Присоединения ботов (не в текущей версии)
+      - Настройки контроля времени (не в текущей версии)
+    - Mail
+      - Активация аккаунта
+      - Передача уведомлений для игроков в offline
+  - games    
+    - Luzhanqi
+      - Привязка стиля 0-игрока для просмотра доски в открытую
+      - protected - запрет просмотра до завершения игроками кроме участников и админов
+      - Защита от ручной загрузки игры от имени противника или 0-игроком (возвращать player_num в recovery)
+    - Chess Go
+      - После recovery включается подсветка резерва даже если ход другого игрока
+    - Режим наблюдения
+      - При навигации session-manager назад принимать текущие ходы молча
+
+- 1D Chess
+  - https://gumroad.com/l/1DChess
+
+- Нарды
+  - http://www.backgammon-game.eu/game_tawla31.html
+  - https://www.bkgm.com/variants/Trictrac.html
+
+- Dagaz
+  - games
+    - Tablut (variants)
+    - Chess
+    - Shatranj (selector)
+    - Laska
+    - Stapeldammen
+    - Abalone (selector)
+    - Annan Shogi
+    - Kyoto Shogi (variants)
+    - Banqi (variants)
+    - Dark XiangQi
+    - Storm the Ivory Tower (variants)
+    - Janggi
+    - Littera Chinese Chess
+    - Passive Chess
+    - Hex
+    - LOA
+    - Captain's Mistress
+    - Three Crowns
+    - FangQi (variants)
+    - Chessball
+    - Hanga Roa
+    - Kamisado (rounds)
+    - Ordo (variants)
+    - Altai Shatra (variants)
+    - Cheskers (variants)
+    - Dameo
+    - Dablot (variants)
+    - Fanorona
+    - Suffragetto
+    - Zamma
+    - Belarusian Chess (variants)
+    - Escalation
+    - Omega Chess Advanced
+    - Platform Chess (variants)
+    - Agon
+    - Hasami Shogi (variants)
+    - Ming Mang (variants)
+    - GESS
+    - Mana
+    - Spock
+    - Abalala'e
+    - Congkak
+    - Dakon
+    - Oware
+    - Ohojichi
+    - Ohvalhu
+    - Selus
+    - Toguz Kumalak
+    - Morris (variants)
+    - Pasang (selector)
+    - Bushi
+    - Halma (variants)
+    - Jasir
+    - Gomoku
+    - Pente
+    - Amazons
+    - Konane
+  - Асинхронные боты
+    - на async.js или defer
+    - https://github.com/glinscott/Garbochess-JS
+    - https://github.com/boardgameio/boardgame.io/blob/master/src/ai/random-bot.ts
+
+- boardgameio
+  - https://boardgame.io/documentation/#/notable_projects
+
+- Frisian Checkers
   - app-net-v2
     - Передавать разделяемый секрет игровой сессии параметром
+    - Автоматическое подсоединение ботов по истечении таймаута
 
 - Gungi
   - https://play.google.com/store/apps/details?id=com.GahijiTech.Hoigi&hl=ru
@@ -66,10 +177,6 @@
   - test castles if they are checking castles, this time if they are in check you move like in check
   - check all castles again, now if they are in check you move like in check and if not so move normal. So this is a 3 pass to check if any castle is in check and it catches at least castles indirectly in check (when a piece is checking a castle and an opponent castle near can be take by this status as king so it works.) hard to explain
 
-- app-net
-  - Присоединение к сессии с использованием разделяемого секрета
-  - Автоматическое подсоединение ботов по истечении таймаута
-
 - Go
   - score
     - Почему доступны capture-ходы для point?
@@ -107,13 +214,6 @@
 
 - 2d-view-full
   - Раздельное управление обновлением позиций и ресурса доски по обновлению turn
-
-- Bonus
-  - Решения
-    - Генерировать зашифрованную строку бонуса при запуске приложения, выводить пользователю при выигрыше
-
-- ai
-  - Ботов на async.js или defer
 
 - Dark Chinese Chess
   - AI

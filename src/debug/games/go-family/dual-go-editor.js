@@ -427,6 +427,26 @@ Dagaz.View.configure = function(view) {
     view.defBoard("Board");
     view.defPiece("BlackStone", "You Black");
     view.defPiece("WhiteStone", "You White");
+    view.defPiece("White0", "White0");
+    view.defPiece("White1", "White1");
+    view.defPiece("White2", "White2");
+    view.defPiece("White3", "White3");
+    view.defPiece("White4", "White4");
+    view.defPiece("White5", "White5");
+    view.defPiece("White6", "White6");
+    view.defPiece("White7", "White7");
+    view.defPiece("White8", "White8");
+    view.defPiece("White9", "White9");
+    view.defPiece("Black0", "Black0");
+    view.defPiece("Black1", "Black1");
+    view.defPiece("Black2", "Black2");
+    view.defPiece("Black3", "Black3");
+    view.defPiece("Black4", "Black4");
+    view.defPiece("Black5", "Black5");
+    view.defPiece("Black6", "Black6");
+    view.defPiece("Black7", "Black7");
+    view.defPiece("Black8", "Black8");
+    view.defPiece("Black9", "Black9");
  
     view.defPosition("a19", 41, 41, 42, 42);
     view.defPosition("b19", 83, 41, 42, 42);
