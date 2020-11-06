@@ -1,12 +1,20 @@
 ﻿- Launcher
+  - games
+    - Использовать анонимную авторизацию для просмотра партий (независимо от realm)
   - bug
     - Dark Chinese Chess (то же в BanQi)
       - Передавать seed
       - Подавлять random setup на втором игроке
       - Формировать начальный setup даже при отсутствии хода
-  - database
-    - Использовать стили связанные с игроками (скрытые) для игр типа Stratego
-      - Основной вид (для подмастривания за игрой) и opposite для 2 игрока
+    - Stratego (1136)
+      - После выполнения хода не обновляется view
+        - После установки последней фигуры не очищается spark (не обновляется view)
+        - При самоуничтожении равной фигуры не обновляется view (фигура остаётся видима для игрока)
+      - По расстановке фигур противник может определить местоположение флага
+  - frontend
+    - Вкладка "My Games"
+      - Фильтры: "My turn" и "Archive"
+    - Подcматривание нулевым игроком за играми типа Stratego root-ом
   - ai
     - Адаптировать GarboChess
     - Создавать сессию вторым игроком если нет текущей игры и ждать
@@ -34,6 +42,10 @@
     - Режим наблюдения
       - При навигации session-manager назад принимать текущие ходы молча
 
+- Chess Go
+  - variant
+    - Принудительно вводить в игру генерала после первого захвата
+
 - 1D Chess
   - https://gumroad.com/l/1DChess
 
@@ -43,11 +55,19 @@
 
 - Dagaz
   - games
-    - Tablut (variants)
-    - Chess
-    - Shatranj (selector)
     - Laska
     - Stapeldammen
+    - Fanorona
+    - Zamma
+    - Momentum Chess
+    - Gravity Chess
+    - Gomoku
+    - Pente
+    - Morris (variants)
+    - Game of Generals
+    - Luzhanqi
+    - Tablut (variants)
+    - Shatranj (selector)
     - Abalone (selector)
     - Annan Shogi
     - Kyoto Shogi (variants)
@@ -57,7 +77,6 @@
     - Janggi
     - Littera Chinese Chess
     - Passive Chess
-    - Hex
     - LOA
     - Captain's Mistress
     - Three Crowns
@@ -70,9 +89,7 @@
     - Cheskers (variants)
     - Dameo
     - Dablot (variants)
-    - Fanorona
     - Suffragetto
-    - Zamma
     - Belarusian Chess (variants)
     - Escalation
     - Omega Chess Advanced
@@ -82,22 +99,16 @@
     - Ming Mang (variants)
     - GESS
     - Mana
-    - Spock
     - Abalala'e
     - Congkak
     - Dakon
-    - Oware
     - Ohojichi
     - Ohvalhu
     - Selus
-    - Toguz Kumalak
-    - Morris (variants)
     - Pasang (selector)
     - Bushi
     - Halma (variants)
     - Jasir
-    - Gomoku
-    - Pente
     - Amazons
     - Konane
   - Асинхронные боты
