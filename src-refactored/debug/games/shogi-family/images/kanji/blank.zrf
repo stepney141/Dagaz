@@ -1,0 +1,28 @@
+(game
+  (title "Blank")
+
+  (pass-turn true)
+
+  (players You)
+  (turn-order You)
+
+  (board
+    (image "blank.bmp")
+    (grid
+      (start-rectangle 0 2 39 41)
+      (dimensions
+        ("a" (39 0)) ; files
+        ("1" (0 39)) ; ranks
+      )
+    )
+  )
+
+  (piece
+     (name  Blank)
+     (image You "SBishop.bmp" "SBishop+.bmp" "SGold.bmp" "SKing.bmp" "SKnight.bmp" "SKnight+.bmp" "SLance.bmp" "SLance+.bmp" "SPawn.bmp" "SPawn+.bmp" "SRook.bmp" "SRook+.bmp" "SSilver.bmp" "SSilver+.bmp")
+  )
+
+  (board-setup
+     (You (Blank a1))
+  )
+)

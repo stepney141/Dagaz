@@ -1,0 +1,10 @@
+a1a2 a7a6 a2a3 a6a5 b1b2 a5b4 a3b3 b4a5 b3a4 a5b5
+a1a2 a7a6 b1b2 a6a5 a2a3 a5b4 a3b3 b4a5 b3a4 a5b5
+a1a2 a7a6 b1b2 a6a5 b2b3 a5b4 a2b2 b4a5 b3a4 a5b5
+b1b2 a7a6 a1a2 a6a5 b2b3 a5b4 a2b2 b4a5 b3a4 a5b5
+b1b2 a7a6 a1a2 a6a5 a2a3 a5a4 a3b3 b4a5 b3a4 a5b5
+b1b2 a7a6 b2b3 a6a5 a1a2 a5b4 a2b2 b4a5 b3a4 a5b5
+b1b2 a7a6 b2a3 a6a5 a1a2 a5a4
+a1a2 a7b6 a2b2 b6a6 b1a2 a6b5 a2a3 b5a5 b2a2 a5a4
+b1a2 a7a6 a1b1 a6a5 b1b2 a5b4 b2b3 b4a5 a2b2 a5b4
+a1a2 a7b6 b1b2 b6b5 a2a3 b5b4 a3b3 b4a4 b2a3 a4a5 b3a4 a5b5 a4b4 b5a6

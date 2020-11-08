@@ -1,0 +1,66 @@
+(define drop-stone (
+  (verify empty?) add
+))
+
+(define shift (
+  (verify friend?)
+  $1 (verify empty?)
+  add
+))
+
+(define step (
+  (verify friend?)
+  $1 (verify enemy?)
+  capture
+  $1 (verify empty?)
+  (add-partial step-type)
+))
+
+(define capture-stone (
+  (verify enemy?)
+  capture add
+))
+
+(game
+  (title "Tibetian checkers")
+
+  (players White Black)
+  (turn-order White Black)
+
+  (board
+      (image "images/tibetian-checkers/board.bmp")
+      (grid
+          (start-rectangle 5 5 35 35)
+          (dimensions
+            ("a/b/c/d/e/f/g/h/i/j/k/l/m/n" (31 0)) ; files
+            ("1/2/3/4/5/6/7/8/9/10/11/12/13/14" (0 31)) ; ranks
+          )
+          (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0))
+      )
+  )
+
+  (piece
+     (name Stone)
+     (image Black "images/tibetian-checkers/black.bmp"
+            White "images/tibetian-checkers/white.bmp")
+     (drops 
+          (move-type init-type)
+          (drop-stone)
+     )
+     (moves
+          (move-type normal-type)
+          (shift n) (shift e) (shift w) (shift s)
+          (move-type step-type)
+          (step n) (step e) (step w) (step s)
+          (move-type capture-type)
+          (capture-stone)
+     ) 
+  )  
+
+  (board-setup
+     (White (Stone g7))
+     (Black (Stone h8))
+  )
+)
+
+
