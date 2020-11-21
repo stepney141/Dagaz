@@ -1,4 +1,4 @@
-(function() {
+{
 
 Dagaz.View.SHIFT_X      = 0;
 Dagaz.View.SHIFT_Y      = 0;
@@ -19,16 +19,16 @@ Dagaz.View.markType = {
 Dagaz.View.maxSteps = 3;
 Dagaz.View.STEP_CNT = 3;
 
-var self            = null;
-var isConfigured    = false;
-var isValid         = false;
-var mouseX          = 0;
-var mouseY          = 0;
-var mousePressed    = false;
-var hintedPiece     = null;
-var fromPos         = null;
-var deferred        = [];
-var blink           = 0;
+let self            = null;
+let isConfigured    = false;
+let isValid         = false;
+let mouseX          = 0;
+let mouseY          = 0;
+let mousePressed    = false;
+let hintedPiece     = null;
+let fromPos         = null;
+let deferred        = [];
+let blink           = 0;
 
 Dagaz.View.blink = [1, 0, -1, 0];
 
@@ -66,7 +66,7 @@ Dagaz.View.inRect = function(view, pos, x, y) {
 }
 
 Dagaz.View.pointToPieces = function(view, x, y) {
-  var list = _.chain(view.setup)
+  let list = _.chain(view.setup)
    .map(function(piece) {
        return +piece.pos;
     })
@@ -95,8 +95,8 @@ View2D.prototype.pointToPositions = function(x, y) {
   return Dagaz.View.pointToPositions(this, x, y);
 }
 
-var posToIx = function(view, pos) {
-  for (var i = 0; i < view.setup.length; i++) {
+let posToIx = function(view, pos) {
+  for (let i = 0; i < view.setup.length; i++) {
        if (view.setup[i].pos == pos) {
            return i;
        }
@@ -138,7 +138,7 @@ View2D.prototype.defPosition = function(name, x, y, dx, dy) {
 
 View2D.prototype.defBoard = function(img, x, y, selector, turns) {
   if (!_.isUndefined(selector) && (selector != Dagaz.Model.getResourceSelector())) return;
-  var board = {
+  let board = {
      h: document.getElementById(img),
      t: turns,
      x: x ? x : 0,
@@ -149,7 +149,7 @@ View2D.prototype.defBoard = function(img, x, y, selector, turns) {
 }
 
 View2D.prototype.defPiece = function(img, name, help, glyph) {
-  var piece = {
+  let piece = {
      h:    document.getElementById(img),
      name: name
   };
@@ -165,8 +165,8 @@ View2D.prototype.defPiece = function(img, name, help, glyph) {
 
 View2D.prototype.allResLoaded = function() {
   if (this.allDone) return true;
-  for (var i = 0; i < this.res.length; i++) {
-       var image = this.res[i].h;
+  for (let i = 0; i < this.res.length; i++) {
+       let image = this.res[i].h;
        if (!image.complete || (image.naturalWidth == 0)) return false;
        this.res[i].dx = image.naturalWidth;
        this.res[i].dy = image.naturalHeight;
@@ -220,7 +220,7 @@ View2D.prototype.capturePiece = function(move, pos, phase) {
    .each(function(frame) {
       deferred.push(pos);
     });
-  var ix = posToIx(this, pos);
+  let ix = posToIx(this, pos);
   if (ix === null) return;
   this.changes.push({
       phase: phase,
@@ -232,7 +232,7 @@ View2D.prototype.capturePiece = function(move, pos, phase) {
 
 View2D.prototype.dropPiece = function(move, pos, piece, phase) {
   if (!phase) { phase = 0; }
-  var ix = posToIx(this, pos);
+  let ix = posToIx(this, pos);
   this.changes.push({
       phase: phase,
       steps: 1,
@@ -280,9 +280,9 @@ View2D.prototype.vectorFound = function(ix, from, to, piece, mode, phase) {
           this.addPhase(ix, from, to, piece, phase, this.vectors[mode][from][to].steps);
           return true;
       }
-      var list = _.keys(this.vectors[mode][from]);
-      for (var i = 0; i < list.length; i++) {
-          var pos = list[i];
+      let list = _.keys(this.vectors[mode][from]);
+      for (let i = 0; i < list.length; i++) {
+          let pos = list[i];
           if (this.vectors[mode][from][pos].level == phase) {
               this.addPhase(ix, from, pos, piece, phase, this.vectors[mode][from][pos].steps);
               if (this.vectorFound(ix, pos, to, piece, mode, phase + 1)) {
@@ -298,7 +298,7 @@ View2D.prototype.vectorFound = function(ix, from, to, piece, mode, phase) {
 View2D.prototype.movePiece = function(move, from, to, piece, phase, steps) {
   if (!phase) { phase = 1; }
   if (!steps) { steps = Dagaz.View.STEP_CNT; }
-  var ix = posToIx(this, from);
+  let ix = posToIx(this, from);
   if (!this.vectorFound(ix, from, to, piece, move.mode)) {
       if (!_.isUndefined(move.hints)) {
           _.each(move.hints, function(p) {
@@ -335,7 +335,7 @@ View2D.prototype.commit = function(move) {
      })
     .uniq()
     .each(function(phase) {
-       var steps = _.chain(this.changes)
+       let steps = _.chain(this.changes)
         .filter(function(frame) {
            return frame.phase == phase;
          })
@@ -356,17 +356,17 @@ View2D.prototype.commit = function(move) {
    this.invalidate();
 }
 
-var drawMarks = function(ctx, view, list, color) {
+let drawMarks = function(ctx, view, list, color) {
    _.each(list, function(p) {
-        var pos = this.pos[p];
-        var x = pos.x; var y = pos.y;
+        let pos = this.pos[p];
+        let x = pos.x; let y = pos.y;
         if (pos.dx > 0) {
             x += pos.dx / 2 | 0;
         }
         if (pos.dy > 0) {
             y += pos.dy / 2 | 0;
         }
-        var r = pos.dx / 4;
+        let r = pos.dx / 4;
         if (Math.abs(pos.dy - pos.dx) > 10) {
             r = Math.min(pos.dy, pos.dx) / 2;
         }
@@ -383,11 +383,11 @@ var drawMarks = function(ctx, view, list, color) {
 
 View2D.prototype.drawKo = function(ctx) {
    if (!_.isUndefined(this.piece["Ko"]) && (this.ko.length > 0)) {
-       var piece = this.piece["Ko"];
+       let piece = this.piece["Ko"];
        _.each(this.ko, function(pos) {
-          var p = this.pos[pos];
-          var x = ( p.x + (p.dx - piece.dx) / 2) | 0;
-          var y = ( p.y + (p.dy - piece.dy) / 2) | 0;
+          let p = this.pos[pos];
+          let x = ( p.x + (p.dx - piece.dx) / 2) | 0;
+          let y = ( p.y + (p.dy - piece.dy) / 2) | 0;
           if (!_.isUndefined(Dagaz.View.KO_ALPHA)) {
               ctx.save();
               ctx.globalAlpha = Dagaz.View.KO_ALPHA;
@@ -404,24 +404,24 @@ View2D.prototype.invalidate = function() {
    isValid = false;
 }
 
-var isCommitted = function(frame) {
+let isCommitted = function(frame) {
   return !_.isUndefined(frame.cnt);
 }
 
-var isDone = function(frame) {
+let isDone = function(frame) {
   return frame.cnt <= 0;
 }
 
-var isNotNull = function(x) {
+let isNotNull = function(x) {
   return !_.isUndefined(x) && (x !== null);
 }
 
 View2D.prototype.animate = function() {
-    var len = this.changes.length;
+    let len = this.changes.length;
     this.changes = _.filter(this.changes, function(frame) {
         return _.isUndefined(frame.done);
     });
-    var phase = _.chain(this.changes)
+    let phase = _.chain(this.changes)
      .map(function(frame) {
         return frame.phase;
       })
@@ -449,7 +449,7 @@ View2D.prototype.animate = function() {
    .filter(isCommitted)
    .each(function(frame) {
         if (!_.isUndefined(frame.op)) {
-            var piece = this.setup[frame.op];
+            let piece = this.setup[frame.op];
             if (piece) {
                 if (!_.isUndefined(frame.dx)) {
                     piece.x += frame.dx;
@@ -462,7 +462,7 @@ View2D.prototype.animate = function() {
         }
         frame.cnt--;
     }, this);
-  var captured = _.chain(this.changes)
+  let captured = _.chain(this.changes)
    .filter(function(frame) {
         return frame.phase == phase;
     })
@@ -498,7 +498,7 @@ View2D.prototype.animate = function() {
    .filter(isDone)
    .each(function(frame) {
         if (!_.isUndefined(frame.op) && !_.isUndefined(frame.to)) {
-            var piece = this.setup[frame.op];
+            let piece = this.setup[frame.op];
             if (piece) {
                 if (frame.np) {
                     piece.name = frame.np;
@@ -559,9 +559,9 @@ Dagaz.View.showMarks = function(view, ctx) {
 }
 
 Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
-  var isSaved = false;
-  var dx = 0;
-  var dy = 0;
+  let isSaved = false;
+  let dx = 0;
+  let dy = 0;
   if (_.indexOf(view.strike, pos) >= 0) {
       ctx.save();
       ctx.globalAlpha = Dagaz.View.STRIKE_ALPHA;
@@ -582,8 +582,8 @@ View2D.prototype.showDrops = function(ctx) {
       ctx.save();
       ctx.globalAlpha = Dagaz.View.DROPS_ALPHA;
       _.each(this.drops, function(f) {
-         var dx = (f.position.dx - f.piece.dx) / 2 | 0;
-         var dy = (f.position.dy - f.piece.dy) / 2 | 0;
+         let dx = (f.position.dx - f.piece.dx) / 2 | 0;
+         let dy = (f.position.dy - f.piece.dy) / 2 | 0;
          ctx.drawImage(f.piece.h, f.position.x + dx, f.position.y + dy, f.piece.dx, f.piece.dy);
       });
       ctx.restore();
@@ -599,7 +599,7 @@ View2D.prototype.configure = function() {
   if (!isConfigured) {
       Dagaz.View.configure(this);
       if (this.controller) {
-          var board = this.controller.getBoard();
+          let board = this.controller.getBoard();
           board.setup(this, true);
           this.controller.done();
       }
@@ -610,19 +610,19 @@ View2D.prototype.configure = function() {
 View2D.prototype.draw = function(canvas) {
   this.configure();
   if (this.allResLoaded() && !isValid) {
-      var ctx = canvas.getContext("2d");
+      let ctx = canvas.getContext("2d");
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       _.each(this.back, function(b) {
            if (!_.isUndefined(b.t)) {
-               var board = Dagaz.Controller.app.board;
+               let board = Dagaz.Controller.app.board;
                if (_.indexOf(b.t, board.turn) < 0) return;
            }
            ctx.drawImage(b.h, b.x, b.y);
       });
       _.chain(_.range(this.setup.length))
        .sortBy(function(ix) {
-           var piece = this.setup[ix];
-           var order = piece.pos;
+           let piece = this.setup[ix];
+           let order = piece.pos;
            if (piece.z > 0) {
                order += this.pos.length;
            }
@@ -632,9 +632,9 @@ View2D.prototype.draw = function(canvas) {
            return this.setup[ix];
         }, this)
        .each(function(p) {
-           var x = p.x; var y = p.y;
-           var pos = this.pos[p.pos];
-           var piece = this.piece[p.name];
+           let x = p.x; let y = p.y;
+           let pos = this.pos[p.pos];
+           let piece = this.piece[p.name];
            if (piece) {
                x += (pos.dx - piece.dx) / 2 | 0;
                y += (pos.dy - piece.dy) / 2 | 0;
@@ -650,7 +650,7 @@ View2D.prototype.draw = function(canvas) {
       this.showDrops(ctx);
       this.animate();
       if (!_.isUndefined(Dagaz.View.showBoard)) {
-           var board = this.controller.getBoard();
+           let board = this.controller.getBoard();
            Dagaz.View.showBoard(board, ctx);
       }
   }
@@ -663,13 +663,13 @@ View2D.prototype.debug = function(text) {
 
 Dagaz.View.showHint = function(view) {
   if (Dagaz.Model.showHints) {
-      var positions = view.pointToPositions(mouseX, mouseY);
+      let positions = view.pointToPositions(mouseX, mouseY);
       if (!_.isUndefined(positions) && (positions.length > 0)) {
-          var ix  = posToIx(view, positions[0]);
+          let ix  = posToIx(view, positions[0]);
           if (ix !== null) {
-              var piece = view.piece[view.setup[ix].name];
+              let piece = view.piece[view.setup[ix].name];
               if (hintedPiece !== piece) {
-                  var text = piece.name;
+                  let text = piece.name;
                   if (piece.help) {
                       text = piece.help;
                   }
@@ -686,16 +686,16 @@ Dagaz.View.showHint = function(view) {
   }
 }
 
-var mouseUpdate = function(event) {
-  var canvasRect = Canvas.getBoundingClientRect();
+let mouseUpdate = function(event) {
+  let canvasRect = Canvas.getBoundingClientRect();
   mouseX = event.clientX - canvasRect.left;
   mouseY = event.clientY - canvasRect.top;
 }
 
-var mouseMove = function(event) {
+let mouseMove = function(event) {
   mouseUpdate(event);
   Dagaz.View.showHint(self);
-  var pos = self.pointToPositions(mouseX, mouseY);
+  let pos = self.pointToPositions(mouseX, mouseY);
   if (pos && self.controller) {
       self.controller.mouseLocate(self, pos);
   }
@@ -703,8 +703,8 @@ var mouseMove = function(event) {
 
 Dagaz.View.PKM = function(view, positions) {}
 
-var mouseUp = function(event) { 
-  var pos = self.pointToPositions(mouseX, mouseY);
+let mouseUp = function(event) { 
+  let pos = self.pointToPositions(mouseX, mouseY);
   if (event.button == 2) return;
   if (pos && self.controller) {
       self.controller.mouseUp(self, pos);
@@ -712,18 +712,18 @@ var mouseUp = function(event) {
   mousePressed = false; 
 }
 
-var mouseDown = function(event) { 
+let mouseDown = function(event) { 
   if (event.button == 2) return;
   mousePressed = true; 
-  var pos = self.pointToPositions(mouseX, mouseY);
+  let pos = self.pointToPositions(mouseX, mouseY);
   if (pos && self.controller) {
       self.controller.mouseDown(self, pos);
   }
   event.preventDefault(); 
 }
 
-var mouseWheel = function(event) {
-  var delta = event.wheelDelta;
+let mouseWheel = function(event) {
+  let delta = event.wheelDelta;
   if (_.isUndefined(event.wheelDelta)) {
       delta = -event.deltaY;
   }
@@ -733,7 +733,7 @@ var mouseWheel = function(event) {
       self.controller.mouseWheel(self, 1);
   }
   mouseUpdate(event);
-  var pos = self.pointToPositions(mouseX, mouseY);
+  let pos = self.pointToPositions(mouseX, mouseY);
   if (pos && pos.length > 0) {
 	event.preventDefault();
   }
@@ -755,9 +755,9 @@ View2D.prototype.init = function(canvas, controller) {
 }
 
 document.oncontextmenu = function()  { 
-  var pos = self.pointToPositions(mouseX, mouseY);
+  let pos = self.pointToPositions(mouseX, mouseY);
   Dagaz.View.PKM(self, pos);
   return false; 
 }
 
-})();
+}

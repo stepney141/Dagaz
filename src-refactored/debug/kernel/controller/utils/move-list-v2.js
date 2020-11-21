@@ -1,4 +1,4 @@
-(function() {
+{
 
 function MoveList(board) {
   this.board    = board;
@@ -21,7 +21,7 @@ MoveList.prototype.isEmpty = function() {
   return this.moves.length == 0;
 }
 
-var getMaxPart = function(move) {
+let getMaxPart = function(move) {
   return _.chain(move.actions)
    .map(function(action) {
         return action[3];
@@ -29,7 +29,7 @@ var getMaxPart = function(move) {
 }
 
 MoveList.prototype.getMoves = function() {
-  var result = _.filter(this.moves, function(move) {
+  let result = _.filter(this.moves, function(move) {
      return getMaxPart(move) < this.level + 1;
   }, this);
   result = _.uniq(result, false, function(move) {
@@ -39,14 +39,14 @@ MoveList.prototype.getMoves = function() {
 }
 
 MoveList.prototype.isDone = function() {
-  var result = _.filter(this.moves, function(move) {
+  let result = _.filter(this.moves, function(move) {
      return getMaxPart(move) >= this.level + 1;
   }, this).length == 0;
   return result;
 }
 
 MoveList.prototype.canPass = function() {
-  var result = _.chain(this.moves).map(getMaxPart).min().value() <= this.level;
+  let result = _.chain(this.moves).map(getMaxPart).min().value() <= this.level;
   return result;
 }
 
@@ -56,27 +56,27 @@ MoveList.prototype.getActions = function(move) {
   }, this);
 }
 
-var isMove = function(action) {
+let isMove = function(action) {
   return (action[0] !== null) && (action[1] !== null);
 }
 
-var isNoMove = function(action) {
+let isNoMove = function(action) {
   return (action[0] === null) || (action[1] === null);
 }
 
-var isDrop = function(action) {
+let isDrop = function(action) {
   return (action[0] === null) && (action[1] !== null);
 }
 
-var isCapturing = function(action) {
+let isCapturing = function(action) {
   return (action[0] !== null) && (action[1] === null);
 }
 
 MoveList.prototype.getTargets = function() {
-  var result = [];
+  let result = [];
   if (this.position !== null) {
       _.each(this.moves, function(move) {
-          var actions = _.filter(this.getActions(move), isMove);
+          let actions = _.filter(this.getActions(move), isMove);
           if ((actions.length > 0) && (_.indexOf(actions[0][0], this.position) >= 0)) {
               _.each(actions[0][1], function(pos) {
                    result.push(pos);
@@ -89,9 +89,9 @@ MoveList.prototype.getTargets = function() {
 }
 
 MoveList.prototype.getStarts = function() {
-  var result = [];
+  let result = [];
   _.each(this.moves, function(move) {
-      var actions = _.filter(this.getActions(move), isMove);
+      let actions = _.filter(this.getActions(move), isMove);
       if (actions.length > 0) {
           _.each(actions[0][0], function(pos) {
                result.push(pos);
@@ -106,9 +106,9 @@ MoveList.prototype.getStops = function() {
   if (this.stops !== null) {
       return this.stops;
   }
-  var result = this.getTargets();
+  let result = this.getTargets();
   _.each(this.moves, function(move) {
-      var actions = _.filter(this.getActions(move), isMove);
+      let actions = _.filter(this.getActions(move), isMove);
       if ((actions.length == 0) || (actions[0][0].length > 1) || (actions[0][1].length > 1)) {
           _.chain(this.getActions(move))
            .filter(isNoMove)
@@ -127,10 +127,10 @@ MoveList.prototype.getStops = function() {
       }
   }, this);
   if (Dagaz.Model.smartFrom || Dagaz.Model.smartTo) {
-      var positions = [];
-      var canPass   = this.canPass();
+      let positions = [];
+      let canPass   = this.canPass();
       _.each(this.moves, function(move) {
-            var actions = _.filter(this.getActions(move), isMove);
+            let actions = _.filter(this.getActions(move), isMove);
             if (!canPass && (actions.length > 0) && (actions[0][0].length == 1) && Dagaz.Model.smartFrom) {
                 positions.push(actions[0][0][0]);
             }
@@ -151,9 +151,9 @@ MoveList.prototype.getStops = function() {
 }
 
 MoveList.prototype.getCaptures = function() {
-  var result = [];
+  let result = [];
   _.each(this.moves, function(move) {
-      var actions = _.filter(this.getActions(move), isMove);
+      let actions = _.filter(this.getActions(move), isMove);
       if (((actions.length > 0) && (_.indexOf(actions[0][0], this.position) >= 0)) ||
           ((actions.length == 0) && (this.position === null))) {
           _.chain(this.getActions(move))
@@ -170,9 +170,9 @@ MoveList.prototype.getCaptures = function() {
 }
 
 MoveList.prototype.getDrops = function() {
-  var result = [];
+  let result = [];
   _.each(this.moves, function(move) {
-      var actions = _.filter(this.getActions(move), isMove);
+      let actions = _.filter(this.getActions(move), isMove);
       if (actions.length == 0) {
           _.chain(this.getActions(move))
            .filter(isDrop)
@@ -187,7 +187,7 @@ MoveList.prototype.getDrops = function() {
 }
 
 MoveList.prototype.getDropPieces = function(pos) {
-  var result = null;
+  let result = null;
   _.each(this.moves, function(move) {
       _.each(move.actions, function(action) {
           if ((result === null) && (action[0] === null) && (action[1] !== null) && (action[1][0] == pos)) {
@@ -202,7 +202,7 @@ MoveList.prototype.filterDrops = function(moves, ix) {
   return moves;
 }
 
-var isEq = function(x, y) {
+let isEq = function(x, y) {
   if (x === null) return y === null;
   if (y === null) return false;
   return _.intersection(x, y).length > 0;
@@ -217,7 +217,7 @@ MoveList.prototype.copyActions = function(move, actions, mode, sound) {
           move.actions.push([ action[0], action[1], action[2], 1 ]);
       });
   } else {
-      var result = [];
+      let result = [];
       _.each(actions, function(action) {
           _.each(move.actions, function(a) {
                if (isEq(action[0], a[0]) && isEq(action[1], a[1])) {
@@ -231,7 +231,7 @@ MoveList.prototype.copyActions = function(move, actions, mode, sound) {
 
 MoveList.prototype.setPosition = function(pos) {
   if (Dagaz.Model.completePartial) {
-      var r = null;
+      let r = null;
       if (Dagaz.Model.smartFrom) {
           _.each(this.moves, function(move) {
               _.each(move.actions, function(a) {
@@ -257,11 +257,11 @@ MoveList.prototype.setPosition = function(pos) {
           return r;
       }
   }
-  var result = Dagaz.Model.createMove();
+  let result = Dagaz.Model.createMove();
   if (_.indexOf(this.getStops(), pos) >= 0) {
-      var moves = _.filter(this.moves, function(move) {
-          var actions = this.getActions(move);
-          var m = _.filter(actions, isMove);
+      let moves = _.filter(this.moves, function(move) {
+          let actions = this.getActions(move);
+          let m = _.filter(actions, isMove);
           if (m.length > 0) {
               if ((_.indexOf(m[0][0], this.position) >= 0) && (_.indexOf(m[0][1], pos) >= 0)) {
                   // Regular move
@@ -283,7 +283,7 @@ MoveList.prototype.setPosition = function(pos) {
                   return true;
               }
           } else {
-              var n = _.chain(actions)
+              let n = _.chain(actions)
                .filter(isNoMove)
                .filter(function(action) {
                    if ((action[0] !== null) && (_.indexOf(action[0], pos) >= 0)) {
@@ -321,4 +321,4 @@ MoveList.prototype.setPosition = function(pos) {
   return result;
 }
 
-})();
+}

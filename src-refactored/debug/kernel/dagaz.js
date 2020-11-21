@@ -1,4 +1,4 @@
-var Dagaz  = {
+const Dagaz  = {
   Model:      {},
   View:       {},
   AI:         {},

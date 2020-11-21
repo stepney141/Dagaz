@@ -1,8 +1,8 @@
-(function() {
+{
 
 Dagaz.Model.DETAIL_MOVE_DESCRIPTION = false;
 
-var sessionManager = null;
+let sessionManager = null;
 
 function SessionManager(controller) {
   this.controller = controller;
@@ -16,9 +16,9 @@ Dagaz.Controller.getSessionManager = function(controller) {
   return sessionManager;
 }
 
-var getName = function() {
-  var str = window.location.pathname.toString();
-  var result = str.match(/\/([^.\/]+)\./);
+let getName = function() {
+  let str = window.location.pathname.toString();
+  let result = str.match(/\/([^.\/]+)\./);
   if (result) {
       return result[1].replace("-board", "").replace("-ai", "");
   } else {
@@ -26,8 +26,8 @@ var getName = function() {
   }
 }
 
-var badName = function(str) {
-  var result = str.match(/[?&]game=([^&*]*)/);
+let badName = function(str) {
+  let result = str.match(/[?&]game=([^&*]*)/);
   if (result) {
       return result[1] != getName();
   } else {
@@ -35,8 +35,8 @@ var badName = function(str) {
   }
 }
 
-var getCookie = function() {
-  var result = localStorage.getItem('dagaz.session');
+let getCookie = function() {
+  let result = localStorage.getItem('dagaz.session');
   if (result) {
       if (badName(result)) return "";
       return "?session=" + result;
@@ -71,8 +71,8 @@ Dagaz.Model.playerToString = function(player) {
 }
 
 Dagaz.Model.moveToString = function(move) {
-  var r = "";
-  for (var i = 0; i < move.actions.length; i++) {
+  let r = "";
+  for (let i = 0; i < move.actions.length; i++) {
        if (move.actions[i][1] !== null) {
            if (r != "") {
                r = r + "-";
@@ -92,15 +92,15 @@ Dagaz.Model.moveToString = function(move) {
 
 SessionManager.prototype.save = function() {
   if (_.isUndefined(this.current) || _.isUndefined(this.current.board)) return null;
-  var states = [];
-  var board  = this.current.board;
+  let states = [];
+  let board  = this.current.board;
   while (board.parent !== null) {
       states.push(board);
       board = board.parent;
   }
-  var r = "(";
+  let r = "(";
   while (states.length > 0) {
-      var board = states.pop();
+      let board = states.pop();
       r = r + ";" + Dagaz.Model.playerToString(board.parent.player);
       r = r + "[" + Dagaz.Model.moveToString(board.move) + "]";
   }
@@ -110,7 +110,7 @@ SessionManager.prototype.save = function() {
 
 SessionManager.prototype.locateMove = function(board, notation) {
   board.generate(Dagaz.Model.getDesign());
-  for (var i = 0; i < board.moves.length; i++) {
+  for (let i = 0; i < board.moves.length; i++) {
        if (Dagaz.Model.moveToString(board.moves[i]) == notation) {
            return board.moves[i];
        }
@@ -120,16 +120,16 @@ SessionManager.prototype.locateMove = function(board, notation) {
 
 SessionManager.prototype.load = function(sgf) {
   if (_.isUndefined(Dagaz.Model.parseSgf)) return false;
-  var res = Dagaz.Model.parseSgf(sgf);
+  let res = Dagaz.Model.parseSgf(sgf);
   this.states = [];
   delete this.current;
-  var board = Dagaz.Model.getInitBoard();
+  let board = Dagaz.Model.getInitBoard();
   this.addState(Dagaz.Model.createMove(), board);
-  for (var i = 0; i < res.length; i++) {
-       var p = res[i].name;
+  for (let i = 0; i < res.length; i++) {
+       let p = res[i].name;
        if (p != Dagaz.Model.playerToString(board.player)) return false;
        if (res[i].arg.length != 1) return false;
-       var move = this.locateMove(board, res[i].arg[0]);
+       let move = this.locateMove(board, res[i].arg[0]);
        if (move === null) return false;
        board = board.apply(move);
        this.addState(move, board);
@@ -139,14 +139,14 @@ SessionManager.prototype.load = function(sgf) {
 }
 
 SessionManager.prototype.addState = function(move, board) {
-  var current = {
+  let current = {
       move:   move,
       board:  board,
       states: []
   };
   if (!_.isUndefined(this.current)) {
       current.parent = this.current;
-      for (var i = 0; i < this.current.states.length; i++) {
+      for (let i = 0; i < this.current.states.length; i++) {
            if (this.current.states[i].move.toString() == move.toString()) {
                this.current.current = this.current.states[i];
                this.current = this.current.states[i];
@@ -160,7 +160,7 @@ SessionManager.prototype.addState = function(move, board) {
   }
   this.current = current;
   if (Dagaz.Controller.persistense == "session") {
-      var str = Dagaz.Controller.getSessionManager().save();
+      let str = Dagaz.Controller.getSessionManager().save();
       if (str == "()") return;
       str = str + "&game=" + getName();
       localStorage.setItem('dagaz.session', str);
@@ -168,13 +168,13 @@ SessionManager.prototype.addState = function(move, board) {
 }
 
 Dagaz.Controller.addState = function(move, board) {  
-  var sm = Dagaz.Controller.getSessionManager();
+  let sm = Dagaz.Controller.getSessionManager();
   sm.addState(move, board);
   sm.updateButtons();
 }
 
 Dagaz.Controller.pushState = function(move, board) {
-  var sm = Dagaz.Controller.getSessionManager();
+  let sm = Dagaz.Controller.getSessionManager();
   if (!_.isUndefined(sm.current) && _.isUndefined(sm.current.current)) {
       board.generate();
       sm.current.current = {
@@ -189,17 +189,17 @@ Dagaz.Controller.pushState = function(move, board) {
 }
 
 Dagaz.Controller.noRedo = function() {
-  var sm = Dagaz.Controller.getSessionManager();
+  let sm = Dagaz.Controller.getSessionManager();
   return !_.isUndefined(sm.current) && _.isUndefined(sm.current.current);
 }
 
-var noMoves = function(board) {
+let noMoves = function(board) {
   if (!_.isUndefined(Dagaz.Controller.skip)) {
       if (Dagaz.Controller.skip(board)) {
           return true;
       }
   }
-  for (var ix = 0; ix < board.moves.length; ix++) {
+  for (let ix = 0; ix < board.moves.length; ix++) {
        if (!board.moves[ix].isPass()) return false;
   }
   return true;
@@ -212,18 +212,18 @@ SessionManager.prototype.redo = function(board) {
   return this.current.board;
 }
 
-var isRandom = function(board) {
-  var design = Dagaz.Model.getDesign();
+let isRandom = function(board) {
+  let design = Dagaz.Model.getDesign();
   if (_.isUndefined(design.turns)) return false;
   if (_.isUndefined(design.turns[board.turn])) return false;
   return design.turns[board.turn].random;
 }
 
 Dagaz.Controller.redo = function() {
-  var sm = Dagaz.Controller.getSessionManager();
+  let sm = Dagaz.Controller.getSessionManager();
   if (_.isUndefined(sm.current) || !sm.controller.isReady()) return;
-  var current = sm.current;
-  var board   = sm.redo();
+  let current = sm.current;
+  let board   = sm.redo();
   if (board === null) return;
   if (!_.isUndefined(sm.controller.setMove) && Dagaz.Model.animateRedo && sm.current && !sm.current.current) {
       sm.controller.setMove(board.move);
@@ -231,7 +231,7 @@ Dagaz.Controller.redo = function() {
       if (_.isUndefined(sm.controller.setBoard)) return;
       while ((sm.aiPresent() && (board.player != current.board.player) && sm.current.current) || noMoves(board) || isRandom(board)) {
          if (_.isUndefined(sm.current.current)) break;
-         var b = sm.redo();
+         let b = sm.redo();
          if (b === null) {
              sm.current = current;
              return;
@@ -254,13 +254,13 @@ SessionManager.prototype.undo = function() {
 }
 
 Dagaz.Controller.undo = function() {
-  var sm = Dagaz.Controller.getSessionManager();
+  let sm = Dagaz.Controller.getSessionManager();
   if (_.isUndefined(sm.current) || _.isUndefined(sm.controller.setBoard) || !sm.controller.isReady()) return;
-  var current = sm.current;
-  var board   = sm.undo();
+  let current = sm.current;
+  let board   = sm.undo();
   if (board !== null) {
       while ((sm.aiPresent() && (board.player != current.board.player) && board.parent) || noMoves(board) || isRandom(board)) {
-         var b = sm.undo();
+         let b = sm.undo();
          if (b === null) {
              sm.current = current;
              return;
@@ -275,7 +275,7 @@ Dagaz.Controller.undo = function() {
   sm.updateButtons();
 }
 
-var clearGame = Dagaz.Controller.clearGame;
+let clearGame = Dagaz.Controller.clearGame;
 
 Dagaz.Controller.clearGame = function() {
    localStorage.setItem('dagaz.session', '');
@@ -285,13 +285,13 @@ Dagaz.Controller.clearGame = function() {
 }
 
 Dagaz.Model.load = function(board) {
-  var str = getCookie();
-  var result = str.match(/session=([^&]*)/);
+  let str = getCookie();
+  let result = str.match(/session=([^&]*)/);
   if (result) {
-      var sm = Dagaz.Controller.getSessionManager();
+      let sm = Dagaz.Controller.getSessionManager();
       sm.load(result[1]);
       sm.updateButtons();
   }
 }
 
-})();
+}

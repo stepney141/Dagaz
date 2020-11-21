@@ -1,4 +1,4 @@
-(function() {
+{
 
 getRandomByte = function() {
   return _.random(0, 255);
@@ -10,8 +10,8 @@ function ZobristHash() {
 }
 
 ZobristHash.prototype.getRandomValue = function() {
-  var r = getRandomByte();
-  for (var i = 0; i < 3; i++) {
+  let r = getRandomByte();
+  for (let i = 0; i < 3; i++) {
       r = r << 8;
       r = r | getRandomByte();
   }
@@ -70,23 +70,23 @@ Dagaz.Model.getPieceType = function(piece) {
 }
 
 Dagaz.Model.zupdate = function(value, piece, pos) {
-  var z = Dagaz.Model.getZobristHash();
+  let z = Dagaz.Model.getZobristHash();
   return z.update(value, piece.player, Dagaz.Model.getPieceType(piece), pos);
 }
 
 Dagaz.Model.hupdate = function(value, piece, pos) {
-  var z = Dagaz.Model.getZobristHash();
+  let z = Dagaz.Model.getZobristHash();
   return z.hpdate(value, piece.player, Dagaz.Model.getPieceType(piece), pos);
 }
 
 Dagaz.Model.zplayer = function(value, player) {
-  var z = Dagaz.Model.getZobristHash();
+  let z = Dagaz.Model.getZobristHash();
   return z.zplayer(value, player);
 }
 
 Dagaz.Model.hplayer = function(value, player) {
-  var z = Dagaz.Model.getZobristHash();
+  let z = Dagaz.Model.getZobristHash();
   return z.hplayer(value, player);
 }
 
-})();
+}

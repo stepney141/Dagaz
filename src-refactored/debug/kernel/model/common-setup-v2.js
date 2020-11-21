@@ -1,10 +1,10 @@
-(function() {
+{
 
 Dagaz.Controller.persistense = "setup";
 
-var getName = function() {
-  var str = window.location.pathname.toString();
-  var result = str.match(/\/([^.\/]+)\./);
+let getName = function() {
+  let str = window.location.pathname.toString();
+  let result = str.match(/\/([^.\/]+)\./);
   if (result) {
       return result[1].replace("-board", "").replace("-ai", "").replace("-kanji", "");
   } else {
@@ -12,8 +12,8 @@ var getName = function() {
   }
 }
 
-var badName = function(str) {
-  var result = str.match(/[?&]game=([^&*]*)/);
+let badName = function(str) {
+  let result = str.match(/[?&]game=([^&*]*)/);
   if (result) {
       return result[1] != getName();
   } else {
@@ -21,8 +21,8 @@ var badName = function(str) {
   }
 }
 
-var getCookie = function() {
-  var result = localStorage.getItem('dagaz.setup');
+let getCookie = function() {
+  let result = localStorage.getItem('dagaz.setup');
   if (result) {
       if (badName(result)) return "";
       return "?setup=" + result;
@@ -31,12 +31,12 @@ var getCookie = function() {
   }
 }
 
-var getSetup = function(setup) {
-  var str = window.location.search.toString();
+let getSetup = function(setup) {
+  let str = window.location.search.toString();
   if (setup) {
       str = setup;
   }
-  var result = str.match(/[?&]setup=([^&]*)/);
+  let result = str.match(/[?&]setup=([^&]*)/);
   if (result) {
       return result[1];
   } else {
@@ -50,12 +50,12 @@ var getSetup = function(setup) {
   }
 }
 
-var getTurn = function(setup) {
-  var str = window.location.search.toString();
+let getTurn = function(setup) {
+  let str = window.location.search.toString();
   if (setup) {
       str = setup;
   }
-  var result = str.match(/[?&]turn=(\d+)/);
+  let result = str.match(/[?&]turn=(\d+)/);
   if (result) {
       return result[1];
   } else {
@@ -69,12 +69,12 @@ var getTurn = function(setup) {
   }
 }
 
-var getSeed = function(setup) {
-  var str = window.location.search.toString();
+let getSeed = function(setup) {
+  let str = window.location.search.toString();
   if (setup) {
       str = setup;
   }
-  var result = str.match(/[?&]seed=(\d+)/);
+  let result = str.match(/[?&]seed=(\d+)/);
   if (result) {
       return result[1];
   } else {
@@ -88,12 +88,12 @@ var getSeed = function(setup) {
   }
 }
 
-var getReserve = function(setup) {
-  var str = window.location.search.toString();
+let getReserve = function(setup) {
+  let str = window.location.search.toString();
   if (setup) {
       str = setup;
   }
-  var result = str.match(/[?&]reserve=([,;\d]+)/);
+  let result = str.match(/[?&]reserve=([,;\d]+)/);
   if (result) {
       return result[1];
   } else {
@@ -107,12 +107,12 @@ var getReserve = function(setup) {
   }
 }
 
-var getGlobal = function(setup) {
-  var str = window.location.search.toString();
+let getGlobal = function(setup) {
+  let str = window.location.search.toString();
   if (setup) {
       str = setup;
   }
-  var result = str.match(/[?&]global=([;\d]+)/);
+  let result = str.match(/[?&]global=([;\d]+)/);
   if (result) {
       return result[1];
   } else {
@@ -130,7 +130,7 @@ function Pattern(exec) {
     this.exec = exec;
     this.then = function (transform) {
         return new Pattern(function (str, pos) {
-            var r = exec(str, pos);
+            let r = exec(str, pos);
             return r && { res: transform(r.res), end: r.end };
         });
     };
@@ -145,7 +145,7 @@ function txt(text) {
 
 function rgx(regexp) {
     return new Pattern(function (str, pos) {
-        var m = regexp.exec(str.slice(pos));
+        let m = regexp.exec(str.slice(pos));
         if (m && m.index == 0)
             return { res: m[0], end: pos + m[0].length };
     });
@@ -159,7 +159,7 @@ function opt(pattern) {
 
 function seq(patterns) {
     return new Pattern(function (str, pos) {
-        var i, r, end = pos, res = [];
+        let i, r, end = pos, res = [];
         for (i = 0; i < patterns.length; i++) {
             r = patterns[i].exec(str, end);
             if (!r) return;
@@ -171,10 +171,10 @@ function seq(patterns) {
 }
 
 function rep(pattern, separator) {
-    var separated = !separator ? pattern :
+    let separated = !separator ? pattern :
         seq([separator, pattern]).then(function(r) {return r[1];});
     return new Pattern(function (str, pos) {
-        var res = [], end = pos, r = pattern.exec(str, end);
+        let res = [], end = pos, r = pattern.exec(str, end);
         while (r && r.end > end) {
             res.push(r.res);
             end = r.end;
@@ -184,18 +184,18 @@ function rep(pattern, separator) {
     });
 }
 
-var num  = rgx(/-?\d+/);
-var str  = rgx(/[^=;+]+/);
+let num  = rgx(/-?\d+/);
+let str  = rgx(/[^=;+]+/);
 
-var attr = seq([
+let attr = seq([
     txt('='), str
 ]).then(function(r) {return r[1];});
 
-var quan = seq([
+let quan = seq([
     txt('+'), num
 ]).then(function(r) {return r[1];});
 
-var parm = seq([
+let parm = seq([
     num, txt(':'), num, opt(rep(attr))
 ]).then(function(r) {return {
     type:   r[0],
@@ -203,44 +203,44 @@ var parm = seq([
     attrs:  r[3]
 };});
 
-var term = seq([
+let term = seq([
     opt(parm), opt(quan), txt(';')
 ]).then(function(r) {return {
     body:   r[0],
     quan:   r[1]
 };});
 
-var conf = rep(term);
+let conf = rep(term);
 
 Dagaz.Model.setup = function(board, init) {
-  var design = Dagaz.Model.design;
-  var setup  = getSetup(init);
+  let design = Dagaz.Model.design;
+  let setup  = getSetup(init);
   if (setup) {
-      var r = conf.exec(setup, 0);
+      let r = conf.exec(setup, 0);
       if (r.end > 0) {
-          var pos = 0;
-          for (var ix = 0; ix < r.res.length; ix++, pos++) {
+          let pos = 0;
+          for (let ix = 0; ix < r.res.length; ix++, pos++) {
               if (pos >= design.positions.length) break;
-              var piece = null;
+              let piece = null;
               if ((ix < r.res.length) && !_.isUndefined(r.res[ix].body)) {
-                  var type = r.res[ix].body.type;
-                  var player = r.res[ix].body.player;
+                  let type = r.res[ix].body.type;
+                  let player = r.res[ix].body.player;
                   piece = Dagaz.Model.createPiece(type, player);
-                  for (var i = 0; i < r.res[ix].body.attrs.length; i++) {
+                  for (let i = 0; i < r.res[ix].body.attrs.length; i++) {
                        piece = piece.setValue(i, r.res[ix].body.attrs[i]);
                   }
               }
               board.setPiece(pos, piece);
               if (!_.isUndefined(r.res[ix].quan)) {
-                  var cnt = +r.res[ix].quan;
-                  for (var i = 0; i < cnt; i++) {
+                  let cnt = +r.res[ix].quan;
+                  for (let i = 0; i < cnt; i++) {
                        pos++;
                        if (pos >= design.positions.length) break;
                        board.setPiece(pos, piece);
                   }
               }
           }
-          var turn = getTurn(init);
+          let turn = getTurn(init);
           if (turn) {
               board.turn   = +turn;
               board.player = design.currPlayer(board.turn);
@@ -250,11 +250,11 @@ Dagaz.Model.setup = function(board, init) {
                   board.reserve[t][p] = 0;
               });
           });
-          var rs = getReserve(init);
+          let rs = getReserve(init);
           if (rs) {
               Dagaz.Model.setReserve(design, board, rs);
           }
-          var g = getGlobal(init);
+          let g = getGlobal(init);
           if (g) {
               Dagaz.Model.setGlobal(design, board, g);
           }
@@ -263,11 +263,11 @@ Dagaz.Model.setup = function(board, init) {
 }
 
 Dagaz.Model.getGlobal = function(design, board) {
-  var r = "";
-  var k = _.keys(board.values);
+  let r = "";
+  let k = _.keys(board.values);
   if (k.length > 0) {
-     for (var i = 0; i <= _.max(k); i++) {
-          var v = board.getValue(i);
+     for (let i = 0; i <= _.max(k); i++) {
+          let v = board.getValue(i);
           if (v !== null) {
               r = r + v;
           }
@@ -278,8 +278,8 @@ Dagaz.Model.getGlobal = function(design, board) {
 }
 
 Dagaz.Model.setGlobal = function(design, board, str) {
-  var ix = 0; var n = null;
-  for (var i = 0; i < str.length; i++) {
+  let ix = 0; let n = null;
+  for (let i = 0; i < str.length; i++) {
        if (str[i] == ';') {
            if (n !== null) {
                board.setValue(ix, n);
@@ -298,8 +298,8 @@ Dagaz.Model.setGlobal = function(design, board, str) {
 }
 
 Dagaz.Model.getReserve = function(design, board) {
-  var r = "";
-  for (var o = 1; o < design.playerNames.length; o++) {
+  let r = "";
+  for (let o = 1; o < design.playerNames.length; o++) {
        if (r != "") r = r + ";";
        _.each(_.keys(design.pieceNames), function(t) {
            if (_.isUndefined(board.reserve[t])) return;
@@ -315,8 +315,8 @@ Dagaz.Model.getReserve = function(design, board) {
 
 Dagaz.Model.setReserve = function(design, board, str) {
   design.reserve = [];
-  var o = 1; var t = 0; var n = 0;
-  for (var i = 0; i < str.length; i++) {
+  let o = 1; let t = 0; let n = 0;
+  for (let i = 0; i < str.length; i++) {
        if (str[i] == ';') {
            o++;
            t = 0;
@@ -335,14 +335,14 @@ Dagaz.Model.setReserve = function(design, board, str) {
 }
 
 Dagaz.Model.getSetup = function(design, board) {
-  var str = ""; var prev = null; var cnt = 0;
+  let str = ""; let prev = null; let cnt = 0;
   _.each(design.allPositions(), function(pos) {
-      var piece = board.getPiece(pos);
-      var s = "";
+      let piece = board.getPiece(pos);
+      let s = "";
       if (piece !== null) {
           s = s + piece.type + ":" + piece.player;
-          for (var i = 0; i < 10; i++) {
-               var value = piece.getValue(i);
+          for (let i = 0; i < 10; i++) {
+               let value = piece.getValue(i);
                if (value === null) break;
                s = s + "=" + value;
           }
@@ -366,11 +366,11 @@ Dagaz.Model.getSetup = function(design, board) {
       str = str + "+" + cnt;
   }
   str = str + ";&turn=" + board.turn;
-  var rs = Dagaz.Model.getReserve(design, board);
+  let rs = Dagaz.Model.getReserve(design, board);
   if (rs != "") {
       str = str + "&reserve=" + rs;
   }
-  var g = Dagaz.Model.getGlobal(design, board);
+  let g = Dagaz.Model.getGlobal(design, board);
   if (g != "") {
       str = str + "&global=" + g;
   }
@@ -378,13 +378,13 @@ Dagaz.Model.getSetup = function(design, board) {
       str = str + "&seed=" + Dagaz.Controller.seed;
   }
   if (Dagaz.Controller.persistense == "setup") {
-      var s = str + "&game=" + getName() + "*";
+      let s = str + "&game=" + getName() + "*";
       localStorage.setItem('dagaz.setup', s);
   }
   return "?setup=" + str;
 }
 
-var getSetupSelector = Dagaz.Model.getSetupSelector;
+let getSetupSelector = Dagaz.Model.getSetupSelector;
 
 Dagaz.Model.getSetupSelector = function(val) {
   if (Dagaz.Controller.randomized && _.isUndefined(Dagaz.Controller.seed)) {
@@ -398,7 +398,7 @@ Dagaz.Model.getSetupSelector = function(val) {
   return getSetupSelector(val);
 }
 
-var clearGame = Dagaz.Controller.clearGame;
+let clearGame = Dagaz.Controller.clearGame;
 
 Dagaz.Controller.clearGame = function() {
    localStorage.setItem('dagaz.setup', '');
@@ -407,4 +407,4 @@ Dagaz.Controller.clearGame = function() {
    }
 }
 
-})();
+}

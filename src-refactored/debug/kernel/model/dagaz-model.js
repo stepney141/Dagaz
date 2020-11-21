@@ -1,4 +1,4 @@
-(function() {
+{
 
 games = {
   model: {
@@ -16,7 +16,7 @@ function TMove(mode) {
 }
 
 TMove.prototype.copy = function() {
-  var r = new TMove(this.mode);
+  let r = new TMove(this.mode);
   _.each(this.actions, function(a) {
       r.actions.push(a);
   });
@@ -24,7 +24,7 @@ TMove.prototype.copy = function() {
 }
 
 TMove.prototype.clone = function(part) {
-  var r = new TMove(this.mode);
+  let r = new TMove(this.mode);
   _.each(this.actions, function(a) {
       if ((a[0] !== null) && (a[1] !== null) && (a[3] == part)) return;
       r.actions.push(a);
@@ -33,9 +33,9 @@ TMove.prototype.clone = function(part) {
 }
 
 TMove.prototype.toString = function(design) {
-  var r = ""; var p = null;
-  for (var i = 0; i < this.actions.length; i++) {
-       var a = this.actions[i];
+  let r = ""; let p = null;
+  for (let i = 0; i < this.actions.length; i++) {
+       let a = this.actions[i];
        if ((a[0] !== null) && (a[1] !== null)) {
            if ((p === null) || (p != a[0])) {
                 if (r != "") r = r + " ";
@@ -107,7 +107,7 @@ function TMoveContext(design, board, pos, piece) {
 }
 
 TMoveContext.prototype.copy = function() {
-  var r = new TMoveContext(this.design, this.board, this.pos, this.piece);
+  let r = new TMoveContext(this.design, this.board, this.pos, this.piece);
   r.parent = this;
   r.part   = this.part + 1;
   r.move   = this.move.copy();
@@ -123,7 +123,7 @@ TMoveContext.prototype.setPiece = function(pos, piece) {
 }
 
 TMoveContext.prototype.getPiece = function(pos) {
-  for (var i = 0; i < this.changes.length; i++) {
+  for (let i = 0; i < this.changes.length; i++) {
       if (this.changes[i].p == pos) return this.changes[i].x;
   }
   if (this.parent !== null) {
@@ -171,26 +171,26 @@ TMoveContext.prototype.getParam = function(params, ix) {
 }
 
 TMoveContext.prototype.go = function(params, ix) {
-  var dir = this.getParam(params, ix);
+  let dir = this.getParam(params, ix);
   if (dir === null) return false;
-  var player = this.board.player;
+  let player = this.board.player;
   if (!_.isUndefined(this.hand)) {
       player = this.hand.piece.player;
   }
-  var p = this.design.navigate(player, this.pos, dir);
+  let p = this.design.navigate(player, this.pos, dir);
   if (p === null) return false;
   this.pos = p;
   return true;
 }
 
 TMoveContext.prototype.opposite = function(params, ix) {
-  var dir = this.getParam(params, ix);
+  let dir = this.getParam(params, ix);
   if (dir === null) return null;
   return this.design.opposite(dir);
 }
 
 TMoveContext.prototype.isLastFrom = function(params, ix) {
-  var pos = this.getParam(params, ix);
+  let pos = this.getParam(params, ix);
   if (pos === null) {
       pos = this.pos;
   }
@@ -202,8 +202,8 @@ TMoveContext.prototype.isLastFrom = function(params, ix) {
 
 TMoveContext.prototype.isEmpty = function() {
   if (games.model.deferredCaptures) {
-      for (var i = 0; i < this.move.actions.length; i++) {
-           var a = this.move.actions[i];
+      for (let i = 0; i < this.move.actions.length; i++) {
+           let a = this.move.actions[i];
            if ((a[0] !== null) && (a[1] === null) && (a[0] == this.pos)) return false;
       }
   }
@@ -211,31 +211,31 @@ TMoveContext.prototype.isEmpty = function() {
 }
 
 TMoveContext.prototype.isEnemy = function() {
-  var piece = this.getPiece(this.pos);
+  let piece = this.getPiece(this.pos);
   if (piece === null) return false;
   return piece.player != this.board.player;
 }
 
 TMoveContext.prototype.isFriend = function() {
-  var piece = this.getPiece(this.pos);
+  let piece = this.getPiece(this.pos);
   if (piece === null) return false;
   return piece.player == this.board.player;
 }
 
 TMoveContext.prototype.isPiece = function(params, ix) {
-  var t = this.getParam(params, ix);
+  let t = this.getParam(params, ix);
   if (t === null) {
       return !this.isEmpty();
   }
-  var piece = this.getPiece(this.pos);
+  let piece = this.getPiece(this.pos);
   if (piece === null) return false;
   return piece.type == t;
 }
 
 TMoveContext.prototype.inZone = function(params, ix) {
-  var zone = this.getParam(params, ix);
+  let zone = this.getParam(params, ix);
   if (zone === null) return null;
-  var player = this.board.player;
+  let player = this.board.player;
   if (!_.isUndefined(this.hand)) {
       player = this.hand.piece.player;
   }
@@ -244,7 +244,7 @@ TMoveContext.prototype.inZone = function(params, ix) {
 
 TMoveContext.prototype.promote = function(params, ix) {
   if (_.isUndefined(this.hand)) return false;
-  var type = this.getParam(params, ix);
+  let type = this.getParam(params, ix);
   if (type === null) return false;
   this.hand.piece = this.hand.piece.promote(type);
   return true;
@@ -256,12 +256,12 @@ TMoveContext.prototype.capture = function() {
 }
 
 TMoveContext.prototype.end = function(params, ix) {
-  var hand = this.hand;
+  let hand = this.hand;
   this.put();
   this.mode = this.getParam(params, ix);
   if (this.succeed) {
       if (this.mode !== null) {
-          var ctx = this.copy();
+          let ctx = this.copy();
           this.board.forks.push(ctx);
       } else {
           this.board.moves.push(this.move);
@@ -287,10 +287,10 @@ TPiece.prototype.getValue = function(ix) {
 }
 
 TPiece.prototype.setValue = function(ix, value) {
-  var v = this.getValue(ix);
+  let v = this.getValue(ix);
   if ((v === null) && (value === null)) return this;
   if ((v !== null) && (value !== null) && (v == value)) return this;
-  var r = new TPiece(this.type, this.player);
+  let r = new TPiece(this.type, this.player);
   if (_.isUndefined(r.values)) {
       r.values = [];
   }
@@ -326,7 +326,7 @@ function TBoard(design) {
 }
 
 TBoard.prototype.copy = function() {
-  var r = new TBoard(this.design);
+  let r = new TBoard(this.design);
   r.parent = this;
   r.turn   = this.turn;
   r.player = this.player;
@@ -377,11 +377,11 @@ TBoard.prototype.setPiece = function(pos, piece) {
 }
 
 TBoard.prototype.completeMove = function(parent) {
-  var r = false;
+  let r = false;
   _.each(this.design.moves, function(t) {
       if (t.t != parent.piece.type) return;
       if (t.m != parent.mode) return;
-      var ctx = parent.copy();
+      let ctx = parent.copy();
       ctx.hand = {
           start: parent.pos,
           piece: parent.piece
@@ -399,21 +399,21 @@ TBoard.prototype.generate = function() {
   if (_.isUndefined(this.moves)) {
       this.forks = [];
       this.moves = [];
-      var groups = _.groupBy(this.design.moves, function(t) {
+      let groups = _.groupBy(this.design.moves, function(t) {
           if (this.design.modes.length == 0) return 0;
           return _.indexOf(this.design.modes, t.m);
       }, this);
-      var cnt = this.design.modes.length;
+      let cnt = this.design.modes.length;
       if (cnt == 0) cnt = 1;
-      for (var i = 0; i < cnt; i++) {
-           var completed = false;
+      for (let i = 0; i < cnt; i++) {
+           let completed = false;
            _.each(this.design.allPositions(), function(pos) {
-               var piece = this.getPiece(pos);
+               let piece = this.getPiece(pos);
                if (piece === null) return;
                if (!games.model.sharedPieces && (piece.player != this.player)) return;
                _.each(groups[i], function(t) {
                   if (t.t != piece.type) return;
-                  var ctx = new TMoveContext(this.design, this, pos, piece);
+                  let ctx = new TMoveContext(this.design, this, pos, piece);
                   ctx.move.mode = t.m;
                   ctx.take(); ctx.setPiece(pos, null);
                   t.f(ctx, t.p);
@@ -424,9 +424,9 @@ TBoard.prototype.generate = function() {
            }, this);
            if (completed) break;
       }
-      for (var i = 0; i < this.forks.length; i++) {
-           var ctx = this.forks[i];
-           var f = true;
+      for (let i = 0; i < this.forks.length; i++) {
+           let ctx = this.forks[i];
+           let f = true;
            if (this.completeMove(ctx)) f = false;
            if (games.model.passPartial || f) {
                this.moves.push(ctx.move);
@@ -443,7 +443,7 @@ TBoard.prototype.generate = function() {
 }
 
 TBoard.prototype.apply = function(move) {
-  var r = this.copy();
+  let r = this.copy();
   r.turn = r.design.nextTurn(this);
   r.player = r.design.currPlayer(r.turn);
   move.applyTo(r);
@@ -498,7 +498,7 @@ TDesign.prototype.posToString = function(pos) {
 }
 
 TDesign.prototype.stringToPos = function(name) {
-   var pos = _.indexOf(this.positionNames, name);
+   let pos = _.indexOf(this.positionNames, name);
    if (pos < 0) return null;
    return pos;
 }
@@ -508,7 +508,7 @@ TDesign.prototype.addDirection = function(name) {
 }
 
 TDesign.prototype.addPlayer = function(name, symmetry) {
-  var ix = this.playerNames.length;
+  let ix = this.playerNames.length;
   if (this.playerNames.length == 0) {
       this.playerNames.push("opposite");
   }
@@ -546,7 +546,7 @@ TDesign.prototype.addPosition = function(name, dirs) {
 }
 
 TDesign.prototype.addZone = function(name, player, positions) {
-  var zone = _.indexOf(this.zoneNames, name);
+  let zone = _.indexOf(this.zoneNames, name);
   if (zone < 0) {
       zone = this.zoneNames.length;
       this.zoneNames.push(name);
@@ -569,7 +569,7 @@ TDesign.prototype.addPiece = function(name, type, price) {
 }
 
 TDesign.prototype.getPieceType = function(name) {
-  var r = _.indexOf(this.pieceNames, name);
+  let r = _.indexOf(this.pieceNames, name);
   if (r < 0) return null;
   return r;
 }
@@ -598,10 +598,10 @@ TDesign.prototype.getInitBoard = function() {
 }
 
 TDesign.prototype.setup = function(player, type, positions) {
-  var t = _.indexOf(this.pieceNames, type);
-  var p = _.indexOf(this.playerNames, player);
+  let t = _.indexOf(this.pieceNames, type);
+  let p = _.indexOf(this.playerNames, player);
   if ((t < 0) || (p < 0)) return;
-  var piece = new TPiece(t, p);
+  let piece = new TPiece(t, p);
   if (!_.isArray(positions)) {
       positions = [positions];
   }
@@ -630,7 +630,7 @@ TDesign.prototype.allPositions = function() {
 }
 
 TDesign.prototype.getDirection = function(name) {
-  var dir = _.indexOf(this.dirs, name);
+  let dir = _.indexOf(this.dirs, name);
   if (dir < 0) {
       return null;
   }
@@ -656,7 +656,7 @@ TDesign.prototype.opposite = function(dir, player) {
 }
 
 TDesign.prototype.getZone = function(name) {
-  var zone = _.indexOf(this.zoneNames, name);
+  let zone = _.indexOf(this.zoneNames, name);
   if (zone < 0) return null;
   return zone;
 }
@@ -679,7 +679,7 @@ TDesign.prototype.nextPlayer = function(player) {
 }
 
 TDesign.prototype.nextTurn = function(board) {
-  var turn = board.turn + 1;
+  let turn = board.turn + 1;
   if (_.isUndefined(this.turns)) {
       if (turn >= this.players.length - 1) {
           turn = 0;
@@ -706,4 +706,4 @@ TDesign.prototype.currPlayer = function(turn) {
   }
 }
 
-})();
+}
