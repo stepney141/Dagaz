@@ -1,0 +1,579 @@
+(define step (
+  $1 (verify empty?)
+  add
+))
+
+(define jump-king (
+  $1 (verify enemy?)
+  capture
+  $1 (verify empty?)
+  (add-partial jump-type)
+))
+
+(define jump-prince (
+  $1 (verify enemy?)
+  (verify (not-piece? King))
+  capture
+  $1 (verify empty?)
+  (add-partial jump-type)
+))
+
+(define jump-man (
+  $1 (verify enemy?)
+  (verify (not-piece? King))
+  (verify (not-piece? Prince))
+  capture
+  $1 (verify empty?)
+  (add-partial jump-type)
+))
+
+(game
+  (title "Dablot Prejjesne")
+
+  (move-sound "Audio\Pickup.wav")
+  (release-sound "Audio\Pickup.wav")
+  (capture-sound "")
+  (drop-sound "")
+
+  (option "animate captures"  false)
+  (option "smart moves"       true)
+  (option "dablot-extension"  true)
+  (option "dablot-invariant"  true)
+
+  (players Black White)
+  (turn-order Black White)
+  (move-priorities jump-type normal-type)
+
+  (board
+     (image "images/dablot/prejjesne.bmp")
+     (grid
+        (start-rectangle 5 5 64 64)
+        (dimensions
+           ("a/b/c/d/e/f" (88 0)) ; files
+           ("13/11/9/7/5/3/1" (0 88)) ; ranks
+        )
+        (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0))
+     )
+     (grid
+        (start-rectangle 48 48 107 107)
+        (dimensions
+           ("a/b/c/d/e" (88 0)) ; files
+           ("12/10/8/6/4/2" (0 88)) ; ranks
+        )
+     )
+     (links ne
+        (a1 a2) (a3 a4) (a5 a6) (a7 a8) (a9 a10) (a11 a12)
+        (b1 b2) (b3 b4) (b5 b6) (b7 b8) (b9 b10) (b11 b12)
+        (c1 c2) (c3 c4) (c5 c6) (c7 c8) (c9 c10) (c11 c12)
+        (d1 d2) (d3 d4) (d5 d6) (d7 d8) (d9 d10) (d11 d12)
+        (e1 e2) (e3 e4) (e5 e6) (e7 e8) (e9 e10) (e11 e12)
+        (a2 b3) (a4 b5) (a6 b7) (a8 b9) (a10 b11) (a12 b13)
+        (b2 c3) (b4 c5) (b6 c7) (b8 c9) (b10 c11) (b12 c13)
+        (c2 d3) (c4 d5) (c6 d7) (c8 d9) (c10 d11) (c12 d13)
+        (d2 e3) (d4 e5) (d6 e7) (d8 e9) (d10 e11) (d12 e13)
+        (e2 f3) (e4 f5) (e6 f7) (e8 f9) (e10 f11) (e12 f13)
+     )
+     (links sw
+        (a2 a1) (a4 a3) (a6 a5) (a8 a7) (a10 a9) (a12 a11)
+        (b2 b1) (b4 b3) (b6 b5) (b8 b7) (b10 b9) (b12 b11)
+        (c2 c1) (c4 c3) (c6 c5) (c8 c7) (c10 c9) (c12 c11)
+        (d2 d1) (d4 d3) (d6 d5) (d8 d7) (d10 d9) (d12 d11)
+        (e2 e1) (e4 e3) (e6 e5) (e8 e7) (e10 e9) (e12 e11)
+        (b3 a2) (b5 a4) (b7 a6) (b9 a8) (b11 a10) (b13 a12)
+        (c3 b2) (c5 b4) (c7 b6) (c9 b8) (c11 b10) (c13 b12)
+        (d3 c2) (d5 c4) (d7 c6) (d9 c8) (d11 c10) (d13 c12)
+        (e3 d2) (e5 d4) (e7 d6) (e9 d8) (e11 d10) (e13 d12)
+        (f3 e2) (f5 e4) (f7 e6) (f9 e8) (f11 e10) (f13 e12)
+     )
+     (links nw
+        (a2 a3) (a4 a5) (a6 a7) (a8 a9) (a10 a11) (a12 a13)
+        (b2 b3) (b4 b5) (b6 b7) (b8 b9) (b10 b11) (b12 b13)
+        (c2 c3) (c4 c5) (c6 c7) (c8 c9) (c10 c11) (c12 c13)
+        (d2 d3) (d4 d5) (d6 d7) (d8 d9) (d10 d11) (d12 d13)
+        (e2 e3) (e4 e5) (e6 e7) (e8 e9) (e10 e11) (e12 e13)
+        (b1 a2) (b3 a4) (b5 a6) (b7 a8) (b9 a10) (b11 a12)
+        (c1 b2) (c3 b4) (c5 b6) (c7 b8) (c9 b10) (c11 b12)
+        (d1 c2) (d3 c4) (d5 c6) (d7 c8) (d9 c10) (d11 c12)
+        (e1 d2) (e3 d4) (e5 d6) (e7 d8) (e9 d10) (e11 d12)
+        (f1 e2) (f3 e4) (f5 e6) (f7 e8) (f9 e10) (f11 e12)
+     )
+     (links se
+        (a3 a2) (a5 a4) (a7 a6) (a9 a8) (a11 a10) (a13 a12)
+        (b3 b2) (b5 b4) (b7 b6) (b9 b8) (b11 b10) (b13 b12)
+        (c3 c2) (c5 c4) (c7 c6) (c9 c8) (c11 c10) (c13 c12)
+        (d3 d2) (d5 d4) (d7 d6) (d9 d8) (d11 d10) (d13 d12)
+        (e3 e2) (e5 e4) (e7 e6) (e9 e8) (e11 e10) (e13 e12)
+        (a2 b1) (a4 b3) (a6 b5) (a8 b7) (a10 b9) (a12 b11)
+        (b2 c1) (b4 c3) (b6 c5) (b8 c7) (b10 c9) (b12 c11)
+        (c2 d1) (c4 d3) (c6 d5) (c8 d7) (c10 d9) (c12 d11)
+        (d2 e1) (d4 e3) (d6 e5) (d8 e7) (d10 e9) (d12 e11)
+        (e2 f1) (e4 f3) (e6 f5) (e8 f7) (e10 f9) (e12 f11)
+     )
+     (zone (name minus-3) (players White Black)
+           (positions a3 a5 a7 a9 a11 f3 f5 f7 f9 f11 b1 c1 d1 e1 b13 c13 d13 e13)
+     )
+     (zone (name minus-4) (players White Black)
+           (positions a2 b2 c2 d2 e2 a4 b4 c4 d4 e4 a6 b6 c6 d6 e6 a8 b8 c8 d8 e8 a10 b10 c10 d10 e10 a12 b12 c12 d12 e12)
+     )
+     (zone (name minus-5) (players White Black)
+           (positions a1 a13 f1 f13)
+     )
+  )
+
+  (piece
+     (name King)
+     (image White "images/dablot/wking.bmp"
+            Black "images/dablot/bking.bmp")
+     (moves
+         (move-type normal-type)
+         (step n) (step w) (step s) (step e)
+         (step nw) (step sw) (step se) (step ne)
+         (move-type jump-type)
+         (jump-king n) (jump-king w) (jump-king s) (jump-king e)
+         (jump-king nw) (jump-king sw) (jump-king se) (jump-king ne)
+     )
+  )
+  (piece
+     (name Prince)
+     (image White "images/dablot/wprince.bmp"
+            Black "images/dablot/bprince.bmp")
+     (moves
+         (move-type normal-type)
+         (step n) (step w) (step s) (step e)
+         (step nw) (step sw) (step se) (step ne)
+         (move-type jump-type)
+         (jump-prince n) (jump-prince w) (jump-prince s) (jump-prince e)
+         (jump-prince nw) (jump-prince sw) (jump-prince se) (jump-prince ne)
+     )
+  )
+  (piece
+     (name Man)
+     (image White "images/dablot/wman.bmp"
+            Black "images/dablot/bman.bmp")
+     (moves
+         (move-type normal-type)
+         (step n) (step w) (step s) (step e)
+         (step nw) (step sw) (step se) (step ne)
+         (move-type jump-type)
+         (jump-man n) (jump-man w) (jump-man s) (jump-man e)
+         (jump-man nw) (jump-man sw) (jump-man se) (jump-man ne)
+     )
+  )
+
+  (board-setup
+    (White (King a7) (Prince a8) (Man a13 a11 a9 b13 b11 b9 c13 c11 c9 d13 d11 d9 e13 e11 e9 f13 f11 f9 a12 a10 b12 b10 c12 c10 d12 d10 e12 e10))
+    (Black (King f7) (Prince e6) (Man a1 a3 a5 b1 b3 b5 c1 c3 c5 d1 d3 d5 e1 e3 e5 f1 f3 f5 a2 a4 b2 b4 c2 c4 d2 d4 e2 e4))
+  )
+
+  (loss-condition (White Black) (pieces-remaining 0 King))
+  (loss-condition (White Black) (pieces-remaining 1))
+  (loss-condition (White Black) stalemated)
+  (loss-condition (White Black) repetition)
+)
+
+(variant
+  (title "Dablot Frostviken (Child)")
+
+  (board
+     (image "images/dablot/4x5.bmp")
+     (grid
+        (start-rectangle 5 5 64 64)
+        (dimensions
+           ("a/b/c/d" (88 0)) ; files
+           ("9/7/5/3/1" (0 88)) ; ranks
+        )
+        (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0))
+     )
+     (grid
+        (start-rectangle 48 48 107 107)
+        (dimensions
+           ("a/b/c" (88 0)) ; files
+           ("8/6/4/2" (0 88)) ; ranks
+        )
+     )
+     (links ne
+        (a1 a2) (a3 a4) (a5 a6) (a7 a8)
+        (b1 b2) (b3 b4) (b5 b6) (b7 b8)
+        (c1 c2) (c3 c4) (c5 c6) (c7 c8)
+        (a2 b3) (a4 b5) (a6 b7) (a8 b9)
+        (b2 c3) (b4 c5) (b6 c7) (b8 c9)
+        (c2 d3) (c4 d5) (c6 d7) (c8 d9)
+     )
+     (links sw
+        (a2 a1) (a4 a3) (a6 a5) (a8 a7)
+        (b2 b1) (b4 b3) (b6 b5) (b8 b7)
+        (c2 c1) (c4 c3) (c6 c5) (c8 c7)
+        (b3 a2) (b5 a4) (b7 a6) (b9 a8)
+        (c3 b2) (c5 b4) (c7 b6) (c9 b8)
+        (d3 c2) (d5 c4) (d7 c6) (d9 c8)
+     )
+     (links nw
+        (a2 a3) (a4 a5) (a6 a7) (a8 a9)
+        (b2 b3) (b4 b5) (b6 b7) (b8 b9)
+        (c2 c3) (c4 c5) (c6 c7) (c8 c9)
+        (b1 a2) (b3 a4) (b5 a6) (b7 a8)
+        (c1 b2) (c3 b4) (c5 b6) (c7 b8)
+        (d1 c2) (d3 c4) (d5 c6) (d7 c8)
+     )
+     (links se
+        (a3 a2) (a5 a4) (a7 a6) (a9 a8)
+        (b3 b2) (b5 b4) (b7 b6) (b9 b8)
+        (c3 c2) (c5 c4) (c7 c6) (c9 c8)
+        (a2 b1) (a4 b3) (a6 b5) (a8 b7)
+        (b2 c1) (b4 c3) (b6 c5) (b8 c7)
+        (c2 d1) (c4 d3) (c6 d5) (c8 d7)
+     )
+     (zone (name minus-3) (players White Black)
+           (positions a3 a5 a7 d3 d5 d7 b1 c1 b9 c9)
+     )                
+     (zone (name minus-4) (players White Black)
+           (positions a2 b2 c2 a4 b4 c4 a6 b6 c6 a8 b8 c8)
+     )
+     (zone (name minus-5) (players White Black)
+           (positions a1 a9 d1 d9)
+     )
+  )
+
+  (board-setup
+    (Black (King d5) (Prince c4) (Man a1 b1 c1 d1 a2 b2 c2 a3 b3 c3 d3))
+    (White (King a5) (Prince a6) (Man a9 b9 c9 d9 a8 b8 c8 a7 b7 c7 d7))
+  )
+)
+
+(variant
+  (title "Dablot Frostviken")
+
+  (board
+     (image "images/dablot/5x5.bmp")
+     (grid
+        (start-rectangle 6 6 65 65)
+        (dimensions
+           ("a/b/c/d/e" (88 0)) ; files
+           ("9/7/5/3/1" (0 88)) ; ranks
+        )
+        (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0))
+     )
+     (grid
+        (start-rectangle 48 48 107 107)
+        (dimensions
+           ("a/b/c/d" (88 0)) ; files
+           ("8/6/4/2" (0 88)) ; ranks
+        )
+     )
+     (links ne
+        (a1 a2) (a3 a4) (a5 a6) (a7 a8)
+        (b1 b2) (b3 b4) (b5 b6) (b7 b8)
+        (c1 c2) (c3 c4) (c5 c6) (c7 c8)
+        (d1 d2) (d3 d4) (d5 d6) (d7 d8)
+        (a2 b3) (a4 b5) (a6 b7) (a8 b9)
+        (b2 c3) (b4 c5) (b6 c7) (b8 c9)
+        (c2 d3) (c4 d5) (c6 d7) (c8 d9)
+        (d2 e3) (d4 e5) (d6 e7) (d8 e9)
+     )
+     (links sw
+        (a2 a1) (a4 a3) (a6 a5) (a8 a7)
+        (b2 b1) (b4 b3) (b6 b5) (b8 b7)
+        (c2 c1) (c4 c3) (c6 c5) (c8 c7)
+        (d2 d1) (d4 d3) (d6 d5) (d8 d7)
+        (b3 a2) (b5 a4) (b7 a6) (b9 a8)
+        (c3 b2) (c5 b4) (c7 b6) (c9 b8)
+        (d3 c2) (d5 c4) (d7 c6) (d9 c8)
+        (e3 d2) (e5 d4) (e7 d6) (e9 d8)
+     )
+     (links nw
+        (a2 a3) (a4 a5) (a6 a7) (a8 a9)
+        (b2 b3) (b4 b5) (b6 b7) (b8 b9)
+        (c2 c3) (c4 c5) (c6 c7) (c8 c9)
+        (d2 d3) (d4 d5) (d6 d7) (d8 d9)
+        (b1 a2) (b3 a4) (b5 a6) (b7 a8)
+        (c1 b2) (c3 b4) (c5 b6) (c7 b8)
+        (d1 c2) (d3 c4) (d5 c6) (d7 c8)
+        (e1 d2) (e3 d4) (e5 d6) (e7 d8)
+     )
+     (links se
+        (a3 a2) (a5 a4) (a7 a6) (a9 a8)
+        (b3 b2) (b5 b4) (b7 b6) (b9 b8)
+        (c3 c2) (c5 c4) (c7 c6) (c9 c8)
+        (d3 d2) (d5 d4) (d7 d6) (d9 d8)
+        (a2 b1) (a4 b3) (a6 b5) (a8 b7)
+        (b2 c1) (b4 c3) (b6 c5) (b8 c7)
+        (c2 d1) (c4 d3) (c6 d5) (c8 d7)
+        (d2 e1) (d4 e3) (d6 e5) (d8 e7)
+     )
+     (zone (name minus-3) (players White Black)
+           (positions a3 a5 a7 e3 e5 e7 b1 c1 d1 b9 c9 d9)
+     )                
+     (zone (name minus-4) (players White Black)
+           (positions a2 b2 c2 d2 a4 b4 c4 d4 a6 b6 c6 d6 a8 b8 c8 d8)
+     )
+     (zone (name minus-5) (players White Black)
+           (positions a1 a9 e1 e9)
+     )
+  )
+
+  (board-setup
+    (Black (King e5) (Prince d4) (Man a1 b1 c1 d1 e1 a2 b2 c2 d2 a3 b3 c3 d3 e3 a4 b4 c4))
+    (White (King a5) (Prince a6) (Man a9 b9 c9 d9 e9 a8 b8 c8 d8 a7 b7 c7 d7 e7 b6 c6 d6))
+  )
+)
+
+(variant
+  (title "Dablot Asele")
+
+  (board
+     (image "images/dablot/5x5.bmp")
+     (grid
+        (start-rectangle 6 6 65 65)
+        (dimensions
+           ("a/b/c/d/e" (88 0)) ; files
+           ("9/7/5/3/1" (0 88)) ; ranks
+        )
+        (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0))
+     )
+     (grid
+        (start-rectangle 48 48 107 107)
+        (dimensions
+           ("a/b/c/d" (88 0)) ; files
+           ("8/6/4/2" (0 88)) ; ranks
+        )
+     )
+     (links ne
+        (a1 a2) (a3 a4) (a5 a6) (a7 a8)
+        (b1 b2) (b3 b4) (b5 b6) (b7 b8)
+        (c1 c2) (c3 c4) (c5 c6) (c7 c8)
+        (d1 d2) (d3 d4) (d5 d6) (d7 d8)
+        (a2 b3) (a4 b5) (a6 b7) (a8 b9)
+        (b2 c3) (b4 c5) (b6 c7) (b8 c9)
+        (c2 d3) (c4 d5) (c6 d7) (c8 d9)
+        (d2 e3) (d4 e5) (d6 e7) (d8 e9)
+     )
+     (links sw
+        (a2 a1) (a4 a3) (a6 a5) (a8 a7)
+        (b2 b1) (b4 b3) (b6 b5) (b8 b7)
+        (c2 c1) (c4 c3) (c6 c5) (c8 c7)
+        (d2 d1) (d4 d3) (d6 d5) (d8 d7)
+        (b3 a2) (b5 a4) (b7 a6) (b9 a8)
+        (c3 b2) (c5 b4) (c7 b6) (c9 b8)
+        (d3 c2) (d5 c4) (d7 c6) (d9 c8)
+        (e3 d2) (e5 d4) (e7 d6) (e9 d8)
+     )
+     (links nw
+        (a2 a3) (a4 a5) (a6 a7) (a8 a9)
+        (b2 b3) (b4 b5) (b6 b7) (b8 b9)
+        (c2 c3) (c4 c5) (c6 c7) (c8 c9)
+        (d2 d3) (d4 d5) (d6 d7) (d8 d9)
+        (b1 a2) (b3 a4) (b5 a6) (b7 a8)
+        (c1 b2) (c3 b4) (c5 b6) (c7 b8)
+        (d1 c2) (d3 c4) (d5 c6) (d7 c8)
+        (e1 d2) (e3 d4) (e5 d6) (e7 d8)
+     )
+     (links se
+        (a3 a2) (a5 a4) (a7 a6) (a9 a8)
+        (b3 b2) (b5 b4) (b7 b6) (b9 b8)
+        (c3 c2) (c5 c4) (c7 c6) (c9 c8)
+        (d3 d2) (d5 d4) (d7 d6) (d9 d8)
+        (a2 b1) (a4 b3) (a6 b5) (a8 b7)
+        (b2 c1) (b4 c3) (b6 c5) (b8 c7)
+        (c2 d1) (c4 d3) (c6 d5) (c8 d7)
+        (d2 e1) (d4 e3) (d6 e5) (d8 e7)
+     )
+     (zone (name minus-3) (players White Black)
+           (positions a3 a5 a7 e3 e5 e7 b1 c1 d1 b9 c9 d9)
+     )                
+     (zone (name minus-4) (players White Black)
+           (positions a2 b2 c2 d2 a4 b4 c4 d4 a6 b6 c6 d6 a8 b8 c8 d8)
+     )
+     (zone (name minus-5) (players White Black)
+           (positions a1 a9 e1 e9)
+     )
+  )
+
+  (board-setup
+    (Black (King e5) (Man a1 b1 c1 d1 e1 a2 b2 c2 d2 a3 b3 c3 d3 e3 a4 b4 c4 d4))
+    (White (King a5) (Man a9 b9 c9 d9 e9 a8 b8 c8 d8 a7 b7 c7 d7 e7 a6 b6 c6 d6))
+  )
+)
+
+(variant
+  (title "Dablot Dares (4 rows)")
+
+  (board
+     (image "images/dablot/7x7.bmp")
+     (grid
+        (start-rectangle 5 5 64 64)
+        (dimensions
+           ("a/b/c/d/e/f/g" (88 0)) ; files
+           ("13/11/9/7/5/3/1" (0 88)) ; ranks
+        )
+        (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0))
+     )
+     (grid
+        (start-rectangle 48 48 107 107)
+        (dimensions
+           ("a/b/c/d/e/f" (88 0)) ; files
+           ("12/10/8/6/4/2" (0 88)) ; ranks
+        )
+     )
+     (links ne
+        (a1 a2) (a3 a4) (a5 a6) (a7 a8) (a9 a10) (a11 a12)
+        (b1 b2) (b3 b4) (b5 b6) (b7 b8) (b9 b10) (b11 b12)
+        (c1 c2) (c3 c4) (c5 c6) (c7 c8) (c9 c10) (c11 c12)
+        (d1 d2) (d3 d4) (d5 d6) (d7 d8) (d9 d10) (d11 d12)
+        (e1 e2) (e3 e4) (e5 e6) (e7 e8) (e9 e10) (e11 e12)
+        (f1 f2) (f3 f4) (f5 f6) (f7 f8) (f9 f10) (f11 f12)
+        (a2 b3) (a4 b5) (a6 b7) (a8 b9) (a10 b11) (a12 b13)
+        (b2 c3) (b4 c5) (b6 c7) (b8 c9) (b10 c11) (b12 c13)
+        (c2 d3) (c4 d5) (c6 d7) (c8 d9) (c10 d11) (c12 d13)
+        (d2 e3) (d4 e5) (d6 e7) (d8 e9) (d10 e11) (d12 e13)
+        (e2 f3) (e4 f5) (e6 f7) (e8 f9) (e10 f11) (e12 f13)
+        (f2 g3) (f4 g5) (f6 g7) (f8 g9) (f10 g11) (f12 g13)
+     )
+     (links sw
+        (a2 a1) (a4 a3) (a6 a5) (a8 a7) (a10 a9) (a12 a11)
+        (b2 b1) (b4 b3) (b6 b5) (b8 b7) (b10 b9) (b12 b11)
+        (c2 c1) (c4 c3) (c6 c5) (c8 c7) (c10 c9) (c12 c11)
+        (d2 d1) (d4 d3) (d6 d5) (d8 d7) (d10 d9) (d12 d11)
+        (e2 e1) (e4 e3) (e6 e5) (e8 e7) (e10 e9) (e12 e11)
+        (f2 f1) (f4 f3) (f6 f5) (f8 f7) (f10 f9) (f12 f11)
+        (b3 a2) (b5 a4) (b7 a6) (b9 a8) (b11 a10) (b13 a12)
+        (c3 b2) (c5 b4) (c7 b6) (c9 b8) (c11 b10) (c13 b12)
+        (d3 c2) (d5 c4) (d7 c6) (d9 c8) (d11 c10) (d13 c12)
+        (e3 d2) (e5 d4) (e7 d6) (e9 d8) (e11 d10) (e13 d12)
+        (f3 e2) (f5 e4) (f7 e6) (f9 e8) (f11 e10) (f13 e12)
+        (g3 f2) (g5 f4) (g7 f6) (g9 f8) (g11 f10) (g13 f12)
+     )
+     (links nw
+        (a2 a3) (a4 a5) (a6 a7) (a8 a9) (a10 a11) (a12 a13)
+        (b2 b3) (b4 b5) (b6 b7) (b8 b9) (b10 b11) (b12 b13)
+        (c2 c3) (c4 c5) (c6 c7) (c8 c9) (c10 c11) (c12 c13)
+        (d2 d3) (d4 d5) (d6 d7) (d8 d9) (d10 d11) (d12 d13)
+        (e2 e3) (e4 e5) (e6 e7) (e8 e9) (e10 e11) (e12 e13)
+        (f2 f3) (f4 f5) (f6 f7) (f8 f9) (f10 f11) (f12 f13)
+        (b1 a2) (b3 a4) (b5 a6) (b7 a8) (b9 a10) (b11 a12)
+        (c1 b2) (c3 b4) (c5 b6) (c7 b8) (c9 b10) (c11 b12)
+        (d1 c2) (d3 c4) (d5 c6) (d7 c8) (d9 c10) (d11 c12)
+        (e1 d2) (e3 d4) (e5 d6) (e7 d8) (e9 d10) (e11 d12)
+        (f1 e2) (f3 e4) (f5 e6) (f7 e8) (f9 e10) (f11 e12)
+        (g1 f2) (g3 f4) (g5 f6) (g7 f8) (g9 f10) (g11 f12)
+     )
+     (links se
+        (a3 a2) (a5 a4) (a7 a6) (a9 a8) (a11 a10) (a13 a12)
+        (b3 b2) (b5 b4) (b7 b6) (b9 b8) (b11 b10) (b13 b12)
+        (c3 c2) (c5 c4) (c7 c6) (c9 c8) (c11 c10) (c13 c12)
+        (d3 d2) (d5 d4) (d7 d6) (d9 d8) (d11 d10) (d13 d12)
+        (e3 e2) (e5 e4) (e7 e6) (e9 e8) (e11 e10) (e13 e12)
+        (f3 f2) (f5 f4) (f7 f6) (f9 f8) (f11 f10) (f13 f12)
+        (a2 b1) (a4 b3) (a6 b5) (a8 b7) (a10 b9) (a12 b11)
+        (b2 c1) (b4 c3) (b6 c5) (b8 c7) (b10 c9) (b12 c11)
+        (c2 d1) (c4 d3) (c6 d5) (c8 d7) (c10 d9) (c12 d11)
+        (d2 e1) (d4 e3) (d6 e5) (d8 e7) (d10 e9) (d12 e11)
+        (e2 f1) (e4 f3) (e6 f5) (e8 f7) (e10 f9) (e12 f11)
+        (f2 g1) (f4 g3) (f6 g5) (f8 g7) (f10 g9) (f12 g11)
+     )
+     (zone (name minus-3) (players White Black)
+           (positions a3 a5 a7 a9 a11 g3 g5 g7 g9 g11 b1 c1 d1 e1 f1 b13 c13 d13 e13 f13)
+     )                
+     (zone (name minus-4) (players White Black)
+           (positions a2 b2 c2 d2 e2 f2 a4 b4 c4 d4 e4 f4 a6 b6 c6 d6 e6 f6 a8 b8 c8 d8 e8 f8 a10 b10 c10 d10 e10 f10 a12 b12 c12 d12 e12 f12)
+     )
+     (zone (name minus-5) (players White Black)
+           (positions a1 a13 g1 g13)
+     )
+  )
+  (board-setup
+    (Black (King g5) (Man a1 b1 c1 d1 e1 f1 g1 a2 b2 c2 d2 e2 f2 a3 b3 c3 d3 e3 f3 g3 a4 b4 c4 d4 e4 f4))
+    (White (King a9) (Man a13 b13 c13 d13 e13 f13 g13 a12 b12 c12 d12 e12 f12 a11 b11 c11 d11 e11 f11 g11 a10 b10 c10 d10 e10 f10))
+  )
+)
+
+(variant
+  (title "Dablot Dares (5 rows)")
+
+  (board
+     (image "images/dablot/7x7.bmp")
+     (grid
+        (start-rectangle 5 5 64 64)
+        (dimensions
+           ("a/b/c/d/e/f/g" (88 0)) ; files
+           ("13/11/9/7/5/3/1" (0 88)) ; ranks
+        )
+        (directions (n 0 -1) (s 0 1) (e 1 0) (w -1 0))
+     )
+     (grid
+        (start-rectangle 48 48 107 107)
+        (dimensions
+           ("a/b/c/d/e/f" (88 0)) ; files
+           ("12/10/8/6/4/2" (0 88)) ; ranks
+        )
+     )
+     (links ne
+        (a1 a2) (a3 a4) (a5 a6) (a7 a8) (a9 a10) (a11 a12)
+        (b1 b2) (b3 b4) (b5 b6) (b7 b8) (b9 b10) (b11 b12)
+        (c1 c2) (c3 c4) (c5 c6) (c7 c8) (c9 c10) (c11 c12)
+        (d1 d2) (d3 d4) (d5 d6) (d7 d8) (d9 d10) (d11 d12)
+        (e1 e2) (e3 e4) (e5 e6) (e7 e8) (e9 e10) (e11 e12)
+        (f1 f2) (f3 f4) (f5 f6) (f7 f8) (f9 f10) (f11 f12)
+        (a2 b3) (a4 b5) (a6 b7) (a8 b9) (a10 b11) (a12 b13)
+        (b2 c3) (b4 c5) (b6 c7) (b8 c9) (b10 c11) (b12 c13)
+        (c2 d3) (c4 d5) (c6 d7) (c8 d9) (c10 d11) (c12 d13)
+        (d2 e3) (d4 e5) (d6 e7) (d8 e9) (d10 e11) (d12 e13)
+        (e2 f3) (e4 f5) (e6 f7) (e8 f9) (e10 f11) (e12 f13)
+        (f2 g3) (f4 g5) (f6 g7) (f8 g9) (f10 g11) (f12 g13)
+     )
+     (links sw
+        (a2 a1) (a4 a3) (a6 a5) (a8 a7) (a10 a9) (a12 a11)
+        (b2 b1) (b4 b3) (b6 b5) (b8 b7) (b10 b9) (b12 b11)
+        (c2 c1) (c4 c3) (c6 c5) (c8 c7) (c10 c9) (c12 c11)
+        (d2 d1) (d4 d3) (d6 d5) (d8 d7) (d10 d9) (d12 d11)
+        (e2 e1) (e4 e3) (e6 e5) (e8 e7) (e10 e9) (e12 e11)
+        (f2 f1) (f4 f3) (f6 f5) (f8 f7) (f10 f9) (f12 f11)
+        (b3 a2) (b5 a4) (b7 a6) (b9 a8) (b11 a10) (b13 a12)
+        (c3 b2) (c5 b4) (c7 b6) (c9 b8) (c11 b10) (c13 b12)
+        (d3 c2) (d5 c4) (d7 c6) (d9 c8) (d11 c10) (d13 c12)
+        (e3 d2) (e5 d4) (e7 d6) (e9 d8) (e11 d10) (e13 d12)
+        (f3 e2) (f5 e4) (f7 e6) (f9 e8) (f11 e10) (f13 e12)
+        (g3 f2) (g5 f4) (g7 f6) (g9 f8) (g11 f10) (g13 f12)
+     )
+     (links nw
+        (a2 a3) (a4 a5) (a6 a7) (a8 a9) (a10 a11) (a12 a13)
+        (b2 b3) (b4 b5) (b6 b7) (b8 b9) (b10 b11) (b12 b13)
+        (c2 c3) (c4 c5) (c6 c7) (c8 c9) (c10 c11) (c12 c13)
+        (d2 d3) (d4 d5) (d6 d7) (d8 d9) (d10 d11) (d12 d13)
+        (e2 e3) (e4 e5) (e6 e7) (e8 e9) (e10 e11) (e12 e13)
+        (f2 f3) (f4 f5) (f6 f7) (f8 f9) (f10 f11) (f12 f13)
+        (b1 a2) (b3 a4) (b5 a6) (b7 a8) (b9 a10) (b11 a12)
+        (c1 b2) (c3 b4) (c5 b6) (c7 b8) (c9 b10) (c11 b12)
+        (d1 c2) (d3 c4) (d5 c6) (d7 c8) (d9 c10) (d11 c12)
+        (e1 d2) (e3 d4) (e5 d6) (e7 d8) (e9 d10) (e11 d12)
+        (f1 e2) (f3 e4) (f5 e6) (f7 e8) (f9 e10) (f11 e12)
+        (g1 f2) (g3 f4) (g5 f6) (g7 f8) (g9 f10) (g11 f12)
+     )
+     (links se
+        (a3 a2) (a5 a4) (a7 a6) (a9 a8) (a11 a10) (a13 a12)
+        (b3 b2) (b5 b4) (b7 b6) (b9 b8) (b11 b10) (b13 b12)
+        (c3 c2) (c5 c4) (c7 c6) (c9 c8) (c11 c10) (c13 c12)
+        (d3 d2) (d5 d4) (d7 d6) (d9 d8) (d11 d10) (d13 d12)
+        (e3 e2) (e5 e4) (e7 e6) (e9 e8) (e11 e10) (e13 e12)
+        (f3 f2) (f5 f4) (f7 f6) (f9 f8) (f11 f10) (f13 f12)
+        (a2 b1) (a4 b3) (a6 b5) (a8 b7) (a10 b9) (a12 b11)
+        (b2 c1) (b4 c3) (b6 c5) (b8 c7) (b10 c9) (b12 c11)
+        (c2 d1) (c4 d3) (c6 d5) (c8 d7) (c10 d9) (c12 d11)
+        (d2 e1) (d4 e3) (d6 e5) (d8 e7) (d10 e9) (d12 e11)
+        (e2 f1) (e4 f3) (e6 f5) (e8 f7) (e10 f9) (e12 f11)
+        (f2 g1) (f4 g3) (f6 g5) (f8 g7) (f10 g9) (f12 g11)
+     )
+     (zone (name minus-3) (players White Black)
+           (positions a3 a5 a7 a9 a11 g3 g5 g7 g9 g11 b1 c1 d1 e1 f1 b13 c13 d13 e13 f13)
+     )                
+     (zone (name minus-4) (players White Black)
+           (positions a2 b2 c2 d2 e2 f2 a4 b4 c4 d4 e4 f4 a6 b6 c6 d6 e6 f6 a8 b8 c8 d8 e8 f8 a10 b10 c10 d10 e10 f10 a12 b12 c12 d12 e12 f12)
+     )
+     (zone (name minus-5) (players White Black)
+           (positions a1 a13 g1 g13)
+     )
+  )
+  (board-setup
+    (Black (King f6) (Man a1 b1 c1 d1 e1 f1 g1 a2 b2 c2 d2 e2 f2 a3 b3 c3 d3 e3 f3 g3 a4 b4 c4 d4 e4 f4 a5 b5 c5 d5 e5 f5 g5))
+    (White (King a8) (Man a13 b13 c13 d13 e13 f13 g13 a12 b12 c12 d12 e12 f12 a11 b11 c11 d11 e11 f11 g11 a10 b10 c10 d10 e10 f10 a9 b9 c9 d9 e9 f9 g9))
+  )
+)

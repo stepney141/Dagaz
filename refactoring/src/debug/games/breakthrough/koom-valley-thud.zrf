@@ -1,0 +1,109 @@
+(define dwarf-slide (
+  $1 (while empty? add $1)
+))
+
+(define rock-step (
+  $1 (verify empty?)
+  add
+))
+
+(define troll-slide (
+  $1 (verify empty?) add
+  $1 (verify empty?) add
+  $1 (verify empty?) add
+))
+
+(define troll-jump (
+  $1 (verify (piece? Dwarf)) capture
+  $1 (verify empty?) (add-partial jump-type)
+))
+
+(game
+  (title "Koom Valley Thud")
+  (history "https://en.wikipedia.org/wiki/Games_of_the_Discworld#Thud")
+
+  (option "animate captures"  false)
+  (option "smart moves"       false)
+
+  (players Dwarfs Trolls)
+  (turn-order Dwarfs Trolls)
+
+  (move-sound "Audio\Pickup.wav")
+  (release-sound "Audio\Pickup.wav")
+  (capture-sound "")
+  (drop-sound "")
+
+  (board
+      (image "images/koom-valley/board.bmp")
+      (grid
+         (start-rectangle 34 29 69 64)
+         (dimensions
+             ("a/b/c/d/e/f/g/h/i/j/k/l/m/n/o" (35 0)) ; files
+             ("15/14/13/12/11/10/9/8/7/6/5/4/3/2/1" (0 35)) ; ranks
+         )
+         (directions (n 0 -1) (e 1 0) (s 0 1) (w -1 0)
+                     (nw -1 -1) (ne 1 -1) (se 1 1) (sw -1 1))
+      )
+      (kill-positions a15 b15 c15 d15 e15    k15 l15 m15 n15 o15
+                      a14 b14 c14 d14            l14 m14 n14 o14
+                      a13 b13 c13                    m13 n13 o13 
+                      a12 b12                            n12 o12
+                      a11                                    o11
+                      a5                                     o5
+                      a4  b4                             n4  o4
+                      a3  b3  c3                     m3  n3  o3
+                      a2  b2  c2  d2             l2  m2  n2  o2
+                      a1  b1  c1  d1  e1     k1  l1  m1  n1  o1 )
+     (zone (name goal) 
+           (players Dwarfs)
+           (positions f15 g15 h15 i15 j15)
+     )
+  )
+
+  (piece
+     (name Rock)
+     (image Dwarfs "images/koom-valley/stone.bmp")
+     (moves
+        (move-type normal-type)
+        (rock-step n) (rock-step nw)
+        (rock-step w) (rock-step se)
+        (rock-step e) (rock-step ne)
+        (rock-step s) (rock-step sw)
+     )
+  )
+  (piece
+     (name Dwarf)
+     (image Dwarfs "images/koom-valley/dwarf.bmp")
+     (moves
+        (move-type normal-type)
+        (dwarf-slide n) (dwarf-slide nw)
+        (dwarf-slide w) (dwarf-slide se)
+        (dwarf-slide e) (dwarf-slide ne)
+        (dwarf-slide s) (dwarf-slide sw)
+     )
+  )
+  (piece
+     (name Troll)
+     (image Trolls "images/koom-valley/troll.bmp")
+     (moves
+        (move-type normal-type)
+        (troll-slide n) (troll-slide nw)
+        (troll-slide w) (troll-slide se)
+        (troll-slide e) (troll-slide ne)
+        (troll-slide s) (troll-slide sw)
+        (move-type jump-type)
+        (troll-jump n) (troll-jump nw)
+        (troll-jump w) (troll-jump se)
+        (troll-jump e) (troll-jump ne)
+        (troll-jump s) (troll-jump sw)
+     )
+  )
+
+  ( board-setup
+     (Dwarfs 
+        (Dwarf a6 b5 c4 d3 e2 f1 g1 h1 i1 j1 k2 l3 m4 n5 o6 h7) 
+        (Rock  h8)
+     )
+     (Trolls (Troll e13 f13 f14 h14 h13 j14 j13 k13))
+  )
+)
