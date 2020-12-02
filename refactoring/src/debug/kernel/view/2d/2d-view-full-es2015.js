@@ -1,641 +1,654 @@
-(function() {
-    Dagaz.Controller.Event = {
-      MOUSE_MOVE:           0,
-      MOUSE_LKM_DOWN:       1,
-      MOUSE_LKM_UP:         2,
-      MOUSE_PKM_DOWN:       3,
-      MOUSE_PKM_UP:         4,
-      MOUSE_WHEEL:          5,
-      KEY_PRESSED:          6,
-      MARK_TARGETS:         7,
-      MARK_CAPTURES:        8,
-      MARK_SELECTED:        9,
-      STATE_CHANGED:        10,
-      STATUS_CHANGED:       11,
-      TURN_CHANGED:         12
-    };
+{
+  Dagaz.Controller.Event = {
+    MOUSE_MOVE: 0,
+    MOUSE_LKM_DOWN: 1,
+    MOUSE_LKM_UP: 2,
+    MOUSE_PKM_DOWN: 3,
+    MOUSE_PKM_UP: 4,
+    MOUSE_WHEEL: 5,
+    KEY_PRESSED: 6,
+    MARK_TARGETS: 7,
+    MARK_CAPTURES: 8,
+    MARK_SELECTED: 9,
+    STATE_CHANGED: 10,
+    STATUS_CHANGED: 11,
+    TURN_CHANGED: 12
+  };
 
-    let isValid             = false;
+  let isValid = false;
 
-    Dagaz.View.SHIFT_X      = 0;
-    Dagaz.View.SHIFT_Y      = 0;
-    Dagaz.View.STRIKE_ALPHA = 0.5;
-    Dagaz.View.STEP_CNT     = 5;
+  Dagaz.View.SHIFT_X = 0;
+  Dagaz.View.SHIFT_Y = 0;
+  Dagaz.View.STRIKE_ALPHA = 0.5;
+  Dagaz.View.STEP_CNT = 5;
 
-    Dagaz.View.NORMAL_DIR   = 0;
-    Dagaz.View.REVERSE_DIR  = 1;
+  Dagaz.View.NORMAL_DIR = 0;
+  Dagaz.View.REVERSE_DIR = 1;
 
-    class Grid {
-        constructor(region, sx, sy, dx, dy) {
-          this.r  = region;
-          this.sx = sx; this.sy = sy;
-          this.dx = dx; this.dy = dy;
-          this.s  = [];
-        }
+  const drawMark = function (ctx, x, y, dx, dy) {
+    x += (dx / 2) | 0;
+    y += (dy / 2) | 0;
+    let r = dx / 4;
+    if (Math.abs(dy - dx) > 10) {
+      r = Math.min(dy, dx) / 2;
+    }
+    if (!_.isUndefined(Dagaz.View.MARK_R)) {
+      r = Dagaz.View.MARK_R;
+      if (r == 0) return;
+    }
+    ctx.beginPath();
+    ctx.fillStyle = "#00AA00";
+    ctx.arc(x + Dagaz.View.SHIFT_X, y + Dagaz.View.SHIFT_Y, r, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.stroke();
+  }
 
-        addScale(scale, sx, sy) {
-          this.s.push({
-             s: scale.split('/'),
-             x: sx,
-             y: sy
-          });
-        }
+  const isBadFrame = function (view, region, c, dx, dy) {
+    if (!_.isUndefined(c.t)) {
+      if (_.indexOf(c.t, view.turn) < 0) return true;
+    }
+    if (c.x - region.sx < 0) return true;
+    if (c.y - region.sy < 0) return true;
+    if (c.x + c.dx - region.sx >= dx) return true;
+    if (c.y + c.dy - region.sy >= dy) return true;
+    return false;
+  }
 
-        addTurns(dir, turns, selector, draw) {
-          const ix = []; let n = 1;
-          for (var i = 0; i < this.s.length; i++) {
-               ix.push(0);
-               n = n * this.s[i].s.length;
+  const inRect = function (obj, x, y) {
+    return (x >= obj.x) &&
+      (y >= obj.y) &&
+      (x < obj.x + obj.dx) &&
+      (y < obj.y + obj.dy);
+  }
+
+  const drawPiece = function (ctx, region, pos, x, y) {
+    let isSaved = false;
+    const view = region.view;
+    const piece = pos.setup.piece;
+    const l = region.locatePosition(pos);
+    if (l === null) return;
+    if (Dagaz.Model.showCaptures) {
+      const ix = Dagaz.Model.stringToPos(pos.name, view.design);
+      if (!_.isUndefined(this.markCaptures) && (_.indexOf(this.markCaptures, ix) >= 0)) {
+        ctx.save();
+        ctx.globalAlpha = Dagaz.View.STRIKE_ALPHA;
+        isSaved = true;
+      }
+    }
+    x += (l.dx - piece.dx) / 2 | 0;
+    y += (l.dy - piece.dy) / 2 | 0;
+    ctx.drawImage(piece.h, x, y, piece.dx, piece.dy);
+    if (isSaved) {
+      ctx.restore();
+    }
+  }
+  class Grid {
+    constructor(region, sx, sy, dx, dy) {
+      this.r = region;
+      this.sx = sx;
+      this.sy = sy;
+      this.dx = dx;
+      this.dy = dy;
+      this.s = [];
+    }
+
+    addScale(scale, sx, sy) {
+      this.s.push({
+        s: scale.split('/'),
+        x: sx,
+        y: sy
+      });
+    }
+
+    addTurns(dir, turns, selector, draw) {
+      const ix = [];
+      let n = 1;
+      for (let i = 0; i < this.s.length; i++) {
+        ix.push(0);
+        n = n * this.s[i].s.length;
+      }
+      for (; n > 0; n--) {
+        let name = '';
+        let x = this.sx;
+        let y = this.sy;
+        for (let i = 0; i < ix.length; i++) {
+          if (dir == Dagaz.View.NORMAL_DIR) {
+            name = name + this.s[i].s[ix[i]];
+          } else {
+            const l = this.s[i].s.length - 1;
+            name = name + this.s[i].s[l - ix[i]];
           }
-          for (; n > 0; n--) {
-               let name = ''; 
-               let x = this.sx; let y = this.sy; 
-               for (var i = 0; i < ix.length; i++) {
-                    if (dir == Dagaz.View.NORMAL_DIR) {
-                        name = name + this.s[i].s[ix[i]];
-                    } else {
-                        const l = this.s[i].s.length - 1;
-                        name = name + this.s[i].s[l - ix[i]];
-                    }
-                    x += this.s[i].x * ix[i];
-                    y += this.s[i].y * ix[i];
-               }
+          x += this.s[i].x * ix[i];
+          y += this.s[i].y * ix[i];
+        }
         //     console.log('view.defPosition("' + name + '", ' + x + ', ' + y + ', ' + this.dx + ', ' + this.dy + ')');
-               this.r.addPosition(name, x, y, this.dx, this.dy, turns, selector, draw);
-               for (var i = 0; i < ix.length; i++) {
-                    if (ix[i] < this.s[i].s.length - 1) {
-                        ix[i]++;
-                        break;
-                    } else {
-                        ix[i] = 0;
-                    }
-               }
+        this.r.addPosition(name, x, y, this.dx, this.dy, turns, selector, draw);
+        for (let i = 0; i < ix.length; i++) {
+          if (ix[i] < this.s[i].s.length - 1) {
+            ix[i]++;
+            break;
+          } else {
+            ix[i] = 0;
           }
         }
+      }
+    }
+  }
+
+  class Region {
+    constructor(isActive, draw, events) {
+      this.d = draw;
+      this.e = events;
+      this.sx = 0;
+      this.sy = 0;
+      this.isActive = isActive;
+      this.regions = [];
+      this.boards = [];
+      this.positions = [];
+      this.frames = [];
     }
 
-    class Region {
-        constructor(isActive, draw, events) {
-          this.d = draw; this.e = events;
-          this.sx = 0; this.sy = 0;
-          this.isActive  = isActive;
-          this.regions   = [];
-          this.boards    = [];
-          this.positions = [];
-          this.frames    = [];
-        }
+    addFrame(x, y, dx, dy, turns) {
+      this.frames.push({
+        t: turns,
+        x: x,
+        y: y,
+        dx: dx,
+        dy: dy
+      });
+    }
 
-        addFrame(x, y, dx, dy, turns) {
-          this.frames.push({
-              t:  turns,
-              x:  x,
-              y:  y,
-              dx: dx,
-              dy: dy
-          });
-        }
+    addRegion(x, y, dx, dy, isActive, turns, draw, events) {
+      if (_.isUndefined(isActive)) isActive = true;
+      const r = new Region(isActive, draw, events);
+      r.addFrame(x, y, dx, dy, turns);
+      r.view = this.view;
+      r.parent = this;
+      r.zValue = this.regions.length;
+      this.regions.push(r);
+      return r;
+    }
 
-        addRegion(x, y, dx, dy, isActive, turns, draw, events) {
-          if (_.isUndefined(isActive)) isActive = true;
-          const r = new Region(isActive, draw, events);
-          r.addFrame(x, y, dx, dy, turns);
-          r.view   = this.view;
-          r.parent = this;
-          r.zValue = this.regions.length;
-          this.regions.push(r);
-          return r;
-        }
+    addBoard(name, turns, selector, draw) {
+      if (!_.isUndefined(selector) && (selector != Dagaz.Model.getResourceSelector())) return;
+      const board = {
+        h: document.getElementById(name),
+        t: turns,
+        d: draw
+      };
+      this.boards.push(board);
+    }
 
-        addBoard(name, turns, selector, draw) {
-          if (!_.isUndefined(selector) && (selector != Dagaz.Model.getResourceSelector())) return;
-          const board = {
-              h: document.getElementById(name),
-              t: turns,
-              d: draw
-          };
-          this.boards.push(board);
-        }
+    findPosition(name, isNotRecursive) {
+      for (let i = 0; i < this.positions.length; i++) {
+        if (this.positions[i].name == name) return this.positions[i];
+      }
+      if (isNotRecursive) return null;
+      for (let i = 0; i < this.regions.length; i++) {
+        const r = this.regions[i].findPosition(name);
+        if (r !== null) return r;
+      }
+      return null;
+    }
 
-        findPosition(name, isNotRecursive) {
-          for (var i = 0; i < this.positions.length; i++) {
-               if (this.positions[i].name == name) return this.positions[i];
+    locatePosition(pos) {
+      let r = null;
+      _.each(pos.c, function (loc) {
+        if (r !== null) return;
+        if (!_.isUndefined(loc.t)) {
+          if (_.indexOf(loc.t, this.view.turn) < 0) return;
+        }
+        r = loc;
+      }, this);
+      return r;
+    }
+
+    findAndLocate(ix) {
+      const name = Dagaz.Model.posToString(ix, this.view.design);
+      const pos = this.findPosition(name);
+      if (pos === null) return null;
+      return this.locatePosition(pos);
+    }
+
+    addPosition(name, x, y, dx, dy, turns, selector, draw) {
+      if (!_.isUndefined(selector) && (selector != Dagaz.Model.getResourceSelector())) return;
+      let pos = this.findPosition(name, true);
+      if (pos === null) {
+        pos = {
+          name: name,
+          r: this,
+          c: [],
+          d: draw
+        };
+        this.positions.push(pos);
+      }
+      pos.c.push({
+        p: pos,
+        t: turns,
+        x: x,
+        y: y,
+        dx: dx,
+        dy: dy
+      });
+    }
+
+    addGrid(sx, sy, dx, dy) {
+      const g = new Grid(this, sx, sy, dx - sx, dy - sy);
+      return g;
+    }
+
+    scrollX(dx) {
+      this.sx += dx;
+      if (this.sx < 0) this.sx = 0;
+      this.view.invalidate();
+    }
+
+    scrollY(dy) {
+      this.sy += dy;
+      if (this.sy < 0) this.sy = 0;
+      this.view.invalidate();
+    }
+
+    clearX() {
+      if (this.sx == 0) return;
+      this.sx = 0;
+      this.view.invalidate();
+    }
+
+    clearY() {
+      if (this.sy == 0) return;
+      this.sy = 0;
+      this.view.invalidate();
+    }
+
+    isLoaded() {
+      for (let i = 0; i < this.regions.length; i++) {
+        if (!this.regions[i].isLoaded()) return false;
+      }
+      for (let i = 0; i < this.boards.length; i++) {
+        const image = this.boards[i].h;
+        if (!image.complete || (image.naturalWidth == 0)) return false;
+        this.boards[i].dx = image.naturalWidth;
+        this.boards[i].dy = image.naturalHeight;
+      }
+      return true;
+    }
+
+    close() {
+      this.isActive = false;
+    }
+
+    open() {
+      if (!_.isUndefined(this.parent)) {
+        const p = this.parent;
+        const regions = [];
+        for (let i = 0; i < this.regions.length; i++) {
+          const r = this.regions[i];
+          if (r.zValue != this.zValue) {
+            r.zValue = regions.length;
+            regions.push(r);
           }
-          if (isNotRecursive) return null;
-          for (var i = 0; i < this.regions.length; i++) {
-               const r = this.regions[i].findPosition(name);
-               if (r !== null) return r;
+        }
+        this.zValue = regions.length;
+        regions.push(this);
+        p.regions = regions;
+      }
+      this.isActive = true;
+    }
+
+    draw(ctx, x, y, dx, dy) {
+      if (!this.isActive) return;
+      if (!_.isUndefined(this.d)) {
+        this.d(ctx, this);
+        return;
+      }
+      _.each(this.boards, function (board) {
+        if (!_.isUndefined(board.t)) {
+          if (_.indexOf(board.t, this.view.turn) < 0) return;
+        }
+        ctx.drawImage(board.h, x, y);
+        if (!_.isUndefined(board.d)) {
+          board.d(ctx, this, board);
+        }
+      }, this);
+      _.each(this.positions, function (pos) {
+        if (!_.isUndefined(pos.d)) {
+          pos.d(ctx, this, pos);
+        }
+      }, this);
+      _.each(this.positions, function (pos) {
+        if (_.isUndefined(pos.setup)) return;
+        if (pos.setup.hints.length > 1) return;
+        let isDone = false;
+        _.each(pos.c, function (c) {
+          if (isDone) return;
+          if (isBadFrame(this.view, this, c, dx, dy)) return;
+          if (!_.isUndefined(pos.setup)) {
+            pos.setup.piece.d(ctx, this, pos, x + c.x + pos.setup.x - this.sx, y + c.y + pos.setup.y - this.sy);
           }
-          return null;
-        }
-
-        locatePosition(pos) {
-          let r = null;
-          _.each(pos.c, function(loc) {
-              if (r !== null) return;
-              if (!_.isUndefined(loc.t)) {
-                  if (_.indexOf(loc.t, this.view.turn) < 0) return;
-              }
-              r = loc;
-          }, this);
-          return r;
-        }
-
-        findAndLocate(ix) {
-          const name = Dagaz.Model.posToString(ix, this.view.design);
-          const pos = this.findPosition(name);
-          if (pos === null) return null;
-          return this.locatePosition(pos);
-        }
-
-        addPosition(name, x, y, dx, dy, turns, selector, draw) {
-          if (!_.isUndefined(selector) && (selector != Dagaz.Model.getResourceSelector())) return;
-          let pos = this.findPosition(name, true);
-          if (pos === null) {
-              pos = {
-                  name: name,
-                  r:    this,
-                  c:    [],
-                  d:    draw
-              };
-              this.positions.push(pos);
+          isDone = true;
+        }, this);
+      }, this);
+      _.each(this.positions, function (pos) {
+        if (_.isUndefined(pos.setup)) return;
+        if (pos.setup.hints.length < 2) return;
+        pos.setup.x = pos.setup.hints.shift();
+        pos.setup.y = pos.setup.hints.shift();
+        let isDone = false;
+        _.each(pos.c, function (c) {
+          if (isDone) return;
+          if (isBadFrame(this.view, this, c, dx, dy)) return;
+          if (!_.isUndefined(pos.setup)) {
+            pos.setup.piece.d(ctx, this, pos, x + c.x + pos.setup.x - this.sx, y + c.y + pos.setup.y - this.sy);
           }
-          pos.c.push({
-              p:    pos,
-              t:    turns,
-              x:    x,
-              y:    y,
-              dx:   dx,
-              dy:   dy
-          });
-        }
-
-        addGrid(sx, sy, dx, dy) {
-          const g = new Grid(this, sx, sy, dx - sx, dy - sy);
-          return g;
-        }
-
-        scrollX(dx) {
-          this.sx += dx;
-          if (this.sx < 0) this.sx = 0;
-          this.view.invalidate();
-        }
-
-        scrollY(dy) {
-          this.sy += dy;
-          if (this.sy < 0) this.sy = 0;
-          this.view.invalidate();
-        }
-
-        clearX() {
-          if (this.sx == 0) return;
-          this.sx = 0;
-          this.view.invalidate();
-        }
-
-        clearY() {
-          if (this.sy == 0) return;
-          this.sy = 0;
-          this.view.invalidate();
-        }
-
-        isLoaded() {
-          for (var i = 0; i < this.regions.length; i++) {
-               if (!this.regions[i].isLoaded()) return false;
+          isDone = true;
+        }, this);
+      }, this);
+      _.each(this.positions, function (pos) {
+        let isDone = false;
+        _.each(pos.c, function (c) {
+          if (isDone) return;
+          if (isBadFrame(this.view, this, c, dx, dy)) return;
+          if (!_.isUndefined(this.view.markTargets) && (_.indexOf(this.view.markTargets, pos.name) >= 0)) {
+            drawMark(ctx, x + c.x - this.sx, y + c.y - this.sy, c.dx, c.dy);
           }
-          for (var i = 0; i < this.boards.length; i++) {
-               const image = this.boards[i].h;
-               if (!image.complete || (image.naturalWidth == 0)) return false;
-               this.boards[i].dx = image.naturalWidth;
-               this.boards[i].dy = image.naturalHeight;
+          isDone = true;
+        }, this);
+      }, this);
+      _.each(this.regions, function (r) {
+        _.each(r.frames, function (w) {
+          if (!_.isUndefined(w.t)) {
+            if (_.indexOf(w.t, this.view.turn) < 0) return;
           }
-          return true;
-        }
+          if (w.x + w.dx - this.sx < 0) return;
+          if (w.y + w.dy - this.sy < 0) return;
+          if (w.x - this.sx >= dx) return;
+          if (w.y - this.sy >= dy) return;
+          r.draw(ctx, x + w.x - this.sx, y + w.y - this.sy);
+        }, this);
+      }, this);
+    }
 
-        close() {
-          this.isActive = false;
+    send(code, event, x, y, callback) {
+      let f = false;
+      if (!this.isActive) return false;
+      _.each(this.frames, function (w) {
+        if (!_.isUndefined(w.t)) {
+          if (_.indexOf(w.t, this.view.turn) < 0) return;
         }
-
-        open() {
-          if (!_.isUndefined(this.parent)) {
-               const p = this.parent;
-               const regions = [];
-               for (let i = 0; i < this.regions.length; i++) {
-                    const r = this.regions[i];
-                    if (r.zValue != this.zValue) {
-                        r.zValue = regions.length;
-                        regions.push(r);
-                    }
-               }
-               this.zValue = regions.length;
-               regions.push(this);
-               p.regions = regions;
+        const wx = w.x;
+        const wy = w.y;
+        if (_.isUndefined(x) || _.isUndefined(y) || inRect(w, x, y)) {
+          if (!_.isUndefined(this.e)) {
+            f = this.e(code, event, x - this.sz, y - this.sy, callback);
+            if (f) return;
           }
-          this.isActive = true;
-        }
-
-        draw(ctx, x, y, dx, dy) {
-          if (!this.isActive) return;
-          if (!_.isUndefined(this.d)) {
-               this.d(ctx, this);
-               return;
-          }
-          _.each(this.boards, function(board) {
-              if (!_.isUndefined(board.t)) {
-                  if (_.indexOf(board.t, this.view.turn) < 0) return;
-              }
-              ctx.drawImage(board.h, x, y);
-              if (!_.isUndefined(board.d)) {
-                  board.d(ctx, this, board);
-              }
+          _.each(this.regions.reverse(), function (r) {
+            if (f) return;
+            f = r.send(code, event,
+              _.isUndefined(x) ? x : x - this.sx /* - w.x*/ ,
+              _.isUndefined(y) ? y : y - this.sy /* - w.y*/ ,
+              callback);
           }, this);
-          _.each(this.positions, function(pos) {
-             if (!_.isUndefined(pos.d)) {
-                 pos.d(ctx, this, pos);
-             }
-          }, this);
-          _.each(this.positions, function(pos) {
-             if (_.isUndefined(pos.setup)) return;
-             if (pos.setup.hints.length > 1) return;
-             let isDone = false;
-             _.each(pos.c, function(c) {
-                 if (isDone) return;
-                 if (isBadFrame(this.view, this, c, dx, dy)) return;
-                 if (!_.isUndefined(pos.setup)) {
-                     pos.setup.piece.d(ctx, this, pos, x + c.x + pos.setup.x - this.sx, y + c.y + pos.setup.y - this.sy);
-                 }
-                 isDone = true;
-             }, this);
-          }, this);
-          _.each(this.positions, function(pos) {
-             if (_.isUndefined(pos.setup)) return;
-             if (pos.setup.hints.length < 2) return;
-             pos.setup.x = pos.setup.hints.shift();
-             pos.setup.y = pos.setup.hints.shift();
-             let isDone = false;
-             _.each(pos.c, function(c) {
-                 if (isDone) return;
-                 if (isBadFrame(this.view, this, c, dx, dy)) return;
-                 if (!_.isUndefined(pos.setup)) {
-                     pos.setup.piece.d(ctx, this, pos, x + c.x + pos.setup.x - this.sx, y + c.y + pos.setup.y - this.sy);
-                 }
-                 isDone = true;
-             }, this);
-          }, this);
-          _.each(this.positions, function(pos) {
-             let isDone = false;
-             _.each(pos.c, function(c) {
-                 if (isDone) return;
-                 if (isBadFrame(this.view, this, c, dx, dy)) return;
-                 if (!_.isUndefined(this.view.markTargets) && (_.indexOf(this.view.markTargets, pos.name) >= 0)) {
-                     drawMark(ctx, x + c.x - this.sx, y + c.y - this.sy, c.dx, c.dy);
-                 }
-                 isDone = true;
-             }, this);
-          }, this);
-          _.each(this.regions, function(r) {
-             _.each(r.frames, function(w) {
-                 if (!_.isUndefined(w.t)) {
-                     if (_.indexOf(w.t, this.view.turn) < 0) return;
-                 }
-                 if (w.x + w.dx - this.sx < 0) return;
-                 if (w.y + w.dy - this.sy < 0) return;
-                 if (w.x - this.sx >= dx) return;
-                 if (w.y - this.sy >= dy) return;
-                 r.draw(ctx, x + w.x - this.sx, y + w.y - this.sy);
-             }, this);
-          }, this);
-        }
-
-        send(code, event, x, y, callback) {
-          let f = false;
-          if (!this.isActive) return false;
-          _.each(this.frames, function(w) {
-              if (!_.isUndefined(w.t)) {
+          if (!_.isUndefined(x) && !_.isUndefined(y)) {
+            _.each(this.positions, function (pos) {
+              if (f) return;
+              _.each(pos.c, function (w) {
+                if (!_.isUndefined(w.t)) {
                   if (_.indexOf(w.t, this.view.turn) < 0) return;
-              }
-              const wx = w.x; const wy = w.y;
-              if (_.isUndefined(x) || _.isUndefined(y) || inRect(w, x, y)) {
-                  if (!_.isUndefined(this.e)) {
-                      f = this.e(code, event, x - this.sz, y - this.sy, callback);
-                      if (f) return;
-                  }
-                  _.each(this.regions.reverse(), function(r) {
-                     if (f) return;
-                     f = r.send(code, event, 
-                         _.isUndefined(x) ? x : x - this.sx/* - w.x*/, 
-                         _.isUndefined(y) ? y : y - this.sy/* - w.y*/, 
-                         callback);
-                  }, this);
-                  if (!_.isUndefined(x) && !_.isUndefined(y)) {
-                      _.each(this.positions, function(pos) {
-                         if (f) return;
-                         _.each(pos.c, function(w) {
-                             if (!_.isUndefined(w.t)) {
-                                 if (_.indexOf(w.t, this.view.turn) < 0) return;
-                             }
-                             if (inRect(w, x - this.sx - wx, y - this.sy - wy)) {
-                                 f = callback(this.view.controller, code, event, x, y, pos);
-                             }
-                         }, this);
-                      }, this);
-                  }
-              }
-          }, this);
-          return f;
-        }
-    }
-
-    var drawMark = function(ctx, x, y, dx, dy) {
-      x += (dx / 2) | 0;
-      y += (dy / 2) | 0;
-      let r = dx / 4;
-      if (Math.abs(dy - dx) > 10) {
-          r = Math.min(dy, dx) / 2;
-      }
-      if (!_.isUndefined(Dagaz.View.MARK_R)) {
-          r = Dagaz.View.MARK_R;
-          if (r == 0) return;
-      }
-      ctx.beginPath();
-      ctx.fillStyle = "#00AA00";
-      ctx.arc(x + Dagaz.View.SHIFT_X, y + Dagaz.View.SHIFT_Y, r, 0, 2 * Math.PI);
-      ctx.fill();
-      ctx.stroke();
-    }
-
-    var isBadFrame = function(view, region, c, dx, dy) {
-      if (!_.isUndefined(c.t)) {
-          if (_.indexOf(c.t, view.turn) < 0) return true;
-      }
-      if (c.x - region.sx < 0) return true;
-      if (c.y - region.sy < 0) return true;
-      if (c.x + c.dx - region.sx >= dx) return true;
-      if (c.y + c.dy - region.sy >= dy) return true;
-      return false;
-    }
-
-    var inRect = function(obj, x, y) {
-      return (x >= obj.x) &&
-             (y >= obj.y) &&
-             (x < obj.x + obj.dx) &&
-             (y < obj.y + obj.dy);
-    }
-
-    class View {
-        constructor(design) {
-          this.design = design;
-          this.root = new Region(true);
-          this.root.addFrame(0, 0, canvas.width, canvas.height);
-          this.root.view = this;
-          this.pieces = [];
-          this.turn = 0;
-        }
-
-        addPiece(name, draw) {
-          if (_.isArray(name)) {
-              _.each(name, function(n) {
-                 this.addPiece(n, draw);
+                }
+                if (inRect(w, x - this.sx - wx, y - this.sy - wy)) {
+                  f = callback(this.view.controller, code, event, x, y, pos);
+                }
               }, this);
-              return;
-          }
-          const piece = {
-              n: name,
-              h: document.getElementById(name),
-              d: _.isUndefined(draw) ? drawPiece : draw
-          };
-          this.pieces.push(piece);
-        }
-
-        findPiece(name) {
-          for (let i = 0; i < this.pieces.length; i++) {
-               if (this.pieces[i].n == name) return this.pieces[i];
-          }
-          return null;
-        }
-
-        isLoaded() {
-          if (_.isUndefined(this.allLoaded)) {
-              if (!this.root.isLoaded()) return false;
-              for (let i = 0; i < this.pieces.length; i++) {
-                   const image = this.pieces[i].h;
-                   if (!image.complete || (image.naturalWidth == 0)) return false;
-                   this.pieces[i].dx = image.naturalWidth;
-                   this.pieces[i].dy = image.naturalHeight;
-              }
-              this.allLoaded = true;
-          }
-          return this.allLoaded;
-        }
-
-        addSetup(name, piece, model) {
-          const pos = this.root.findPosition(name);
-          if (pos !== null) {
-              pos.setup = {
-                  model: model,
-                  piece: piece,
-                  hints: [],
-                  x: 0, y: 0
-              };
-              this.invalidate();
+            }, this);
           }
         }
+      }, this);
+      return f;
+    }
+  }
 
-        setup(board) {
-          _.each(this.design.allPositions(), function(pos) {
-              const piece = board.getPiece(pos);
-              if (piece === null) return;
-              const name = Dagaz.Model.posToString(pos, this.design);
+  class View {
+    constructor(design) {
+      this.design = design;
+      this.root = new Region(true);
+      this.root.addFrame(0, 0, canvas.width, canvas.height);
+      this.root.view = this;
+      this.pieces = [];
+      this.turn = 0;
+    }
+
+    addPiece(name, draw) {
+      if (_.isArray(name)) {
+        _.each(name, function (n) {
+          this.addPiece(n, draw);
+        }, this);
+        return;
+      }
+      const piece = {
+        n: name,
+        h: document.getElementById(name),
+        d: _.isUndefined(draw) ? drawPiece : draw
+      };
+      this.pieces.push(piece);
+    }
+
+    findPiece(name) {
+      for (let i = 0; i < this.pieces.length; i++) {
+        if (this.pieces[i].n == name) return this.pieces[i];
+      }
+      return null;
+    }
+
+    isLoaded() {
+      if (_.isUndefined(this.allLoaded)) {
+        if (!this.root.isLoaded()) return false;
+        for (let i = 0; i < this.pieces.length; i++) {
+          const image = this.pieces[i].h;
+          if (!image.complete || (image.naturalWidth == 0)) return false;
+          this.pieces[i].dx = image.naturalWidth;
+          this.pieces[i].dy = image.naturalHeight;
+        }
+        this.allLoaded = true;
+      }
+      return this.allLoaded;
+    }
+
+    addSetup(name, piece, model) {
+      const pos = this.root.findPosition(name);
+      if (pos !== null) {
+        pos.setup = {
+          model: model,
+          piece: piece,
+          hints: [],
+          x: 0,
+          y: 0
+        };
+        this.invalidate();
+      }
+    }
+
+    setup(board) {
+      _.each(this.design.allPositions(), function (pos) {
+        const piece = board.getPiece(pos);
+        if (piece === null) return;
+        const name = Dagaz.Model.posToString(pos, this.design);
         //    console.log(name + ": " + piece.getOwner() + piece.getType());
-              this.addSetup(name, this.findPiece(piece.getOwner() + piece.getType()), piece);
-          }, this);
-        }
+        this.addSetup(name, this.findPiece(piece.getOwner() + piece.getType()), piece);
+      }, this);
+    }
 
-        apply(move) {
-          if (!_.isUndefined(this.move)) return false;
-          this.move = move;
-          this.step = 0;
+    apply(move) {
+      if (!_.isUndefined(this.move)) return false;
+      this.move = move;
+      this.step = 0;
+      this.changes = [];
+      return true;
+    }
+
+    createChanges() {
+      this.step++;
+      _.each(this.move.actions, function (a) {
+        if (a[3] != this.step) return;
+        let o = null;
+        let n = null;
+        let piece = null;
+        let model = null;
+        if (a[0] !== null) {
+          o = this.root.findAndLocate(a[0][0]);
+          if (o === null) return;
+          if (o.p.setup) {
+            piece = o.p.setup.piece;
+            model = o.p.setup.model;
+          }
+        }
+        if (a[1] !== null) {
+          n = this.root.findAndLocate(a[1][0]);
+          if (n === null) return;
+        }
+        if (a[2] !== null) {
+          const name = a[2][0].getOwner() + a[2][0].getType();
+          piece = this.findPiece(name);
+          if (piece === null) return;
+          model = a[2][0];
+        }
+        let c = 0;
+        if ((o !== null) && (n !== null)) {
+          o.p.setup.hints = [];
+          o.p.setup.x = 0;
+          o.p.setup.y = 0;
+          if (!_.isUndefined(this.move.hints)) {
+            for (let i = 0; i < this.move.hints.length; i++) {
+              if (_.isObject(this.move.hints[i])) {
+                o.p.setup.hints.push(this.move.hints[i].x);
+                o.p.setup.hints.push(this.move.hints[i].y);
+              } else {
+                const loc = this.root.findAndLocate(this.move.hints[i]);
+                if (loc !== null) {
+                  o.p.setup.hints.push(loc.x - o.x);
+                  o.p.setup.hints.push(loc.y - o.y);
+                }
+              }
+              c++;
+            }
+          } else {
+            c = Dagaz.View.STEP_CNT;
+            const dx = ((n.x - o.x) / c) | 0;
+            const dy = ((n.y - o.y) / c) | 0;
+            let x = 0;
+            let y = 0;
+            for (let i = 0; i < c; i++) {
+              x += dx;
+              y += dy;
+              o.p.setup.hints.push(x);
+              o.p.setup.hints.push(y);
+            }
+          }
+        }
+        this.changes.push({
+          c: c,
+          o: o,
+          n: n,
+          p: piece,
+          m: model
+        });
+      }, this);
+    }
+
+    animate() {
+      if (!_.isUndefined(this.changes) && !_.isUndefined(this.move)) {
+        let f = true;
+        _.each(this.changes, function (c) {
+          if ((c.c <= 2) && (c.n !== null) && (c.o !== null) && c.n.p.setup) {
+            delete c.n.p.setup;
+          }
+          if (c.c <= 1) return;
+          c.c--;
+          f = false;
+        });
+        if (f) {
+          _.each(this.changes, function (c) {
+            if ((c.o !== null) && !_.isUndefined(c.o.p.setup)) {
+              delete c.o.p.setup;
+            }
+            if (c.n === null) return;
+            if (c.p === null) return;
+            c.n.p.setup = {
+              model: c.m,
+              piece: c.p,
+              hints: [],
+              x: 0,
+              y: 0
+            };
+          });
           this.changes = [];
-          return true;
-        }
-
-        createChanges() {
-          this.step++;
-          _.each(this.move.actions, function(a) {
-               if (a[3] != this.step) return;
-               let o = null; let n = null;
-               let piece = null; let model = null;
-               if (a[0] !== null) {
-                   o = this.root.findAndLocate(a[0][0]);
-                   if (o === null) return;
-                   if (o.p.setup) {
-                       piece = o.p.setup.piece;
-                       model = o.p.setup.model;
-                   }
-               }
-               if (a[1] !== null) {
-                   n = this.root.findAndLocate(a[1][0]);
-                   if (n === null) return;
-               }
-               if (a[2] !== null) {
-                   const name = a[2][0].getOwner() + a[2][0].getType();
-                   piece = this.findPiece(name);
-                   if (piece === null) return;
-                   model = a[2][0];
-               }
-               let c = 0;
-               if ((o !== null) && (n !== null)) {
-                   o.p.setup.hints = [];
-                   o.p.setup.x = 0; o.p.setup.y = 0;
-                   if (!_.isUndefined(this.move.hints)) {
-                        for (var i = 0; i < this.move.hints.length; i++) {
-                             if (_.isObject(this.move.hints[i])) {
-                                 o.p.setup.hints.push(this.move.hints[i].x);
-                                 o.p.setup.hints.push(this.move.hints[i].y);
-                             } else {
-                                 const loc = this.root.findAndLocate(this.move.hints[i]);
-                                 if (loc !== null) {
-                                     o.p.setup.hints.push(loc.x - o.x);
-                                     o.p.setup.hints.push(loc.y - o.y);
-                                 }
-                             }
-                             c++;
-                        }
-                   } else {
-                        c = Dagaz.View.STEP_CNT;
-                        const dx = ((n.x - o.x) / c) | 0;
-                        const dy = ((n.y - o.y) / c) | 0;
-                        let x = 0; let y = 0;
-                        for (var i = 0; i < c; i++) {
-                             x += dx; y += dy;
-                             o.p.setup.hints.push(x);
-                             o.p.setup.hints.push(y);
-                        }
-                  }
-               }
-               this.changes.push({
-                  c: c,
-                  o: o,
-                  n: n,
-                  p: piece,
-                  m: model
-               });
-          }, this);
-        }
-
-        animate() {
-          if (!_.isUndefined(this.changes) && !_.isUndefined(this.move)) {
-               let f = true;
-               _.each(this.changes, function(c) {
-                   if ((c.c <= 2) && (c.n !== null) && (c.o !== null) && c.n.p.setup) {
-                       delete c.n.p.setup;
-                   }
-                   if (c.c <= 1) return;
-                   c.c--;
-                   f = false;
-               });
-               if (f) {
-                   _.each(this.changes, function(c) {
-                        if ((c.o !== null) && !_.isUndefined(c.o.p.setup)) {
-                            delete c.o.p.setup;
-                        }
-                        if (c.n === null) return;
-                        if (c.p === null) return;
-                        c.n.p.setup = {
-                            model: c.m,
-                            piece: c.p,
-                            hints: [],
-                            x: 0, y: 0
-                        };
-                   });
-                   this.changes = [];
-                   this.createChanges();
-                   if (this.changes.length == 0) {
-                       delete this.changes;
-                       delete this.move;
-                       if (this.controller.done) {
-                           this.controller.done();
-                       }
-                   }
-               }
-               this.invalidate();
+          this.createChanges();
+          if (this.changes.length == 0) {
+            delete this.changes;
+            delete this.move;
+            if (this.controller.done) {
+              this.controller.done();
+            }
           }
         }
-
-        draw() {
-          if (!this.isLoaded()) return;
-          this.animate();
-          if (isValid) return;
-          const ctx = canvas.getContext("2d");
-          ctx.clearRect(0, 0, this.root.dx, this.root.dy);
-          this.root.draw(ctx, 0, 0, this.root.dx, this.root.dy);
-          isValid = true;
-        }
-
-        send(code, event, x, y, callback) {
-          if (code == Dagaz.Controller.Event.MARK_TARGETS) {
-              this.markTargets = event;
-              this.invalidate();
-              return true;
-          }
-          if (code == Dagaz.Controller.Event.MARK_CAPTURES) {
-              this.markCaptures = event;
-              return true;
-          }
-          if (code == Dagaz.Controller.Event.MARK_SELECTED) {
-              this.markSelected = event;
-              return true;
-          }
-          if (code == Dagaz.Controller.Event.STATE_CHANGED) {
-              this.state = event;
-              return true;
-          }
-          if (code == Dagaz.Controller.Event.STATUS_CHANGED) {
-              this.status = event;
-              return true;
-          }
-          if (code == Dagaz.Controller.Event.TURN_CHANGED) {
-              this.turn = event;
-              this.invalidate();
-              return true;
-          }
-          return this.root.send(code, event, x, y, callback);
-        }
-
-        invalidate() {
-           isValid = false;
-        }
-
-        setController(controller) {
-          this.controller = controller;
-        }
-    }
-
-    Dagaz.View.getView = function(design) {
-      if (_.isUndefined(Dagaz.View.view)) {
-          Dagaz.View.view = new View(design);
-      }
-      return Dagaz.View.view;
-    }
-
-    var drawPiece = function(ctx, region, pos, x, y) {
-      let isSaved = false;
-      const view  = region.view;
-      const piece = pos.setup.piece;
-      const l = region.locatePosition(pos);
-      if (l === null) return;
-      if (Dagaz.Model.showCaptures) {
-          const ix = Dagaz.Model.stringToPos(pos.name, view.design);
-          if (!_.isUndefined(this.markCaptures) && (_.indexOf(this.markCaptures, ix) >= 0)) {
-              ctx.save();
-              ctx.globalAlpha = Dagaz.View.STRIKE_ALPHA;
-              isSaved = true;
-          }
-      }
-      x += (l.dx - piece.dx) / 2 | 0;
-      y += (l.dy - piece.dy) / 2 | 0;
-      ctx.drawImage(piece.h, x, y, piece.dx, piece.dy);
-      if (isSaved) {
-          ctx.restore();
+        this.invalidate();
       }
     }
-})();
+
+    draw() {
+      if (!this.isLoaded()) return;
+      this.animate();
+      if (isValid) return;
+      const ctx = canvas.getContext("2d");
+      ctx.clearRect(0, 0, this.root.dx, this.root.dy);
+      this.root.draw(ctx, 0, 0, this.root.dx, this.root.dy);
+      isValid = true;
+    }
+
+    send(code, event, x, y, callback) {
+      if (code == Dagaz.Controller.Event.MARK_TARGETS) {
+        this.markTargets = event;
+        this.invalidate();
+        return true;
+      }
+      if (code == Dagaz.Controller.Event.MARK_CAPTURES) {
+        this.markCaptures = event;
+        return true;
+      }
+      if (code == Dagaz.Controller.Event.MARK_SELECTED) {
+        this.markSelected = event;
+        return true;
+      }
+      if (code == Dagaz.Controller.Event.STATE_CHANGED) {
+        this.state = event;
+        return true;
+      }
+      if (code == Dagaz.Controller.Event.STATUS_CHANGED) {
+        this.status = event;
+        return true;
+      }
+      if (code == Dagaz.Controller.Event.TURN_CHANGED) {
+        this.turn = event;
+        this.invalidate();
+        return true;
+      }
+      return this.root.send(code, event, x, y, callback);
+    }
+
+    invalidate() {
+      isValid = false;
+    }
+
+    setController(controller) {
+      this.controller = controller;
+    }
+  }
+
+  Dagaz.View.getView = function (design) {
+    if (_.isUndefined(Dagaz.View.view)) {
+      Dagaz.View.view = new View(design);
+    }
+    return Dagaz.View.view;
+  }
+}
