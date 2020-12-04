@@ -1,6 +1,6 @@
 # Dagaz
 
-Dagaz is an universal engine to develop abstract board games with JavaScript/HTML. It provides graphical user interface, AI player, and a large collection of implements of board games and logical puzzles.
+Dagaz is a universal engine to develop abstract board games with JavaScript/HTML. It provides graphical user interface, AI player, and a large collection of implements of board games and logical puzzles.
 
 ## Demo
 
