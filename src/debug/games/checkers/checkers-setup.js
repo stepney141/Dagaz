@@ -1,11 +1,25 @@
 (function() {
 
-var checkVersion = Dagaz.Model.checkVersion;
 var row = 8;
 
+var checkVersion = Dagaz.Model.checkVersion;
+
 Dagaz.Model.checkVersion = function(design, name, value) {
-  if (name != "checkers-setup") {
+  if (name != "checkers-setup") {     
       checkVersion(design, name, value);
+  }
+}
+
+var getSetup = function(setup) {
+  var str = window.location.search.toString();
+  if (setup) {
+      str = setup;
+  }
+  var result = str.match(/[?&]setup=([^&]*)/);
+  if (result) {
+      return result[1];
+  } else {
+      return "";
   }
 }
 
@@ -17,12 +31,18 @@ var getY = function(pos) {
   return (pos / row) | 0;
 }
 
-var notValid = function(pos) {
+var notValid = function(pos, player) {
   if (getY(pos) % 2 == 0) {
-      return getX(pos) % 2 == 0;
+      if (getX(pos) % 2 == 0) return true;
   } else {
-      return getX(pos) % 2 != 0;
+      if (getX(pos) % 2 != 0) return true;
   }
+  if (player == 2) {
+      var x = getX(pos);
+      var y = 7 - getY(pos);
+      return x == y;
+  }
+  return false;
 }
 
 var isAttacked = function(a, positions) {
@@ -50,25 +70,30 @@ Dagaz.AI.isSafePosition = function(design, board, pos) {
   return r;
 }
 
-Dagaz.Model.setup = function(board) {
+Dagaz.Model.setup = function(board, init) {
+  if (getSetup(init)) {
+      setup(board, init);
+      return;
+  }
   var design = Dagaz.Model.design;
   var cnt = design.positions.length;
   row = Math.sqrt(cnt) | 0;
   var positions = [];
-  for (var i = 0; i < 3; i++) {
-       var pos = _.random(0, cnt - 1);
-       while (notValid(pos) || (_.indexOf(positions, pos) >= 0)) {
-           pos = _.random(0, cnt - 1);
-       }
-       board.setPiece(pos, Dagaz.Model.createPiece(1, 1));
-       positions.push(pos);
+  if (!_.isUndefined(design.reserve)) {
+      _.each(_.keys(design.reserve), function(type) {
+          _.each(_.keys(design.reserve[type]), function(player) {
+               var piece = Dagaz.Model.createPiece(+type, +player);
+               for (var i = 0; i < design.reserve[type][player]; i++) {
+                    var pos = _.random(0, cnt - 1);
+                    while (notValid(pos, +player) || (_.indexOf(positions, pos) >= 0)) {
+                        pos = _.random(0, cnt - 1);
+                    }
+                    board.setPiece(pos, Dagaz.Model.createPiece(+type, +player));
+                    positions.push(pos);
+               }
+          });
+      });
   }
-  positions.push(row - 1);
-  var pos = _.random(0, cnt - 1);
-  while (notValid(pos) || isAttacked(pos, positions)) {
-      pos = _.random(0, cnt - 1);
-  }
-  board.setPiece(pos, Dagaz.Model.createPiece(1, 2));
 }
 
 })();

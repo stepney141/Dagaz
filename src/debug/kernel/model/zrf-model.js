@@ -735,7 +735,10 @@ ZrfDesign.prototype.allPlayers = function() {
   return _.range(1, this.playerNames.length);
 }
 
-ZrfDesign.prototype.reserve = function(player, piece, cnt) {
+ZrfDesign.prototype.reserve = function(player, piece, cnt, selector) {
+  if (!_.isUndefined(selector) && (selector != Dagaz.Model.getSetupSelector())) {
+      return;
+  }
   var o = Dagaz.find(this.playerNames, player);
   var t = Dagaz.find(this.pieceNames, piece);
   if ((o < 0) || (t < 0)) {
@@ -842,7 +845,10 @@ ZrfDesign.prototype.addPiece = function(name, type, price) {
   this.price[type] = price ? price : 1;
 }
 
-ZrfDesign.prototype.addMove = function(type, template, params, mode, sound) {
+ZrfDesign.prototype.addMove = function(type, template, params, mode, sound, selector) {
+  if (!_.isUndefined(selector) && (selector != Dagaz.Model.getSetupSelector())) {
+      return;
+  }
   if (_.isUndefined(this.pieces[type])) {
       this.pieces[type] = [];
   }
@@ -857,7 +863,10 @@ ZrfDesign.prototype.addMove = function(type, template, params, mode, sound) {
   }
 }
 
-ZrfDesign.prototype.addDrop = function(type, template, params, mode, sound) {
+ZrfDesign.prototype.addDrop = function(type, template, params, mode, sound, selector) {
+  if (!_.isUndefined(selector) && (selector != Dagaz.Model.getSetupSelector())) {
+      return;
+  }
   if (_.isUndefined(this.pieces[type])) {
       this.pieces[type] = [];
   }

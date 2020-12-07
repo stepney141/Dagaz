@@ -8,8 +8,11 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var getSetup = function() {
+var getSetup = function(setup) {
   var str = window.location.search.toString();
+  if (setup) {
+      str = setup;
+  }
   var result = str.match(/[?&]setup=([^&]*)/);
   if (result) {
       return result[1];
@@ -42,29 +45,31 @@ var notValid = function(design, board, pos, piece) {
   return Dagaz.Model.checkPositions(design, board, piece.player, [ pos ]);
 }
 
-var getPosition = function(design, board, piece) {
-  var pos = _.random(0, design.positions.length - 1);
-  while (notValid(design, board, pos, piece)) {
-      pos = _.random(0, design.positions.length - 1);
+var getPosition = function(design, board, piece, positions) {
+  var ix = _.random(0, positions.length - 1);
+  while (notValid(design, board, positions[ix], piece)) {
+      ix = _.random(0, positions.length - 1);
   }
-  return pos;
+  return positions[ix];
 }
 
 var setup = Dagaz.Model.setup;
 
-Dagaz.Model.setup = function(board) {
-  if (getSetup()) {
-      setup(board);
+Dagaz.Model.setup = function(board, init) {
+  if (getSetup(init)) {
+      setup(board, init);
       return;
   }
   var design = Dagaz.Model.design;
+  var positions = _.range(64);
   if (!_.isUndefined(design.reserve)) {
       _.each(_.keys(design.reserve), function(type) {
           _.each(_.keys(design.reserve[type]), function(player) {
                var piece = Dagaz.Model.createPiece(+type, +player);
                for (var i = 0; i < design.reserve[type][player]; i++) {
-                    var pos = getPosition(design, board, piece);
+                    var pos = getPosition(design, board, piece, positions);
                     board.setPiece(pos, piece);
+                    positions = _.without(positions, pos);
                }
           });
       });

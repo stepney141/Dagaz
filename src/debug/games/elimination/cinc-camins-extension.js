@@ -11,8 +11,6 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var checkGoals = Dagaz.Model.checkGoals;
-
 Dagaz.AI.eval = function(design, params, board, player) {
   var r = 0;
   _.each(design.allPositions(), function(pos) {
