@@ -392,7 +392,6 @@
 
 (variant
   (title "12 Men")
-  (default)
 
   (board
      (image "images/12-men.bmp")
