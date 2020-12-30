@@ -1,30 +1,72 @@
+- Нарды
+  - https://bkgm.com/rgb/rgb.cgi?view+1537
+  - http://www.backgammon-game.eu/game_tawla31.html
+  - https://www.bkgm.com/variants/Trictrac.html
+
+- DagazServer
+  -  some descriptions about how to use DagazServer
+     - The server probably requires a privacy policy everyone can read, even ones who don't sign in.
+  - a rating system
+  - a time control system with a game clock
+
+- UCI
+  - https://habr.com/ru/post/532314/
+
+- Wikipedia
+  - Статьи про Dagaz
+
 - Dual Go
   - Разрешить самоубийственные ходы
 
 - Dice Chess
   - https://dicechess.net/ru/правила/
 
+- Трёхцветное Гомоку
+  - https://www.popmech.ru/technologies/457422-rendzyu-dlya-troih-igra-v-kotoruyu-mozhno-vyigrat-ne-igraya/?mindbox-click-id=f423ce17-7bb7-43b0-90db-67eb1d10e2da
+  - https://www.pvsm.ru/e-to-interesno/311726
+
+- Paco Sako
+  - https://spacebiff.com/2019/08/15/paco-sako/
+  - https://www.facebook.com/pacosakosg/
+
+- Flex
+  - https://m.habr.com/ru/post/467049/
+
 - Launcher
-    - Seega
-      - Подвисает второй drop-ход
-      - Зависла после первого хода чёрных (skip-pass?)
+    - GarboChess
+      - external_ai - ссылка на user бота (локальный бот имеет приоритет) вызов из launch
+      - заполнять last_setup при создании сессии (до первого хода)
+    - session-manager
+      - В addMove если есть альтернативный ход
+        - Взять branch из session и увеличить на 1
+        - Создать ход с новым branch
+        - Если не AI создать alert связанный с ходом
+      - Прокручивая ходы вперёд брать максимальный branch не превышающий заданного в session
+    - Восстановление пароля по устаревшему токену (переход в профиль)
+    - Bushi, Dual Go, Chu Shogi, Stappeldamen
+      - Используется board.parent
+    - Chess Go, Passive Chess
+      - Используется board.move
+    - Stratego
+      - http://127.0.0.1:3000/dagaz/stratego-blue.html?sid=1141
+    - Ordo, Abalone
+      - Нарушилась нумерация в turn_num (повторено значение)
+    - Chu Shogi
+      - lion-extension не работает
+        - http://127.0.0.1:3000/dagaz/chu-shogi-north.html?sid=1559
+      - есть еще нюанс - при загрузке игры фигурка летит очень быстро (последний ход), не всегда даже заметно. м.б, сделать вместо 100ms - 1000ms?
+    - Too Much Chess
+      - https://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=1777
+    - Magyar Dama
+      - Не передаётся ход если нет возможности переместить тайл (доработать skip-pass?)
     - QXO
       - Теряется второй полуход бота
       - Нарушается порядок ходов при обновлении страницы
-    - Russian Checkers
-      - Подключить бота не конфликтуя с ботом для 2 расстановки
-    - Hoppel-Poppel
-      - https://www.pychess.org/variant/hoppelpoppel
-    - Chu Shogi
-      - http://games.dtco.ru/dagaz/chu-shogi-north-kanji.html?sid=1559
-      - ?setup=28:2;;37:2;36:2;34:2;32:2;29:2;34:2;36:2;37:2;;28:2;22:2;+2;31:2;21:2;20:2;31:2;;2:2;;22:2;23:2;;4:2;;16:2;;14:2;;18:2;4:2;33:2;23:2;0:2;25:2;;18:2;33:2;0:2;10:1;;0:2;;25:2;0:2;;0:2+3;+2;1:2;0:2;+7;0:2;14:1;+1;0:2;+2;0:1;+11;1:1;0:1+1;+1;1:1;0:1;+1;0:1+1;;0:1;21:1;20:1;0:1;;0:1;;0:1+1;23:1;25:1;4:1;;16:1;+1;4:1;+1;25:1;23:1;22:1;;2:1;;31:1;;6:1;31:1;16:1;37:1;;22:1;28:1;33:1;37:1;36:1;34:1;29:1;32:1;34:1;36:1;;33:1;28:1;+1;&turn=1
-      - 6c-6d White Lion 6d-7c White Lion
     - map
       - Закладки для позиционирования в map
       - Значки "AI" для игр с поддержкой ботов
     - game
       - индикация очерёдности хода
-      - пометка последней сходившей фигуры
       - сделать внизу кнопульку "export to kifu" - и вывести этот запрос
       - только вот насчет "книги жалоб и предложений" - м.б. сделать небольшую формочку "отправить письмо" - просто от кого, обратный адрес, тема и текст сообщения? что бы тебе писалось в какую-нибудь табличку?
     - settings
@@ -50,8 +92,6 @@
       - Индикация пользователей и игр в online, передача сообщений
     - backend
       - Проброс входящего IP (nginx.txt)
-    - Three Men Morris
-      - Откатила ход красных после победы синих: http://games.dtco.ru/dagaz/triangle.html?sid=1371
     - Chess
       - При просмотре завершённой партии сообщение о победе не воспроизводится
     - Backgammon
@@ -60,8 +100,6 @@
       - Правило пирога
     - Janggi
       - Оппонент не принимает ходы после подключения в процессе начальной расстановки до рефреша
-    - Tigers, Litter Chess, Seega, Tafl, Three Crowns
-      - Используется board.parent
     - Luzhanqi (ходы инженера не работают)
       - file:///E:/work/Dagaz/src/debug/games/races/luzhanqi-test.htm?setup=2:2+1;5:2;6:2;7:2;8:2;10:2+1;;9:2;;8:2;1:2;3:2;4:2;;6:2;8:2;11:2;10:2;;9:2;+1;0:2;3:2;4:2;5:2;6:2;0:1;+2;3:1+1;4:1;6:1+1;8:1;2:1;;4:1;;9:1;8:1;2:1;1:1;;6:1;7:1;10:1;5:1;;9:1;;10:1;11:1;;8:1;5:1;7:1+1;10:1;&turn=50&reserve=0,0,0,0,0,0,0,0,0,0,0,0,0,;0,0,0,0,0,0,0,0,0,0,0,0,0,
     - Stapeldammen
@@ -132,42 +170,34 @@
 - 1D Chess
   - https://gumroad.com/l/1DChess
 
-- Нарды
-  - http://www.backgammon-game.eu/game_tawla31.html
-  - https://www.bkgm.com/variants/Trictrac.html
-
 - Fighting Checkers
   - https://www.thegamecrafter.com/games/Fighting-Checkers
 
 - Dagaz
   - games
-    - Gonnect
+    - Neutron
+      - https://en.wikipedia.org/wiki/Neutron_(game)
+    - HiQue
+    - Hasami Shogi (variants)
     - Марсельские шахматы
+      - https://ru.wikipedia.org/wiki/Марсельские_шахматы
+        - Если игрок при первом передвижении своей фигуры или пешки объявляет королю противника шах, то он теряет право на второе движение
+        - Взять пешку на проходе можно даже в том случае, если она перемещалась первым движением из двух
+        - Брать пешку на проходе нужно своим первым движением, но если на предыдущем ходе противник сделал два «длинных» движения пешками через битое поле, то ответным ходом на проходе можно взять обе эти пешки
+    - Gonnect
     - Hishigata Shogi
       - https://glukkazan.github.io/shogi/hishigata-shogi-board.htm
-    - Hasami Shogi (variants)
-    - Jasir
     - FangQi (variants)
     - Tibetian checkers
     - Virus Wars (paper games)
     - Descent
     - Stoical Go
     - Tibetian Go
-    - Makyek
-    - Neutral King
-    - Resurrection Chess
     - Gravity Chess
-    - Anti King Chess
-    - Abalone (selector)
     - Storm the Ivory Tower (variants)
-    - Captain's Mistress
-    - Chessball
-    - Hanga Roa
     - Kamisado (rounds)
-    - Ordo (variants)
     - Dameo
     - Bolotoudou
-    - Escalation
     - Omega Chess Advanced
     - Senegalese Checkers
     - Yote
@@ -175,7 +205,6 @@
     - Abalala'e
     - Congkak
     - Dakon
-    - Ohojichi
     - Ohvalhu
     - Selus
     - Pasang (selector)
