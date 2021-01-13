@@ -33,14 +33,17 @@
   - https://m.habr.com/ru/post/467049/
 
 - Launcher
+    - Mana
+      - После drop-а пометка последней сходившей фигуры остаётся у противника (board.parent)
     - GarboChess
-      - Проверить рокировки (в дебютах)
-      - Запрещать загрузку chess-ai для внешних ботов!
-      - external_ai - ссылка на user бота (локальный бот имеет приоритет) вызов из launch
-      - Не откатывается ход бота при рефреше
+      - Передавать статистику AI в комментарий к ходу
+      - Регулировать силу бота в зависимости от рейтинга игрока
       - Шахматы с минами (скрывать мины в FEN при передаче AI, восстанавливать целые)
       - "Голый король" (резервы передавать отдельно, до turn)
       - "Ловец душ"
+      - Шатрандж
+      - Шахматы Гарднера
+      - Игры без короля
     - session-manager
       - В addMove если есть альтернативный ход
         - Взять branch из session и увеличить на 1
@@ -53,7 +56,7 @@
       - в Watch sessions м.б. лучше выбор кнопочками сделать, а не списком?
       - на странице Archive неплохо было бы добавить колонку результата - кто выиграл, или ничья, или по времени закончилась
     - Восстановление пароля по устаревшему токену (переход в профиль)
-    - Bushi, Dual Go, Chu Shogi, Stappeldamen
+    - Mana, Bushi, Dual Go, Chu Shogi, Stappeldamen
       - Используется board.parent
     - Chess Go, Passive Chess
       - Используется board.move
@@ -185,6 +188,15 @@
 
 - Dagaz
   - games
+    - Nubia
+    - Terrace
+    - Cannon
+    - NotChess
+    - Shogi (variants)
+    - Focus
+    - Hunt
+    - Konane
+    - Pilare
     - Neutron
       - https://en.wikipedia.org/wiki/Neutron_(game)
     - HiQue
@@ -209,9 +221,7 @@
     - Dameo
     - Bolotoudou
     - Omega Chess Advanced
-    - Senegalese Checkers
     - Yote
-    - Mana
     - Abalala'e
     - Congkak
     - Dakon
