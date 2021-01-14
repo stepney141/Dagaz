@@ -33,8 +33,9 @@
   - https://m.habr.com/ru/post/467049/
 
 - Launcher
-    - Mana
-      - После drop-а пометка последней сходившей фигуры остаётся у противника (board.parent)
+    - Terrace
+      - Не работает анимация перемещений
+      - Не работают боты
     - GarboChess
       - Передавать статистику AI в комментарий к ходу
       - Регулировать силу бота в зависимости от рейтинга игрока
@@ -56,7 +57,7 @@
       - в Watch sessions м.б. лучше выбор кнопочками сделать, а не списком?
       - на странице Archive неплохо было бы добавить колонку результата - кто выиграл, или ничья, или по времени закончилась
     - Восстановление пароля по устаревшему токену (переход в профиль)
-    - Mana, Bushi, Dual Go, Chu Shogi, Stappeldamen
+    - Bushi, Dual Go, Chu Shogi, Stappeldamen
       - Используется board.parent
     - Chess Go, Passive Chess
       - Используется board.move
@@ -189,7 +190,6 @@
 - Dagaz
   - games
     - Nubia
-    - Terrace
     - Cannon
     - NotChess
     - Shogi (variants)
