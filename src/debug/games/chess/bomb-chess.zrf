@@ -17,6 +17,7 @@
 
 (define pawn-step (
   $1 (verify enemy?)
+  (verify (not-piece? Bomb))
   (if (in-zone? last-rank)
       (add Queen)
    else
@@ -48,7 +49,7 @@
 
 (define slide (
   $1 
-  (while empty? add $1)
+  (while (or empty? (piece? Bomb)) add $1)
   (verify not-friend?)
   add
 ))
@@ -71,6 +72,12 @@
   $1 (verify friend?) (verify (piece? Rook))
   cascade
   $2 $2 $2
+  add
+))
+
+(define king-step (
+  $1 (verify not-friend?)
+  (verify (not-piece? Bomb))
   add
 ))
 
@@ -175,8 +182,8 @@
      (image White "images/wking.bmp"
             Black "images/bking.bmp")
      (moves
-         (step n) (step s) (step w) (step e)
-         (step nw) (step sw) (step ne) (step se)
+         (king-step n) (king-step s) (king-step w) (king-step e)
+         (king-step nw) (king-step sw) (king-step ne) (king-step se)
          (O-O e w) (O-O-O w e)
      )
   )
