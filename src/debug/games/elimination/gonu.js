@@ -27,7 +27,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-blink", "false");
-    design.checkVersion("gonu-extension", "true");
 
     design.addDirection("w");
     design.addDirection("e");
