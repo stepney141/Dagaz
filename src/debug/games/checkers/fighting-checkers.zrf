@@ -31,61 +31,35 @@
 (define checker-jump (
    $1 (verify friend?) 
    $1 (verify empty?)
-   (add-partial jump-type)
+   (if (in-zone? last-rank)
+       (add King)
+    else
+       (add-partial jump-type)
+   )
 ))
 
 (define king-shift (
-   $1 (while empty?
-       add $1
-   )
+   $1 (verify empty?)
+   add
+))
+
+(define king-leap (
+   $1 (verify empty?)
+   $1 (verify empty?)
+   add
 ))
 
 (define king-capture (
-   $1 (while empty? $1)
-   (verify enemy?)
-   $1 (while empty?
-       mark
-       (while empty? 
-          (opposite $1)
-       ) 
-       capture
-       back
-       (add-partial continue-type) $1
-   )
-))
-
-(define king-continue (
-   $1 (while empty? 
-       $1 (verify not-last-from?)
-   )
-   (verify enemy?)
-   $1 (while empty?
-       mark
-       (while empty? 
-          (opposite $1)
-       ) 
-       capture
-       back
-       (add-partial continue-type) $1
-   )
+   $1 (verify enemy?) 
+   capture 
+   $1 (verify empty?)
+   (add-partial jump-type)
 ))
 
 (define king-jump (
-   $1 (while empty? $1)
-   (verify friend?)
-   $1 (while empty?
-       (add-partial continue-type) $1
-   )
-))
-
-(define king-continue-jump (
-   $1 (while empty? 
-       $1 (verify not-last-from?)
-   )
-   (verify friend?)
-   $1 (while empty?
-       (add-partial continue-type) $1
-   )
+   $1 (verify friend?) 
+   $1 (verify empty?)
+   (add-partial jump-type)
 ))
 
 (game
@@ -136,18 +110,15 @@
             Black "images/bdamone.bmp")
      (moves
          (move-type jump-type)
-         (king-jump nw) (king-jump ne) (king-jump sw) (king-jump se)
-         (king-jump n) (king-jump e) (king-jump w) (king-jump s)
          (king-capture nw) (king-capture ne) (king-capture sw) (king-capture se)
-         (king-capture n) (king-capture e) (king-capture w) (king-capture s)
-         (move-type continue-type)
-         (king-continue nw) (king-continue ne) (king-continue sw) (king-continue se)
-         (king-continue n) (king-continue e) (king-continue w) (king-continue s)
-         (king-continue-jump nw) (king-continue-jump ne) (king-continue-jump sw) (king-continue-jump se)
-         (king-continue-jump n) (king-continue-jump e) (king-continue-jump w) (king-continue-jump s)
+         (king-capture n) (king-capture e) (king-capture s) (king-capture w)
+         (king-jump nw) (king-jump ne) (king-jump sw) (king-jump se)
+         (king-jump n) (king-jump e) (king-jump s) (king-jump w)
          (move-type normal-type)
          (king-shift nw) (king-shift ne) (king-shift sw) (king-shift se)
-         (king-shift n) (king-shift e) (king-shift w) (king-shift s)
+         (king-shift n) (king-shift e) (king-shift s) (king-shift w)
+         (king-leap nw) (king-leap ne) (king-leap sw) (king-leap se)
+         (king-leap n) (king-leap e) (king-leap s) (king-leap w)
      )
   )
 
