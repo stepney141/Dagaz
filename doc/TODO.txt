@@ -1,6 +1,3 @@
-- Fighting Checkers
-  - Зацикливание
-
 - Chess
   - Запретить длинный ход пешкой в 4-ой расстановке
 
@@ -52,11 +49,16 @@
 
 - Launcher
     - ai
+      - Для Resurrection Chess отрезать верхнюю часть FEN перед передачей в AI
+      - Hoppel-Poppel Chess (internal ai)
+      - Не могу сделать встроенного бота для 8-ой расстановки Chess
       - XiangQi
-        - Зависает See
+        - a10 - a10
+        - Ошибка на UnmakeMove
+        - После g8- h10: fen = 1h1a1a1hr/4g4/9/s1s1S1s1s/9/9/S1S3S1S/6H2/9/RHEAGAE2 w
+          - g_board[from] = 0 (в See)
         - Ошибочный ход советником g8-h10 (не фиксируется шах пушкой)
       - Если ограничения времени недостаточно для уменьшения силы игры, ограничивать max ply   
-    - Восстановление пароля по устаревшему токену (переход в профиль)
     - Возможность кастомизации label-ов в зависимости от игры и локализации
     - Описание правил
       - Maharadja
@@ -85,7 +87,8 @@
       - Bushi
       - Constitutional Checkers
       - Dark XiangQi
-    - Игра за нескольких игроков (Yonin Shogi, Chinese Checkers, Traverse)
+    - Игра за нескольких игроков (Yonin Shogi, Chinese Checkers, Traverse, Martian Chess)
+      - Режим игры за 2 игроков (коалиции)
       - Изменить goal (все игроки одной из сторон должны закончить игру)
       - Доработать skip-pass (пропуск хода несколькими игроками)
       - Доработать app (игра за нескольких игроков, поддержка встраиваемых ботов)
@@ -104,10 +107,6 @@
           - Как играть за чёрных?
         - Сдвоенную фигуру в FEN перекодировать в виде пешки
       - "Голый король" (резервы передавать отдельно, до turn)
-      - "Ловец душ"
-      - Шатрандж
-      - Шахматы Гарднера
-      - Игры без короля
     - Go
       - https://habr.com/ru/post/311392/
       - https://senseis.xmp.net/?ComputerGo
@@ -267,10 +266,8 @@
     - Traverse (2 players)
     - Neo Rithmomachia
     - Gravity Chess
-    - Watermelon Chess
     - Cannon
     - Hasami Shogi (variants)
-    - Shogi (variants)
     - Euclid
     - GIPF
       - https://ru.wikipedia.org/wiki/GIPF

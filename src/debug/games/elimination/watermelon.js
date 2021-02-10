@@ -24,6 +24,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("animate-captures", "false");
     design.checkVersion("smart-moves", "true");
     design.checkVersion("show-blink", "false");
+    design.checkVersion("show-captures", "false");
     design.checkVersion("watermelon-extension", "true");
 
     design.addDirection("n");
@@ -64,24 +65,37 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(0, ZRF.FUNCTION,	25);	// to
     design.addCommand(0, ZRF.FUNCTION,	28);	// end
 
+    design.addCommand(1, ZRF.FUNCTION,	1);	// empty?
+    design.addCommand(1, ZRF.FUNCTION,	20);	// verify
+    design.addCommand(1, ZRF.FUNCTION,	25);	// to
+    design.addCommand(1, ZRF.FUNCTION,	28);	// end
+
     design.addPiece("Stone", 0);
     design.addMove(0, 0, [0], 0);
     design.addMove(0, 0, [1], 0);
     design.addMove(0, 0, [2], 0);
     design.addMove(0, 0, [3], 0);
+    design.addDrop(0, 1, [], 0);
 
-    design.setup("White", "Stone", 5);
-    design.setup("White", "Stone", 6);
-    design.setup("White", "Stone", 7);
-    design.setup("White", "Stone", 8);
-    design.setup("White", "Stone", 9);
-    design.setup("White", "Stone", 14);
-    design.setup("Black", "Stone", 1);
-    design.setup("Black", "Stone", 2);
-    design.setup("Black", "Stone", 3);
-    design.setup("Black", "Stone", 11);
-    design.setup("Black", "Stone", 0);
-    design.setup("Black", "Stone", 12);
+    design.setupSelector(2);
+
+    design.setup("White", "Stone", 5, 1);
+    design.setup("White", "Stone", 6, 1);
+    design.setup("White", "Stone", 7, 1);
+    design.setup("White", "Stone", 8, 1);
+    design.setup("White", "Stone", 9, 1);
+    design.setup("White", "Stone", 14, 1);
+    design.setup("Black", "Stone", 1, 1);
+    design.setup("Black", "Stone", 2, 1);
+    design.setup("Black", "Stone", 3, 1);
+    design.setup("Black", "Stone", 11, 1);
+    design.setup("Black", "Stone", 0, 1);
+    design.setup("Black", "Stone", 12, 1);
+    design.reserve("White", "Stone", 0, 1);
+    design.reserve("Black", "Stone", 0, 1);
+
+    design.reserve("White", "Stone", 6, 2);
+    design.reserve("Black", "Stone", 6, 2);
 }
 
 Dagaz.View.configure = function(view) {
