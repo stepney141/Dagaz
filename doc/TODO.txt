@@ -24,7 +24,8 @@
   - a rating system
   - a time control system with a game clock
 
-- UCI
+- AI
+  - https://habr.com/ru/post/541564/
   - https://habr.com/ru/post/532314/
 
 - Wikipedia
@@ -261,6 +262,8 @@
     - и при логине - сразу переходить на нее, если есть активные ходы. если нет - то на стартовую страницу
   - games
     - Квадратно-круглые уголки (Fangyuan tiaoqi)
+    - Neutron
+      - https://en.wikipedia.org/wiki/Neutron_(game)
     - Yonin Shogi (selector)
     - Chinese Checkers
     - Traverse (2 players)
@@ -272,8 +275,6 @@
     - GIPF
       - https://ru.wikipedia.org/wiki/GIPF
       - https://skyruk.livejournal.com/336032.html
-    - Neutron
-      - https://en.wikipedia.org/wiki/Neutron_(game)
     - MacBeth
       - https://www.zillions-of-games.com/cgi-bin/zilligames/submissions.cgi?do=show;id=584
       - https://mindsports.nl/index.php/dagaz/868-macbeth
