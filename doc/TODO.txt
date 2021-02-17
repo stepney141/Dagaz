@@ -1,3 +1,7 @@
+- Hex
+  - https://drericsilverman.wordpress.com/2021/02/15/a-beginners-guide-to-hex/
+  - http://www.mseymour.ca/hex_book/hexstrat.html
+
 - Chess
   - Запретить длинный ход пешкой в 4-ой расстановке
 
@@ -114,6 +118,11 @@
       - https://github.com/galvanom/letitGO/tree/master/com/letitgo
       - http://www.michna.com/kgsbot.htm
     - session-manager
+      - Как предыдущую историю после рефреша?
+        - Фоновая загрузка
+      - Выгрузка в SGF
+        - Начальная позиция
+        - Дерево ходов
       - Ограниченная версия для просмотра завершённых партий
         - Кнопка перемотки в начало
         - Кнопка анимации (остановка анимации при нажатии на любую кнопку)
@@ -261,17 +270,16 @@
     - да и вообще, My Turn - лучше отдельным линком сделать на верхнем меню, т.к. это по сути самая частая страница
     - и при логине - сразу переходить на нее, если есть активные ходы. если нет - то на стартовую страницу
   - games
-    - Квадратно-круглые уголки (Fangyuan tiaoqi)
-    - Neutron
-      - https://en.wikipedia.org/wiki/Neutron_(game)
+    - Neutron (selector)
+    - Hasami Shogi (variants)
+    - Euclid
+    - FangQi (variants)
     - Yonin Shogi (selector)
     - Chinese Checkers
     - Traverse (2 players)
     - Neo Rithmomachia
     - Gravity Chess
     - Cannon
-    - Hasami Shogi (variants)
-    - Euclid
     - GIPF
       - https://ru.wikipedia.org/wiki/GIPF
       - https://skyruk.livejournal.com/336032.html
@@ -292,7 +300,6 @@
     - Gonnect
     - Hishigata Shogi
       - https://glukkazan.github.io/shogi/hishigata-shogi-board.htm
-    - FangQi (variants)
     - Virus Wars (paper games)
     - Descent
     - Stoical Go
@@ -502,10 +509,6 @@
       - Можно освобождать фигуры противника, но нельзя делить
     - Слияние фигур
       - Управление результатом слияния при ходе на свою башню
-
-- Chess Go Mobile
-  - net
-    - Стандартизировать нотацию обеспечив игру мобильной версии с обычной
 
 - Nyout
   - prototype
