@@ -1055,7 +1055,10 @@ ZrfGrid.prototype.addDirection = function(name, offsets) {
   }
 }
 
-ZrfDesign.prototype.addPosition = function(name, links) {
+ZrfDesign.prototype.addPosition = function(name, links, selector) {
+  if (!_.isUndefined(selector) && (selector != Dagaz.Model.getSetupSelector())) {
+      return;
+  }
   if (_.isUndefined(links)) {
       links = _.map(_.range(this.dirs.length), function(dir) {
           return 0;

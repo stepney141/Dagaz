@@ -20,12 +20,12 @@
   (turn-order White repeat Black Black White White)
 
   (board
-     (image "images/neutron/5x5.bmp")
+     (image "images/neutron/7x7.bmp")
      (grid
          (start-rectangle 2 2 52 52)
          (dimensions
-           ("a/b/c/d/e" (50 0)) ; files
-           ("5/4/3/2/1" (0 50)) ; ranks
+           ("a/b/c/d/e/f/g" (50 0)) ; files
+           ("7/6/5/4/3/2/1" (0 50)) ; ranks
          )
          (directions 
            (n 0 -1) (s 0 1) (e 1 0) (w -1 0)
@@ -33,10 +33,10 @@
          )
      )
      (zone (name goal-zone) (players White)
-           (positions a1 b1 c1 d1 e1)
+           (positions a1 b1 c1 d1 e1 f1 g1)
      )
      (zone (name goal-zone) (players Black)
-           (positions a5 b5 c5 d5 e5)
+           (positions a7 b7 c7 d7 e7 f7 g7)
      )
   )
 
@@ -66,8 +66,8 @@
 
 
   (board-setup
-     (N (Ball c3))
-     (White (Man a1 b1 c1 d1 e1))
-     (Black (Man a5 b5 c5 d5 e5))
+     (N (Ball d4))
+     (White (Man a1 b1 c1 d1 e1 f1 g1))
+     (Black (Man a7 b7 c7 d7 e7 f7 g7))
   )
 )

@@ -53,6 +53,12 @@
   - https://m.habr.com/ru/post/467049/
 
 - Launcher
+    - session-manager
+      - redo/undo даЄт ошибку (также ошибка при выполнении начальной анимации)
+      - автоматическое проигрывание с возможностью undo в любой момент (анимировать при совпадении top с current)
+    - Bugs:
+      - http://127.0.0.1:3000/dagaz/fangyuan-tiaoqi-north.html?sid=2525
+      - http://127.0.0.1:3000/dagaz/micro-chess.html?sid=2562&selector=1
     - ai
       - ƒл€ Resurrection Chess отрезать верхнюю часть FEN перед передачей в AI
       - Hoppel-Poppel Chess (internal ai)
@@ -270,7 +276,6 @@
     - да и вообще, My Turn - лучше отдельным линком сделать на верхнем меню, т.к. это по сути сама€ часта€ страница
     - и при логине - сразу переходить на нее, если есть активные ходы. если нет - то на стартовую страницу
   - games
-    - Neutron (selector)
     - Hasami Shogi (variants)
     - Euclid
     - FangQi (variants)

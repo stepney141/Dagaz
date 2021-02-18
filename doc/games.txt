@@ -141,7 +141,7 @@
   - Luzhanqi [cloack, setups, random, drops, limit, wheel, sparks, best, family:chess]
   - Stratego [cloack, random, drops, limit, wheel, sparks, family:chess]
   - Game of Generals [todo:ai, random, cloack, drops, limit, wheel, breakthrough, sparks, family:chess]
-  - Neutron [todo, shared, family:breakthrough]
+  - Neutron [shared, setups, family:breakthrough]
   - Chessball [composite, best, family:breakthrough]
   - Arimaa [todo, turns, elimination, stalemate, family:breakthrough]
   - Terrace [todo:hints, king, family:breakthrough]
