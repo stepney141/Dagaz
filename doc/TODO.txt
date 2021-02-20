@@ -57,11 +57,11 @@
       - redo/undo даЄт ошибку (также ошибка при выполнении начальной анимации)
       - автоматическое проигрывание с возможностью undo в любой момент (анимировать при совпадении top с current)
     - Bugs:
+      - Go: pass-turn не работает, не сохран€етс€ количество вз€тых камней
       - http://127.0.0.1:3000/dagaz/fangyuan-tiaoqi-north.html?sid=2525
       - http://127.0.0.1:3000/dagaz/micro-chess.html?sid=2562&selector=1
     - ai
       - ƒл€ Resurrection Chess отрезать верхнюю часть FEN перед передачей в AI
-      - Hoppel-Poppel Chess (internal ai)
       - Ќе могу сделать встроенного бота дл€ 8-ой расстановки Chess
       - XiangQi
         - a10 - a10
