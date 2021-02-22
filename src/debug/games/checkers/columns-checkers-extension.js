@@ -161,7 +161,7 @@ Dagaz.View.showPiece = function(view, ctx, frame, pos, piece, model, x, y) {
           if (p !== null) {
               ctx.drawImage(p.h, x + dx, y, piece.dx, piece.dy);
           }
-          y -= 5;
+          y -= 8;
       }
   }
 }
