@@ -8,21 +8,30 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var isAttacked = function(design, board, player, pos, dir, from, isKing) {
+var isRestricted = function(design, player, pos, dir, from) {
   var p = design.navigate(player, pos, dir);
-  if ((p === null) || (p == from)) return false;
+  while (p !== null) {
+      if (p == from) return true;
+      p = design.navigate(player, p, dir);
+  }
+  return false;
+}
+
+var isAttacked = function(design, board, player, pos, dir, isKing) {
+  var p = design.navigate(player, pos, dir);
+  if (p === null) return false;
   var piece = board.getPiece(p);
   if (piece === null) {
       if (!isKing) return false;
       while (piece === null) {
           p = design.navigate(player, p, dir);
-          if ((p === null) || (p == from)) return false;
+          if (p === null) return false;
           piece = board.getPiece(p);
       }
   }
   if (piece.player == player) return false;
   p = design.navigate(player, p, dir);
-  if ((p === null) || (p == from)) return false;
+  if (p === null) return false;
   return board.getPiece(p) === null;
 }
 
@@ -50,15 +59,21 @@ Dagaz.Model.CheckInvariants = function(board) {
       if (piece === null) return;
       var b = board.apply(move);
       var f = false;
+      var isKing = piece.type == 1;
+      if (design.inZone(0, board.player, to)) {
+          isKing = true;
+      }
       _.each(design.allDirections(), function(dir) {
           if (f) return;
-          if (!isAttacked(design, b, board.player, to, dir, from, piece.type == 1)) return;
+          if (isRestricted(design, board.player, to, dir, from)) return;
+          if (!isAttacked(design, b, board.player, to, dir, isKing)) return;
           f = true;
       });
       if (f) {
           move.goTo(board.turn);
           move.setValue(0, to);
           move.setValue(1, from);
+          move.mode = 2;
       } else {
           move.setValue(0, null);
           move.setValue(1, null);
