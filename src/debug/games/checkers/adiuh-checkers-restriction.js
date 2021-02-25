@@ -1,11 +1,23 @@
 (function() {
 
+Dagaz.Model.WIDTH = 8;
+
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
   if (name != "adiuh-checkers-restriction") {
       checkVersion(design, name, value);
   }
+}
+
+var findDirection = function(from, to) {
+  var dx = Dagaz.Model.getX(to) - Dagaz.Model.getX(from);
+  var dy = Dagaz.Model.getY(to) - Dagaz.Model.getY(from);
+  if ((dx > 0) && (dy > 0) && (dx == dy))  return 3;
+  if ((dx < 0) && (dy > 0) && (dx == -dy)) return 2;
+  if ((dx > 0) && (dy < 0) && (dx == -dy)) return 1;
+  if ((dx < 0) && (dy < 0) && (dx == dy))  return 0;
+  return null;
 }
 
 var CheckInvariants = Dagaz.Model.CheckInvariants;
@@ -27,6 +39,17 @@ Dagaz.Model.CheckInvariants = function(board) {
           if (from === null) return;
           if (to === null) return;
           if (from == pos) {
+              var restricted = board.getValue(1);
+              var dir = findDirection(from, to);
+              if ((restricted != null) && (dir !== null)) {
+                  var p = design.navigate(board.player, from, dir);
+                  while (p !== null) {
+                      if (p == restricted) {
+                          return;
+                      }
+                      p = design.navigate(board.player, p, dir);
+                  }
+              }
               moves.push(move);
           }
       });

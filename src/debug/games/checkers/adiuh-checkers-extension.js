@@ -77,7 +77,7 @@ Dagaz.Model.CheckInvariants = function(board) {
       } else {
           move.setValue(0, null);
           move.setValue(1, null);
-          if (piece.type == 1) {
+          if ((piece.type == 1) && !design.inZone(0, board.player, to)) {
               _.each(move.actions, function(a) {
                   if (a[0] === null) return;
                   if (a[1] === null) return;
