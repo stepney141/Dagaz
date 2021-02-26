@@ -20,6 +20,7 @@
   - https://drive.google.com/file/d/15K1EBsNrjqWnjb8ww1u8hZ75KVoJojQa/view
 
 - Chess Go
+  - Повторный обмен ладьями друг с другом должен быть запрещён как Ко
   - Создаём вторым игроком, падает после первого хода
 
 - Hex
