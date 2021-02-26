@@ -1,3 +1,5 @@
+Dagaz.Controller.persistense = "none";
+
 ZRF = {
     JUMP:          0,
     IF:            1,
@@ -31,38 +33,38 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addDirection("w");  // 2
     design.addDirection("n");  // 3
     design.addDirection("ne"); // 4
-    design.addDirection("sw"); // 5
-    design.addDirection("nw"); // 6
-    design.addDirection("se"); // 7
+    design.addDirection("nw"); // 5
+    design.addDirection("se"); // 6
+    design.addDirection("sw"); // 7
 
-    design.addPlayer("Blue", [3, 2, 1, 0, 5, 4, 7, 6]);
+    design.addPlayer("Blue", [3, 2, 1, 0, 7, 6, 5, 4]);
     design.addPlayer("Green", [0, 1, 2, 3, 4, 5, 6, 7]);
 
-    design.addPosition("a5", [5, 1, 0, 0, 0, 0, 0, 6]);
+    design.addPosition("a5", [5, 1, 0, 0, 0, 0, 6, 0]);
     design.addPosition("b5", [5, 1, -1, 0, 0, 0, 0, 0]);
-    design.addPosition("c5", [5, 1, -1, 0, 0, 4, 0, 6]);
+    design.addPosition("c5", [5, 1, -1, 0, 0, 0, 6, 4]);
     design.addPosition("d5", [5, 1, -1, 0, 0, 0, 0, 0]);
-    design.addPosition("e5", [5, 0, -1, 0, 0, 4, 0, 0]);
+    design.addPosition("e5", [5, 0, -1, 0, 0, 0, 0, 4]);
     design.addPosition("a4", [5, 1, 0, -5, 0, 0, 0, 0]);
-    design.addPosition("b4", [5, 1, -1, -5, -4, 4, -6, 6]);
+    design.addPosition("b4", [5, 1, -1, -5, -4, -6, 6, 4]);
     design.addPosition("c4", [5, 1, -1, -5, 0, 0, 0, 0]);
-    design.addPosition("d4", [5, 1, -1, -5, -4, 4, -6, 6]);
+    design.addPosition("d4", [5, 1, -1, -5, -4, -6, 6, 4]);
     design.addPosition("e4", [5, 0, -1, -5, 0, 0, 0, 0]);
-    design.addPosition("a3", [5, 1, 0, -5, -4, 0, 0, 6]);
+    design.addPosition("a3", [5, 1, 0, -5, -4, 0, 6, 0]);
     design.addPosition("b3", [5, 1, -1, -5, 0, 0, 0, 0]);
-    design.addPosition("c3", [5, 1, -1, -5, -4, 4, -6, 6]);
+    design.addPosition("c3", [5, 1, -1, -5, -4, -6, 6, 4]);
     design.addPosition("d3", [5, 1, -1, -5, 0, 0, 0, 0]);
-    design.addPosition("e3", [5, 0, -1, -5, 0, 4, -6, 0]);
+    design.addPosition("e3", [5, 0, -1, -5, 0, -6, 0, 4]);
     design.addPosition("a2", [5, 1, 0, -5, 0, 0, 0, 0]);
-    design.addPosition("b2", [5, 1, -1, -5, -4, 4, -6, 6]);
+    design.addPosition("b2", [5, 1, -1, -5, -4, -6, 6, 4]);
     design.addPosition("c2", [5, 1, -1, -5, 0, 0, 0, 0]);
-    design.addPosition("d2", [5, 1, -1, -5, -4, 4, -6, 6]);
+    design.addPosition("d2", [5, 1, -1, -5, -4, -6, 6, 4]);
     design.addPosition("e2", [5, 0, -1, -5, 0, 0, 0, 0]);
     design.addPosition("a1", [0, 1, 0, -5, -4, 0, 0, 0]);
     design.addPosition("b1", [0, 1, -1, -5, 0, 0, 0, 0]);
-    design.addPosition("c1", [0, 1, -1, -5, -4, 0, -6, 0]);
+    design.addPosition("c1", [0, 1, -1, -5, -4, -6, 0, 0]);
     design.addPosition("d1", [0, 1, -1, -5, 0, 0, 0, 0]);
-    design.addPosition("e1", [0, 0, -1, -5, 0, 0, -6, 0]);
+    design.addPosition("e1", [0, 0, -1, -5, 0, -6, 0, 0]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
