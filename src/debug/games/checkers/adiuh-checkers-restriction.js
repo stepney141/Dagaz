@@ -20,6 +20,27 @@ var findDirection = function(from, to) {
   return null;
 }
 
+var getStartPos = function(move) {
+  var r = null;
+  _.each(move.actions, function(a) {
+      if (r !== null) return;
+      if (a[0] === null) return;
+      if (a[1] === null) return;
+      if (a[0][0] == a[1][0]) return;
+      r = a[0][0];
+  });
+  return r;
+}
+
+var samePiece = function(move, moves) {
+  var pos = getStartPos(move);
+  if (pos === null) return false;
+  for (var i = 0; i < moves.length; i++) {
+       if (getStartPos(moves[i]) == pos) return true;
+  }
+  return false;
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {
@@ -63,7 +84,12 @@ Dagaz.Model.CheckInvariants = function(board) {
       moves.push(move);
   });
   if (moves.length > 0) {
-      board.moves = moves;
+      var m = [];
+      _.each(board.moves, function(move) {
+          if (samePiece(move, moves)) return;
+          m.push(move);
+      });
+      board.moves = _.union(moves, m);
   }
   CheckInvariants(board);
 }
