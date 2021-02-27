@@ -8,6 +8,8 @@ Dagaz.View.DROPS_ALPHA  = 0.5;
 
 Dagaz.View.HINT_STEPS   = 1;
 
+Dagaz.View.TARGET_COLOR = "#00AA00";
+
 Dagaz.View.markType = {
    TARGET:    0,
    ATTACKING: 1,
@@ -555,7 +557,7 @@ View2D.prototype.animate = function() {
 }
 
 Dagaz.View.showMarks = function(view, ctx) {
-  drawMarks(ctx, view, view.target, "#00AA00");
+  drawMarks(ctx, view, view.target, Dagaz.View.TARGET_COLOR);
   drawMarks(ctx, view, view.goal,   "#FFFF00");
 }
 
