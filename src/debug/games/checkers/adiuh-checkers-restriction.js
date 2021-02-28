@@ -13,10 +13,10 @@ Dagaz.Model.checkVersion = function(design, name, value) {
 var findDirection = function(from, to) {
   var dx = Dagaz.Model.getX(to) - Dagaz.Model.getX(from);
   var dy = Dagaz.Model.getY(to) - Dagaz.Model.getY(from);
-  if ((dx > 0) && (dy > 0) && (dx == dy))  return 3;
-  if ((dx < 0) && (dy > 0) && (dx == -dy)) return 2;
-  if ((dx > 0) && (dy < 0) && (dx == -dy)) return 1;
-  if ((dx < 0) && (dy < 0) && (dx == dy))  return 0;
+  if ((dx > 0) && (dy > 0) && (dx == dy))  return 0;
+  if ((dx < 0) && (dy > 0) && (dx == -dy)) return 1;
+  if ((dx > 0) && (dy < 0) && (dx == -dy)) return 2;
+  if ((dx < 0) && (dy < 0) && (dx == dy))  return 3;
   return null;
 }
 
@@ -63,12 +63,12 @@ Dagaz.Model.CheckInvariants = function(board) {
               var restricted = board.getValue(1);
               var dir = findDirection(from, to);
               if ((restricted != null) && (dir !== null)) {
-                  var p = design.navigate(board.player, from, dir);
+                  var p = design.navigate(1, from, dir);
                   while (p !== null) {
                       if (p == restricted) {
                           return;
                       }
-                      p = design.navigate(board.player, p, dir);
+                      p = design.navigate(1, p, dir);
                   }
               }
               moves.push(move);
