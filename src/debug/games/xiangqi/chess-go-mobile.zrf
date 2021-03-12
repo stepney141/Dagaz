@@ -30,7 +30,7 @@
 ))
 
 (define shoot (
-  $1 (while (or empty? (piece? Stone)) (if empty? add) $1)
+  $1 (while (or empty? (piece? Stone)) add $1)
   $1 (while (or empty? (piece? Stone)) $1)
   add
 ))
