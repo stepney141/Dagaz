@@ -1,6 +1,37 @@
 (define step (
-  $1 (verify not-friend?)
+  $1 add
+))
+
+(define pawn-jump (
+  (verify (in-zone? $1))
+  $1 (verify empty?)
+  $1 (verify empty?)
   add
+))
+
+(define pawn-shift (
+  $1 (verify empty?)
+  add
+))
+
+(define pawn-step (
+  $1 (verify not-empty?)
+  add
+))
+
+(define jump (
+  $1 $2 add
+))
+
+(define slide (
+  $1 add (verify empty?)
+  $1 add (verify empty?)
+  $1 add (verify empty?)
+  $1 add (verify empty?)
+  $1 add (verify empty?)
+  $1 add (verify empty?)
+  $1 add (verify empty?)
+  $1 add
 ))
 
 (game
@@ -61,8 +92,11 @@
      (zone (name slate-zone) (players White Black)
            (positions g10 j7)
      )
-     (zone (name cross-zone) (players White Black)
-           (positions h1 i1 h2 i2 h3 i3 h4 i4 h5 i5 h6 i6 h11 i11 h12 i12 h13 i13 h14 i14 h15 i15 h16 i16 a8 a9 b8 b9 c8 c9 d8 d9 e8 e9 f8 f9 k8 k9 l8 l9 m8 m9 n8 n9 o8 o9 p8 p9)
+     (zone (name v-zone) (players White Black)
+           (positions h1 i1 h2 i2 h3 i3 h4 i4 h5 i5 h6 i6 h11 i11 h12 i12 h13 i13 h14 i14 h15 i15 h16 i16)
+     )
+     (zone (name h-zone) (players White Black)
+           (positions a8 a9 b8 b9 c8 c9 d8 d9 e8 e9 f8 f9 k8 k9 l8 l9 m8 m9 n8 n9 o8 o9 p8 p9)
      )
      (zone (name sw-zone) (players White Black)
            (positions a1 b1 c1 d1 e1 f1 g1 h1 a2 b2 c2 d2 e2 f2 g2 h2 a3 b3 c3 d3 e3 f3 g3 h3 a4 b4 c4 d4 e4 f4 g4 h4 a5 b5 c5 d5 e5 f5 g5 h5 a6 b6 c6 d6 e6 f6 g6 h6 a7 b7 c7 d7 e7 f7 g7 h7 a8 b8 c8 d8 e8 f8 g8 h8)
@@ -106,7 +140,12 @@
             Slate  "images/sovereign/spawn.bmp"
      )
      (moves
-         (step n) (step e) (step w) (step s)
+         (pawn-jump s-zone n) (pawn-jump w-zone e)
+         (pawn-jump n-zone s) (pawn-jump e-zone w)
+         (pawn-shift n) (pawn-shift e)
+         (pawn-shift s) (pawn-shift w)
+         (pawn-step nw) (pawn-step ne)
+         (pawn-step sw) (pawn-step se)
      )
   )
   (piece
@@ -125,7 +164,7 @@
             Slate  "images/sovereign/srook.bmp"
      )
      (moves
-         (step n) (step e) (step w) (step s)
+         (slide n) (slide e) (slide w) (slide s)
      )
   )
   (piece
@@ -144,7 +183,10 @@
             Slate  "images/sovereign/sknight.bmp"
      )
      (moves
-         (step n) (step e) (step w) (step s)
+         (jump n nw) (jump n ne)
+         (jump s sw) (jump s se)
+         (jump w nw) (jump w sw)
+         (jump e ne) (jump e se)
      )
   )
   (piece
@@ -163,7 +205,7 @@
             Slate  "images/sovereign/sbishop.bmp"
      )
      (moves
-         (step n) (step e) (step w) (step s)
+         (slide nw) (slide ne) (slide sw) (slide se)
      )
   )
   (piece
@@ -182,7 +224,8 @@
             Slate  "images/sovereign/squeen.bmp"
      )
      (moves
-         (step n) (step e) (step w) (step s)
+         (slide n) (slide e) (slide w) (slide s)
+         (slide nw) (slide ne) (slide sw) (slide se)
      )
   )
   (piece
