@@ -310,6 +310,11 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addPosition("n1", [0, 0, 0, 1, -1, -15, -17, -16]);
     design.addPosition("o1", [0, 0, 0, 1, -1, -15, -17, -16]);
     design.addPosition("p1", [0, 0, 0, 0, -1, 0, -17, -16]);
+    design.addPosition("X1", [0, 0, 0, 0, 0, 0, 0, 0]);
+    design.addPosition("X2", [0, 0, 0, 0, 0, 0, 0, 0]);
+    design.addPosition("X3", [0, 0, 0, 0, 0, 0, 0, 0]);
+    design.addPosition("X4", [0, 0, 0, 0, 0, 0, 0, 0]);
+    design.addPosition("X5", [0, 0, 0, 0, 0, 0, 0, 0]);
 
     design.addZone("promotion-zone", 1, [150, 151, 152, 153, 134, 135, 136, 137, 118, 119, 120, 121, 102, 103, 104, 105]);
     design.addZone("promotion-zone", 2, [150, 151, 152, 153, 134, 135, 136, 137, 118, 119, 120, 121, 102, 103, 104, 105]);
@@ -997,4 +1002,11 @@ Dagaz.View.configure = function(view) {
     view.defPosition("n1", 602, 696, 46, 46);
     view.defPosition("o1", 648, 696, 46, 46);
     view.defPosition("p1", 694, 696, 46, 46);
+
+    view.defPopup("Promote", 189, 130);
+    view.defPopupPosition("X1", 10, 7, 68, 68);
+    view.defPopupPosition("X2", 80, 7, 68, 68);
+    view.defPopupPosition("X3", 150, 7, 68, 68);
+    view.defPopupPosition("X4", 220, 7, 68, 68);
+    view.defPopupPosition("X5", 290, 7, 68, 68);
 }
