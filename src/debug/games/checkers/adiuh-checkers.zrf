@@ -83,3 +83,32 @@
     (Black (Man b8 d8 f8 h8  a7 c7 e7 g7  b6 d6 f6 h6) )
   )
 )
+
+(variant
+  (title "Adiuh Checkers (8x10)")
+  (default)
+
+  (board
+     (image "images/adiuh/10x8.bmp")
+     (grid
+         (start-rectangle 2 44 70 112)
+         (dimensions
+           ("a/b/c/d/e/f/g/h/i/j" (68 0)) ; files
+           ("8/7/6/5/4/3/2/1" (0 68)) ; ranks
+         )
+         (directions (ne 1 -1) (nw -1 -1) (se 1 1) (sw -1 1))
+     )
+     (symmetry Black (nw se) (se nw) (ne sw) (sw ne))
+     (zone (name promotion) (players White)
+           (positions b8 d8 f8 h8)
+     )
+     (zone (name promotion) (players Black)
+           (positions a1 c1 e1 g1)
+     )
+  )
+
+  (board-setup
+    (White (Man a1 c1 e1 g1 i1  b2 d2 f2 h2 j2  a3 c3 e3 g3 i3) )
+    (Black (Man b8 d8 f8 h8 j8  a7 c7 e7 g7 i7  b6 d6 f6 h6 j6) )
+  )
+)
