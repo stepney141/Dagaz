@@ -51,6 +51,7 @@ Dagaz.Model.CheckInvariants = function(board) {
           var m = Dagaz.Model.createMove(0);
           m.movePiece(r.pos, king, board.getPiece(r.pos));
           m.movePiece(king, p, board.getPiece(king));
+          m.mode = 1;
           board.moves.push(m);
           p = design.navigate(1, p, r.dir);
           while (p !== null) {
@@ -58,6 +59,7 @@ Dagaz.Model.CheckInvariants = function(board) {
               m = Dagaz.Model.createMove(0);
               m.movePiece(king, p, board.getPiece(king));
               m.movePiece(r.pos, design.navigate(0, p, r.dir), board.getPiece(r.pos));
+              m.mode = 1;
               board.moves.push(m);
               p = design.navigate(1, p, r.dir);
           }

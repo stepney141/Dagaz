@@ -100,10 +100,10 @@
      )
      (symmetry Black (nw se) (se nw) (ne sw) (sw ne))
      (zone (name promotion) (players White)
-           (positions b8 d8 f8 h8)
+           (positions b8 d8 f8 h8 j8)
      )
      (zone (name promotion) (players Black)
-           (positions a1 c1 e1 g1)
+           (positions a1 c1 e1 g1 i1)
      )
   )
 

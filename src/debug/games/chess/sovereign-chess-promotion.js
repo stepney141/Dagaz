@@ -26,7 +26,7 @@ Dagaz.Model.PostProcessing = function(board, moves) {
       king = pos;
   });
   if (king !== null) {
-      _.each(board.moves, function(move) {
+      _.each(moves, function(move) {
           if (move.actions.length < 1) return;
           if (move.actions[0][0] === null) return;
           if (move.actions[0][1] === null) return;
@@ -34,6 +34,9 @@ Dagaz.Model.PostProcessing = function(board, moves) {
           var piece = move.actions[0][2][0];
           if (piece.type != design.getPieceType("King")) return;
           move.capturePiece(king);
+          if (piece.player != player) {
+              move.setValue(board.player, piece.player);
+          }
       });
   }
   if (!_.isUndefined(PostProcessing)) {

@@ -245,6 +245,7 @@
      )
      (moves
          (step n) (step e) (step w) (step s)
+         (step nw) (step ne) (step sw) (step se)
      )
   )
 
