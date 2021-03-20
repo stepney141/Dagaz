@@ -1,5 +1,5 @@
 Dagaz.Model.DETAIL_MOVE_DESCRIPTION = true;
-Dagaz.Controller.persistense = "none";
+Dagaz.Model.showLose = true;
 
 ZRF = {
     JUMP:          0,

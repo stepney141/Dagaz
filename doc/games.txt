@@ -195,6 +195,7 @@
   - Progressive Chess [checkmate, goto, attributes, todo:ai, dialog(promotion), family:chess]
   - Troitzky Chess [checkmate, attributes, todo:ai, dialog(promotion), random, family:chess]
   - Balbo's Game [checkmate, attributes, todo:ai, dialogs, family:chess]
+  - Sovereign Chess [checkmate, attributes, shared, dialogs, postprocessing, family:chess]
   - Hiashatar [checkmate, todo:goal, todo:invariant, dialog(promotion), family:chess]
   - Genesis Chess [drops, checkmate, todo:ai, wheel, limit, dialog(promotion), family:chess]
   - Omega Chess [checkmate, attributes, todo:ai, dialog(promotion), family:chess]

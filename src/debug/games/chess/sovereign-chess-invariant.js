@@ -119,6 +119,37 @@ var getRestrictions = function(design, board, pos, dir, move) {
   return [];
 }
 
+var checkGoals = Dagaz.Model.checkGoals;
+
+Dagaz.Model.checkGoals = function(design, board, player) {
+  var p = board.getValue(player);
+  if (p === null) {
+      p = player;
+  }
+  var f = null; var e = null;
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if (piece === null) return;
+      if (piece.type != 5) return;
+      if (piece.player == p) {
+          f = pos;
+      } else {
+          e = pos;
+      }
+  });
+  if (e === null) return 1;
+  if (f === null) return -1;
+  board.generate(design);
+  if (board.moves.length == 0) {
+      var c = getColors(board);
+      Dagaz.Model.expandColors(design, board, c.friend, c.enemy);
+      Dagaz.Model.expandColors(design, board, c.enemy, c.friend);
+      if (Dagaz.Model.checkPositions(design, board, c, [f])) return 1;
+      return 0;
+  }
+  return checkGoals(design, board, player);
+}
+
 var CheckInvariants = Dagaz.Model.CheckInvariants;
 
 Dagaz.Model.CheckInvariants = function(board) {

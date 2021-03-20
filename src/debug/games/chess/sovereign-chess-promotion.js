@@ -56,7 +56,7 @@ Dagaz.Model.CheckInvariants = function(board) {
       if (move.actions[0][2] === null) return;
       var pos = move.actions[0][0][0];
       var piece = board.getPiece(pos);
-      if ((piece !== null) && (piece.type == pawn) && design.inZone(0, piece.player, move.actions[0][1][0])) {
+      if ((piece !== null) && (piece.type == pawn) && design.inZone(0, 1, move.actions[0][1][0])) {
           piece = move.actions[0][2][0];
           var pieces = [];
           pieces.push(piece.promote(design.getPieceType("Bishop")));
