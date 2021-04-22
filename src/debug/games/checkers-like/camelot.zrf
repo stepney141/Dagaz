@@ -4,6 +4,7 @@
 ))
 
 (define jump (
+  (verify (not-in-zone? goal-zone))
   $1 (verify not-empty?)
   (if enemy? capture)
   $1 (verify empty?)
