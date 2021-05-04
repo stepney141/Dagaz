@@ -1,9 +1,70 @@
-﻿- Chess Go
+﻿- DagazServer
+  - Bugs
+    - Ur
+      - Зацикливается на ожидании хода
+      - Проверить передачу первого хода
+      - Не работает загрузка ходов завершённой игры
+        - в session-manager использовать setup при невозможности redo хода
+    - Sovereign Chess
+      - Партия не воспроизводится (3002)
+  - Dices
+    - Ur
+      - app-net-v2 не поддерживает хинты
+      - исправить звук
+      - развернуть доску для второго игрока
+      - анимировать перемещение сбитого камня в резерв
+    - Shen
+    - Senet
+    - Tablan
+    - Backgammon
+    - Oblong Shatranj
+    - Chaturaji
+  - Tournaments
+    - Platform Chess
+    - Sovereign Chess (12x12)
+  - Games
+    - Paper and Pencil Go
+    - Storm the Ivory Tower
+    - Magyar Dama
+    - Hasami Shogi
+    - Martian Chess
+    - Genesis Chess
+    - Kamisado
+    - Gauntlet
+    - Terrace
+    - Choko
+    - Bolotoudou
+    - Yote
+    - Ko Shogi
+    - Pommel (https://mindsports.nl/index.php/dagaz/1017-pommel)
+    - XiaGo (https://mindsports.nl/index.php/dagaz/1115-xiago)
+    - MacBeth (https://mindsports.nl/index.php/dagaz/868-macbeth)
+    - KnightVision (https://mindsports.nl/index.php/dagaz/1121-knightvision)
+    - Nine-Tile_Cyvasse
+
+- Shen
+  - IGNORE_DICES
+  - В DagazServer броски костей выполняются неправильно
+    - Исправить разыгрывание первого хода
+- Puluc
+  - IGNORE_DICES
+  - Не работает (зависает второй игрок на приёме хода)
+    - зацикливается на recovery по Bad Move (на первом броске костей)
+- Ur  
+  - skip-pass не работает в играх с костями (3301)
+  - в app-net-v2 нежелетельные визуальные эффекты при анимации захвата ботом
+    - не работает анимация сложных перемещений (hints)
+      - реализация hints не совместима с ходами перемещающими несколько фигур
+  - разыгрывать право первого хода
+  - Анимация перемещения захвата в резерв не работает (hints)
+
+- Chess Go
   - Игра была продолжена на один ход после захвата генерала (3080)
 
 - Турниры
   - Контроль времени
-    - Отображать счётчики контроля времени при посмотре завершённых партий
+    - Учитывать время ожидания в off-line при завершении игры по исчерпании лимита (на загрузке игры)
+    - Останавливать отсчёт таймера по завершении игры
     - Проверить winGame в recovery 
       - данные по противнику не присылаются
       - добавлять фиксированный таймаут перед принудительным завершением
