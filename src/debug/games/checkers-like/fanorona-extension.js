@@ -1,10 +1,5 @@
 (function() {
 
-Dagaz.AI.AI_FRAME      = 2000;
-Dagaz.AI.MAX_DEEP      = 1;
-
-var MAX_FORCED_FACTOR  = 1;
-
 var checkVersion = Dagaz.Model.checkVersion;
 
 Dagaz.Model.checkVersion = function(design, name, value) {
@@ -13,86 +8,69 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-Dagaz.AI.heuristic = function(ai, design, board, move) {
-  var r = 1;
-  _.each(move.actions, function(a) {
-      if ((a[0] !== null) && (a[1] === null)) {
-           var piece = board.getPiece(a[0][0]);
-           if (piece !== null) {
-               r += design.price[piece.type];
-           }
+Dagaz.AI.MAX_DEEP  = 2;
+
+var bonus = [
+ 30, 30, 50, 30, 50, 30, 50, 30, 30, 
+ 30, 80, 40, 80, 40, 80, 40, 80, 30, 
+ 50, 40, 80, 40, 80, 40, 80, 40, 50, 
+ 30, 80, 40, 80, 40, 80, 40, 80, 30, 
+ 30, 30, 50, 30, 50, 30, 50, 30, 30
+];
+
+Dagaz.AI.getPrice = function(pos) {
+  if (pos >= 45) return 0
+  return bonus[pos];
+}
+
+Dagaz.AI.eval = function(ai, design, board, player) {
+  var r = 0;
+  _.each(design.allPositions(), function(pos) {
+      var piece = board.getPiece(pos);
+      if (piece !== null) {
+          var v = Dagaz.AI.getPrice(pos);
+          if (piece.player == board.player) {
+              _.each(design.allDirections(), function(dir) {
+                  var p = design.navigate(1, pos, dir);
+                  if (p === null) return;
+                  var piece = board.getPiece(p);
+                  var cnt = 0;
+                  if (piece === null) {
+                      p = design.navigate(0, pos, dir);
+                      while (p !== null) {
+                          piece = board.getPiece(p);
+                          if (piece === null) break;
+                          if (piece.player == board.player) break;
+                          p = design.navigate(0, p, dir);
+                          cnt++;
+                      }
+                  } else {
+                      if (piece.player == board.player) return;
+                      var q = design.navigate(0, pos, dir);
+                      if (q === null) return;
+                      if (board.getPiece(q) !== null) return;
+                      while (p !== null) {
+                          cnt++;
+                          piece = board.getPiece(p);
+                          if (piece === null) break;
+                          if (piece.player == board.player) break;
+                          p = design.navigate(1, p, dir);
+                      }
+                  }
+                  v += cnt;
+              });
+          }
+          if (!Dagaz.AI.isFriend(player, piece.player)) {
+              v = -v;
+          }
+          r += v;
       }
   });
   return r;
 }
 
-Dagaz.AI.isForced = function(design, board, move) {
-  if (_.isUndefined(move.isForced)) {
-      move.isForced = false;
-      var b = board.apply(move);
-      var c = 0;
-      _.each(design.allPositions(), function(pos) {
-          var piece = b.getPiece(pos);
-          if ((piece !== null) && (piece.player == b.player)) {
-              _.each(design.allDirections(), function(dir) {
-                   var p = design.navigate(b.player, pos, dir);
-                   if (p !== null) {
-                       piece = b.getPiece(p);
-                       if (piece === null) {
-                           p = design.navigate(b.player, p, dir);
-                           if (p !== null) {
-                               piece = b.getPiece(p);
-                               if ((piece !== null) && (piece.player != b.player)) c++;
-                           }
-                       } else {
-                           p = design.navigate(0, pos, dir);
-                           if ((p !== null) && (piece.player != b.player) && (b.getPiece(p) === null)) c++;                       
-                       }
-                   }
-              });
-          }
-      });
-      if ((c > 0) && (c <= MAX_FORCED_FACTOR)) {
-          move.isForced = true;
-      }
-  }
-  return move.isForced;
-}
-
-Dagaz.AI.getEval = function(design, board) {
-  if (_.isUndefined(board.eval)) {
-      board.eval = 0;
-      _.each(design.allPositions(), function(pos) {
-          var piece = board.getPiece(pos);
-          if (piece !== null) {
-              var v = design.price[piece.type];
-              var bonus = 8;
-              if (_.indexOf([19, 29, 11, 21, 31, 13, 23, 33, 15, 25], +pos) >= 0) {
-                  bonus -= 4;
-              }
-              if (_.indexOf([27, 9, 37, 39, 41, 43, 1, 3, 5, 7, 35, 17], +pos) >= 0) {
-                  bonus -= 3;
-              }
-              if (_.indexOf([36, 0, 44, 8], +pos) >= 0) {
-                  bonus -= 5;
-              }
-              v += bonus;
-              if (!Dagaz.AI.isFriend(board.player, piece.player)) {
-                  v = -v;
-              }
-              board.eval += v;
-          }
-      });
-  }
-  return board.eval;
-}
-
-Dagaz.AI.eval = function(design, params, board, player) {
-  var r = Dagaz.AI.getEval(design, board);
-  if (!Dagaz.AI.isFriend(player, board.player)) {
-      r = -r;
-  }
-  return r;
+Dagaz.AI.heuristic = function(ai, design, board, move) {
+  return move.actions.length;
 }
 
 var CheckInvariants = Dagaz.Model.CheckInvariants;
