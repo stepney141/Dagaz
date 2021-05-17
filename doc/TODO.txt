@@ -2,10 +2,11 @@
   - Портировать на MySQL
 
 - DagazServer
+  - Games
+    - Chaturaji
+      - игра в коалиции (за двух игроков)
   - Bugs
     - Ur (3347)
-      - Не работает загрузка ходов завершённой игры
-        - в session-manager использовать setup при невозможности redo хода
       - Не происходит передача хода если нет ходов (заблокированы все фигуры)
     - Sovereign Chess
       - Партия не воспроизводится (3002)
@@ -44,10 +45,19 @@
     - KnightVision (https://mindsports.nl/index.php/dagaz/1121-knightvision)
     - Nine-Tile_Cyvasse
 
+- Turnover
+  - Make the last castle be able to move
+    - as it is now, I just can move if it is in check, but if there is only one castle, so we need be able to move it even if it is not in check
+
+- Chaturaji
+  - При отсутствии возможности хода, ход не пропускается
+    - skip-pass не работает
+  - Коалиции (при игре с ботом) не учитываются (Dagaz.AI.isFriend)
 - Shen
-  - IGNORE_DICES
-  - В DagazServer броски костей выполняются неправильно
-    - Исправить разыгрывание первого хода
+  - Два хода подряд, без перебрасывания костей (3375, 3376)
+    - При выполнении повторного хода
+    - Срабатывает как выбрасывание 5 очков
+  - Зациклилось после завершения игры с ботом
 - Ur  
   - skip-pass не работает в играх с костями (3349)
     - перебрасывать кости?
