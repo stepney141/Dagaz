@@ -1,36 +1,29 @@
-﻿- DagazServer
-  - Портировать на MySQL
+﻿- Turnover
+  - Использовать звуки из Turnover в шахматных играх
+
+- Games
+  - http://www.logygames.com/logy/sale-abcapture.html
 
 - DagazServer
-  - Games
-    - Chaturaji
-      - игра в коалиции (за двух игроков)
   - Bugs
-    - Ur (3347)
-      - Не происходит передача хода если нет ходов (заблокированы все фигуры)
+    - Не бросать кости после завершения игры
     - Sovereign Chess
       - Партия не воспроизводится (3002)
   - Dices
-    - Ur
-      - app-net-v2 не поддерживает хинты
-      - исправить звук
-      - развернуть доску для второго игрока
-      - анимировать перемещение сбитого камня в резерв
-    - Shen
-    - Senet
+    - Sahkku
+      - prototype
+        - https://skyruk.livejournal.com/288965.html
+    - Nyout
+      - prototype
+        - https://skyruk.livejournal.com/216114.html
     - Tablan
-    - Backgammon
-    - Oblong Shatranj
-    - Chaturaji
   - Tournaments
     - Platform Chess
     - Sovereign Chess (12x12)
   - Games
     - Paper and Pencil Go
-    - Storm the Ivory Tower
     - Magyar Dama
     - Hasami Shogi
-    - Martian Chess
     - Genesis Chess
     - Kamisado
     - Gauntlet
@@ -45,28 +38,26 @@
     - KnightVision (https://mindsports.nl/index.php/dagaz/1121-knightvision)
     - Nine-Tile_Cyvasse
 
-- Turnover
-  - Make the last castle be able to move
-    - as it is now, I just can move if it is in check, but if there is only one castle, so we need be able to move it even if it is not in check
+- Chess
+  - Редактор позиций в FEN-нотации
 
+- Senet
+  - Игра с ботом не останавливается после завершения одним из игроков и зависает после ухода всех камней с поля (3418)
+  - Проверить бой дальней фишки в паре
 - Chaturaji
-  - При отсутствии возможности хода, ход не пропускается
-    - skip-pass не работает
-  - Коалиции (при игре с ботом) не учитываются (Dagaz.AI.isFriend)
+  - Не сработал возврат красного короля в игру после возврата зелёного (3441)
+  - В списке сессий (My Turn) не отображается ход игрока в коалиции
 - Shen
-  - Два хода подряд, без перебрасывания костей (3375, 3376)
-    - При выполнении повторного хода
-    - Срабатывает как выбрасывание 5 очков
-  - Зациклилось после завершения игры с ботом
+  - Обработка повторного хода
+    - ?setup=+3;0:2;1:2;0:2+1;+25;2:2;+19;2:1;+10;2:2;2:1;2:2;2:1;2:2;2:1;2:2;2:1;&turn=13
+  - Преждевременное завершение игры
+    - ?setup=+8;2:1;+14;2:1;+18;2:1;+17;2:2;+9;&turn=9
+    - ?setup=+3;1:2+1;0:2+1;;2:1;+14;2:1;+18;2:1;+17;2:2;+9;&turn=13
 - Ur  
-  - skip-pass не работает в играх с костями (3349)
-    - перебрасывать кости?
-    - не удаляется кость на x1 (ur-dice.js)
-    - при рестарте игры выброшены другие кости
-    - игра не была завершена и зависла, когда у белого не осталось фигур на доске (игра с ботом)
-      - почему не сработала ur-goal?
-      - цель не проверяется на фазе рандомного игрока
-      - сессия была закрыта, когда игра "зависла" на ходе белого
+  - игра не была завершена и зависла, когда у белого не осталось фигур на доске (игра с ботом)
+    - почему не сработала ur-goal?
+    - цель не проверяется на фазе рандомного игрока
+    - сессия была закрыта, когда игра "зависла" на ходе белого
   - в app-net-v2 нежелетельные визуальные эффекты при анимации захвата ботом
     - не работает анимация сложных перемещений (hints)
       - реализация hints не совместима с ходами перемещающими несколько фигур
@@ -147,9 +138,6 @@
     - https://gofederation.ru/pages/277294472
   - Контроль времени
     - https://ru.wikipedia.org/wiki/Контроль_времени
-
-- Camelot
-  - http://worldcamelotfederation.com/Camelot_Rules.htm
 
 - Russian Checkers
   - Бой дамкой (исправлено в Dagaz 3092)
@@ -781,14 +769,6 @@
       - Можно освобождать фигуры противника, но нельзя делить
     - Слияние фигур
       - Управление результатом слияния при ходе на свою башню
-
-- Nyout
-  - prototype
-    - https://skyruk.livejournal.com/216114.html
-
-- Sahkku
-  - prototype
-    - https://skyruk.livejournal.com/288965.html
 
 - Ludo
   - prototype

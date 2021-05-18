@@ -1,33 +1,47 @@
+(define drop-dice (
+  (verify (in-zone? dices))
+  (verify not-friend?)
+  add
+))
+
+(define king-step-1 (
+  $1 add
+))
+
+(define king-step-2 (
+  $1 (add-partial dice-1)
+))
+
+(define king-step-3 (
+  $1 (add-partial dice-2)
+))
+
 (define activate (
-  (verify (and (not-on-board? na) (not-on-board? nb)))
+  (verify (in-zone? start))
   up (verify empty?)
   add
 ))
 
 (define step-1 (
-  (set-flag is-ok (on-board? $1))
-  (if (flag? is-ok) $1 else $2)
-  (while (and not-empty? (on-board? up)) up)
-  (if (flag? is-ok) add else (add $3))
+  (if (on-board? $1) $1 else $2)
+; (while (and not-empty? (on-board? up)) up)
+  add
 ))
 
-(define shadow-dirs
-  (a8 aII) (a9 aII) (a10 aII)
-  (b8 bII) (b9 bII) (b10 bII)
-  (c8 cII) (c9 cII) (c10 cII)
-  (d8 dII) (d9 dII) (d10 dII)
-  (e8 eII) (e9 eII) (e10 eII)
-  (f8 fII) (f9 fII) (f10 fII)
-  (g8 gII) (g9 gII) (g10 gII)
-  (h8 hII) (h9 hII) (h10 hII)
-  (i8 iII) (i9 iII) (i10 iII)
-  (j8 jII) (j9 jII) (j10 jII)
-  (k8 kII) (k9 kII) (k10 kII)
-  (l8 lII) (l9 lII) (l10 lII)
-  (m8 mII) (m9 mII) (m10 mII)
-  (n8 nII) (n9 nII) (n10 nII)
-  (o8 oII) (o9 oII) (o10 oII)
-)
+(define step-2 (
+  (if (on-board? $1) $1 else $2)
+  (if (on-board? $1) $1 else $2)
+; (while (and not-empty? (on-board? up)) up)
+  add
+))
+
+(define step-3 (
+  (if (on-board? $1) $1 else $2)
+  (if (on-board? $1) $1 else $2)
+  (if (on-board? $1) $1 else $2)
+; (while (and not-empty? (on-board? up)) up)
+  add
+))
 
 (game
   (title "Sahkku")
@@ -37,24 +51,22 @@
   (option "smart moves"      true)
   (option "pass turn"        forced)
 
-  (move-sound    "Audio/Clack.wav")
-  (release-sound "Audio/Clack.wav")
-  (drop-sound    "Audio/Dice_cup.wav")
-  (capture-sound "")
-  (change-sound  "")
-  (click-sound   "")
-  (draw-sound    "")
-
-  (players Black White ?N)
+  (players Black White N)
   (turn-order Black White)
 
   (board
-    (image "images/Sahkku/board.bmp")
+    (image "images/sahkku/board.bmp")
+    (grid
+      (start-rectangle 751 107 843 128)
+      (dimensions
+        ("X/Y/Z" (0 48))
+      )
+    )
     (grid
       (start-rectangle 11 103 53 145)
       (dimensions
         ("a/b/c/d/e/f/g/h/i/j/k/l/m/n/o" (47 0)) ; files
-        ("III/II/I" (0 42)) ; ranks
+        ("I/II/III" (0 42)) ; ranks
       )
       (directions (n 0 -1) (s 0 1) (w -1 0) (e 1 0))
     )
@@ -81,11 +93,42 @@
       )
       (directions (up 0 -1) (wup 0 -1) (dn 0 1))
     )
+    (zone (name dices) (players Black White) (positions X Y Z))
+    (zone (name start) (players Black White) (positions a1 b1 c1 d1 e1 f1 g1 h1 i1 j1 k1 l1 m1 n1 o1 a17 b17 c17 d17 e17 f17 g17 h17 i17 j17 k17 l17 m17 n17 o17))
     (links shadow
-      (shadow-dirs)
+      (a8 aII) (a9 aII) (a10 aII)
+      (b8 bII) (b9 bII) (b10 bII)
+      (c8 cII) (c9 cII) (c10 cII)
+      (d8 dII) (d9 dII) (d10 dII)
+      (e8 eII) (e9 eII) (e10 eII)
+      (f8 fII) (f9 fII) (f10 fII)
+      (g8 gII) (g9 gII) (g10 gII)
+      (h8 hII) (h9 hII) (h10 hII)
+      (i8 iII) (i9 iII) (i10 iII)
+      (j8 jII) (j9 jII) (j10 jII)
+      (k8 kII) (k9 kII) (k10 kII)
+      (l8 lII) (l9 lII) (l10 lII)
+      (m8 mII) (m9 mII) (m10 mII)
+      (n8 nII) (n9 nII) (n10 nII)
+      (o8 oII) (o9 oII) (o10 oII)
     )
     (links top
-      (shadow-dirs)
+      (a8 aII) (a9 aII) (a10 aII)
+      (b8 bII) (b9 bII) (b10 bII)
+      (c8 cII) (c9 cII) (c10 cII)
+      (d8 dII) (d9 dII) (d10 dII)
+      (e8 eII) (e9 eII) (e10 eII)
+      (f8 fII) (f9 fII) (f10 fII)
+      (g8 gII) (g9 gII) (g10 gII)
+      (h8 hII) (h9 hII) (h10 hII)
+      (i8 iII) (i9 iII) (i10 iII)
+      (j8 jII) (j9 jII) (j10 jII)
+      (k8 kII) (k9 kII) (k10 kII)
+      (l8 lII) (l9 lII) (l10 lII)
+      (m8 mII) (m9 mII) (m10 mII)
+      (n8 nII) (n9 nII) (n10 nII)
+      (o8 oII) (o9 oII) (o10 oII)
+
       (a6 aII) (a7 aII) (a11 aII) (a12 aII)
       (b6 bII) (b7 bII) (b11 bII) (b12 bII)
       (c6 cII) (c7 cII) (c11 cII) (c12 cII)
@@ -224,7 +267,7 @@
     (links wna
       (o16 n16) (o15 n16) (o14 n16) (o13 n16) (o2 n2) (o3 n2) (o4 n2) (o5 n2)
       (n16 m16) (n15 m16) (n14 m16) (n13 m16) (n2 m2) (n3 m2) (n4 m2) (n5 m2)
-      (m16 l16) (m15 l16) (m14 l16) (m13 l16) (m2 l2) (m2 l2) (m4 l2) (m5 l2)
+      (m16 l16) (m15 l16) (m14 l16) (m13 l16) (m2 l2) (m3 l2) (m4 l2) (m5 l2)
       (l16 k16) (l15 k16) (l14 k16) (l13 k16) (l2 k2) (l3 k2) (l4 k2) (l5 k2)
       (k16 j16) (k15 j16) (k14 j16) (k13 j16) (k2 j2) (k3 j2) (k4 j2) (k5 j2)
       (j16 i16) (j15 i16) (j14 i16) (j13 i16) (j2 i2) (j3 i2) (j4 i2) (j5 i2)
@@ -288,48 +331,86 @@
       (m6 n9) (m7 n9) (m8 n9) (m9 n9) (m10 n9) (m11 n9) (m12 n9)
       (n6 o9) (n7 o9) (n8 o9) (n9 o9) (n10 o9) (n11 o9) (n12 o9)
 
-      (a2 a9) (a3 a9) (a5 a9) (a5 a9) (o6 o16) (o7 o16) (o8 o16) (o8 o16) (o10 o16) (o11 o16) (o12 o16)
+      (a2 a9) (a3 a9) (a4 a9) (a5 a9) (o6 o16) (o7 o16) (o8 o16) (o9 o16) (o10 o16) (o11 o16) (o12 o16)
     )
     (unlink 
       (a2 dn) (b2 dn) (c2 dn) (d2 dn) (e2 dn) (f2 dn) (g2 dn) (h2 dn) (i2 dn) (j2 dn) (k2 dn) (l2 dn) (m2 dn) (n2 dn) (o2 dn)
       (a16 dn) (b16 dn) (c16 dn) (d16 dn) (e16 dn) (f16 dn) (g16 dn) (h16 dn) (i16 dn) (j16 dn) (k16 dn) (l16 dn) (m16 dn) (n16 dn) (o16 dn)
     )
-    (symmetry White (na wna) (nb wnb) (up wup))
+    (symmetry White (na wna) (wna na) (nb wnb) (wnb nb) (up wup) (wup up) (dn dn) (shadow shadow) (top top) (n n) (e e) (w w) (s s))
+  )
+
+  (piece
+     (name D0)
+     (image White "images/sahkku/d0.bmp"
+            Black "images/sahkku/d0.bmp")
+     (drops
+         (move-type dice-drop)
+         (drop-dice)
+     )
+  )
+  (piece
+     (name D1)
+     (image White "images/sahkku/d1.bmp"
+            Black "images/sahkku/d1.bmp")
+     (drops
+         (move-type dice-drop)
+         (drop-dice)
+     )
+  )
+  (piece
+     (name D2)
+     (image White "images/sahkku/d2.bmp"
+            Black "images/sahkku/d2.bmp")
+     (drops
+         (move-type dice-drop)
+         (drop-dice)
+     )
+  )
+  (piece
+     (name D3)
+     (image White "images/sahkku/d3.bmp"
+            Black "images/sahkku/d3.bmp")
+     (drops
+         (move-type dice-drop)
+         (drop-dice)
+     )
   )
 
   (piece
      (name  King)
      (help "King")
-     (image White "images/Sahkku/WKing.bmp"
-            Black "images/Sahkku/BKing.bmp"
-            ?N    "images/Sahkku/King.bmp")
-  )
-  (piece
-     (name  ManA)
-     (help "Man")
-     (image White "images/Sahkku/White.bmp"
-            Black "images/Sahkku/Black.bmp")
+     (image White "images/sahkku/wking.bmp"
+            Black "images/sahkku/bking.bmp"
+            N     "images/sahkku/king.bmp")
      (moves
-         (activate)
-         (step-1 na nb ManB)
+         (move-type dice-1)
+         (king-step-1 n) (king-step-1 e) (king-step-1 w) (king-step-1 s)
+         (move-type dice-2)
+         (king-step-2 n) (king-step-2 e) (king-step-2 w) (king-step-2 s)
+         (move-type dice-3)
+         (king-step-3 n) (king-step-3 e) (king-step-3 w) (king-step-3 s)
      )
   )
   (piece
-     (name  ManB)
+     (name  Man)
      (help "Man")
-     (image White "images/Sahkku/White.bmp"
-            Black "images/Sahkku/Black.bmp")
+     (image White "images/sahkku/white.bmp"
+            Black "images/sahkku/black.bmp")
      (moves
+         (move-type dice-1)
          (activate)
-         (step-1 nb na ManA)
+         (step-1 na nb)
+         (move-type dice-2)
+         (step-2 na nb)
+         (move-type dice-3)
+         (step-3 na nb)
      )
   )
 
   (board-setup
-     (White (ManA a17 b17 c17 d17 e17 f17 g17 h17 i17 j17 k17 l17 m17 n17 o17))
-     (Black (ManA a1 b1 c1 d1 e1 f1 g1 h1 i1 j1 k1 l1 m1 n1 o1))
-     (?N (King hII))
+     (White (Man a17 b17 c17 d17 e17 f17 g17 h17 i17 j17 k17 l17 m17 n17 o17))
+     (Black (Man a1 b1 c1 d1 e1 f1 g1 h1 i1 j1 k1 l1 m1 n1 o1))
+     (N (King hII))
   )
-
-  (loss-condition (Black White) (and (pieces-remaining 0 ManA) (pieces-remaining 0 ManB)))
 )
