@@ -1,10 +1,23 @@
-﻿- DagazServer MySQL
+﻿- Cyclic Checkers
+  - сброс из резерва генерировать в случае отсутствия приоритетных ходов
+  - deferred-captures совместно с detect-loops делает невозможными взятия
+
+- Doubutsu Shogi
+  - eval
+    - Матрицы бонусов позиций
+    - Учитывать угрозы на своём ходу и защиту своих фигур
+
+- session-manager
+  - Использовать для проверок на super Ko
+
+- DagazServer MySQL
   - Traditional Games
     - Renju
     - Tafl
     - Oware
     - Fanorona
     - Surakarta
+    - Kharbaga
     - Turkish Dama (tournaments)
     - Russian Checkers (tournaments)
     - International Checkers (tournaments)
