@@ -25,6 +25,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.checkVersion("smart-moves", "false");
     design.checkVersion("show-hints", "false");
     design.checkVersion("show-blink", "true");
+    design.checkVersion("pass-partial", "true");
 
     design.addDirection("se"); // 0
     design.addDirection("sw"); // 1
@@ -246,7 +247,6 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addCommand(4, ZRF.FUNCTION,	22);	// navigate
     design.addCommand(4, ZRF.JUMP,	-8);
     design.addCommand(4, ZRF.FUNCTION,	28);	// end
-
 
     design.addPiece("Man", 0);
     design.addMove(0, 0, [3, 3], 0);
