@@ -45,21 +45,17 @@ Dagaz.Model.CheckInvariants = function(board) {
       });
   });
   if (priority.length == 0) {
-      if (capturing.length == 0) {
-          for (var src = Dagaz.Model.stringToPos("X8"); src < design.positions.length; src++) {
-               var piece = board.getPiece(src);
-               if ((piece !== null) && (piece.player == board.player)) {
-                   for (var dst = 0; dst < Dagaz.Model.stringToPos("X8"); dst++) {
-                        if ((board.getPiece(dst) === null) && design.inZone(1, board.player, dst)) {
-                            var move = Dagaz.Model.createMove(0);
-                            move.movePiece(src, dst, piece);
-                            board.moves.push(move);
-                        }
-                   }
+      for (var src = Dagaz.Model.stringToPos("X8"); src < design.positions.length; src++) {
+           var piece = board.getPiece(src);
+           if ((piece !== null) && (piece.player == board.player)) {
+               for (var dst = 0; dst < Dagaz.Model.stringToPos("X8"); dst++) {
+                    if ((board.getPiece(dst) === null) && design.inZone(1, board.player, dst)) {
+                        var move = Dagaz.Model.createMove(0);
+                        move.movePiece(src, dst, piece);
+                        board.moves.push(move);
+                    }
                }
-          }
-      } else {
-          board.moves = capturing;
+           }
       }
   } else {
       board.moves = _.union(priority, capturing);

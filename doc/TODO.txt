@@ -1,11 +1,18 @@
 ﻿- Cyclic Checkers
-  - сброс из резерва генерировать в случае отсутствия приоритетных ходов
+  - cases
+    - ?setup=;0:2;;0:2;;0:2;;0:2+1;;0:2;;0:2;;0:2;+5;0:2;;0:2+1;;0:2;+9;0:1;+1;0:1;;0:1;;0:1;;0:1;+1;0:1;;0:1;+2;0:1+1;;0:1;;0:1;;0:1;+16;&turn=0
+      - Если оказывается рядом с вражеской фигурой, должна есть (при этом, тихие ходы разрешены)
   - deferred-captures совместно с detect-loops делает невозможными взятия
 
 - Doubutsu Shogi
   - eval
     - Матрицы бонусов позиций
     - Учитывать угрозы на своём ходу и защиту своих фигур
+
+- Jocly
+  - https://wiki.jocly.com/index.php/Main_Page
+  - https://wiki.jocly.com/index.php/Developing_a_Chess_variant
+  - https://wiki.jocly.com/index.php/Changing_the_pieces_with_my_own_set
 
 - session-manager
   - Использовать для проверок на super Ko
