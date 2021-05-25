@@ -8,7 +8,7 @@ Dagaz.Model.checkVersion = function(design, name, value) {
   }
 }
 
-var isTarget = function(design, board, pos, dir, piece) {
+var isTarget = function(design, board, pos, dir, piece, captured) {
   var p = design.navigate(1, pos, dir);
   if (piece.type == 1) {
       while (p !== null) {
@@ -17,6 +17,7 @@ var isTarget = function(design, board, pos, dir, piece) {
       }
   }
   if (p === null) return false;
+  if (_.indexOf(captured, p) >= 0) return false;
   var x = board.getPiece(p);
   if (x === null) return false;
   if (x.player == board.player) return false;
@@ -31,6 +32,12 @@ Dagaz.Model.CheckInvariants = function(board) {
   var design = Dagaz.Model.design;
   _.each(board.moves, function(move) {
       var piece = null; var target = null;
+      var captured = [];
+      for (var i = 0; i < move.actions.length; i++) {
+           if ((move.actions[i][0] !== null) && (move.actions[i][1] === null)) {
+                captured.push(move.actions[i][0][0]);
+           }
+      }
       for (var i = 0; i < move.actions.length; i++) {         
            if (piece === null) {
                if ((move.actions[i][0] !== null) && (move.actions[i][1] !== null)) {
@@ -42,14 +49,15 @@ Dagaz.Model.CheckInvariants = function(board) {
                if ((move.actions[i][0] !== null) && (move.actions[i][1] !== null)) {
                     var pos = move.actions[i][0][0];
                     _.each([0, 1, 2, 3], function(dir) {
-                        if (isTarget(design, board, pos, dir, piece)) move.failed = true;
+                        if (isTarget(design, board, pos, dir, piece, captured)) move.failed = true;
                     });
                }
                target = null;
            }
            if ((move.actions[i][0] !== null) && (move.actions[i][1] === null)) {
-               target = board.getPiece(move.actions[i][0][0]);
-               if (target.player != board.player) {
+               target = move.actions[i][0][0];
+               var x = board.getPiece(target);
+               if ((x === null) || (x.player != board.player)) {
                    target = null;
                }
            }
