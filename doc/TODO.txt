@@ -1,13 +1,41 @@
-﻿- Cyclic Checkers
+﻿- Doubutsu Shogi
+  - eval
+    - Учитывать угрозы на своём ходу и защиту своих фигур
+
+- DagazServer MySQL
+  - Traditional Games
+    - Renju
+    - Tafl
+    - Shogi (tournaments)
+    - Janggi
+    - Yitongqi
+    - Pasang
+    ? Agon
+    ? Alquerque
+    ? Armenian Tama
+    - Zamma
+    - Canadian Checkers
+    - Italian Checkers
+    - Italian Damone
+    ? Courier Chess
+    ? Dablot
+    ? Gala
+    ? Hiashatar
+    ? Makruk
+    ? Makyek
+    - Ming Mang
+    - Ohojichi
+    ? Seega
+    - Shatranj
+    ? Sittuyin
+    - Thai Checkers
+    - Greek Checkers
+
+- Cyclic Checkers
   - cases
     - ?setup=;0:2;+2;0:2;;0:2+1;;0:2;;0:2;+5;0:2;;0:1;+1;0:2;+9;0:1;+3;0:1;;0:1;+12;0:1;;0:1;;0:1;;0:1;;0:2;+13;0:1;&turn=0
     - ?setup=;0:2;;0:2;;0:2;;0:2+1;;0:2;;0:2;;0:2;+5;0:2;;0:2+1;;0:2;+9;0:1;+1;0:1;;0:1;;0:1;;0:1;+1;0:1;;0:1;+2;0:1+1;;0:1;;0:1;;0:1;+16;&turn=0
   - deferred-captures совместно с detect-loops делает невозможными взятия
-
-- Doubutsu Shogi
-  - eval
-    - Матрицы бонусов позиций
-    - Учитывать угрозы на своём ходу и защиту своих фигур
 
 - Jocly
   - https://wiki.jocly.com/index.php/Main_Page
@@ -16,26 +44,6 @@
 
 - session-manager
   - Использовать для проверок на super Ko
-
-- DagazServer MySQL
-  - Traditional Games
-    - Renju
-    - Tafl
-    - Oware
-    - Fanorona
-    - Surakarta
-    - Kharbaga
-    - Turkish Dama (tournaments)
-    - Russian Checkers (tournaments)
-    - International Checkers (tournaments)
-    - Frisian Checkers (tournaments)
-    - Column Checkers (tournaments)
-    - Dark Chess
-    - Chess (tournaments)
-    - Shogi (tournaments)
-    - XiangQi (tournaments)
-    - Janggi
-    - Pasang
 
 - Turnover
   - Использовать звуки из Turnover в шахматных играх
