@@ -1,0 +1,68 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>L-Game</title>
+</head>
+<body>
+
+<img id="Board" style="display:none" src="images/l-game/board.png">
+<img id="BlackStone" style="display:none" src="images/l-game/stone.png">
+<img id="BlueTile" style="display:none" src="images/l-game/b0000.png">
+<img id="PinkTile" style="display:none" src="images/l-game/r0000.png">
+<img id="B0001" style="display:none" src="images/l-game/b0001.png">
+<img id="B0010" style="display:none" src="images/l-game/b0010.png">
+<img id="B0011" style="display:none" src="images/l-game/b0011.png">
+<img id="B0100" style="display:none" src="images/l-game/b0100.png">
+<img id="B0101" style="display:none" src="images/l-game/b0101.png">
+<img id="B0110" style="display:none" src="images/l-game/b0110.png">
+<img id="B1000" style="display:none" src="images/l-game/b1000.png">
+<img id="B1001" style="display:none" src="images/l-game/b1001.png">
+<img id="B1010" style="display:none" src="images/l-game/b1010.png">
+<img id="B1100" style="display:none" src="images/l-game/b1100.png">
+<img id="R0001" style="display:none" src="images/l-game/r0001.png">
+<img id="R0010" style="display:none" src="images/l-game/r0010.png">
+<img id="R0011" style="display:none" src="images/l-game/r0011.png">
+<img id="R0100" style="display:none" src="images/l-game/r0100.png">
+<img id="R0101" style="display:none" src="images/l-game/r0101.png">
+<img id="R0110" style="display:none" src="images/l-game/r0110.png">
+<img id="R1000" style="display:none" src="images/l-game/r1000.png">
+<img id="R1001" style="display:none" src="images/l-game/r1001.png">
+<img id="R1010" style="display:none" src="images/l-game/r1010.png">
+<img id="R1100" style="display:none" src="images/l-game/r1100.png">
+
+<table style="margin:auto; font-family:sans-serif; font-size:14px" id="Table">
+<tr style="height:400px; vertical-align:top">
+<td id="CanvasCell" style="width:400px">
+<canvas id="Canvas" width="400" height="400" style="cursor:default">Broken canvas...</canvas>
+</td><td style="width:300px;">
+<div style="height:510px; overflow:auto" id="ScrollDiv">
+<img id="GlyphImage"><p id="HelpText"></p>
+<p id="GameSession"></p>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div style="height:100px; width:400px; margin-left:auto; margin-right:auto">
+<table>
+<tr style="display:none" id="PieceInfo">
+<td><img id="PieceInfoImage"></td><td id="PieceInfoText"></td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+
+<script src="http://underscorejs.ru/underscore-min.js"></script>
+<script src="../../kernel/dagaz.js"></script>
+<script src="../../kernel/model/zrf-model.js"></script>
+<script src="../../kernel/model/zobrist.js"></script>
+<script src="../../kernel/view/2d/2d-view-v2.js"></script>
+<script src="../../kernel/controller/utils/move-list-v2.js"></script>
+<script src="l-game-view.js"></script>
+<script src="l-game.js"></script>
+<script src="../../kernel/controller/app-v2.js"></script>
+
+</body>
+</html>
