@@ -73,6 +73,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                         _.each(capturing, function(pos) {
                              move.capturePiece(pos);
                         });
+                        move.setValue(board.player - 1, p);
                         board.moves.push(move);
                     }
                }

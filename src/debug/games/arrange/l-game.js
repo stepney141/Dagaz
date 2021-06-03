@@ -73,6 +73,9 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addPiece("Tile", 1);
 
+    design.setValue(0, 5);
+    design.setValue(1, 1);
+
     design.setup("Blue", "Tile", 13);
     design.setup("Blue", "Tile", 9);
     design.setup("Blue", "Tile", 5);

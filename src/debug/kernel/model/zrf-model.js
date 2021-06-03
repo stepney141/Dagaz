@@ -713,6 +713,7 @@ function ZrfDesign() {
   this.modes          = [];
   this.price          = [];
   this.goals          = [];
+  this.values         = [];
   this.failed         = false;
 }
 
@@ -721,6 +722,10 @@ Dagaz.Model.getDesign = function() {
       Dagaz.Model.design = new ZrfDesign();
   }
   return Dagaz.Model.design;
+}
+
+ZrfDesign.protoype.setValue = function(name, value) {
+  this.values[name] = value;
 }
 
 ZrfDesign.prototype.allPositions = function() {
@@ -1800,6 +1805,7 @@ Dagaz.Model.getInitBoard = function() {
       var design = Dagaz.Model.getDesign();
       Dagaz.Model.board = new ZrfBoard(Dagaz.Model);
       Dagaz.Model.board.reserve = design.reserve;
+      Dagaz.Model.board.values = design.values;
   }
   return Dagaz.Model.board;
 }
