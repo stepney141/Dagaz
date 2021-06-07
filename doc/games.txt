@@ -44,7 +44,7 @@
   - Banqi [cloack, random, attributes, shared, best, todo:mindsports, family:chess]
   - Martian Chess [ko, 4-players, todo:coalition, scoring]
   - Dejarik [todo, family:other]
-  - Duel [king, todo, family:other]
+  - Duel [king, family:other]
 - Stalemate [stalemate]
   - Bear games [family:stalemate]
   - Mu Torere [smart(from), family:stalemate]

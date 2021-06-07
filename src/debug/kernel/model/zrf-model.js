@@ -724,7 +724,7 @@ Dagaz.Model.getDesign = function() {
   return Dagaz.Model.design;
 }
 
-ZrfDesign.protoype.setValue = function(name, value) {
+ZrfDesign.prototype.setValue = function(name, value) {
   this.values[name] = value;
 }
 
