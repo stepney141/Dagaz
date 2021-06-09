@@ -34,6 +34,8 @@
     )
     (zone (name goal) (players Red) (positions e8))
     (zone (name goal) (players White) (positions e1))
+    (zone (name home) (players White) (positions a8 b8 c8 d8 f8 g8 h8 i8))
+    (zone (name home) (players Red) (positions a1 b1 c1 d1 f1 g1 h1 i1))
   )
 
   (piece

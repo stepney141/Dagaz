@@ -1,4 +1,4 @@
-Dagaz.Controller.persistense = "session";
+Dagaz.Controller.persistense = "none";
 
 ZRF = {
     JUMP:          0,
@@ -113,6 +113,8 @@ Dagaz.Model.BuildDesign = function(design) {
 
     design.addZone("goal", 1, [4]);
     design.addZone("goal", 2, [67]);
+    design.addZone("home", 1, [63, 64, 65, 66, 68, 69, 70, 71]);
+    design.addZone("home", 2, [0, 1, 2, 3, 5, 6, 7, 8]);
 
     design.addCommand(0, ZRF.FUNCTION,	24);	// from
     design.addCommand(0, ZRF.PARAM,	0);	// $1
@@ -2098,23 +2100,7 @@ Dagaz.Model.BuildDesign = function(design) {
     design.addMove(24, 75, [1], 4);
 
     design.setup("Red", "King", 67);
-    design.setup("Red", "D13", 64);
-    design.setup("Red", "D13", 70);
-    design.setup("Red", "D23", 65);
-    design.setup("Red", "D23", 69);
-    design.setup("Red", "D53", 63);
-    design.setup("Red", "D53", 71);
-    design.setup("Red", "D63", 66);
-    design.setup("Red", "D63", 68);
     design.setup("White", "King", 4);
-    design.setup("White", "D14", 1);
-    design.setup("White", "D14", 7);
-    design.setup("White", "D24", 2);
-    design.setup("White", "D24", 6);
-    design.setup("White", "D54", 0);
-    design.setup("White", "D54", 8);
-    design.setup("White", "D64", 3);
-    design.setup("White", "D64", 5);
 }
 
 Dagaz.View.configure = function(view) {
@@ -2169,6 +2155,58 @@ Dagaz.View.configure = function(view) {
     view.defPiece("WhiteD64", "White D64");
     view.defPiece("RedD65", "Red D65");
     view.defPiece("WhiteD65", "White D65");
+
+    view.defPiece("RedKH", "RedKH");
+    view.defPiece("RedD12H", "RedD12H");
+    view.defPiece("RedD13H", "RedD13H");
+    view.defPiece("RedD14H", "RedD14H");
+    view.defPiece("RedD15H", "RedD15H");
+    view.defPiece("RedD21H", "RedD21H");
+    view.defPiece("RedD23H", "RedD23H");
+    view.defPiece("RedD24H", "RedD24H");
+    view.defPiece("RedD26H", "RedD26H");
+    view.defPiece("RedD31H", "RedD31H");
+    view.defPiece("RedD32H", "RedD32H");
+    view.defPiece("RedD35H", "RedD35H");
+    view.defPiece("RedD36H", "RedD36H");
+    view.defPiece("RedD41H", "RedD41H");
+    view.defPiece("RedD42H", "RedD42H");
+    view.defPiece("RedD45H", "RedD45H");
+    view.defPiece("RedD46H", "RedD46H");
+    view.defPiece("RedD51H", "RedD51H");
+    view.defPiece("RedD53H", "RedD53H");
+    view.defPiece("RedD54H", "RedD54H");
+    view.defPiece("RedD56H", "RedD56H");
+    view.defPiece("RedD62H", "RedD62H");
+    view.defPiece("RedD63H", "RedD63H");
+    view.defPiece("RedD64H", "RedD64H");
+    view.defPiece("RedD65H", "RedD65H");
+
+    view.defPiece("WhiteKH", "WhiteKH");
+    view.defPiece("WhiteD12H", "WhiteD12H");
+    view.defPiece("WhiteD13H", "WhiteD13H");
+    view.defPiece("WhiteD14H", "WhiteD14H");
+    view.defPiece("WhiteD15H", "WhiteD15H");
+    view.defPiece("WhiteD21H", "WhiteD21H");
+    view.defPiece("WhiteD23H", "WhiteD23H");
+    view.defPiece("WhiteD24H", "WhiteD24H");
+    view.defPiece("WhiteD26H", "WhiteD26H");
+    view.defPiece("WhiteD31H", "WhiteD31H");
+    view.defPiece("WhiteD32H", "WhiteD32H");
+    view.defPiece("WhiteD35H", "WhiteD35H");
+    view.defPiece("WhiteD36H", "WhiteD36H");
+    view.defPiece("WhiteD41H", "WhiteD41H");
+    view.defPiece("WhiteD42H", "WhiteD42H");
+    view.defPiece("WhiteD45H", "WhiteD45H");
+    view.defPiece("WhiteD46H", "WhiteD46H");
+    view.defPiece("WhiteD51H", "WhiteD51H");
+    view.defPiece("WhiteD53H", "WhiteD53H");
+    view.defPiece("WhiteD54H", "WhiteD54H");
+    view.defPiece("WhiteD56H", "WhiteD56H");
+    view.defPiece("WhiteD62H", "WhiteD62H");
+    view.defPiece("WhiteD63H", "WhiteD63H");
+    view.defPiece("WhiteD64H", "WhiteD64H");
+    view.defPiece("WhiteD65H", "WhiteD65H");
  
     view.defPosition("a8", 6, 7, 38, 38);
     view.defPosition("b8", 44, 7, 38, 38);
