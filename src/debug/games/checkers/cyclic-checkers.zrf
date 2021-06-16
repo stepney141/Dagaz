@@ -8,13 +8,24 @@
 ))
 
 (define checker-jump (
-   $1 (verify not-empty?) 
+   $1 (verify enemy?) 
    capture 
    $1 (verify empty?)
    (if (in-zone? promotion)
        (add-partial King continue-type)
     else
-       (add-partial jump-type)
+       (add-partial continue-type)
+   )
+))
+
+(define checker-leap (
+   $1 (verify friend?) 
+   capture 
+   $1 (verify empty?)
+   (if (in-zone? promotion)
+       (add-partial King continue-type)
+    else
+       (add-partial continue-type)
    )
 ))
 
@@ -25,8 +36,22 @@
 ))
 
 (define king-jump (
-   $1 (while empty?  $1)
-   (verify not-empty?)
+   $1 (while empty? $1)
+   (verify enemy?)
+   $1 (while empty?
+       mark
+       (while empty? 
+          (opposite $1)
+       ) 
+       capture
+       back
+       (add-partial continue-type) $1
+   )
+))
+
+(define king-leap (
+   $1 (while empty? $1)
+   (verify friend?)
    $1 (while empty?
        mark
        (while empty? 
@@ -59,6 +84,7 @@
 
   (players White Black)
   (turn-order White Black)
+  (move-priorities jump-type normal-type)
 
   (board
      (image "images/cyclic.bmp")
@@ -99,10 +125,14 @@
      (image White "images/wman.bmp"
             Black "images/bman.bmp")
      (moves
-         (move-type jump-type)
-         (checker-jump nw) (checker-jump ne) (checker-jump sw) (checker-jump se)
          (move-type normal-type)
          (checker-shift nw) (checker-shift ne)
+         (checker-leap nw) (checker-leap ne) (checker-leap sw) (checker-leap se)
+         (move-type jump-type)
+         (checker-jump nw) (checker-jump ne) (checker-jump sw) (checker-jump se)
+         (move-type continue-type)
+         (checker-jump nw) (checker-jump ne) (checker-jump sw) (checker-jump se)
+         (checker-leap nw) (checker-leap ne) (checker-leap sw) (checker-leap se)
      )
   )
   (piece
@@ -110,12 +140,13 @@
      (image White "images/wdamone.bmp"
             Black "images/bdamone.bmp")
      (moves
+         (move-type normal-type)
+         (king-shift nw) (king-shift ne) (king-shift sw) (king-shift se)
+         (king-leap nw) (king-leap ne) (king-leap sw) (king-leap se)
          (move-type jump-type)
          (king-jump nw) (king-jump ne) (king-jump sw) (king-jump se)
          (move-type continue-type)
          (king-continue nw) (king-continue ne) (king-continue sw) (king-continue se)
-         (move-type normal-type)
-         (king-shift nw) (king-shift ne) (king-shift sw) (king-shift se)
      )
   )
 

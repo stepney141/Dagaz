@@ -3,14 +3,14 @@
     - Процедурная отрисовка L-фигур (подмена ресурсов тайлов в зависимости от соседецй)
     - Процедурная генерация ходов перемещения L-фигур
 
-- Cyclic Checkers
-  - Уточнить правила
-
 - Ludii
   - https://github.com/Ludeme/Ludii
 
 - Буси Сёги
   - https://ru.wikipedia.org/wiki/%D0%91%D1%83%D1%81%D0%B8_%D1%81%D1%91%D0%B3%D0%B8
+
+- Jungle
+  - https://brainking.com/ru/GameRules?tp=108
 
 - Doubutsu Shogi
   - Учитывать угрозы на своём ходу и защиту своих фигур
