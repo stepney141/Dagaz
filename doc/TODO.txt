@@ -1,13 +1,17 @@
-﻿- Chess
+﻿- L-game
+  - prototype
+
+- DagazServer
+  - Hiashatar
+  - Shatar
+    - https://sangharussia.ru/vidy-sporta/shatar-buryatskie-shakhmaty
+    - https://сшорзк-адапт.рф/about/natsionalnye-vidy-sporta/buryatskie-shakhmaty-shatar/
+
+- Chess
   - Запретить длинный ход пешкой в 4-ой расстановке
 
 - Turnover
   - Использовать звуки из Turnover в шахматных играх
-
-- L-game
-  - prototype
-    - Процедурная отрисовка L-фигур (подмена ресурсов тайлов в зависимости от соседецй)
-    - Процедурная генерация ходов перемещения L-фигур
 
 - Ludii
   - https://github.com/Ludeme/Ludii

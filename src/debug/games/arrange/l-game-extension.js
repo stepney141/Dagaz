@@ -41,7 +41,7 @@ var addPattern = function(design, board, sx, sy, p, move) {
        for (var y = 0; y < 3; y++) {
             if (patterns[p][y * 3 + x] == 0) continue;
             if ((x + sx >= 4) || (y + sy >= 4)) return false;
-            var pos = (y * sy) * 4 + x + sx;
+            var pos = (y + sy) * 4 + x + sx;
             var piece = board.getPiece(pos);
             if (piece !== null) {
                 if ((piece.type == 0) || (piece.player != board.player)) return false;
@@ -73,7 +73,7 @@ Dagaz.Model.CheckInvariants = function(board) {
                         _.each(capturing, function(pos) {
                              move.capturePiece(pos);
                         });
-                        move.setValue(board.player - 1, p);
+                        move.setValue(board.player - 1, p + 1);
                         board.moves.push(move);
                     }
                }

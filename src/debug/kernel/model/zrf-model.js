@@ -756,7 +756,7 @@ ZrfDesign.prototype.reserve = function(player, piece, cnt, selector) {
   }
 }
 
-ZrfDesign.prototype.setup = function(player, piece, pos, selector) {
+ZrfDesign.prototype.setup = function(player, piece, pos, selector, functor) {
   if (!_.isUndefined(selector) && (selector != Dagaz.Model.getSetupSelector())) {
       return;
   }
@@ -768,11 +768,15 @@ ZrfDesign.prototype.setup = function(player, piece, pos, selector) {
   }
   var o = Dagaz.find(this.playerNames, player);
   var t = Dagaz.find(this.pieceNames, piece);
+  var piece = Dagaz.Model.createPiece(t, o);
+  if (!_.isUndefined(functor)) {
+      piece = functor(piece);
+  }
   if ((o < 0) || (t < 0)) {
       this.failed = true;
   } else {
       var board = Dagaz.Model.getInitBoard();
-      board.setPiece(pos, Dagaz.Model.createPiece(t, o));
+      board.setPiece(pos, piece);
   }
 }
 

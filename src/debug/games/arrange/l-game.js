@@ -76,14 +76,15 @@ Dagaz.Model.BuildDesign = function(design) {
     design.setValue(0, 5);
     design.setValue(1, 1);
 
-    design.setup("Blue", "Tile", 13);
-    design.setup("Blue", "Tile", 9);
-    design.setup("Blue", "Tile", 5);
-    design.setup("Blue", "Tile", 14);
-    design.setup("Pink", "Tile", 1);
-    design.setup("Pink", "Tile", 10);
-    design.setup("Pink", "Tile", 6);
-    design.setup("Pink", "Tile", 2);
+    design.setup("Blue", "Tile", 13, undefined, function(p) {return p.setValue(0, 2);});
+    design.setup("Blue", "Tile", 9,  undefined, function(p) {return p.setValue(0, 3);});
+    design.setup("Blue", "Tile", 5,  undefined, function(p) {return p.setValue(0, 4);});
+    design.setup("Blue", "Tile", 14, undefined, function(p) {return p.setValue(0, 1);});
+    design.setup("Pink", "Tile", 1,  undefined, function(p) {return p.setValue(0, 1);});
+    design.setup("Pink", "Tile", 10, undefined, function(p) {return p.setValue(0, 4);});
+    design.setup("Pink", "Tile", 6,  undefined, function(p) {return p.setValue(0, 3);});
+    design.setup("Pink", "Tile", 2,  undefined, function(p) {return p.setValue(0, 2);});
+
     design.setup("Black", "Stone", 0);
     design.setup("Black", "Stone", 15);
 }
