@@ -1,8 +1,12 @@
-﻿- Adiuh Checkers
-  - Не выводится итоговый счёт при завершении игры на DagazServer
+﻿- DagazServer
+  - Hoppel-Poppel Chess
+    - Не принимается ход встроенного бота (garbo-ai)
+  - Adiuh Checkers
+    - Не выводится итоговый счёт при завершении игры
 
-- garbo-ai
-  - http://omerkel.github.io/Garbochess-JS/oliver/
+- Doubutsu Shogi
+  - Учитывать угрозы на своём ходу и защиту своих фигур
+  - garbo-ai
 
 - L-game
   - prototype
@@ -27,10 +31,6 @@
 
 - Jungle
   - https://brainking.com/ru/GameRules?tp=108
-
-- Doubutsu Shogi
-  - Учитывать угрозы на своём ходу и защиту своих фигур
-  - garbo-ai
 
 - DagazServer MySQL
   - Traditional Games

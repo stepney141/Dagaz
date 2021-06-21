@@ -1,10 +1,8 @@
 "use strict";
 
-(function() {
-
 var g_timeout = 40;
-var g_width   = 8;
-var g_height  = 8;
+var g_width = 8;
+var g_height = 8;
 
 function GetFen(){
     var result = "";
@@ -65,6 +63,8 @@ function FormatSquare(square) {
 }
 
 function FormatMove(move) {
+    if (move & moveflagCastleKing) return "O-O";
+    if (move & moveflagCastleQueen) return "O-O-O";
     var result = FormatSquare(move & 0xFF) + '-' + FormatSquare((move >> 8) & 0xFF);
     if (move & moveflagPromotion) {
         if (move & moveflagPromoteBishop) result += " Bishop";
@@ -125,10 +125,7 @@ function Search(finishMoveCallback, maxPly, finishPlyCallback) {
     }
 
     if (finishMoveCallback != null) {
-        MakeMove(bestMove);
-        var curFen = GetFen();
-        UnmakeMove(bestMove);
-        finishMoveCallback(bestMove, curFen, value, (new Date()).getTime() - g_startTime, i - 1);
+        finishMoveCallback(bestMove, value, (new Date()).getTime() - g_startTime, i - 1);
     }
 }
 
@@ -1186,7 +1183,6 @@ function ResetGame() {
         }
     }
 
-    pieceSquareAdj[pieceEmpty] = MakeTable(emptyAdj);
     pieceSquareAdj[piecePawn] = MakeTable(((g_width == 8) && (g_height == 8)) ? pawnAdj : emptyAdj);
     pieceSquareAdj[pieceKnight] = MakeTable(((g_width == 8) && (g_height == 8)) ? knightAdj : emptyAdj);
     pieceSquareAdj[pieceBishop] = MakeTable(((g_width == 8) && (g_height == 8)) ? bishopAdj: emptyAdj);
@@ -2313,77 +2309,45 @@ function SeeAddSliderAttacks(target, us, attacks, pieceType) {
     return hit;
 }
 
-function debugPlyCallback(bestMove, value, time, ply) {
-    console.log(FormatMove(bestMove) + ', v = ' + value + ', t = ' + time + ', ply = ' + ply);
+function BuildPVMessage(bestMove, value, timeTaken, ply) {
+    var totalNodes = g_nodeCount + g_qNodeCount;
+    return "Ply:" + ply + " Score:" + value + " Nodes:" + totalNodes + " NPS:" + ((totalNodes / (timeTaken / 1000)) | 0) + " " + PVFromHash(bestMove, 15);
 }
 
-function FindMove(fen, timeout, callback, flags, width, height) {
-    ResetGame();
-    InitializeFromFen(fen);
-    g_timeout = timeout;
-    g_flags   = flags;
-    g_width   = width;
-    g_height  = height;
-    Search(callback, 99, debugPlyCallback);
+//////////////////////////////////////////////////
+// Test Harness
+//////////////////////////////////////////////////
+function FinishPlyCallback(bestMove, value, timeTaken, ply) {
+    postMessage("pv " + BuildPVMessage(bestMove, value, timeTaken, ply));
 }
 
-function Ai(parent) {
-  this.parent = parent;
+function FinishMoveLocalTesting(bestMove, value, timeTaken, ply) {
+    if (bestMove != null) {
+        MakeMove(bestMove);
+        postMessage(FormatMove(bestMove));
+    }
 }
 
-var findBot = Dagaz.AI.findBot;
-
-Dagaz.AI.findBot = function(type, params, parent) {
-  if ((type == "common") || (type == "1") || (type == "2")) {
-      return new Ai(parent);
-  } else {
-      return findBot(type, params, parent);
-  }
+var needsReset = true;
+self.onmessage = function (e) {
+    if (e.data == "go" || needsReset) {
+        ResetGame();
+        needsReset = false;
+        if (e.data == "go") return;
+    }
+    if (e.data.match("^position") == "position") {
+        ResetGame();
+        var result = InitializeFromFen(e.data.substr(9, e.data.length - 9));
+        if (result.length != 0) {
+            postMessage("message " + result);
+        }
+    } else if (e.data.match("^search") == "search") {
+        g_timeout = parseInt(e.data.substr(7, e.data.length - 7), 10);
+        Search(FinishMoveLocalTesting, 99, FinishPlyCallback);
+    } else if (e.data == "analyze") {
+        g_timeout = 99999999999;
+        Search(null, 99, FinishPlyCallback);
+    } else {
+        MakeMove(GetMoveFromString(e.data));
+    }
 }
-
-Ai.prototype.setContext = function(ctx, board) {
-  if (this.parent) {
-      this.parent.setContext(ctx, board);
-  }
-  ctx.board  = board;
-}
-
-var best = null;
-
-function FinishTurnCallback(bestMove, fen, value, time, ply) {
-   console.log(FormatMove(bestMove) + ', v = ' + value + ', t = ' + time + ', ply = ' + ply);
-   console.log("fen = " + fen);
-   best = FormatMove(bestMove);
-}
-
-Ai.prototype.getMove = function(ctx) {
-  var moves = Dagaz.AI.generate(ctx, ctx.board);
-  if (moves.length == 0) {      
-      return { done: true, ai: "nothing" };
-  }
-  if (moves.length == 1) {
-      return { done: true, move: moves[0], ai: "once" };
-  }
-  var fen = Dagaz.Model.getSetup(ctx.design, ctx.board);
-  console.log("fen = " + fen);
-  FindMove(fen, 1000, FinishTurnCallback, g_flags, g_width, g_height);
-  var result = null;
-  _.each(ctx.board.moves, function(move) {
-      var m = move.toString() + ' ';
-      if (m.startsWith(best + ' ')) {
-          result = move;
-      }
-  });
-  if (result !== null) {
-      return {
-          done: true,
-          move: result,
-          ai:   "ai"
-      };
-  }
-  if (this.parent) {
-      return this.parent.getMove(ctx);
-  }
-}
-
-})();
