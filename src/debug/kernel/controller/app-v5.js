@@ -550,12 +550,13 @@ App.prototype.exec = function() {
       }
       if (result) {
           if (_.isUndefined(result.move)) {
+/*            console.log(result);
               this.state = STATE.DONE;
               Canvas.style.cursor = "default";
               if (!_.isUndefined(Dagaz.Controller.play)) {
                   Dagaz.Controller.play(Dagaz.Sounds.win);
               }
-              this.gameOver(player + " lose", -this.board.player);
+              this.gameOver(player + " lose", -this.board.player);*/
               return;
           }
           if (result.done || (Date.now() - this.timestamp >= this.params.AI_WAIT)) {
