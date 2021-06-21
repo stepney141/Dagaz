@@ -1,4 +1,10 @@
-﻿- L-game
+﻿- Adiuh Checkers
+  - Не выводится итоговый счёт при завершении игры на DagazServer
+
+- garbo-ai
+  - http://omerkel.github.io/Garbochess-JS/oliver/
+
+- L-game
   - prototype
 
 - DagazServer

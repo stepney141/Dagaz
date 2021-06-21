@@ -114,17 +114,43 @@ MoveList.prototype.setMode = function(mode) {
   delete this.list;
 }
 
+MoveList.prototype.getTile = function(mode) {
+  var r = null;
+  _.each(this.list, function(move) {
+      _.each(move.actions, function(a) {
+         if (a[0] !== null) return;
+         if (a[1] === null) return;
+         if (a[1][0] != this.dst) return;
+         if (a[2] === null) return;
+         var piece = a[2][0];
+         r = piece.getValue(0);
+      }, this);
+  }, this);
+  return r;
+}
+
 MoveList.prototype.setPosition = function(pos) {
   if (this.src !== null) {
       if (_.indexOf(this.getStops(), +pos) < 0) this.src = null;
   }
   if (this.src !== null) {
+      var list = this.list;
+      var mode = this.mode;
+      // with current mode
       this.dst = pos;
       delete this.list;
       if (this.getMoves().length > 0) return;
+      // other modes (mode changing by application)
       this.mode = null;
       delete this.list;
       if (this.getMoves().length > 0) return;
+      // change tile
+      if (list.length == 1) {
+          this.list = list;
+          this.mode = mode;
+          this.tile = this.getTile();
+          if (this.tile !== null) return;
+      }
       this.src = null;
       this.dst = null;
       delete this.stops;
