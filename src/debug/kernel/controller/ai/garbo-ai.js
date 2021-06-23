@@ -4,6 +4,7 @@ function Ai(parent) {
   this.parent = parent;
 }
 
+var once       = true;
 var inProgress = false;
 var resultMove = null;
 var player     = null;
@@ -11,7 +12,7 @@ var player     = null;
 var findBot = Dagaz.AI.findBot;
 
 Dagaz.AI.findBot = function(type, params, parent) {
-  if ((type == "external") || (type == "opening") || (type == "1") || (type == "2")) {
+  if ((type == "external") || (type == "common") || (type == "1") || (type == "2")) {
       return new Ai(parent);
   } else {
       return findBot(type, params, parent);
@@ -27,11 +28,14 @@ Ai.prototype.setContext = function(ctx, board) {
   inProgress = false;
   resultMove = null;
   player     = board.player;
-  ResetGame();
+  if (once) {
+      Dagaz.AI.ResetGame();
+      once = false;
+  }
 }
 
 var garbo = function(bestMove, value, timeTaken, ply) {
-  resultMove = FormatMove(bestMove);  
+  resultMove = Dagaz.AI.FormatMove(bestMove);  
   inProgress = false;
   console.log('Garbo: ' + resultMove + ', value = ' + value + ', time = ' + timeTaken + ', ply = ' + ply);
   if (resultMove == 'O-O-O') {
@@ -49,6 +53,9 @@ var garbo = function(bestMove, value, timeTaken, ply) {
       if (player == 2) {
           resultMove = 'e8-g8';
       }
+  }
+  if (Dagaz.AI.callback) {
+      Dagaz.AI.callback(resultMove);
   }
 }
 
@@ -98,8 +105,8 @@ Ai.prototype.getMove = function(ctx) {
       inProgress = true;
       var fen = result[1];
       setTimeout(function () {
-            InitializeFromFen(fen);
-            Search(garbo, 10, null);
+            Dagaz.AI.InitializeFromFen(fen);
+            Dagaz.AI.Search(garbo, 10, null);
         }, 100);
       return {
            done: false,

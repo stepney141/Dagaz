@@ -1,6 +1,8 @@
 "use strict";
 
-var g_timeout = 40;
+(function() {
+
+var g_timeout = 3000;
 var g_width = 8;
 var g_height = 8;
 
@@ -2314,6 +2316,10 @@ function BuildPVMessage(bestMove, value, timeTaken, ply) {
     return "Ply:" + ply + " Score:" + value + " Nodes:" + totalNodes + " NPS:" + ((totalNodes / (timeTaken / 1000)) | 0) + " " + PVFromHash(bestMove, 15);
 }
 
+function SetTimeout(timeout) {
+    g_timeout = timeout;
+}
+
 //////////////////////////////////////////////////
 // Test Harness
 //////////////////////////////////////////////////
@@ -2351,3 +2357,11 @@ self.onmessage = function (e) {
         MakeMove(GetMoveFromString(e.data));
     }
 }
+
+Dagaz.AI.FormatMove        = FormatMove;
+Dagaz.AI.ResetGame         = ResetGame;
+Dagaz.AI.InitializeFromFen = InitializeFromFen;
+Dagaz.AI.Search            = Search;
+Dagaz.AI.SetTimeout        = SetTimeout;
+
+})();
