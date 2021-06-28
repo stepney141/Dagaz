@@ -1,5 +1,3 @@
-Dagaz.Controller.persistense = "session";
-
 ZRF = {
     JUMP:          0,
     IF:            1,

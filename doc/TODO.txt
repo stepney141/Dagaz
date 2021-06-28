@@ -1,10 +1,42 @@
-﻿- DagazServer
-  - Hoppel-Poppel Chess
-    - Не принимается ход встроенного бота (garbo-ai)
+﻿- Doubutsu Shogi
+  - garbo-ai
+
+- Sahkku
+  - prototype
+    - https://skyruk.livejournal.com/288965.html
 
 - Silverman's Chess
   - session-manager
     - session persistense откатывает последний ход чёрных при переключении
+
+- DagazServer
+  - SMTP
+  - Hoppel-Poppel Chess
+    - Ход предложенный адвизором (и следующий за ним ход бота) не фиксируется в dagaz.session
+
+- garbo-ai
+  - Tafl
+  - Kono
+  - Maharadja
+  - NotChess
+  - Alapo
+  - Jungle
+  - Breakthrough
+  - Jasir
+  - Jeson Mor
+  - Mini XiangQi
+  - Passive Chess
+  - Chaturanga
+  - Makruk
+  - Sittuyin
+  - Short Assize
+  - Hiashatar
+  - Balbo's Game
+  - Platform Chess
+  - Nam Dinh
+  - Chessence
+  - Escalation
+  - Turnover
 
 - MakYek
   - https://en.wikipedia.org/wiki/Mak-yek
@@ -100,9 +132,6 @@
     - Sovereign Chess
       - Партия не воспроизводится (3002)
   - Dices
-    - Sahkku
-      - prototype
-        - https://skyruk.livejournal.com/288965.html
     - Nyout
       - prototype
         - https://skyruk.livejournal.com/216114.html
