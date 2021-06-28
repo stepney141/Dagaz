@@ -1,6 +1,10 @@
 ﻿- Doubutsu Shogi
   - garbo-ai
 
+- session-manager
+  - Hoppel-Poppel Chess
+    - Ход предложенный адвизором (и ход бота) не фиксируется в dagaz.session
+
 - Sahkku
   - prototype
     - https://skyruk.livejournal.com/288965.html
@@ -11,8 +15,6 @@
 
 - DagazServer
   - SMTP
-  - Hoppel-Poppel Chess
-    - Ход предложенный адвизором (и следующий за ним ход бота) не фиксируется в dagaz.session
 
 - garbo-ai
   - Tafl
