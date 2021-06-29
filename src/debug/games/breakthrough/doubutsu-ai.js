@@ -16,6 +16,7 @@ var pieceBishop = 0x03;
 var pieceRook   = 0x04;
 var pieceQueen  = 0x05;
 
+var moveflagPromotion  = 0x1 << 16;
 var moveflagDrop       = 0x2 << 16;
 var moveflagDropBishop = 0x4 << 16;
 var moveflagDropRook   = 0x8 << 16;
@@ -373,7 +374,12 @@ function IsHashMoveValid(hashMove) {
             return false;
         }        
     }
-    // TODO: Queen moves?
+    if (pieceType == pieceQueen) {
+        var dir = to - from;
+        if ((Math.abs(dir) != 1) && (Math.abs(dir) != 16)) {
+            if ((g_toMove == colorWhite) != (dir < 0)) return false;
+        }
+    }
     return true;
 }
 
@@ -596,8 +602,7 @@ function AllCutNode(ply, depth, beta, allowNull) {
 	        g_toMove = colorWhite - g_toMove;
 	        g_baseEval = -g_baseEval;
 
-            if (value >= beta)
-	            return beta;
+            if (value >= beta) return beta;
         }
     }
 
@@ -1006,7 +1011,7 @@ function ResetGame() {
     pieceSquareAdj[pieceQueen] = MakeTable(queenAdj);
     pieceSquareAdj[pieceKing] = MakeTable(kingAdj);
 
-    var pieceDeltas = [[], g_kingDeltas, [], g_bishopDeltas, g_rookDeltas, []];
+    var pieceDeltas = [[], g_kingDeltas, [], g_bishopDeltas, g_rookDeltas, g_rookDeltas];
 
     for (var i = 0; i < 256; i++) {
         g_vectorDelta[i] = new Object();
@@ -1017,34 +1022,36 @@ function ResetGame() {
     }
     
     // Initialize the vector delta table    
-/*  for (var row = 0; row < 0x40; row += 0x10) 
+    for (var row = 0; row < 0x40; row += 0x10) 
         for (var col = 0; col < 0x3; col++) {
             var square = row | col;
             
             // Pawn moves
-            var index = square - (square - 17) + 128;
+            var index = square - (square - 16) + 128;
             g_vectorDelta[index].pieceMask[colorWhite >> 3] |= (1 << piecePawn);
+            index = square - (square + 16) + 128;
+            g_vectorDelta[index].pieceMask[0] |= (1 << piecePawn);
+
+            // Queen moves
+            index = square - (square - 17) + 128;
+            g_vectorDelta[index].pieceMask[colorWhite >> 3] |= (1 << pieceQueen);
             index = square - (square - 15) + 128;
-            g_vectorDelta[index].pieceMask[colorWhite >> 3] |= (1 << piecePawn);
+            g_vectorDelta[index].pieceMask[colorWhite >> 3] |= (1 << pieceQueen);
             
             index = square - (square + 17) + 128;
-            g_vectorDelta[index].pieceMask[0] |= (1 << piecePawn);
+            g_vectorDelta[index].pieceMask[0] |= (1 << pieceQueen);
             index = square - (square + 15) + 128;
-            g_vectorDelta[index].pieceMask[0] |= (1 << piecePawn);
+            g_vectorDelta[index].pieceMask[0] |= (1 << pieceQueen);
             
-            for (var i = pieceKnight; i <= pieceKing; i++) {
+            for (var i = pieceKing; i <= pieceQueen; i++) {
                 for (var dir = 0; dir < pieceDeltas[i].length; dir++) {
                     var target = square + pieceDeltas[i][dir];
-                    while (!(target & 0x88)) {
+                    if (!(target & 0x88)) {
                         index = square - target + 128;
-                        
                         g_vectorDelta[index].pieceMask[colorWhite >> 3] |= (1 << i);
                         g_vectorDelta[index].pieceMask[0] |= (1 << i);
-                        
                         var flip = -1;
-                        if (square < target) 
-                            flip = 1;
-                        
+                        if (square < target) flip = 1;
                         if ((square & 0xF0) == (target & 0xF0)) {
                             // On the same row
                             g_vectorDelta[index].delta = flip * 1;
@@ -1056,25 +1063,361 @@ function ResetGame() {
                         } else if ((square % 17) == (target % 17)) {
                             g_vectorDelta[index].delta = flip * 17;
                         }
-
-                        if (i == pieceBishop) {
-                            g_vectorDelta[index].delta = pieceDeltas[i][dir];
-                            break;
-                        }
-
-                        if (i == pieceKing)
-                            break;
-
-                        target += pieceDeltas[i][dir];
                     }
                 }
             }
-        }*/
+        }
 
     InitializeEval();
     InitializeFromFen("rkb/1p1/1P1/BKR-000000 w");
 }
 
+function InitializeEval() {
+    g_mobUnit = new Array(2);
+    for (var i = 0; i < 2; i++) {
+        g_mobUnit[i] = new Array();
+        var enemy = i == 0 ? 0x10 : 8;
+        var friend = i == 0 ? 8 : 0x10;
+        g_mobUnit[i][0] = 1;
+        g_mobUnit[i][0x80] = 0;
+        g_mobUnit[i][enemy | piecePawn] = 1;
+        g_mobUnit[i][enemy | pieceBishop] = 2;
+        g_mobUnit[i][enemy | pieceRook] = 4;
+        g_mobUnit[i][enemy | pieceQueen] = 6;
+        g_mobUnit[i][enemy | pieceKing] = 6;
+        g_mobUnit[i][friend | piecePawn] = 0;
+        g_mobUnit[i][friend | pieceBishop] = 0;
+        g_mobUnit[i][friend | pieceRook] = 0;
+        g_mobUnit[i][friend | pieceQueen] = 0;
+        g_mobUnit[i][friend | pieceKing] = 0;
+    }
+}
+
+function SetHash() {
+    var result = new Object();
+    result.hashKeyLow = 0;
+    result.hashKeyHigh = 0;
+    for (var i = 0; i < 256; i++) {
+        var piece = g_board[i];
+        if (piece & 0x18) {
+            result.hashKeyLow ^= g_zobristLow[i][piece & 0xF]
+            result.hashKeyHigh ^= g_zobristHigh[i][piece & 0xF]
+        }
+    }
+    if (!g_toMove) {
+        result.hashKeyLow ^= g_zobristBlackLow;
+        result.hashKeyHigh ^= g_zobristBlackHigh;
+    }
+    // TODO: g_nand's hash
+    return result;
+}
+
+function InitializeFromFen(fen) {
+    var chunks = fen.split(' ');
+    
+    for (var i = 0; i < 256; i++) 
+        g_board[i] = 0x80;
+    
+    var row = 0;
+    var col = 0;
+
+    var pie = chunks[0].split('-');
+    var pieces = pie[0];
+    for (var i = 0; i < pieces.length; i++) {
+        var c = pieces.charAt(i);
+        if (c == '/') {
+            row++;
+            col = 0;
+        }
+        else {
+            if (c >= '0' && c <= '9') {
+                for (var j = 0; j < parseInt(c); j++) {
+                    g_board[MakeSquare(row, col)] = 0;
+                    col++;
+                }
+            }
+            else {
+                var isBlack = c >= 'a' && c <= 'z';
+                var piece = isBlack ? colorBlack : colorWhite;
+                if (!isBlack) 
+                    c = pieces.toLowerCase().charAt(i);
+                switch (c) {
+                    case 'p':
+                        piece |= piecePawn;
+                        break;
+                    case 'b':
+                        piece |= pieceBishop;
+                        break;
+                    case 'r':
+                        piece |= pieceRook;
+                        break;
+                    case 'q':
+                        piece |= pieceQueen;
+                        break;
+                    case 'k':
+                        piece |= pieceKing;
+                        break;
+                }
+                g_board[MakeSquare(row, col)] = piece;
+                col++;
+            }
+        }
+    }
+
+    // TODO: g_hand from pie[1]
+    
+    InitializePieceList();
+    
+    g_toMove = chunks[1].charAt(0) == 'w' ? colorWhite : 0;
+    var them = 8 - g_toMove;
+    
+    var hashResult = SetHash();
+    g_hashKeyLow = hashResult.hashKeyLow;
+    g_hashKeyHigh = hashResult.hashKeyHigh;
+
+    g_baseEval = 0;
+    for (var i = 0; i < 256; i++) {
+        if (g_board[i] & colorWhite) {
+            g_baseEval += pieceSquareAdj[g_board[i] & 0x7][i];
+            g_baseEval += materialTable[g_board[i] & 0x7];
+        } else if (g_board[i] & colorBlack) {
+            g_baseEval -= pieceSquareAdj[g_board[i] & 0x7][flipTable[i]];
+            g_baseEval -= materialTable[g_board[i] & 0x7];
+        }
+    }
+    if (!g_toMove) g_baseEval = -g_baseEval;
+
+    g_move50 = 0;
+    var kingPos = g_pieceList[(g_toMove | pieceKing) << 6];
+    g_inCheck = false;
+    if (kingPos != 0) {
+        g_inCheck = IsSquareAttackable(kingPos, them);
+    }
+
+    // Check for king capture (invalid FEN)
+    kingPos = g_pieceList[(them | pieceKing) << 6]
+    if ((kingPos != 0) && IsSquareAttackable(kingPos, g_toMove)) {
+        return 'Invalid FEN: Can capture king';
+    }
+
+    // Checkmate/stalemate
+    if (GenerateValidMoves().length == 0) {
+        return g_inCheck ? 'Checkmate' : 'Stalemate';
+    } 
+
+    return '';
+}
+
+var g_pieceIndex = new Array(256);
+var g_pieceList = new Array(2 * 8 * 64);
+var g_pieceCount = new Array(2 * 8);
+
+function InitializePieceList() {
+    for (var i = 0; i < 16; i++) {
+        g_pieceCount[i] = 0;
+        for (var j = 0; j < 64; j++) {
+            // 0 is used as the terminator for piece lists
+            g_pieceList[(i << 6) | j] = 0;
+        }
+    }
+    for (var i = 0; i < 256; i++) {
+        g_pieceIndex[i] = 0;
+        if (g_board[i] & (colorWhite | colorBlack)) {
+            var piece = g_board[i] & 0xF;
+            g_pieceList[(piece << 6) | g_pieceCount[piece]] = i;
+            g_pieceIndex[i] = g_pieceCount[piece];
+            g_pieceCount[piece]++;
+        }
+    }
+}
+
+function UndoHistory(inCheck, baseEval, hashKeyLow, hashKeyHigh, move50, captured) {
+    this.inCheck = inCheck;
+    this.baseEval = baseEval;
+    this.hashKeyLow = hashKeyLow;
+    this.hashKeyHigh = hashKeyHigh;
+    this.move50 = move50;
+    this.captured = captured;
+}
+
+function MakeMove(move){
+    var me = g_toMove >> 3;
+    var otherColor = 8 - g_toMove; 
+
+    var flags = move & 0xFF0000;
+    var to = (move >> 8) & 0xFF;
+    var from = move & 0xFF;
+    var captured = g_board[to];
+    var piece = g_board[from];
+
+    g_moveUndoStack[g_moveCount] = new UndoHistory(g_inCheck, g_baseEval, g_hashKeyLow, g_hashKeyHigh, g_move50, captured);
+    g_moveCount++;
+
+    if (flags & moveflagDrop) {
+        // TODO: drop-move
+        // TODO: Update g_hand's hash
+        // TODO: Update g_pieceList
+        return true;
+    }
+
+    if (captured) {
+        // Remove our piece from the piece list
+        var capturedType = captured & 0xF;
+        g_pieceCount[capturedType]--;
+        var lastPieceSquare = g_pieceList[(capturedType << 6) | g_pieceCount[capturedType]];
+        g_pieceIndex[lastPieceSquare] = g_pieceIndex[epcEnd];
+        g_pieceList[(capturedType << 6) | g_pieceIndex[lastPieceSquare]] = lastPieceSquare;
+        g_pieceList[(capturedType << 6) | g_pieceCount[capturedType]] = 0;
+
+        g_baseEval += materialTable[captured & 0x7];
+        g_baseEval += pieceSquareAdj[captured & 0x7][me ? flipTable[epcEnd] : epcEnd];
+
+        g_hashKeyLow ^= g_zobristLow[epcEnd][capturedType];
+        g_hashKeyHigh ^= g_zobristHigh[epcEnd][capturedType];
+        g_move50 = 0;
+
+        // TODO: Add to unpromoted piece to reserve
+        // TODO: Update g_hand's hash
+    }
+
+    g_hashKeyLow ^= g_zobristLow[from][piece & 0xF];
+    g_hashKeyHigh ^= g_zobristHigh[from][piece & 0xF];
+    g_hashKeyLow ^= g_zobristLow[to][piece & 0xF];
+    g_hashKeyHigh ^= g_zobristHigh[to][piece & 0xF];
+    g_hashKeyLow ^= g_zobristBlackLow;
+    g_hashKeyHigh ^= g_zobristBlackHigh;
+
+    g_baseEval -= pieceSquareAdj[piece & 0x7][me == 0 ? flipTable[from] : from];
+
+    // Move our piece in the piece list
+    g_pieceIndex[to] = g_pieceIndex[from];
+    g_pieceList[((piece & 0xF) << 6) | g_pieceIndex[to]] = to;
+
+    if (flags & moveflagPromotion) {
+        var newPiece = piece & (~0x7);
+        newPiece |= pieceQueen;
+
+        g_hashKeyLow ^= g_zobristLow[to][piece & 0xF];
+        g_hashKeyHigh ^= g_zobristHigh[to][piece & 0xF];
+        g_board[to] = newPiece;
+        g_hashKeyLow ^= g_zobristLow[to][newPiece & 0xF];
+        g_hashKeyHigh ^= g_zobristHigh[to][newPiece & 0xF];
+
+        g_baseEval += pieceSquareAdj[newPiece & 0x7][me == 0 ? flipTable[to] : to];
+        g_baseEval -= materialTable[piecePawn];
+        g_baseEval += materialTable[newPiece & 0x7];
+
+        var pawnType = piece & 0xF;
+        var promoteType = newPiece & 0xF;
+
+        g_pieceCount[pawnType]--;
+
+        var lastPawnSquare = g_pieceList[(pawnType << 6) | g_pieceCount[pawnType]];
+        g_pieceIndex[lastPawnSquare] = g_pieceIndex[to];
+        g_pieceList[(pawnType << 6) | g_pieceIndex[lastPawnSquare]] = lastPawnSquare;
+        g_pieceList[(pawnType << 6) | g_pieceCount[pawnType]] = 0;
+        g_pieceIndex[to] = g_pieceCount[promoteType];
+        g_pieceList[(promoteType << 6) | g_pieceIndex[to]] = to;
+        g_pieceCount[promoteType]++;
+    } else {
+        g_board[to] = g_board[from];
+        g_baseEval += pieceSquareAdj[piece & 0x7][me == 0 ? flipTable[to] : to];
+    }
+
+    g_board[from] = pieceEmpty;
+    g_toMove = otherColor;
+    g_baseEval = -g_baseEval;
+
+    if ((piece & 0x7) == pieceKing || g_inCheck) {
+        var kingPos =g_pieceList[(pieceKing | (8 - g_toMove)) << 6];
+        if ((kingPos != 0) && IsSquareAttackable(kingPos, otherColor)) {
+            UnmakeMove(move);
+            return false;
+        }
+    } else {
+        var kingPos = g_pieceList[(pieceKing | (8 - g_toMove)) << 6];
+        if (kingPos != 0) {
+            if (ExposesCheck(from, kingPos)) {
+                UnmakeMove(move);
+                return false;
+            }
+            
+            if (epcEnd != to) {
+                if (ExposesCheck(epcEnd, kingPos)) {
+                    UnmakeMove(move);
+                    return false;
+                }
+            }
+        }
+    }
+    
+    g_inCheck = false;
+    var kingPos = g_pieceList[(pieceKing | g_toMove) << 6];
+    if (kingPos != 0) {
+        g_inCheck = IsSquareAttackable(kingPos, 8 - g_toMove);
+    }
+
+    g_repMoveStack[g_moveCount - 1] = g_hashKeyLow;
+    g_move50++;
+
+    return true;
+}
+
+function UnmakeMove(move){
+    g_toMove = 8 - g_toMove;
+    g_baseEval = -g_baseEval;
+    
+    g_moveCount--;
+    g_inCheck = g_moveUndoStack[g_moveCount].inCheck;
+    g_baseEval = g_moveUndoStack[g_moveCount].baseEval;
+    g_hashKeyLow = g_moveUndoStack[g_moveCount].hashKeyLow;
+    g_hashKeyHigh = g_moveUndoStack[g_moveCount].hashKeyHigh;
+    g_move50 = g_moveUndoStack[g_moveCount].move50;
+
+    var otherColor = 8 - g_toMove;
+    var me = g_toMove >> 3;
+    var them = otherColor >> 3;
+
+    var flags = move & 0xFF0000;
+    var captured = g_moveUndoStack[g_moveCount].captured;
+    var to = (move >> 8) & 0xFF;
+    var from = move & 0xFF;
+    var piece = g_board[to];
+
+    // TODO: moveflagDrop!
+
+    if (flags & moveflagPromotion) {
+        piece = (g_board[to] & (~0x7)) | piecePawn;
+        g_board[from] = piece;
+        var pawnType = g_board[from] & 0xF;
+        var promoteType = g_board[to] & 0xF;
+        g_pieceCount[promoteType]--;
+        var lastPromoteSquare = g_pieceList[(promoteType << 6) | g_pieceCount[promoteType]];
+        g_pieceIndex[lastPromoteSquare] = g_pieceIndex[to];
+        g_pieceList[(promoteType << 6) | g_pieceIndex[lastPromoteSquare]] = lastPromoteSquare;
+        g_pieceList[(promoteType << 6) | g_pieceCount[promoteType]] = 0;
+        g_pieceIndex[to] = g_pieceCount[pawnType];
+        g_pieceList[(pawnType << 6) | g_pieceIndex[to]] = to;
+        g_pieceCount[pawnType]++;
+    } else {
+        g_board[from] = g_board[to];
+    }
+    g_board[to] = captured;
+
+    // Move our piece in the piece list
+    g_pieceIndex[from] = g_pieceIndex[to];
+    g_pieceList[((piece & 0xF) << 6) | g_pieceIndex[from]] = from;
+
+    if (captured) {
+        // Restore our piece to the piece list
+        var captureType = captured & 0xF;
+        g_pieceIndex[epcEnd] = g_pieceCount[captureType];
+        g_pieceList[(captureType << 6) | g_pieceCount[captureType]] = epcEnd;
+        g_pieceCount[captureType]++;
+        // TODO: Update g_hand
+        // TODO: Update g_hand's hash
+    }
+}
 
 function SetTimeout(timeout) {
     g_timeout = timeout;

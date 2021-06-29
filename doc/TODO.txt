@@ -1,6 +1,9 @@
 ﻿- Doubutsu Shogi
   - garbo-ai
 
+- DagazServer
+  - app-net-v5
+
 - session-manager
   - Hoppel-Poppel Chess
     - Ход предложенный адвизором (и ход бота) не фиксируется в dagaz.session
@@ -12,9 +15,6 @@
 - Silverman's Chess
   - session-manager
     - session persistense откатывает последний ход чёрных при переключении
-
-- DagazServer
-  - SMTP
 
 - garbo-ai
   - Tafl
@@ -50,12 +50,6 @@
   - https://summercamp.ru/Шашки
 - Реверси
   - https://www.youtube.com/watch?v=KZLeF3q7JSE
-
-- Doubutsu Shogi
-  - garbo-ai
-    - FEN-кодирование (учитывать фигуры в резерве)
-    - Преобразовывать сбросы из резерва в drop-ходы на уровне нотации
-  - Учитывать угрозы на своём ходу и защиту своих фигур
 
 - L-game
   - prototype
