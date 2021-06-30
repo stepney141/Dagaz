@@ -45,7 +45,7 @@ function GetFen() {
         }
     }
     result += "-";
-    for (var i = 0; i < 3 * 2; i++) {
+    for (var i = 0; i < 6; i++) {
         result += g_hand[ i ];
     }
     result += g_toMove == colorWhite ? " w" : " b";
@@ -160,7 +160,7 @@ var queenAdj = [
 ];
 
 var kingAdj = [ 
-   900, 900, 900,
+  9000,9000,9000,
    500, 400, 500,
    300, 200, 300,
    100, 200, 100
@@ -1164,7 +1164,9 @@ function InitializeFromFen(fen) {
         }
     }
 
-    // TODO: g_hand from pie[1]
+    for (var i = 0; i < pie[1].length; i++) {
+        g_hand[ i ] = pie[1][i];
+    }
     
     InitializePieceList();
     
@@ -1265,15 +1267,15 @@ function MakeMove(move){
         var capturedType = captured & 0xF;
         g_pieceCount[capturedType]--;
         var lastPieceSquare = g_pieceList[(capturedType << 6) | g_pieceCount[capturedType]];
-        g_pieceIndex[lastPieceSquare] = g_pieceIndex[epcEnd];
+        g_pieceIndex[lastPieceSquare] = g_pieceIndex[to];
         g_pieceList[(capturedType << 6) | g_pieceIndex[lastPieceSquare]] = lastPieceSquare;
         g_pieceList[(capturedType << 6) | g_pieceCount[capturedType]] = 0;
 
         g_baseEval += materialTable[captured & 0x7];
-        g_baseEval += pieceSquareAdj[captured & 0x7][me ? flipTable[epcEnd] : epcEnd];
+        g_baseEval += pieceSquareAdj[captured & 0x7][me ? flipTable[to] : to];
 
-        g_hashKeyLow ^= g_zobristLow[epcEnd][capturedType];
-        g_hashKeyHigh ^= g_zobristHigh[epcEnd][capturedType];
+        g_hashKeyLow ^= g_zobristLow[to][capturedType];
+        g_hashKeyHigh ^= g_zobristHigh[to][capturedType];
         g_move50 = 0;
 
         // TODO: Add to unpromoted piece to reserve
@@ -1341,13 +1343,6 @@ function MakeMove(move){
                 UnmakeMove(move);
                 return false;
             }
-            
-            if (epcEnd != to) {
-                if (ExposesCheck(epcEnd, kingPos)) {
-                    UnmakeMove(move);
-                    return false;
-                }
-            }
         }
     }
     
@@ -1411,8 +1406,8 @@ function UnmakeMove(move){
     if (captured) {
         // Restore our piece to the piece list
         var captureType = captured & 0xF;
-        g_pieceIndex[epcEnd] = g_pieceCount[captureType];
-        g_pieceList[(captureType << 6) | g_pieceCount[captureType]] = epcEnd;
+        g_pieceIndex[to] = g_pieceCount[captureType];
+        g_pieceList[(captureType << 6) | g_pieceCount[captureType]] = to;
         g_pieceCount[captureType]++;
         // TODO: Update g_hand
         // TODO: Update g_hand's hash

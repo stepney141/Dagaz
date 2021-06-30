@@ -1,0 +1,74 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Men Row Chess</title>
+</head>
+<body>
+
+<img id="Board" style="display:none" src="images/8x10.png">
+<img id="Promote" style="display:none" src="images/dialog-4.png">
+<img id="WhiteMan" style="display:none" src="images/shabel/wman.png">
+<img id="BlackMan" style="display:none" src="images/shabel/bman.png">
+<img id="WhiteDama" style="display:none" src="images/shabel/wdamone.png">
+<img id="BlackDama" style="display:none" src="images/shabel/bdamone.png">
+<img id="WhitePawn" style="display:none" src="images/wpawn.png">
+<img id="BlackPawn" style="display:none" src="images/shabel/bpawn.png">
+<img id="WhiteRook" style="display:none" src="images/wrook.png">
+<img id="BlackRook" style="display:none" src="images/shabel/brook.png">
+<img id="WhiteKnight" style="display:none" src="images/wknight.png">
+<img id="BlackKnight" style="display:none" src="images/shabel/bknight.png">
+<img id="WhiteBishop" style="display:none" src="images/wbishop.png">
+<img id="BlackBishop" style="display:none" src="images/shabel/bbishop.png">
+<img id="WhiteQueen" style="display:none" src="images/wqueen.png">
+<img id="BlackQueen" style="display:none" src="images/shabel/bqueen.png">
+<img id="WhiteKing" style="display:none" src="images/wking.png">
+<img id="BlackKing" style="display:none" src="images/shabel/bking.png">
+
+<table style="margin:auto; font-family:sans-serif; font-size:14px" id="Table">
+<tr><td><a href="javascript:Dagaz.Controller.undo()" style="display:none" id="undo"><img src="../../images/undo.png"/></a>
+Copyright (c) 2008 Giuseppe Acciaro (<a target="_blank" href="https://www.iggamecenter.com/info/en/menrowchess.html">rules</a>)
+<a href="javascript:Dagaz.Controller.redo()" style="display:none" id="redo"><img src="../../images/redo.png"/></a>
+<br><a href="javascript:Dagaz.Controller.newGame()">New Game</a>
+<a href="javascript:Dagaz.Controller.sound()" id="sound">no Sound</a>
+</td></tr>
+<tr style="height:504px; vertical-align:top">
+<td id="CanvasCell" style="width:405px">
+<canvas id="Canvas" width="405" height="504" style="cursor:default">Broken canvas...</canvas>
+</td><td style="width:300px;">
+<div style="height:510px; overflow:auto" id="ScrollDiv">
+<img id="GlyphImage"><p id="HelpText"></p>
+<p id="GameSession"></p>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div style="height:100px; width:405px; margin-left:auto; margin-right:auto">
+<table>
+<tr style="display:none" id="PieceInfo">
+<td><img id="PieceInfoImage"></td><td id="PieceInfoText"></td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+
+<script src="../../../underscore/underscore-min.js"></script>
+<script src="../../kernel/dagaz.js"></script>
+<script src="../../kernel/model/zrf-model.js"></script>
+<script src="../../kernel/model/zobrist.js"></script>
+<script src="../../kernel/model/common-setup-v3.js"></script>
+<script src="../../kernel/view/2d/2d-view-v3.js"></script>
+<script src="../../kernel/controller/utils/session-manager.js"></script>
+<script src="../../kernel/controller/utils/sound-manager-v2.js"></script>
+<script src="../../kernel/controller/utils/move-list-v2.js"></script>
+<script src="../../kernel/controller/ai/random-ai.js"></script>
+<script src="../../kernel/controller/ai/aggressive-ai-v4.js"></script>
+<script src="menrow-goal.js"></script>
+<script src="chess-promotion.js"></script>
+<script src="menrow.js"></script>
+<script src="../../kernel/controller/app-v5.js"></script>
+
+</body>
+</html>
