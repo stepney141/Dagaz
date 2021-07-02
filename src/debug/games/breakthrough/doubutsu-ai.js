@@ -1535,10 +1535,6 @@ function IsSquareAttackable(target, color) {
     return false;
 }
 
-function GenerateMove(from, to) {
-    return from | (to << 8);
-}
-
 function GenerateMove(from, to, flags){
     return from | (to << 8) | flags;
 }
@@ -1565,14 +1561,14 @@ function GenerateAllMoves(moveStack) {
     pieceIdx = (g_toMove | pieceKing) << 4;
     from = g_pieceList[pieceIdx];
     while (from != 0) {
-        to = from - 15; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from - 17; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from + 15; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from + 17; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from - 1;  if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from + 1;  if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from - 16; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from + 16; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to);
+        to = from - 15; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from - 17; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from + 15; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from + 17; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from - 1;  if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from + 1;  if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from - 16; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from + 16; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to, 0);
         from = g_pieceList[pieceIdx++];
     }
 
@@ -1598,10 +1594,10 @@ function GenerateAllMoves(moveStack) {
     pieceIdx = (g_toMove | pieceBishop) << 4;
     from = g_pieceList[pieceIdx++];
     while (from != 0) {
-        to = from - 15; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from - 17; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from + 15; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from + 17; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to);
+        to = from - 15; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from - 17; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from + 15; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from + 17; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to, 0);
         from = g_pieceList[pieceIdx++];
     }
 
@@ -1609,10 +1605,10 @@ function GenerateAllMoves(moveStack) {
     pieceIdx = (g_toMove | pieceRook) << 4;
     from = g_pieceList[pieceIdx++];
     while (from != 0) {
-        to = from - 1;  if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from + 1;  if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from - 16; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from + 16; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to);
+        to = from - 1;  if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from + 1;  if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from - 16; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from + 16; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to, 0);
         from = g_pieceList[pieceIdx++];
     }
 
@@ -1620,14 +1616,14 @@ function GenerateAllMoves(moveStack) {
     pieceIdx = (g_toMove | pieceQueen) << 4;
     from = g_pieceList[pieceIdx++];
     while (from != 0) {
-        to = from - 1;  if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from + 1;  if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from - 16; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from + 16; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to);
+        to = from - 1;  if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from + 1;  if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from - 16; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from + 16; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to, 0);
         inc = (g_toMove == colorWhite) ? -17 : 17;
-        to = from + inc; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to);
+        to = from + inc; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to, 0);
         inc = (g_toMove == colorWhite) ? -15 : 15;
-        to = from + inc; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to);
+        to = from + inc; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to, 0);
         from = g_pieceList[pieceIdx++];
     }
 
@@ -1668,14 +1664,14 @@ function GenerateCaptureMoves(moveStack, moveScores) {
     pieceIdx = (g_toMove | pieceKing) << 4;
     from = g_pieceList[pieceIdx];
     while (from != 0) {
-        to = from - 15; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from - 17; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from + 15; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from + 17; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from - 1;  if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from + 1;  if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from - 16; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from + 16; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
+        to = from - 15; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from - 17; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from + 15; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from + 17; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from - 1;  if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from + 1;  if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from - 16; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from + 16; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to, 0);
         from = g_pieceList[pieceIdx++];
     }
 
@@ -1701,10 +1697,10 @@ function GenerateCaptureMoves(moveStack, moveScores) {
     pieceIdx = (g_toMove | pieceBishop) << 4;
     from = g_pieceList[pieceIdx++];
     while (from != 0) {
-        to = from - 15; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from - 17; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from + 15; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from + 17; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
+        to = from - 15; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from - 17; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from + 15; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from + 17; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to, 0);
         from = g_pieceList[pieceIdx++];
     }
 
@@ -1712,10 +1708,10 @@ function GenerateCaptureMoves(moveStack, moveScores) {
     pieceIdx = (g_toMove | pieceRook) << 4;
     from = g_pieceList[pieceIdx++];
     while (from != 0) {
-        to = from - 1;  if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from + 1;  if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from - 16; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from + 16; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
+        to = from - 1;  if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from + 1;  if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from - 16; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from + 16; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to, 0);
         from = g_pieceList[pieceIdx++];
     }
 
@@ -1723,14 +1719,14 @@ function GenerateCaptureMoves(moveStack, moveScores) {
     pieceIdx = (g_toMove | pieceQueen) << 4;
     from = g_pieceList[pieceIdx++];
     while (from != 0) {
-        to = from - 1;  if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from + 1;  if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from - 16; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
-        to = from + 16; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
+        to = from - 1;  if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from + 1;  if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from - 16; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to, 0);
+        to = from + 16; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to, 0);
         inc = (g_toMove == colorWhite) ? -17 : 17;
-        to = from + inc; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
+        to = from + inc; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to, 0);
         inc = (g_toMove == colorWhite) ? -15 : 15;
-        to = from + inc; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
+        to = from + inc; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to, 0);
         from = g_pieceList[pieceIdx++];
     }
 }
@@ -1891,52 +1887,11 @@ function SeeAddSliderAttacks(target, us, attacks, pieceType) {
     return hit;
 }
 
-function BuildPVMessage(bestMove, value, timeTaken, ply) {
-    var totalNodes = g_nodeCount + g_qNodeCount;
-    return "Ply:" + ply + " Score:" + value + " Nodes:" + totalNodes + " NPS:" + ((totalNodes / (timeTaken / 1000)) | 0) + " " + PVFromHash(bestMove, 15);
-}
-
 function SetTimeout(timeout) {
     g_timeout = timeout;
 }
 
-//////////////////////////////////////////////////
-// Test Harness
-//////////////////////////////////////////////////
-function FinishPlyCallback(bestMove, value, timeTaken, ply) {
-    postMessage("pv " + BuildPVMessage(bestMove, value, timeTaken, ply));
-}
-
-function FinishMoveLocalTesting(bestMove, value, timeTaken, ply) {
-    if (bestMove != null) {
-        MakeMove(bestMove);
-        postMessage(FormatMove(bestMove));
-    }
-}
-
 var needsReset = true;
-self.onmessage = function (e) {
-    if (e.data == "go" || needsReset) {
-        ResetGame();
-        needsReset = false;
-        if (e.data == "go") return;
-    }
-    if (e.data.match("^position") == "position") {
-        ResetGame();
-        var result = InitializeFromFen(e.data.substr(9, e.data.length - 9));
-        if (result.length != 0) {
-            postMessage("message " + result);
-        }
-    } else if (e.data.match("^search") == "search") {
-        g_timeout = parseInt(e.data.substr(7, e.data.length - 7), 10);
-        Search(FinishMoveLocalTesting, 99, FinishPlyCallback);
-    } else if (e.data == "analyze") {
-        g_timeout = 99999999999;
-        Search(null, 99, FinishPlyCallback);
-    } else {
-        MakeMove(GetMoveFromString(e.data));
-    }
-}
 
 Dagaz.AI.FormatMove        = FormatMove;
 Dagaz.AI.ResetGame         = ResetGame;
