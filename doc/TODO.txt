@@ -1,5 +1,8 @@
 ﻿- Doubutsu Shogi
   - garbo-ai
+    - See не работает (переполнение стека)
+    - После первого хода возвращает bestMove == 0
+      - Когда есть только тихие ходы
 
 - DagazServer
   - app-net-v5

@@ -193,6 +193,11 @@ Dagaz.Model.getSetup = function(design, board) {
            str += c;
       }
   }
+  if (board.turn == 0) {
+      str += " w";
+  } else {
+      str += " b";
+  }
   if (Dagaz.Controller.persistense == "setup") {
       var s = str + "&game=" + getName() + "*";
       localStorage.setItem('dagaz.setup', s);

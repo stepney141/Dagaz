@@ -587,9 +587,9 @@ function AllCutNode(ply, depth, beta, allowNull) {
         if (ply > 1 &&
             g_baseEval >= beta - (ply >= 4 ? 2500 : 0) &&
             // Disable null move if potential zugzwang (no big pieces)
-            (g_hand[g_toMove == ? colorWhite : 0 : 3] + 
-             g_hand[g_toMove == ? colorWhite : 1 : 4] +
-             g_hand[g_toMove == ? colorWhite : 2 : 5] > 0 ||
+            (g_hand[g_toMove == colorWhite ? 0 : 3] + 
+             g_hand[g_toMove == colorWhite ? 1 : 4] +
+             g_hand[g_toMove == colorWhite ? 2 : 5] > 0 ||
              g_pieceCount[pieceBishop | g_toMove] != 0 ||
              g_pieceCount[pieceRook   | g_toMove] != 0 ||
              g_pieceCount[pieceQueen  | g_toMove] != 0)) {
@@ -1579,7 +1579,7 @@ function GenerateAllMoves(moveStack) {
         to = from + inc; 
         if (g_board[to] == 0) {
              var flags = 0;
-             var row = square & 0xF0;
+             var row = to & 0xF0;
              if (g_toMove == colorWhite) {
                  if (row == 0x20) flags = moveflagPromotion;
              } else {
@@ -1629,12 +1629,12 @@ function GenerateAllMoves(moveStack) {
 
     // drop moves
     var ix = 0;
-    if (color != colorWhite) ix += 3;
+    if (g_toMove != colorWhite) ix += 3;
     if (g_hand[ix]) {
         for (var row = 1; row < g_height; row++) {
             for (var col = 0; col < g_width; col++) {
                  var to = MakeSquare(row, col);
-                 if (color != colorWhite) {
+                 if (g_toMove != colorWhite) {
                      to = flipTable[to];
                  }
                  if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(0, to, moveflagDrop);
@@ -1682,7 +1682,7 @@ function GenerateCaptureMoves(moveStack, moveScores) {
         to = from + inc; 
         if (g_board[to] & enemy) {
              var flags = 0;
-             var row = square & 0xF0;
+             var row = to & 0xF0;
              if (g_toMove == colorWhite) {
                  if (row == 0x20) flags = moveflagPromotion;
              } else {
@@ -1751,6 +1751,9 @@ function See(move) {
         // Drops, promotion, ep are always good
         return true;
     }
+
+    var us = (fromPiece & colorWhite) ? colorWhite : 0;
+    var them = 8 - us;
 
     // Pawn attacks 
     // If any opponent pawns can capture back, this capture is probably not worthwhile (as we must be using knight or above).
