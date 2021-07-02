@@ -219,7 +219,7 @@ function Mobility(color) {
 
     // Knight mobility
     mob = -4;
-    pieceIdx = (color | 2) << 6;
+    pieceIdx = (color | 2) << 4;
     from = g_pieceList[pieceIdx++];
     while (from != 0) {
         x = g_board[from + 31] & 0x7; if (x == 0) mob++;
@@ -273,7 +273,7 @@ function Mobility(color) {
 
     // Bishop mobility
     mob = -3;
-    pieceIdx = (color | 3) << 6;
+    pieceIdx = (color | 3) << 4;
     from = g_pieceList[pieceIdx++];
     while (from != 0) {
         x = g_board[from + 31]; if (x & 0x7) mob += mobUnit[x];
@@ -294,7 +294,7 @@ function Mobility(color) {
 
     // Rook mobility
     mob = -4;
-    pieceIdx = (color | 4) << 6;
+    pieceIdx = (color | 4) << 4;
     from = g_pieceList[pieceIdx++];
     while (from != 0) {
         to = from - 1; while (g_board[to] == 0) { to--; mob++;}  if (g_board[to] & enemy) mob++;
@@ -307,7 +307,7 @@ function Mobility(color) {
 
     // Queen mobility
     mob = -2;
-    pieceIdx = (color | 5) << 6;
+    pieceIdx = (color | 5) << 4;
     from = g_pieceList[pieceIdx++];
     while (from != 0) {
         to = from - 15; while (g_board[to] == 0) { to -= 15; mob++; } if (g_board[to] & enemy) mob++;
@@ -330,15 +330,15 @@ function Evaluate() {
 
     var evalAdjust = 0;
     // Black queen gone, then cancel white's penalty for king movement
-    if (g_pieceList[pieceQueen << 6] == 0) {
-        var kingPos = g_pieceList[(colorWhite | pieceKing) << 6];
+    if (g_pieceList[pieceQueen << 4] == 0) {
+        var kingPos = g_pieceList[(colorWhite | pieceKing) << 4];
         if (kingPos != 0) {
             evalAdjust -= pieceSquareAdj[pieceKing][kingPos];
         }
     }
     // White queen gone, then cancel black's penalty for king movement
-    if (g_pieceList[(colorWhite | pieceQueen) << 6] == 0) {
-        var kingPos = flipTable[g_pieceList[pieceKing << 6]];
+    if (g_pieceList[(colorWhite | pieceQueen) << 4] == 0) {
+        var kingPos = flipTable[g_pieceList[pieceKing << 4]];
         if (kingPos != 0) {
             evalAdjust += pieceSquareAdj[pieceKing][kingPos];
         }
@@ -1420,14 +1420,14 @@ function InitializeFromFen(fen) {
     if (!g_toMove) g_baseEval = -g_baseEval;
 
     g_move50 = 0;
-    var kingPos = g_pieceList[(g_toMove | pieceKing) << 6];
+    var kingPos = g_pieceList[(g_toMove | pieceKing) << 4];
     g_inCheck = false;
     if (kingPos != 0) {
         g_inCheck = IsSquareAttackable(kingPos, them);
     }
 
     // Check for king capture (invalid FEN)
-    kingPos = g_pieceList[(them | pieceKing) << 6]
+    kingPos = g_pieceList[(them | pieceKing) << 4]
     if ((kingPos != 0) && IsSquareAttackable(kingPos, g_toMove)) {
         return 'Invalid FEN: Can capture king';
     }
@@ -1449,7 +1449,7 @@ function InitializePieceList() {
         g_pieceCount[i] = 0;
         for (var j = 0; j < 64; j++) {
             // 0 is used as the terminator for piece lists
-            g_pieceList[(i << 6) | j] = 0;
+            g_pieceList[(i << 4) | j] = 0;
         }
     }
 
@@ -1458,7 +1458,7 @@ function InitializePieceList() {
         if (g_board[i] & (colorWhite | colorBlack)) {
 			var piece = g_board[i] & 0xF;
 
-			g_pieceList[(piece << 6) | g_pieceCount[piece]] = i;
+			g_pieceList[(piece << 4) | g_pieceCount[piece]] = i;
 			g_pieceIndex[i] = g_pieceCount[piece];
 			g_pieceCount[piece]++;
         }
@@ -1510,7 +1510,7 @@ function MakeMove(move){
 
             var rookIndex = g_pieceIndex[to + 1];
             g_pieceIndex[to - 1] = rookIndex;
-            g_pieceList[((rook & 0xF) << 6) | rookIndex] = to - 1;
+            g_pieceList[((rook & 0xF) << 4) | rookIndex] = to - 1;
         } else if (flags & moveflagCastleQueen) {
             if (IsSquareAttackable(from - 1, otherColor) ||
             	IsSquareAttackable(from - 2, otherColor)) {
@@ -1533,7 +1533,7 @@ function MakeMove(move){
 
             var rookIndex = g_pieceIndex[to - 2];
             g_pieceIndex[to + 1] = rookIndex;
-            g_pieceList[((rook & 0xF) << 6) | rookIndex] = to + 1;
+            g_pieceList[((rook & 0xF) << 4) | rookIndex] = to + 1;
         }
     }
 
@@ -1541,10 +1541,10 @@ function MakeMove(move){
         // Remove our piece from the piece list
         var capturedType = captured & 0xF;
         g_pieceCount[capturedType]--;
-        var lastPieceSquare = g_pieceList[(capturedType << 6) | g_pieceCount[capturedType]];
+        var lastPieceSquare = g_pieceList[(capturedType << 4) | g_pieceCount[capturedType]];
         g_pieceIndex[lastPieceSquare] = g_pieceIndex[epcEnd];
-        g_pieceList[(capturedType << 6) | g_pieceIndex[lastPieceSquare]] = lastPieceSquare;
-        g_pieceList[(capturedType << 6) | g_pieceCount[capturedType]] = 0;
+        g_pieceList[(capturedType << 4) | g_pieceIndex[lastPieceSquare]] = lastPieceSquare;
+        g_pieceList[(capturedType << 4) | g_pieceCount[capturedType]] = 0;
 
         g_baseEval += materialTable[captured & 0x7];
         g_baseEval += pieceSquareAdj[captured & 0x7][me ? flipTable[epcEnd] : epcEnd];
@@ -1574,7 +1574,7 @@ function MakeMove(move){
     
     // Move our piece in the piece list
     g_pieceIndex[to] = g_pieceIndex[from];
-    g_pieceList[((piece & 0xF) << 6) | g_pieceIndex[to]] = to;
+    g_pieceList[((piece & 0xF) << 4) | g_pieceIndex[to]] = to;
 
     if (flags & moveflagPromotion) {
         var newPiece = piece & (~0x7);
@@ -1602,12 +1602,12 @@ function MakeMove(move){
 
         g_pieceCount[pawnType]--;
 
-        var lastPawnSquare = g_pieceList[(pawnType << 6) | g_pieceCount[pawnType]];
+        var lastPawnSquare = g_pieceList[(pawnType << 4) | g_pieceCount[pawnType]];
         g_pieceIndex[lastPawnSquare] = g_pieceIndex[to];
-        g_pieceList[(pawnType << 6) | g_pieceIndex[lastPawnSquare]] = lastPawnSquare;
-        g_pieceList[(pawnType << 6) | g_pieceCount[pawnType]] = 0;
+        g_pieceList[(pawnType << 4) | g_pieceIndex[lastPawnSquare]] = lastPawnSquare;
+        g_pieceList[(pawnType << 4) | g_pieceCount[pawnType]] = 0;
         g_pieceIndex[to] = g_pieceCount[promoteType];
-        g_pieceList[(promoteType << 6) | g_pieceIndex[to]] = to;
+        g_pieceList[(promoteType << 4) | g_pieceIndex[to]] = to;
         g_pieceCount[promoteType]++;
     } else {
         g_board[to] = g_board[from];
@@ -1620,13 +1620,13 @@ function MakeMove(move){
     g_baseEval = -g_baseEval;
     
     if ((piece & 0x7) == pieceKing || g_inCheck) {
-        var kingPos =g_pieceList[(pieceKing | (8 - g_toMove)) << 6];
+        var kingPos =g_pieceList[(pieceKing | (8 - g_toMove)) << 4];
         if ((kingPos != 0) && IsSquareAttackable(kingPos, otherColor)) {
             UnmakeMove(move);
             return false;
         }
     } else {
-        var kingPos = g_pieceList[(pieceKing | (8 - g_toMove)) << 6];
+        var kingPos = g_pieceList[(pieceKing | (8 - g_toMove)) << 4];
         if (kingPos != 0) {
             if (ExposesCheck(from, kingPos)) {
                 UnmakeMove(move);
@@ -1645,7 +1645,7 @@ function MakeMove(move){
     g_inCheck = false;
     
     if (flags <= moveflagEPC) {
-        var theirKingPos = g_pieceList[(pieceKing | g_toMove) << 6];
+        var theirKingPos = g_pieceList[(pieceKing | g_toMove) << 4];
         if (theirKingPos != 0) {
             // First check if the piece we moved can attack the enemy king
             g_inCheck = IsSquareAttackableFrom(theirKingPos, to);
@@ -1666,7 +1666,7 @@ function MakeMove(move){
     else {
         // Castle or promotion, slow check
         g_inCheck = false;
-        var kingPos = g_pieceList[(pieceKing | g_toMove) << 6];
+        var kingPos = g_pieceList[(pieceKing | g_toMove) << 4];
         if (kingPos != 0) {
             g_inCheck = IsSquareAttackable(kingPos, 8 - g_toMove);
         }
@@ -1710,7 +1710,7 @@ function UnmakeMove(move){
 			
             var rookIndex = g_pieceIndex[to - 1];
             g_pieceIndex[to + 1] = rookIndex;
-            g_pieceList[((rook & 0xF) << 6) | rookIndex] = to + 1;
+            g_pieceList[((rook & 0xF) << 4) | rookIndex] = to + 1;
         }
         else if (flags & moveflagCastleQueen) {
             var rook = g_board[to + 1];
@@ -1719,7 +1719,7 @@ function UnmakeMove(move){
 			
             var rookIndex = g_pieceIndex[to + 1];
             g_pieceIndex[to - 2] = rookIndex;
-            g_pieceList[((rook & 0xF) << 6) | rookIndex] = to - 2;
+            g_pieceList[((rook & 0xF) << 4) | rookIndex] = to - 2;
         }
     }
     
@@ -1732,12 +1732,12 @@ function UnmakeMove(move){
 
         g_pieceCount[promoteType]--;
 
-        var lastPromoteSquare = g_pieceList[(promoteType << 6) | g_pieceCount[promoteType]];
+        var lastPromoteSquare = g_pieceList[(promoteType << 4) | g_pieceCount[promoteType]];
         g_pieceIndex[lastPromoteSquare] = g_pieceIndex[to];
-        g_pieceList[(promoteType << 6) | g_pieceIndex[lastPromoteSquare]] = lastPromoteSquare;
-        g_pieceList[(promoteType << 6) | g_pieceCount[promoteType]] = 0;
+        g_pieceList[(promoteType << 4) | g_pieceIndex[lastPromoteSquare]] = lastPromoteSquare;
+        g_pieceList[(promoteType << 4) | g_pieceCount[promoteType]] = 0;
         g_pieceIndex[to] = g_pieceCount[pawnType];
-        g_pieceList[(pawnType << 6) | g_pieceIndex[to]] = to;
+        g_pieceList[(pawnType << 4) | g_pieceIndex[to]] = to;
         g_pieceCount[pawnType]++;
     }
     else {
@@ -1757,13 +1757,13 @@ function UnmakeMove(move){
 
 	// Move our piece in the piece list
     g_pieceIndex[from] = g_pieceIndex[to];
-    g_pieceList[((piece & 0xF) << 6) | g_pieceIndex[from]] = from;
+    g_pieceList[((piece & 0xF) << 4) | g_pieceIndex[from]] = from;
 
     if (captured) {
 		// Restore our piece to the piece list
         var captureType = captured & 0xF;
         g_pieceIndex[epcEnd] = g_pieceCount[captureType];
-        g_pieceList[(captureType << 6) | g_pieceCount[captureType]] = epcEnd;
+        g_pieceList[(captureType << 4) | g_pieceCount[captureType]] = epcEnd;
         g_pieceCount[captureType]++;
     }
 }
@@ -1820,7 +1820,7 @@ function IsSquareAttackable(target, color) {
 	
 	// Attackable by pieces?
 	for (var i = 2; i <= 6; i++) {
-        var index = (color | i) << 6;
+        var index = (color | i) << 4;
         var square = g_pieceList[index];
 		while (square != 0) {
 			if (IsSquareAttackableFrom(target, square))
@@ -1859,7 +1859,7 @@ function GenerateAllMoves(moveStack) {
     var from, to, pieceIdx;
 
 	// Pawn quiet moves
-    pieceIdx = (g_toMove | 1) << 6;
+    pieceIdx = (g_toMove | 1) << 4;
     from = g_pieceList[pieceIdx++];
     while (from != 0) {
         GeneratePawnMoves(moveStack, from);
@@ -1867,7 +1867,7 @@ function GenerateAllMoves(moveStack) {
     }
 
     // Knight quiet moves
-	pieceIdx = (g_toMove | 2) << 6;
+	pieceIdx = (g_toMove | 2) << 4;
 	from = g_pieceList[pieceIdx++];
 	while (from != 0) {
 		to = from + 31; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to);
@@ -1882,7 +1882,7 @@ function GenerateAllMoves(moveStack) {
 	}
 
 	// Bishop quiet moves
-	pieceIdx = (g_toMove | 3) << 6;
+	pieceIdx = (g_toMove | 3) << 4;
 	from = g_pieceList[pieceIdx++];
 	while (from != 0) {
 		to = from - 15; while (g_board[to] == 0) { moveStack[moveStack.length] = GenerateMove(from, to); to -= 15; }
@@ -1893,7 +1893,7 @@ function GenerateAllMoves(moveStack) {
 	}
 
 	// Rook quiet moves
-	pieceIdx = (g_toMove | 4) << 6;
+	pieceIdx = (g_toMove | 4) << 4;
 	from = g_pieceList[pieceIdx++];
 	while (from != 0) {
 		to = from - 1; while (g_board[to] == 0) { moveStack[moveStack.length] = GenerateMove(from, to); to--; }
@@ -1904,7 +1904,7 @@ function GenerateAllMoves(moveStack) {
 	}
 	
 	// Queen quiet moves
-	pieceIdx = (g_toMove | 5) << 6;
+	pieceIdx = (g_toMove | 5) << 4;
 	from = g_pieceList[pieceIdx++];
 	while (from != 0) {
 		to = from - 15; while (g_board[to] == 0) { moveStack[moveStack.length] = GenerateMove(from, to); to -= 15; }
@@ -1920,7 +1920,7 @@ function GenerateAllMoves(moveStack) {
 	
 	// King quiet moves
 	{
-		pieceIdx = (g_toMove | 6) << 6;
+		pieceIdx = (g_toMove | 6) << 4;
 		from = g_pieceList[pieceIdx];
 		to = from - 15; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to);
 		to = from - 17; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to);
@@ -1957,7 +1957,7 @@ function GenerateCaptureMoves(moveStack, moveScores) {
     var enemy = g_toMove == 8 ? 0x10 : 0x8;
 
     // Pawn captures
-    pieceIdx = (g_toMove | 1) << 6;
+    pieceIdx = (g_toMove | 1) << 4;
     from = g_pieceList[pieceIdx++];
     while (from != 0) {
         to = from + inc - 1;
@@ -1989,7 +1989,7 @@ function GenerateCaptureMoves(moveStack, moveScores) {
     }
 
     // Knight captures
-	pieceIdx = (g_toMove | 2) << 6;
+	pieceIdx = (g_toMove | 2) << 4;
 	from = g_pieceList[pieceIdx++];
 	while (from != 0) {
 		to = from; do { to -= 15; } while (g_board[to] == 0); if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
@@ -2000,7 +2000,7 @@ function GenerateCaptureMoves(moveStack, moveScores) {
 	}
 	
 	// Bishop captures
-	pieceIdx = (g_toMove | 3) << 6;
+	pieceIdx = (g_toMove | 3) << 4;
 	from = g_pieceList[pieceIdx++];
 	while (from != 0) {
 		to = from + 31; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
@@ -2015,7 +2015,7 @@ function GenerateCaptureMoves(moveStack, moveScores) {
 	}
 	
 	// Rook captures
-	pieceIdx = (g_toMove | 4) << 6;
+	pieceIdx = (g_toMove | 4) << 4;
 	from = g_pieceList[pieceIdx++];
 	while (from != 0) {
 		to = from; do { to--; } while (g_board[to] == 0); if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
@@ -2026,7 +2026,7 @@ function GenerateCaptureMoves(moveStack, moveScores) {
 	}
 	
 	// Queen captures
-	pieceIdx = (g_toMove | 5) << 6;
+	pieceIdx = (g_toMove | 5) << 4;
 	from = g_pieceList[pieceIdx++];
 	while (from != 0) {
 		to = from; do { to -= 15; } while (g_board[to] == 0); if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
@@ -2042,7 +2042,7 @@ function GenerateCaptureMoves(moveStack, moveScores) {
 	
 	// King captures
 	{
-		pieceIdx = (g_toMove | 6) << 6;
+		pieceIdx = (g_toMove | 6) << 4;
 		from = g_pieceList[pieceIdx];
 		to = from - 15; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
 		to = from - 17; if (g_board[to] & enemy) moveStack[moveStack.length] = GenerateMove(from, to);
@@ -2284,7 +2284,7 @@ function SeeAddXrayAttack(target, square, us, usAttacks, themAttacks) {
 
 // target = attacking square, us = color of knights to look for, attacks = array to add squares to
 function SeeAddKnightAttacks(target, us, attacks) {
-    var pieceIdx = (us | pieceBishop) << 6;
+    var pieceIdx = (us | pieceBishop) << 4;
     var attackerSq = g_pieceList[pieceIdx++];
 
     while (attackerSq != 0) {
@@ -2296,7 +2296,7 @@ function SeeAddKnightAttacks(target, us, attacks) {
 }
 
 function SeeAddSliderAttacks(target, us, attacks, pieceType) {
-    var pieceIdx = (us | pieceType) << 6;
+    var pieceIdx = (us | pieceType) << 4;
     var attackerSq = g_pieceList[pieceIdx++];
     var hit = false;
 

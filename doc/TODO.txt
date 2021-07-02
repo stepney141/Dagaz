@@ -4,19 +4,27 @@
 - DagazServer
   - app-net-v5
 
+- L-game
+  - prototype
+
+- MakYek
+  - https://en.wikipedia.org/wiki/Mak-yek
+
+- Шашки
+  - https://summercamp.ru/Шашки
+
 - session-manager
   - Hoppel-Poppel Chess
     - Ход предложенный адвизором (и ход бота) не фиксируется в dagaz.session
+  - Silverman's Chess
+    - session persistense откатывает последний ход чёрных при переключении
 
 - Sahkku
   - prototype
     - https://skyruk.livejournal.com/288965.html
 
-- Silverman's Chess
-  - session-manager
-    - session persistense откатывает последний ход чёрных при переключении
-
 - garbo-ai
+  - MiniShogi
   - Tafl
   - Kono
   - Maharadja
@@ -40,19 +48,11 @@
   - Escalation
   - Turnover
 
-- MakYek
-  - https://en.wikipedia.org/wiki/Mak-yek
-
 - Cyclic Checkers
   - ?setup=;0:2;+5;0:2;+14;0:1;+9;0:2;;0:1;;0:1;+8;1:1;+2;0:1;+5;0:1;+2;&turn=0
 
-- Шашки
-  - https://summercamp.ru/Шашки
 - Реверси
   - https://www.youtube.com/watch?v=KZLeF3q7JSE
-
-- L-game
-  - prototype
 
 - DagazServer
   - Hiashatar

@@ -285,7 +285,7 @@
   - Chameleon Chess Puzzle [todo, family:chess]
   - Chess Swappers [best, family:halma]
   - Fox Hunting [pkm, random, sparks, masquerade, family:other]
-  - Mine Sweeper [best, random, sparks, masquerade, family:other]
+  - Mine Sweeper [best, pkm, random, sparks, masquerade, family:other]
   - Klondike [best, random, showpiece, attributes, family:other]
   - Mahjong solitaire [attributes, random, showpiece, capture, best]
   - Netwalk [random, best]
