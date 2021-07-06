@@ -166,13 +166,6 @@ var kingAdj = [
    100, 200, 100
 ];
 
-var emptyAdj = [ 
-     0,   0,   0,
-     0,   0,   0,
-     0,   0,   0,
-     0,   0,   0
-];
-
 var pieceSquareAdj = new Array(8);
 
 // Returns the square flipped
@@ -250,6 +243,12 @@ function ScoreMove(move){
     var moveTo = (move >> 8) & 0xFF;
     var captured = g_board[moveTo] & 0x7;
     var piece = g_board[move & 0xFF];
+    if (move & moveflagDrop) {
+        piece = piecePawn;
+        if (move & moveflagDropBishop) piece = pieceBishop;
+        if (move & moveflagDropRook) piece = pieceRook;
+        piece += g_toMove;
+    }
     var score;
     if (captured != 0) {
         var pieceType = piece & 0x7;
@@ -271,6 +270,18 @@ function QSearch(alpha, beta, ply) {
     if (realEval > alpha)
         alpha = realEval;
 
+    // For this game only
+    var enemy = colorWhite - g_toMove;
+    var kingPos = g_pieceList[(enemy | pieceKing) << 4];
+    if (kingPos != 0) {
+        var row = kingPos & 0xF0;
+        if (enemy == colorWhite) {
+            if (row == 0x20) return minEval + ply;
+        } else {
+            if (row == 0x50) return minEval + ply;
+        }
+    }
+
     var moves = new Array();
     var moveScores = new Array();
     var wasInCheck = g_inCheck;
@@ -278,6 +289,7 @@ function QSearch(alpha, beta, ply) {
     if (wasInCheck) {
         GenerateCaptureMoves(moves);
         GenerateAllMoves(moves);
+//      GenerateDropMoves(moves);
         for (var i = 0; i < moves.length; i++) {
             moveScores[i] = ScoreMove(moves[i]);
         }
@@ -351,7 +363,7 @@ function IsHashMoveValid(hashMove) {
         if (hashMove & moveflagDropBishop) ix = 1;
         if (hashMove & moveflagDropRook) ix = 2;
         if (g_toMove != colorWhite) ix += 3;
-        if (!g_hand[ix]) return false;
+        if (g_hand[ix] <= 0) return false;
 /*      if ((hashMove & (moveflagDropBishop | moveflagDropRook)) == 0) {
             var row = square & 0xF0;
             if (g_toMove == colorWhite) {
@@ -370,7 +382,7 @@ function IsHashMoveValid(hashMove) {
     if (g_toMove != (ourPiece & 0x8)) return false;
     // Can't move to a square that has something of the same color
     if (g_board[to] != 0 && (g_toMove == (g_board[to] & 0x8))) return false;
-    if (pieceType == piecePawn) {
+/*  if (pieceType == piecePawn) {
         // Valid moves
         var dir = to - from;
         if ((g_toMove == colorWhite) != (dir < 0))  {
@@ -383,7 +395,7 @@ function IsHashMoveValid(hashMove) {
         if ((Math.abs(dir) != 1) && (Math.abs(dir) != 16)) {
             if ((g_toMove == colorWhite) != (dir < 0)) return false;
         }
-    }
+    }*/
     return IsSquareAttackableFrom(to, from);
 }
 
@@ -462,6 +474,7 @@ function MovePicker(hashMove, depth, killer1, killer2) {
 
             if (this.stage == 5) {
                 GenerateAllMoves(this.moves);
+                GenerateDropMoves(this.moves);
                 this.moveCount = this.moves.length;
                 // Move ordering
                 for (var i = this.atMove; i < this.moveCount; i++) this.moveScores[i] = ScoreMove(this.moves[i]);
@@ -523,6 +536,8 @@ function MovePicker(hashMove, depth, killer1, killer2) {
 }
 
 function AllCutNode(ply, depth, beta, allowNull) {
+    if (depth > 100) return 0;
+
     if (ply <= 0) {
         return QSearch(beta - 1, beta, 0);
     }
@@ -616,6 +631,18 @@ function AllCutNode(ply, depth, beta, allowNull) {
     var realEval = minEval - 1;
     var inCheck = g_inCheck;
 
+    // For this game only
+    var enemy = colorWhite - g_toMove;
+    var kingPos = g_pieceList[(enemy | pieceKing) << 4];
+    if (kingPos != 0) {
+        var row = kingPos & 0xF0;
+        if (enemy == colorWhite) {
+            if (row == 0x20) return minEval + depth;
+        } else {
+            if (row == 0x50) return minEval + depth;
+        }
+    }
+
     var movePicker = new MovePicker(hashMove, depth, g_killers[depth][0], g_killers[depth][1]);
 
     for (;;) {
@@ -704,8 +731,8 @@ function AlphaBeta(ply, depth, alpha, beta) {
 
     g_nodeCount++;
 
-    if (depth > 0 && IsRepDraw())
-        return 0;
+    if (depth > 0 && IsRepDraw()) return 0;
+    if (depth > 100) return 0;
 
     // Mate distance pruning
     var oldAlpha = alpha;
@@ -725,6 +752,18 @@ function AlphaBeta(ply, depth, alpha, beta) {
 
     var moveMade = false;
     var realEval = minEval;
+
+    // For this game only
+    var enemy = colorWhite - g_toMove;
+    var kingPos = g_pieceList[(enemy | pieceKing) << 4];
+    if (kingPos != 0) {
+        var row = kingPos & 0xF0;
+        if (enemy == colorWhite) {
+            if (row == 0x20) return minEval + depth;
+        } else {
+            if (row == 0x50) return minEval + depth;
+        }
+    }
 
     var movePicker = new MovePicker(hashMove, depth, g_killers[depth][0], g_killers[depth][1]);
 
@@ -1190,7 +1229,7 @@ function InitializeFromFen(fen) {
     }
 
     for (var i = 0; i < pie[1].length; i++) {
-        g_hand[i] = pie[1][i];
+        g_hand[i] = +pie[1][i];
     }
     
     InitializePieceList();
@@ -1291,13 +1330,24 @@ function MakeMove(move){
             pieceType = pieceRook;
             ix = 2;
         }
-        if (g_toMove != colorWhite) ix += 3;
-        g_hashKeyLow ^= g_zobristHandLow[pieceType][g_hand[ix] - 1];
-        g_hashKeyHigh ^= g_zobristHandHigh[pieceType][g_hand[ix] - 1];
+        if (g_toMove != colorWhite) {
+            ix += 3;
+        } else {
+            pieceType += colorWhite;
+        }
+
+        // DEBUG:
+        if (g_hand[ix] <= 0) {
+            UnmakeMove(move);
+            return false;
+        }
+
+        g_hashKeyLow ^= g_zobristHandLow[ix][g_hand[ix] - 1];
+        g_hashKeyHigh ^= g_zobristHandHigh[ix][g_hand[ix] - 1];
         g_hand[ix]--;
         if (g_hand[ix] > 0) {
-            g_hashKeyLow ^= g_zobristHandLow[pieceType][0];
-            g_hashKeyHigh ^= g_zobristHandHigh[pieceType][0];
+            g_hashKeyLow ^= g_zobristHandLow[ix][g_hand[ix] - 1];
+            g_hashKeyHigh ^= g_zobristHandHigh[ix][g_hand[ix] - 1];
         }
         g_board[to] = pieceType;
         g_hashKeyLow ^= g_zobristLow[to][pieceType & 0xF];
@@ -1325,19 +1375,22 @@ function MakeMove(move){
         g_hashKeyHigh ^= g_zobristHigh[to][captureType];
         g_move50 = 0;
 
-        if (captureType > pieceKing) {
-            if (captureType == pieceQueen) captureType = piecePawn;
-            captureType -= piecePawn;
-            if (g_toMove != colorWhite) captureType += 3;
-            var j = g_hand[captureType];
+        if ((captureType & 0x07) > pieceKing) {
+            if ((captureType & 0x07) >= pieceQueen) {
+                captureType &= ~0x7;
+                captureType |= piecePawn;
+            }
+            var ix = (captureType & 0x07) - piecePawn;
+            if (g_toMove != colorWhite) ix += 3;
+            var j = g_hand[ix];
             if (j < 2) {
                 if (j) {
-                    g_hashKeyLow ^= g_zobristHandLow[captureType][j - 1];
-                    g_hashKeyHigh ^= g_zobristHandHigh[captureType][j - 1];
+                    g_hashKeyLow ^= g_zobristHandLow[ix][j - 1];
+                    g_hashKeyHigh ^= g_zobristHandHigh[ix][j - 1];
                 }
-                g_hand[captureType]++;
-                g_hashKeyLow ^= g_zobristHandLow[captureType][j];
-                g_hashKeyHigh ^= g_zobristHandHigh[captureType][j];
+                g_hand[ix]++;
+                g_hashKeyLow ^= g_zobristHandLow[ix][j];
+                g_hashKeyHigh ^= g_zobristHandHigh[ix][j];
             }
         }
     }
@@ -1391,7 +1444,7 @@ function MakeMove(move){
     g_baseEval = -g_baseEval;
 
     if ((piece & 0x7) == pieceKing || g_inCheck) {
-        var kingPos =g_pieceList[(pieceKing | (8 - g_toMove)) << 4];
+        var kingPos = g_pieceList[(pieceKing | (8 - g_toMove)) << 4];
         if ((kingPos != 0) && IsSquareAttackable(kingPos, otherColor)) {
             UnmakeMove(move);
             return false;
@@ -1483,11 +1536,16 @@ function UnmakeMove(move){
         g_pieceIndex[to] = g_pieceCount[captureType];
         g_pieceList[(captureType << 4) | g_pieceCount[captureType]] = to;
         g_pieceCount[captureType]++;
-        if (captureType > pieceKing) {
-            if (captureType == pieceQueen) captureType = piecePawn;
-            captureType -= piecePawn;
-            if (g_toMove != colorWhite) captureType += 3;
-            g_hand[captureType]--;
+        if ((captureType & 0x07) > pieceKing) {
+            if ((captureType & 0x07) >= pieceQueen) {
+                captureType &= ~0x7;
+                captureType |= piecePawn;
+            }
+            var ix = (captureType & 0x07) - piecePawn;
+            if (g_toMove != colorWhite) ix += 3;
+            if (g_hand[ix] > 0) {
+                g_hand[ix]--;
+            }
         }
     }
 }
@@ -1544,6 +1602,7 @@ function GenerateValidMoves() {
     var allMoves = new Array();
     GenerateCaptureMoves(allMoves, null);
     GenerateAllMoves(allMoves);
+//  GenerateDropMoves(allMoves);
     for (var i = allMoves.length - 1; i >= 0; i--) {
         if (MakeMove(allMoves[i])) {
             moveList[moveList.length] = allMoves[i];
@@ -1626,8 +1685,12 @@ function GenerateAllMoves(moveStack) {
         to = from + inc; if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(from, to, 0);
         from = g_pieceList[pieceIdx++];
     }
+}
 
-    // drop moves
+function GenerateDropMoves(moveStack) {
+    // DEBUG:
+    // return;
+
     var ix = 0;
     if (g_toMove != colorWhite) ix += 3;
     if (g_hand[ix]) {
@@ -1637,7 +1700,9 @@ function GenerateAllMoves(moveStack) {
                  if (g_toMove != colorWhite) {
                      to = flipTable[to];
                  }
-                 if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(0, to, moveflagDrop);
+                 if (g_board[to] == 0) {
+                     moveStack[moveStack.length] = GenerateMove(to, to, moveflagDrop);
+                 }
             }
         }
     }
@@ -1648,7 +1713,9 @@ function GenerateAllMoves(moveStack) {
              for (var row = 0; row < g_height; row++) {
                  for (var col = 0; col < g_width; col++) {
                       var to = MakeSquare(row, col);
-                      if (g_board[to] == 0) moveStack[moveStack.length] = GenerateMove(0, to, moveflagDrop | flags);
+                      if (g_board[to] == 0) {
+                          moveStack[moveStack.length] = GenerateMove(to, to, moveflagDrop | flags);
+                      }
                  }
              }
          }
