@@ -1,6 +1,6 @@
 (function() {
 
-function MT() {
+Dagaz.AI.MT = function() {
     var N = 624;
     var M = 397;
     var MAG01 = [0x0, 0x9908b0df];
@@ -100,7 +100,7 @@ function MT() {
 }
 
 function ZobristHash() {
-   this.mt = new MT(0x1badf00d);
+   this.mt = new Dagaz.AI.MT(0x1badf00d);
    this.lh = []; this.hh = [];
    this.lp = []; this.hp = [];
 }
