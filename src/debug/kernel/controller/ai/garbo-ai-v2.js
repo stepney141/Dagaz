@@ -9,7 +9,8 @@ Dagaz.Model.HEIGHT     = 8;
 Dagaz.AI.PIECE_MASK    = 0xF;
 Dagaz.AI.TYPE_MASK     = 0x7;
 Dagaz.AI.PLAYERS_MASK  = 0x18;
-Dagaz.AI.COUNTER_SIZE  = 4;
+Dagaz.AI.COUNTER_SIZE  = 6;
+Dagaz.AI.TYPE_SIZE     = 3;
 
 Dagaz.AI.colorBlack    = 0x10;
 Dagaz.AI.colorWhite    = 0x08;
@@ -29,14 +30,14 @@ Dagaz.AI.g_zobristBlackHigh = 0;
 
 Dagaz.AI.g_moveCount = 0;
 
-var g_move50 = 0;
-var g_repMoveStack = new Array();
+Dagaz.AI.g_move50 = 0;
+Dagaz.AI.g_repMoveStack = new Array();
 
 var g_hashSize = 1 << 22;
 var g_hashMask = g_hashSize - 1;
 var g_hashTable;
-
 var g_killers;
+
 Dagaz.AI.historyTable = new Array(32);
 
 var hashflagAlpha = 1;
@@ -44,7 +45,7 @@ var hashflagBeta  = 2;
 var hashflagExact = 3;
 
 Dagaz.AI.g_pieceIndex = new Array(256);
-Dagaz.AI.g_pieceList  = new Array(2 * 8 * 64); // TODO: Check this (Dagaz.AI.COUNTER_SIZE)!
+Dagaz.AI.g_pieceList  = new Array(2 * 8 * 64);
 Dagaz.AI.g_pieceCount = new Array(2 * 8);
 
 var once       = true;
@@ -220,10 +221,10 @@ function StoreHash(value, flags, ply, move, depth) {
 }
 
 function IsRepDraw() {
-    var stop = Dagaz.AI.g_moveCount - 1 - g_move50;
+    var stop = Dagaz.AI.g_moveCount - 1 - Dagaz.AI.g_move50;
     stop = stop < 0 ? 0 : stop;
     for (var i = Dagaz.AI.g_moveCount - 5; i >= stop; i -= 2) {
-        if (g_repMoveStack[i] == Dagaz.AI.g_hashKeyLow)
+        if (Dagaz.AI.g_repMoveStack[i] == Dagaz.AI.g_hashKeyLow)
             return true;
     }
     return false;
@@ -355,6 +356,10 @@ function MovePicker(hashMove, depth, killer1, killer2) {
     }
 }
 
+Dagaz.AI.isNoZugzwang = function() {
+  return true;
+}
+
 function AllCutNode(ply, depth, beta, allowNull) {
     if (depth > 100) return 0;
 
@@ -422,10 +427,7 @@ function AllCutNode(ply, depth, beta, allowNull) {
         if (ply > 1 &&
             Dagaz.AI.g_baseEval >= beta - (ply >= 4 ? 2500 : 0) &&
             // Disable null move if potential zugzwang (no big pieces)
-            (Dagaz.AI.isZugzwang()
-/*           g_pieceCount[pieceBishop | g_toMove] != 0 ||
-             g_pieceCount[pieceRook   | g_toMove] != 0 ||
-             g_pieceCount[pieceQueen  | g_toMove] != 0*/)) {
+            Dagaz.AI.isNoZugzwang()) {
                 var r = 3 + (ply >= 5 ? 1 : ply / 4);
                 if (Dagaz.AI.g_baseEval - beta > 1500) r++;
 
@@ -496,9 +498,9 @@ function AllCutNode(ply, depth, beta, allowNull) {
 		var histTo = (currentMove >> 8) & 0xFF;
 		if (Dagaz.AI.g_board[histTo] == 0) {
 		    var histPiece = Dagaz.AI.g_board[currentMove & 0xFF] & Dagaz.AI.PIECE_MASK;
-		    historyTable[histPiece][histTo] += ply * ply;
-		    if (historyTable[histPiece][histTo] > 32767) {
-		        historyTable[histPiece][histTo] >>= 1;
+		    Dagaz.AI.historyTable[histPiece][histTo] += ply * ply;
+		    if (Dagaz.AI.historyTable[histPiece][histTo] > 32767) {
+		        Dagaz.AI.historyTable[histPiece][histTo] >>= 1;
 		    }
 
 		    if (g_killers[depth][0] != currentMove) {
@@ -601,9 +603,9 @@ function AlphaBeta(ply, depth, alpha, beta) {
                 var histTo = (currentMove >> 8) & 0xFF;
                 if (Dagaz.AI.g_board[histTo] == 0) {
                     var histPiece = Dagaz.AI.g_board[currentMove & 0xFF] & Dagaz.AI.PIECE_MASK;
-                    historyTable[histPiece][histTo] += ply * ply;
-                    if (historyTable[histPiece][histTo] > 32767) {
-                        historyTable[histPiece][histTo] >>= 1;
+                    Dagaz.AI.historyTable[histPiece][histTo] += ply * ply;
+                    if (Dagaz.AI.historyTable[histPiece][histTo] > 32767) {
+                        Dagaz.AI.historyTable[histPiece][histTo] >>= 1;
                     }
 
                     if (g_killers[depth][0] != currentMove) {
@@ -640,7 +642,7 @@ function AlphaBeta(ply, depth, alpha, beta) {
     return realEval;
 }
 
-function ResetGame() {
+Dagaz.AI.ResetGame = function() {
     g_killers = new Array(128);
     for (var i = 0; i < 128; i++) {
         g_killers[i] = [0, 0];
@@ -649,9 +651,9 @@ function ResetGame() {
     g_hashTable = new Array(g_hashSize);
 
     for (var i = 0; i < 32; i++) {
-        historyTable[i] = new Array(256);
+        Dagaz.AI.historyTable[i] = new Array(256);
         for (var j = 0; j < 256; j++)
-            historyTable[i][j] = 0;
+            Dagaz.AI.historyTable[i][j] = 0;
     }
 
     var mt = new Dagaz.AI.MT(0x1badf00d);
@@ -668,80 +670,6 @@ function ResetGame() {
     }
     Dagaz.AI.g_zobristBlackLow = mt.next(32);
     Dagaz.AI.g_zobristBlackHigh = mt.next(32);
-
-    Dagaz.AI.InitializeEval();
-/*  for (var row = 0; row < g_height; row++) {
-        for (var col = 0; col < g_width; col++) {
-            var square = MakeSquare(row, col);
-            flipTable[square] = MakeSquare(3 - row, col);
-        }
-    }
-
-    pieceSquareAdj[piecePawn] = MakeTable(pawnAdj);
-    pieceSquareAdj[pieceBishop] = MakeTable(bishopAdj);
-    pieceSquareAdj[pieceRook] = MakeTable(rookAdj);
-    pieceSquareAdj[pieceQueen] = MakeTable(queenAdj);
-    pieceSquareAdj[pieceKing] = MakeTable(kingAdj);
-
-    var pieceDeltas = [[], g_kingDeltas, [], g_bishopDeltas, g_rookDeltas, g_rookDeltas];
-
-    for (var i = 0; i < 256; i++) {
-        g_vectorDelta[i] = new Object();
-        g_vectorDelta[i].delta = 0;
-        g_vectorDelta[i].pieceMask = new Array(2);
-        g_vectorDelta[i].pieceMask[0] = 0;
-        g_vectorDelta[i].pieceMask[1] = 0;
-    }
-    
-    // Initialize the vector delta table    
-    for (var row = 0; row < 0x40; row += 0x10) 
-        for (var col = 0; col < 0x3; col++) {
-            var square = row | col;
-            
-            // Pawn moves
-            var index = square - (square - 16) + 128;
-            g_vectorDelta[index].pieceMask[colorWhite >> 3] |= (1 << piecePawn);
-            index = square - (square + 16) + 128;
-            g_vectorDelta[index].pieceMask[0] |= (1 << piecePawn);
-
-            // Queen moves
-            index = square - (square - 17) + 128;
-            g_vectorDelta[index].pieceMask[colorWhite >> 3] |= (1 << pieceQueen);
-            index = square - (square - 15) + 128;
-            g_vectorDelta[index].pieceMask[colorWhite >> 3] |= (1 << pieceQueen);
-            
-            index = square - (square + 17) + 128;
-            g_vectorDelta[index].pieceMask[0] |= (1 << pieceQueen);
-            index = square - (square + 15) + 128;
-            g_vectorDelta[index].pieceMask[0] |= (1 << pieceQueen);
-            
-            for (var i = pieceKing; i <= pieceQueen; i++) {
-                for (var dir = 0; dir < pieceDeltas[i].length; dir++) {
-                    var target = square + pieceDeltas[i][dir];
-                    if (!(target & 0x88)) {
-                        index = square - target + 128;
-                        g_vectorDelta[index].pieceMask[colorWhite >> 3] |= (1 << i);
-                        g_vectorDelta[index].pieceMask[0] |= (1 << i);
-                        var flip = -1;
-                        if (square < target) flip = 1;
-                        if ((square & 0xF0) == (target & 0xF0)) {
-                            // On the same row
-                            g_vectorDelta[index].delta = flip * 1;
-                        } else if ((square & 0x0F) == (target & 0x0F)) {
-                            // On the same column
-                            g_vectorDelta[index].delta = flip * 16;
-                        } else if ((square % 15) == (target % 15)) {
-                            g_vectorDelta[index].delta = flip * 15;
-                        } else if ((square % 17) == (target % 17)) {
-                            g_vectorDelta[index].delta = flip * 17;
-                        }
-                    }
-                }
-            }
-        }
-
-    InitializeEval();
-    InitializeFromFen("rkb/1p1/1P1/BKR-000000 w");*/
 }
 
 Dagaz.AI.SetHash = function() {
@@ -762,7 +690,7 @@ Dagaz.AI.SetHash = function() {
     return result;
 }
 
-function InitializePieceList() {
+Dagaz.AI.InitializePieceList = function() {
     for (var i = 0; i < 16; i++) {
         Dagaz.AI.g_pieceCount[i] = 0;
         for (var j = 0; j < 64; j++) {
@@ -781,10 +709,6 @@ function InitializePieceList() {
     }
 }
 
-Dagaz.AI.GenerateMove = function(from, to, flags){
-    return from | (to << 8) | flags;
-}
-
 Dagaz.AI.GenerateDropMoves = function(moves, force) {}
 
 Ai.prototype.setContext = function(ctx, board) {
@@ -797,31 +721,15 @@ Ai.prototype.setContext = function(ctx, board) {
   resultMove = null;
   player     = board.player;
   if (once) {
-//    Dagaz.AI.ResetGame();
+      Dagaz.AI.ResetGame();
       once = false;
   }
 }
 
 var garbo = function(bestMove, value, timeTaken, ply) {
-//resultMove = Dagaz.AI.FormatMove(bestMove);  
+  resultMove = Dagaz.AI.FormatMove(bestMove);  
   inProgress = false;
   console.log('Garbo: ' + resultMove + ', value = ' + value + ', time = ' + timeTaken + ', ply = ' + ply);
-/*if (resultMove == 'O-O-O') {
-      if (player == 1) {
-          resultMove = 'e1-a1';
-      }
-      if (player == 2) {
-          resultMove = 'e8-a8';
-      }
-  }
-  if (resultMove == 'O-O') {
-      if (player == 1) {
-          resultMove = 'e1-g1';
-      }
-      if (player == 2) {
-          resultMove = 'e8-g8';
-      }
-  }*/
   if (Dagaz.AI.callback) {
       Dagaz.AI.callback(resultMove);
   }
@@ -873,8 +781,12 @@ Ai.prototype.getMove = function(ctx) {
       inProgress = true;
       var fen = result[1];
       setTimeout(function () {
-//          Dagaz.AI.InitializeFromFen(fen);
-            Search(garbo, 10, null);
+            var s = Dagaz.AI.InitializeFromFen(fen);
+            if (s == '') {
+                Search(garbo, 10, null);
+            } else {
+                console.log(s);
+            }
         }, 100);
       return {
            done: false,
