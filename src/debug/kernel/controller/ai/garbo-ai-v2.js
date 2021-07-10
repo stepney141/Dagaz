@@ -295,7 +295,7 @@ function MovePicker(hashMove, depth, killer1, killer2) {
 
             if (this.stage == 5) {
                 Dagaz.AI.GenerateAllMoves(this.moves);
-                Dagaz.AI.GenerateDropMoves(moves, true);
+                Dagaz.AI.GenerateDropMoves(this.moves, true);
                 this.moveCount = this.moves.length;
                 // Move ordering
                 for (var i = this.atMove; i < this.moveCount; i++) this.moveScores[i] = Dagaz.AI.ScoreMove(this.moves[i]);

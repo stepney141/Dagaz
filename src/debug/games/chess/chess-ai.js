@@ -725,7 +725,7 @@ Dagaz.AI.MakeMove = function(move){
         if (diff > 16) {
             g_enPassentSquare = me ? (to + 0x10) : (to - 0x10);
         }
-        g_move50 = 0;
+        Dagaz.AI.g_move50 = 0;
     }
 
     Dagaz.AI.g_hashKeyLow ^= Dagaz.AI.g_zobristLow[from][piece & Dagaz.AI.PIECE_MASK];
@@ -1211,13 +1211,13 @@ function MovePawnTo(moveStack, start, square) {
     var row = square & 0xF0;
     var delta = (8 - Dagaz.Model.HEIGHT) << 4;
     if ((row == (0x90 - delta) || (row == 0x20))) {
-        if (g_flags & moveflagPromoteQueen) {
+        if (Dagaz.AI.g_flags & moveflagPromoteQueen) {
             moveStack[moveStack.length] = GenerateMove(start, square, moveflagPromotion | moveflagPromoteQueen);
         }
-        if (g_flags & moveflagPromoteKnight) {
+        if (Dagaz.AI.g_flags & moveflagPromoteKnight) {
             moveStack[moveStack.length] = GenerateMove(start, square, moveflagPromotion | moveflagPromoteKnight);
         }
-        if (g_flags & moveflagPromoteBishop) {
+        if (Dagaz.AI.g_flags & moveflagPromoteBishop) {
             moveStack[moveStack.length] = GenerateMove(start, square, moveflagPromotion | moveflagPromoteBishop);
         }
         moveStack[moveStack.length] = GenerateMove(start, square, moveflagPromotion);
@@ -1240,8 +1240,8 @@ function GeneratePawnMoves(moveStack, from) {
 	if ((((from & 0xF0) == 0x30) && color != Dagaz.AI.colorWhite) ||
 	    (((from & 0xF0) == (0x80 - delta)) && color == Dagaz.AI.colorWhite)) {
             to += inc;
-            if ((g_board[to] == 0) && (g_flags & moveflagEPC)) {
-                 Dagaz.AI.moveStack[moveStack.length] = GenerateMove(from, to);
+            if ((Dagaz.AI.g_board[to] == 0) && (Dagaz.AI.g_flags & moveflagEPC)) {
+                 moveStack[moveStack.length] = GenerateMove(from, to);
             }				
 	}
    }
